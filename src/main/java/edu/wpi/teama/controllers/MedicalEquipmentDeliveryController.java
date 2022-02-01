@@ -1,6 +1,7 @@
 package edu.wpi.teama.controllers;
 
 import edu.wpi.teama.Aapp;
+import edu.wpi.teama.entities.MedicalEquipmentServiceRequest;
 import java.io.IOException;
 import java.net.URL;
 import javafx.event.ActionEvent;
@@ -9,21 +10,31 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class MedicalEquipmentDeliveryController {
   @FXML private Button homeButton;
-  @FXML private MenuButton typeMenu;
-  @FXML private MenuButton fromMenu;
+  @FXML private ChoiceBox typeChoiceBox;
+  @FXML private ChoiceBox fromChoiceBox;
   @FXML private Button submitButton;
   @FXML private Label locationLabel;
   @FXML private TextField specialNotes;
   @FXML private Button backButton;
   private FXMLLoader loader = new FXMLLoader();
+  private MedicalEquipmentServiceRequest medicalEquipmentServiceRequest;
+
+  public MedicalEquipmentDeliveryController() {
+    medicalEquipmentServiceRequest = new MedicalEquipmentServiceRequest();
+  }
+
+  @FXML
+  private void initialize() {
+    typeChoiceBox.getItems().removeAll(typeChoiceBox.getItems());
+    typeChoiceBox.getItems().addAll("Type", "Bed", "XRAY", "Infusion Pump", "Patient Recliner");
+    typeChoiceBox.getSelectionModel().select("Type");
+    typeChoiceBox.getSelectionModel().selectedItemProperty();
+  }
 
   @FXML
   private void returnToHomeScene() throws IOException {
@@ -48,36 +59,6 @@ public class MedicalEquipmentDeliveryController {
     window.setScene(new Scene(root));
     window.setTitle("Select Service Request");
     window.show();
-  }
-
-  @FXML
-  private void selectTypeBed() {
-    typeMenu.setText("Bed");
-  }
-
-  @FXML
-  private void selectTypeXRAY() {
-    typeMenu.setText("XRAY");
-  }
-
-  @FXML
-  private void selectTypeInfusionPump() {
-    typeMenu.setText("Infusion Pump");
-  }
-
-  @FXML
-  private void selectTypePatientRecliner() {
-    typeMenu.setText("Patient Recliner");
-  }
-
-  @FXML
-  private void selectFromBedPark() {
-    fromMenu.setText("Bed Park");
-  }
-
-  @FXML
-  private void selectFromStorageUnit() {
-    fromMenu.setText("Storage Unit");
   }
 
   @FXML

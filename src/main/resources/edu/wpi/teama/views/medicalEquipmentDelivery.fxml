@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.ChoiceBox?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teama.controllers.MedicalEquipmentDeliveryController">
     <children>
         <Button fx:id="homeButton" layoutX="516.0" layoutY="336.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" />
@@ -33,20 +34,9 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-              <MenuButton fx:id="typeMenu" alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="102.0" text="Type" GridPane.halignment="CENTER" GridPane.valignment="TOP">
-                  <items>
-                      <MenuItem mnemonicParsing="false" onAction="#selectTypeBed" text="Bed" />
-                      <MenuItem mnemonicParsing="false" onAction="#selectTypeXRAY" text="Portable X-RAY" />
-                      <MenuItem mnemonicParsing="false" onAction="#selectTypeInfusionPump" text="Infusion Pump" />
-                      <MenuItem mnemonicParsing="false" onAction="#selectTypePatientRecliner" text="Patient Recliner" />
-                  </items>
-              </MenuButton>
-              <MenuButton fx:id="fromMenu" alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="102.0" text="From" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-                  <items>
-                      <MenuItem mnemonicParsing="false" onAction="#selectFromBedPark" text="Bed Park" />
-                      <MenuItem mnemonicParsing="false" onAction="#selectFromStorageUnit" text="Storage Unit" />
-                  </items>
-              </MenuButton>
+              <ChoiceBox fx:id="typeChoiceBox" prefHeight="26.0" prefWidth="102.0" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
+              <ChoiceBox fx:id="fromChoiceBox" prefHeight="26.0" prefWidth="102.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM"/>
+
               <Label alignment="CENTER" prefHeight="34.0" prefWidth="102.0" text="Map" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                   <font>
                       <Font size="16.0" />
