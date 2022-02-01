@@ -6,7 +6,9 @@ import java.util.Scanner;
 
 public class Main {
 
-  public static void main(String[] args) { Aapp.launch(Aapp.class, args); }
+  public static void main(String[] args) {
+    Aapp.launch(Aapp.class, args);
+  }
 
   // This is the main function of the db repo. This needs to be integrated into the rest of the
   // code. For now, the aapp.launch is blocking, so can't add it to the main main function.
