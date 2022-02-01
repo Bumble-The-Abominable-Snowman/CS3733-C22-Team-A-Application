@@ -37,7 +37,6 @@ public class Adb {
     }
 
     //Check if each table in the database exist. If not exist then create one.
-
     //Check TowerLocations table.
     try {
 
@@ -118,35 +117,5 @@ public class Adb {
                       + l.getShortName()
                       + "')");*/
       // System.out.println(addition);
-
-/*  //Get node from a table.
-  public static void getNode(String tableName, String nodeID) {
-
-  }
-
-  //Update node from a table.
-  public static void updateCoordinates(String tableName,String nodeID, int xcoord, int ycoord) {
-
-  }
-
-  //Add node to a table
-  public static void enterNode(String tableName,
-      String nodeID,
-      int xcoord,
-      int ycoord,
-      String floor,
-      String building,
-      String nodeType,
-      String longName,
-      String shortName) {
-
-  }
-
-  //delete node from a table.
-  public static void deleteNode(String tableName,String nodeID) {
-
-  }*/
-
-
 
 }

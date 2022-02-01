@@ -77,9 +77,7 @@ public class Location {
     return xCoord;
   }
 
-  public int getYCoord() {
-    return yCoord;
-  }
+  public int getYCoord() { return yCoord; }
 
   public String getFloor() {
     return floor;
@@ -114,7 +112,7 @@ public class Location {
   }*/
 
   //Method to get node from the location table.
-  public List<Location> getLocationNode(String ID){
+  public Location getLocationNode(String ID){
 
     String tableName = "TowerLocations";
     try {
@@ -129,23 +127,20 @@ public class Location {
 
       //Commented code to print out the selected node.
       ResultSet rset = getNode.getResultSet();
-
-      List<Location> locList = new ArrayList<>();
       // process results
-      while (rset.next()) {
-          String nodeID = rset.getString("nodeID");
-          int xc = rset.getInt("xCoord");
-          int yc = rset.getInt("yCoord");
-          String floor = rset.getString("floor");
-          String building = rset.getString("building");
-          String nodeType = rset.getString("nodeType");
-          String longName = rset.getString("longName");
-          String shortName = rset.getString("shortName");
+      String nodeID = rset.getString("nodeID");
+      int xc = rset.getInt("xCoord");
+      int yc = rset.getInt("yCoord");
+      String floor = rset.getString("floor");
+      String building = rset.getString("building");
+      String nodeType = rset.getString("nodeType");
+      String longName = rset.getString("longName");
+      String shortName = rset.getString("shortName");
 
-          Location l = new Location(nodeID, xc, yc, floor, building, nodeType, longName, shortName);
-          locList.add(l);
-      }
-      return locList;
+      Location l = new Location(nodeID, xc, yc, floor, building, nodeType, longName, shortName);
+
+      //Return the location object
+      return l;
 
     } catch (SQLException e) {
       System.out.println("Failed");
@@ -155,19 +150,17 @@ public class Location {
   }
 
   //Method to update nodes from location table.
-  public void updateLocationCoords(String ID, int xcoord, int ycoord){
+  public void updateLocation(String ID, String field, String change){
 
     String tableName = "TowerLocations";
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:"+ tableName +";");
+      Connection connection = DriverManager.getConnection("jdbc:derby:" + tableName + ";");
       Statement updateCoords = connection.createStatement();
 
       String str =
               String.format(
-                      "update "+ tableName +" set xcoord = %d, ycoord = %d where nodeID = '%s'",
-                      xcoord, ycoord,
-                      nodeID); // update the x and y coord for specific node which ID = input nodeID.
-
+                      "update " + tableName + " set "+ field +" = %s where nodeID = '%s'",
+                      change, ID);
       updateCoords.execute(str);
 
     } catch (SQLException e) {
@@ -176,7 +169,6 @@ public class Location {
       return;
     }
     return;
-
   }
 
   //Method to add node to location table.
