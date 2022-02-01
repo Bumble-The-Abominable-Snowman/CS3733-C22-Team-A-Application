@@ -1,4 +1,4 @@
-package edu.wpi.teama;
+package edu.wpi.teama.Adb;
 
 public class MedicalEquipment {
   private String equipmentID;
