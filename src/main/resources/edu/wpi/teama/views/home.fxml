@@ -43,6 +43,7 @@
                </children>
             </VBox>
             <Label text="Absolute-Zero Abominable Snowmen" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitApp" snapToPixel="false" text="Exit" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
          </children>
       </GridPane>
    </children>

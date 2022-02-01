@@ -1,4 +1,4 @@
-package edu.wpi.teama;
+package edu.wpi.teama.Adb;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -77,7 +77,9 @@ public class Location {
     return xCoord;
   }
 
-  public int getYCoord() { return yCoord; }
+  public int getYCoord() {
+    return yCoord;
+  }
 
   public String getFloor() {
     return floor;
@@ -99,7 +101,7 @@ public class Location {
     return shortName;
   }
 
-/*  @Override
+  /*  @Override
   public String toString() { // Used to format for printing to console, not useful otherwise.
     return getNodeID()
         + getXCoord()
@@ -111,21 +113,21 @@ public class Location {
         + getShortName();
   }*/
 
-  //Method to get node from the location table.
-  public Location getLocationNode(String ID){
+  // Method to get node from the location table.
+  public Location getLocationNode(String ID) {
 
     String tableName = "TowerLocations";
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:"+ tableName +";");
+      Connection connection = DriverManager.getConnection("jdbc:derby:" + tableName + ";");
       Statement getNode = connection.createStatement();
       String str =
-              String.format(
-                      "select * from " + tableName + " Where nodeID = '%s'",
-                      nodeID); // get node from table location
+          String.format(
+              "select * from " + tableName + " Where nodeID = '%s'",
+              nodeID); // get node from table location
 
       getNode.execute(str);
 
-      //Commented code to print out the selected node.
+      // Commented code to print out the selected node.
       ResultSet rset = getNode.getResultSet();
       // process results
       String nodeID = rset.getString("nodeID");
@@ -139,7 +141,7 @@ public class Location {
 
       Location l = new Location(nodeID, xc, yc, floor, building, nodeType, longName, shortName);
 
-      //Return the location object
+      // Return the location object
       return l;
 
     } catch (SQLException e) {
@@ -149,8 +151,8 @@ public class Location {
     }
   }
 
-  //Method to update nodes from location table.
-  public void updateLocation(String ID, String field, String change){
+  // Method to update nodes from location table.
+  public void updateLocation(String ID, String field, String change) {
 
     String tableName = "TowerLocations";
     try {
@@ -158,9 +160,8 @@ public class Location {
       Statement updateCoords = connection.createStatement();
 
       String str =
-              String.format(
-                      "update " + tableName + " set "+ field +" = %s where nodeID = '%s'",
-                      change, ID);
+          String.format(
+              "update " + tableName + " set " + field + " = %s where nodeID = '%s'", change, ID);
       updateCoords.execute(str);
 
     } catch (SQLException e) {
@@ -171,20 +172,36 @@ public class Location {
     return;
   }
 
-  //Method to add node to location table.
-  public void enterLocationNode(String ID, int xcoord, int ycoord, String floor, String building, String nodeType, String longName, String shortName){
+  // Method to add node to location table.
+  public void enterLocationNode(
+      String ID,
+      int xcoord,
+      int ycoord,
+      String floor,
+      String building,
+      String nodeType,
+      String longName,
+      String shortName) {
 
     String tableName = "TowerLocations";
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:"+ tableName +";");
+      Connection connection = DriverManager.getConnection("jdbc:derby:" + tableName + ";");
       Statement enterNode = connection.createStatement();
 
       String str =
-              String.format(
-                      "INSERT INTO "+ tableName +"(nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName)"
-                              + "VALUES ('%s', %d, %d, '%s', '%s', '%s', '%s', '%s')",
-                      nodeID, xcoord, ycoord, floor, building, nodeType, longName,
-                      shortName); // insert values from input.
+          String.format(
+              "INSERT INTO "
+                  + tableName
+                  + "(nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName)"
+                  + "VALUES ('%s', %d, %d, '%s', '%s', '%s', '%s', '%s')",
+              nodeID,
+              xcoord,
+              ycoord,
+              floor,
+              building,
+              nodeType,
+              longName,
+              shortName); // insert values from input.
 
       enterNode.execute(str);
 
@@ -193,20 +210,20 @@ public class Location {
       e.printStackTrace();
       return;
     }
-
   }
 
-  //Method to delete nodes from location table.
-  public void deleteLocationNode(String ID){
+  // Method to delete nodes from location table.
+  public void deleteLocationNode(String ID) {
 
     String tableName = "TowerLocations";
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:"+ tableName +";");
+      Connection connection = DriverManager.getConnection("jdbc:derby:" + tableName + ";");
       Statement deleteNode = connection.createStatement();
 
       String str =
-              String.format(
-                      "DELETE FROM "+ tableName +" WHERE nodeID ='%s'", nodeID); // delete the selected node
+          String.format(
+              "DELETE FROM " + tableName + " WHERE nodeID ='%s'",
+              nodeID); // delete the selected node
 
       deleteNode.execute(str);
 
@@ -217,7 +234,7 @@ public class Location {
     }
   }
 
-  //Put all nodes in a list.
+  // Put all nodes in a list.
   public static List<Location> getNodeList() {
     List<Location> locList = new ArrayList<>();
     try {

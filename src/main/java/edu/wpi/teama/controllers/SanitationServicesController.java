@@ -14,11 +14,14 @@ import javafx.stage.Stage;
 public class SanitationServicesController {
   @FXML private Button backButton;
   @FXML private Button returnButton;
+  @FXML private Button clearButton;
   @FXML private ChoiceBox typeMenu;
   @FXML private Button submitButton;
   @FXML private Label locationLabel;
   @FXML private TextField specialNotes;
   @FXML private TextField typeOtherBox;
+
+  private FXMLLoader loader = new FXMLLoader();
 
   @FXML
   private void initialize() {
@@ -59,6 +62,18 @@ public class SanitationServicesController {
     Stage window = (Stage) backButton.getScene().getWindow();
     window.setScene(new Scene(root));
     window.setTitle("Select Service Request");
+    window.show();
+  }
+
+  @FXML
+  private void clearSubmission() throws IOException {
+    URL xmlUrl = Aapp.class.getResource("views/sanitationServices.fxml");
+    loader.setLocation(xmlUrl);
+    Parent root = loader.load();
+
+    Stage window = (Stage) clearButton.getScene().getWindow();
+    window.setScene(new Scene(root));
+    window.setTitle("Sanitation Services");
     window.show();
   }
 }
