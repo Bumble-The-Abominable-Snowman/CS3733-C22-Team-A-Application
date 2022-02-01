@@ -18,7 +18,8 @@ public class Main {
     Adb.initialConnection(locList);
     // App.launch(App.class, args);
 
-    boolean exit = false;
+    //Commented code use interaction: selection 1-6.
+    /*boolean exit = false;
 
     while (exit == false) {
       // launch 1-6 selections
@@ -28,7 +29,6 @@ public class Main {
       Scanner input = new Scanner(System.in); // New input
       String selection = input.next();
 
-      // processing selection 1-6
       switch (selection) {
         case "1":
           System.out.println("\nExecuting: 1- Node Information");
@@ -129,7 +129,7 @@ public class Main {
           System.out.println("\nInput not supported. Try again");
           break;
       }
-    }
+    }*/
 
     return;
   }

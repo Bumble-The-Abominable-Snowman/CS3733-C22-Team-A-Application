@@ -119,88 +119,18 @@ public class Adb {
                       + "')");*/
       // System.out.println(addition);
 
-  //Get node from a table.
-  public static void getNode(String nodeID) {
-    try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:TowerLocations;");
-      Statement getNode = connection.createStatement();
-      String str =
-          String.format(
-              "select * from TowerLocations Where nodeID = '%s'",
-              nodeID); // get node from table location
+/*  //Get node from a table.
+  public static void getNode(String tableName, String nodeID) {
 
-      getNode.execute(str);
-      ResultSet rset = getNode.getResultSet();
-
-      int getX = 0, getY = 0;
-      String getID = "",
-          getFloor = "",
-          getBuilding = "",
-          getNodeType = "",
-          getLongName = "",
-          getShortName = "";
-      // process results
-      while (rset.next()) {
-        getX = rset.getInt("xcoord");
-        getY = rset.getInt("ycoord");
-        getFloor = rset.getString("floor");
-        getID = rset.getString("nodeID");
-        getBuilding = rset.getString("building");
-        getNodeType = rset.getString("nodeType");
-        getLongName = rset.getString("longName");
-        getShortName = rset.getString("shortName");
-        System.out.println(
-            "nodeID: "
-                + getID
-                + " xcoord: "
-                + getX
-                + " ycoord: "
-                + getY
-                + " floor: "
-                + getFloor
-                + " building: "
-                + getBuilding
-                + " nodeType: "
-                + getNodeType
-                + " longName: "
-                + getLongName
-                + " shortName: "
-                + getShortName);
-        // print out the selected node
-      }
-
-    } catch (SQLException e) {
-      System.out.println("Failed");
-      e.printStackTrace();
-      return;
-    }
   }
 
   //Update node from a table.
-  public static void updateCoordinates(String nodeID, int xcoord, int ycoord) {
-    try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:TowerLocations;");
-      Statement updateCoords = connection.createStatement();
+  public static void updateCoordinates(String tableName,String nodeID, int xcoord, int ycoord) {
 
-      String str =
-          String.format(
-              "update TowerLocations set xcoord = %d, ycoord = %d where nodeID = '%s'",
-              xcoord, ycoord,
-              nodeID); // update the x and y coord for specific node which ID = input nodeID.
-
-      updateCoords.execute(str);
-      System.out.println("Coordinates updated for node " + nodeID);
-
-    } catch (SQLException e) {
-      System.out.println("Failed");
-      e.printStackTrace();
-      return;
-    }
-    return;
   }
 
   //Add node to a table
-  public static void enterNode(
+  public static void enterNode(String tableName,
       String nodeID,
       int xcoord,
       int ycoord,
@@ -209,72 +139,14 @@ public class Adb {
       String nodeType,
       String longName,
       String shortName) {
-    try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:TowerLocations;");
-      Statement enterNode = connection.createStatement();
 
-      String str =
-          String.format(
-              "INSERT INTO TowerLocations(nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName)"
-                  + "VALUES ('%s', %d, %d, '%s', '%s', '%s', '%s', '%s')",
-              nodeID, xcoord, ycoord, floor, building, nodeType, longName,
-              shortName); // insert values from input.
-
-      enterNode.execute(str);
-      System.out.println("New node added");
-
-    } catch (SQLException e) {
-      System.out.println("Failed");
-      e.printStackTrace();
-      return;
-    }
   }
 
   //delete node from a table.
-  public static void deleteNode(String nodeID) {
-    try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:TowerLocations;");
-      Statement deleteNode = connection.createStatement();
+  public static void deleteNode(String tableName,String nodeID) {
 
-      String str =
-          String.format(
-              "DELETE FROM TowerLocations WHERE nodeID ='%s'", nodeID); // delete the selected node
+  }*/
 
-      deleteNode.execute(str);
-      System.out.println("node " + nodeID + " deleted");
 
-    } catch (SQLException e) {
-      System.out.println("Failed");
-      e.printStackTrace();
-      return;
-    }
-  }
 
-  public static List<Location> getNodeList() {
-    List<Location> locList = new ArrayList<>();
-    try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:TowerLocations;");
-      Statement getNodeList = connection.createStatement();
-      ResultSet rset = getNodeList.executeQuery("SELECT * FROM TowerLocations");
-
-      while (rset.next()) {
-        String nodeID = rset.getString("nodeID");
-        int xc = rset.getInt("xCoord");
-        int yc = rset.getInt("yCoord");
-        String floor = rset.getString("floor");
-        String building = rset.getString("building");
-        String nodeType = rset.getString("nodeType");
-        String longName = rset.getString("longName");
-        String shortName = rset.getString("shortName");
-
-        Location l = new Location(nodeID, xc, yc, floor, building, nodeType, longName, shortName);
-        locList.add(l);
-      }
-    } catch (SQLException e) {
-      System.out.println("Failed");
-      e.printStackTrace();
-    }
-
-    return locList;
-  }
 }
