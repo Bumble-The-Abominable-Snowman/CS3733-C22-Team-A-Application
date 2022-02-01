@@ -7,6 +7,8 @@ import java.util.List;
 public class Adb {
 
   public static void initialConnection(List<Location> locList) {
+
+    //Connection to database driver
     System.out.println("----- Apache Derby Connection Testing -----");
     try {
       Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
@@ -18,17 +20,22 @@ public class Adb {
 
     System.out.println("Apache Derby driver registered!");
 
+
     try {
+
+      //Check if database exist. If not then create one.
       try {
-        Connection connection = DriverManager.getConnection("jdbc:derby:TowerLocations;");
+        Connection connection = DriverManager.getConnection("jdbc:derby:Adb;");//Modify the database name from TowerLocation to Adb for better recognition.
       } catch (SQLException e) {
-        Connection c = DriverManager.getConnection("jdbc:derby:TowerLocations;create=true");
+        Connection c = DriverManager.getConnection("jdbc:derby:Adb;create=true");
       }
 
-      Connection connection = DriverManager.getConnection("jdbc:derby:TowerLocations;");
+      Connection connection = DriverManager.getConnection("jdbc:derby:Adb;");
       /*Statement dropTableLocations = c.createStatement();
       dropTableLocations.execute("DROP TABLE TowerLocations");*/
       Statement addTableLocation = connection.createStatement();
+
+      //Check if table exist. If not exist then create one.
       try {
         addTableLocation.execute(
             "CREATE TABLE TowerLocations(nodeID varchar(25), xcoord int, ycoord int, floor varchar(25), building varchar(25), nodeType varchar(25), longName varchar(100), shortName varchar(50))");
@@ -37,6 +44,7 @@ public class Adb {
         return;
       }
 
+      //Put data stored in locList into TowerLocations table.
       for (Location l : locList) {
         Statement addStatement = connection.createStatement();
         addStatement.executeUpdate(
@@ -62,17 +70,6 @@ public class Adb {
 
       System.out.println("Data successfully added");
 
-      // Example Query
-      /*Statement getData = c.createStatement();
-      ResultSet rset = getData.executeQuery("SELECT nodeID, longName FROM TowerLocations");
-      rset.next();
-      System.out.println("printing out data");
-      while(rset.next()){
-        System.out.println("nodeID: " + rset.getString("nodeID") +
-                "   longName: " + rset.getString("longName"));
-      }
-      */
-
     } catch (SQLException e) {
       System.out.println("Connection failed");
       e.printStackTrace();
@@ -80,6 +77,7 @@ public class Adb {
     }
   }
 
+  //Get node from a table.
   public static void getNode(String nodeID) {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:TowerLocations;");
@@ -136,6 +134,7 @@ public class Adb {
     }
   }
 
+  //Update node from a table.
   public static void updateCoordinates(String nodeID, int xcoord, int ycoord) {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:TowerLocations;");
@@ -158,6 +157,7 @@ public class Adb {
     return;
   }
 
+  //Add node to a table
   public static void enterNode(
       String nodeID,
       int xcoord,
@@ -188,6 +188,7 @@ public class Adb {
     }
   }
 
+  //delete node from a table.
   public static void deleteNode(String nodeID) {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:TowerLocations;");
