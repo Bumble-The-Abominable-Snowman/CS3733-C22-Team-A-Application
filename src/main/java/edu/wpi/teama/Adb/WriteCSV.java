@@ -1,5 +1,7 @@
 package edu.wpi.teama.Adb;
 
+import edu.wpi.teama.Adb.Location.Location;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;

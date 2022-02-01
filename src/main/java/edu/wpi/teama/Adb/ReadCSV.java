@@ -1,5 +1,7 @@
 package edu.wpi.teama.Adb;
 
+import edu.wpi.teama.Adb.Location.Location;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

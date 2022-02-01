@@ -1,4 +1,4 @@
-package edu.wpi.teama.Adb;
+package edu.wpi.teama.Adb.Location;
 
 import java.sql.*;
 import java.util.ArrayList;
