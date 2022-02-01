@@ -2,7 +2,6 @@ package edu.wpi.teama;
 
 import java.sql.Connection;
 import java.util.List;
-import java.util.Scanner;
 
 public class Main {
 
