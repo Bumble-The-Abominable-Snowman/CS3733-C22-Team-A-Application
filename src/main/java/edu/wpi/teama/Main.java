@@ -3,7 +3,6 @@ package edu.wpi.teama;
 import edu.wpi.teama.Adb.Adb;
 import edu.wpi.teama.Adb.Location;
 import edu.wpi.teama.Adb.ReadCSV;
-
 import java.sql.Connection;
 import java.util.List;
 
