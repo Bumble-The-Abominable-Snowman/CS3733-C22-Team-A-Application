@@ -1,2 +1,3 @@
-package edu.wpi.teama.controllers;public class LocationData {
-}
+package edu.wpi.teama.controllers;
+
+public class LocationDataController {}
