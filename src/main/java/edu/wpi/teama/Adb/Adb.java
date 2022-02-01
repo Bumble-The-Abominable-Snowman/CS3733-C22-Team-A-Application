@@ -1,7 +1,6 @@
-package edu.wpi.teama;
+package edu.wpi.teama.Adb;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Adb {
