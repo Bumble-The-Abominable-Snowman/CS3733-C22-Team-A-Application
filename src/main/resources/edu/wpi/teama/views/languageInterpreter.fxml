@@ -24,8 +24,9 @@
     <Button fx:id="floor2Button" layoutX="274.0" layoutY="198.0" mnemonicParsing="false" text="Floor 2" />
     <Button fx:id="floor3Button" layoutX="274.0" layoutY="173.0" mnemonicParsing="false" text="Floor 3" />
     <Button fx:id="floor4Button" layoutX="274.0" layoutY="148.0" mnemonicParsing="false" text="Floor 4" />
-    <Button fx:id="returnHomeButton" layoutX="516.0" layoutY="336.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" />
-    <Button fx:id="backButton" layoutX="38.0" layoutY="336.0" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="34.0" prefWidth="50.0" text="Back" />
+    <Button fx:id="returnHomeButton" layoutX="5.0" layoutY="360.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" />
+    <Button fx:id="clearButton" layoutX="481.0" layoutY="360.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="34.0" prefWidth="112.0" text="Clear All Fields" />
+    <Button fx:id="backButton" layoutX="6.0" layoutY="323.0" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="34.0" prefWidth="41.0" text="Back" />
     <Button fx:id="submitButton" layoutX="191.0" layoutY="340.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="218.0" text="Submit" />
     <ChoiceBox fx:id="langInterpreter" layoutX="38.0" layoutY="85.0" prefHeight="28.0" prefWidth="100.0" />
     <TextField fx:id="commentsBox" alignment="TOP_CENTER" layoutX="409.0" layoutY="85.0" prefHeight="217.0" prefWidth="178.0" promptText="Special Instructions/Notes" />

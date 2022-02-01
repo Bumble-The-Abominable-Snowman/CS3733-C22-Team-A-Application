@@ -9,7 +9,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teama.controllers.SanitationServicesController">
    <children>
-      <Button fx:id="returnButton" layoutX="515.0" layoutY="336.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" />
+      <Button fx:id="returnButton" layoutX="5.0" layoutY="360.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" />
+      <Button fx:id="clearButton" layoutX="481.0" layoutY="360.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="34.0" prefWidth="112.0" text="Clear All Fields" />
+      <Button fx:id="backButton" layoutX="6.0" layoutY="323.0" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="34.0" prefWidth="41.0" text="Back" />
       <Label layoutX="219.0" layoutY="19.0" prefHeight="34.0" prefWidth="161.0" text="Sanitation Request">
          <font>
             <Font size="19.0" />
@@ -29,6 +31,5 @@
       <TextField fx:id="specialNotes" alignment="TOP_CENTER" layoutX="414.0" layoutY="107.0" prefHeight="186.0" prefWidth="150.0" promptText="Special Instructions/Notes" />
       <TextField fx:id="typeOtherBox" alignment="TOP_CENTER" layoutX="45.0" layoutY="181.0" prefHeight="58.0" prefWidth="119.0" visible="false" />
       <ChoiceBox fx:id="typeMenu" layoutX="53.0" layoutY="145.0" prefHeight="26.0" prefWidth="102.0" />
-      <Button fx:id="backButton" layoutX="34.0" layoutY="336.0" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="34.0" prefWidth="41.0" text="Back" />
    </children>
 </AnchorPane>
