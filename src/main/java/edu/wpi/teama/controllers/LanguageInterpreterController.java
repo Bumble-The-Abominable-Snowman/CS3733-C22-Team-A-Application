@@ -20,11 +20,14 @@ public class LanguageInterpreterController {
   @FXML private Button returnHomeButton;
   @FXML private Button submitButton;
   @FXML private Button backButton;
+  @FXML private Button clearButton;
   @FXML private ChoiceBox<String> displayLang;
   @FXML private ChoiceBox<String> langInterpreter;
   @FXML private ChoiceBox<String> langInterpreter1;
   @FXML private TextField roomNum;
   @FXML private TextField commentsBox;
+
+  private FXMLLoader loader = new FXMLLoader();
 
   @FXML
   private void returnToHomeScene() throws IOException {
@@ -49,6 +52,18 @@ public class LanguageInterpreterController {
     Stage window = (Stage) backButton.getScene().getWindow();
     window.setScene(new Scene(root));
     window.setTitle("Select Service Request");
+    window.show();
+  }
+
+  @FXML
+  private void clearSubmission() throws IOException {
+    URL xmlUrl = Aapp.class.getResource("views/languageInterpreter.fxml");
+    loader.setLocation(xmlUrl);
+    Parent root = loader.load();
+
+    Stage window = (Stage) clearButton.getScene().getWindow();
+    window.setScene(new Scene(root));
+    window.setTitle("Language Services");
     window.show();
   }
 }
