@@ -21,7 +21,7 @@ public class WriteCSV {
     for (Location thisLocation : locList) {
 
       String xCord = String.valueOf(thisLocation.getXCoord());
-      String yCord = String.valueOf(thisLocation.getXCoord());
+      String yCord = String.valueOf(thisLocation.getYCoord());
       writer.write(
           String.join(
               ",",
