@@ -1,10 +1,6 @@
 package edu.wpi.teama;
 
-import edu.wpi.teama.Adb.Adb;
-import edu.wpi.teama.Adb.Location.Location;
-import edu.wpi.teama.Adb.ReadCSV;
 import java.sql.Connection;
-import java.util.List;
 
 public class Main {
 
@@ -16,10 +12,10 @@ public class Main {
   // code. For now, the aapp.launch is blocking, so can't add it to the main main function.
   public static void main_db(String[] args) throws Exception {
     System.out.println("calling CSV");
-    //List<Location> locList = ReadCSV.readCSV();
+    // List<Location> locList = ReadCSV.readCSV();
 
     Connection connection = null;
-    //db.initialConnection(locList);
+    // db.initialConnection(locList);
     // App.launch(App.class, args);
 
     return;

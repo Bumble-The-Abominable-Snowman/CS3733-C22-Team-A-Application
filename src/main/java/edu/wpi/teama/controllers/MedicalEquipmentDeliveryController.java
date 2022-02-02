@@ -63,22 +63,22 @@ public class MedicalEquipmentDeliveryController {
               } else if (newValue.equals("Bed")) {
                 fromChoiceBox.getItems().clear();
                 fromChoiceBox.getItems().setAll(bedLocations);
-                typeChoiceBox.getSelectionModel().select(bedLocations.get(0));
+                fromChoiceBox.getSelectionModel().select(bedLocations.get(0));
                 fromChoiceBox.setDisable(false);
               } else if (newValue.equals("XRAY")) {
                 fromChoiceBox.getItems().clear();
                 fromChoiceBox.getItems().setAll(xrayLocations);
-                typeChoiceBox.getSelectionModel().select(xrayLocations.get(0));
+                fromChoiceBox.getSelectionModel().select(xrayLocations.get(0));
                 fromChoiceBox.setDisable(false);
               } else if (newValue.equals("Infusion Pump")) {
                 fromChoiceBox.getItems().clear();
                 fromChoiceBox.getItems().setAll(infusionPumpLocations);
-                typeChoiceBox.getSelectionModel().select(infusionPumpLocations.get(0));
+                fromChoiceBox.getSelectionModel().select(infusionPumpLocations.get(0));
                 fromChoiceBox.setDisable(false);
               } else if (newValue.equals("Patient Recliner")) {
                 fromChoiceBox.getItems().clear();
                 fromChoiceBox.getItems().setAll(reclinerLocations);
-                typeChoiceBox.getSelectionModel().select(reclinerLocations.get(0));
+                fromChoiceBox.getSelectionModel().select(reclinerLocations.get(0));
                 fromChoiceBox.setDisable(false);
               }
             });

@@ -1,7 +1,6 @@
 package edu.wpi.teama.Adb;
 
 import edu.wpi.teama.Adb.Location.Location;
-
 import java.sql.*;
 import java.util.List;
 
@@ -27,7 +26,8 @@ public class Adb {
       try {
         Connection connection =
             DriverManager.getConnection(
-                "jdbc:derby:HospitalDBA;"); // Modify the database name from TowerLocation to Adb for better
+                "jdbc:derby:HospitalDBA;"); // Modify the database name from TowerLocation to Adb
+        // for better
         // recognition.
       } catch (SQLException e) {
         Connection c = DriverManager.getConnection("jdbc:derby:HospitalDBA;create=true");
