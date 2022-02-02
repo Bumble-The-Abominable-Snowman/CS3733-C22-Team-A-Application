@@ -1,12 +1,15 @@
 package edu.wpi.teama.Adb.Location;
+
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class LocationDerbyImpl implements LocationDAO {
-  List<Location> Location;
 
-  public LocationDerbyImpl() {
+  public LocationDerbyImpl() {}
+
+  // Put all nodes in a list.
+  public List<Location> getNodeList() {
+    List<Location> Location = null;
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement getNodeList = connection.createStatement();
@@ -29,16 +32,10 @@ public class LocationDerbyImpl implements LocationDAO {
       System.out.println("Failed");
       e.printStackTrace();
     }
-  }
-
-  // Put all nodes in a list.
-  @Override
-  public List<Location> getNodeList() {
     return Location;
   }
 
   // Method to delete nodes from location table.
-  @Override
   public void deleteLocationNode(String ID) {
 
     String tableName = "TowerLocations";
@@ -101,7 +98,6 @@ public class LocationDerbyImpl implements LocationDAO {
   }
 
   // Method to update nodes from location table.
-  @Override
   public void updateLocation(String ID, String field, String change) {
 
     String tableName = "TowerLocations";
@@ -160,5 +156,4 @@ public class LocationDerbyImpl implements LocationDAO {
       return null;
     }
   }
-
 }
