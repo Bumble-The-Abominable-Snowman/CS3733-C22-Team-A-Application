@@ -19,8 +19,8 @@ public class Main {
     //List<Location> locList = ReadCSV.readCSV();
 
     Connection connection = null;
-    //db.initialConnection(locList);
-    // App.launch(App.class, args);
+    Adb.initialConnection();
+    Aapp.launch(Aapp.class, args);
 
     return;
   }

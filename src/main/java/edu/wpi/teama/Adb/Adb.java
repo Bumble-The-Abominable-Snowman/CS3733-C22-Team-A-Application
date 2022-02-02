@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Adb {
 
-  public static void initialConnection(List<Location> locList) {
+  public static void initialConnection() {
 
     // Connection to database driver
     System.out.println("----- Apache Derby Connection Testing -----");
