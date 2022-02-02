@@ -13,7 +13,7 @@ import java.util.List;
 public class WriteCSV {
 
   // Write CSV for location table
-  static void writeLocationCSV(List<Location> List) throws IOException {
+  public static void writeLocationCSV(List<Location> List) throws IOException {
 
     // create a writer
     BufferedWriter writer = Files.newBufferedWriter(Paths.get("TowerLocations.CSV"));
@@ -40,7 +40,7 @@ public class WriteCSV {
   }
 
   // Write CSV for Employee table
-  static void writeEmployeeCSV(List<Employee> List) throws IOException {
+  public static void writeEmployeeCSV(List<Employee> List) throws IOException {
 
     // create a writer
     BufferedWriter writer = Files.newBufferedWriter(Paths.get("Employee.CSV"));
