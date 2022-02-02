@@ -83,6 +83,7 @@ public class DefaultTest {
             + " "
             + e.getStartDate());
     Employee.updateEmployee("001", "phoneNum", "0000000001");
-    Employee.deleteEmployee("001");
+    // Employee.deleteEmployee("001");
+    WriteCSV.writeEmployeeCSV(Employee.getEmployeeList());
   }
 }

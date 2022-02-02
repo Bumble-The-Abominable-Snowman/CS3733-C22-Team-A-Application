@@ -40,7 +40,7 @@ public class WriteCSV {
   }
 
   // Write CSV for Employee table
-  static void writeEmployeeCSV(List<Employee> List) throws IOException {
+  public static void writeEmployeeCSV(List<Employee> List) throws IOException {
 
     // create a writer
     BufferedWriter writer = Files.newBufferedWriter(Paths.get("Employee.CSV"));
