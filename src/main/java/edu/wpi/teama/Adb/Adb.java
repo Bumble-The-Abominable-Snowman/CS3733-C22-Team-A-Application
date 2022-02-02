@@ -1,5 +1,7 @@
 package edu.wpi.teama.Adb;
 
+import edu.wpi.teama.Adb.Location.Location;
+
 import java.sql.*;
 import java.util.List;
 
@@ -25,10 +27,10 @@ public class Adb {
       try {
         Connection connection =
             DriverManager.getConnection(
-                "jdbc:derby:Adb;"); // Modify the database name from TowerLocation to Adb for better
+                "jdbc:derby:HospitalDBA;"); // Modify the database name from TowerLocation to Adb for better
         // recognition.
       } catch (SQLException e) {
-        Connection c = DriverManager.getConnection("jdbc:derby:Adb;create=true");
+        Connection c = DriverManager.getConnection("jdbc:derby:HospitalDBA;create=true");
       }
 
     } catch (SQLException e) {
@@ -41,7 +43,7 @@ public class Adb {
     // Check TowerLocations table.
     try {
 
-      Connection connection = DriverManager.getConnection("jdbc:derby:Adb;");
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement addTable = connection.createStatement();
 
       addTable.execute(
@@ -55,7 +57,7 @@ public class Adb {
     // Check MedicalEquipment table.
     try {
 
-      Connection connection = DriverManager.getConnection("jdbc:derby:Adb;");
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement addTable = connection.createStatement();
 
       addTable.execute(
@@ -69,7 +71,7 @@ public class Adb {
     // Check MedicalEquipmentServiceRequest table.
     try {
 
-      Connection connection = DriverManager.getConnection("jdbc:derby:Adb;");
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement addTable = connection.createStatement();
 
       // Can split up TimeStamp to time and date?
@@ -84,7 +86,7 @@ public class Adb {
     // Check Employee table.
     try {
 
-      Connection connection = DriverManager.getConnection("jdbc:derby:Adb;");
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement addTable = connection.createStatement();
 
       addTable.execute(
