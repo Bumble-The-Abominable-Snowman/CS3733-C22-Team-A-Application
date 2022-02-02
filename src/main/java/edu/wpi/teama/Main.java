@@ -9,7 +9,8 @@ public class Main {
 
     Connection connection = null;
     Adb.initialConnection();
+    Adb.inputFromCSV("TowerLocations");
 
-    Aapp.launch(Aapp.class, args);
+    // Aapp.launch(Aapp.class, args);
   }
 }
