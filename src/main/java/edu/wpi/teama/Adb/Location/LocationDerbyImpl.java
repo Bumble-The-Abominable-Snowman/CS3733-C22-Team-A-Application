@@ -9,7 +9,7 @@ public class LocationDerbyImpl implements LocationDAO {
 
     public LocationDerbyImpl(){
         try {
-            Connection connection = DriverManager.getConnection("jdbc:derby:TowerLocations;");
+            Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
             Statement getNodeList = connection.createStatement();
             ResultSet rset = getNodeList.executeQuery("SELECT * FROM TowerLocations");
 
@@ -44,7 +44,7 @@ public class LocationDerbyImpl implements LocationDAO {
 
         String tableName = "TowerLocations";
         try {
-            Connection connection = DriverManager.getConnection("jdbc:derby:" + tableName + ";");
+            Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
             Statement deleteNode = connection.createStatement();
 
             String str =
@@ -75,7 +75,7 @@ public class LocationDerbyImpl implements LocationDAO {
 
         String tableName = "TowerLocations";
         try {
-            Connection connection = DriverManager.getConnection("jdbc:derby:" + tableName + ";");
+            Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
             Statement enterNode = connection.createStatement();
 
             String str =
@@ -108,7 +108,7 @@ public class LocationDerbyImpl implements LocationDAO {
 
         String tableName = "TowerLocations";
         try {
-            Connection connection = DriverManager.getConnection("jdbc:derby:" + tableName + ";");
+            Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
             Statement updateCoords = connection.createStatement();
 
             String str =
@@ -130,7 +130,7 @@ public class LocationDerbyImpl implements LocationDAO {
 
         String tableName = "TowerLocations";
         try {
-            Connection connection = DriverManager.getConnection("jdbc:derby:" + tableName + ";");
+            Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
             Statement getNode = connection.createStatement();
             String str =
                     String.format(
