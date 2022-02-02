@@ -25,19 +25,15 @@ public class MedicalEquipment {
   public String getEquipmentID() {
     return equipmentID;
   }
-
   public String getEquipmentType() {
     return equipmentType;
   }
-
   public boolean getIsClean() {
     return isClean;
   }
-
   public String getCurrentLocation() {
     return currentLocation;
   }
-
   public boolean getIsAvailable() {
     return isAvailable;
   }
@@ -45,20 +41,17 @@ public class MedicalEquipment {
   public void setEquipmentID(String id) {
     equipmentID = id;
   }
-
   public void setEquipmentType(String type) {
     equipmentType = type;
   }
-
   public void setIsClean(boolean b) {
     isClean = b;
   }
-
   public void setCurrentLocation(String c) {
     currentLocation = c;
   }
-
   public void setIsAvailable(boolean b) {
     isAvailable = b;
   }
+
 }
