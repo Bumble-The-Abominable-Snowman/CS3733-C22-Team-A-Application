@@ -20,9 +20,11 @@ public class MedicalEquipmentDeliveryController {
   @FXML private MenuButton typeMenu;
   @FXML private MenuButton fromMenu;
   @FXML private Button submitButton;
+  @FXML private Button clearButton;
   @FXML private Label locationLabel;
   @FXML private TextField specialNotes;
   @FXML private Button backButton;
+
   private FXMLLoader loader = new FXMLLoader();
 
   @FXML
@@ -84,5 +86,17 @@ public class MedicalEquipmentDeliveryController {
   public void chooseFloor(ActionEvent actionEvent) {
     locationLabel.setText(((Button) actionEvent.getSource()).getText());
     locationLabel.setAlignment(Pos.CENTER);
+  }
+
+  @FXML
+  private void clearSubmission() throws IOException {
+    URL xmlUrl = Aapp.class.getResource("views/medicalEquipmentDelivery.fxml");
+    loader.setLocation(xmlUrl);
+    Parent root = loader.load();
+
+    Stage window = (Stage) clearButton.getScene().getWindow();
+    window.setScene(new Scene(root));
+    window.setTitle("Medical Equipment Delivery");
+    window.show();
   }
 }

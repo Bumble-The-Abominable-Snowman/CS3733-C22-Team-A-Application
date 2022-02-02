@@ -24,6 +24,9 @@ public class LaundryServicesController {
   @FXML private Button homeButton = new Button();
   @FXML private Button submitButton;
   @FXML private Button backButton;
+  @FXML private Button clearButton;
+
+  private FXMLLoader loader = new FXMLLoader();
 
   @FXML
   public void initialize() {
@@ -71,5 +74,17 @@ public class LaundryServicesController {
   public void chooseFloor(ActionEvent actionEvent) {
     locationLabel.setText(((Button) actionEvent.getSource()).getText());
     locationLabel.setAlignment(Pos.CENTER);
+  }
+
+  @FXML
+  private void clearSubmission() throws IOException {
+    URL xmlUrl = Aapp.class.getResource("views/laundryServices.fxml");
+    loader.setLocation(xmlUrl);
+    Parent root = loader.load();
+
+    Stage window = (Stage) clearButton.getScene().getWindow();
+    window.setScene(new Scene(root));
+    window.setTitle("Laundry Services");
+    window.show();
   }
 }

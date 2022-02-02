@@ -16,6 +16,7 @@ public class FoodDeliveryController {
   @FXML private Button nextButton;
   @FXML private Button backButton;
   @FXML private Button homeButton;
+  @FXML private Button clearButton;
   @FXML private Button submitButton;
   @FXML private ChoiceBox<String> mainChoice;
   @FXML private ChoiceBox<String> drinkChoice;
@@ -82,5 +83,17 @@ public class FoodDeliveryController {
     dessertChoice.getItems().addAll("Chocolate Chip Cookie", "Brownie", "Jello");
     dessertChoice.getSelectionModel().select("Dessert");
     dessertChoice.getSelectionModel().selectedItemProperty();
+  }
+
+  @FXML
+  private void clearSubmission() throws IOException {
+    URL xmlUrl = Aapp.class.getResource("views/foodDelivery.fxml");
+    loader.setLocation(xmlUrl);
+    Parent root = loader.load();
+
+    Stage window = (Stage) clearButton.getScene().getWindow();
+    window.setScene(new Scene(root));
+    window.setTitle("Food Delivery");
+    window.show();
   }
 }

@@ -18,7 +18,10 @@ public class ReligiousServicesController {
   @FXML private ChoiceBox fromRoom = new ChoiceBox();
   @FXML private Button homeButton = new Button();
   @FXML private Button backButton = new Button();
+  @FXML private Button clearButton;
   @FXML private Button submitRequestButton = new Button();
+
+  private FXMLLoader loader = new FXMLLoader();
 
   @FXML
   private void returnToMain() throws IOException {
@@ -49,5 +52,17 @@ public class ReligiousServicesController {
   @FXML
   private void submitRequest() {
     // send request to database
+  }
+
+  @FXML
+  private void clearSubmission() throws IOException {
+    URL xmlUrl = Aapp.class.getResource("views/religiousServices.fxml");
+    loader.setLocation(xmlUrl);
+    Parent root = loader.load();
+
+    Stage window = (Stage) clearButton.getScene().getWindow();
+    window.setScene(new Scene(root));
+    window.setTitle("Religious Requests");
+    window.show();
   }
 }

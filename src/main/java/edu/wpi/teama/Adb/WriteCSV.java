@@ -1,4 +1,4 @@
-package edu.wpi.teama;
+package edu.wpi.teama.Adb;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class WriteCSV {
     for (Location thisLocation : locList) {
 
       String xCord = String.valueOf(thisLocation.getXCoord());
-      String yCord = String.valueOf(thisLocation.getXCoord());
+      String yCord = String.valueOf(thisLocation.getYCoord());
       writer.write(
           String.join(
               ",",
