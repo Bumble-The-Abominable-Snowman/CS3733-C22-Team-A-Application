@@ -2,11 +2,9 @@ package edu.wpi.teama.Adb;
 
 import edu.wpi.teama.Adb.Employee.Employee;
 import edu.wpi.teama.Adb.Location.Location;
-
 import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipment;
 import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest;
 import java.io.IOException;
-
 import java.sql.*;
 import java.text.ParseException;
 import java.util.List;
@@ -130,12 +128,12 @@ public class Adb {
                     + "', '"
                     + l.getShortName()
                     + "')");
-            return;
           }
         } catch (SQLException | IOException e) {
           System.out.println("Insertion failed!");
           return;
         }
+        return;
 
         // Table name = Employee
       case "Employee":
@@ -163,12 +161,12 @@ public class Adb {
                     + "', '"
                     + l.getStartDate()
                     + "')");
-            return;
           }
         } catch (SQLException | IOException | ParseException e) {
           System.out.println("Insertion failed!");
           return;
         }
+        return;
 
         // Table name = MedicalEquipment
       case "MedicalEquipment":
@@ -191,12 +189,12 @@ public class Adb {
                     + "', '"
                     + l.getIsAvailable()
                     + "')");
-            return;
           }
         } catch (SQLException | IOException | ParseException e) {
           System.out.println("Insertion failed!");
           return;
         }
+        return;
 
       case "MedicalEquipmentServiceRequest":
         try {
@@ -226,12 +224,12 @@ public class Adb {
                     + ", '"
                     + l.getRequestType()
                     + "')");
-            return;
           }
         } catch (SQLException | IOException | ParseException e) {
           System.out.println("Insertion failed!");
           return;
         }
+        return;
 
       default:
         System.out.println("failed!");
