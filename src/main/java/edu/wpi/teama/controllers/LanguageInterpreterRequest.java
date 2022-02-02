@@ -3,16 +3,16 @@ package edu.wpi.teama.controllers;
 public class LanguageInterpreterRequest {
   private String language;
   private String toLocation;
-  private String employee;
+  private String requestedEmployee;
   private String comments;
 
   public LanguageInterpreterRequest() {}
 
   public LanguageInterpreterRequest(
-      String language, String toLocation, String employee, String comments) {
+      String language, String toLocation, String requestedEmployee, String comments) {
     this.language = language;
     this.toLocation = toLocation;
-    this.employee = employee;
+    this.requestedEmployee = requestedEmployee;
     this.comments = comments;
   }
 
@@ -24,8 +24,8 @@ public class LanguageInterpreterRequest {
     return toLocation;
   }
 
-  public String getEmployee() {
-    return employee;
+  public String getRequestedEmployee() {
+    return requestedEmployee;
   }
 
   public String getComments() {
@@ -40,8 +40,8 @@ public class LanguageInterpreterRequest {
     this.toLocation = toLocation;
   }
 
-  public void setEmployee(String employee) {
-    this.employee = employee;
+  public void setRequestedEmployee(String requestedEmployee) {
+    this.requestedEmployee = requestedEmployee;
   }
 
   public void setComments(String comments) {
