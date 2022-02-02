@@ -128,6 +128,7 @@ public class Adb {
                     + "', '"
                     + l.getShortName()
                     + "')");
+            return;
           }
         } catch (SQLException | IOException e) {
           System.out.println("Insertion failed!");
@@ -160,6 +161,7 @@ public class Adb {
                     + "', '"
                     + l.getStartDate()
                     + "')");
+            return;
           }
         } catch (SQLException | IOException | ParseException e) {
           System.out.println("Insertion failed!");
@@ -187,6 +189,7 @@ public class Adb {
                     + "', '"
                     + l.getIsAvailable()
                     + "')");
+            return;
           }
         } catch (SQLException | IOException | ParseException e) {
           System.out.println("Insertion failed!");
@@ -221,6 +224,7 @@ public class Adb {
                     + ", '"
                     + l.getRequestType()
                     + "')");
+            return;
           }
         } catch (SQLException | IOException | ParseException e) {
           System.out.println("Insertion failed!");
@@ -229,6 +233,7 @@ public class Adb {
 
       default:
         System.out.println("failed!");
+        return;
     }
   }
 }
