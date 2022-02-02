@@ -1,11 +1,14 @@
 package edu.wpi.teama.controllers;
 
 import edu.wpi.teama.Aapp;
+import edu.wpi.teama.Adb.Employee.Employee;
+import edu.wpi.teama.Adb.Employee.EmployeeDerbyImpl;
 import edu.wpi.teama.entities.MedicalEquipmentServiceRequest;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +20,7 @@ import javafx.stage.Stage;
 
 public class MedicalEquipmentDeliveryController {
   @FXML private TextArea specialNotes;
-  @FXML private ChoiceBox employeeCheckBox;
+  @FXML private ChoiceBox employeeChoiceBox;
   @FXML private ChoiceBox toChoiceBox;
   @FXML private Button homeButton;
   @FXML private ChoiceBox typeChoiceBox;
@@ -91,7 +94,14 @@ public class MedicalEquipmentDeliveryController {
     fromChoiceBox.getItems().removeAll(fromChoiceBox.getItems());
     toChoiceBox.getItems().removeAll(toChoiceBox.getItems());
     // typeChoiceBox.getItems().addAll(new LocationDerbyImpl().getNodeList());
-    // employeeChoiceBox.getItems().addAll(new EmployeeDerbyImpl.getNodeList());
+    System.out.println(new EmployeeDerbyImpl().getEmployeeList().size());
+    employeeChoiceBox
+        .getItems()
+        .addAll(
+            new EmployeeDerbyImpl()
+                .getEmployeeList().stream()
+                    .map(Employee::getFirstName)
+                    .collect(Collectors.toList()));
   }
 
   @FXML

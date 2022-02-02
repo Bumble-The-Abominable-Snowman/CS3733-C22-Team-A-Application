@@ -60,7 +60,7 @@
             </Label>
             <ChoiceBox fx:id="toChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Label text="Employee:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
-            <ChoiceBox fx:id="employeeCheckBox" prefHeight="26.0" prefWidth="130.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+            <ChoiceBox fx:id="employeeChoiceBox" prefHeight="26.0" prefWidth="130.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets top="20.0" />
                </GridPane.margin>
