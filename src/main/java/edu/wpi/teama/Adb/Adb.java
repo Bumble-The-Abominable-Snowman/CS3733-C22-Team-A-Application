@@ -2,8 +2,7 @@ package edu.wpi.teama.Adb;
 
 import edu.wpi.teama.Adb.Employee.Employee;
 import edu.wpi.teama.Adb.Location.Location;
-import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipment;
-import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest;
+import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipmentServiceRequest;
 import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
@@ -177,9 +176,8 @@ public class Adb {
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
-          List<edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipment> List =
-              ReadCSV.readMedicalEquipmentCSV();
-          for (MedicalEquipment l : List) {
+          List<MedicalEquipmentServiceRequest> List = ReadCSV.readMedicalEquipmentCSV();
+          for (MedicalEquipmentServiceRequest l : List) {
             Statement addStatement = connection.createStatement();
             addStatement.executeUpdate(
                 "INSERT INTO MedicalEquipment( equipmentID varchar(25), equipmentType varchar(25), isClean varchar(25), currentLocation varchar(25), isAvailable varchar(25)) VALUES('"
@@ -226,7 +224,8 @@ public class Adb {
 
           List<edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest>
               List = ReadCSV.readMedicalEquipmentServiceRequestCSV();
-          for (MedicalEquipmentServiceRequest l : List) {
+          for (edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest l :
+              List) {
             Statement addStatement = connection.createStatement();
             addStatement.executeUpdate(
                 "INSERT INTO MedicalEquipment(requestID varchar(25), startLocation varchar(25), endLocation varchar(25), employeeRequested varchar(25), employeeAssigned varchar(25), requestTime timestamp, requestStatus varchar(25), equipmentID varchar(25), requestType varchar(25)) VALUES('"

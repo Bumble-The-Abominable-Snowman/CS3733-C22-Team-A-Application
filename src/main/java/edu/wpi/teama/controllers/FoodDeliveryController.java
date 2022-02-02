@@ -1,5 +1,7 @@
 package edu.wpi.teama.controllers;
 
+import static java.lang.Integer.parseInt;
+
 import edu.wpi.teama.Aapp;
 import java.io.IOException;
 import java.net.URL;
@@ -9,7 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 public class FoodDeliveryController {
@@ -17,13 +19,13 @@ public class FoodDeliveryController {
   @FXML private Button backButton;
   @FXML private Button homeButton;
   @FXML private Button clearButton;
-  @FXML private TextField roomText;
   @FXML private Button submitButton;
   @FXML private ChoiceBox<String> mainChoice;
   @FXML private ChoiceBox<String> drinkChoice;
   @FXML private ChoiceBox<String> sideChoice;
   @FXML private ChoiceBox<String> dessertChoice;
-  @FXML private TextField commentsText;
+  @FXML private ChoiceBox<String> roomChoice;
+  @FXML private TextArea commentsBox;
   private FXMLLoader loader = new FXMLLoader();
 
   @FXML
@@ -49,6 +51,50 @@ public class FoodDeliveryController {
     window.setScene(new Scene(root));
     window.setTitle("Select Service Request");
     window.show();
+  }
+
+  @FXML
+  private foodDeliveryRequest createFoodRequest() throws IOException {
+    foodDeliveryRequest aRequest =
+        new foodDeliveryRequest(
+            mainChoice.getValue(),
+            sideChoice.getValue(),
+            drinkChoice.getValue(),
+            dessertChoice.getValue(),
+            parseInt(roomChoice.getValue()),
+            commentsBox.getText());
+    clearSubmission();
+    return (aRequest);
+  }
+
+  @FXML
+  private void initialize() {
+    mainChoice.getItems().removeAll(mainChoice.getItems());
+    mainChoice
+        .getItems()
+        .addAll("Ham Sandwich", "Turkey Sandwich", "Peanut Butter KJelly Sandwich");
+    mainChoice.getSelectionModel().select("Entree");
+    mainChoice.getSelectionModel().selectedItemProperty();
+
+    sideChoice.getItems().removeAll(sideChoice.getItems());
+    sideChoice.getItems().addAll("Chicken Noodle Soup", "Mac & Cheese", "Bread");
+    sideChoice.getSelectionModel().select("Side");
+    sideChoice.getSelectionModel().selectedItemProperty();
+
+    drinkChoice.getItems().removeAll(drinkChoice.getItems());
+    drinkChoice.getItems().addAll("Water", "Juice", "Milk");
+    drinkChoice.getSelectionModel().select("Beverage");
+    drinkChoice.getSelectionModel().selectedItemProperty();
+
+    dessertChoice.getItems().removeAll(dessertChoice.getItems());
+    dessertChoice.getItems().addAll("Chocolate Chip Cookie", "Brownie", "Jello");
+    dessertChoice.getSelectionModel().select("Dessert");
+    dessertChoice.getSelectionModel().selectedItemProperty();
+
+    roomChoice.getItems().removeAll(roomChoice.getItems());
+    roomChoice.getItems().addAll("Placeholder");
+    roomChoice.getSelectionModel().select("Room for Delivery");
+    roomChoice.getSelectionModel().selectedItemProperty();
   }
 
   @FXML
