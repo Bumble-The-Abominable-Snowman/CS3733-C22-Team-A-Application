@@ -162,3 +162,6 @@ gradle-app.setting
 
 src/main/resources/edu/wpi/teama/db
 .idea
+
+# Ignore HospitalDBA folder which is the database folder
+HospitalDBA/

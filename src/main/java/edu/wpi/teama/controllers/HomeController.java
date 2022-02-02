@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 public class HomeController {
   @FXML private Button settingsButton;
   @FXML private Button serviceRequestsButton;
+  @FXML private Button equipmentTrackerButton;
   @FXML private Button exitButton;
   private FXMLLoader loader = new FXMLLoader();
 
@@ -37,6 +38,18 @@ public class HomeController {
     Stage window = (Stage) settingsButton.getScene().getWindow();
     window.setScene(new Scene(root));
     window.setTitle("Settings");
+    window.show();
+  }
+
+  @FXML
+  private void goToEquipmentTracker() throws IOException {
+    URL xmlUrl = Aapp.class.getResource("views/medicalEquipmentData.fxml");
+    loader.setLocation(xmlUrl);
+    Parent root = loader.load();
+
+    Stage window = (Stage) equipmentTrackerButton.getScene().getWindow();
+    window.setScene(new Scene(root));
+    window.setTitle("Equipment Tracker");
     window.show();
   }
 
