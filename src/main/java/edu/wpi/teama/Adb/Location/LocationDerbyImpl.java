@@ -1,16 +1,16 @@
 package edu.wpi.teama.Adb.Location;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocationDerbyImpl implements LocationDAO {
+  List<Location> Location;
 
-  public LocationDerbyImpl() {}
-
-  // Put all nodes in a list.
-  public List<Location> getNodeList() {
-    List<Location> Location = null;
+  public LocationDerbyImpl() {
     try {
+
+      Location = new ArrayList<Location>();
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement getNodeList = connection.createStatement();
       ResultSet rset = getNodeList.executeQuery("SELECT * FROM TowerLocations");
@@ -32,6 +32,10 @@ public class LocationDerbyImpl implements LocationDAO {
       System.out.println("Failed");
       e.printStackTrace();
     }
+  }
+
+  // Put all nodes in a list.
+  public List<Location> getNodeList() {
     return Location;
   }
 

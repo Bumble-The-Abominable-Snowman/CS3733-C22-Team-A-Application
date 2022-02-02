@@ -96,6 +96,47 @@ public class Adb {
     } catch (SQLException e) {
       System.out.println("Table MedicalEquipmentServiceRequest already exist");
     }
+
+    // Check if tables are empty
+    // Check location table
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Statement deleteTable = connection.createStatement();
+
+      deleteTable.execute("DELETE FROM TowerLocations");
+    } catch (SQLException e) {
+      System.out.println("Delete failed");
+    }
+
+    // Check employee table
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Statement dropTable = connection.createStatement();
+
+      dropTable.execute("DELETE FROM Employee");
+    } catch (SQLException e) {
+      System.out.println("Delete failed");
+    }
+
+    // Check MedicalEquipment table
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Statement dropTable = connection.createStatement();
+
+      dropTable.execute("DELETE FROM MedicalEquipment");
+    } catch (SQLException e) {
+      System.out.println("delete failed");
+    }
+
+    // Check MedicalEquipmentServiceRequest table
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Statement dropTable = connection.createStatement();
+
+      dropTable.execute("DELETE FROM MedicalEquipmentServiceRequest");
+    } catch (SQLException e) {
+      System.out.println("delete failed");
+    }
   }
 
   // input from CSV
@@ -104,16 +145,6 @@ public class Adb {
 
         // Table name = Location
       case "TowerLocations":
-        // Check TowerLocations table.
-        try {
-          Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-          Statement deleteTable = connection.createStatement();
-
-          deleteTable.execute("DELETE FROM TowerLocations");
-        } catch (SQLException e) {
-          System.out.println("Delete failed");
-        }
-
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
@@ -149,15 +180,6 @@ public class Adb {
       case "Employee":
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-          Statement dropTable = connection.createStatement();
-
-          dropTable.execute("DELETE FROM Employee");
-        } catch (SQLException e) {
-          System.out.println("Delete failed");
-        }
-
-        try {
-          Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
           List<edu.wpi.teama.Adb.Employee.Employee> List = ReadCSV.readEmployeeCSV();
           for (Employee l : List) {
@@ -191,15 +213,6 @@ public class Adb {
       case "MedicalEquipment":
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-          Statement dropTable = connection.createStatement();
-
-          dropTable.execute("DELETE FROM MedicalEquipment");
-        } catch (SQLException e) {
-          System.out.println("delete failed");
-        }
-
-        try {
-          Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
           List<edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipment> List =
               ReadCSV.readMedicalEquipmentCSV();
@@ -225,15 +238,6 @@ public class Adb {
         return;
 
       case "MedicalEquipmentServiceRequest":
-        try {
-          Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-          Statement dropTable = connection.createStatement();
-
-          dropTable.execute("DELETE FROM MedicalEquipmentServiceRequest");
-        } catch (SQLException e) {
-          System.out.println("delete failed");
-        }
-
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 

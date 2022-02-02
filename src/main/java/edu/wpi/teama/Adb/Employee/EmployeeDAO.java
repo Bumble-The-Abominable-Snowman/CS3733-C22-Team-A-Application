@@ -1,5 +1,6 @@
 package edu.wpi.teama.Adb.Employee;
 
+import java.util.Date;
 import java.util.List;
 
 public interface EmployeeDAO {
@@ -16,7 +17,7 @@ public interface EmployeeDAO {
       String email,
       String phoneNum,
       String address,
-      String startDate);
+      Date startDate);
 
   public void deleteEmployee(String ID);
 
