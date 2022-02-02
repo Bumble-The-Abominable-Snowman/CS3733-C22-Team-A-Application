@@ -1,7 +1,6 @@
 package edu.wpi.teama.controllers;
 
 import edu.wpi.teama.Aapp;
-import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
 import edu.wpi.teama.entities.MedicalEquipmentServiceRequest;
 import java.io.IOException;
 import java.net.URL;
@@ -87,7 +86,7 @@ public class MedicalEquipmentDeliveryController {
 
     fromChoiceBox.getItems().removeAll(fromChoiceBox.getItems());
     toChoiceBox.getItems().removeAll(toChoiceBox.getItems());
-    typeChoiceBox.getItems().addAll(new LocationDerbyImpl().getNodeList());
+    // typeChoiceBox.getItems().addAll(new LocationDerbyImpl().getNodeList());
   }
 
   @FXML
