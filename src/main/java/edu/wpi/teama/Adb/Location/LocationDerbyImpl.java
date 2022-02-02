@@ -3,157 +3,162 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocationDerbyImpl implements LocationDAO{
+public class LocationDerbyImpl implements LocationDAO {
+  List<Location> Location;
 
-    // Method to get node from the location table.
-    public static Location getLocationNode(String ID) {
-        String tableName = "TowerLocations";
-        try {
-            Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-            Statement getNode = connection.createStatement();
-            String str =
-                    String.format(
-                            "SELECT * FROM " + tableName + " WHERE nodeID = '%s'",
-                            ID); // get node from table location
+  public LocationDerbyImpl() {
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Statement getNodeList = connection.createStatement();
+      ResultSet rset = getNodeList.executeQuery("SELECT * FROM TowerLocations");
 
-            getNode.execute(str);
+      while (rset.next()) {
+        String nodeID = rset.getString("nodeID");
+        int xc = rset.getInt("xCoord");
+        int yc = rset.getInt("yCoord");
+        String floor = rset.getString("floor");
+        String building = rset.getString("building");
+        String nodeType = rset.getString("nodeType");
+        String longName = rset.getString("longName");
+        String shortName = rset.getString("shortName");
 
-            // Commented code to print out the selected node.
-            ResultSet rset = getNode.getResultSet();
-            // process results
-            String nodeID = rset.getString("nodeID");
-            int xc = rset.getInt("xCoord");
-            int yc = rset.getInt("yCoord");
-            String floor = rset.getString("floor");
-            String building = rset.getString("building");
-            String nodeType = rset.getString("nodeType");
-            String longName = rset.getString("longName");
-            String shortName = rset.getString("shortName");
-
-            Location l = new Location(nodeID, xc, yc, floor, building, nodeType, longName, shortName);
-
-            // Return the location object
-            return l;
-
-        } catch (SQLException e) {
-            System.out.println("Failed");
-            e.printStackTrace();
-            return null;
-        }
+        Location l = new Location(nodeID, xc, yc, floor, building, nodeType, longName, shortName);
+        Location.add(l);
+      }
+    } catch (SQLException e) {
+      System.out.println("Failed");
+      e.printStackTrace();
     }
+  }
 
-    // Method to update nodes from location table.
-    public static void updateLocation(String ID, String field, String change) {
+  // Put all nodes in a list.
+  @Override
+  public List<Location> getNodeList() {
+    return Location;
+  }
 
-        String tableName = "TowerLocations";
-        try {
-            Connection connection = DriverManager.getConnection("jdbc:derby:" + tableName + ";");
-            Statement updateCoords = connection.createStatement();
+  // Method to delete nodes from location table.
+  @Override
+  public void deleteLocationNode(String ID) {
 
-            String str =
-                    String.format(
-                            "UPDATE " + tableName + " SET " + field + " = %s WHERE nodeID = '%s'", change, ID);
-            updateCoords.execute(str);
+    String tableName = "TowerLocations";
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Statement deleteNode = connection.createStatement();
 
-        } catch (SQLException e) {
-            System.out.println("Failed");
-            e.printStackTrace();
-            return;
-        }
-        return;
+      String str =
+          String.format(
+              "DELETE FROM " + tableName + " WHERE nodeID ='%s'", ID); // delete the selected node
+
+      deleteNode.execute(str);
+
+    } catch (SQLException e) {
+      System.out.println("Failed");
+      e.printStackTrace();
+      return;
     }
+  }
 
+  // Method to add node to location table.
+  @Override
+  public void enterLocationNode(
+      String ID,
+      int xcoord,
+      int ycoord,
+      String floor,
+      String building,
+      String nodeType,
+      String longName,
+      String shortName) {
 
-    // Method to add node to location table.
-    public static void enterLocationNode(
-            String nodeID,
-            int xcoord,
-            int ycoord,
-            String floor,
-            String building,
-            String nodeType,
-            String longName,
-            String shortName) {
+    String tableName = "TowerLocations";
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Statement enterNode = connection.createStatement();
 
-        String tableName = "TowerLocations";
-        try {
-            Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-            Statement enterNode = connection.createStatement();
+      String str =
+          String.format(
+              "INSERT INTO "
+                  + tableName
+                  + "(nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName)"
+                  + "VALUES ('%s', %d, %d, '%s', '%s', '%s', '%s', '%s')",
+              ID,
+              xcoord,
+              ycoord,
+              floor,
+              building,
+              nodeType,
+              longName,
+              shortName); // insert values from input.
 
-            String str = String.format(
-                            "INSERT INTO "
-                                    + tableName
-                                    + "(nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName)"
-                                    + "VALUES ('%s', %d, %d, '%s', '%s', '%s', '%s', '%s')",
-                            nodeID,
-                            xcoord,
-                            ycoord,
-                            floor,
-                            building,
-                            nodeType,
-                            longName,
-                            shortName); // insert values from input.
+      enterNode.execute(str);
 
-            enterNode.execute(str);
-
-        } catch (SQLException e) {
-            System.out.println("Failed");
-            e.printStackTrace();
-            return;
-        }
+    } catch (SQLException e) {
+      System.out.println("Failed");
+      e.printStackTrace();
+      return;
     }
+  }
 
+  // Method to update nodes from location table.
+  @Override
+  public void updateLocation(String ID, String field, String change) {
 
-    // Method to delete nodes from location table.
-    public static void deleteLocationNode(String nodeID) {
+    String tableName = "TowerLocations";
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Statement updateCoords = connection.createStatement();
 
-        String tableName = "TowerLocations";
-        try {
-            Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-            Statement deleteNode = connection.createStatement();
+      String str =
+          String.format(
+              "update " + tableName + " set " + field + " = %s where nodeID = '%s'", change, ID);
+      updateCoords.execute(str);
 
-            String str =
-                    String.format(
-                            "DELETE FROM " + tableName + " WHERE nodeID ='%s'",
-                            nodeID); // delete the selected node
-
-            deleteNode.execute(str);
-
-        } catch (SQLException e) {
-            System.out.println("Failed");
-            e.printStackTrace();
-            return;
-        }
+    } catch (SQLException e) {
+      System.out.println("Failed");
+      e.printStackTrace();
+      return;
     }
+    return;
+  }
 
+  // Method to get node from the location table.
+  @Override
+  public Location getLocationNode(String ID) {
 
-    // Put all nodes in a list.
-    public static List<Location> getNodeList() {
-        List<Location> locList = new ArrayList<>();
-        try {
-            Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-            Statement getNodeList = connection.createStatement();
-            ResultSet rset = getNodeList.executeQuery("SELECT * FROM TowerLocations");
+    String tableName = "TowerLocations";
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Statement getNode = connection.createStatement();
+      String str =
+          String.format(
+              "select * from " + tableName + " Where nodeID = '%s'",
+              ID); // get node from table location
 
-            while (rset.next()) {
-                String nodeID = rset.getString("nodeID");
-                int xc = rset.getInt("xCoord");
-                int yc = rset.getInt("yCoord");
-                String floor = rset.getString("floor");
-                String building = rset.getString("building");
-                String nodeType = rset.getString("nodeType");
-                String longName = rset.getString("longName");
-                String shortName = rset.getString("shortName");
+      getNode.execute(str);
 
-                Location l = new Location(nodeID, xc, yc, floor, building, nodeType, longName, shortName);
-                locList.add(l);
-            }
-        } catch (SQLException e) {
-            System.out.println("Failed");
-            e.printStackTrace();
-        }
+      // Commented code to print out the selected node.
+      ResultSet rset = getNode.getResultSet();
+      // process results
+      String nodeID = rset.getString("nodeID");
+      int xc = rset.getInt("xCoord");
+      int yc = rset.getInt("yCoord");
+      String floor = rset.getString("floor");
+      String building = rset.getString("building");
+      String nodeType = rset.getString("nodeType");
+      String longName = rset.getString("longName");
+      String shortName = rset.getString("shortName");
 
-        return locList;
+      Location l = new Location(nodeID, xc, yc, floor, building, nodeType, longName, shortName);
+
+      // Return the location object
+      return l;
+
+    } catch (SQLException e) {
+      System.out.println("Failed");
+      e.printStackTrace();
+      return null;
     }
+  }
 
 }

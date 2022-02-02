@@ -24,3 +24,4 @@ public interface MedicalEquipmentDAO {
         return null;
     }
 }
+
