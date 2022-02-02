@@ -16,6 +16,8 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class MedicalEquipmentDeliveryController {
+  @FXML private TextArea specialNotes;
+  @FXML private ChoiceBox employeeCheckBox;
   @FXML private ChoiceBox toChoiceBox;
   @FXML private Button homeButton;
   @FXML private ChoiceBox typeChoiceBox;
@@ -23,7 +25,7 @@ public class MedicalEquipmentDeliveryController {
   @FXML private Button submitButton;
   @FXML private Button clearButton;
   @FXML private Label locationLabel;
-  @FXML private TextField specialNotes;
+
   @FXML private Button backButton;
 
   private FXMLLoader loader = new FXMLLoader();
@@ -50,6 +52,8 @@ public class MedicalEquipmentDeliveryController {
 
   @FXML
   private void initialize() {
+    specialNotes.setWrapText(true);
+
     typeChoiceBox.getItems().removeAll(typeChoiceBox.getItems());
     typeChoiceBox.getItems().addAll("Type", "Bed", "XRAY", "Infusion Pump", "Patient Recliner");
     typeChoiceBox.getSelectionModel().select("Type");
@@ -87,6 +91,7 @@ public class MedicalEquipmentDeliveryController {
     fromChoiceBox.getItems().removeAll(fromChoiceBox.getItems());
     toChoiceBox.getItems().removeAll(toChoiceBox.getItems());
     // typeChoiceBox.getItems().addAll(new LocationDerbyImpl().getNodeList());
+    // employeeChoiceBox.getItems().addAll(new EmployeeDerbyImpl.getNodeList());
   }
 
   @FXML
