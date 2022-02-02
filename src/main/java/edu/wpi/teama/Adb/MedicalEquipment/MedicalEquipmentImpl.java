@@ -6,7 +6,9 @@ import java.util.List;
 
 public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
 
-  public static MedicalEquipment getMedicalEquipment(String ID) {
+  public void MedicalEquipmentImpl() {}
+
+  public MedicalEquipment getMedicalEquipment(String ID) {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement get = connection.createStatement();
@@ -31,7 +33,7 @@ public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
     }
   }
 
-  public static void updateMedicalEquipment(String ID, String field, String change) {
+  public void updateMedicalEquipment(String ID, String field, String change) {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement update = connection.createStatement();
@@ -46,7 +48,7 @@ public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
     }
   }
 
-  public static void enterMedicalEquipment(
+  public void enterMedicalEquipment(
       String equipmentID,
       String equipmentType,
       boolean isClean,
@@ -70,7 +72,7 @@ public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
     }
   }
 
-  public static void deleteMedicalEquipment(String ID) {
+  public void deleteMedicalEquipment(String ID) {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement delete = connection.createStatement();
@@ -84,7 +86,7 @@ public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
     }
   }
 
-  public static List<MedicalEquipment> getMedicalEquipmentList() {
+  public List<MedicalEquipment> getMedicalEquipmentList() {
     List<MedicalEquipment> equipList = new ArrayList<>();
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
