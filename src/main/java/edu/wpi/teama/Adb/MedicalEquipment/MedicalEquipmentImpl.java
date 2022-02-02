@@ -6,7 +6,7 @@ import java.util.List;
 
 public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
 
-  public static MedicalEquipment getMedicalEquipment(String ID) {
+  public static MedicalEquipmentServiceRequest getMedicalEquipment(String ID) {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement get = connection.createStatement();
@@ -19,8 +19,9 @@ public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
       String currentLocation = rset.getString("currentLocation");
       boolean isAvailable = rset.getBoolean("isAvailable");
 
-      MedicalEquipment me =
-          new MedicalEquipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable);
+      MedicalEquipmentServiceRequest me =
+          new MedicalEquipmentServiceRequest(
+              equipmentID, equipmentType, isClean, currentLocation, isAvailable);
 
       return me;
 
@@ -84,8 +85,8 @@ public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
     }
   }
 
-  public static List<MedicalEquipment> getMedicalEquipmentList() {
-    List<MedicalEquipment> equipList = new ArrayList<>();
+  public static List<MedicalEquipmentServiceRequest> getMedicalEquipmentList() {
+    List<MedicalEquipmentServiceRequest> equipList = new ArrayList<>();
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement getNodeList = connection.createStatement();
@@ -98,8 +99,9 @@ public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
         String currentLocation = rset.getString("currentLocation");
         boolean isAvailable = rset.getBoolean("isAvailable");
 
-        MedicalEquipment e =
-            new MedicalEquipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable);
+        MedicalEquipmentServiceRequest e =
+            new MedicalEquipmentServiceRequest(
+                equipmentID, equipmentType, isClean, currentLocation, isAvailable);
         equipList.add(e);
       }
     } catch (SQLException e) {

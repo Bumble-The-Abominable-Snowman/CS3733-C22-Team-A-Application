@@ -42,6 +42,7 @@
                   <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="168.0" text="Employees" />
                   <Button fx:id="serviceRequestsButton1" mnemonicParsing="false" onAction="#goToCreateNewServiceRequest" prefHeight="25.0" prefWidth="168.0" text="View Existing Service Requests" />
                   <Button fx:id="equipmentTrackerButton" mnemonicParsing="false" onAction="#goToEquipmentTracker" prefHeight="25.0" prefWidth="168.0" text="View Equipment Tracker" />
+                  <Button fx:id="viewRequestsButton" mnemonicParsing="false" onAction="#goToServiceRequests" prefHeight="25.0" prefWidth="168.0" text="View Service Requests" />
                </children>
             </VBox>
             <Label text="Absolute-Zero Abominable Snowmen" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />

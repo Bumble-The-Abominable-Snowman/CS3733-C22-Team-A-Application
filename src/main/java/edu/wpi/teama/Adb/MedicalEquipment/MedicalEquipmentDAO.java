@@ -3,7 +3,7 @@ package edu.wpi.teama.Adb.MedicalEquipment;
 import java.util.List;
 
 public interface MedicalEquipmentDAO {
-  public static MedicalEquipment getMedicalEquipment(String ID) {
+  public static MedicalEquipmentServiceRequest getMedicalEquipment(String ID) {
     return null;
   }
 
@@ -18,7 +18,7 @@ public interface MedicalEquipmentDAO {
 
   public static void deleteMedicalEquipment(String ID) {}
 
-  public static List<MedicalEquipment> getMedicalEquipmentList() {
+  public static List<MedicalEquipmentServiceRequest> getMedicalEquipmentList() {
     return null;
   }
 }
