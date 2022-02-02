@@ -11,6 +11,6 @@ public class Main {
     Adb.initialConnection();
     Adb.inputFromCSV("TowerLocations");
 
-    // Aapp.launch(Aapp.class, args);
+    Aapp.launch(Aapp.class, args);
   }
 }
