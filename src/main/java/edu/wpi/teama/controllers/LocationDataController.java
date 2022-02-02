@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 public class LocationDataController implements Initializable {
   @FXML Button backButton;
   @FXML JFXTreeTableView<Location> locationTable;
+  boolean fillerYes = true;
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
@@ -32,29 +33,23 @@ public class LocationDataController implements Initializable {
     JFXTreeTableColumn<Location, String> id = new JFXTreeTableColumn<>("ID");
     JFXTreeTableColumn<Location, String> name = new JFXTreeTableColumn<>("Room Name");
     JFXTreeTableColumn<Location, String> floorNum = new JFXTreeTableColumn<>("Floor Number");
-
-    JFXTreeTableColumn<Location, String> storeXRAY =
-        new JFXTreeTableColumn<>("Does it store XRAY?");
-    JFXTreeTableColumn<Location, String> storeBed =
-        new JFXTreeTableColumn<>("Does it store Beds??");
-    JFXTreeTableColumn<Location, String> storePump =
-        new JFXTreeTableColumn<>("Does it store Infusion Pumps?");
+    JFXTreeTableColumn<Location, String> storeXRAY = new JFXTreeTableColumn<>("Store XRAY?");
+    JFXTreeTableColumn<Location, String> storeBed = new JFXTreeTableColumn<>("Store Beds?");
+    JFXTreeTableColumn<Location, String> storePump = new JFXTreeTableColumn<>("Store I. Pumps?");
     JFXTreeTableColumn<Location, String> storeRecliner =
-        new JFXTreeTableColumn<>("Does it store Recliners?");
+        new JFXTreeTableColumn<>("Store Recliners?");
 
-    id.setPrefWidth(112);
-    name.setPrefWidth(110);
-    floorNum.setPrefWidth(110);
-
-    storeXRAY.setPrefWidth(115);
-    storeBed.setPrefWidth(110);
-    storePump.setPrefWidth(115);
-    storeRecliner.setPrefWidth(110);
+    id.setPrefWidth(80);
+    name.setPrefWidth(80);
+    floorNum.setPrefWidth(80);
+    storeXRAY.setPrefWidth(80);
+    storeBed.setPrefWidth(80);
+    storePump.setPrefWidth(80);
+    storeRecliner.setPrefWidth(80);
 
     id.setStyle("-fx-alignment: center ;");
     name.setStyle("-fx-alignment: center ;");
     floorNum.setStyle("-fx-alignment: center ;");
-
     storeXRAY.setStyle("-fx-alignment: center ;");
     storeBed.setStyle("-fx-alignment: center ;");
     storePump.setStyle("-fx-alignment: center ;");
@@ -70,20 +65,24 @@ public class LocationDataController implements Initializable {
         (TreeTableColumn.CellDataFeatures<Location, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getFloor()));
     // this code has to be implemented when a location's medical equipment is known
-    // currently filled with getFloors as value which is obv not correct
-
+    // currently filled with filler Yes values, which represent that atm every room
+    // can store every equipment. In the future, this will not be true.
     storeXRAY.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<Location, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getFloor()));
+            new SimpleStringProperty(fillerYes ? "Yes" : "No"));
+    // new SimpleStringProperty(param.getValue().getValue().getCanStoreXRAY()));
     storeBed.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<Location, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getFloor()));
+            new SimpleStringProperty(fillerYes ? "Yes" : "No"));
+    // new SimpleStringProperty(param.getValue().getValue().getCanStoreBed()));
     storePump.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<Location, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getFloor()));
+            new SimpleStringProperty(fillerYes ? "Yes" : "No"));
+    // new SimpleStringProperty(param.getValue().getValue().getCanStorePump()));
     storeRecliner.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<Location, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getFloor()));
+            new SimpleStringProperty(fillerYes ? "Yes" : "No"));
+    // new SimpleStringProperty(param.getValue().getValue().getCanStoreRecliner()));
 
     // Grab location / equipment from database, these are dummies
     ObservableList<Location> locations = FXCollections.observableArrayList();
