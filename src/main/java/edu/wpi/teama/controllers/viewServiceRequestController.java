@@ -30,7 +30,7 @@ public class viewServiceRequestController implements Initializable {
   public void initialize(URL url, ResourceBundle rb) {
     // Create all columns in the tracker table
     JFXTreeTableColumn<MedicalEquipmentServiceRequest, String> reqID =
-        new JFXTreeTableColumn<>("Request ID");
+        new JFXTreeTableColumn<>("ID");
     JFXTreeTableColumn<MedicalEquipmentServiceRequest, String> startLoc =
         new JFXTreeTableColumn<>("Start Location");
     JFXTreeTableColumn<MedicalEquipmentServiceRequest, String> endLoc =
@@ -42,20 +42,20 @@ public class viewServiceRequestController implements Initializable {
     JFXTreeTableColumn<MedicalEquipmentServiceRequest, String> reqTime =
         new JFXTreeTableColumn<>("Request Time");
     JFXTreeTableColumn<MedicalEquipmentServiceRequest, String> reqStatus =
-        new JFXTreeTableColumn<>("Request Status");
+        new JFXTreeTableColumn<>("Status");
     JFXTreeTableColumn<MedicalEquipmentServiceRequest, String> equipmentID =
         new JFXTreeTableColumn<>("Equipment ID");
     JFXTreeTableColumn<MedicalEquipmentServiceRequest, String> reqType =
-        new JFXTreeTableColumn<>("Request Type");
-    reqID.setPrefWidth(112);
-    startLoc.setPrefWidth(110);
-    endLoc.setPrefWidth(110);
-    employeeReq.setPrefWidth(115);
-    employeeAss.setPrefWidth(110);
-    reqTime.setPrefWidth(110);
-    reqStatus.setPrefWidth(110);
-    equipmentID.setPrefWidth(115);
-    reqType.setPrefWidth(110);
+        new JFXTreeTableColumn<>("Type");
+    reqID.setPrefWidth(80);
+    startLoc.setPrefWidth(80);
+    endLoc.setPrefWidth(80);
+    employeeReq.setPrefWidth(80);
+    employeeAss.setPrefWidth(80);
+    reqTime.setPrefWidth(80);
+    reqStatus.setPrefWidth(80);
+    equipmentID.setPrefWidth(80);
+    reqType.setPrefWidth(80);
     reqID.setStyle("-fx-alignment: center ;");
     startLoc.setStyle("-fx-alignment: center ;");
     endLoc.setStyle("-fx-alignment: center ;");
