@@ -2,11 +2,9 @@ package edu.wpi.teama.Adb;
 
 import edu.wpi.teama.Adb.Employee.Employee;
 import edu.wpi.teama.Adb.Location.Location;
-
 import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipment;
 import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest;
 import java.io.IOException;
-
 import java.sql.*;
 import java.text.ParseException;
 import java.util.List;
@@ -45,60 +43,6 @@ public class Adb {
       e.printStackTrace();
       return;
     }
-
-    // Check if each table in the database exist. If not exist then create one.
-    // Check TowerLocations table.
-    try {
-
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-      Statement addTable = connection.createStatement();
-
-      addTable.execute(
-          "CREATE TABLE TowerLocations(nodeID varchar(25), xcoord int, ycoord int, floor varchar(25), building varchar(25), nodeType varchar(25), longName varchar(100), shortName varchar(50))");
-
-    } catch (SQLException e) {
-      System.out.println("Table TowerLocations already exist");
-    }
-
-    // Check MedicalEquipment table.
-    try {
-
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-      Statement addTable = connection.createStatement();
-
-      addTable.execute(
-          "CREATE TABLE MedicalEquipment(equipmentID varchar(25), equipmentType varchar(25), isClean varchar(25), currentLocation varchar(25), isAvailable varchar(25))");
-
-    } catch (SQLException e) {
-      System.out.println("Table MedicalEquipment already exist");
-    }
-
-    // Check MedicalEquipmentServiceRequest table.
-    try {
-
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-      Statement addTable = connection.createStatement();
-
-      // Can split up TimeStamp to time and date?
-      addTable.execute(
-          "CREATE TABLE MedicalEquipmentServiceRequest(requestID varchar(25), startLocation varchar(25), endLocation varchar(25), employeeRequested varchar(25), employeeAssigned varchar(25), requestTime time, requestDate date, requestStatus varchar(25), equipmentID varchar(25), requestType varchar(25))");
-
-    } catch (SQLException e) {
-      System.out.println("Table MedicalEquipmentServiceRequest already exist");
-    }
-
-    // Check Employee table.
-    try {
-
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-      Statement addTable = connection.createStatement();
-
-      addTable.execute(
-          "CREATE TABLE Employee(employeeID varchar(25), employeeType varchar(25), firstName varchar(25), lastName varchar(25), email varchar(25), phoneNum varchar(25), address varchar(25), startDate date)");
-
-    } catch (SQLException e) {
-      System.out.println("Table Employee already exist");
-    }
   }
 
   public static void inputFromCSV(String tableName) {
@@ -106,6 +50,26 @@ public class Adb {
 
         // Table name = Location
       case "TowerLocations":
+        // Check TowerLocations table.
+        try {
+
+          Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+          Statement addTable = connection.createStatement();
+
+          addTable.execute(
+              "CREATE TABLE TowerLocations(nodeID varchar(25), xcoord int, ycoord int, floor varchar(25), building varchar(25), nodeType varchar(25), longName varchar(100), shortName varchar(50))");
+
+        } catch (SQLException e) {
+          try {
+            Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+            Statement dropTable = connection.createStatement();
+
+            dropTable.execute("DELETE FROM TowerLocations");
+          } catch (SQLException e1) {
+            System.out.println("delete failed");
+          }
+        }
+
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
@@ -130,15 +94,34 @@ public class Adb {
                     + "', '"
                     + l.getShortName()
                     + "')");
-            return;
           }
         } catch (SQLException | IOException e) {
           System.out.println("Insertion failed!");
           return;
         }
+        return;
 
         // Table name = Employee
       case "Employee":
+        try {
+
+          Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+          Statement addTable = connection.createStatement();
+
+          addTable.execute(
+              "CREATE TABLE Employee(employeeID varchar(25), employeeType varchar(25), firstName varchar(25), lastName varchar(25), email varchar(25), phoneNum varchar(25), address varchar(25), startDate date)");
+
+        } catch (SQLException e) {
+          try {
+            Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+            Statement dropTable = connection.createStatement();
+
+            dropTable.execute("DELETE FROM Employee");
+          } catch (SQLException e1) {
+            System.out.println("delete failed");
+          }
+        }
+
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
@@ -163,15 +146,34 @@ public class Adb {
                     + "', '"
                     + l.getStartDate()
                     + "')");
-            return;
           }
         } catch (SQLException | IOException | ParseException e) {
           System.out.println("Insertion failed!");
           return;
         }
+        return;
 
         // Table name = MedicalEquipment
       case "MedicalEquipment":
+        try {
+
+          Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+          Statement addTable = connection.createStatement();
+
+          addTable.execute(
+              "CREATE TABLE MedicalEquipment(equipmentID varchar(25), equipmentType varchar(25), isClean varchar(25), currentLocation varchar(25), isAvailable varchar(25))");
+
+        } catch (SQLException e) {
+          try {
+            Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+            Statement dropTable = connection.createStatement();
+
+            dropTable.execute("DELETE FROM MedicalEquipment");
+          } catch (SQLException e1) {
+            System.out.println("delete failed");
+          }
+        }
+
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
@@ -191,14 +193,34 @@ public class Adb {
                     + "', '"
                     + l.getIsAvailable()
                     + "')");
-            return;
           }
         } catch (SQLException | IOException | ParseException e) {
           System.out.println("Insertion failed!");
           return;
         }
+        return;
 
       case "MedicalEquipmentServiceRequest":
+        try {
+
+          Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+          Statement addTable = connection.createStatement();
+
+          // Can split up TimeStamp to time and date?
+          addTable.execute(
+              "CREATE TABLE MedicalEquipmentServiceRequest(requestID varchar(25), startLocation varchar(25), endLocation varchar(25), employeeRequested varchar(25), employeeAssigned varchar(25), requestTime time, requestDate date, requestStatus varchar(25), equipmentID varchar(25), requestType varchar(25))");
+
+        } catch (SQLException e) {
+          try {
+            Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+            Statement dropTable = connection.createStatement();
+
+            dropTable.execute("DELETE FROM MedicalEquipmentServiceRequest");
+          } catch (SQLException e1) {
+            System.out.println("delete failed");
+          }
+        }
+
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
@@ -226,12 +248,12 @@ public class Adb {
                     + ", '"
                     + l.getRequestType()
                     + "')");
-            return;
           }
         } catch (SQLException | IOException | ParseException e) {
           System.out.println("Insertion failed!");
           return;
         }
+        return;
 
       default:
         System.out.println("failed!");
