@@ -1,6 +1,7 @@
 package edu.wpi.teama.controllers;
 
 import edu.wpi.teama.Aapp;
+import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
 import edu.wpi.teama.entities.MedicalEquipmentServiceRequest;
 import java.io.IOException;
 import java.net.URL;
@@ -16,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class MedicalEquipmentDeliveryController {
+  @FXML private ChoiceBox toChoiceBox;
   @FXML private Button homeButton;
   @FXML private ChoiceBox typeChoiceBox;
   @FXML private ChoiceBox fromChoiceBox;
@@ -83,10 +85,9 @@ public class MedicalEquipmentDeliveryController {
               }
             });
 
-    fromChoiceBox.getItems().removeAll(typeChoiceBox.getItems());
-    fromChoiceBox.getItems().addAll("From", "Bed", "XRAY", "Infusion Pump", "Patient Recliner");
-    fromChoiceBox.getSelectionModel().select("From");
-    fromChoiceBox.getSelectionModel().selectedItemProperty();
+    fromChoiceBox.getItems().removeAll(fromChoiceBox.getItems());
+    toChoiceBox.getItems().removeAll(toChoiceBox.getItems());
+    typeChoiceBox.getItems().addAll(new LocationDerbyImpl().getNodeList());
   }
 
   @FXML
