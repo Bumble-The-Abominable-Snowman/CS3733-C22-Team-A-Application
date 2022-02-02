@@ -1,4 +1,4 @@
-package edu.wpi.teama;
+package edu.wpi.teama.Adb.MedicalEquipmentServiceRequest;
 
 import java.sql.Timestamp;
 
