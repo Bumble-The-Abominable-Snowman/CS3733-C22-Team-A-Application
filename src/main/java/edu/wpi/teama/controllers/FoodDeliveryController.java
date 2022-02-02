@@ -1,5 +1,7 @@
 package edu.wpi.teama.controllers;
 
+import static java.lang.Integer.parseInt;
+
 import edu.wpi.teama.Aapp;
 import java.io.IOException;
 import java.net.URL;
@@ -22,6 +24,7 @@ public class FoodDeliveryController {
   @FXML private ChoiceBox<String> drinkChoice;
   @FXML private ChoiceBox<String> sideChoice;
   @FXML private ChoiceBox<String> dessertChoice;
+  @FXML private ChoiceBox<String> roomChoice;
   @FXML private TextArea commentsBox;
   private FXMLLoader loader = new FXMLLoader();
 
@@ -51,13 +54,17 @@ public class FoodDeliveryController {
   }
 
   @FXML
-  private void createFoodRequest() throws IOException {
-    String theMain = mainChoice.getValue();
-    String theSide = sideChoice.getValue();
-    String theDrink = drinkChoice.getValue();
-    String theDessert = dessertChoice.getValue();
-    String theInstructions = commentsBox.getText();
-    commentsBox.setText(theMain + theSide + theDrink + theDessert + theInstructions);
+  private foodDeliveryRequest createFoodRequest() throws IOException {
+    foodDeliveryRequest aRequest =
+        new foodDeliveryRequest(
+            mainChoice.getValue(),
+            sideChoice.getValue(),
+            drinkChoice.getValue(),
+            dessertChoice.getValue(),
+            parseInt(roomChoice.getValue()),
+            commentsBox.getText());
+    clearSubmission();
+    return (aRequest);
   }
 
   @FXML
