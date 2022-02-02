@@ -7,9 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class LanguageInterpreterController {
@@ -18,13 +16,38 @@ public class LanguageInterpreterController {
   @FXML private Button backButton;
   @FXML private Button clearButton;
   @FXML private ChoiceBox<String> languageChoice;
-  @FXML private ChoiceBox<String> fromChoice;
   @FXML private ChoiceBox<String> toChoice;
   @FXML private ChoiceBox<String> employeeChoice;
-  @FXML private TextField roomNum;
-  @FXML private TextField commentsBox;
+  @FXML private TextArea commentsBox;
 
   private FXMLLoader loader = new FXMLLoader();
+
+  @FXML
+  private void initialize() {
+    commentsBox.setWrapText(true);
+
+    languageChoice.getItems().removeAll(languageChoice.getItems());
+    languageChoice
+        .getItems()
+        .addAll(
+            "American Sign Language",
+            "Arabic",
+            "French",
+            "German",
+            "Italian",
+            "Japanese",
+            "Korean",
+            "Mandarin",
+            "Russian",
+            "Spanish");
+    languageChoice.getSelectionModel().select("Language");
+    languageChoice.getSelectionModel().selectedItemProperty();
+
+    toChoice.getItems().removeAll(toChoice.getItems());
+
+    employeeChoice.getItems().removeAll(employeeChoice.getItems());
+    employeeChoice.getSelectionModel().select("Employee");
+  }
 
   @FXML
   private void returnToHomeScene() throws IOException {
