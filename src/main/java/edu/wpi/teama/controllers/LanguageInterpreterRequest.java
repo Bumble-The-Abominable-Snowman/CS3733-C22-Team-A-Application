@@ -40,7 +40,7 @@ public class LanguageInterpreterRequest {
     this.toLocation = toLocation;
   }
 
-  public void setEmployeeRequested(String employeeRequested) {
+  public void setEmployee(String employee) {
     this.employee = employee;
   }
 
