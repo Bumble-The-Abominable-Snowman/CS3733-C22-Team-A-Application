@@ -1,8 +1,6 @@
 package edu.wpi.teama;
 
-
 import edu.wpi.teama.Adb.Adb;
-
 import java.sql.Connection;
 
 public class Main {
@@ -13,7 +11,6 @@ public class Main {
     Adb.initialConnection();
     Adb.inputFromCSV("TowerLocations");
 
-
-    Aapp.launch(Aapp.class, args);
+    // Aapp.launch(Aapp.class, args);
   }
 }
