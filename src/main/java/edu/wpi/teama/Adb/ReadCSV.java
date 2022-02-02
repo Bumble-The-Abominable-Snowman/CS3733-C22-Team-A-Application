@@ -4,7 +4,6 @@ import edu.wpi.teama.Adb.Employee.Employee;
 import edu.wpi.teama.Adb.Location.Location;
 import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipment;
 import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest;
-
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -13,12 +12,12 @@ import java.util.*;
 
 public class ReadCSV {
 
-  //Read from Location CSV
+  // Read from Location CSV
   public static List<Location> readLocationCSV() throws IOException {
     // System.out.println("beginning to read csv");
 
     Scanner lineScanner =
-            new Scanner(ReadCSV.class.getClassLoader().getResourceAsStream("TowerLocations.csv"));
+        new Scanner(ReadCSV.class.getClassLoader().getResourceAsStream("TowerLocations.csv"));
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
@@ -62,12 +61,12 @@ public class ReadCSV {
     return list;
   }
 
-  //Read From Employees CSV
+  // Read From Employees CSV
   public static List<Employee> readEmployeeCSV() throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
     Scanner lineScanner =
-            new Scanner(ReadCSV.class.getClassLoader().getResourceAsStream("Employee.csv"));
+        new Scanner(ReadCSV.class.getClassLoader().getResourceAsStream("Employee.csv"));
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
@@ -109,12 +108,13 @@ public class ReadCSV {
     return list;
   }
 
-  //Read From MedicalEquipment CSV
-  public static List<MedicalEquipment> readMedicalEquipmentCSV() throws IOException, ParseException {
+  // Read From MedicalEquipment CSV
+  public static List<MedicalEquipment> readMedicalEquipmentCSV()
+      throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
     Scanner lineScanner =
-            new Scanner(ReadCSV.class.getClassLoader().getResourceAsStream("MedicalEquipment.csv"));
+        new Scanner(ReadCSV.class.getClassLoader().getResourceAsStream("MedicalEquipment.csv"));
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
@@ -156,12 +156,16 @@ public class ReadCSV {
     return list;
   }
 
-  //Read from Location CSV
-  public static List<MedicalEquipmentServiceRequest> readMedicalEquipmentServiceRequestCSV() throws IOException, ParseException {
+  // Read from Location CSV
+  public static List<MedicalEquipmentServiceRequest> readMedicalEquipmentServiceRequestCSV()
+      throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
     Scanner lineScanner =
-            new Scanner(ReadCSV.class.getClassLoader().getResourceAsStream("MedicalEquipmentServiceRequest.csv"));
+        new Scanner(
+            ReadCSV.class
+                .getClassLoader()
+                .getResourceAsStream("MedicalEquipmentServiceRequest.csv"));
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
@@ -188,8 +192,7 @@ public class ReadCSV {
           Date parsedDate = dateFormat.parse(data);
           Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
           thisMESR.setRequestTime(timestamp);
-        }
-        else if (dataIndex == 6) thisMESR.setRequestStatus(data);
+        } else if (dataIndex == 6) thisMESR.setRequestStatus(data);
         else if (dataIndex == 7) thisMESR.setEquipmentID(data);
         else if (dataIndex == 8) thisMESR.setRequestType(data);
         else System.out.println("Invalid data, I broke::" + data);
@@ -206,5 +209,4 @@ public class ReadCSV {
     lineScanner.close();
     return list;
   }
-
 }

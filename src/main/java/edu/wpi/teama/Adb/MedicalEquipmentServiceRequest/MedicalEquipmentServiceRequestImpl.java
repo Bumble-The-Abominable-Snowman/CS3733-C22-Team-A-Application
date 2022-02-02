@@ -1,4 +1,3 @@
 package edu.wpi.teama.Adb.MedicalEquipmentServiceRequest;
 
-public class MedicalEquipmentServiceRequestImpl {
-}
+public class MedicalEquipmentServiceRequestImpl {}
