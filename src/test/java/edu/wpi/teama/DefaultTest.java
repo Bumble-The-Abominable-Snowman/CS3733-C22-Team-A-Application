@@ -49,7 +49,7 @@ public class DefaultTest {
     Location.updateLocation("nyxdai0209", "ycoord", "2");
     Location.deleteLocationNode("nyxdai0209");
 
-    // Test on Employee table
+    // Test on Employee table still bugged
     EmployeeDAO Employee = new EmployeeDerbyImpl();
     Employee.enterEmployee(
         "001",
