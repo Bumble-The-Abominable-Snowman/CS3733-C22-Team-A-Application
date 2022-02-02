@@ -120,5 +120,5 @@ public class WriteCSV {
     }
     writer.close(); // close the writer
   }
-  
+
 }
