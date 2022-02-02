@@ -6,8 +6,10 @@ import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.teama.Aapp;
 import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipment;
+import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipmentImpl;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -61,10 +63,13 @@ public class MedicalEquipmentDataController implements Initializable {
         (TreeTableColumn.CellDataFeatures<MedicalEquipment, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getIsAvailable() ? "Yes" : "No"));
 
-    // Grab equipment from database (uses example item currently)
+    // Grab equipment from database
+    MedicalEquipmentImpl database = new MedicalEquipmentImpl();
+    List<MedicalEquipment> equipFromDatabase = database.getMedicalEquipmentList();
     ObservableList<MedicalEquipment> equipment = FXCollections.observableArrayList();
-    equipment.add(new MedicalEquipment("12", "XRAY", false, "Room 2-A", false));
-    equipment.add(new MedicalEquipment("14", "BED", true, "OR", true));
+    for (MedicalEquipment item : equipFromDatabase) {
+      equipment.add(item);
+    }
 
     // Sets up the table and puts the equipment data under the columns
     final TreeItem<MedicalEquipment> root =
