@@ -21,5 +21,4 @@ public interface LocationDAO {
   public void updateLocation(String ID, String field, String change);
 
   public Location getLocationNode(String ID);
-
 }

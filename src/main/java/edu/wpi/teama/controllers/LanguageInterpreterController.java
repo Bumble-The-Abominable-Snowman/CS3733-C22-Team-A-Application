@@ -13,17 +13,14 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class LanguageInterpreterController {
-  @FXML private Button floor1Button;
-  @FXML private Button floor2Button;
-  @FXML private Button floor3Button;
-  @FXML private Button floor4Button;
   @FXML private Button returnHomeButton;
   @FXML private Button submitButton;
   @FXML private Button backButton;
   @FXML private Button clearButton;
-  @FXML private ChoiceBox<String> displayLang;
-  @FXML private ChoiceBox<String> langInterpreter;
-  @FXML private ChoiceBox<String> langInterpreter1;
+  @FXML private ChoiceBox<String> languageChoice;
+  @FXML private ChoiceBox<String> fromChoice;
+  @FXML private ChoiceBox<String> toChoice;
+  @FXML private ChoiceBox<String> employeeChoice;
   @FXML private TextField roomNum;
   @FXML private TextField commentsBox;
 
