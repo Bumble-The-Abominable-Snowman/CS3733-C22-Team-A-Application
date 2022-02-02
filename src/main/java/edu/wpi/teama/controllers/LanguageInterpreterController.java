@@ -16,7 +16,7 @@ public class LanguageInterpreterController {
   @FXML private Button backButton;
   @FXML private Button clearButton;
   @FXML private ChoiceBox<String> languageChoice;
-  @FXML private ChoiceBox<String> toChoice;
+  @FXML private ChoiceBox<String> toLocationChoice;
   @FXML private ChoiceBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
 
@@ -43,7 +43,7 @@ public class LanguageInterpreterController {
     languageChoice.getSelectionModel().select("Language");
     languageChoice.getSelectionModel().selectedItemProperty();
 
-    toChoice.getItems().removeAll(toChoice.getItems());
+    toLocationChoice.getItems().removeAll(toLocationChoice.getItems());
 
     employeeChoice.getItems().removeAll(employeeChoice.getItems());
     employeeChoice.getSelectionModel().select("Employee");
@@ -85,5 +85,17 @@ public class LanguageInterpreterController {
     window.setScene(new Scene(root));
     window.setTitle("Language Services");
     window.show();
+  }
+
+  @FXML
+  private LanguageInterpreterRequest createLanguageRequest() throws IOException {
+    LanguageInterpreterRequest aRequest =
+        new LanguageInterpreterRequest(
+            languageChoice.getValue(),
+            toLocationChoice.getValue(),
+            employeeChoice.getValue(),
+            commentsBox.getText());
+    clearSubmission();
+    return (aRequest);
   }
 }
