@@ -3,9 +3,15 @@ package edu.wpi.teama.Adb.Location;
 import java.util.List;
 
 public interface LocationDAO {
-    public Location getLocationNode(String ID);
-    public void updateLocation(String ID, String field, String change);
-    public void enterLocationNode(
+    public static Location getLocationNode(String ID) {
+        return null;
+    }
+
+    public static void updateLocation(String ID, String field, String change) {
+
+    }
+
+    public static void enterLocationNode(
             String nodeID,
             int xcoord,
             int ycoord,
@@ -13,10 +19,17 @@ public interface LocationDAO {
             String building,
             String nodeType,
             String longName,
-            String shortName);
+            String shortName) {
 
-    public void deleteLocationNode(String nodeID);
-    public List<Location> getNodeList();
+    }
+
+    public static void deleteLocationNode(String nodeID) {
+
+    }
+
+    public static List<Location> getNodeList() {
+        return null;
+    }
 
 
 }

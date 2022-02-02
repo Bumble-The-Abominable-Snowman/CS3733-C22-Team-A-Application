@@ -7,7 +7,7 @@ import java.util.List;
 
 public class EmployeeDerbyImpl implements  EmployeeDAO{
 
-    public Employee getEmployee(String ID){
+    public static Employee getEmployee(String ID){
         try{
             Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
             Statement get = connection.createStatement();
@@ -34,7 +34,7 @@ public class EmployeeDerbyImpl implements  EmployeeDAO{
         }
     }
 
-    public void updateEmployee(String ID, String field, String change){
+    public static void updateEmployee(String ID, String field, String change){
         try{
             Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
             Statement update = connection.createStatement();
@@ -49,7 +49,7 @@ public class EmployeeDerbyImpl implements  EmployeeDAO{
         }
     }
 
-    public void enterEmployee(String employeeID, String employeeType, String firstName,
+    public static void enterEmployee(String employeeID, String employeeType, String firstName,
                               String lastName, String email, String phoneNum,
                               String address, Date startDate){
         try{
@@ -70,7 +70,7 @@ public class EmployeeDerbyImpl implements  EmployeeDAO{
         }
     }
 
-    public void deleteEmployee(String ID){
+    public static void deleteEmployee(String ID){
         try{
             Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
             Statement delete = connection.createStatement();
@@ -84,7 +84,7 @@ public class EmployeeDerbyImpl implements  EmployeeDAO{
         }
     }
 
-    public List<Employee> getEmployeeList() {
+    public static List<Employee> getEmployeeList() {
         List<Employee> empList = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");

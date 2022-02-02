@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServiceRequestDAO{
 
-    public MedicalEquipmentServiceRequest getMedicalEquipmentServiceRequest(String ID){
+    public static MedicalEquipmentServiceRequest getMedicalEquipmentServiceRequest(String ID){
         try{
             Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
             Statement get = connection.createStatement();
@@ -40,7 +40,7 @@ public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServi
         }
     }
 
-    public void updateMedicalEquipmentServiceRequest(String ID, String field, String change){
+    public static void updateMedicalEquipmentServiceRequest(String ID, String field, String change){
         try{
             Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
             Statement update = connection.createStatement();
@@ -55,7 +55,7 @@ public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServi
         }
     }
 
-    public void enterMedicalEquipmentServiceRequest(String requestID, String startLocation,
+    public static void enterMedicalEquipmentServiceRequest(String requestID, String startLocation,
                                                     String endLocation, String employeeRequested,
                                                     String employeeAssigned, Timestamp requestTime,
                                                     String requestStatus, String equipmentID, String requestType){
@@ -77,7 +77,7 @@ public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServi
         }
     }
 
-    public void deleteMedicalEquipment(String ID){
+    public static void deleteMedicalEquipment(String ID){
         try{
             Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
             Statement delete = connection.createStatement();
@@ -91,7 +91,7 @@ public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServi
         }
     }
 
-    public List<MedicalEquipmentServiceRequest> getMedicalEquipmentServiceRequestList() {
+    public static List<MedicalEquipmentServiceRequest> getMedicalEquipmentServiceRequestList() {
         List<MedicalEquipmentServiceRequest> reqList = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");

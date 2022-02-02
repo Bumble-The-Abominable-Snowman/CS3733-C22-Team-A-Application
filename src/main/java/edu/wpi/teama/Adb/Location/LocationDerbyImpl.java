@@ -6,7 +6,7 @@ import java.util.List;
 public class LocationDerbyImpl implements LocationDAO{
 
     // Method to get node from the location table.
-    public Location getLocationNode(String ID) {
+    public static Location getLocationNode(String ID) {
         String tableName = "TowerLocations";
         try {
             Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
@@ -43,7 +43,7 @@ public class LocationDerbyImpl implements LocationDAO{
     }
 
     // Method to update nodes from location table.
-    public void updateLocation(String ID, String field, String change) {
+    public static void updateLocation(String ID, String field, String change) {
 
         String tableName = "TowerLocations";
         try {
@@ -65,7 +65,7 @@ public class LocationDerbyImpl implements LocationDAO{
 
 
     // Method to add node to location table.
-    public void enterLocationNode(
+    public static void enterLocationNode(
             String nodeID,
             int xcoord,
             int ycoord,
@@ -105,7 +105,7 @@ public class LocationDerbyImpl implements LocationDAO{
 
 
     // Method to delete nodes from location table.
-    public void deleteLocationNode(String nodeID) {
+    public static void deleteLocationNode(String nodeID) {
 
         String tableName = "TowerLocations";
         try {
@@ -128,7 +128,7 @@ public class LocationDerbyImpl implements LocationDAO{
 
 
     // Put all nodes in a list.
-    public List<Location> getNodeList() {
+    public static List<Location> getNodeList() {
         List<Location> locList = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
