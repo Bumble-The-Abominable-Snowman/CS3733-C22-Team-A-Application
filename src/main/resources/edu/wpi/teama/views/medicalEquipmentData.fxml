@@ -13,7 +13,7 @@
             <Font size="32.0" />
          </font>
       </Label>
-      <JFXTreeTableView fx:id="equipmentTable" layoutX="20.0" layoutY="67.0" prefHeight="318.0" prefWidth="559.0" />
+      <JFXTreeTableView fx:id="equipmentTable" layoutX="20.0" layoutY="67.0" prefHeight="318.0" prefWidth="559.0" showRoot="false" />
       <Button fx:id="backButton" layoutX="22.0" layoutY="21.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="26.0" prefWidth="55.0" text="Back" />
    </children>
 </AnchorPane>

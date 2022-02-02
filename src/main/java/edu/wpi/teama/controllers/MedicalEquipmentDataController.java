@@ -9,7 +9,6 @@ import edu.wpi.teama.Adb.MedicalEquipment;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,15 +31,20 @@ public class MedicalEquipmentDataController implements Initializable {
     // Create all columns in the tracker table
     JFXTreeTableColumn<MedicalEquipment, String> id = new JFXTreeTableColumn<>("ID");
     JFXTreeTableColumn<MedicalEquipment, String> type = new JFXTreeTableColumn<>("Type");
-    JFXTreeTableColumn<MedicalEquipment, Boolean> clean = new JFXTreeTableColumn<>("Is Clean?");
+    JFXTreeTableColumn<MedicalEquipment, String> clean = new JFXTreeTableColumn<>("Is Clean?");
     JFXTreeTableColumn<MedicalEquipment, String> location = new JFXTreeTableColumn<>("Location");
-    JFXTreeTableColumn<MedicalEquipment, Boolean> available =
+    JFXTreeTableColumn<MedicalEquipment, String> available =
         new JFXTreeTableColumn<>("Is Available?");
-    id.setPrefWidth(150);
-    type.setPrefWidth(150);
-    clean.setPrefWidth(150);
-    location.setPrefWidth(150);
-    available.setPrefWidth(150);
+    id.setPrefWidth(112);
+    type.setPrefWidth(110);
+    clean.setPrefWidth(110);
+    location.setPrefWidth(115);
+    available.setPrefWidth(110);
+    id.setStyle("-fx-alignment: center ;");
+    type.setStyle("-fx-alignment: center ;");
+    clean.setStyle("-fx-alignment: center ;");
+    location.setStyle("-fx-alignment: center ;");
+    available.setStyle("-fx-alignment: center ;");
     id.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipment, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getEquipmentID()));
@@ -48,14 +52,14 @@ public class MedicalEquipmentDataController implements Initializable {
         (TreeTableColumn.CellDataFeatures<MedicalEquipment, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getEquipmentType()));
     clean.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<MedicalEquipment, Boolean> param) ->
-            new SimpleBooleanProperty(param.getValue().getValue().getIsClean()));
+        (TreeTableColumn.CellDataFeatures<MedicalEquipment, String> param) ->
+            new SimpleStringProperty(param.getValue().getValue().getIsClean() ? "Yes" : "No"));
     location.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipment, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getCurrentLocation()));
     available.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<MedicalEquipment, Boolean> param) ->
-            new SimpleBooleanProperty(param.getValue().getValue().getIsAvailable()));
+        (TreeTableColumn.CellDataFeatures<MedicalEquipment, String> param) ->
+            new SimpleStringProperty(param.getValue().getValue().getIsAvailable() ? "Yes" : "No"));
 
     // Grab equipment from database (uses example item currently)
     ObservableList<MedicalEquipment> equipment = FXCollections.observableArrayList();
@@ -67,7 +71,6 @@ public class MedicalEquipmentDataController implements Initializable {
         new RecursiveTreeItem<>(equipment, RecursiveTreeObject::getChildren);
     equipmentTable.getColumns().setAll(id, type, clean, location, available);
     equipmentTable.setRoot(root);
-    equipmentTable.setShowRoot(false);
   }
 
   @FXML
