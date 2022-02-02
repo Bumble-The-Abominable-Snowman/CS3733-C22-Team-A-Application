@@ -60,7 +60,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
       String email,
       String phoneNum,
       String address,
-      Date startDate) {
+      String startDate) {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement insert = connection.createStatement();
@@ -70,7 +70,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
               "INSERT INTO Employee(employeeID, employeeType, firstName, "
                   + "lastName, email, phoneNum, "
                   + "address, startDate) "
-                  + " VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%tY%n');",
+                  + " VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');",
               employeeID, employeeType, firstName, lastName, email, phoneNum, address, startDate);
       insert.execute(str);
 

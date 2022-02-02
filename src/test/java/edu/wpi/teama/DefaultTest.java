@@ -5,16 +5,20 @@
 package edu.wpi.teama;
 
 import edu.wpi.teama.Adb.Adb;
+import edu.wpi.teama.Adb.Employee.Employee;
+import edu.wpi.teama.Adb.Employee.EmployeeDAO;
+import edu.wpi.teama.Adb.Employee.EmployeeDerbyImpl;
 import edu.wpi.teama.Adb.Location.Location;
 import edu.wpi.teama.Adb.Location.LocationDAO;
 import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
 import java.sql.Connection;
+import java.text.ParseException;
 import org.junit.jupiter.api.Test;
 
 public class DefaultTest {
 
   @Test
-  public void test() {
+  public void test() throws ParseException {
 
     Connection connection = null;
     Adb.initialConnection();
@@ -44,5 +48,17 @@ public class DefaultTest {
     Location.updateLocation("nyxdai0209", "xcoord", "2");
     Location.updateLocation("nyxdai0209", "ycoord", "2");
     Location.deleteLocationNode("nyxdai0209");
+
+    // Test on Employee table
+    EmployeeDAO Employee = new EmployeeDerbyImpl();
+    Employee.enterEmployee(
+        "001",
+        "Admin",
+        "Yanbo",
+        "Dai",
+        "ydai2@wpi.edu",
+        "0000000000",
+        "100 institute Rd",
+        "2022-02-02");
   }
 }
