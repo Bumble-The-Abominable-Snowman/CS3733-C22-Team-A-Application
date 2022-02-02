@@ -4,13 +4,11 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public interface MedicalEquipmentServiceRequestDAO {
-  public static MedicalEquipmentServiceRequest getMedicalEquipmentServiceRequest(String ID) {
-    return null;
-  }
+  public MedicalEquipmentServiceRequest getMedicalEquipmentServiceRequest(String ID);
 
-  public static void updateMedicalEquipmentServiceRequest(String ID, String field, String change) {}
+  public void updateMedicalEquipmentServiceRequest(String ID, String field, String change);
 
-  public static void enterMedicalEquipmentServiceRequest(
+  public void enterMedicalEquipmentServiceRequest(
       String requestID,
       String startLocation,
       String endLocation,
@@ -19,11 +17,9 @@ public interface MedicalEquipmentServiceRequestDAO {
       Timestamp requestTime,
       String requestStatus,
       String equipmentID,
-      String requestType) {}
+      String requestType);
 
-  public static void deleteMedicalEquipment(String ID) {}
+  public void deleteMedicalEquipment(String ID);
 
-  public static List<MedicalEquipmentServiceRequest> getMedicalEquipmentServiceRequestList() {
-    return null;
-  }
+  public List<MedicalEquipmentServiceRequest> getMedicalEquipmentServiceRequestList();
 }

@@ -4,9 +4,12 @@ import java.sql.*;
 import java.util.List;
 
 public class LocationDerbyImpl implements LocationDAO {
-  List<Location> Location;
 
-  public LocationDerbyImpl() {
+  public LocationDerbyImpl() {}
+
+  // Put all nodes in a list.
+  public List<Location> getNodeList() {
+    List<Location> Location = null;
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement getNodeList = connection.createStatement();
@@ -29,16 +32,10 @@ public class LocationDerbyImpl implements LocationDAO {
       System.out.println("Failed");
       e.printStackTrace();
     }
-  }
-
-  // Put all nodes in a list.
-  @Override
-  public List<Location> getNodeList() {
     return Location;
   }
 
   // Method to delete nodes from location table.
-  @Override
   public void deleteLocationNode(String ID) {
 
     String tableName = "TowerLocations";
@@ -60,7 +57,6 @@ public class LocationDerbyImpl implements LocationDAO {
   }
 
   // Method to add node to location table.
-  @Override
   public void enterLocationNode(
       String ID,
       int xcoord,
@@ -101,7 +97,6 @@ public class LocationDerbyImpl implements LocationDAO {
   }
 
   // Method to update nodes from location table.
-  @Override
   public void updateLocation(String ID, String field, String change) {
 
     String tableName = "TowerLocations";
@@ -123,7 +118,6 @@ public class LocationDerbyImpl implements LocationDAO {
   }
 
   // Method to get node from the location table.
-  @Override
   public Location getLocationNode(String ID) {
 
     String tableName = "TowerLocations";
@@ -139,23 +133,26 @@ public class LocationDerbyImpl implements LocationDAO {
 
       // Commented code to print out the selected node.
       ResultSet rset = getNode.getResultSet();
+      Location l = new Location();
       // process results
-      String nodeID = rset.getString("nodeID");
-      int xc = rset.getInt("xCoord");
-      int yc = rset.getInt("yCoord");
-      String floor = rset.getString("floor");
-      String building = rset.getString("building");
-      String nodeType = rset.getString("nodeType");
-      String longName = rset.getString("longName");
-      String shortName = rset.getString("shortName");
+      if (rset.next()) {
+        String nodeID = rset.getString("nodeID");
+        int xc = rset.getInt("xCoord");
+        int yc = rset.getInt("yCoord");
+        String floor = rset.getString("floor");
+        String building = rset.getString("building");
+        String nodeType = rset.getString("nodeType");
+        String longName = rset.getString("longName");
+        String shortName = rset.getString("shortName");
 
-      Location l = new Location(nodeID, xc, yc, floor, building, nodeType, longName, shortName);
+        l = new Location(nodeID, xc, yc, floor, building, nodeType, longName, shortName);
+      }
 
       // Return the location object
       return l;
 
     } catch (SQLException e) {
-      System.out.println("Failed");
+      System.out.println("Failed to get node");
       e.printStackTrace();
       return null;
     }

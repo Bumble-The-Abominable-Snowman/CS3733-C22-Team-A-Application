@@ -7,7 +7,9 @@ import java.util.List;
 
 public class EmployeeDerbyImpl implements EmployeeDAO {
 
-  public static Employee getEmployee(String ID) {
+  public void EmployeeDerbyImpl() {}
+
+  public Employee getEmployee(String ID) {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement get = connection.createStatement();
@@ -35,7 +37,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     }
   }
 
-  public static void updateEmployee(String ID, String field, String change) {
+  public void updateEmployee(String ID, String field, String change) {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement update = connection.createStatement();
@@ -50,7 +52,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     }
   }
 
-  public static void enterEmployee(
+  public void enterEmployee(
       String employeeID,
       String employeeType,
       String firstName,
@@ -58,7 +60,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
       String email,
       String phoneNum,
       String address,
-      Date startDate) {
+      String startDate) {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement insert = connection.createStatement();
@@ -68,7 +70,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
               "INSERT INTO Employee(employeeID, employeeType, firstName, "
                   + "lastName, email, phoneNum, "
                   + "address, startDate) "
-                  + " VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%tY%n');",
+                  + " VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');",
               employeeID, employeeType, firstName, lastName, email, phoneNum, address, startDate);
       insert.execute(str);
 
@@ -79,7 +81,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     }
   }
 
-  public static void deleteEmployee(String ID) {
+  public void deleteEmployee(String ID) {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement delete = connection.createStatement();
@@ -93,7 +95,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     }
   }
 
-  public static List<Employee> getEmployeeList() {
+  public List<Employee> getEmployeeList() {
     List<Employee> empList = new ArrayList<>();
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
