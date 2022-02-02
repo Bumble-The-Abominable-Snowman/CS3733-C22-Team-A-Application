@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -40,10 +41,16 @@
                   <Button mnemonicParsing="false" text="Emergency/Urgent Requests" />
                   <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="168.0" text="Employees" />
                   <Button fx:id="serviceRequestsButton1" mnemonicParsing="false" onAction="#goToCreateNewServiceRequest" prefHeight="25.0" prefWidth="168.0" text="View Existing Service Requests" />
+                  <Button fx:id="equipmentTrackerButton" mnemonicParsing="false" onAction="#goToEquipmentTracker" prefHeight="25.0" prefWidth="168.0" text="View Equipment Tracker" />
                </children>
             </VBox>
             <Label text="Absolute-Zero Abominable Snowmen" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitApp" snapToPixel="false" text="Exit" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+            <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#goTosettings" text="Settings" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets right="5.0" top="5.0" />
+               </GridPane.margin>
+            </Button>
          </children>
       </GridPane>
    </children>
