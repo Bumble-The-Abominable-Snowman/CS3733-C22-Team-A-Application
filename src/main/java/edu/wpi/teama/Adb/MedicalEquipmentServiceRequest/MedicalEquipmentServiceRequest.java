@@ -1,10 +1,8 @@
 package edu.wpi.teama.Adb.MedicalEquipmentServiceRequest;
 
-import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import java.sql.Timestamp;
 
-public class MedicalEquipmentServiceRequest
-    extends RecursiveTreeObject<MedicalEquipmentServiceRequest> {
+public class MedicalEquipmentServiceRequest {
   private String requestID;
   private String startLocation;
   private String endLocation;

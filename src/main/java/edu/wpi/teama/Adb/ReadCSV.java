@@ -2,7 +2,8 @@ package edu.wpi.teama.Adb;
 
 import edu.wpi.teama.Adb.Employee.Employee;
 import edu.wpi.teama.Adb.Location.Location;
-import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipmentServiceRequest;
+import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipment;
+import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -108,7 +109,7 @@ public class ReadCSV {
   }
 
   // Read From MedicalEquipment CSV
-  public static List<MedicalEquipmentServiceRequest> readMedicalEquipmentCSV()
+  public static List<MedicalEquipment> readMedicalEquipmentCSV()
       throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
@@ -118,14 +119,14 @@ public class ReadCSV {
     int dataIndex = 0;
     int lineIndex = 0;
     int intData = 0;
-    List<MedicalEquipmentServiceRequest> list = new ArrayList<>();
+    List<MedicalEquipment> list = new ArrayList<>();
     lineScanner.nextLine();
 
     while (lineScanner.hasNextLine()) { // Scan CSV line by line
 
       dataScanner = new Scanner(lineScanner.nextLine());
       dataScanner.useDelimiter(",");
-      MedicalEquipmentServiceRequest thisME = new MedicalEquipmentServiceRequest();
+      MedicalEquipment thisME = new MedicalEquipment();
 
       while (dataScanner.hasNext()) {
 
@@ -156,9 +157,8 @@ public class ReadCSV {
   }
 
   // Read from Location CSV
-  public static List<
-          edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest>
-      readMedicalEquipmentServiceRequestCSV() throws IOException, ParseException {
+  public static List<MedicalEquipmentServiceRequest> readMedicalEquipmentServiceRequestCSV()
+      throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
     Scanner lineScanner =
@@ -170,16 +170,14 @@ public class ReadCSV {
     int dataIndex = 0;
     int lineIndex = 0;
     int intData = 0;
-    List<edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest> list =
-        new ArrayList<>();
+    List<MedicalEquipmentServiceRequest> list = new ArrayList<>();
     lineScanner.nextLine();
 
     while (lineScanner.hasNextLine()) { // Scan CSV line by line
 
       dataScanner = new Scanner(lineScanner.nextLine());
       dataScanner.useDelimiter(",");
-      edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest thisMESR =
-          new edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest();
+      MedicalEquipmentServiceRequest thisMESR = new MedicalEquipmentServiceRequest();
 
       while (dataScanner.hasNext()) {
 

@@ -6,7 +6,9 @@ import java.util.List;
 
 public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
 
-  public static MedicalEquipmentServiceRequest getMedicalEquipment(String ID) {
+  public void MedicalEquipmentImpl() {}
+
+  public MedicalEquipment getMedicalEquipment(String ID) {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement get = connection.createStatement();
@@ -19,9 +21,8 @@ public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
       String currentLocation = rset.getString("currentLocation");
       boolean isAvailable = rset.getBoolean("isAvailable");
 
-      MedicalEquipmentServiceRequest me =
-          new MedicalEquipmentServiceRequest(
-              equipmentID, equipmentType, isClean, currentLocation, isAvailable);
+      MedicalEquipment me =
+          new MedicalEquipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable);
 
       return me;
 
@@ -32,7 +33,7 @@ public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
     }
   }
 
-  public static void updateMedicalEquipment(String ID, String field, String change) {
+  public void updateMedicalEquipment(String ID, String field, String change) {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement update = connection.createStatement();
@@ -47,7 +48,7 @@ public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
     }
   }
 
-  public static void enterMedicalEquipment(
+  public void enterMedicalEquipment(
       String equipmentID,
       String equipmentType,
       boolean isClean,
@@ -71,7 +72,7 @@ public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
     }
   }
 
-  public static void deleteMedicalEquipment(String ID) {
+  public void deleteMedicalEquipment(String ID) {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement delete = connection.createStatement();
@@ -85,8 +86,8 @@ public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
     }
   }
 
-  public static List<MedicalEquipmentServiceRequest> getMedicalEquipmentList() {
-    List<MedicalEquipmentServiceRequest> equipList = new ArrayList<>();
+  public List<MedicalEquipment> getMedicalEquipmentList() {
+    List<MedicalEquipment> equipList = new ArrayList<>();
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement getNodeList = connection.createStatement();
@@ -99,9 +100,8 @@ public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
         String currentLocation = rset.getString("currentLocation");
         boolean isAvailable = rset.getBoolean("isAvailable");
 
-        MedicalEquipmentServiceRequest e =
-            new MedicalEquipmentServiceRequest(
-                equipmentID, equipmentType, isClean, currentLocation, isAvailable);
+        MedicalEquipment e =
+            new MedicalEquipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable);
         equipList.add(e);
       }
     } catch (SQLException e) {

@@ -2,17 +2,16 @@ package edu.wpi.teama.Adb.MedicalEquipment;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
-public class MedicalEquipmentServiceRequest
-    extends RecursiveTreeObject<MedicalEquipmentServiceRequest> {
+public class MedicalEquipment extends RecursiveTreeObject<MedicalEquipment> {
   private String equipmentID;
   private String equipmentType;
   private boolean isClean;
   private String currentLocation;
   private boolean isAvailable;
 
-  public MedicalEquipmentServiceRequest() {}
+  public MedicalEquipment() {}
 
-  public MedicalEquipmentServiceRequest(
+  public MedicalEquipment(
       String equipmentID,
       String equipmentType,
       boolean isClean,
