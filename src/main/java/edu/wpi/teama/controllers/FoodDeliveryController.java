@@ -16,6 +16,7 @@ public class FoodDeliveryController {
   @FXML private Button nextButton;
   @FXML private Button backButton;
   @FXML private Button homeButton;
+  @FXML private Button clearButton;
   @FXML private TextField roomText;
   @FXML private Button submitButton;
   @FXML private ChoiceBox<String> mainChoice;
@@ -47,6 +48,18 @@ public class FoodDeliveryController {
     Stage window = (Stage) backButton.getScene().getWindow();
     window.setScene(new Scene(root));
     window.setTitle("Select Service Request");
+    window.show();
+  }
+
+  @FXML
+  private void clearSubmission() throws IOException {
+    URL xmlUrl = Aapp.class.getResource("views/foodDelivery.fxml");
+    loader.setLocation(xmlUrl);
+    Parent root = loader.load();
+
+    Stage window = (Stage) clearButton.getScene().getWindow();
+    window.setScene(new Scene(root));
+    window.setTitle("Food Delivery");
     window.show();
   }
 }

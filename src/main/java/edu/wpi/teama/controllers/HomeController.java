@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 public class HomeController {
   @FXML private Button settingsButton;
   @FXML private Button serviceRequestsButton;
+  @FXML private Button exitButton;
   private FXMLLoader loader = new FXMLLoader();
 
   @FXML
@@ -37,5 +38,10 @@ public class HomeController {
     window.setScene(new Scene(root));
     window.setTitle("Settings");
     window.show();
+  }
+
+  @FXML
+  private void exitApp() {
+    System.exit(0);
   }
 }

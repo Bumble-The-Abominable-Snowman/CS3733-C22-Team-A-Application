@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17"  xmlns:fx="http://javafx.com/fxml" fx:controller="edu.wpi.teama.controllers.HomeController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teama.controllers.HomeController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="228.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="386.0" minWidth="10.0" prefWidth="372.0" />
@@ -37,12 +37,14 @@
          <children>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="serviceRequestsButton" mnemonicParsing="false" onAction="#goToCreateNewServiceRequest" prefHeight="25.0" prefWidth="168.0" text="Service Requests" />
+                  <Button fx:id="serviceRequestsButton" mnemonicParsing="false" onAction="#goToCreateNewServiceRequest" prefHeight="25.0" prefWidth="168.0" text="Make New Service Requests" />
                   <Button mnemonicParsing="false" text="Emergency/Urgent Requests" />
                   <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="168.0" text="Employees" />
+                  <Button fx:id="serviceRequestsButton1" mnemonicParsing="false" onAction="#goToCreateNewServiceRequest" prefHeight="25.0" prefWidth="168.0" text="View Existing Service Requests" />
                </children>
             </VBox>
             <Label text="Absolute-Zero Abominable Snowmen" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitApp" snapToPixel="false" text="Exit" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
             <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#goTosettings" text="Settings" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets right="5.0" top="5.0" />

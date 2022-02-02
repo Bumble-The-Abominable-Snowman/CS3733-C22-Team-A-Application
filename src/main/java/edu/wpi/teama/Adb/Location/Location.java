@@ -1,4 +1,8 @@
-package edu.wpi.teama;
+package edu.wpi.teama.Adb.Location;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Location {
 
@@ -97,7 +101,7 @@ public class Location {
     return shortName;
   }
 
-  @Override
+  /*  @Override
   public String toString() { // Used to format for printing to console, not useful otherwise.
     return getNodeID()
         + getXCoord()
@@ -107,5 +111,5 @@ public class Location {
         + getNodeType()
         + getLongName()
         + getShortName();
-  }
+  }*/
 }
