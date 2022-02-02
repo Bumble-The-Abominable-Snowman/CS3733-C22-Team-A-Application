@@ -1,11 +1,20 @@
 package edu.wpi.teama.controllers;
 
 import edu.wpi.teama.Aapp;
+import edu.wpi.teama.Adb.Employee.Employee;
+import edu.wpi.teama.Adb.Employee.EmployeeDAO;
+import edu.wpi.teama.Adb.Employee.EmployeeDerbyImpl;
+import edu.wpi.teama.Adb.Location.Location;
+import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
 import edu.wpi.teama.entities.MedicalEquipmentServiceRequest;
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,8 +26,8 @@ import javafx.stage.Stage;
 
 public class MedicalEquipmentDeliveryController {
   @FXML private TextArea specialNotes;
-  @FXML private ChoiceBox employeeCheckBox;
-  @FXML private ChoiceBox toChoiceBox;
+  @FXML private ChoiceBox employeeChoiceBox;
+  @FXML private ComboBox toChoiceBox;
   @FXML private Button homeButton;
   @FXML private ChoiceBox typeChoiceBox;
   @FXML private ChoiceBox fromChoiceBox;
@@ -51,7 +60,7 @@ public class MedicalEquipmentDeliveryController {
   }
 
   @FXML
-  private void initialize() {
+  private void initialize() throws ParseException {
     specialNotes.setWrapText(true);
 
     typeChoiceBox.getItems().removeAll(typeChoiceBox.getItems());
@@ -90,8 +99,26 @@ public class MedicalEquipmentDeliveryController {
 
     fromChoiceBox.getItems().removeAll(fromChoiceBox.getItems());
     toChoiceBox.getItems().removeAll(toChoiceBox.getItems());
-    // typeChoiceBox.getItems().addAll(new LocationDerbyImpl().getNodeList());
-    // employeeChoiceBox.getItems().addAll(new EmployeeDerbyImpl.getNodeList());
+    toChoiceBox
+        .getItems()
+        .addAll(
+            new LocationDerbyImpl()
+                .getNodeList().stream().map(Location::getShortName).collect(Collectors.toList()));
+    toChoiceBox.setVisibleRowCount(5);
+
+    EmployeeDAO EmployeeDAO = new EmployeeDerbyImpl();
+    String input = "2022-02-01";
+    SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Date date = originalFormat.parse(input);
+    EmployeeDAO.enterEmployee(
+        "001", "Admin", "Yanbo", "Dai", "ydai2@wpi.edu", "0000000000", "100 institute Rd", date);
+
+    employeeChoiceBox
+        .getItems()
+        .addAll(
+            EmployeeDAO.getEmployeeList().stream()
+                .map(Employee::getFirstName)
+                .collect(Collectors.toList()));
   }
 
   @FXML
