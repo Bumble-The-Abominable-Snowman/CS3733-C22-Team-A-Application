@@ -2,8 +2,7 @@ package edu.wpi.teama.Adb;
 
 import edu.wpi.teama.Adb.Employee.Employee;
 import edu.wpi.teama.Adb.Location.Location;
-import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipment;
-import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest;
+import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipmentServiceRequest;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -67,13 +66,14 @@ public class WriteCSV {
   }
 
   // Write CSV for MedicalEquipment table
-  static void writeMedicalEquipmentCSV(List<MedicalEquipment> List) throws IOException {
+  static void writeMedicalEquipmentCSV(List<MedicalEquipmentServiceRequest> List)
+      throws IOException {
 
     // create a writer
     BufferedWriter writer = Files.newBufferedWriter(Paths.get("MedicalEquipment.CSV"));
 
     // write location data
-    for (MedicalEquipment thisME : List) {
+    for (MedicalEquipmentServiceRequest thisME : List) {
 
       String isClean = String.valueOf(thisME.getIsClean());
       String isAvailable = String.valueOf(thisME.getIsAvailable());
@@ -92,7 +92,8 @@ public class WriteCSV {
   }
 
   // Write CSV for MedicalEquipmentServiceRequest table
-  static void writeMedicalEquipmentServiceRequestCSV(List<MedicalEquipmentServiceRequest> List)
+  static void writeMedicalEquipmentServiceRequestCSV(
+      List<edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest> List)
       throws IOException {
 
     // create a writer
@@ -100,7 +101,8 @@ public class WriteCSV {
         Files.newBufferedWriter(Paths.get("MedicalEquipmentServiceRequest.CSV"));
 
     // write location data
-    for (MedicalEquipmentServiceRequest thisMESR : List) {
+    for (edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest thisMESR :
+        List) {
 
       String requestTime = String.valueOf(thisMESR.getRequestTime());
       writer.write(

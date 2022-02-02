@@ -90,6 +90,11 @@ public class FoodDeliveryController {
     dessertChoice.getItems().addAll("Chocolate Chip Cookie", "Brownie", "Jello");
     dessertChoice.getSelectionModel().select("Dessert");
     dessertChoice.getSelectionModel().selectedItemProperty();
+
+    roomChoice.getItems().removeAll(roomChoice.getItems());
+    roomChoice.getItems().addAll("Placeholder");
+    roomChoice.getSelectionModel().select("Room for Delivery");
+    roomChoice.getSelectionModel().selectedItemProperty();
   }
 
   @FXML
