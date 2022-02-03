@@ -1,10 +1,16 @@
 package edu.wpi.teama.controllers.ServiceRequestControllers;
 
+import edu.wpi.teama.Adb.Employee.Employee;
+import edu.wpi.teama.Adb.Employee.EmployeeDAO;
+import edu.wpi.teama.Adb.Employee.EmployeeDerbyImpl;
 import edu.wpi.teama.Adb.Location.Location;
 import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
 import edu.wpi.teama.controllers.SceneController;
 import edu.wpi.teama.entities.LanguageInterpreterRequest;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,7 +29,7 @@ public class LanguageInterpreterController extends GenericServiceRequestsControl
   private FXMLLoader loader = new FXMLLoader();
 
   @FXML
-  public void initialize() {
+  public void initialize() throws ParseException {
     sceneID = SceneController.SCENES.LANGUAGE_INTERPRETER_SERVICE_REQUEST_SCENE;
 
     commentsBox.setWrapText(true);
@@ -54,7 +60,25 @@ public class LanguageInterpreterController extends GenericServiceRequestsControl
     toLocationChoice.setVisibleRowCount(5);
 
     employeeChoice.getItems().removeAll(employeeChoice.getItems());
-    employeeChoice.getItems().addAll("Placeholder");
+    EmployeeDAO EmployeeDAO = new EmployeeDerbyImpl();
+    String input = "2022-02-03";
+    SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Date date = originalFormat.parse(input);
+    EmployeeDAO.enterEmployee(
+        "323",
+        "Admin",
+        "Lucy",
+        "Bernard",
+        "lcbernard@wpi.edu",
+        "0000000000",
+        "100 institute Rd",
+        date);
+    employeeChoice
+        .getItems()
+        .addAll(
+            EmployeeDAO.getEmployeeList().stream()
+                .map(Employee::getFirstName)
+                .collect(Collectors.toList()));
     employeeChoice.getSelectionModel().select("Employee");
     employeeChoice.setVisibleRowCount(5);
   }
