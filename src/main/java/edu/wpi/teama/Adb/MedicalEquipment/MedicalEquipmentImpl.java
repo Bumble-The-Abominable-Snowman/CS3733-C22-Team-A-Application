@@ -6,7 +6,7 @@ import java.util.List;
 
 public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
 
-  public void MedicalEquipmentImpl() {}
+  public MedicalEquipmentImpl() {}
 
   public MedicalEquipment getMedicalEquipment(String ID) {
     try {
@@ -15,15 +15,17 @@ public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
       String str = String.format("SELECT * FROM MedicalEquipment WHERE equipmentID = '%s'", ID);
 
       ResultSet rset = get.executeQuery(str);
-      String equipmentID = rset.getString("equipmentID");
-      String equipmentType = rset.getString("equipmentType");
-      boolean isClean = rset.getBoolean("isClean");
-      String currentLocation = rset.getString("currentLocation");
-      boolean isAvailable = rset.getBoolean("isAvailable");
+      MedicalEquipment me = new MedicalEquipment();
+      if (rset.next()) {
+        String equipmentID = rset.getString("equipmentID");
+        String equipmentType = rset.getString("equipmentType");
+        boolean isClean = rset.getBoolean("isClean");
+        String currentLocation = rset.getString("currentLocation");
+        boolean isAvailable = rset.getBoolean("isAvailable");
 
-      MedicalEquipment me =
-          new MedicalEquipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable);
-
+        me =
+            new MedicalEquipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable);
+      }
       return me;
 
     } catch (SQLException e) {
@@ -39,7 +41,9 @@ public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
       Statement update = connection.createStatement();
       String str =
           String.format(
-              "UPDATE MedicalEquipment SET " + field + " = %s WHERE nodeID = '%s'", change, ID);
+              "UPDATE MedicalEquipment SET " + field + " = %s WHERE equipmentID = '%s'",
+              change,
+              ID);
       update.execute(str);
     } catch (SQLException e) {
       System.out.println("Failed");
@@ -64,7 +68,7 @@ public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
                   + " VALUES('%s', '%s', '%b', '%s', '%b')",
               equipmentID, equipmentType, isClean, currentLocation, isAvailable);
       insert.execute(str);
-
+      connection.close();
     } catch (SQLException e) {
       System.out.println("Failed");
       e.printStackTrace();
@@ -75,10 +79,11 @@ public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
   public void deleteMedicalEquipment(String ID) {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      System.out.println("Connection MAde");
       Statement delete = connection.createStatement();
       String str = String.format("DELETE FROM MedicalEquipment WHERE equipmentID = '%s'", ID);
       delete.execute(str);
-
+      connection.close();
     } catch (SQLException e) {
       System.out.println("Failed");
       e.printStackTrace();

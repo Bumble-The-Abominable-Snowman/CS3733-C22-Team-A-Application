@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 public class CreateNewServiceRequestController {
 
   @FXML private Button newRequestButton;
+
   private FXMLLoader loader = new FXMLLoader();
 
   @FXML

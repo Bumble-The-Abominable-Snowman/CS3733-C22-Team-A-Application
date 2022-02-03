@@ -67,7 +67,7 @@ public class WriteCSV {
   }
 
   // Write CSV for MedicalEquipment table
-  static void writeMedicalEquipmentCSV(List<MedicalEquipment> List) throws IOException {
+  public static void writeMedicalEquipmentCSV(List<MedicalEquipment> List) throws IOException {
 
     // create a writer
     BufferedWriter writer = Files.newBufferedWriter(Paths.get("MedicalEquipment.CSV"));
@@ -92,8 +92,8 @@ public class WriteCSV {
   }
 
   // Write CSV for MedicalEquipmentServiceRequest table
-  static void writeMedicalEquipmentServiceRequestCSV(List<MedicalEquipmentServiceRequest> List)
-      throws IOException {
+  public static void writeMedicalEquipmentServiceRequestCSV(
+      List<MedicalEquipmentServiceRequest> List) throws IOException {
 
     // create a writer
     BufferedWriter writer =
