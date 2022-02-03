@@ -7,6 +7,7 @@ import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceR
 import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class Adb {
@@ -184,14 +185,18 @@ public class Adb {
           List<edu.wpi.teama.Adb.Employee.Employee> List = ReadCSV.readEmployeeCSV();
           for (Employee l : List) {
             Statement addStatement = connection.createStatement();
+
+            SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String date = originalFormat.format(l.getStartDate());
+
             addStatement.executeUpdate(
-                "INSERT INTO Employee(employeeID varchar(25), employeeType varchar(25), firstName varchar(25), lastName varchar(25), email varchar(25), phoneNum varchar(25), address varchar(25), startDate date) VALUES('"
+                "INSERT INTO Employee(employeeID, employeeType, firstName, lastName, email, phoneNum, address, startDate) VALUES('"
                     + l.getEmployeeID()
-                    + "', "
+                    + "', '"
                     + l.getEmployeeType()
-                    + ", "
+                    + "', '"
                     + l.getFirstName()
-                    + ", '"
+                    + "', '"
                     + l.getLastName()
                     + "', '"
                     + l.getEmail()
@@ -200,7 +205,7 @@ public class Adb {
                     + "', '"
                     + l.getAddress()
                     + "', '"
-                    + l.getStartDate()
+                    + date
                     + "')");
           }
         } catch (SQLException | IOException | ParseException e) {
@@ -219,7 +224,7 @@ public class Adb {
           for (MedicalEquipment l : List) {
             Statement addStatement = connection.createStatement();
             addStatement.executeUpdate(
-                "INSERT INTO MedicalEquipment( equipmentID varchar(25), equipmentType varchar(25), isClean varchar(25), currentLocation varchar(25), isAvailable varchar(25)) VALUES('"
+                "INSERT INTO MedicalEquipment( equipmentID, equipmentType, isClean, currentLocation, isAvailable) VALUES('"
                     + l.getEquipmentID()
                     + "', "
                     + l.getEquipmentType()
@@ -246,7 +251,7 @@ public class Adb {
           for (MedicalEquipmentServiceRequest l : List) {
             Statement addStatement = connection.createStatement();
             addStatement.executeUpdate(
-                "INSERT INTO MedicalEquipment(requestID varchar(25), startLocation varchar(25), endLocation varchar(25), employeeRequested varchar(25), employeeAssigned varchar(25), requestTime timestamp, requestStatus varchar(25), equipmentID varchar(25), requestType varchar(25)) VALUES('"
+                "INSERT INTO MedicalEquipment(requestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, equipmentID, requestType) VALUES('"
                     + l.getRequestID()
                     + "', "
                     + l.getStartLocation()
