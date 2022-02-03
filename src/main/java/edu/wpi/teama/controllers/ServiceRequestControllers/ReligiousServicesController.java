@@ -1,16 +1,14 @@
 package edu.wpi.teama.controllers.ServiceRequestControllers;
 
-import edu.wpi.teama.Aapp;
-import java.io.IOException;
-import java.net.URL;
+import edu.wpi.teama.controllers.SceneController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 
-public class ReligiousServicesController {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ReligiousServicesController extends GenericServiceRequestsController {
   @FXML private TextArea specialNotes = new TextArea();
   @FXML private ChoiceBox religionChoiceBox = new ChoiceBox();
   @FXML private ChoiceBox toChoiceBox = new ChoiceBox();
@@ -22,48 +20,44 @@ public class ReligiousServicesController {
   @FXML private Button clearButton;
   @FXML private Button submitButton = new Button();
 
+
+  private List<String> christianDenom = new ArrayList<>();
+  private List<String> nonDenom = new ArrayList<>();
+  private List<String> otherDenom = new ArrayList<>();
+
   private FXMLLoader loader = new FXMLLoader();
 
-  @FXML
-  private void returnToHomeScene() throws IOException {
-    FXMLLoader loader = new FXMLLoader();
-    URL xmlUrl = Aapp.class.getResource("views/home.fxml");
-    loader.setLocation(xmlUrl);
-    Parent root = loader.load();
+  public ReligiousServicesController() {
+    super();
 
-    Stage window = (Stage) homeButton.getScene().getWindow();
-    window.setScene(new Scene(root));
-    window.setTitle("Home");
-    window.show();
+    christianDenom.add("Catholic");
+    christianDenom.add("Baptist");
+    christianDenom.add("Unspec. Protestant");
+    christianDenom.add("Episcopal");
+    christianDenom.add("UCOC");
+    christianDenom.add("Methodist");
+    christianDenom.add("Other");
+
+    nonDenom.add("Atheist");
+    nonDenom.add("Agnostic");
+    nonDenom.add("Other");
+
+    otherDenom.add("Jewish");
+    otherDenom.add("Buddhist");
+    otherDenom.add("Muslim");
+    otherDenom.add("Hindu");
+    otherDenom.add("Other");
+  }
+
+  private void initialize() {
+    sceneID = SceneController.SCENES.RELIGIOUS_SERVICE_REQUEST_SCENE;
+    specialNotes.setWrapText(true);
+
+
   }
 
   @FXML
-  private void returnToSelectServiceScene() throws IOException {
-    FXMLLoader loader = new FXMLLoader();
-    URL xmlUrl = Aapp.class.getResource("views/selectServiceRequest.fxml");
-    loader.setLocation(xmlUrl);
-    Parent root = loader.load();
-
-    Stage window = (Stage) backButton.getScene().getWindow();
-    window.setScene(new Scene(root));
-    window.setTitle("Select Service Request");
-    window.show();
-  }
-
-  @FXML
-  private void submitRequest() {
+  void submitRequest() {
     // send request to database
-  }
-
-  @FXML
-  private void clearSubmission() throws IOException {
-    URL xmlUrl = Aapp.class.getResource("views/religiousServices.fxml");
-    loader.setLocation(xmlUrl);
-    Parent root = loader.load();
-
-    Stage window = (Stage) clearButton.getScene().getWindow();
-    window.setScene(new Scene(root));
-    window.setTitle("Religious Requests");
-    window.show();
   }
 }
