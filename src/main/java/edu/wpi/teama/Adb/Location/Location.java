@@ -1,8 +1,9 @@
 package edu.wpi.teama.Adb.Location;
 
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import java.sql.*;
 
-public class Location {
+public class Location extends RecursiveTreeObject<Location> {
 
   String nodeID;
   int xCoord;

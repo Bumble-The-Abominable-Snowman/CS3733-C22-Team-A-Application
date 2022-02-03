@@ -91,7 +91,8 @@ public class ReadCSV {
         else if (dataIndex == 5) thisEmployee.setPhoneNum(data);
         else if (dataIndex == 6) thisEmployee.setAddress(data);
         else if (dataIndex == 7) {
-          Date date = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).parse(data);
+          SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+          Date date = originalFormat.parse(data);
           thisEmployee.setStartDate(date);
         } else System.out.println("Invalid data, I broke::" + data);
         dataIndex++;
