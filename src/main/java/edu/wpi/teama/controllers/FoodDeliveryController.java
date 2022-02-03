@@ -1,6 +1,7 @@
 package edu.wpi.teama.controllers;
 
 import edu.wpi.teama.Aapp;
+import edu.wpi.teama.entities.foodDeliveryRequest;
 import java.io.IOException;
 import java.net.URL;
 import javafx.fxml.FXML;
@@ -23,8 +24,28 @@ public class FoodDeliveryController {
   @FXML private ChoiceBox<String> drinkChoice;
   @FXML private ChoiceBox<String> sideChoice;
   @FXML private ChoiceBox<String> dessertChoice;
+  @FXML private ChoiceBox<Integer> roomChoice;
   @FXML private TextField commentsText;
   private FXMLLoader loader = new FXMLLoader();
+
+  @FXML
+  private void initialize() {
+    mainChoice.getItems().addAll("Turkey Sandwich", "Grilled Cheese Sandwich", "Friend Chicken");
+    drinkChoice.getItems().addAll("Water", "Juice", "Milk");
+    sideChoice.getItems().addAll("French Fries", "Apple", "Biscuit");
+    dessertChoice.getItems().addAll("Cookie", "Brownie", "Cinnamon Roll");
+    roomChoice.getItems().addAll(000, 101, 102, 103);
+    mainChoice.getSelectionModel().select("Entree");
+    drinkChoice.getSelectionModel().select("Beverage");
+    sideChoice.getSelectionModel().select("Side");
+    dessertChoice.getSelectionModel().select("Dessert");
+    roomChoice.getSelectionModel().select(0);
+    mainChoice.getSelectionModel().selectedItemProperty();
+    drinkChoice.getSelectionModel().selectedItemProperty();
+    sideChoice.getSelectionModel().selectedItemProperty();
+    dessertChoice.getSelectionModel().selectedItemProperty();
+    roomChoice.getSelectionModel().selectedItemProperty();
+  }
 
   @FXML
   private void returnToHomeScene() throws IOException {
@@ -61,5 +82,17 @@ public class FoodDeliveryController {
     window.setScene(new Scene(root));
     window.setTitle("Food Delivery");
     window.show();
+  }
+
+  @FXML
+  private void createFoodRequest() throws IOException {
+    foodDeliveryRequest aRequest =
+        new foodDeliveryRequest(
+            mainChoice.getValue(),
+            sideChoice.getValue(),
+            drinkChoice.getValue(),
+            dessertChoice.getValue(),
+            roomChoice.getValue(),
+            commentsText.getText());
   }
 }
