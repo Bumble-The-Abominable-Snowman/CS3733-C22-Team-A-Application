@@ -1,6 +1,7 @@
-package edu.wpi.teama.controllers.ServiceRequestControllers;
+package edu.wpi.teama.controllers;
 
 import edu.wpi.teama.Aapp;
+import edu.wpi.teama.entities.foodDeliveryRequest;
 import edu.wpi.teama.controllers.SceneController;
 import java.io.IOException;
 import java.net.URL;
@@ -18,11 +19,32 @@ public class SanitationServicesController extends GenericServiceRequestsControll
   @FXML private Button clearButton;
   @FXML private ChoiceBox typeMenu;
   @FXML private Button submitButton;
-  @FXML private Label locationLabel;
-  @FXML private TextField specialNotes;
-  @FXML private TextField typeOtherBox;
-
+  @FXML private ChoiceBox<String> mainChoice;
+  @FXML private ChoiceBox<String> drinkChoice;
+  @FXML private ChoiceBox<String> sideChoice;
+  @FXML private ChoiceBox<String> dessertChoice;
+  @FXML private ChoiceBox<Integer> roomChoice;
+  @FXML private TextField commentsText;
   private FXMLLoader loader = new FXMLLoader();
+
+  @FXML
+  private void initialize() {
+    mainChoice.getItems().addAll("Turkey Sandwich", "Grilled Cheese Sandwich", "Friend Chicken");
+    drinkChoice.getItems().addAll("Water", "Juice", "Milk");
+    sideChoice.getItems().addAll("French Fries", "Apple", "Biscuit");
+    dessertChoice.getItems().addAll("Cookie", "Brownie", "Cinnamon Roll");
+    roomChoice.getItems().addAll(000, 101, 102, 103);
+    mainChoice.getSelectionModel().select("Entree");
+    drinkChoice.getSelectionModel().select("Beverage");
+    sideChoice.getSelectionModel().select("Side");
+    dessertChoice.getSelectionModel().select("Dessert");
+    roomChoice.getSelectionModel().select(0);
+    mainChoice.getSelectionModel().selectedItemProperty();
+    drinkChoice.getSelectionModel().selectedItemProperty();
+    sideChoice.getSelectionModel().selectedItemProperty();
+    dessertChoice.getSelectionModel().selectedItemProperty();
+    roomChoice.getSelectionModel().selectedItemProperty();
+  }
 
   @FXML
   private void initialize() {
@@ -44,12 +66,11 @@ public class SanitationServicesController extends GenericServiceRequestsControll
 
   @FXML
   private void returnToHomeScene() throws IOException {
-    FXMLLoader loader = new FXMLLoader();
     URL xmlUrl = Aapp.class.getResource("views/home.fxml");
     loader.setLocation(xmlUrl);
     Parent root = loader.load();
 
-    Stage window = (Stage) returnButton.getScene().getWindow();
+    Stage window = (Stage) homeButton.getScene().getWindow();
     window.setScene(new Scene(root));
     window.setTitle("Home");
     window.show();
@@ -70,13 +91,25 @@ public class SanitationServicesController extends GenericServiceRequestsControll
 
   @FXML
   private void clearSubmission() throws IOException {
-    URL xmlUrl = Aapp.class.getResource("views/sanitationServices.fxml");
+    URL xmlUrl = Aapp.class.getResource("views/foodDelivery.fxml");
     loader.setLocation(xmlUrl);
     Parent root = loader.load();
 
     Stage window = (Stage) clearButton.getScene().getWindow();
     window.setScene(new Scene(root));
-    window.setTitle("Sanitation Services");
+    window.setTitle("Food Delivery");
     window.show();
+  }
+
+  @FXML
+  private void createFoodRequest() throws IOException {
+    foodDeliveryRequest aRequest =
+        new foodDeliveryRequest(
+            mainChoice.getValue(),
+            sideChoice.getValue(),
+            drinkChoice.getValue(),
+            dessertChoice.getValue(),
+            roomChoice.getValue(),
+            commentsText.getText());
   }
 }
