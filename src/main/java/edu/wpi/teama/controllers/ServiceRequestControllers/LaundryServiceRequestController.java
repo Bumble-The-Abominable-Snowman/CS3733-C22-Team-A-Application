@@ -1,7 +1,6 @@
 package edu.wpi.teama.controllers.ServiceRequestControllers;
 
 import edu.wpi.teama.Adb.LaundryServiceRequest.LaundryServiceRequest;
-import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest;
 import edu.wpi.teama.controllers.SceneController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,9 +37,9 @@ public class LaundryServiceRequestController extends GenericServiceRequestsContr
   void submitRequest() {
     System.out.print("\nNew request, got some work to do bud!\n");
     System.out.printf("Selected wash mode is : %s\n", washMode.getValue());
-    System.out.printf("Added this note : \n[NOTE START]\n%s\n[NOTE END]\n", specialNotes.getCharacters());
-    if (!washMode.getValue().equals("Wash Mode"))
-    {
+    System.out.printf(
+        "Added this note : \n[NOTE START]\n%s\n[NOTE END]\n", specialNotes.getCharacters());
+    if (!washMode.getValue().equals("Wash Mode")) {
       LaundryServiceRequest laundryServiceRequest = new LaundryServiceRequest();
       laundryServiceRequest.setWashMode(washMode.getValue());
       laundryServiceRequest.setSpecialInstructions(specialNotes.getCharacters().toString());
