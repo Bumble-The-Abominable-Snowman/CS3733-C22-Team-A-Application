@@ -19,6 +19,7 @@ public class Aapp extends Application {
   @Override
   public void init() throws IOException {
     log.info("Starting Up");
+    //test
   }
 
   @Override
