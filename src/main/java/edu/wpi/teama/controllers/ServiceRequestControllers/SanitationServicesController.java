@@ -12,4 +12,7 @@ public class SanitationServicesController extends GenericServiceRequestsControll
   private void initialize() {
     sceneID = SceneController.SCENES.SANITATION_SERVICE_REQUEST_SCENE;
   }
+
+  @FXML
+  void submitRequest() {}
 }

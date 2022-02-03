@@ -28,4 +28,7 @@ public class LanguageInterpreterController extends GenericServiceRequestsControl
   public void initialize() {
     sceneID = SceneController.SCENES.LANGUAGE_INTERPRETER_SERVICE_REQUEST_SCENE;
   }
+
+  @FXML
+  void submitRequest() {}
 }

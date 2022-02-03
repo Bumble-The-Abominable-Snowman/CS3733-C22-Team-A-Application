@@ -7,6 +7,7 @@ import edu.wpi.teama.Adb.Location.Location;
 import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
 import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest;
 import edu.wpi.teama.controllers.SceneController;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,6 +33,8 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
   private List<String> reclinerLocations = new ArrayList<>();
 
   public MedicalEquipmentDeliveryController() {
+    super();
+
     bedLocations.add("Nearest Location");
     bedLocations.add("OR Bed Park");
     bedLocations.add("Nearest Hallway");
@@ -110,10 +113,12 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
   }
 
   @FXML
-  private void submitRequest(){
-    MedicalEquipmentServiceRequest medicalEquipmentServiceRequest = new MedicalEquipmentServiceRequest();
-    if(){
-
+  void submitRequest() throws IOException {
+    MedicalEquipmentServiceRequest medicalEquipmentServiceRequest =
+        new MedicalEquipmentServiceRequest();
+    if (!typeChoiceBox.getSelectionModel().getSelectedItem().equals("Type")) {
+      // pass medical service request object
+      this.returnToHomeScene();
     }
   }
 }

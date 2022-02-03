@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 
-public class GenericServiceRequestsController {
+public abstract class GenericServiceRequestsController {
   @FXML private Button homeButton = new Button();
   @FXML private Button submitButton;
   @FXML private Button backButton;
@@ -20,7 +20,7 @@ public class GenericServiceRequestsController {
   private FXMLLoader loader = new FXMLLoader();
 
   @FXML
-  private void returnToHomeScene() throws IOException {
+  void returnToHomeScene() throws IOException {
     sceneController.switchScene(SceneController.SCENES.HOME_SCENE);
   }
 
@@ -33,4 +33,7 @@ public class GenericServiceRequestsController {
   private void clearSubmission() throws IOException {
     sceneController.switchScene(sceneID);
   }
+
+  @FXML
+  abstract void submitRequest() throws IOException;
 }

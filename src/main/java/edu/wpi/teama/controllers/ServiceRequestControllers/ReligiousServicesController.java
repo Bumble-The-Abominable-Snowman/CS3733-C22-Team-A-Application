@@ -24,7 +24,7 @@ public class ReligiousServicesController extends GenericServiceRequestsControlle
   }
 
   @FXML
-  private void submitRequest() {
+  void submitRequest() {
     // send request to database
   }
 }

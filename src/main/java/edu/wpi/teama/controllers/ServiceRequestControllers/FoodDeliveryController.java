@@ -55,4 +55,7 @@ public class FoodDeliveryController extends GenericServiceRequestsController {
             roomChoice.getValue(),
             commentsText.getText());
   }
+
+  @FXML
+  void submitRequest() {}
 }

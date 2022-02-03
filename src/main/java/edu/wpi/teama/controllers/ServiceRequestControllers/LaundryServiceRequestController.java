@@ -33,7 +33,7 @@ public class LaundryServiceRequestController extends GenericServiceRequestsContr
   }
 
   @FXML
-  private void submitRequest() {
+  void submitRequest() {
     System.out.print("\nNew request, got some work to do bud!\n");
     System.out.printf("Selected wash mode is : %s\n", washMode.getValue());
     System.out.printf(
