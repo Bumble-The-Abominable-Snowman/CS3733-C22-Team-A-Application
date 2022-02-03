@@ -1,14 +1,12 @@
-package edu.wpi.teama.controllers;
+package edu.wpi.teama.controllers.ServiceRequestControllers;
 
-import edu.wpi.teama.Aapp;
 import edu.wpi.teama.Adb.Employee.Employee;
 import edu.wpi.teama.Adb.Employee.EmployeeDAO;
 import edu.wpi.teama.Adb.Employee.EmployeeDerbyImpl;
 import edu.wpi.teama.Adb.Location.Location;
 import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
+import edu.wpi.teama.controllers.SceneController;
 import edu.wpi.teama.entities.MedicalEquipmentServiceRequest;
-import java.io.IOException;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,12 +17,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 
-public class MedicalEquipmentDeliveryController {
+public class MedicalEquipmentDeliveryController extends GenericServiceRequestsController {
   @FXML private TextArea specialNotes;
   @FXML private ChoiceBox employeeChoiceBox;
   @FXML private ComboBox toChoiceBox;
@@ -61,6 +56,8 @@ public class MedicalEquipmentDeliveryController {
 
   @FXML
   private void initialize() throws ParseException {
+    sceneID = SceneController.SCENES.MEDICAL_EQUIPMENT_DELIVERY_SERVICE_REQUEST_SCENE;
+
     specialNotes.setWrapText(true);
 
     typeChoiceBox.getItems().removeAll(typeChoiceBox.getItems());
@@ -122,45 +119,8 @@ public class MedicalEquipmentDeliveryController {
   }
 
   @FXML
-  private void returnToHomeScene() throws IOException {
-    URL xmlUrl = Aapp.class.getResource("views/home.fxml");
-    loader.setLocation(xmlUrl);
-    Parent root = loader.load();
-
-    Stage window = (Stage) homeButton.getScene().getWindow();
-    window.setScene(new Scene(root));
-    window.setTitle("Home");
-    window.show();
-  }
-
-  @FXML
-  private void returnToSelectServiceScene() throws IOException {
-    FXMLLoader loader = new FXMLLoader();
-    URL xmlUrl = Aapp.class.getResource("views/selectServiceRequest.fxml");
-    loader.setLocation(xmlUrl);
-    Parent root = loader.load();
-
-    Stage window = (Stage) backButton.getScene().getWindow();
-    window.setScene(new Scene(root));
-    window.setTitle("Select Service Request");
-    window.show();
-  }
-
-  @FXML
   public void chooseFloor(ActionEvent actionEvent) {
     locationLabel.setText(((Button) actionEvent.getSource()).getText());
     locationLabel.setAlignment(Pos.CENTER);
-  }
-
-  @FXML
-  private void clearSubmission() throws IOException {
-    URL xmlUrl = Aapp.class.getResource("views/medicalEquipmentDelivery.fxml");
-    loader.setLocation(xmlUrl);
-    Parent root = loader.load();
-
-    Stage window = (Stage) clearButton.getScene().getWindow();
-    window.setScene(new Scene(root));
-    window.setTitle("Medical Equipment Delivery");
-    window.show();
   }
 }

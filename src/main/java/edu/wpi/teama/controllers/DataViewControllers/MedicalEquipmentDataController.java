@@ -1,4 +1,4 @@
-package edu.wpi.teama.controllers;
+package edu.wpi.teama.controllers.DataViewControllers;
 
 import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
@@ -8,6 +8,7 @@ import edu.wpi.teama.Aapp;
 import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipment;
 import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipmentDAO;
 import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipmentImpl;
+import edu.wpi.teama.controllers.SceneController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -16,18 +17,16 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
-import javafx.stage.Stage;
 
 public class MedicalEquipmentDataController implements Initializable {
   @FXML Button backButton;
   @FXML JFXTreeTableView<MedicalEquipment> equipmentTable;
+
+  private final SceneController sceneController = Aapp.sceneController;
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
@@ -81,14 +80,6 @@ public class MedicalEquipmentDataController implements Initializable {
 
   @FXML
   private void returnToHomeScene() throws IOException {
-    FXMLLoader loader = new FXMLLoader();
-    URL xmlUrl = Aapp.class.getResource("views/home.fxml");
-    loader.setLocation(xmlUrl);
-    Parent root = loader.load();
-
-    Stage window = (Stage) backButton.getScene().getWindow();
-    window.setScene(new Scene(root));
-    window.setTitle("Home");
-    window.show();
+    sceneController.switchScene(SceneController.SCENES.HOME_SCENE);
   }
 }

@@ -1,9 +1,9 @@
-package edu.wpi.teama.controllers;
+package edu.wpi.teama.controllers.SettingsControllers;
 
 import edu.wpi.teama.Aapp;
+import edu.wpi.teama.controllers.SceneController;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Collections;
 import java.util.Objects;
 import javafx.collections.FXCollections;
@@ -12,14 +12,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 public class BackupController {
   public Button refreshButton;
@@ -29,6 +26,8 @@ public class BackupController {
   @FXML private Button backButton;
   @FXML private Button loadFromBackupButton;
   private FXMLLoader loader = new FXMLLoader();
+
+  private final SceneController sceneController = Aapp.sceneController;
 
   @FXML
   public void initialize() {
@@ -47,27 +46,12 @@ public class BackupController {
   }
 
   public void returnToSettingsScene(ActionEvent actionEvent) throws IOException {
-    URL xmlUrl = Aapp.class.getResource("views/settings.fxml");
-    loader.setLocation(xmlUrl);
-    Parent root = loader.load();
-
-    Stage window = (Stage) homeButton.getScene().getWindow();
-    window.setScene(new Scene(root));
-    window.setTitle("Settings");
-    window.show();
+    sceneController.switchScene(SceneController.SCENES.SETTINGS_SCENE);
   }
 
   @FXML
   private void returnToHomeScene() throws IOException {
-    FXMLLoader loader = new FXMLLoader();
-    URL xmlUrl = Aapp.class.getResource("views/home.fxml");
-    loader.setLocation(xmlUrl);
-    Parent root = loader.load();
-
-    Stage window = (Stage) homeButton.getScene().getWindow();
-    window.setScene(new Scene(root));
-    window.setTitle("Home");
-    window.show();
+    sceneController.switchScene(SceneController.SCENES.HOME_SCENE);
   }
 
   @FXML

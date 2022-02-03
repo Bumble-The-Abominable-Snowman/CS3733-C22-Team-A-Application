@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teama.controllers.LanguageInterpreterController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teama.controllers.ServiceRequestControllers.LanguageInterpreterController">
     <Label layoutX="170.0" prefHeight="78.0" prefWidth="261.0" text="Language Interpreter Requests">
         <font>
             <Font size="19.0" />
