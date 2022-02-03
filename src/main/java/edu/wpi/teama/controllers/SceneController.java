@@ -20,6 +20,7 @@ public class SceneController {
     SANITATION_SERVICE_REQUEST_SCENE,
     VIEW_MEDICAL_EQUIPMENT_SCENE,
     VIEW_LOCATION_DATA_SCENE,
+    VIEW_SERVICE_REQUEST_SCENE,
     SETTINGS_SCENE,
     LOAD_FROM_BACKUP_SCENE,
   }
@@ -50,6 +51,7 @@ public class SceneController {
 
     addScene(SCENES.VIEW_MEDICAL_EQUIPMENT_SCENE, "views/DataViewViews/medicalEquipmentData.fxml");
     addScene(SCENES.VIEW_LOCATION_DATA_SCENE, "views/DataViewViews/locationData.fxml");
+    addScene(SCENES.VIEW_SERVICE_REQUEST_SCENE, "views/DataViewViews/viewServiceRequest.fxml");
 
     addScene(SCENES.SETTINGS_SCENE, "views/SettingsViews/settings.fxml");
     addScene(SCENES.LOAD_FROM_BACKUP_SCENE, "views/SettingsViews/loadFromBackup.fxml");
