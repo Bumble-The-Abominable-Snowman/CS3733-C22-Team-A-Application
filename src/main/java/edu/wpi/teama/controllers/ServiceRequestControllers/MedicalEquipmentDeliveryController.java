@@ -5,6 +5,7 @@ import edu.wpi.teama.Adb.Employee.EmployeeDAO;
 import edu.wpi.teama.Adb.Employee.EmployeeDerbyImpl;
 import edu.wpi.teama.Adb.Location.Location;
 import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
+import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest;
 import edu.wpi.teama.controllers.SceneController;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,24 +13,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 
 public class MedicalEquipmentDeliveryController extends GenericServiceRequestsController {
   @FXML private TextArea specialNotes;
   @FXML private ChoiceBox employeeChoiceBox;
   @FXML private ComboBox toChoiceBox;
-  @FXML private Button homeButton;
+
   @FXML private ChoiceBox typeChoiceBox;
   @FXML private ChoiceBox fromChoiceBox;
-  @FXML private Button submitButton;
-  @FXML private Button clearButton;
-  @FXML private Label locationLabel;
-
-  @FXML private Button backButton;
 
   private FXMLLoader loader = new FXMLLoader();
   private List<String> bedLocations = new ArrayList<>();
@@ -116,8 +110,10 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
   }
 
   @FXML
-  public void chooseFloor(ActionEvent actionEvent) {
-    locationLabel.setText(((Button) actionEvent.getSource()).getText());
-    locationLabel.setAlignment(Pos.CENTER);
+  private void submitRequest(){
+    MedicalEquipmentServiceRequest medicalEquipmentServiceRequest = new MedicalEquipmentServiceRequest();
+    if(){
+
+    }
   }
 }
