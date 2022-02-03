@@ -6,6 +6,7 @@ import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.teama.Aapp;
 import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipment;
+import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipmentDAO;
 import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipmentImpl;
 import java.io.IOException;
 import java.net.URL;
@@ -64,7 +65,7 @@ public class MedicalEquipmentDataController implements Initializable {
             new SimpleStringProperty(param.getValue().getValue().getIsAvailable() ? "Yes" : "No"));
 
     // Grab equipment from database
-    MedicalEquipmentImpl database = new MedicalEquipmentImpl();
+    MedicalEquipmentDAO database = new MedicalEquipmentImpl();
     List<MedicalEquipment> equipFromDatabase = database.getMedicalEquipmentList();
     ObservableList<MedicalEquipment> equipment = FXCollections.observableArrayList();
     for (MedicalEquipment item : equipFromDatabase) {
