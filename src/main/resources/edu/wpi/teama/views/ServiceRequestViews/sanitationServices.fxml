@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teama.controllers.ServiceRequestControllers.SanitationServicesController">
+   <children>
+      <Button fx:id="returnButton" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" />
+      <Button fx:id="clearButton" layoutX="481.0" layoutY="360.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="34.0" prefWidth="112.0" text="Clear All Fields" />
+      <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="34.0" prefWidth="41.0" text="Back" />
+      <Label layoutX="219.0" layoutY="19.0" prefHeight="34.0" prefWidth="161.0" text="Sanitation Request">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="249.0" layoutY="64.0" prefHeight="34.0" prefWidth="102.0" text="Map">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="submitButton" layoutX="190.0" layoutY="340.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="218.0" text="Submit" />
+      <Label fx:id="locationLabel" layoutX="257.0" layoutY="278.0" prefHeight="57.0" prefWidth="83.0" text="Selected Location" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="specialNotes" alignment="TOP_CENTER" layoutX="414.0" layoutY="107.0" prefHeight="186.0" prefWidth="150.0" promptText="Special Instructions/Notes" />
+      <TextField fx:id="typeOtherBox" alignment="TOP_CENTER" layoutX="45.0" layoutY="181.0" prefHeight="58.0" prefWidth="119.0" visible="false" />
+      <ChoiceBox fx:id="typeMenu" layoutX="53.0" layoutY="145.0" prefHeight="26.0" prefWidth="102.0" />
+   </children>
+</AnchorPane>

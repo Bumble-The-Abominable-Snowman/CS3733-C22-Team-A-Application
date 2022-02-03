@@ -5,7 +5,6 @@
 package edu.wpi.teama;
 
 import edu.wpi.teama.Adb.Adb;
-import edu.wpi.teama.Adb.Employee.Employee;
 import edu.wpi.teama.Adb.Employee.EmployeeDAO;
 import edu.wpi.teama.Adb.Employee.EmployeeDerbyImpl;
 import edu.wpi.teama.Adb.Location.Location;
@@ -57,6 +56,7 @@ public class DefaultTest {
     // Test on Employee table (Fixed)
     EmployeeDAO Employee = new EmployeeDerbyImpl();
 
+    Adb.inputFromCSV("Employee");
     String input = "2022-02-01";
     SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date date = originalFormat.parse(input);
@@ -64,6 +64,9 @@ public class DefaultTest {
 
     Employee.enterEmployee(
         "001", "Admin", "Yanbo", "Dai", "ydai2@wpi.edu", "0000000000", "100 institute Rd", date);
+
+    Employee.enterEmployee(
+        "002", "Admin", "Yanbo", "Dai", "ydai2@wpi.edu", "0000000001", "100 institute Rd", date);
 
     edu.wpi.teama.Adb.Employee.Employee e = Employee.getEmployee("001");
     System.out.println(

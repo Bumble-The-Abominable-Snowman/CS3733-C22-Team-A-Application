@@ -1,0 +1,4 @@
+.hospitalBackground {
+    -fx-background-image: url('../images/FrontBackground.JPG');
+    -fx-background-size: 100% 100%;
+}
