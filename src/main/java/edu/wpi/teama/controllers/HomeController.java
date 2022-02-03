@@ -42,18 +42,6 @@ public class HomeController {
   }
 
   @FXML
-  private void goToViewServiceRequest() throws IOException {
-    URL xmlUrl = Aapp.class.getResource("views/viewServiceRequest.fxml");
-    loader.setLocation(xmlUrl);
-    Parent root = loader.load();
-
-    Stage window = (Stage) locationDataButton.getScene().getWindow();
-    window.setScene(new Scene(root));
-    window.setTitle("Location Data");
-    window.show();
-  }
-
-  @FXML
   private void exitApp() {
     System.exit(0);
   }
