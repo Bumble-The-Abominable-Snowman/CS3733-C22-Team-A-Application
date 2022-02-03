@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teama.controllers.ServiceRequestControllers.LanguageInterpreterController">
+    <Label layoutX="170.0" prefHeight="78.0" prefWidth="261.0" text="Language Interpreter Requests">
+        <font>
+            <Font size="19.0" />
+        </font>
+    </Label>
+    <Label alignment="CENTER" layoutX="249.0" layoutY="92.0" prefHeight="34.0" prefWidth="102.0" text="Map" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+        <font>
+            <Font size="16.0" />
+        </font>
+    </Label>
+    <Label layoutX="232.0" layoutY="251.0" prefHeight="57.0" prefWidth="137.0" text="Selected Location" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+        <font>
+            <Font size="17.0" />
+        </font>
+    </Label>
+    <Button fx:id="floor1Button" layoutX="274.0" layoutY="223.0" mnemonicParsing="false" text="Floor 1" />
+    <Button fx:id="floor2Button" layoutX="274.0" layoutY="198.0" mnemonicParsing="false" text="Floor 2" />
+    <Button fx:id="floor3Button" layoutX="274.0" layoutY="173.0" mnemonicParsing="false" text="Floor 3" />
+    <Button fx:id="floor4Button" layoutX="274.0" layoutY="148.0" mnemonicParsing="false" text="Floor 4" />
+    <Button fx:id="returnHomeButton" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" />
+    <Button fx:id="clearButton" layoutX="481.0" layoutY="360.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="34.0" prefWidth="112.0" text="Clear All Fields" />
+    <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="34.0" prefWidth="41.0" text="Back" />
+    <Button fx:id="submitButton" layoutX="191.0" layoutY="340.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="218.0" text="Submit" />
+    <ChoiceBox fx:id="langInterpreter" layoutX="38.0" layoutY="85.0" prefHeight="28.0" prefWidth="100.0" />
+    <TextField fx:id="commentsBox" alignment="TOP_CENTER" layoutX="409.0" layoutY="85.0" prefHeight="217.0" prefWidth="178.0" promptText="Special Instructions/Notes" />
+    <Label layoutX="53.0" layoutY="83.0" prefHeight="30.0" prefWidth="57.0" text="Language" />
+   <ChoiceBox fx:id="langInterpreter1" layoutX="38.0" layoutY="279.0" prefHeight="28.0" prefWidth="100.0" />
+   <Label layoutX="67.0" layoutY="278.0" prefHeight="30.0" prefWidth="57.0" text="From" />
+</AnchorPane>
