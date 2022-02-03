@@ -6,7 +6,6 @@ import edu.wpi.teama.Adb.Employee.EmployeeDerbyImpl;
 import edu.wpi.teama.Adb.Location.Location;
 import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
 import edu.wpi.teama.controllers.SceneController;
-import edu.wpi.teama.entities.MedicalEquipmentServiceRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,14 +32,12 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
   @FXML private Button backButton;
 
   private FXMLLoader loader = new FXMLLoader();
-  private MedicalEquipmentServiceRequest medicalEquipmentServiceRequest;
   private List<String> bedLocations = new ArrayList<>();
   private List<String> xrayLocations = new ArrayList<>();
   private List<String> infusionPumpLocations = new ArrayList<>();
   private List<String> reclinerLocations = new ArrayList<>();
 
   public MedicalEquipmentDeliveryController() {
-    medicalEquipmentServiceRequest = new MedicalEquipmentServiceRequest();
     bedLocations.add("Nearest Location");
     bedLocations.add("OR Bed Park");
     bedLocations.add("Nearest Hallway");
