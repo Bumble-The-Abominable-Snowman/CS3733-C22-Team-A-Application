@@ -3,6 +3,7 @@ package edu.wpi.teama.controllers;
 import edu.wpi.teama.Aapp;
 import edu.wpi.teama.Adb.Location.Location;
 import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
+import edu.wpi.teama.entities.LanguageInterpreterRequest;
 import java.io.IOException;
 import java.net.URL;
 import java.util.stream.Collectors;
@@ -106,7 +107,7 @@ public class LanguageInterpreterController {
             toLocationChoice.getValue(),
             employeeChoice.getValue(),
             commentsBox.getText());
-    clearSubmission();
+    returnToHomeScene();
     return (aRequest);
   }
 }

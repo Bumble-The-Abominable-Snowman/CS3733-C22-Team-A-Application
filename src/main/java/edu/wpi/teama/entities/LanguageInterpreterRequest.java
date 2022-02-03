@@ -1,4 +1,4 @@
-package edu.wpi.teama.controllers;
+package edu.wpi.teama.entities;
 
 public class LanguageInterpreterRequest {
   private String language;
