@@ -6,8 +6,11 @@ import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.teama.Aapp;
 import edu.wpi.teama.Adb.Location.Location;
+import edu.wpi.teama.Adb.Location.LocationDAO;
+import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -64,9 +67,9 @@ public class LocationDataController implements Initializable {
     floorNum.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<Location, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getFloor()));
-    // this code has to be implemented when a location's medical equipment is known
-    // currently filled with filler Yes values, which represent that atm every room
-    // can store every equipment. In the future, this will not be true.
+    // the following code has to be implemented when a location's medical equipment is known.
+    // eahc is currently filled with filler Yes values, which represent that atm every room
+    // can store every equipment. In the future, this will not be true and must be updated
     storeXRAY.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<Location, String> param) ->
             new SimpleStringProperty(fillerYes ? "Yes" : "No"));
@@ -85,9 +88,12 @@ public class LocationDataController implements Initializable {
     // new SimpleStringProperty(param.getValue().getValue().getCanStoreRecliner()));
 
     // Grab location / equipment from database, these are dummies
+    LocationDAO locationBase = new LocationDerbyImpl();
+    List<Location> locationFromDatabase = locationBase.getNodeList();
     ObservableList<Location> locations = FXCollections.observableArrayList();
-    locations.add(new Location("12", 0, 0, "Three", "Tower", "false", "Room 312", "false"));
-    locations.add(new Location("24", 0, 0, "Two", "Tower", "false", "Room 2-A", "false"));
+    for (Location currLoc : locationFromDatabase) {
+      locations.add(currLoc);
+    }
 
     // Sets up the table and puts the location data under the columns
     final TreeItem<Location> root =
