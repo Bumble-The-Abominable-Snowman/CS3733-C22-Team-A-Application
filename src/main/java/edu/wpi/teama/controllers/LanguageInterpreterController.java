@@ -1,8 +1,11 @@
 package edu.wpi.teama.controllers;
 
 import edu.wpi.teama.Aapp;
+import edu.wpi.teama.Adb.Location.Location;
+import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
 import java.io.IOException;
 import java.net.URL;
+import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,9 +18,9 @@ public class LanguageInterpreterController {
   @FXML private Button submitButton;
   @FXML private Button backButton;
   @FXML private Button clearButton;
-  @FXML private ChoiceBox<String> languageChoice;
-  @FXML private ChoiceBox<String> toLocationChoice;
-  @FXML private ChoiceBox<String> employeeChoice;
+  @FXML private ComboBox<String> languageChoice;
+  @FXML private ComboBox<String> toLocationChoice;
+  @FXML private ComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
 
   private FXMLLoader loader = new FXMLLoader();
@@ -42,11 +45,19 @@ public class LanguageInterpreterController {
             "Spanish");
     languageChoice.getSelectionModel().select("Language");
     languageChoice.getSelectionModel().selectedItemProperty();
+    languageChoice.setVisibleRowCount(5);
 
     toLocationChoice.getItems().removeAll(toLocationChoice.getItems());
+    toLocationChoice
+        .getItems()
+        .addAll(
+            new LocationDerbyImpl()
+                .getNodeList().stream().map(Location::getShortName).collect(Collectors.toList()));
+    toLocationChoice.setVisibleRowCount(5);
 
     employeeChoice.getItems().removeAll(employeeChoice.getItems());
     employeeChoice.getSelectionModel().select("Employee");
+    employeeChoice.setVisibleRowCount(5);
   }
 
   @FXML

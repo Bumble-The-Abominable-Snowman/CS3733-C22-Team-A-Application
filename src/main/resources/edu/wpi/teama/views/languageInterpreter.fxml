@@ -24,8 +24,8 @@
     <Button fx:id="clearButton" layoutX="481.0" layoutY="360.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="34.0" prefWidth="112.0" text="Clear All Fields" />
     <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="34.0" prefWidth="41.0" text="Back" />
     <Button fx:id="submitButton" layoutX="191.0" layoutY="340.0" mnemonicParsing="false" onAction="#createLanguageRequest" prefHeight="26.0" prefWidth="218.0" text="Submit" />
-    <ChoiceBox fx:id="languageChoice" layoutX="34.0" layoutY="180.0" prefHeight="28.0" prefWidth="112.0" />
+    <ComboBox fx:id="languageChoice" layoutX="34.0" layoutY="180.0" prefHeight="28.0" prefWidth="112.0" />
     <TextArea fx:id="commentsBox" layoutX="411.0" layoutY="196.0" maxHeight="-Infinity" prefHeight="106.0" prefWidth="180.0" promptText="Special Instructions/Notes" GridPane.columnIndex="2" GridPane.valignment="BOTTOM" />
-    <ChoiceBox fx:id="toLocationChoice" layoutX="225.0" layoutY="180.0" prefHeight="28.0" prefWidth="150.0" />
-   <ChoiceBox fx:id="employeeChoice" layoutX="443.0" layoutY="93.0" prefHeight="28.0" prefWidth="112.0" />
+    <ComboBox fx:id="toLocationChoice" layoutX="225.0" layoutY="180.0" prefHeight="28.0" prefWidth="150.0" />
+   <ComboBox fx:id="employeeChoice" layoutX="443.0" layoutY="93.0" prefHeight="28.0" prefWidth="112.0" />
 </AnchorPane>
