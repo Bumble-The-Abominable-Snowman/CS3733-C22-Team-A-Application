@@ -10,6 +10,8 @@ public class Main {
     Connection connection = null;
     Adb.initialConnection();
     Adb.inputFromCSV("TowerLocations");
+    Adb.inputFromCSV("MedicalEquipmentServiceRequest");
+    Adb.inputFromCSV("Employee");
 
     Aapp.launch(Aapp.class, args);
   }

@@ -9,9 +9,7 @@ import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceR
 import edu.wpi.teama.controllers.SceneController;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
@@ -99,11 +97,6 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
     employeeChoiceBox.setVisibleRowCount(5);
 
     EmployeeDAO EmployeeDAO = new EmployeeDerbyImpl();
-    String input = "2022-02-01";
-    SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
-    Date date = originalFormat.parse(input);
-    EmployeeDAO.enterEmployee(
-        "001", "Admin", "Yanbo", "Dai", "ydai2@wpi.edu", "0000000000", "100 institute Rd", date);
 
     employeeChoiceBox
         .getItems()
