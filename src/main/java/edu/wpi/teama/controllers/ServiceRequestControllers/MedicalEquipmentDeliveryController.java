@@ -20,7 +20,7 @@ import javafx.scene.control.*;
 
 public class MedicalEquipmentDeliveryController extends GenericServiceRequestsController {
   @FXML private TextArea specialNotes;
-  @FXML private ChoiceBox employeeChoiceBox;
+  @FXML private ComboBox employeeChoiceBox;
   @FXML private ComboBox toChoiceBox;
 
   @FXML private ChoiceBox typeChoiceBox;
@@ -96,6 +96,7 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
             new LocationDerbyImpl()
                 .getNodeList().stream().map(Location::getShortName).collect(Collectors.toList()));
     toChoiceBox.setVisibleRowCount(5);
+    employeeChoiceBox.setVisibleRowCount(5);
 
     EmployeeDAO EmployeeDAO = new EmployeeDerbyImpl();
     String input = "2022-02-01";
@@ -116,7 +117,9 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
   void submitRequest() throws IOException {
     MedicalEquipmentServiceRequest medicalEquipmentServiceRequest =
         new MedicalEquipmentServiceRequest();
-    if (!typeChoiceBox.getSelectionModel().getSelectedItem().equals("Type")) {
+    if (!typeChoiceBox.getSelectionModel().getSelectedItem().equals("Type")
+        && toChoiceBox.getSelectionModel().getSelectedItem() != null
+        && employeeChoiceBox.getSelectionModel().getSelectedItem() != null) {
       // pass medical service request object
       this.returnToHomeScene();
     }
