@@ -1,4 +1,6 @@
-package edu.wpi.teama.controllers;
+package edu.wpi.teama.controllers.ServiceRequestControllers;
+
+// DEPRECATED FOR NOW
 
 import edu.wpi.teama.Aapp;
 import java.io.IOException;

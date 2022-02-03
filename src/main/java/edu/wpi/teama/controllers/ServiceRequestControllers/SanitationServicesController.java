@@ -1,6 +1,7 @@
-package edu.wpi.teama.controllers;
+package edu.wpi.teama.controllers.ServiceRequestControllers;
 
 import edu.wpi.teama.Aapp;
+import edu.wpi.teama.controllers.SceneController;
 import java.io.IOException;
 import java.net.URL;
 import javafx.beans.value.ChangeListener;
@@ -11,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-public class SanitationServicesController {
+public class SanitationServicesController extends GenericServiceRequestsController {
   @FXML private Button backButton;
   @FXML private Button returnButton;
   @FXML private Button clearButton;
@@ -25,6 +26,8 @@ public class SanitationServicesController {
 
   @FXML
   private void initialize() {
+    sceneID = SceneController.SCENES.SANITATION_SERVICE_REQUEST_SCENE;
+
     typeMenu.getItems().removeAll(typeMenu.getItems());
     typeMenu.getItems().addAll("Type", "Decontaminate Room", "Floor Spill", "Other");
     typeMenu.getSelectionModel().select("Type");
