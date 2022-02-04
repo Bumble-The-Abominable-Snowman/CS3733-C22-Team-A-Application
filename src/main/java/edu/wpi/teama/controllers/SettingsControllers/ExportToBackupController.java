@@ -47,9 +47,9 @@ public class ExportToBackupController {
 
       String filepath;
       if (input.endsWith(".csv")) {
-        filepath = "edu/wpi/teama/db/" + input;
+        filepath = "src/main/resources/edu/wpi/teama/db/" + input;
       } else {
-        filepath = "edu/wpi/teama/db/" + input + ".csv";
+        filepath = "src/main/resources/edu/wpi/teama/db/" + input + ".csv";
       }
       Adb.exportToCSV(TypeCSV.getValue(), filepath);
 
