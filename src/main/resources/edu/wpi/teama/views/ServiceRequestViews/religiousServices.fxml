@@ -34,7 +34,7 @@
                         <Insets top="20.0" />
                     </GridPane.margin>
                 </ChoiceBox>
-                <ChoiceBox fx:id="fromChoiceBox" prefHeight="26.0" prefWidth="130.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+                <ChoiceBox fx:id="denomChoiceBox" prefHeight="26.0" prefWidth="130.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
                 <Label alignment="CENTER" prefHeight="34.0" prefWidth="154.0" text="Map (To Be Added)" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                     <font>
                         <Font size="16.0" />
@@ -51,7 +51,7 @@
                     </font>
                 </Label>
                 <Label text="Religious Type :" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
-                <Label text="From: (unnecesary?)" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                <Label text="Denomination" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                     <GridPane.margin>
                         <Insets bottom="30.0" />
                     </GridPane.margin>
