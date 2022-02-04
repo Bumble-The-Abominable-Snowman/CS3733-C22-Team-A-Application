@@ -58,6 +58,8 @@ public class DefaultTest {
     Location.deleteLocationNode("nyxdai0209");
     WriteCSV.writeLocationCSV(Location.getNodeList());
 
+    // **************************************************************************************************
+
     // Test on Employee table (Fixed)
     EmployeeDAO Employee = new EmployeeDerbyImpl();
 
@@ -94,7 +96,10 @@ public class DefaultTest {
     // Employee.deleteEmployee("001");
     WriteCSV.writeEmployeeCSV(Employee.getEmployeeList());
 
+    // **************************************************************************************************
+
     // Test on Medical Equipment
+    Adb.inputFromCSV("MedicalEquipment");
     MedicalEquipmentDAO equipment = new MedicalEquipmentImpl();
     System.out.println("Testing enter");
     equipment.enterMedicalEquipment("EQ1234", "Bed", true, "FDEPT00101", true);
@@ -107,9 +112,10 @@ public class DefaultTest {
     equipment.updateMedicalEquipment("EQ1234", "isClean", "false");
     System.out.println("testing delete");
     equipment.deleteMedicalEquipment("EQ1234");
-    // System.out.println("deletion Successful");
+    System.out.println("deletion Successful");
     equipment.deleteMedicalEquipment("EQ5678");
-    // System.out.println("deletion Successful");
+    System.out.println("deletion Successful");
+    WriteCSV.writeMedicalEquipmentCSV(equipment.getMedicalEquipmentList());
 
     // ************************************************************************************************** */
 
@@ -117,8 +123,19 @@ public class DefaultTest {
     MedicalEquipmentServiceRequestDAO mesr = new MedicalEquipmentServiceRequestImpl();
     System.out.println("Testing enter");
 
+    Adb.inputFromCSV("MedicalEquipmentServiceRequest");
     mesr.enterMedicalEquipmentServiceRequest(
         "REQ123",
+        "FDEPT00101",
+        "FDEPT00201",
+        "EMP1",
+        "EMP2",
+        Timestamp.valueOf("2018-09-01 09:01:15"),
+        "In Progress",
+        "EQ1234",
+        "Low Priority");
+    mesr.enterMedicalEquipmentServiceRequest(
+        "REQ124",
         "FDEPT00101",
         "FDEPT00201",
         "EMP1",
@@ -135,5 +152,7 @@ public class DefaultTest {
     System.out.println(mesr.getMedicalEquipmentServiceRequestList());
     System.out.println("testing delete");
     mesr.deleteMedicalEquipment("REQ123");
+    mesr.deleteMedicalEquipment("REQ124");
+    WriteCSV.writeMedicalEquipmentServiceRequestCSV(mesr.getMedicalEquipmentServiceRequestList());
   }
 }

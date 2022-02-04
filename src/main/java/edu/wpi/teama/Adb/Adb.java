@@ -226,11 +226,11 @@ public class Adb {
             addStatement.executeUpdate(
                 "INSERT INTO MedicalEquipment( equipmentID, equipmentType, isClean, currentLocation, isAvailable) VALUES('"
                     + l.getEquipmentID()
-                    + "', "
+                    + "', '"
                     + l.getEquipmentType()
-                    + ", "
+                    + "', '"
                     + l.getIsClean()
-                    + ", '"
+                    + "', '"
                     + l.getCurrentLocation()
                     + "', '"
                     + l.getIsAvailable()
@@ -251,23 +251,23 @@ public class Adb {
           for (MedicalEquipmentServiceRequest l : List) {
             Statement addStatement = connection.createStatement();
             addStatement.executeUpdate(
-                "INSERT INTO MedicalEquipment(requestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, equipmentID, requestType) VALUES('"
+                "INSERT INTO MedicalEquipmentServiceRequest(requestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, equipmentID, requestType) VALUES('"
                     + l.getRequestID()
-                    + "', "
+                    + "', '"
                     + l.getStartLocation()
-                    + ", "
+                    + "', '"
                     + l.getEndLocation()
-                    + ", '"
+                    + "', '"
                     + l.getEmployeeRequested()
                     + "', '"
                     + l.getEmployeeAssigned()
-                    + ", '"
-                    + l.getRequestTime()
-                    + ", '"
+                    + "', '"
+                    + l.getRequestTime().toString()
+                    + "', '"
                     + l.getRequestStatus()
-                    + ", '"
+                    + "', '"
                     + l.getEquipmentID()
-                    + ", '"
+                    + "', '"
                     + l.getRequestType()
                     + "')");
           }
