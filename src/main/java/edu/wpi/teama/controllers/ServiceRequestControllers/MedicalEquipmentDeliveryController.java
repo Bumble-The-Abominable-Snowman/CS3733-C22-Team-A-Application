@@ -126,6 +126,8 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
               "Alex Sun",
               employeeChoiceBox.getSelectionModel().getSelectedItem(),
               new Timestamp((new Date()).getTime()),
+              , typeChoiceBox.getSelectionModel().getSelectedItem(),
+              "MedicalEquipmentRequest"
               
       );
 
