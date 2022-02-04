@@ -5,6 +5,10 @@
 package edu.wpi.teama;
 
 import edu.wpi.teama.Adb.Adb;
+import edu.wpi.teama.Adb.Employee.EmployeeDAO;
+import edu.wpi.teama.Adb.Employee.EmployeeDerbyImpl;
+import edu.wpi.teama.Adb.Location.LocationDAO;
+import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
 import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestDAO;
 import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestImpl;
 import edu.wpi.teama.Adb.WriteCSV;
@@ -12,6 +16,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Timestamp;
 import java.text.ParseException;
+
+import edu.wpi.teama.entities.Location;
 import org.junit.jupiter.api.Test;
 
 public class DefaultTest {
@@ -23,13 +29,13 @@ public class DefaultTest {
     Adb.initialConnection();
     Adb.inputFromCSV("TowerLocations", "edu/wpi/teama/db/TowerLocations.csv");
 
-    /*// Test on Location table (Fixed)
-        LocationDAO Location = new LocationDerbyImpl();
+    // Test on Location table (Fixed)
+       /* LocationDAO Location = new LocationDerbyImpl();
 
         Location.enterLocationNode("nyxdai0209", 1, 1, "B1", "Tower", "Dept", "nyx dai", "nd");
-        Location l = Location.getLocationNode("FDEPT00101");
+        edu.wpi.teama.entities.Location l = Location.getLocationNode("FDEPT00101");
         System.out.println(
-            l.getNodeID()
+            ((edu.wpi.teama.entities.Location) l).getNodeID()
                 + " "
                 + l.getXCoord()
                 + " "

@@ -6,8 +6,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServiceRequestDAO {
+  List<MedicalEquipmentServiceRequest> reqList;
+  
+  public MedicalEquipmentServiceRequestImpl() {
+    List<MedicalEquipmentServiceRequest> reqList = new ArrayList<>();
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Statement getNodeList = connection.createStatement();
+      ResultSet rset = getNodeList.executeQuery("SELECT * FROM MedicalEquipmentServiceRequest");
 
-  public MedicalEquipmentServiceRequestImpl() {}
+      while (rset.next()) {
+        String requestID = rset.getString("requestID");
+        String startLocation = rset.getString("startLocation");
+        String endLocation = rset.getString("endLocation");
+        String employeeRequested = rset.getString("employeeRequested");
+        String employeeAssigned = rset.getString("employeeAssigned");
+        Timestamp requestTime = rset.getTimestamp("requestTime");
+        String requestStatus = rset.getString("requestStatus");
+        String equipmentID = rset.getString("equipmentID");
+        String requestType = rset.getString("requestType");
+
+        MedicalEquipmentServiceRequest mesr =
+                new MedicalEquipmentServiceRequest(
+                        requestID,
+                        startLocation,
+                        endLocation,
+                        employeeRequested,
+                        employeeAssigned,
+                        requestTime,
+                        requestStatus,
+                        equipmentID,
+                        requestType);
+        reqList.add(mesr);
+      }
+    } catch (SQLException e) {
+      System.out.println("Failed");
+      e.printStackTrace();
+    }
+  }
 
   public MedicalEquipmentServiceRequest getMedicalEquipmentServiceRequest(String ID) {
     try {
@@ -126,41 +162,6 @@ public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServi
   }
 
   public List<MedicalEquipmentServiceRequest> getMedicalEquipmentServiceRequestList() {
-    List<MedicalEquipmentServiceRequest> reqList = new ArrayList<>();
-    try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-      Statement getNodeList = connection.createStatement();
-      ResultSet rset = getNodeList.executeQuery("SELECT * FROM MedicalEquipmentServiceRequest");
-
-      while (rset.next()) {
-        String requestID = rset.getString("requestID");
-        String startLocation = rset.getString("startLocation");
-        String endLocation = rset.getString("endLocation");
-        String employeeRequested = rset.getString("employeeRequested");
-        String employeeAssigned = rset.getString("employeeAssigned");
-        Timestamp requestTime = rset.getTimestamp("requestTime");
-        String requestStatus = rset.getString("requestStatus");
-        String equipmentID = rset.getString("equipmentID");
-        String requestType = rset.getString("requestType");
-
-        MedicalEquipmentServiceRequest mesr =
-            new MedicalEquipmentServiceRequest(
-                requestID,
-                startLocation,
-                endLocation,
-                employeeRequested,
-                employeeAssigned,
-                requestTime,
-                requestStatus,
-                equipmentID,
-                requestType);
-        reqList.add(mesr);
-      }
-    } catch (SQLException e) {
-      System.out.println("Failed");
-      e.printStackTrace();
-    }
-
     return reqList;
   }
 }
