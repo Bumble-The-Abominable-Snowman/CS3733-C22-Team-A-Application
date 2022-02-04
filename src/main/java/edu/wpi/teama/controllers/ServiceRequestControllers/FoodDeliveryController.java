@@ -64,11 +64,6 @@ public class FoodDeliveryController extends GenericServiceRequestsController {
     employeeChoice.setVisibleRowCount(5);
 
     EmployeeDAO EmployeeDAO = new EmployeeDerbyImpl();
-    String input = "2022-02-01";
-    SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
-    Date date = originalFormat.parse(input);
-    EmployeeDAO.enterEmployee(
-        "001", "Admin", "Yanbo", "Dai", "ydai2@wpi.edu", "0000000000", "100 institute Rd", date);
 
     employeeChoice
         .getItems()
