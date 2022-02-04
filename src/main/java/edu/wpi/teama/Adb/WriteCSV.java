@@ -75,7 +75,8 @@ public class WriteCSV {
   }
 
   // Write CSV for MedicalEquipment table
-  public static void writeMedicalEquipmentCSV(List<MedicalEquipment> List, String csvFilePath) throws IOException {
+  public static void writeMedicalEquipmentCSV(List<MedicalEquipment> List, String csvFilePath)
+      throws IOException {
 
     // create a writer
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
@@ -107,8 +108,7 @@ public class WriteCSV {
       List<MedicalEquipmentServiceRequest> List, String csvFilePath) throws IOException {
 
     // create a writer
-    BufferedWriter writer =
-        Files.newBufferedWriter(Paths.get(csvFilePath));
+    BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(
         "RequestID, getStartLocation, getEndLocation, getEmployeeRequested, getEmployeeAssigned, requestTime, getRequestStatus, getEquipmentID, getRequestType");

@@ -20,7 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-public class BackupController {
+public class LoadFromBackupController {
   public Button refreshButton;
   @FXML private ChoiceBox<String> TypeCSV;
   @FXML private Text selectedFileText;

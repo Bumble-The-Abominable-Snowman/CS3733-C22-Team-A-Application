@@ -22,4 +22,8 @@ public class SettingsController {
   public void loadFromBackup(ActionEvent actionEvent) throws IOException {
     sceneController.switchScene(SceneController.SCENES.LOAD_FROM_BACKUP_SCENE);
   }
+
+  public void exportToBackup(ActionEvent actionEvent) throws IOException {
+    sceneController.switchScene(SceneController.SCENES.EXPORT_TO_BACKUP_SCENE);
+  }
 }

@@ -306,27 +306,23 @@ public class Adb {
 
   // Export to CSV
   public static void exportToCSV(String tableName, String csvFilePath) throws IOException {
-    switch (tableName){
+    switch (tableName) {
       case "TowerLocations":
-
         LocationDAO Location = new LocationDerbyImpl();
-        WriteCSV.writeLocationCSV(Location.getNodeList(),csvFilePath);
+        WriteCSV.writeLocationCSV(Location.getNodeList(), csvFilePath);
 
       case "Employee":
-
         EmployeeDAO Employee = new EmployeeDerbyImpl();
         WriteCSV.writeEmployeeCSV(Employee.getEmployeeList(), csvFilePath);
 
       case "MedicalEquipment":
-
         MedicalEquipmentDAO equipment = new MedicalEquipmentImpl();
         WriteCSV.writeMedicalEquipmentCSV(equipment.getMedicalEquipmentList(), csvFilePath);
 
       case "MedicalEquipmentServiceRequest":
-
         MedicalEquipmentServiceRequestDAO mesr = new MedicalEquipmentServiceRequestImpl();
-        WriteCSV.writeMedicalEquipmentServiceRequestCSV(mesr.getMedicalEquipmentServiceRequestList(), csvFilePath);
-
+        WriteCSV.writeMedicalEquipmentServiceRequestCSV(
+            mesr.getMedicalEquipmentServiceRequestList(), csvFilePath);
     }
   }
 }
