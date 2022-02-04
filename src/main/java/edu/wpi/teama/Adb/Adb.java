@@ -14,6 +14,7 @@ public class Adb {
 
   public static void initialConnection() {
 
+    boolean isInitialized = false;
     // Connection to database driver
     System.out.println("----- Apache Derby Connection Testing -----");
     try {
@@ -33,10 +34,12 @@ public class Adb {
         Connection connection =
             DriverManager.getConnection(
                 "jdbc:derby:HospitalDBA;"); // Modify the database name from TowerLocation to Adb
+        isInitialized = true;
         // for better
         // recognition.
       } catch (SQLException e) {
         Connection c = DriverManager.getConnection("jdbc:derby:HospitalDBA;create=true");
+        isInitialized = false;
       }
 
     } catch (SQLException e) {
@@ -137,6 +140,14 @@ public class Adb {
       dropTable.execute("DELETE FROM MedicalEquipmentServiceRequest");
     } catch (SQLException e) {
       System.out.println("delete failed");
+    }
+
+    if (!isInitialized) {
+      inputFromCSV("TowerLocations", "edu/wpi/teama/db/TowerLocations.csv");
+      inputFromCSV("Employee", "edu/wpi/teama/db/Employee.csv");
+      inputFromCSV(
+          "MedicalEquipmentServiceRequest", "edu/wpi/teama/db/MedicalEquipmentServiceRequest.csv");
+      inputFromCSV("MedicalEquipment", "edu/wpi/teama/db/MedicalEquipment.csv");
     }
   }
 
