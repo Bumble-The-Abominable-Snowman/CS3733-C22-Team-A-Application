@@ -37,7 +37,7 @@ public class BackupController {
         new EventHandler<MouseEvent>() {
           @Override
           public void handle(MouseEvent event) {
-            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+            if (event.getButton() == MouseButton.PRIMARY) {
               String currentItemSelected = fileList.getSelectionModel().getSelectedItem();
               lastSelectedFile = currentItemSelected;
               selectedFileText.setText(currentItemSelected);
