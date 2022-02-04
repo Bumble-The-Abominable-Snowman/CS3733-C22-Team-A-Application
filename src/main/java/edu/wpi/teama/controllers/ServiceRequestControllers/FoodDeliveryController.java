@@ -6,7 +6,7 @@ import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
 import edu.wpi.teama.controllers.SceneController;
 import edu.wpi.teama.entities.Employee;
 import edu.wpi.teama.entities.Location;
-import edu.wpi.teama.entities.requests.foodDeliveryRequest;
+import edu.wpi.teama.entities.requests.FoodDeliveryRequest;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.stream.Collectors;
@@ -73,8 +73,8 @@ public class FoodDeliveryController extends GenericServiceRequestsController {
 
   @FXML
   private void createFoodRequest() throws IOException {
-    foodDeliveryRequest aRequest =
-        new foodDeliveryRequest(
+    FoodDeliveryRequest aRequest =
+        new FoodDeliveryRequest(
             mainChoice.getValue(),
             sideChoice.getValue(),
             drinkChoice.getValue(),

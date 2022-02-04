@@ -15,18 +15,20 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javax.swing.*;
 
 public class MedicalEquipmentDeliveryController extends GenericServiceRequestsController {
   @FXML private ComboBox statusChoiceBox;
   @FXML private TextArea specialNotes;
   @FXML private ComboBox employeeChoiceBox;
   @FXML private ComboBox toChoiceBox;
-  @FXML private ChoiceBox typeChoiceBox;
-  @FXML private ChoiceBox fromChoiceBox;
+  @FXML private ComboBox typeChoiceBox;
+  @FXML private ComboBox fromChoiceBox;
 
   private FXMLLoader loader = new FXMLLoader();
   private List<String> bedLocations = new ArrayList<>();
@@ -34,6 +36,7 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
   private List<String> infusionPumpLocations = new ArrayList<>();
   private List<String> reclinerLocations = new ArrayList<>();
   private List<String> status = new ArrayList<>();
+  private Random rand = new Random();
 
   public MedicalEquipmentDeliveryController() {
     super();
@@ -132,7 +135,7 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
           new MedicalEquipmentServiceRequestImpl();
 
       medicalEquipmentServiceRequestDAO.enterMedicalEquipmentServiceRequest(
-          "testID",
+          Integer.toString(rand.nextInt(10000)),
           fromChoiceBox.getValue().toString(),
           toChoiceBox.getSelectionModel().getSelectedItem().toString(),
           "Alex Sun",
