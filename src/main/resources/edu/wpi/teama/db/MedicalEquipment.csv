@@ -1,2 +1,2 @@
-EQ1234,Bed,false,FDEPT00101,true
-EQ5678,Xray machine,false,FDEPT00201,true
+getEquipmentID, getEquipmentType, isClean, getCurrentLocation, isAvailable
+EQ5678,Xray machine,true,FDEPT00201,true
