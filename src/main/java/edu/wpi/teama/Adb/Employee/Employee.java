@@ -1,8 +1,9 @@
 package edu.wpi.teama.Adb.Employee;
 
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import java.util.Date;
 
-public class Employee {
+public class Employee extends RecursiveTreeObject<Employee> {
   private String employeeID;
   private String employeeType;
   private String firstName;
