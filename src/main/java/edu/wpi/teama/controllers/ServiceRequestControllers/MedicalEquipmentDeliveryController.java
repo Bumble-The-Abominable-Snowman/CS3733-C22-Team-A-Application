@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +36,7 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
   private List<String> infusionPumpLocations = new ArrayList<>();
   private List<String> reclinerLocations = new ArrayList<>();
   private List<String> status = new ArrayList<>();
+  private Random rand = new Random();
 
   public MedicalEquipmentDeliveryController() {
     super();
@@ -133,7 +135,7 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
           new MedicalEquipmentServiceRequestImpl();
 
       medicalEquipmentServiceRequestDAO.enterMedicalEquipmentServiceRequest(
-          "testID",
+          Integer.toString(rand.nextInt(10000)),
           fromChoiceBox.getValue().toString(),
           toChoiceBox.getSelectionModel().getSelectedItem().toString(),
           "Alex Sun",

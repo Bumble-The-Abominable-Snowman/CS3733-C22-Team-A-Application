@@ -38,7 +38,7 @@ public class ViewServiceRequestController implements Initializable {
     JFXTreeTableColumn<MedicalEquipmentServiceRequest, String> endLoc =
         new JFXTreeTableColumn<>("End Location");
     JFXTreeTableColumn<MedicalEquipmentServiceRequest, String> employeeReq =
-        new JFXTreeTableColumn<>("Employee Requests");
+        new JFXTreeTableColumn<>("Requested By");
     JFXTreeTableColumn<MedicalEquipmentServiceRequest, String> employeeAss =
         new JFXTreeTableColumn<>("Employee Assigned");
     JFXTreeTableColumn<MedicalEquipmentServiceRequest, String> reqTime =
