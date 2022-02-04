@@ -1,11 +1,11 @@
 package edu.wpi.teama.controllers.ServiceRequestControllers;
 
-import edu.wpi.teama.Adb.Employee.Employee;
+import edu.wpi.teama.entities.Employee;
 import edu.wpi.teama.Adb.Employee.EmployeeDAO;
 import edu.wpi.teama.Adb.Employee.EmployeeDerbyImpl;
-import edu.wpi.teama.Adb.Location.Location;
+import edu.wpi.teama.entities.Location;
 import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
-import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest;
+import edu.wpi.teama.entities.requests.MedicalEquipmentServiceRequest;
 import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestDAO;
 import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestImpl;
 import edu.wpi.teama.controllers.SceneController;

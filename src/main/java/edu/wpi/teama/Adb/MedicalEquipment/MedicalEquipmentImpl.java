@@ -1,5 +1,7 @@
 package edu.wpi.teama.Adb.MedicalEquipment;
 
+import edu.wpi.teama.entities.MedicalEquipment;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

@@ -5,7 +5,7 @@ import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.teama.Aapp;
-import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest;
+import edu.wpi.teama.entities.requests.MedicalEquipmentServiceRequest;
 import edu.wpi.teama.controllers.SceneController;
 import java.io.IOException;
 import java.net.URL;
@@ -92,7 +92,7 @@ public class viewServiceRequestController implements Initializable {
     // Grab equipment from database (uses example item currently)
     ObservableList<MedicalEquipmentServiceRequest> equipment = FXCollections.observableArrayList();
     /*equipment.add(
-    new edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest(
+    new edu.wpi.teama.entities.requests.MedicalEquipmentServiceRequest(
         "12345689",
         "Start",
         "End",

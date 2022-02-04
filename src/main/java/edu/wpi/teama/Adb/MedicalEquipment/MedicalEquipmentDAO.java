@@ -1,5 +1,7 @@
 package edu.wpi.teama.Adb.MedicalEquipment;
 
+import edu.wpi.teama.entities.MedicalEquipment;
+
 import java.util.List;
 
 public interface MedicalEquipmentDAO {

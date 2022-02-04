@@ -7,7 +7,7 @@ package edu.wpi.teama;
 import edu.wpi.teama.Adb.Adb;
 import edu.wpi.teama.Adb.Employee.EmployeeDAO;
 import edu.wpi.teama.Adb.Employee.EmployeeDerbyImpl;
-import edu.wpi.teama.Adb.Location.Location;
+import edu.wpi.teama.entities.Location;
 import edu.wpi.teama.Adb.Location.LocationDAO;
 import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
 import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipmentDAO;
@@ -75,7 +75,7 @@ public class DefaultTest {
     Employee.enterEmployee(
         "002", "Admin", "Yanbo", "Dai", "ydai2@wpi.edu", "0000000001", "100 institute Rd", date);
 
-    edu.wpi.teama.Adb.Employee.Employee e = Employee.getEmployee("001");
+    edu.wpi.teama.entities.Employee e = Employee.getEmployee("001");
     System.out.println(
         e.getEmployeeID()
             + " "

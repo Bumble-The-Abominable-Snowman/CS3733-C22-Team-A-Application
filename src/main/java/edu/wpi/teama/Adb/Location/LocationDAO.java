@@ -1,5 +1,7 @@
 package edu.wpi.teama.Adb.Location;
 
+import edu.wpi.teama.entities.Location;
+
 import java.util.List;
 
 public interface LocationDAO {

@@ -1,5 +1,7 @@
 package edu.wpi.teama.Adb.MedicalEquipmentServiceRequest;
 
+import edu.wpi.teama.entities.requests.MedicalEquipmentServiceRequest;
+
 import java.sql.Timestamp;
 import java.util.List;
 

@@ -1,5 +1,7 @@
 package edu.wpi.teama.Adb.Employee;
 
+import edu.wpi.teama.entities.Employee;
+
 import java.util.Date;
 import java.util.List;
 

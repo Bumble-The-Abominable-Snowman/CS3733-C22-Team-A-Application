@@ -5,7 +5,7 @@ import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.teama.Aapp;
-import edu.wpi.teama.Adb.Location.Location;
+import edu.wpi.teama.entities.Location;
 import edu.wpi.teama.Adb.Location.LocationDAO;
 import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
 import edu.wpi.teama.controllers.SceneController;

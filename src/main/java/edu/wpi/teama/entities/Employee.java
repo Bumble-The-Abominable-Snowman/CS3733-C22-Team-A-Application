@@ -1,4 +1,4 @@
-package edu.wpi.teama.Adb.Employee;
+package edu.wpi.teama.entities;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package edu.wpi.teama.entities;
+package edu.wpi.teama.entities.requests;
 
 public class foodDeliveryRequest {
   String mainDish;

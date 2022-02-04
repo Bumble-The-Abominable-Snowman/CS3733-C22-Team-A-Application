@@ -1,9 +1,9 @@
 package edu.wpi.teama.Adb;
 
-import edu.wpi.teama.Adb.Employee.Employee;
-import edu.wpi.teama.Adb.Location.Location;
-import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipment;
-import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest;
+import edu.wpi.teama.entities.Employee;
+import edu.wpi.teama.entities.Location;
+import edu.wpi.teama.entities.MedicalEquipment;
+import edu.wpi.teama.entities.requests.MedicalEquipmentServiceRequest;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;

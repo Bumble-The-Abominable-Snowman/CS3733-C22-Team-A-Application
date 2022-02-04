@@ -5,7 +5,7 @@ import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.teama.Aapp;
-import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipment;
+import edu.wpi.teama.entities.MedicalEquipment;
 import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipmentDAO;
 import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipmentImpl;
 import edu.wpi.teama.controllers.SceneController;
