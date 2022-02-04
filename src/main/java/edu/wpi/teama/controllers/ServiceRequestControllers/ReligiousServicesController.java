@@ -5,9 +5,8 @@ import edu.wpi.teama.Adb.Employee.EmployeeDAO;
 import edu.wpi.teama.Adb.Employee.EmployeeDerbyImpl;
 import edu.wpi.teama.Adb.Location.Location;
 import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
-import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest;
 import edu.wpi.teama.controllers.SceneController;
-
+import edu.wpi.teama.entities.ReligiousServiceRequest;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import edu.wpi.teama.entities.ReligiousServiceRequest;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -121,12 +118,12 @@ public class ReligiousServicesController extends GenericServiceRequestsControlle
 
   @FXML
   void submitRequest() throws IOException {
-    ReligiousServiceRequest religiousServiceRequest =
-            new ReligiousServiceRequest();
+    ReligiousServiceRequest religiousServiceRequest = new ReligiousServiceRequest();
     if (!religionChoiceBox.getSelectionModel().getSelectedItem().equals("Type")
-            && toChoiceBox.getSelectionModel().getSelectedItem() != null
-            && employeeChoiceBox.getSelectionModel().getSelectedItem() != null) {
+        && toChoiceBox.getSelectionModel().getSelectedItem() != null
+        && employeeChoiceBox.getSelectionModel().getSelectedItem() != null) {
       // pass religious service request object
       this.returnToHomeScene();
-    }  }
+    }
+  }
 }

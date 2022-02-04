@@ -70,7 +70,7 @@ public class WriteCSV {
   public static void writeMedicalEquipmentCSV(List<MedicalEquipment> List) throws IOException {
 
     // create a writer
-    BufferedWriter writer = Files.newBufferedWriter(Paths.get("MedicalEquipment.CSV"));
+    BufferedWriter writer = Files.newBufferedWriter(Paths.get("MedicalEquipment.csv"));
 
     // write location data
     for (MedicalEquipment thisME : List) {

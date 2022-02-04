@@ -99,7 +99,7 @@ public class DefaultTest {
     // **************************************************************************************************
 
     // Test on Medical Equipment
-    Adb.inputFromCSV("MedicalEquipment");
+    Adb.inputFromCSV("MedicalEquipment", "edu/wpi/teama/db/MedicalEquipment.csv");
     MedicalEquipmentDAO equipment = new MedicalEquipmentImpl();
     System.out.println("Testing enter");
     equipment.enterMedicalEquipment("EQ1234", "Bed", true, "FDEPT00101", true);
@@ -123,7 +123,7 @@ public class DefaultTest {
     MedicalEquipmentServiceRequestDAO mesr = new MedicalEquipmentServiceRequestImpl();
     System.out.println("Testing enter");
 
-    Adb.inputFromCSV("MedicalEquipmentServiceRequest");
+    Adb.inputFromCSV("MedicalEquipment", "edu/wpi/teama/db/MedicalEquipmentServiceRequest.csv");
     mesr.enterMedicalEquipmentServiceRequest(
         "REQ123",
         "FDEPT00101",
