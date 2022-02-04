@@ -5,10 +5,13 @@ import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.teama.Aapp;
+import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestDAO;
+import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestImpl;
 import edu.wpi.teama.controllers.SceneController;
 import edu.wpi.teama.entities.requests.MedicalEquipmentServiceRequest;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -19,7 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 
-public class viewServiceRequestController implements Initializable {
+public class ViewServiceRequestController implements Initializable {
   @FXML Button backButton;
   @FXML JFXTreeTableView<MedicalEquipmentServiceRequest> requestsTable;
 
@@ -91,16 +94,17 @@ public class viewServiceRequestController implements Initializable {
     reqType.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getRequestType()));
-    // Grab equipment from database (uses example item currently)
-    ObservableList<MedicalEquipmentServiceRequest> equipment = FXCollections.observableArrayList();
-    equipment.add(
-        new edu.wpi.teama.entities.requests.MedicalEquipmentServiceRequest(
-            "12345689", "Start", "End", "Joe", "N/A", "30 minutes", "Done", "74", "No"));
-    // equipment.add(new MedicalEquipmentRequest("14", "BED", true, "OR", true));
+    MedicalEquipmentServiceRequestDAO serviceRequestBase = new MedicalEquipmentServiceRequestImpl();
+    List<MedicalEquipmentServiceRequest> employeeFromDatabase =
+        serviceRequestBase.getMedicalEquipmentServiceRequestList();
+    ObservableList<MedicalEquipmentServiceRequest> requests = FXCollections.observableArrayList();
+    for (MedicalEquipmentServiceRequest currLoc : employeeFromDatabase) {
+      requests.add(currLoc);
+    }
 
     // Sets up the table and puts the equipment data under the columns
     final TreeItem<MedicalEquipmentServiceRequest> root =
-        new RecursiveTreeItem<>(equipment, RecursiveTreeObject::getChildren);
+        new RecursiveTreeItem<>(requests, RecursiveTreeObject::getChildren);
     requestsTable
         .getColumns()
         .setAll(

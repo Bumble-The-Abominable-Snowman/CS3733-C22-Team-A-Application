@@ -1,6 +1,6 @@
 package edu.wpi.teama.entities.requests;
 
-public class foodDeliveryRequest {
+public class FoodDeliveryRequest {
   String mainDish;
   String sideDish;
   String beverage;
@@ -9,7 +9,7 @@ public class foodDeliveryRequest {
   String employee;
   String comments;
 
-  public foodDeliveryRequest(
+  public FoodDeliveryRequest(
       String main,
       String side,
       String drink,
