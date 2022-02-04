@@ -109,13 +109,24 @@ public class Adb {
       inputFromCSV("MedicalEquipment", "edu/wpi/teama/db/MedicalEquipment.csv");
     }
   }
-
+  
   // input from CSV
   public static void inputFromCSV(String tableName, String csvFilePath) {
     switch (tableName) {
 
         // Table name = Location
       case "TowerLocations":
+
+        // Check location table
+        try {
+          Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+          Statement deleteTable = connection.createStatement();
+
+          deleteTable.execute("DELETE FROM TowerLocations");
+        } catch (SQLException e) {
+          System.out.println("Delete failed");
+        }
+
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
@@ -149,6 +160,17 @@ public class Adb {
 
         // Table name = Employee
       case "Employee":
+
+        // Check employee table
+        try {
+          Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+          Statement dropTable = connection.createStatement();
+
+          dropTable.execute("DELETE FROM Employee");
+        } catch (SQLException e) {
+          System.out.println("Delete failed");
+        }
+
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
@@ -186,6 +208,17 @@ public class Adb {
 
         // Table name = MedicalEquipment
       case "MedicalEquipment":
+
+        // Check MedicalEquipment table
+        try {
+          Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+          Statement dropTable = connection.createStatement();
+
+          dropTable.execute("DELETE FROM MedicalEquipment");
+        } catch (SQLException e) {
+          System.out.println("delete failed");
+        }
+
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
@@ -212,6 +245,17 @@ public class Adb {
         return;
 
       case "MedicalEquipmentServiceRequest":
+
+        // Check MedicalEquipmentServiceRequest table
+        try {
+          Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+          Statement dropTable = connection.createStatement();
+
+          dropTable.execute("DELETE FROM MedicalEquipmentServiceRequest");
+        } catch (SQLException e) {
+          System.out.println("delete failed");
+        }
+
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
