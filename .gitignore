@@ -160,7 +160,7 @@ gradle-app.setting
 
 # End of https://www.gitignore.io/api/java,macos,gradle,intellij+all
 
-src/main/resources/edu/wpi/teama/db
+#src/main/resources/edu/wpi/teama/db
 .idea
 
 # Ignore HospitalDBA folder which is the database folder

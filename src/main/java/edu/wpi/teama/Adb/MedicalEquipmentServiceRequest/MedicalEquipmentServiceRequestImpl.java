@@ -1,24 +1,21 @@
 package edu.wpi.teama.Adb.MedicalEquipmentServiceRequest;
 
+import edu.wpi.teama.entities.requests.MedicalEquipmentServiceRequest;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServiceRequestDAO {
+  List<MedicalEquipmentServiceRequest> reqList;
 
-  public MedicalEquipmentServiceRequestImpl() {}
-
-  public MedicalEquipmentServiceRequest getMedicalEquipmentServiceRequest(String ID) {
+  public MedicalEquipmentServiceRequestImpl() {
+    List<MedicalEquipmentServiceRequest> reqList = new ArrayList<>();
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-      Statement get = connection.createStatement();
-      String str =
-          String.format(
-              "SELECT * FROM MedicalEquipmentServiceRequest WHERE equipmentID = '%s'", ID);
+      Statement getNodeList = connection.createStatement();
+      ResultSet rset = getNodeList.executeQuery("SELECT * FROM MedicalEquipmentServiceRequest");
 
-      ResultSet rset = get.executeQuery(str);
-      MedicalEquipmentServiceRequest mesr = new MedicalEquipmentServiceRequest();
-      if (rset.next()) {
+      while (rset.next()) {
         String requestID = rset.getString("requestID");
         String startLocation = rset.getString("startLocation");
         String endLocation = rset.getString("endLocation");
@@ -29,6 +26,47 @@ public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServi
         String equipmentID = rset.getString("equipmentID");
         String requestType = rset.getString("requestType");
 
+        MedicalEquipmentServiceRequest mesr =
+            new MedicalEquipmentServiceRequest(
+                requestID,
+                startLocation,
+                endLocation,
+                employeeRequested,
+                employeeAssigned,
+                requestTime,
+                requestStatus,
+                equipmentID,
+                requestType);
+        reqList.add(mesr);
+      }
+    } catch (SQLException e) {
+      System.out.println("Failed");
+      e.printStackTrace();
+    }
+  }
+
+  public MedicalEquipmentServiceRequest getMedicalEquipmentServiceRequest(String ID) {
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Statement get = connection.createStatement();
+      String str =
+          String.format("SELECT * FROM MedicalEquipmentServiceRequest WHERE requestID = '%s'", ID);
+
+      ResultSet rset = get.executeQuery(str);
+      MedicalEquipmentServiceRequest mesr = new MedicalEquipmentServiceRequest();
+      System.out.println("hello");
+      if (rset.next()) {
+        System.out.println("hi");
+        String requestID = rset.getString("requestID");
+        String startLocation = rset.getString("startLocation");
+        String endLocation = rset.getString("endLocation");
+        String employeeRequested = rset.getString("employeeRequested");
+        String employeeAssigned = rset.getString("employeeAssigned");
+        Timestamp requestTime = rset.getTimestamp("requestTime");
+        String requestStatus = rset.getString("requestStatus");
+        String equipmentID = rset.getString("equipmentID");
+        String requestType = rset.getString("requestType");
+        System.out.println(requestType);
         mesr =
             new MedicalEquipmentServiceRequest(
                 requestID,
@@ -125,41 +163,6 @@ public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServi
   }
 
   public List<MedicalEquipmentServiceRequest> getMedicalEquipmentServiceRequestList() {
-    List<MedicalEquipmentServiceRequest> reqList = new ArrayList<>();
-    try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-      Statement getNodeList = connection.createStatement();
-      ResultSet rset = getNodeList.executeQuery("SELECT * FROM MedicalEquipmentServiceRequest");
-
-      while (rset.next()) {
-        String requestID = rset.getString("requestID");
-        String startLocation = rset.getString("startLocation");
-        String endLocation = rset.getString("endLocation");
-        String employeeRequested = rset.getString("employeeRequested");
-        String employeeAssigned = rset.getString("employeeAssigned");
-        Timestamp requestTime = rset.getTimestamp("requestTime");
-        String requestStatus = rset.getString("requestStatus");
-        String equipmentID = rset.getString("equipmentID");
-        String requestType = rset.getString("requestType");
-
-        MedicalEquipmentServiceRequest mesr =
-            new MedicalEquipmentServiceRequest(
-                requestID,
-                startLocation,
-                endLocation,
-                employeeRequested,
-                employeeAssigned,
-                requestTime,
-                requestStatus,
-                equipmentID,
-                requestType);
-        reqList.add(mesr);
-      }
-    } catch (SQLException e) {
-      System.out.println("Failed");
-      e.printStackTrace();
-    }
-
     return reqList;
   }
 }

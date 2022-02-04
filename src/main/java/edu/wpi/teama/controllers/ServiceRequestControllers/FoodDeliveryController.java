@@ -6,7 +6,7 @@ import edu.wpi.teama.Adb.Employee.EmployeeDerbyImpl;
 import edu.wpi.teama.Adb.Location.Location;
 import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
 import edu.wpi.teama.controllers.SceneController;
-import edu.wpi.teama.entities.foodDeliveryRequest;
+import edu.wpi.teama.entities.requests.foodDeliveryRequest;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

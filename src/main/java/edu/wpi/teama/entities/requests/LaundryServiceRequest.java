@@ -1,4 +1,4 @@
-package edu.wpi.teama.Adb.LaundryServiceRequest;
+package edu.wpi.teama.entities.requests;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import java.sql.Timestamp;

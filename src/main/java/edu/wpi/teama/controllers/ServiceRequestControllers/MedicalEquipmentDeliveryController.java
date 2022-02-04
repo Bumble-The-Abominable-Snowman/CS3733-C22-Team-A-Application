@@ -1,15 +1,17 @@
 package edu.wpi.teama.controllers.ServiceRequestControllers;
 
-import edu.wpi.teama.Adb.Employee.Employee;
 import edu.wpi.teama.Adb.Employee.EmployeeDAO;
 import edu.wpi.teama.Adb.Employee.EmployeeDerbyImpl;
-import edu.wpi.teama.Adb.Location.Location;
 import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
-import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest;
+import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestDAO;
+import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestImpl;
 import edu.wpi.teama.controllers.SceneController;
+import edu.wpi.teama.entities.Employee;
+import edu.wpi.teama.entities.Location;
+import edu.wpi.teama.entities.requests.MedicalEquipmentServiceRequest;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,10 +21,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 
 public class MedicalEquipmentDeliveryController extends GenericServiceRequestsController {
+  @FXML private ComboBox statusChoiceBox;
   @FXML private TextArea specialNotes;
   @FXML private ComboBox employeeChoiceBox;
   @FXML private ComboBox toChoiceBox;
-
   @FXML private ChoiceBox typeChoiceBox;
   @FXML private ChoiceBox fromChoiceBox;
 
@@ -31,6 +33,7 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
   private List<String> xrayLocations = new ArrayList<>();
   private List<String> infusionPumpLocations = new ArrayList<>();
   private List<String> reclinerLocations = new ArrayList<>();
+  private List<String> status = new ArrayList<>();
 
   public MedicalEquipmentDeliveryController() {
     super();
@@ -46,6 +49,12 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
 
     reclinerLocations.add("Nearest from Hallways");
     reclinerLocations.add("West Plaza 1st Floor");
+
+    status.add("NEW/BLANK");
+    status.add("IN-PROGRESS");
+    status.add("WAITING FOR EQUIPMENT");
+    status.add("CANCELED");
+    status.add("DONE");
   }
 
   @FXML
@@ -99,11 +108,6 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
     employeeChoiceBox.setVisibleRowCount(5);
 
     EmployeeDAO EmployeeDAO = new EmployeeDerbyImpl();
-    String input = "2022-02-01";
-    SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
-    Date date = originalFormat.parse(input);
-    EmployeeDAO.enterEmployee(
-        "001", "Admin", "Yanbo", "Dai", "ydai2@wpi.edu", "0000000000", "100 institute Rd", date);
 
     employeeChoiceBox
         .getItems()
@@ -111,6 +115,9 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
             EmployeeDAO.getEmployeeList().stream()
                 .map(Employee::getFirstName)
                 .collect(Collectors.toList()));
+
+    statusChoiceBox.getItems().removeAll(statusChoiceBox.getItems());
+    statusChoiceBox.getItems().setAll(status);
   }
 
   @FXML
@@ -121,6 +128,20 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
         && toChoiceBox.getSelectionModel().getSelectedItem() != null
         && employeeChoiceBox.getSelectionModel().getSelectedItem() != null) {
       // pass medical service request object
+      MedicalEquipmentServiceRequestDAO medicalEquipmentServiceRequestDAO =
+          new MedicalEquipmentServiceRequestImpl();
+
+      medicalEquipmentServiceRequestDAO.enterMedicalEquipmentServiceRequest(
+          "testID",
+          fromChoiceBox.getValue().toString(),
+          toChoiceBox.getSelectionModel().getSelectedItem().toString(),
+          "Alex Sun",
+          employeeChoiceBox.getSelectionModel().getSelectedItem().toString(),
+          new Timestamp((new Date()).getTime()),
+          statusChoiceBox.getSelectionModel().getSelectedItem().toString(),
+          typeChoiceBox.getSelectionModel().getSelectedItem().toString(),
+          "MedicalEquipmentRequest");
+
       this.returnToHomeScene();
     }
   }
