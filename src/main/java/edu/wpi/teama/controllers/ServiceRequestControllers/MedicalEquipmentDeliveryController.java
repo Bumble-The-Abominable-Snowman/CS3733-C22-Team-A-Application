@@ -6,10 +6,14 @@ import edu.wpi.teama.Adb.Employee.EmployeeDerbyImpl;
 import edu.wpi.teama.Adb.Location.Location;
 import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
 import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest;
+import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestDAO;
+import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestImpl;
 import edu.wpi.teama.controllers.SceneController;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
@@ -114,6 +118,17 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
         && toChoiceBox.getSelectionModel().getSelectedItem() != null
         && employeeChoiceBox.getSelectionModel().getSelectedItem() != null) {
       // pass medical service request object
+      MedicalEquipmentServiceRequestDAO medicalEquipmentServiceRequestDAO = new MedicalEquipmentServiceRequestImpl();
+      medicalEquipmentServiceRequestDAO.enterMedicalEquipmentServiceRequest(
+              "testID",
+              fromChoiceBox.getSelectionModel().getSelectedItem(),
+              toChoiceBox.getSelectionModel().getSelectedItem(),
+              "Alex Sun",
+              employeeChoiceBox.getSelectionModel().getSelectedItem(),
+              new Timestamp((new Date()).getTime()),
+              
+      );
+
       this.returnToHomeScene();
     }
   }
