@@ -21,10 +21,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 
 public class MedicalEquipmentDeliveryController extends GenericServiceRequestsController {
+  @FXML private ComboBox statusChoiceBox;
   @FXML private TextArea specialNotes;
   @FXML private ComboBox employeeChoiceBox;
   @FXML private ComboBox toChoiceBox;
-
   @FXML private ChoiceBox typeChoiceBox;
   @FXML private ChoiceBox fromChoiceBox;
 
@@ -33,6 +33,7 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
   private List<String> xrayLocations = new ArrayList<>();
   private List<String> infusionPumpLocations = new ArrayList<>();
   private List<String> reclinerLocations = new ArrayList<>();
+  private List<String> status = new ArrayList<>();
 
   public MedicalEquipmentDeliveryController() {
     super();
@@ -48,6 +49,12 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
 
     reclinerLocations.add("Nearest from Hallways");
     reclinerLocations.add("West Plaza 1st Floor");
+
+    status.add("NEW/BLANK");
+    status.add("IN-PROGRESS");
+    status.add("WAITING FOR EQUIPMENT");
+    status.add("CANCELED");
+    status.add("DONE");
   }
 
   @FXML
@@ -108,6 +115,9 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
             EmployeeDAO.getEmployeeList().stream()
                 .map(Employee::getFirstName)
                 .collect(Collectors.toList()));
+
+    statusChoiceBox.getItems().removeAll(statusChoiceBox.getItems());
+    statusChoiceBox.getItems().setAll(status);
   }
 
   @FXML
@@ -118,18 +128,24 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
         && toChoiceBox.getSelectionModel().getSelectedItem() != null
         && employeeChoiceBox.getSelectionModel().getSelectedItem() != null) {
       // pass medical service request object
-      MedicalEquipmentServiceRequestDAO medicalEquipmentServiceRequestDAO = new MedicalEquipmentServiceRequestImpl();
+      MedicalEquipmentServiceRequestDAO medicalEquipmentServiceRequestDAO =
+          new MedicalEquipmentServiceRequestImpl();
+
       medicalEquipmentServiceRequestDAO.enterMedicalEquipmentServiceRequest(
-              "testID",
-              fromChoiceBox.getSelectionModel().getSelectedItem(),
-              toChoiceBox.getSelectionModel().getSelectedItem(),
-              "Alex Sun",
-              employeeChoiceBox.getSelectionModel().getSelectedItem(),
-              new Timestamp((new Date()).getTime()),
-              , typeChoiceBox.getSelectionModel().getSelectedItem(),
-              "MedicalEquipmentRequest"
-              
-      );
+          "testID",
+          fromChoiceBox.getValue().toString(),
+          toChoiceBox.getSelectionModel().getSelectedItem().toString(),
+          "Alex Sun",
+          employeeChoiceBox.getSelectionModel().getSelectedItem().toString(),
+          new Timestamp((new Date()).getTime()),
+          statusChoiceBox.getSelectionModel().getSelectedItem().toString(),
+          typeChoiceBox.getSelectionModel().getSelectedItem().toString(),
+          "MedicalEquipmentRequest");
+
+      System.out.println(
+          medicalEquipmentServiceRequestDAO
+              .getMedicalEquipmentServiceRequest("testID")
+              .getStartLocation());
 
       this.returnToHomeScene();
     }
