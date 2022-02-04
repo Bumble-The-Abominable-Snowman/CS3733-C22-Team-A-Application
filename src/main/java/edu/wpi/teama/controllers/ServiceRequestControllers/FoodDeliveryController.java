@@ -1,12 +1,22 @@
 package edu.wpi.teama.controllers.ServiceRequestControllers;
 
+import edu.wpi.teama.Adb.Employee.Employee;
+import edu.wpi.teama.Adb.Employee.EmployeeDAO;
+import edu.wpi.teama.Adb.Employee.EmployeeDerbyImpl;
+import edu.wpi.teama.Adb.Location.Location;
+import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
 import edu.wpi.teama.controllers.SceneController;
 import edu.wpi.teama.entities.foodDeliveryRequest;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 
 public class FoodDeliveryController extends GenericServiceRequestsController {
@@ -19,12 +29,13 @@ public class FoodDeliveryController extends GenericServiceRequestsController {
   @FXML private ChoiceBox<String> drinkChoice;
   @FXML private ChoiceBox<String> sideChoice;
   @FXML private ChoiceBox<String> dessertChoice;
-  @FXML private ChoiceBox<Integer> roomChoice;
+  @FXML private ComboBox roomChoice;
+  @FXML private ComboBox employeeChoice;
   @FXML private TextArea commentsText;
   private FXMLLoader loader = new FXMLLoader();
 
   @FXML
-  public void initialize() {
+  public void initialize() throws ParseException {
     sceneID = SceneController.SCENES.FOOD_DELIVERY_SERVICE_REQUEST_SCENE;
 
     mainChoice.getItems().addAll("Turkey Sandwich", "Grilled Cheese Sandwich", "Friend Chicken");
@@ -42,6 +53,24 @@ public class FoodDeliveryController extends GenericServiceRequestsController {
     sideChoice.getSelectionModel().selectedItemProperty();
     dessertChoice.getSelectionModel().selectedItemProperty();
     roomChoice.getSelectionModel().selectedItemProperty();
+
+    roomChoice.getItems().removeAll(roomChoice.getItems());
+    roomChoice
+        .getItems()
+        .addAll(
+            new LocationDerbyImpl()
+                .getNodeList().stream().map(Location::getShortName).collect(Collectors.toList()));
+    roomChoice.setVisibleRowCount(5);
+    employeeChoice.setVisibleRowCount(5);
+
+    EmployeeDAO EmployeeDAO = new EmployeeDerbyImpl();
+
+    employeeChoice
+        .getItems()
+        .addAll(
+            EmployeeDAO.getEmployeeList().stream()
+                .map(Employee::getFirstName)
+                .collect(Collectors.toList()));
   }
 
   @FXML
@@ -52,7 +81,8 @@ public class FoodDeliveryController extends GenericServiceRequestsController {
             sideChoice.getValue(),
             drinkChoice.getValue(),
             dessertChoice.getValue(),
-            roomChoice.getValue(),
+            (String) roomChoice.getSelectionModel().getSelectedItem(),
+            (String) employeeChoice.getSelectionModel().getSelectedItem(),
             commentsText.getText());
   }
 
