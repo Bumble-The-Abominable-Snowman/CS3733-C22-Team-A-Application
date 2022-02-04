@@ -5,19 +5,24 @@ import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.teama.Aapp;
+import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestDAO;
+import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestImpl;
 import edu.wpi.teama.controllers.SceneController;
 import edu.wpi.teama.entities.requests.MedicalEquipmentServiceRequest;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
 
-public class viewServiceRequestController implements Initializable {
+public class ViewServiceRequestController implements Initializable {
   @FXML Button backButton;
   @FXML JFXTreeTableView<MedicalEquipmentServiceRequest> requestsTable;
 
@@ -62,51 +67,44 @@ public class viewServiceRequestController implements Initializable {
     reqStatus.setStyle("-fx-alignment: center ;");
     equipmentID.setStyle("-fx-alignment: center ;");
     reqType.setStyle("-fx-alignment: center ;");
-    /*reqID.setCellValueFactory(
+    reqID.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getEquipmentID()));
+            new SimpleStringProperty(param.getValue().getValue().getRequestID()));
     startLoc.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getEquipmentType()));
+            new SimpleStringProperty(param.getValue().getValue().getStartLocation()));
     endLoc.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getIsClean() ? "Yes" : "No"));
+            new SimpleStringProperty(param.getValue().getValue().getEndLocation()));
     employeeReq.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getCurrentLocation()));
+            new SimpleStringProperty(param.getValue().getValue().getEmployeeRequested()));
     employeeAss.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getIsAvailable() ? "Yes" : "No"));
+            new SimpleStringProperty(param.getValue().getValue().getEmployeeAssigned()));
     reqTime.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getIsAvailable() ? "Yes" : "No"));
+            new SimpleStringProperty(param.getValue().getValue().getRequestTime()));
     reqStatus.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getIsAvailable() ? "Yes" : "No"));
+            new SimpleStringProperty(param.getValue().getValue().getRequestStatus()));
     equipmentID.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getIsAvailable() ? "Yes" : "No"));
+            new SimpleStringProperty(param.getValue().getValue().getEquipmentID()));
     reqType.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getIsAvailable() ? "Yes" : "No"));*/
-    // Grab equipment from database (uses example item currently)
-    ObservableList<MedicalEquipmentServiceRequest> equipment = FXCollections.observableArrayList();
-    /*equipment.add(
-    new edu.wpi.teama.entities.requests.MedicalEquipmentServiceRequest(
-        "12345689",
-        "Start",
-        "End",
-        "Joe",
-        "N/A",
-        new Timestamp(74, 74, 74, 74, 74, 74, 74),
-        "Done",
-        "74",
-        "No"));*/
-    // equipment.add(new MedicalEquipmentRequest("14", "BED", true, "OR", true));
+            new SimpleStringProperty(param.getValue().getValue().getRequestType()));
+    MedicalEquipmentServiceRequestDAO serviceRequestBase = new MedicalEquipmentServiceRequestImpl();
+    List<MedicalEquipmentServiceRequest> employeeFromDatabase =
+        serviceRequestBase.getMedicalEquipmentServiceRequestList();
+    ObservableList<MedicalEquipmentServiceRequest> requests = FXCollections.observableArrayList();
+    for (MedicalEquipmentServiceRequest currLoc : employeeFromDatabase) {
+      requests.add(currLoc);
+    }
 
     // Sets up the table and puts the equipment data under the columns
     final TreeItem<MedicalEquipmentServiceRequest> root =
-        new RecursiveTreeItem<>(equipment, RecursiveTreeObject::getChildren);
+        new RecursiveTreeItem<>(requests, RecursiveTreeObject::getChildren);
     requestsTable
         .getColumns()
         .setAll(

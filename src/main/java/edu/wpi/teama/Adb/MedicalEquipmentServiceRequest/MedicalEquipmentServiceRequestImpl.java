@@ -26,7 +26,7 @@ public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServi
         String endLocation = rset.getString("endLocation");
         String employeeRequested = rset.getString("employeeRequested");
         String employeeAssigned = rset.getString("employeeAssigned");
-        Timestamp requestTime = rset.getTimestamp("requestTime");
+        String requestTime = rset.getString("requestTime");
         String requestStatus = rset.getString("requestStatus");
         String equipmentID = rset.getString("equipmentID");
         String requestType = rset.getString("requestType");
@@ -139,7 +139,7 @@ public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServi
         String endLocation = rset.getString("endLocation");
         String employeeRequested = rset.getString("employeeRequested");
         String employeeAssigned = rset.getString("employeeAssigned");
-        Timestamp requestTime = rset.getTimestamp("requestTime");
+        String requestTime = rset.getString("requestTime");
         String requestStatus = rset.getString("requestStatus");
         String equipmentID = rset.getString("equipmentID");
         String requestType = rset.getString("requestType");
