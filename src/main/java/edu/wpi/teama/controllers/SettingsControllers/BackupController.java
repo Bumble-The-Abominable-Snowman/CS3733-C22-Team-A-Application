@@ -47,7 +47,8 @@ public class BackupController {
         });
 
     TypeCSV.getItems().removeAll(TypeCSV.getItems());
-    TypeCSV.getItems().addAll("TowerLocations", "Employee");
+    TypeCSV.getItems()
+        .addAll("TowerLocations", "Employee", "MedicalEquipment", "MedicalEquipmentServiceRequest");
     TypeCSV.setValue("CSV Type");
   }
 
