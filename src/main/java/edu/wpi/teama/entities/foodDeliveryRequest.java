@@ -5,16 +5,24 @@ public class foodDeliveryRequest {
   String sideDish;
   String beverage;
   String dessert;
-  Integer roomNum;
+  String roomNum;
+  String employee;
   String comments;
 
   public foodDeliveryRequest(
-      String main, String side, String drink, String dessert, Integer roomNum, String comments) {
+      String main,
+      String side,
+      String drink,
+      String dessert,
+      String roomNum,
+      String employee,
+      String comments) {
     this.mainDish = main;
     this.sideDish = side;
     this.beverage = drink;
     this.dessert = dessert;
     this.roomNum = roomNum;
+    this.employee = employee;
     this.comments = comments;
   }
 }
