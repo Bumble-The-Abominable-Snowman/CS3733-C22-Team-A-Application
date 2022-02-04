@@ -1,5 +1,13 @@
 package edu.wpi.teama.Adb;
 
+import edu.wpi.teama.Adb.Employee.EmployeeDAO;
+import edu.wpi.teama.Adb.Employee.EmployeeDerbyImpl;
+import edu.wpi.teama.Adb.Location.LocationDAO;
+import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
+import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipmentDAO;
+import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipmentImpl;
+import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestDAO;
+import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestImpl;
 import edu.wpi.teama.entities.Employee;
 import edu.wpi.teama.entities.Location;
 import edu.wpi.teama.entities.MedicalEquipment;
@@ -109,7 +117,7 @@ public class Adb {
       inputFromCSV("MedicalEquipment", "edu/wpi/teama/db/MedicalEquipment.csv");
     }
   }
-  
+
   // input from CSV
   public static void inputFromCSV(String tableName, String csvFilePath) {
     switch (tableName) {
@@ -293,6 +301,32 @@ public class Adb {
       default:
         System.out.println("failed!");
         return;
+    }
+  }
+
+  // Export to CSV
+  public static void exportToCSV(String tableName, String csvFilePath) throws IOException {
+    switch (tableName){
+      case "TowerLocations":
+
+        LocationDAO Location = new LocationDerbyImpl();
+        WriteCSV.writeLocationCSV(Location.getNodeList(),csvFilePath);
+
+      case "Employee":
+
+        EmployeeDAO Employee = new EmployeeDerbyImpl();
+        WriteCSV.writeEmployeeCSV(Employee.getEmployeeList(), csvFilePath);
+
+      case "MedicalEquipment":
+
+        MedicalEquipmentDAO equipment = new MedicalEquipmentImpl();
+        WriteCSV.writeMedicalEquipmentCSV(equipment.getMedicalEquipmentList(), csvFilePath);
+
+      case "MedicalEquipmentServiceRequest":
+
+        MedicalEquipmentServiceRequestDAO mesr = new MedicalEquipmentServiceRequestImpl();
+        WriteCSV.writeMedicalEquipmentServiceRequestCSV(mesr.getMedicalEquipmentServiceRequestList(), csvFilePath);
+
     }
   }
 }

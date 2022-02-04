@@ -13,10 +13,10 @@ import java.util.List;
 public class WriteCSV {
 
   // Write CSV for location table
-  public static void writeLocationCSV(List<Location> List) throws IOException {
+  public static void writeLocationCSV(List<Location> List, String csvFilePath) throws IOException {
 
     // create a writer
-    BufferedWriter writer = Files.newBufferedWriter(Paths.get("TowerLocations.CSV"));
+    BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(
         "getNodeID, xCord, yCord, getFloor(),getBuilding, getNodeType, getLongName, getShortName");
@@ -44,10 +44,10 @@ public class WriteCSV {
   }
 
   // Write CSV for Employee table
-  public static void writeEmployeeCSV(List<Employee> List) throws IOException {
+  public static void writeEmployeeCSV(List<Employee> List, String csvFilePath) throws IOException {
 
     // create a writer
-    BufferedWriter writer = Files.newBufferedWriter(Paths.get("Employee.CSV"));
+    BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(
         "getEmployeeID, getEmployeeType, getFirstName, getLastName, getEmail, getPhoneNum, getAddress, startDate");
@@ -75,10 +75,10 @@ public class WriteCSV {
   }
 
   // Write CSV for MedicalEquipment table
-  public static void writeMedicalEquipmentCSV(List<MedicalEquipment> List) throws IOException {
+  public static void writeMedicalEquipmentCSV(List<MedicalEquipment> List, String csvFilePath) throws IOException {
 
     // create a writer
-    BufferedWriter writer = Files.newBufferedWriter(Paths.get("MedicalEquipment.csv"));
+    BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write("getEquipmentID, getEquipmentType, isClean, getCurrentLocation, isAvailable");
     writer.newLine();
@@ -104,11 +104,11 @@ public class WriteCSV {
 
   // Write CSV for MedicalEquipmentServiceRequest table
   public static void writeMedicalEquipmentServiceRequestCSV(
-      List<MedicalEquipmentServiceRequest> List) throws IOException {
+      List<MedicalEquipmentServiceRequest> List, String csvFilePath) throws IOException {
 
     // create a writer
     BufferedWriter writer =
-        Files.newBufferedWriter(Paths.get("MedicalEquipmentServiceRequest.CSV"));
+        Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(
         "RequestID, getStartLocation, getEndLocation, getEmployeeRequested, getEmployeeAssigned, requestTime, getRequestStatus, getEquipmentID, getRequestType");
