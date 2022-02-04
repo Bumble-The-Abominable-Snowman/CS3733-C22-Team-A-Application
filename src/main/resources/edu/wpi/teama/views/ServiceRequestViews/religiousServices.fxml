@@ -1,56 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teama.controllers.ServiceRequestControllers.ReligiousServicesController">
-   <children>
-       <Button fx:id="homeButton" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" />
-       <Button fx:id="clearButton" layoutX="481.0" layoutY="360.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="34.0" prefWidth="112.0" text="Clear All Fields" />
-       <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="34.0" prefWidth="41.0" text="Back" />
-      <Label alignment="CENTER" layoutX="139.0" layoutY="26.0" prefHeight="48.0" prefWidth="322.0" text="Religious Requests">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Button fx:id="submitRequestButton" layoutX="260.0" layoutY="342.0" mnemonicParsing="false" onAction="#submitRequest" prefHeight="25.0" prefWidth="79.0" text="Submit" />
-      <GridPane layoutX="14.0" layoutY="97.0" prefHeight="201.0" prefWidth="583.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <TextField fx:id="religiousDesc" alignment="TOP_LEFT" prefHeight="201.0" prefWidth="183.0" promptText="Nature of your request?" GridPane.columnIndex="2">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </TextField>
-            <ChoiceBox fx:id="fromRoom" prefWidth="150.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
-            <ChoiceBox fx:id="religionChoice" prefWidth="150.0" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
-            <Label alignment="CENTER" prefHeight="31.0" prefWidth="71.0" text="Map" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" layoutX="267.0" layoutY="10.0" prefHeight="31.0" prefWidth="181.0" text="Selected Location" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </Label>
-            <VBox alignment="CENTER" prefHeight="217.0" prefWidth="74.0" GridPane.columnIndex="1">
-               <children>
-                  <Button mnemonicParsing="false" text="Floor 4" />
-                  <Button mnemonicParsing="false" text="Floor 3" />
-                  <Button mnemonicParsing="false" text="Floor 2" />
-                  <Button mnemonicParsing="false" text="Floor 1" />
-               </children>
-            </VBox>
-         </children>
-      </GridPane>
-   </children>
+<?import javafx.scene.control.ComboBox?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teama.controllers.ServiceRequestControllers.ReligiousServicesController">
+    <children>
+        <Label alignment="CENTER" layoutX="219.0" layoutY="24.0" prefHeight="48.0" prefWidth="172.0" text="Religious Requests">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Label>
+        <GridPane layoutX="10.0" layoutY="92.0" prefHeight="217.0" prefWidth="600.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <ChoiceBox fx:id="religionChoiceBox" prefHeight="26.0" prefWidth="130.0" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                    <GridPane.margin>
+                        <Insets top="20.0" />
+                    </GridPane.margin>
+                </ChoiceBox>
+                <ChoiceBox fx:id="denomChoiceBox" prefHeight="26.0" prefWidth="130.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+                <Label alignment="CENTER" prefHeight="34.0" prefWidth="154.0" text="Map (To Be Added)" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Label>
+                <TextArea fx:id="specialNotes" maxHeight="-Infinity" prefHeight="106.0" prefWidth="180.0" promptText="Special Instructions/Notes" GridPane.columnIndex="2" GridPane.valignment="BOTTOM">
+                    <GridPane.margin>
+                        <Insets left="10.0" right="10.0" />
+                    </GridPane.margin>
+                </TextArea>
+                <Label fx:id="locationLabel" prefHeight="57.0" prefWidth="137.0" text="Selected Location" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                </Label>
+                <Label text="Religious Type :" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
+                <Label text="Denomination" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                    <GridPane.margin>
+                        <Insets bottom="30.0" />
+                    </GridPane.margin>
+                </Label>
+                <ComboBox fx:id="toChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                <Label text="Employee:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
+                <ComboBox fx:id="employeeCheckBox" prefHeight="26.0" prefWidth="130.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                    <GridPane.margin>
+                        <Insets top="20.0" />
+                    </GridPane.margin>
+                </ComboBox>
+            </children>
+        </GridPane>
+        <Button fx:id="backButton" layoutX="24.0" layoutY="24.0" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="34.0" prefWidth="41.0" text="Back" />
+        <Button fx:id="homeButton" layoutX="547.0" layoutY="24.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" />
+        <Button fx:id="submitButton" layoutX="201.0" layoutY="350.0" mnemonicParsing="false" onAction="#submitRequest" prefHeight="26.0" prefWidth="218.0" text="Submit" />
+        <Button fx:id="clearButton" layoutX="484.0" layoutY="359.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="34.0" prefWidth="112.0" text="Clear All Fields" />
+    </children>
 </AnchorPane>
+

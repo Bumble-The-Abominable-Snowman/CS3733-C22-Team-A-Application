@@ -30,7 +30,7 @@ public class DefaultTest {
 
     Connection connection = null;
     Adb.initialConnection();
-    Adb.inputFromCSV("TowerLocations");
+    Adb.inputFromCSV("TowerLocations", "edu/wpi/teama/db/TowerLocations.csv");
 
     // Test on Location table (Fixed)
     LocationDAO Location = new LocationDerbyImpl();
@@ -63,7 +63,7 @@ public class DefaultTest {
     // Test on Employee table (Fixed)
     EmployeeDAO Employee = new EmployeeDerbyImpl();
 
-    Adb.inputFromCSV("Employee");
+    Adb.inputFromCSV("Employee", "edu/wpi/teama/db/Employee.csv");
     String input = "2022-02-01";
     SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date date = originalFormat.parse(input);
