@@ -13,11 +13,11 @@ import java.util.*;
 public class ReadCSV {
 
   // Read from Location CSV
-  public static List<Location> readLocationCSV() throws IOException {
+  public static List<Location> readLocationCSV(String csvFilePath) throws IOException {
     // System.out.println("beginning to read csv");
 
     Scanner lineScanner =
-        new Scanner(ReadCSV.class.getClassLoader().getResourceAsStream("TowerLocations.csv"));
+        new Scanner(ReadCSV.class.getClassLoader().getResourceAsStream(csvFilePath));
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
@@ -62,11 +62,12 @@ public class ReadCSV {
   }
 
   // Read From Employees CSV
-  public static List<Employee> readEmployeeCSV() throws IOException, ParseException {
+  public static List<Employee> readEmployeeCSV(String csvFilePath)
+      throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
     Scanner lineScanner =
-        new Scanner(ReadCSV.class.getClassLoader().getResourceAsStream("Employee.csv"));
+        new Scanner(ReadCSV.class.getClassLoader().getResourceAsStream(csvFilePath));
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
@@ -110,12 +111,12 @@ public class ReadCSV {
   }
 
   // Read From MedicalEquipment CSV
-  public static List<MedicalEquipment> readMedicalEquipmentCSV()
+  public static List<MedicalEquipment> readMedicalEquipmentCSV(String csvFilePath)
       throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
     Scanner lineScanner =
-        new Scanner(ReadCSV.class.getClassLoader().getResourceAsStream("MedicalEquipment.csv"));
+        new Scanner(ReadCSV.class.getClassLoader().getResourceAsStream(csvFilePath));
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
@@ -158,15 +159,12 @@ public class ReadCSV {
   }
 
   // Read from Location CSV
-  public static List<MedicalEquipmentServiceRequest> readMedicalEquipmentServiceRequestCSV()
-      throws IOException, ParseException {
+  public static List<MedicalEquipmentServiceRequest> readMedicalEquipmentServiceRequestCSV(
+      String csvFilePath) throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
     Scanner lineScanner =
-        new Scanner(
-            ReadCSV.class
-                .getClassLoader()
-                .getResourceAsStream("MedicalEquipmentServiceRequest.csv"));
+        new Scanner(ReadCSV.class.getClassLoader().getResourceAsStream(csvFilePath));
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;

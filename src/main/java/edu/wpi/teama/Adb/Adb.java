@@ -141,7 +141,7 @@ public class Adb {
   }
 
   // input from CSV
-  public static void inputFromCSV(String tableName) {
+  public static void inputFromCSV(String tableName, String csvFilePath) {
     switch (tableName) {
 
         // Table name = Location
@@ -149,7 +149,7 @@ public class Adb {
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
-          List<edu.wpi.teama.Adb.Location.Location> locList = ReadCSV.readLocationCSV();
+          List<edu.wpi.teama.Adb.Location.Location> locList = ReadCSV.readLocationCSV(csvFilePath);
           for (Location l : locList) {
             Statement addStatement = connection.createStatement();
             addStatement.executeUpdate(
@@ -182,7 +182,7 @@ public class Adb {
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
-          List<edu.wpi.teama.Adb.Employee.Employee> List = ReadCSV.readEmployeeCSV();
+          List<edu.wpi.teama.Adb.Employee.Employee> List = ReadCSV.readEmployeeCSV(csvFilePath);
           for (Employee l : List) {
             Statement addStatement = connection.createStatement();
 
@@ -220,7 +220,7 @@ public class Adb {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
           List<edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipment> List =
-              ReadCSV.readMedicalEquipmentCSV();
+              ReadCSV.readMedicalEquipmentCSV(csvFilePath);
           for (MedicalEquipment l : List) {
             Statement addStatement = connection.createStatement();
             addStatement.executeUpdate(
@@ -247,7 +247,7 @@ public class Adb {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
           List<edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest>
-              List = ReadCSV.readMedicalEquipmentServiceRequestCSV();
+              List = ReadCSV.readMedicalEquipmentServiceRequestCSV(csvFilePath);
           for (MedicalEquipmentServiceRequest l : List) {
             Statement addStatement = connection.createStatement();
             addStatement.executeUpdate(
