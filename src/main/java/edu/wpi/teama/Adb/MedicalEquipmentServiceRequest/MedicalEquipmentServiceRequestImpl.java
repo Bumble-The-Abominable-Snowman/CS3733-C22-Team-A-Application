@@ -1,7 +1,6 @@
 package edu.wpi.teama.Adb.MedicalEquipmentServiceRequest;
 
 import edu.wpi.teama.entities.requests.MedicalEquipmentServiceRequest;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

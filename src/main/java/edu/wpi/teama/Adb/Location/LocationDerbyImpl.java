@@ -1,7 +1,6 @@
 package edu.wpi.teama.Adb.Location;
 
 import edu.wpi.teama.entities.Location;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

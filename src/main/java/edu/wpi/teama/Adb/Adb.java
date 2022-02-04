@@ -4,7 +4,6 @@ import edu.wpi.teama.entities.Employee;
 import edu.wpi.teama.entities.Location;
 import edu.wpi.teama.entities.MedicalEquipment;
 import edu.wpi.teama.entities.requests.MedicalEquipmentServiceRequest;
-
 import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
@@ -220,8 +219,7 @@ public class Adb {
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
-          List<MedicalEquipment> List =
-              ReadCSV.readMedicalEquipmentCSV(csvFilePath);
+          List<MedicalEquipment> List = ReadCSV.readMedicalEquipmentCSV(csvFilePath);
           for (MedicalEquipment l : List) {
             Statement addStatement = connection.createStatement();
             addStatement.executeUpdate(
@@ -247,8 +245,8 @@ public class Adb {
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
-          List<MedicalEquipmentServiceRequest>
-              List = ReadCSV.readMedicalEquipmentServiceRequestCSV(csvFilePath);
+          List<MedicalEquipmentServiceRequest> List =
+              ReadCSV.readMedicalEquipmentServiceRequestCSV(csvFilePath);
           for (MedicalEquipmentServiceRequest l : List) {
             Statement addStatement = connection.createStatement();
             addStatement.executeUpdate(

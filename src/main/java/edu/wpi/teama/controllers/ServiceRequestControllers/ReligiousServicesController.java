@@ -1,11 +1,11 @@
 package edu.wpi.teama.controllers.ServiceRequestControllers;
 
-import edu.wpi.teama.entities.Employee;
 import edu.wpi.teama.Adb.Employee.EmployeeDAO;
 import edu.wpi.teama.Adb.Employee.EmployeeDerbyImpl;
-import edu.wpi.teama.entities.Location;
 import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
 import edu.wpi.teama.controllers.SceneController;
+import edu.wpi.teama.entities.Employee;
+import edu.wpi.teama.entities.Location;
 import edu.wpi.teama.entities.ReligiousServiceRequest;
 import java.io.IOException;
 import java.text.ParseException;
