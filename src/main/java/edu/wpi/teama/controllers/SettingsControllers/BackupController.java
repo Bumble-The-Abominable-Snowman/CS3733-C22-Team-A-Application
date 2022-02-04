@@ -12,7 +12,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
@@ -26,10 +25,7 @@ public class BackupController {
   @FXML private ChoiceBox<String> TypeCSV;
   @FXML private Text selectedFileText;
   @FXML private ListView<String> fileList;
-  @FXML private Button homeButton;
-  @FXML private Button backButton;
-  @FXML private Button loadFromBackupButton;
-  private FXMLLoader loader = new FXMLLoader();
+  private String lastSelectedFile;
 
   private final SceneController sceneController = Aapp.sceneController;
 
@@ -43,6 +39,7 @@ public class BackupController {
           public void handle(MouseEvent event) {
             if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
               String currentItemSelected = fileList.getSelectionModel().getSelectedItem();
+              lastSelectedFile = currentItemSelected;
               selectedFileText.setText(currentItemSelected);
               selectedFileText.setFill(Color.BLACK);
             }
@@ -81,9 +78,9 @@ public class BackupController {
 
   public void loadFromBackup(ActionEvent actionEvent) {
     // TODO: load csv file and populate the db given a filepath
-    String filepath = "edu/wpi/teama/db/" + selectedFileText.getText();
+    String filepath = "edu/wpi/teama/db/" + lastSelectedFile;
 
-    if (!TypeCSV.getValue().equals("CSV Type") && selectedFileText.getText().length() > 4) {
+    if (!TypeCSV.getValue().equals("CSV Type") && lastSelectedFile.length() > 4) {
       Adb.initialConnection();
       Adb.inputFromCSV(TypeCSV.getValue(), filepath);
 

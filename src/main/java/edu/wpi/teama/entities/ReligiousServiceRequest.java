@@ -1,2 +1,3 @@
-package edu.wpi.teama.entities;public class ReligiousServiceRequest {
-}
+package edu.wpi.teama.entities;
+
+public class ReligiousServiceRequest {}
