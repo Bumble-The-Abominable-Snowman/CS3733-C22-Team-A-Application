@@ -10,9 +10,14 @@ import edu.wpi.teama.Adb.Employee.EmployeeDerbyImpl;
 import edu.wpi.teama.Adb.Location.Location;
 import edu.wpi.teama.Adb.Location.LocationDAO;
 import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
+import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipmentDAO;
+import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipmentImpl;
+import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestDAO;
+import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestImpl;
 import edu.wpi.teama.Adb.WriteCSV;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,7 +30,7 @@ public class DefaultTest {
 
     Connection connection = null;
     Adb.initialConnection();
-    Adb.inputFromCSV("TowerLocations");
+    Adb.inputFromCSV("TowerLocations", "edu/wpi/teama/db/TowerLocations.csv");
 
     // Test on Location table (Fixed)
     LocationDAO Location = new LocationDerbyImpl();
@@ -53,10 +58,12 @@ public class DefaultTest {
     Location.deleteLocationNode("nyxdai0209");
     WriteCSV.writeLocationCSV(Location.getNodeList());
 
+    // **************************************************************************************************
+
     // Test on Employee table (Fixed)
     EmployeeDAO Employee = new EmployeeDerbyImpl();
 
-    Adb.inputFromCSV("Employee");
+    Adb.inputFromCSV("Employee", "edu/wpi/teama/db/Employee.csv");
     String input = "2022-02-01";
     SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date date = originalFormat.parse(input);
@@ -88,5 +95,64 @@ public class DefaultTest {
     Employee.updateEmployee("001", "phoneNum", "0000000001");
     // Employee.deleteEmployee("001");
     WriteCSV.writeEmployeeCSV(Employee.getEmployeeList());
+
+    // **************************************************************************************************
+
+    // Test on Medical Equipment
+    Adb.inputFromCSV("MedicalEquipment");
+    MedicalEquipmentDAO equipment = new MedicalEquipmentImpl();
+    System.out.println("Testing enter");
+    equipment.enterMedicalEquipment("EQ1234", "Bed", true, "FDEPT00101", true);
+    equipment.enterMedicalEquipment("EQ5678", "Xray machine", false, "FDEPT00201", true);
+    System.out.println("Testing get");
+    System.out.println(equipment.getMedicalEquipment("EQ1234"));
+    System.out.println("Testing getList");
+    System.out.println(equipment.getMedicalEquipmentList());
+    System.out.println("Testing udpate");
+    equipment.updateMedicalEquipment("EQ1234", "isClean", "false");
+    System.out.println("testing delete");
+    equipment.deleteMedicalEquipment("EQ1234");
+    System.out.println("deletion Successful");
+    equipment.deleteMedicalEquipment("EQ5678");
+    System.out.println("deletion Successful");
+    WriteCSV.writeMedicalEquipmentCSV(equipment.getMedicalEquipmentList());
+
+    // ************************************************************************************************** */
+
+    // Test on MedicalEquipmentServiceRequest
+    MedicalEquipmentServiceRequestDAO mesr = new MedicalEquipmentServiceRequestImpl();
+    System.out.println("Testing enter");
+
+    Adb.inputFromCSV("MedicalEquipmentServiceRequest");
+    mesr.enterMedicalEquipmentServiceRequest(
+        "REQ123",
+        "FDEPT00101",
+        "FDEPT00201",
+        "EMP1",
+        "EMP2",
+        Timestamp.valueOf("2018-09-01 09:01:15"),
+        "In Progress",
+        "EQ1234",
+        "Low Priority");
+    mesr.enterMedicalEquipmentServiceRequest(
+        "REQ124",
+        "FDEPT00101",
+        "FDEPT00201",
+        "EMP1",
+        "EMP2",
+        Timestamp.valueOf("2018-09-01 09:01:15"),
+        "In Progress",
+        "EQ1234",
+        "Low Priority");
+    System.out.println("Testing get");
+    System.out.println(mesr.getMedicalEquipmentServiceRequest("REQ123"));
+    System.out.println("Testing udpate");
+    mesr.updateMedicalEquipmentServiceRequest("REQ123", "StartLocation", "FDEPT00301");
+    System.out.println("Testing getList");
+    System.out.println(mesr.getMedicalEquipmentServiceRequestList());
+    System.out.println("testing delete");
+    mesr.deleteMedicalEquipment("REQ123");
+    mesr.deleteMedicalEquipment("REQ124");
+    WriteCSV.writeMedicalEquipmentServiceRequestCSV(mesr.getMedicalEquipmentServiceRequestList());
   }
 }

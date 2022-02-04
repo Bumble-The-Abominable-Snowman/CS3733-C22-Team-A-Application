@@ -6,7 +6,7 @@ import java.util.List;
 
 public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServiceRequestDAO {
 
-  public void MedicalEquipmentServiceRequestImpl() {}
+  public MedicalEquipmentServiceRequestImpl() {}
 
   public MedicalEquipmentServiceRequest getMedicalEquipmentServiceRequest(String ID) {
     try {
@@ -17,28 +17,30 @@ public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServi
               "SELECT * FROM MedicalEquipmentServiceRequest WHERE equipmentID = '%s'", ID);
 
       ResultSet rset = get.executeQuery(str);
-      String requestID = rset.getString("requestID");
-      String startLocation = rset.getString("startLocation");
-      String endLocation = rset.getString("endLocation");
-      String employeeRequested = rset.getString("employeeRequested");
-      String employeeAssigned = rset.getString("employeeAssigned");
-      Timestamp requestTime = rset.getTimestamp("requestTime");
-      String requestStatus = rset.getString("requestStatus");
-      String equipmentID = rset.getString("equipmentID");
-      String requestType = rset.getString("requestType");
+      MedicalEquipmentServiceRequest mesr = new MedicalEquipmentServiceRequest();
+      if (rset.next()) {
+        String requestID = rset.getString("requestID");
+        String startLocation = rset.getString("startLocation");
+        String endLocation = rset.getString("endLocation");
+        String employeeRequested = rset.getString("employeeRequested");
+        String employeeAssigned = rset.getString("employeeAssigned");
+        Timestamp requestTime = rset.getTimestamp("requestTime");
+        String requestStatus = rset.getString("requestStatus");
+        String equipmentID = rset.getString("equipmentID");
+        String requestType = rset.getString("requestType");
 
-      MedicalEquipmentServiceRequest mesr =
-          new MedicalEquipmentServiceRequest(
-              requestID,
-              startLocation,
-              endLocation,
-              employeeRequested,
-              employeeAssigned,
-              requestTime,
-              requestStatus,
-              equipmentID,
-              requestType);
-
+        mesr =
+            new MedicalEquipmentServiceRequest(
+                requestID,
+                startLocation,
+                endLocation,
+                employeeRequested,
+                employeeAssigned,
+                requestTime,
+                requestStatus,
+                equipmentID,
+                requestType);
+      }
       return mesr;
 
     } catch (SQLException e) {
@@ -54,7 +56,9 @@ public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServi
       Statement update = connection.createStatement();
       String str =
           String.format(
-              "UPDATE MedicalEquipmentServiceRequest SET " + field + " = %s WHERE requestID = '%s'",
+              "UPDATE MedicalEquipmentServiceRequest SET "
+                  + field
+                  + " = '%s' WHERE requestID = '%s'",
               change,
               ID);
       update.execute(str);
@@ -79,21 +83,24 @@ public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServi
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement insert = connection.createStatement();
 
+      String strTime = "'" + requestTime.toString() + "'";
+      System.out.println(strTime);
       String str =
           String.format(
               "INSERT INTO MedicalEquipmentServiceRequest(requestID, startLocation, endLocation, "
                   + "employeeRequested, employeeAssigned, requestTime, requestStatus, equipmentID, requestType) "
-                  + " VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%1$TD %1$TT', '%s', '%s', '%s');",
+                  + " VALUES('%s', '%s', '%s', '%s', '%s', %s, '%s', '%s', '%s')",
               requestID,
               startLocation,
               endLocation,
               employeeRequested,
               employeeAssigned,
-              requestTime,
+              strTime,
               requestStatus,
               equipmentID,
               requestType);
       insert.execute(str);
+      connection.close();
 
     } catch (SQLException e) {
       System.out.println("Failed");

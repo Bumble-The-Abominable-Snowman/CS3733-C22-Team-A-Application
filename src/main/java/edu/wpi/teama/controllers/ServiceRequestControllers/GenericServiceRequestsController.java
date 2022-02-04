@@ -4,7 +4,6 @@ import edu.wpi.teama.Aapp;
 import edu.wpi.teama.controllers.SceneController;
 import java.io.IOException;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 
 public abstract class GenericServiceRequestsController {
@@ -16,8 +15,6 @@ public abstract class GenericServiceRequestsController {
   SceneController.SCENES sceneID;
 
   private final SceneController sceneController = Aapp.sceneController;
-
-  private FXMLLoader loader = new FXMLLoader();
 
   @FXML
   void returnToHomeScene() throws IOException {

@@ -1,5 +1,7 @@
 package edu.wpi.teama.controllers.ServiceRequestControllers;
 
+import static edu.wpi.teama.Aapp.sceneController;
+
 import edu.wpi.teama.Aapp;
 import edu.wpi.teama.controllers.SceneController;
 import java.io.IOException;
@@ -15,6 +17,7 @@ public class SelectServiceRequestController {
   @FXML private Button laundryServicesButton;
   @FXML private Button foodDeliveryButton;
   @FXML private Button languageServicesButton;
+  @FXML private Button backButton;
   private FXMLLoader loader = new FXMLLoader();
 
   private final SceneController sceneController = Aapp.sceneController;
@@ -48,5 +51,10 @@ public class SelectServiceRequestController {
   @FXML
   private void goToLanguageServices() throws IOException {
     sceneController.switchScene(SceneController.SCENES.LANGUAGE_INTERPRETER_SERVICE_REQUEST_SCENE);
+  }
+
+  @FXML
+  void returnToHomeScene() throws IOException {
+    sceneController.switchScene(SceneController.SCENES.HOME_SCENE);
   }
 }

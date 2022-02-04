@@ -9,7 +9,7 @@ public class Main {
 
     Connection connection = null;
     Adb.initialConnection();
-    Adb.inputFromCSV("TowerLocations");
+    Adb.inputFromCSV("TowerLocations", "edu/wpi/teama/db/TowerLocations.csv");
 
     Aapp.launch(Aapp.class, args);
   }
