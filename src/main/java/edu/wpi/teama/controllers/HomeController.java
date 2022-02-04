@@ -42,6 +42,11 @@ public class HomeController {
   }
 
   @FXML
+  public void goToViewEmployees(ActionEvent actionEvent) throws IOException {
+    sceneController.switchScene(SceneController.SCENES.VIEW_EMPLOYEES_SCENE);
+  }
+
+  @FXML
   private void exitApp() {
     System.exit(0);
   }

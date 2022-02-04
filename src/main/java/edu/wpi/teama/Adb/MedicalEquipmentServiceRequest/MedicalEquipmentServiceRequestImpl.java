@@ -7,7 +7,7 @@ import java.util.List;
 
 public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServiceRequestDAO {
   List<MedicalEquipmentServiceRequest> reqList;
-  
+
   public MedicalEquipmentServiceRequestImpl() {
     List<MedicalEquipmentServiceRequest> reqList = new ArrayList<>();
     try {
@@ -27,16 +27,16 @@ public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServi
         String requestType = rset.getString("requestType");
 
         MedicalEquipmentServiceRequest mesr =
-                new MedicalEquipmentServiceRequest(
-                        requestID,
-                        startLocation,
-                        endLocation,
-                        employeeRequested,
-                        employeeAssigned,
-                        requestTime,
-                        requestStatus,
-                        equipmentID,
-                        requestType);
+            new MedicalEquipmentServiceRequest(
+                requestID,
+                startLocation,
+                endLocation,
+                employeeRequested,
+                employeeAssigned,
+                requestTime,
+                requestStatus,
+                equipmentID,
+                requestType);
         reqList.add(mesr);
       }
     } catch (SQLException e) {
@@ -50,12 +50,13 @@ public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServi
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement get = connection.createStatement();
       String str =
-          String.format(
-              "SELECT * FROM MedicalEquipmentServiceRequest WHERE equipmentID = '%s'", ID);
+          String.format("SELECT * FROM MedicalEquipmentServiceRequest WHERE requestID = '%s'", ID);
 
       ResultSet rset = get.executeQuery(str);
       MedicalEquipmentServiceRequest mesr = new MedicalEquipmentServiceRequest();
+      System.out.println("hello");
       if (rset.next()) {
+        System.out.println("hi");
         String requestID = rset.getString("requestID");
         String startLocation = rset.getString("startLocation");
         String endLocation = rset.getString("endLocation");
@@ -65,7 +66,7 @@ public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServi
         String requestStatus = rset.getString("requestStatus");
         String equipmentID = rset.getString("equipmentID");
         String requestType = rset.getString("requestType");
-
+        System.out.println(requestType);
         mesr =
             new MedicalEquipmentServiceRequest(
                 requestID,

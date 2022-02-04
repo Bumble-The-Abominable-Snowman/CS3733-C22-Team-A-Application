@@ -1,2 +1,3 @@
+employeeID, employeeType, firstName, lastName, email, phoneNum, address, startDate
 001,Admin,Yanbo,Dai,ydai2@wpi.edu,0000000001,100 institute Rd,2022-02-01
-002,Admin,Yanbo,Dai,ydai2@wpi.edu,0000000001,100 institute Rd,2022-02-01
+002,Admin,Yasar,Idikut,yidikut@wpi.edu,0000000002,Area 51,2022-02-03

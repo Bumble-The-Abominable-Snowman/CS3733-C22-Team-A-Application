@@ -142,11 +142,6 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
           typeChoiceBox.getSelectionModel().getSelectedItem().toString(),
           "MedicalEquipmentRequest");
 
-      System.out.println(
-          medicalEquipmentServiceRequestDAO
-              .getMedicalEquipmentServiceRequest("testID")
-              .getStartLocation());
-
       this.returnToHomeScene();
     }
   }
