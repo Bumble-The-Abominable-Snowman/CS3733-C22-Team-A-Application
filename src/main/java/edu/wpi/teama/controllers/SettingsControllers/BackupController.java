@@ -82,7 +82,6 @@ public class BackupController {
     String filepath = "edu/wpi/teama/db/" + lastSelectedFile;
 
     if (!TypeCSV.getValue().equals("CSV Type") && lastSelectedFile.length() > 4) {
-      Adb.initialConnection();
       Adb.inputFromCSV(TypeCSV.getValue(), filepath);
 
       selectedFileText.setText("Success!");
