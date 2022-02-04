@@ -101,47 +101,6 @@ public class Adb {
       System.out.println("Table MedicalEquipmentServiceRequest already exist");
     }
 
-    // Check if tables are empty
-    // Check location table
-    try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-      Statement deleteTable = connection.createStatement();
-
-      deleteTable.execute("DELETE FROM TowerLocations");
-    } catch (SQLException e) {
-      System.out.println("Delete failed");
-    }
-
-    // Check employee table
-    try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-      Statement dropTable = connection.createStatement();
-
-      dropTable.execute("DELETE FROM Employee");
-    } catch (SQLException e) {
-      System.out.println("Delete failed");
-    }
-
-    // Check MedicalEquipment table
-    try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-      Statement dropTable = connection.createStatement();
-
-      dropTable.execute("DELETE FROM MedicalEquipment");
-    } catch (SQLException e) {
-      System.out.println("delete failed");
-    }
-
-    // Check MedicalEquipmentServiceRequest table
-    try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-      Statement dropTable = connection.createStatement();
-
-      dropTable.execute("DELETE FROM MedicalEquipmentServiceRequest");
-    } catch (SQLException e) {
-      System.out.println("delete failed");
-    }
-
     if (!isInitialized) {
       inputFromCSV("TowerLocations", "edu/wpi/teama/db/TowerLocations.csv");
       inputFromCSV("Employee", "edu/wpi/teama/db/Employee.csv");
