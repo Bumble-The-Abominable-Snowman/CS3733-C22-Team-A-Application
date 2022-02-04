@@ -1,7 +1,6 @@
 package edu.wpi.teama.Adb.MedicalEquipmentServiceRequest;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import java.sql.Timestamp;
 
 public class MedicalEquipmentServiceRequest
     extends RecursiveTreeObject<MedicalEquipmentServiceRequest> {
@@ -10,7 +9,7 @@ public class MedicalEquipmentServiceRequest
   private String endLocation;
   private String employeeRequested;
   private String employeeAssigned;
-  private Timestamp requestTime;
+  private String requestTime;
   private String requestStatus;
   private String equipmentID;
   private String requestType;
@@ -23,7 +22,7 @@ public class MedicalEquipmentServiceRequest
       String endLocation,
       String employeeRequested,
       String employeeAssigned,
-      Timestamp requestTime,
+      String requestTime,
       String requestStatus,
       String equipmentID,
       String requestType) {
@@ -58,7 +57,7 @@ public class MedicalEquipmentServiceRequest
     return employeeAssigned;
   }
 
-  public Timestamp getRequestTime() {
+  public String getRequestTime() {
     return requestTime;
   }
 
@@ -94,7 +93,7 @@ public class MedicalEquipmentServiceRequest
     this.employeeAssigned = employeeAssigned;
   }
 
-  public void setRequestTime(Timestamp requestTime) {
+  public void setRequestTime(String requestTime) {
     this.requestTime = requestTime;
   }
 

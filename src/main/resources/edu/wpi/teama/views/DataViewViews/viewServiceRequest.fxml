@@ -8,7 +8,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teama.controllers.DataViewControllers.viewServiceRequestController">
     <children>
-        <Label layoutX="168.0" layoutY="10.0" text="Equipment Tracker">
+        <Label layoutX="168.0" layoutY="10.0" text="Existing Service Requests">
             <font>
                 <Font size="32.0" />
             </font>

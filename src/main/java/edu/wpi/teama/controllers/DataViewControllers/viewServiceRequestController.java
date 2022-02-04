@@ -10,12 +10,14 @@ import edu.wpi.teama.controllers.SceneController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
 
 public class viewServiceRequestController implements Initializable {
   @FXML Button backButton;
@@ -62,46 +64,38 @@ public class viewServiceRequestController implements Initializable {
     reqStatus.setStyle("-fx-alignment: center ;");
     equipmentID.setStyle("-fx-alignment: center ;");
     reqType.setStyle("-fx-alignment: center ;");
-    /*reqID.setCellValueFactory(
+    reqID.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getEquipmentID()));
+            new SimpleStringProperty(param.getValue().getValue().getRequestID()));
     startLoc.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getEquipmentType()));
+            new SimpleStringProperty(param.getValue().getValue().getStartLocation()));
     endLoc.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getIsClean() ? "Yes" : "No"));
+            new SimpleStringProperty(param.getValue().getValue().getEndLocation()));
     employeeReq.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getCurrentLocation()));
+            new SimpleStringProperty(param.getValue().getValue().getEmployeeRequested()));
     employeeAss.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getIsAvailable() ? "Yes" : "No"));
+            new SimpleStringProperty(param.getValue().getValue().getEmployeeAssigned()));
     reqTime.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getIsAvailable() ? "Yes" : "No"));
+            new SimpleStringProperty(param.getValue().getValue().getRequestTime()));
     reqStatus.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getIsAvailable() ? "Yes" : "No"));
+            new SimpleStringProperty(param.getValue().getValue().getRequestStatus()));
     equipmentID.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getIsAvailable() ? "Yes" : "No"));
+            new SimpleStringProperty(param.getValue().getValue().getEquipmentID()));
     reqType.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getIsAvailable() ? "Yes" : "No"));*/
+            new SimpleStringProperty(param.getValue().getValue().getRequestType()));
     // Grab equipment from database (uses example item currently)
     ObservableList<MedicalEquipmentServiceRequest> equipment = FXCollections.observableArrayList();
-    /*equipment.add(
-    new edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest(
-        "12345689",
-        "Start",
-        "End",
-        "Joe",
-        "N/A",
-        new Timestamp(74, 74, 74, 74, 74, 74, 74),
-        "Done",
-        "74",
-        "No"));*/
+    equipment.add(
+        new edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest(
+            "12345689", "Start", "End", "Joe", "N/A", "30 minutes", "Done", "74", "No"));
     // equipment.add(new MedicalEquipmentRequest("14", "BED", true, "OR", true));
 
     // Sets up the table and puts the equipment data under the columns

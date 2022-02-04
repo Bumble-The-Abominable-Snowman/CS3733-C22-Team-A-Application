@@ -5,7 +5,6 @@ import edu.wpi.teama.Adb.Location.Location;
 import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipment;
 import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -186,12 +185,8 @@ public class ReadCSV {
         else if (dataIndex == 2) thisMESR.setEndLocation(data);
         else if (dataIndex == 3) thisMESR.setEmployeeRequested(data);
         else if (dataIndex == 4) thisMESR.setEmployeeAssigned(data);
-        else if (dataIndex == 5) {
-          SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-          Date parsedDate = dateFormat.parse(data);
-          Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
-          thisMESR.setRequestTime(timestamp);
-        } else if (dataIndex == 6) thisMESR.setRequestStatus(data);
+        else if (dataIndex == 5) thisMESR.setRequestTime(data);
+        else if (dataIndex == 6) thisMESR.setRequestStatus(data);
         else if (dataIndex == 7) thisMESR.setEquipmentID(data);
         else if (dataIndex == 8) thisMESR.setRequestType(data);
         else System.out.println("Invalid data, I broke::" + data);
