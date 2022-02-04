@@ -1,5 +1,6 @@
 package edu.wpi.teama.Adb.MedicalEquipmentServiceRequest;
 
+import edu.wpi.teama.entities.requests.MedicalEquipmentServiceRequest;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +14,13 @@ public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServi
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement get = connection.createStatement();
       String str =
-          String.format(
-              "SELECT * FROM MedicalEquipmentServiceRequest WHERE equipmentID = '%s'", ID);
+          String.format("SELECT * FROM MedicalEquipmentServiceRequest WHERE requestID = '%s'", ID);
 
       ResultSet rset = get.executeQuery(str);
       MedicalEquipmentServiceRequest mesr = new MedicalEquipmentServiceRequest();
+      System.out.println("hello");
       if (rset.next()) {
+        System.out.println("hi");
         String requestID = rset.getString("requestID");
         String startLocation = rset.getString("startLocation");
         String endLocation = rset.getString("endLocation");
@@ -28,7 +30,7 @@ public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServi
         String requestStatus = rset.getString("requestStatus");
         String equipmentID = rset.getString("equipmentID");
         String requestType = rset.getString("requestType");
-
+        System.out.println(requestType);
         mesr =
             new MedicalEquipmentServiceRequest(
                 requestID,
@@ -159,7 +161,6 @@ public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServi
       System.out.println("Failed");
       e.printStackTrace();
     }
-
     return reqList;
   }
 }

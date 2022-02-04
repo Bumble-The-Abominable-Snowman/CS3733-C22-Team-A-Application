@@ -1,4 +1,4 @@
-nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName
+getNodeID, xCord, yCord, getFloor(),getBuilding, getNodeType, getLongName, getShortName
 FDEPT00101,1617,825,1,Tower,DEPT,Center for International Medicine,CIM
 FDEPT00201,1610,1120,1,Tower,DEPT,Bretholtz Center for Patients and Families,Bretholtz WR
 FDEPT00301,1721,931,1,Tower,DEPT,Multifaith Chapel,Chapel

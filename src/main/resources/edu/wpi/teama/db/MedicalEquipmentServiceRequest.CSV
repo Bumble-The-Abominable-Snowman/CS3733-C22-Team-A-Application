@@ -1,0 +1,3 @@
+RequestID, getStartLocation, getEndLocation, getEmployeeRequested, getEmployeeAssigned, requestTime, getRequestStatus, getEquipmentID, getRequestType
+REQ1256,FDEPT00101,FDEPT00201,EMP1,EMP2,2018-09-01 09:01:15.0,In Progress,EQ1234,Low Priority
+REQ12325,FDEPT00101,FDEPT00201,EMP1,EMP2,2018-09-01 09:01:15.0,In Progress,EQ1234,Low Priority

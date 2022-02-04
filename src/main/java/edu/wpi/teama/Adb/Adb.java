@@ -1,9 +1,9 @@
 package edu.wpi.teama.Adb;
 
-import edu.wpi.teama.Adb.Employee.Employee;
-import edu.wpi.teama.Adb.Location.Location;
-import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipment;
-import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest;
+import edu.wpi.teama.entities.Employee;
+import edu.wpi.teama.entities.Location;
+import edu.wpi.teama.entities.MedicalEquipment;
+import edu.wpi.teama.entities.requests.MedicalEquipmentServiceRequest;
 import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
@@ -149,7 +149,7 @@ public class Adb {
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
-          List<edu.wpi.teama.Adb.Location.Location> locList = ReadCSV.readLocationCSV(csvFilePath);
+          List<Location> locList = ReadCSV.readLocationCSV(csvFilePath);
           for (Location l : locList) {
             Statement addStatement = connection.createStatement();
             addStatement.executeUpdate(
@@ -182,7 +182,7 @@ public class Adb {
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
-          List<edu.wpi.teama.Adb.Employee.Employee> List = ReadCSV.readEmployeeCSV(csvFilePath);
+          List<Employee> List = ReadCSV.readEmployeeCSV(csvFilePath);
           for (Employee l : List) {
             Statement addStatement = connection.createStatement();
 
@@ -219,8 +219,7 @@ public class Adb {
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
-          List<edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipment> List =
-              ReadCSV.readMedicalEquipmentCSV(csvFilePath);
+          List<MedicalEquipment> List = ReadCSV.readMedicalEquipmentCSV(csvFilePath);
           for (MedicalEquipment l : List) {
             Statement addStatement = connection.createStatement();
             addStatement.executeUpdate(
@@ -246,8 +245,8 @@ public class Adb {
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
-          List<edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest>
-              List = ReadCSV.readMedicalEquipmentServiceRequestCSV(csvFilePath);
+          List<MedicalEquipmentServiceRequest> List =
+              ReadCSV.readMedicalEquipmentServiceRequestCSV(csvFilePath);
           for (MedicalEquipmentServiceRequest l : List) {
             Statement addStatement = connection.createStatement();
             addStatement.executeUpdate(

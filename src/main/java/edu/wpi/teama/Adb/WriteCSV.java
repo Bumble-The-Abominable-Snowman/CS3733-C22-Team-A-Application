@@ -1,9 +1,9 @@
 package edu.wpi.teama.Adb;
 
-import edu.wpi.teama.Adb.Employee.Employee;
-import edu.wpi.teama.Adb.Location.Location;
-import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipment;
-import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequest;
+import edu.wpi.teama.entities.Employee;
+import edu.wpi.teama.entities.Location;
+import edu.wpi.teama.entities.MedicalEquipment;
+import edu.wpi.teama.entities.requests.MedicalEquipmentServiceRequest;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,6 +17,10 @@ public class WriteCSV {
 
     // create a writer
     BufferedWriter writer = Files.newBufferedWriter(Paths.get("TowerLocations.CSV"));
+
+    writer.write(
+        "getNodeID, xCord, yCord, getFloor(),getBuilding, getNodeType, getLongName, getShortName");
+    writer.newLine();
 
     // write location data
     for (Location thisLocation : List) {
@@ -45,6 +49,10 @@ public class WriteCSV {
     // create a writer
     BufferedWriter writer = Files.newBufferedWriter(Paths.get("Employee.CSV"));
 
+    writer.write(
+        "getEmployeeID, getEmployeeType, getFirstName, getLastName, getEmail, getPhoneNum, getAddress, startDate");
+    writer.newLine();
+
     // write location data
     for (Employee thisEmployee : List) {
 
@@ -70,7 +78,10 @@ public class WriteCSV {
   public static void writeMedicalEquipmentCSV(List<MedicalEquipment> List) throws IOException {
 
     // create a writer
-    BufferedWriter writer = Files.newBufferedWriter(Paths.get("MedicalEquipment.CSV"));
+    BufferedWriter writer = Files.newBufferedWriter(Paths.get("MedicalEquipment.csv"));
+
+    writer.write("getEquipmentID, getEquipmentType, isClean, getCurrentLocation, isAvailable");
+    writer.newLine();
 
     // write location data
     for (MedicalEquipment thisME : List) {
@@ -98,6 +109,10 @@ public class WriteCSV {
     // create a writer
     BufferedWriter writer =
         Files.newBufferedWriter(Paths.get("MedicalEquipmentServiceRequest.CSV"));
+
+    writer.write(
+        "RequestID, getStartLocation, getEndLocation, getEmployeeRequested, getEmployeeAssigned, requestTime, getRequestStatus, getEquipmentID, getRequestType");
+    writer.newLine();
 
     // write location data
     for (MedicalEquipmentServiceRequest thisMESR : List) {

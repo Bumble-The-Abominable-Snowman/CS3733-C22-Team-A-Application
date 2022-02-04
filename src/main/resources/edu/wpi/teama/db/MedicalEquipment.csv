@@ -1,0 +1,2 @@
+getEquipmentID, getEquipmentType, isClean, getCurrentLocation, isAvailable
+EQ5678,Xray machine,true,FDEPT00201,true

@@ -1,4 +1,4 @@
-package edu.wpi.teama.Adb.MedicalEquipment;
+package edu.wpi.teama.entities;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 

@@ -1,5 +1,6 @@
 package edu.wpi.teama.Adb.Employee;
 
+import edu.wpi.teama.entities.Employee;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

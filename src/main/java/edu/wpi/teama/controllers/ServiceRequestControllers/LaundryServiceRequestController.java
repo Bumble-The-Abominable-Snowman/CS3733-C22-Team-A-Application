@@ -1,7 +1,7 @@
 package edu.wpi.teama.controllers.ServiceRequestControllers;
 
-import edu.wpi.teama.Adb.LaundryServiceRequest.LaundryServiceRequest;
 import edu.wpi.teama.controllers.SceneController;
+import edu.wpi.teama.entities.requests.LaundryServiceRequest;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
