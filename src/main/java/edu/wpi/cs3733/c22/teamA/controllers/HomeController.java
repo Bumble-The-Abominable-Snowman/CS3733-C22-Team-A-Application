@@ -37,6 +37,11 @@ public class HomeController {
   }
 
   @FXML
+  private void goToEditLocationData() throws IOException {
+    sceneController.switchScene(SceneController.SCENES.VIEW_EDIT_LOCATION_DATA);
+  }
+
+  @FXML
   private void goToViewServiceRequest() throws IOException {
     sceneController.switchScene(SceneController.SCENES.VIEW_SERVICE_REQUEST_SCENE);
   }
