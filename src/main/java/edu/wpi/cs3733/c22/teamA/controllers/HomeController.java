@@ -48,7 +48,9 @@ public class HomeController {
   }
 
   @FXML
-  private void exitApp() {
-    System.exit(0);
+  private void exitHome() throws IOException {
+    sceneController.switchScene(SceneController.SCENES.LOG_IN_SCENE);
   }
+
+  public void exitApp(ActionEvent actionEvent) {}
 }
