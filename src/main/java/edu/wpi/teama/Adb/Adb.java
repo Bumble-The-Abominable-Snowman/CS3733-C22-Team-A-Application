@@ -1,13 +1,13 @@
 package edu.wpi.teama.Adb;
 
-import edu.wpi.teama.Adb.Employee.EmployeeDAO;
-import edu.wpi.teama.Adb.Employee.EmployeeDerbyImpl;
-import edu.wpi.teama.Adb.Location.LocationDAO;
-import edu.wpi.teama.Adb.Location.LocationDerbyImpl;
-import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipmentDAO;
-import edu.wpi.teama.Adb.MedicalEquipment.MedicalEquipmentImpl;
-import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestDAO;
-import edu.wpi.teama.Adb.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestImpl;
+import edu.wpi.teama.Adb.employee.EmployeeDAO;
+import edu.wpi.teama.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.teama.Adb.location.LocationDAO;
+import edu.wpi.teama.Adb.location.LocationDerbyImpl;
+import edu.wpi.teama.Adb.medicalequipment.MedicalEquipmentDAO;
+import edu.wpi.teama.Adb.medicalequipment.MedicalEquipmentImpl;
+import edu.wpi.teama.Adb.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDAO;
+import edu.wpi.teama.Adb.medicalequipmentservicerequest.MedicalEquipmentServiceRequestImpl;
 import edu.wpi.teama.entities.Employee;
 import edu.wpi.teama.entities.Location;
 import edu.wpi.teama.entities.MedicalEquipment;
