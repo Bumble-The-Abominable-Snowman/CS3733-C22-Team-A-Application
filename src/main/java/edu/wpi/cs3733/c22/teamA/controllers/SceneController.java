@@ -51,7 +51,7 @@ public class SceneController {
     addScene(SCENES.VIEW_LOCATION_DATA_SCENE, "views/dataview/locationData.fxml");
     addScene(SCENES.VIEW_SERVICE_REQUEST_SCENE, "views/dataview/viewServiceRequest.fxml");
     addScene(SCENES.VIEW_EMPLOYEES_SCENE, "views/dataview/employeeData.fxml");
-    
+
     addScene(SCENES.SETTINGS_SCENE, "views/SettingsViews/settings.fxml");
     addScene(SCENES.LOAD_FROM_BACKUP_SCENE, "views/SettingsViews/loadFromBackup.fxml");
     addScene(SCENES.EXPORT_TO_BACKUP_SCENE, "views/SettingsViews/exportToBackup.fxml");
