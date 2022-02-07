@@ -1,11 +1,9 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
 import edu.wpi.cs3733.c22.teamA.Aapp;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

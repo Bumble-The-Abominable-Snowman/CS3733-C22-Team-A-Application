@@ -46,8 +46,8 @@ test {
 
 
 def codeCoverageExcludes = [
-        'edu.wpi.teama.App',
-        'edu.wpi.teama.Main',
+        'edu.wpi.cs3733.c22.teamA.Aapp',
+        'edu.wpi.cs3733.c22.teamA.Main',
 ]
 
 jacoco {
@@ -99,7 +99,7 @@ spotless {
     }
 }
 
-mainClassName = 'edu.wpi.teama.Main'
+mainClassName = 'edu.wpi.cs3733.c22.teamA.Main'
 
 jar {
     manifest {

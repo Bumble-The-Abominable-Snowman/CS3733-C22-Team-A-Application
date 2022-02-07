@@ -3,10 +3,8 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 // DEPRECATED FOR NOW
 
 import edu.wpi.cs3733.c22.teamA.Aapp;
-
 import java.io.IOException;
 import java.net.URL;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
