@@ -3,6 +3,7 @@ package edu.wpi.cs3733.c22.teamA.controllers.map;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -11,7 +12,7 @@ import javafx.scene.shape.Polygon;
 public class MapEditorController {
   @FXML private ComboBox floorSelectionComboBox;
   @FXML private AnchorPane anchorPane;
-  private List<Polygon> locationMarkers;
+  private List<Button> locationMarkers;
 
   public MapEditorController() {
     locationMarkers = new ArrayList<>();
@@ -35,9 +36,15 @@ public class MapEditorController {
                 Polygon polygon = new Polygon();
                 polygon
                     .getPoints()
-                    .addAll(new Double[] {100.0, 110.0, 92.5, 100.0, 100.0, 90.0, 107.5, 100.0});
+                    .addAll(new Double[] {7.5, 20.0, 0.0, 10.0, 7.5, 0.0, 15.0, 10.0});
                 polygon.setFill(Color.color(0, 0.6, 1.0));
-                locationMarkers.add(polygon);
+                Button a = new Button();
+                a.setShape(polygon);
+                a.setLayoutX(0); // top left coord
+                a.setLayoutY(0);// center at (7.5, 10)
+                a.setPickOnBounds(false);
+                a.setStyle("-fx-background-color: Blue");
+                locationMarkers.add(a);
                 draw();
               }
             });
