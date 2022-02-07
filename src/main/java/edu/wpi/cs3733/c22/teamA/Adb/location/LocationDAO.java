@@ -1,7 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.Adb.location;
 
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-
 import java.util.List;
 
 public interface LocationDAO {

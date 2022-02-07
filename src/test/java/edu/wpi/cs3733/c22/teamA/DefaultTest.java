@@ -5,11 +5,9 @@
 package edu.wpi.cs3733.c22.teamA;
 
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.text.ParseException;
-
 import org.junit.jupiter.api.Test;
 
 public class DefaultTest {
