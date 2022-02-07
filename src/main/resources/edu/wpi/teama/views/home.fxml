@@ -86,7 +86,7 @@
                           </children>
                       </VBox>
                       <Label text="Absolute-Zero Abominable Snowmen" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                      <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitHome" snapToPixel="false" text="Exit" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+                      <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitHome" snapToPixel="false" text="Log out" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
                       <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#goTosettings" text="Settings" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
                           <GridPane.margin>
                               <Insets right="5.0" top="5.0" />
