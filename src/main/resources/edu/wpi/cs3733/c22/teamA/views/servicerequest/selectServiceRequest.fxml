@@ -21,6 +21,7 @@
       <JFXButton fx:id="laundryServicesButton" mnemonicParsing="false" onAction="#goToLaundryServices" text="Laundry Services" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
       <JFXButton fx:id="sanitationServicesButton" mnemonicParsing="false" onAction="#goToSanitationServices" text="Sanitation Services" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
       <JFXButton fx:id="floralServicesButton" mnemonicParsing="false" onAction="#goToFloralDelivery" text="Floral Delivery" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+      <JFXButton fx:id="medicineDeliveryButton" mnemonicParsing="false" onAction="#goToMedicineDelivery" text="Medicine Delivery" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
       <JFXButton fx:id="backButton" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="26.0" prefWidth="55.0" text="Back" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
    </children>
 </GridPane>

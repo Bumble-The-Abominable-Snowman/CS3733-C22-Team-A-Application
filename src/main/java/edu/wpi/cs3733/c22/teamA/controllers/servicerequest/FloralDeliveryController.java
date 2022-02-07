@@ -18,7 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextArea;
 
-public class floralDeliveryController extends GenericServiceRequestsController {
+public class FloralDeliveryController extends GenericServiceRequestsController {
   @FXML private JFXButton returnHomeButton;
   @FXML private JFXButton submitButton;
   @FXML private JFXButton backButton;

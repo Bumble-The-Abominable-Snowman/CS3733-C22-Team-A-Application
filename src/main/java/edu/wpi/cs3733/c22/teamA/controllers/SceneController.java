@@ -27,6 +27,7 @@ public class SceneController {
     LOAD_FROM_BACKUP_SCENE,
     EXPORT_TO_BACKUP_SCENE,
     FLORAL_DELIVERY_REQUEST_SCENE,
+    MEDICINE_DELIVERY_REQUEST_SCENE
   }
 
   private final HashMap<SCENES, String> screenMap = new HashMap<>();
@@ -59,6 +60,7 @@ public class SceneController {
     addScene(SCENES.LOAD_FROM_BACKUP_SCENE, "views/settings/loadFromBackup.fxml");
     addScene(SCENES.EXPORT_TO_BACKUP_SCENE, "views/settings/exportToBackup.fxml");
     addScene(SCENES.FLORAL_DELIVERY_REQUEST_SCENE, "views/servicerequest/floralDelivery.fxml");
+    addScene(SCENES.MEDICINE_DELIVERY_REQUEST_SCENE, "views/servicerequest/medicineDelivery.fxml");
   }
 
   public void addScene(SCENES name, String pathToFXML) {
