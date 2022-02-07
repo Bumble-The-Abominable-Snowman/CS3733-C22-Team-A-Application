@@ -1,18 +1,19 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
+import com.jfoenix.controls.JFXButton;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
 
 public class HomeController {
-  @FXML private Button settingsButton;
-  @FXML private Button serviceRequestsButton;
-  @FXML private Button equipmentTrackerButton;
-  @FXML private Button locationDataButton;
-  @FXML private Button exitButton;
+  @FXML private JFXButton settingsButton;
+  @FXML private JFXButton serviceRequestsButton;
+  @FXML private JFXButton viewServiceRequestsButton;
+  @FXML private JFXButton equipmentTrackerButton;
+  @FXML private JFXButton locationDataButton;
+  @FXML private JFXButton exitButton;
   private FXMLLoader loader = new FXMLLoader();
 
   private final SceneController sceneController = Aapp.sceneController;
