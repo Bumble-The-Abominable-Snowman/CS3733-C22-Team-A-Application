@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
+import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
@@ -22,12 +23,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 
 public class MedicalEquipmentDeliveryController extends GenericServiceRequestsController {
-  @FXML private ComboBox statusChoiceBox;
+  @FXML private JFXComboBox statusChoiceBox;
   @FXML private TextArea specialNotes;
-  @FXML private ComboBox employeeChoiceBox;
-  @FXML private ComboBox toChoiceBox;
-  @FXML private ComboBox typeChoiceBox;
-  @FXML private ComboBox fromChoiceBox;
+  @FXML private JFXComboBox employeeChoiceBox;
+  @FXML private JFXComboBox toChoiceBox;
+  @FXML private JFXComboBox typeChoiceBox;
+  @FXML private JFXComboBox fromChoiceBox;
 
   private FXMLLoader loader = new FXMLLoader();
   private List<String> bedLocations = new ArrayList<>();

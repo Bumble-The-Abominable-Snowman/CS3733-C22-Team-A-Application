@@ -11,6 +11,7 @@ import edu.wpi.cs3733.c22.teamA.entities.ReligiousServiceRequest;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,10 +26,10 @@ public class ReligiousServicesController extends GenericServiceRequestsControlle
   @FXML private JFXComboBox employeeChoiceBox;
   @FXML private JFXComboBox denomChoiceBox;
 
-  private List<String> christianDenom;
-  private List<String> nonDenom;
-  private List<String> otherDenom;
-  private List<String> initChoices;
+  private List<String> christianDenom = new ArrayList<>();
+  private List<String> nonDenom = new ArrayList<>();
+  private List<String> otherDenom = new ArrayList<>();
+  private List<String> initChoices = new ArrayList<>();
 
   private FXMLLoader loader = new FXMLLoader();
 
