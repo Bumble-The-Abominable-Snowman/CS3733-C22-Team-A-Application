@@ -26,7 +26,7 @@ public class Aapp extends Application {
   public void start(Stage primaryStage) throws IOException {
     guiStage = primaryStage;
     sceneController = new SceneController();
-    sceneController.switchScene(SceneController.SCENES.HOME_SCENE);
+    sceneController.switchScene(SceneController.SCENES.LOG_IN_SCENE);
   }
 
   @Override
