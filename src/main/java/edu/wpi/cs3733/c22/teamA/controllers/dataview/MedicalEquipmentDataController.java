@@ -1,19 +1,20 @@
-package edu.wpi.c22.teamA.controllers.dataview;
+package edu.wpi.cs3733.c22.teamA.controllers.dataview;
 
 import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import edu.wpi.c22.teamA.Aapp;
-import edu.wpi.c22.teamA.Adb.medicalequipment.MedicalEquipmentDAO;
-import edu.wpi.c22.teamA.Adb.medicalequipment.MedicalEquipmentImpl;
-import edu.wpi.c22.teamA.entities.MedicalEquipment;
-import edu.wpi.c22.teamA.controllers.SceneController;
+import edu.wpi.cs3733.c22.teamA.Aapp;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentImpl;
+import edu.wpi.cs3733.c22.teamA.entities.MedicalEquipment;
+import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

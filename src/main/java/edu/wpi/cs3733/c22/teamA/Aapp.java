@@ -1,6 +1,6 @@
-package edu.wpi.c22.teamA;
+package edu.wpi.cs3733.c22.teamA;
 
-import edu.wpi.c22.teamA.controllers.SceneController;
+import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.stage.Stage;

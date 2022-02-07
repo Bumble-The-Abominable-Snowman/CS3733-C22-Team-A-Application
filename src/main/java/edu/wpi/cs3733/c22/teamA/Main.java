@@ -1,6 +1,6 @@
-package edu.wpi.c22.teamA;
+package edu.wpi.cs3733.c22.teamA;
 
-import edu.wpi.c22.teamA.Adb.Adb;
+import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 
 public class Main {
 

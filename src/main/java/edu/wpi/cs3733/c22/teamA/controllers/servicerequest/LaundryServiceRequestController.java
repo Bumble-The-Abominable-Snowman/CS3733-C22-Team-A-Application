@@ -1,7 +1,7 @@
-package edu.wpi.c22.teamA.controllers.servicerequest;
+package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
-import edu.wpi.c22.teamA.controllers.SceneController;
-import edu.wpi.c22.teamA.entities.requests.LaundryServiceRequest;
+import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
+import edu.wpi.cs3733.c22.teamA.entities.requests.LaundryServiceRequest;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

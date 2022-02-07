@@ -1,4 +1,4 @@
-package edu.wpi.c22.teamA.entities.requests;
+package edu.wpi.cs3733.c22.teamA.entities.requests;
 
 public class LanguageInterpreterRequest {
   private String language;

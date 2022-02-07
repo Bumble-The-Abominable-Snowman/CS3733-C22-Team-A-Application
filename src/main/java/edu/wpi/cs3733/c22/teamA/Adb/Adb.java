@@ -1,17 +1,17 @@
-package edu.wpi.c22.teamA.Adb;
+package edu.wpi.cs3733.c22.teamA.Adb;
 
-import edu.wpi.c22.teamA.Adb.employee.EmployeeDAO;
-import edu.wpi.c22.teamA.Adb.employee.EmployeeDerbyImpl;
-import edu.wpi.c22.teamA.Adb.location.LocationDAO;
-import edu.wpi.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.c22.teamA.Adb.medicalequipment.MedicalEquipmentDAO;
-import edu.wpi.c22.teamA.Adb.medicalequipment.MedicalEquipmentImpl;
-import edu.wpi.c22.teamA.Adb.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDAO;
-import edu.wpi.c22.teamA.Adb.medicalequipmentservicerequest.MedicalEquipmentServiceRequestImpl;
-import edu.wpi.c22.teamA.entities.Employee;
-import edu.wpi.c22.teamA.entities.Location;
-import edu.wpi.c22.teamA.entities.MedicalEquipment;
-import edu.wpi.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipmentservicerequest.MedicalEquipmentServiceRequestImpl;
+import edu.wpi.cs3733.c22.teamA.entities.Employee;
+import edu.wpi.cs3733.c22.teamA.entities.Location;
+import edu.wpi.cs3733.c22.teamA.entities.MedicalEquipment;
+import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
 import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
@@ -110,11 +110,11 @@ public class Adb {
     }
 
     if (!isInitialized) {
-      inputFromCSV("TowerLocations", "edu/wpi/c22/teamA/db/TowerLocations.csv");
+      inputFromCSV("TowerLocations", "edu/wpi/cs3733/c22/teamA/db/TowerLocations.csv");
       inputFromCSV("Employee", "edu/wpi/teama/db/Employee.csv");
       inputFromCSV(
           "MedicalEquipmentServiceRequest", "edu/wpi/teama/db/MedicalEquipmentServiceRequest.csv");
-      inputFromCSV("MedicalEquipment", "edu/wpi/c22/teamA/db/MedicalEquipment.csv");
+      inputFromCSV("MedicalEquipment", "edu/wpi/cs3733/c22/teamA/db/MedicalEquipment.csv");
     }
   }
 

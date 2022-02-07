@@ -1,9 +1,10 @@
-package edu.wpi.c22.teamA.controllers.settings;
+package edu.wpi.cs3733.c22.teamA.controllers.settings;
 
-import edu.wpi.c22.teamA.Aapp;
-import edu.wpi.c22.teamA.Adb.Adb;
-import edu.wpi.c22.teamA.controllers.SceneController;
+import edu.wpi.cs3733.c22.teamA.Aapp;
+import edu.wpi.cs3733.c22.teamA.Adb.Adb;
+import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

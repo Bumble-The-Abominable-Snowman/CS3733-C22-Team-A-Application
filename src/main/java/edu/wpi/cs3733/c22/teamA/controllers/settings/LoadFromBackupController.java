@@ -1,12 +1,13 @@
-package edu.wpi.c22.teamA.controllers.settings;
+package edu.wpi.cs3733.c22.teamA.controllers.settings;
 
-import edu.wpi.c22.teamA.Aapp;
-import edu.wpi.c22.teamA.Adb.Adb;
-import edu.wpi.c22.teamA.controllers.SceneController;
+import edu.wpi.cs3733.c22.teamA.Aapp;
+import edu.wpi.cs3733.c22.teamA.Adb.Adb;
+import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Objects;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

@@ -2,13 +2,14 @@
 /* DO NOT DELETE THIS TEST */
 /*-------------------------*/
 
-package edu.wpi.c22.teamA;
+package edu.wpi.cs3733.c22.teamA;
 
-import edu.wpi.c22.teamA.Adb.Adb;
+import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.text.ParseException;
+
 import org.junit.jupiter.api.Test;
 
 public class DefaultTest {
@@ -18,7 +19,7 @@ public class DefaultTest {
 
     Connection connection = null;
     Adb.initialConnection();
-    Adb.inputFromCSV("TowerLocations", "edu/wpi/c22/teamA/db/TowerLocations.csv");
+    Adb.inputFromCSV("TowerLocations", "edu/wpi/cs3733/c22/teamA/db/TowerLocations.csv");
 
     // Test on Location table (Fixed)
     //    LocationDAO Location = new LocationDerbyImpl();

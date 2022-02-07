@@ -1,8 +1,9 @@
-package edu.wpi.c22.teamA.controllers;
+package edu.wpi.cs3733.c22.teamA.controllers;
 
-import edu.wpi.c22.teamA.Aapp;
+import edu.wpi.cs3733.c22.teamA.Aapp;
 
 import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

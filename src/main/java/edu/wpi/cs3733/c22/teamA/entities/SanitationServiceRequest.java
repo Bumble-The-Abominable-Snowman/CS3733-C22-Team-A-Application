@@ -1,4 +1,4 @@
-package edu.wpi.c22.teamA.entities;
+package edu.wpi.cs3733.c22.teamA.entities;
 
 import lombok.Getter;
 import lombok.Setter;
