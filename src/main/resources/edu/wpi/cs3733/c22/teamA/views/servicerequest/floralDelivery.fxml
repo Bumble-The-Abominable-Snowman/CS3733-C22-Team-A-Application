@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="edu.wpi.cs3733.c22.teamA.controllers.servicerequest.floralDeliveryController"
+            prefHeight="400.0" prefWidth="600.0">
+    <Label layoutX="170.0" prefHeight="78.0" prefWidth="261.0" text="Floral Delivery Requests">
+        <font>
+            <Font size="19.0" />
+        </font>
+    </Label>
+    <Label alignment="CENTER" layoutX="232.0" layoutY="89.0" prefHeight="34.0" prefWidth="137.0" text="Map (To Be Added)" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+        <font>
+            <Font size="16.0" />
+        </font>
+    </Label>
+    <Label layoutX="232.0" layoutY="251.0" prefHeight="57.0" prefWidth="137.0" text="Selected Location" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+        <font>
+            <Font size="17.0" />
+        </font>
+    </Label>
+    <JFXButton fx:id="returnHomeButton" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" />
+    <JFXButton fx:id="clearButton" layoutX="481.0" layoutY="360.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="34.0" prefWidth="112.0" text="Clear All Fields" />
+    <JFXButton fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="34.0" prefWidth="41.0" text="Back" />
+    <JFXButton fx:id="submitButton" layoutX="191.0" layoutY="340.0" mnemonicParsing="false" onAction="#submitRequest" prefHeight="26.0" prefWidth="218.0" text="Submit" />
+    <JFXComboBox fx:id="flowerChoice" layoutX="34.0" layoutY="100.0" prefHeight="28.0" prefWidth="112.0" />
+    <JFXComboBox fx:id="bouquetTypeChoice" layoutX="34.0" layoutY="250.0" prefHeight="28.0" prefWidth="112.0" />
+    <TextArea fx:id="commentsBox" layoutX="411.0" layoutY="196.0" maxHeight="-Infinity" prefHeight="106.0" prefWidth="180.0" promptText="Special Instructions/Notes" GridPane.columnIndex="2" GridPane.valignment="BOTTOM" />
+    <JFXComboBox fx:id="toLocationChoice" layoutX="225.0" layoutY="180.0" prefHeight="28.0" prefWidth="150.0" />
+    <JFXComboBox fx:id="employeeChoice" layoutX="443.0" layoutY="93.0" prefHeight="28.0" prefWidth="112.0" />
+</AnchorPane>

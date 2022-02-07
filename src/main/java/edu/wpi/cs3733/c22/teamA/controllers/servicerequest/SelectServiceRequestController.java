@@ -15,6 +15,7 @@ public class SelectServiceRequestController {
   @FXML private JFXButton laundryServicesButton;
   @FXML private JFXButton foodDeliveryButton;
   @FXML private JFXButton languageServicesButton;
+  @FXML private JFXButton floralServicesButton;
   @FXML private JFXButton backButton;
   private FXMLLoader loader = new FXMLLoader();
 
@@ -49,6 +50,11 @@ public class SelectServiceRequestController {
   @FXML
   private void goToLanguageServices() throws IOException {
     sceneController.switchScene(SceneController.SCENES.LANGUAGE_INTERPRETER_SERVICE_REQUEST_SCENE);
+  }
+
+  @FXML
+  private void goToFloralDelivery() throws IOException {
+    sceneController.switchScene(SceneController.SCENES.FLORAL_DELIVERY_REQUEST_SCENE);
   }
 
   @FXML
