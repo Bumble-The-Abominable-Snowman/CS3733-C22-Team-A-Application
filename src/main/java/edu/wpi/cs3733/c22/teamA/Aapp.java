@@ -1,5 +1,7 @@
 package edu.wpi.cs3733.c22.teamA;
 
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import java.io.IOException;
 import javafx.application.Application;

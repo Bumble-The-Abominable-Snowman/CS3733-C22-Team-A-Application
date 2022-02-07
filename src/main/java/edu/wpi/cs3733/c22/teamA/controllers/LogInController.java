@@ -1,7 +1,6 @@
-package edu.wpi.teama.controllers;
+package edu.wpi.cs3733.c22.teamA.controllers;
 
-import com.rabbitmq.client.AuthenticationFailureException;
-import edu.wpi.teama.Aapp;
+import edu.wpi.cs3733.c22.teamA.Aapp;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 import javafx.event.ActionEvent;
@@ -35,7 +34,7 @@ public class LogInController {
       welcomeBox.setFill(Color.GREEN);
 
       sceneController.switchScene(SceneController.SCENES.HOME_SCENE);
-    } catch (AuthenticationFailureException exception) {
+    } catch (Exception e) {
 
       welcomeBox.setText("Unsuccesful login!");
       welcomeBox.setFill(Color.RED);

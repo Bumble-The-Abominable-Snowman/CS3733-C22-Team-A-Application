@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teama.controllers.LogInController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.LogInController">
    <children>
       <Button fx:id="exitButton" layoutX="514.0" layoutY="32.0" mnemonicParsing="false" onAction="#exitApp" text="Exit" />
       <TextField fx:id="usernameBox" layoutX="225.0" layoutY="200.0" promptText="username" />
