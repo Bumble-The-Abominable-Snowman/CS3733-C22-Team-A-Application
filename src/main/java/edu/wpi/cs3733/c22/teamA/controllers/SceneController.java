@@ -33,32 +33,27 @@ public class SceneController {
 
     addScene(SceneController.SCENES.HOME_SCENE, "views/home.fxml");
 
-    addScene(
-        SCENES.SELECT_SERVICE_REQUEST_SCENE, "views/ServiceRequestViews/selectServiceRequest.fxml");
-    addScene(
-        SCENES.LAUNDRY_SERVICE_REQUEST_SCENE, "views/ServiceRequestViews/laundryServices.fxml");
-    addScene(
-        SCENES.FOOD_DELIVERY_SERVICE_REQUEST_SCENE, "views/ServiceRequestViews/foodDelivery.fxml");
+    addScene(SCENES.SELECT_SERVICE_REQUEST_SCENE, "views/servicerequest/selectServiceRequest.fxml");
+    addScene(SCENES.LAUNDRY_SERVICE_REQUEST_SCENE, "views/servicerequest/laundryServices.fxml");
+    addScene(SCENES.FOOD_DELIVERY_SERVICE_REQUEST_SCENE, "views/servicerequest/foodDelivery.fxml");
     addScene(
         SCENES.LANGUAGE_INTERPRETER_SERVICE_REQUEST_SCENE,
-        "views/ServiceRequestViews/languageInterpreter.fxml");
+        "views/servicerequest/languageInterpreter.fxml");
     addScene(
         SCENES.MEDICAL_EQUIPMENT_DELIVERY_SERVICE_REQUEST_SCENE,
-        "views/ServiceRequestViews/medicalEquipmentDelivery.fxml");
+        "views/servicerequest/medicalEquipmentDelivery.fxml");
+    addScene(SCENES.RELIGIOUS_SERVICE_REQUEST_SCENE, "views/servicerequest/religiousServices.fxml");
     addScene(
-        SCENES.RELIGIOUS_SERVICE_REQUEST_SCENE, "views/ServiceRequestViews/religiousServices.fxml");
-    addScene(
-        SCENES.SANITATION_SERVICE_REQUEST_SCENE,
-        "views/ServiceRequestViews/sanitationServices.fxml");
+        SCENES.SANITATION_SERVICE_REQUEST_SCENE, "views/servicerequest/sanitationServices.fxml");
 
-    addScene(SCENES.VIEW_MEDICAL_EQUIPMENT_SCENE, "views/DataViewViews/medicalEquipmentData.fxml");
-    addScene(SCENES.VIEW_LOCATION_DATA_SCENE, "views/DataViewViews/locationData.fxml");
-    addScene(SCENES.VIEW_SERVICE_REQUEST_SCENE, "views/DataViewViews/viewServiceRequest.fxml");
-    addScene(SCENES.VIEW_EMPLOYEES_SCENE, "views/DataViewViews/employeeData.fxml");
+    addScene(SCENES.VIEW_MEDICAL_EQUIPMENT_SCENE, "views/dataview/medicalEquipmentData.fxml");
+    addScene(SCENES.VIEW_LOCATION_DATA_SCENE, "views/dataview/locationData.fxml");
+    addScene(SCENES.VIEW_SERVICE_REQUEST_SCENE, "views/dataview/viewServiceRequest.fxml");
+    addScene(SCENES.VIEW_EMPLOYEES_SCENE, "views/dataview/employeeData.fxml");
 
-    addScene(SCENES.SETTINGS_SCENE, "views/SettingsViews/settings.fxml");
-    addScene(SCENES.LOAD_FROM_BACKUP_SCENE, "views/SettingsViews/loadFromBackup.fxml");
-    addScene(SCENES.EXPORT_TO_BACKUP_SCENE, "views/SettingsViews/exportToBackup.fxml");
+    addScene(SCENES.SETTINGS_SCENE, "views/settings/settings.fxml");
+    addScene(SCENES.LOAD_FROM_BACKUP_SCENE, "views/settings/loadFromBackup.fxml");
+    addScene(SCENES.EXPORT_TO_BACKUP_SCENE, "views/settings/exportToBackup.fxml");
   }
 
   public void addScene(SCENES name, String pathToFXML) {
