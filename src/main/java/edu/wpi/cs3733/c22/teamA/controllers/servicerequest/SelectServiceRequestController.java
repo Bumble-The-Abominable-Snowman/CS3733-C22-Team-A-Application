@@ -1,21 +1,21 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
+import com.jfoenix.controls.JFXButton;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
 
 public class SelectServiceRequestController {
 
-  @FXML private Button medicalEquipmentDeliveryButton;
-  @FXML private Button religiousRequestsButton;
-  @FXML private Button sanitationServicesButton;
-  @FXML private Button laundryServicesButton;
-  @FXML private Button foodDeliveryButton;
-  @FXML private Button languageServicesButton;
-  @FXML private Button backButton;
+  @FXML private JFXButton medicalEquipmentDeliveryButton;
+  @FXML private JFXButton religiousRequestsButton;
+  @FXML private JFXButton sanitationServicesButton;
+  @FXML private JFXButton laundryServicesButton;
+  @FXML private JFXButton foodDeliveryButton;
+  @FXML private JFXButton languageServicesButton;
+  @FXML private JFXButton backButton;
   private FXMLLoader loader = new FXMLLoader();
 
   private final SceneController sceneController = Aapp.sceneController;

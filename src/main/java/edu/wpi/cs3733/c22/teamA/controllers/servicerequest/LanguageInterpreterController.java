@@ -1,5 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
@@ -17,13 +19,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 
 public class LanguageInterpreterController extends GenericServiceRequestsController {
-  @FXML private Button returnHomeButton;
-  @FXML private Button submitButton;
-  @FXML private Button backButton;
-  @FXML private Button clearButton;
-  @FXML private ComboBox<String> employeeChoice;
-  @FXML private ComboBox<String> toLocationChoice;
-  @FXML private ComboBox<String> languageChoice;
+  @FXML private JFXButton returnHomeButton;
+  @FXML private JFXButton submitButton;
+  @FXML private JFXButton backButton;
+  @FXML private JFXButton clearButton;
+  @FXML private JFXComboBox<String> employeeChoice;
+  @FXML private JFXComboBox<String> toLocationChoice;
+  @FXML private JFXComboBox<String> languageChoice;
   @FXML private TextArea commentsBox;
 
   private FXMLLoader loader = new FXMLLoader();

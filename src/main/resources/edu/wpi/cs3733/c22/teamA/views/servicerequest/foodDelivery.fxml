@@ -7,11 +7,13 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.servicerequest.FoodDeliveryController">
-   <Button fx:id="homeButton" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" />
-   <Button fx:id="clearButton" layoutX="481.0" layoutY="360.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="34.0" prefWidth="112.0" text="Clear All Fields" />
-   <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="34.0" prefWidth="41.0" text="Back" />
+   <JFXButton fx:id="homeButton" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" />
+   <JFXButton fx:id="clearButton" layoutX="481.0" layoutY="360.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="34.0" prefWidth="112.0" text="Clear All Fields" />
+   <JFXButton fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="34.0" prefWidth="41.0" text="Back" />
       <Label layoutX="240.0" prefHeight="78.0" prefWidth="138.0" text="Food Delivery">
          <font>
             <Font size="22.0" />
@@ -19,16 +21,16 @@
       </Label>
       <Label layoutX="46.0" layoutY="55.0" prefHeight="30.0" prefWidth="67.0" text="Meal Order" />
       <Label layoutX="279.0" layoutY="56.0" prefHeight="27.0" prefWidth="59.0" text="Map" textAlignment="CENTER" />
-      <Button fx:id="submitButton" layoutX="251.0" layoutY="338.0" mnemonicParsing="false" onAction="#createFoodRequest" text="Submit Order" />
-      <ChoiceBox fx:id="mainChoice" layoutX="20.0" layoutY="100.0" prefHeight="28.0" prefWidth="119.0" />
-      <ChoiceBox fx:id="drinkChoice" layoutX="20.0" layoutY="144.0" prefHeight="28.0" prefWidth="119.0" />
-      <ChoiceBox fx:id="sideChoice" layoutX="20.0" layoutY="186.0" prefHeight="28.0" prefWidth="119.0" />
-      <ChoiceBox fx:id="dessertChoice" layoutX="20.0" layoutY="228.0" prefHeight="28.0" prefWidth="119.0" />
+      <JFXButton fx:id="submitButton" layoutX="251.0" layoutY="338.0" mnemonicParsing="false" onAction="#createFoodRequest" text="Submit Order" />
+      <JFXComboBox fx:id="mainChoice" layoutX="20.0" layoutY="100.0" prefHeight="28.0" prefWidth="119.0" />
+      <JFXComboBox fx:id="drinkChoice" layoutX="20.0" layoutY="144.0" prefHeight="28.0" prefWidth="119.0" />
+      <JFXComboBox fx:id="sideChoice" layoutX="20.0" layoutY="186.0" prefHeight="28.0" prefWidth="119.0" />
+      <JFXComboBox fx:id="dessertChoice" layoutX="20.0" layoutY="228.0" prefHeight="28.0" prefWidth="119.0" />
    <TextArea fx:id="commentsText" layoutX="437.0" layoutY="144.0" prefHeight="121.0" prefWidth="138.0" promptText="Special Instructions/Allergies">
       <font>
          <Font name="System Italic" size="12.0" />
       </font></TextArea>
    <Label layoutX="240.0" layoutY="297.0" text="Selected Location" />
-   <ComboBox fx:id="roomChoice" layoutX="212.0" layoutY="159.0" prefWidth="150.0" />
-   <ComboBox fx:id="employeeChoice" layoutX="431.0" layoutY="87.0" prefWidth="150.0" />
+   <JFXComboBox fx:id="roomChoice" layoutX="212.0" layoutY="159.0" prefWidth="150.0" />
+   <JFXComboBox fx:id="employeeChoice" layoutX="431.0" layoutY="87.0" prefWidth="150.0" />
 </AnchorPane>

@@ -60,7 +60,7 @@
                           <MenuItem mnemonicParsing="false" text="View Map" onAction="#goToLocationData"/>
                         </items>
                         <items>
-                          <MenuItem mnemonicParsing="false" text="Settings" onAction="#goTosettings"/>
+                          <MenuItem mnemonicParsing="false" text="Settings" onAction="#goToSettings"/>
                         </items>
                       </Menu>
                     </menus>

@@ -22,7 +22,7 @@ public class HomeController {
     sceneController.switchScene(SceneController.SCENES.SELECT_SERVICE_REQUEST_SCENE);
   }
 
-  public void goTosettings(ActionEvent actionEvent) throws IOException {
+  public void goToSettings(ActionEvent actionEvent) throws IOException {
     sceneController.switchScene(SceneController.SCENES.SETTINGS_SCENE);
   }
 

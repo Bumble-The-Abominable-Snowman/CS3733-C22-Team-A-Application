@@ -12,6 +12,8 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.control.ComboBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXButton?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.servicerequest.ReligiousServicesController">
     <children>
         <Label alignment="CENTER" layoutX="219.0" layoutY="24.0" prefHeight="48.0" prefWidth="172.0" text="Religious Requests">
@@ -29,12 +31,12 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <ChoiceBox fx:id="religionChoiceBox" prefHeight="26.0" prefWidth="130.0" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                <JFXComboBox fx:id="religionChoiceBox" prefHeight="26.0" prefWidth="130.0" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                     <GridPane.margin>
                         <Insets top="20.0" />
                     </GridPane.margin>
-                </ChoiceBox>
-                <ChoiceBox fx:id="denomChoiceBox" prefHeight="26.0" prefWidth="130.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+                </JFXComboBox>
+                <JFXComboBox fx:id="denomChoiceBox" prefHeight="26.0" prefWidth="130.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
                 <Label alignment="CENTER" prefHeight="34.0" prefWidth="154.0" text="Map (To Be Added)" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                     <font>
                         <Font size="16.0" />
@@ -56,19 +58,19 @@
                         <Insets bottom="30.0" />
                     </GridPane.margin>
                 </Label>
-                <ComboBox fx:id="toChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                <JFXComboBox fx:id="toChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                 <Label text="Employee:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
-                <ComboBox fx:id="employeeCheckBox" prefHeight="26.0" prefWidth="130.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                <JFXComboBox fx:id="employeeCheckBox" prefHeight="26.0" prefWidth="130.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                     <GridPane.margin>
                         <Insets top="20.0" />
                     </GridPane.margin>
-                </ComboBox>
+                </JFXComboBox>
             </children>
         </GridPane>
-        <Button fx:id="backButton" layoutX="24.0" layoutY="24.0" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="34.0" prefWidth="41.0" text="Back" />
-        <Button fx:id="homeButton" layoutX="547.0" layoutY="24.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" />
-        <Button fx:id="submitButton" layoutX="201.0" layoutY="350.0" mnemonicParsing="false" onAction="#submitRequest" prefHeight="26.0" prefWidth="218.0" text="Submit" />
-        <Button fx:id="clearButton" layoutX="484.0" layoutY="359.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="34.0" prefWidth="112.0" text="Clear All Fields" />
+        <JFXButton fx:id="backButton" layoutX="24.0" layoutY="24.0" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="34.0" prefWidth="41.0" text="Back" />
+        <JFXButton fx:id="homeButton" layoutX="547.0" layoutY="24.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" />
+        <JFXButton fx:id="submitButton" layoutX="201.0" layoutY="350.0" mnemonicParsing="false" onAction="#submitRequest" prefHeight="26.0" prefWidth="218.0" text="Submit" />
+        <JFXButton fx:id="clearButton" layoutX="484.0" layoutY="359.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="34.0" prefWidth="112.0" text="Clear All Fields" />
     </children>
 </AnchorPane>
 

@@ -1,5 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
@@ -12,23 +14,20 @@ import java.text.ParseException;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 
 public class FoodDeliveryController extends GenericServiceRequestsController {
-  @FXML private Button backButton;
-  @FXML private Button returnButton;
-  @FXML private Button clearButton;
-  @FXML private ChoiceBox typeMenu;
-  @FXML private Button submitButton;
-  @FXML private ChoiceBox<String> mainChoice;
-  @FXML private ChoiceBox<String> drinkChoice;
-  @FXML private ChoiceBox<String> sideChoice;
-  @FXML private ChoiceBox<String> dessertChoice;
-  @FXML private ComboBox roomChoice;
-  @FXML private ComboBox employeeChoice;
+  @FXML private JFXButton backButton;
+  @FXML private JFXButton returnButton;
+  @FXML private JFXButton clearButton;
+  @FXML private JFXComboBox typeMenu;
+  @FXML private JFXButton submitButton;
+  @FXML private JFXComboBox<String> mainChoice;
+  @FXML private JFXComboBox<String> drinkChoice;
+  @FXML private JFXComboBox<String> sideChoice;
+  @FXML private JFXComboBox<String> dessertChoice;
+  @FXML private JFXComboBox roomChoice;
+  @FXML private JFXComboBox employeeChoice;
   @FXML private TextArea commentsText;
   private FXMLLoader loader = new FXMLLoader();
 

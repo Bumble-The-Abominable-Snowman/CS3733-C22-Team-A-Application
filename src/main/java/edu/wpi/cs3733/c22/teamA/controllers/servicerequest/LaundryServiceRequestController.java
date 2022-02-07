@@ -1,5 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.requests.LaundryServiceRequest;
 import javafx.event.ActionEvent;
@@ -9,18 +11,18 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 
 public class LaundryServiceRequestController extends GenericServiceRequestsController {
-  @FXML private Button floor4Button;
-  @FXML private Button floor3Button;
-  @FXML private Button floor2Button;
-  @FXML private Button floor1Button;
+  @FXML private JFXButton floor4Button;
+  @FXML private JFXButton floor3Button;
+  @FXML private JFXButton floor2Button;
+  @FXML private JFXButton floor1Button;
 
   @FXML private Label locationLabel;
   @FXML private TextField specialNotes;
-  @FXML private ChoiceBox<String> washMode = new ChoiceBox<>();
-  @FXML private Button homeButton = new Button();
-  @FXML private Button submitButton;
-  @FXML private Button backButton;
-  @FXML private Button clearButton;
+  @FXML private JFXComboBox<String> washMode;
+  @FXML private JFXButton homeButton;
+  @FXML private JFXButton submitButton;
+  @FXML private JFXButton backButton;
+  @FXML private JFXButton clearButton;
 
   private FXMLLoader loader = new FXMLLoader();
 

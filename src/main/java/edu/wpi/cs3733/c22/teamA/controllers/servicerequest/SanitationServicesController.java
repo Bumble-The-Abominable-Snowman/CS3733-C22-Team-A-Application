@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
+import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
@@ -11,8 +12,8 @@ import javafx.scene.control.*;
 public class SanitationServicesController extends GenericServiceRequestsController {
   @FXML private TextArea specialNotes;
   @FXML private TextArea typeOtherBox;
-  @FXML private ChoiceBox<String> typeMenu;
-  @FXML private ComboBox<String> locationMenu;
+  @FXML private JFXComboBox<String> typeMenu;
+  @FXML private JFXComboBox<String> locationMenu;
 
   @FXML
   private void initialize() {
