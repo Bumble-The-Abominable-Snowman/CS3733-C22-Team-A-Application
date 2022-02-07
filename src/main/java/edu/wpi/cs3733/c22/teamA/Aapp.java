@@ -12,6 +12,9 @@ public class Aapp extends Application {
   private static Stage guiStage;
   public static SceneController sceneController;
 
+  public static ConnectionFactory factory = new ConnectionFactory();
+  public static Connection connection;
+
   public static Stage getStage() {
     return guiStage;
   }
@@ -19,14 +22,16 @@ public class Aapp extends Application {
   @Override
   public void init() throws IOException {
     log.info("Starting Up");
-    // test
+
+    Aapp.factory.setHost("198.199.83.208");
+    Aapp.factory.setPort(5672); // 5672 for regular connections, 5671 for connections that use TLS
   }
 
   @Override
   public void start(Stage primaryStage) throws IOException {
     guiStage = primaryStage;
     sceneController = new SceneController();
-    sceneController.switchScene(SceneController.SCENES.HOME_SCENE);
+    sceneController.switchScene(SceneController.SCENES.LOG_IN_SCENE);
   }
 
   @Override

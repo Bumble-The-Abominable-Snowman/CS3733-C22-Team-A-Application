@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 
 public class SceneController {
   public enum SCENES {
+    LOG_IN_SCENE,
     HOME_SCENE,
     SELECT_SERVICE_REQUEST_SCENE,
     LAUNDRY_SERVICE_REQUEST_SCENE,
@@ -30,6 +31,8 @@ public class SceneController {
   private final HashMap<SCENES, String> screenMap = new HashMap<>();
 
   public SceneController() {
+
+    addScene(SceneController.SCENES.LOG_IN_SCENE, "views/logIn.fxml");
 
     addScene(SceneController.SCENES.HOME_SCENE, "views/home.fxml");
 
