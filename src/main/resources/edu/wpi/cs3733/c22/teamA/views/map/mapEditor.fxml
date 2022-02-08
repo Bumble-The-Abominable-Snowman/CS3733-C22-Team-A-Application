@@ -35,9 +35,9 @@
             <Insets />
          </opaqueInsets>
       </Label>
-      <VBox fx:id="inputVBox" layoutX="465.0" layoutY="46.0" prefHeight="325.0" prefWidth="121.0">
+      <VBox fx:id="inputVBox" layoutX="465.0" layoutY="46.0" prefHeight="355.0" prefWidth="121.0">
          <children>
-            <JFXTextArea fx:id="nodeIDText" prefHeight="29.0" prefWidth="121.0" text="NodeID" />
+            <JFXTextArea fx:id="nodeIDText" prefHeight="29.0" prefWidth="121.0" promptText="NodeID" />
             <JFXTextArea prefHeight="29.0" prefWidth="121.0" text="XPOS" fx:id="xPosText" />
             <JFXTextArea fx:id="yPosText" prefHeight="29.0" prefWidth="121.0" text="YPOS" />
             <JFXTextArea fx:id="floorText" prefHeight="29.0" prefWidth="121.0" text="FLOOR" />
@@ -46,6 +46,7 @@
             <JFXTextArea fx:id="longnameText" prefHeight="29.0" prefWidth="121.0" text="LONGNAME" />
             <JFXTextArea fx:id="shortnameText" prefHeight="29.0" prefWidth="121.0" text="SHORTNAME" />
             <JFXButton fx:id="saveButton" onAction="#saveNewLocation" prefHeight="25.0" prefWidth="122.0" text="Save" />
+            <JFXButton fx:id="editButton" onAction="#editLocation" prefHeight="25.0" prefWidth="122.0" text="Edit" />
             <JFXButton fx:id="clearButton" onAction="#clearSubmission" prefHeight="25.0" prefWidth="123.0" text="Delete" />
          </children>
       </VBox>

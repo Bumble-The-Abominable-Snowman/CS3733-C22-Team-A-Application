@@ -36,6 +36,7 @@ public class MapEditorController {
   @FXML JFXButton viewTableButton = new JFXButton();
 
   @FXML JFXButton saveButton = new JFXButton();
+  @FXML JFXButton editButton = new JFXButton();
   @FXML JFXButton clearButton = new JFXButton();
 
   @FXML JFXButton backButton = new JFXButton();
@@ -45,7 +46,8 @@ public class MapEditorController {
 
   LocationDAO locationBase = new LocationDerbyImpl();
   List<Location> locationFromDatabase = locationBase.getNodeList();
-  Location fillerLoc = locationFromDatabase.get(0);
+  Location newFillerLoc = locationFromDatabase.get(0);
+  Location selectedLocation;
 
   private final SceneController sceneController = Aapp.sceneController;
 
@@ -61,14 +63,31 @@ public class MapEditorController {
     inputVBox.setDisable(false);
   }
 
-  public void existingLocSelected() {
+  // as long as each diamond on the map is assigned a whole
+  // location object, this function works fine. if each diamond is assigned a location
+  // NodeID to save space or smth, can easily be refactored
+  public void existingLocSelected(Location currLocation) {
+    editButton.setDisable(false);
+    saveButton.setDisable(true);
     inputVBox.setDisable(false);
-    // saveButton.setOnAction(editCurrLocation(););
+    selectedLocation = currLocation;
+    nodeIDText.setText(selectedLocation.getNodeID());
+    xPosText.setText(String.valueOf(selectedLocation.getXCoord()));
+    yPosText.setText(String.valueOf(selectedLocation.getYCoord()));
+    floorText.setText(selectedLocation.getFloor());
+    buildingText.setText(selectedLocation.getBuilding());
+    typeText.setText(selectedLocation.getNodeType());
+    longnameText.setText(selectedLocation.getLongName());
+    shortnameText.setText(selectedLocation.getShortName());
   }
 
   // write filler code w/ filler location object to edit / create location data
   public void saveNewLocation() {
-    Location l = new Location();
+    // could probably cut first chunk and draw directly into the database to cut down
+    // on lines of code + repetitiveness, havent tested tho
+    // editButton.setDisable(true);
+    saveButton.setDisable(false);
+    Location l = newFillerLoc;
     l.setNodeID(nodeIDText.getText());
     l.setXCoord(Integer.parseInt(xPosText.getText()));
     l.setYCoord(Integer.parseInt(yPosText.getText()));
@@ -91,7 +110,18 @@ public class MapEditorController {
     locationBase.deleteLocationNode(l.getNodeID());
   }
 
-  public void editCurrLocation() {}
+  public void editLocation() {
+    // selectedLocation = locationBase.getLocationNode(selectedLocation.getNodeID());
+    selectedLocation = locationBase.getLocationNode("rceskridge");
+    String ID = selectedLocation.getNodeID();
+    locationBase.updateLocation(ID, "xCoord", xPosText.getText());
+    locationBase.updateLocation(ID, "yCoord", yPosText.getText());
+    locationBase.updateLocation(ID, "floor", floorText.getText());
+    locationBase.updateLocation(ID, "building", buildingText.getText());
+    locationBase.updateLocation(ID, "nodeType", typeText.getText());
+    locationBase.updateLocation(ID, "longName", longnameText.getText());
+    locationBase.updateLocation(ID, "shortName", shortnameText.getText());
+  }
 
   public void clearSubmission() {}
 
