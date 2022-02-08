@@ -89,7 +89,7 @@ public class DefaultTest {
     //
     //    // Test on Medical Equipment
     //    Adb.inputFromCSV("MedicalEquipment", "edu/wpi/teama/db/MedicalEquipment.csv");
-    //    MedicalEquipmentDAO equipment = new MedicalEquipmentImpl();
+    //    MedicalEquipmentDAO equipment = new MedicalEquipmentDerbyImpl();
     //    /*    System.out.println("Testing enter");
     //    equipment.enterMedicalEquipment("EQ1235", "Bed", true, "FDEPT00101", true);
     //    equipment.enterMedicalEquipment("EQ5679", "Xray machine", false, "FDEPT00201", true);
@@ -110,7 +110,7 @@ public class DefaultTest {
     // ************************************************************************************************** */
 
     // Test on MedicalEquipmentServiceRequest
-    //    MedicalEquipmentServiceRequestDAO mesr = new MedicalEquipmentServiceRequestImpl();
+    //    MedicalEquipmentServiceRequestDAO mesr = new MedicalEquipmentServiceRequestDerbyImpl();
     //    System.out.println("Testing enter");
     //
     //    Adb.inputFromCSV(

@@ -5,9 +5,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MedicalEquipmentServiceRequestImpl implements MedicalEquipmentServiceRequestDAO {
+public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipmentServiceRequestDAO {
 
-  public MedicalEquipmentServiceRequestImpl() {}
+  public MedicalEquipmentServiceRequestDerbyImpl() {}
 
   public MedicalEquipmentServiceRequest getMedicalEquipmentServiceRequest(String ID) {
     try {

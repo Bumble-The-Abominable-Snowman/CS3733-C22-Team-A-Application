@@ -4,7 +4,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipmentservicerequest.MedicalEquipmentServiceRequestImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
@@ -131,7 +131,7 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
         && employeeChoiceBox.getSelectionModel().getSelectedItem() != null) {
       // pass medical service request object
       MedicalEquipmentServiceRequestDAO medicalEquipmentServiceRequestDAO =
-          new MedicalEquipmentServiceRequestImpl();
+          new MedicalEquipmentServiceRequestDerbyImpl();
 
       medicalEquipmentServiceRequestDAO.enterMedicalEquipmentServiceRequest(
           Integer.toString(rand.nextInt(10000)),

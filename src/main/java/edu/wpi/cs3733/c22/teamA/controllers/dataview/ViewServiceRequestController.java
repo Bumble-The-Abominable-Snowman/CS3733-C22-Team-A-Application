@@ -6,7 +6,7 @@ import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipmentservicerequest.MedicalEquipmentServiceRequestImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
 import java.io.IOException;
@@ -94,7 +94,7 @@ public class ViewServiceRequestController implements Initializable {
     reqType.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getRequestType()));
-    MedicalEquipmentServiceRequestDAO serviceRequestBase = new MedicalEquipmentServiceRequestImpl();
+    MedicalEquipmentServiceRequestDAO serviceRequestBase = new MedicalEquipmentServiceRequestDerbyImpl();
     List<MedicalEquipmentServiceRequest> employeeFromDatabase =
         serviceRequestBase.getMedicalEquipmentServiceRequestList();
     ObservableList<MedicalEquipmentServiceRequest> requests = FXCollections.observableArrayList();

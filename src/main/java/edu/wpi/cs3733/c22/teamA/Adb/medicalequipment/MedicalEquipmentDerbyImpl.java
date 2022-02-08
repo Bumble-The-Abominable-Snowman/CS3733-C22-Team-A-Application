@@ -5,9 +5,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MedicalEquipmentImpl implements MedicalEquipmentDAO {
+public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
 
-  public MedicalEquipmentImpl() {}
+  public MedicalEquipmentDerbyImpl() {}
 
   public MedicalEquipment getMedicalEquipment(String ID) {
     try {
