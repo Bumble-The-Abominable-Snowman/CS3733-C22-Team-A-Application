@@ -1,4 +1,4 @@
-package edu.wpi.teama.entities.requests;
+package edu.wpi.cs3733.c22.teamA.entities.requests;
 
 import java.sql.Timestamp;
 import lombok.Data;

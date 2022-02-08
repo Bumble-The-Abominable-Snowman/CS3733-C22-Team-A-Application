@@ -1,6 +1,6 @@
-package edu.wpi.teama.Adb.MedicalEquipment;
+package edu.wpi.cs3733.c22.teamA.Adb.MedicalEquipment;
 
-import edu.wpi.teama.entities.MedicalEquipment;
+import edu.wpi.cs3733.c22.teamA.entities.MedicalEquipment;
 import java.util.List;
 
 public interface MedicalEquipmentDAO {

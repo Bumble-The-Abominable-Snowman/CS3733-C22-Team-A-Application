@@ -1,7 +1,6 @@
-package edu.wpi.teama.Adb.ServiceRequest.SanitationServiceRequest;
+package edu.wpi.cs3733.c22.teamA.Adb.ServiceRequest.SanitationServiceRequest;
 
-import edu.wpi.teama.entities.requests.LanguageServiceRequest;
-import edu.wpi.teama.entities.requests.SanitationServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.requests.SanitationServiceRequest;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,7 +1,6 @@
-package edu.wpi.teama.Adb.ServiceRequest.ReligiousServiceRequest;
+package edu.wpi.cs3733.c22.teamA.Adb.ServiceRequest.ReligiousServiceRequest;
 
-import edu.wpi.teama.entities.requests.LanguageServiceRequest;
-import edu.wpi.teama.entities.requests.ReligiousServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.requests.ReligiousServiceRequest;
 
 import java.sql.*;
 import java.util.ArrayList;

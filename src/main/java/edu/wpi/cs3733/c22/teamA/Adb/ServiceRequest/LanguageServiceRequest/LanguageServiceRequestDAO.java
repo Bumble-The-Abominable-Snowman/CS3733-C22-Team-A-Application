@@ -1,5 +1,6 @@
-package edu.wpi.teama.Adb.ServiceRequest.LanguageServiceRequest;
-import edu.wpi.teama.entities.requests.LanguageServiceRequest;
+package edu.wpi.cs3733.c22.teamA.Adb.ServiceRequest.LanguageServiceRequest;
+
+import edu.wpi.cs3733.c22.teamA.entities.requests.LanguageServiceRequest;
 import java.util.List;
 import java.sql.*;
 

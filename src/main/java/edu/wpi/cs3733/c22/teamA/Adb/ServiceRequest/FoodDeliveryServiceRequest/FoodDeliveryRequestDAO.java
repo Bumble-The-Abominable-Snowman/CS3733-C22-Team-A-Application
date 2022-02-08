@@ -1,4 +1,4 @@
-package edu.wpi.cs3733.c22.teamA.Adb.fooddeliveryrequest;
+package edu.wpi.cs3733.c22.teamA.Adb.ServiceRequest.FoodDeliveryServiceRequest;
 
 import edu.wpi.cs3733.c22.teamA.entities.requests.FoodDeliveryRequest;
 

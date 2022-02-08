@@ -1,12 +1,12 @@
-package edu.wpi.teama.Adb.Location;
+package edu.wpi.cs3733.c22.teamA.Adb.Location;
 
-import edu.wpi.teama.entities.Location;
+import edu.wpi.cs3733.c22.teamA.entities.Location;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LocationDerbyImpl implements LocationDAO {
-  List<edu.wpi.teama.entities.Location> Location;
+  List<Location> Location;
 
   public LocationDerbyImpl() {
     try {

@@ -1,7 +1,6 @@
-package edu.wpi.teama.Adb.ServiceRequest.LaundryServiceRequest;
+package edu.wpi.cs3733.c22.teamA.Adb.ServiceRequest.LaundryServiceRequest;
 
-import edu.wpi.teama.entities.requests.LanguageServiceRequest;
-import edu.wpi.teama.entities.requests.LaundryServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.requests.LaundryServiceRequest;
 
 import java.sql.*;
 import java.util.ArrayList;
