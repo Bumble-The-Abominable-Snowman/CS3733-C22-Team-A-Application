@@ -35,7 +35,7 @@
             <Font size="17.0" />
         </font>
     </Label>
-    <Label text="Equipment Type:" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+    <Label text="Equipment Type:" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="BOTTOM" />
     <Label text="From:" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
     </Label>
     <Label text="Employee:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
