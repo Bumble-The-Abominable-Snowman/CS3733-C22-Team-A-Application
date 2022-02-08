@@ -5,9 +5,15 @@
 package edu.wpi.cs3733.c22.teamA;
 
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.entities.requests.ReligiousServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.requests.SanitationServiceRequest;
 import java.io.IOException;
-import java.sql.Connection;
+import java.sql.*;
 import java.text.ParseException;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class DefaultTest {
@@ -147,5 +153,65 @@ public class DefaultTest {
     //    mesr.deleteMedicalEquipment("REQ124");
     //
     // WriteCSV.writeMedicalEquipmentServiceRequestCSV(mesr.getMedicalEquipmentServiceRequestList());
+  }
+
+  @Test
+  public void testReligious() {
+    Adb.initialConnection();
+    ReligiousServiceRequestDAO derby = new ReligiousServiceRequestDerbyImpl();
+    ReligiousServiceRequest rsr =
+        new ReligiousServiceRequest(
+            "rel123",
+            "start",
+            "end",
+            "emp1",
+            "emp2",
+            "2020-01-01 12:45:00",
+            "In Progress",
+            "High Priority",
+            "no additional comments",
+            "Christain");
+    System.out.println("Testing enter");
+    derby.enterReligiousServiceRequest(rsr);
+    System.out.println("Testing get");
+    ReligiousServiceRequest rsr2 = derby.getReligiousServiceRequest("rel123");
+    System.out.println("Got RequestID: " + rsr2.getRequestID());
+    System.out.println("Testing update: updating religion to 'Judiasm'");
+    derby.updateReligiousServiceRequest("rel123", "religion", "Judiasm");
+    System.out.println("Testing getList");
+    List<ReligiousServiceRequest> list = derby.getReligiousServiceRequestList();
+    System.out.println("First element religion: " + list.get(1).getReligion());
+    System.out.println("testing delete");
+    derby.deleteReligiousServiceRequest("rel123");
+  }
+
+  @Test
+  public void testSanitation() {
+    Adb.initialConnection();
+    SanitationServiceRequestDerbyImpl derby = new SanitationServiceRequestDerbyImpl();
+    SanitationServiceRequest ssr =
+        new SanitationServiceRequest(
+            "san123",
+            "start",
+            "end",
+            "emp1",
+            "emp2",
+            "2020-01-01 12:45:00",
+            "In Progress",
+            "High Priority",
+            "no additional comments",
+            "floor");
+    System.out.println("Testing enter");
+    derby.enterSanitationServiceRequest(ssr);
+    System.out.println("Testing get");
+    SanitationServiceRequest rsr2 = derby.getSanitationServiceRequest("san123");
+    System.out.println("Got RequestID: " + rsr2.getRequestID());
+    System.out.println("Testing update: updating religion to 'Judiasm'");
+    derby.updateSanitationServiceRequest("rel123", "religion", "Judiasm");
+    System.out.println("Testing getList");
+    List<SanitationServiceRequest> list = derby.getSanitationServiceRequestList();
+    System.out.println("First element santype: " + list.get(1).getSanitationType());
+    System.out.println("testing delete");
+    derby.deleteSanitationServiceRequest("san123");
   }
 }

@@ -126,13 +126,14 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
               requestType,
               comments);
 
-      insert.executeQuery(str);
-
+      insert.executeUpdate(str);
       String str2 =
           String.format(
-              "INSERT INTO SanitationServiceRequest(requestID, language) " + "VALUES('%s', '%s')",
+              "INSERT INTO SanitationServiceRequest(requestID, sanitationType) "
+                  + "VALUES('%s', '%s')",
               requestID, sanitationType);
-      insert.execute(str2);
+
+      insert.executeUpdate(str2);
 
     } catch (SQLException e) {
       System.out.println("Failed");

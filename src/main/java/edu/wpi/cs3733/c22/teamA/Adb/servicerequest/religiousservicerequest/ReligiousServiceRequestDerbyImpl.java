@@ -61,7 +61,7 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
       if (field.equals("religion")) {
         str =
             String.format(
-                "UPDATE ReligionServiceRequest SET " + field + " = '%s' WHERE requestID = '%s'",
+                "UPDATE ReligiousServiceRequest SET " + field + " = '%s' WHERE requestID = '%s'",
                 change,
                 ID);
       } else {
@@ -126,13 +126,13 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
               requestType,
               comments);
 
-      insert.executeQuery(str);
+      insert.executeUpdate(str);
 
       String str2 =
           String.format(
-              "INSERT INTO ReligionServiceRequest(requestID, language) " + "VALUES('%s', '%s')",
+              "INSERT INTO ReligiousServiceRequest(requestID, religion) " + "VALUES('%s', '%s')",
               requestID, religion);
-      insert.execute(str2);
+      insert.executeUpdate(str2);
 
     } catch (SQLException e) {
       System.out.println("Failed");
