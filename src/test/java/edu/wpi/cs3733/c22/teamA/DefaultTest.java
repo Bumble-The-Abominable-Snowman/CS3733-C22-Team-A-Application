@@ -23,7 +23,6 @@ public class DefaultTest {
 
     Connection connection = null;
     Adb.initialConnection();
-    Adb.inputFromCSV("TowerLocations", "edu/wpi/cs3733/c22/teamA/db/TowerLocations.csv");
 
     // Test on Location table (Fixed)
     //    LocationDAO Location = new LocationDerbyImpl();
