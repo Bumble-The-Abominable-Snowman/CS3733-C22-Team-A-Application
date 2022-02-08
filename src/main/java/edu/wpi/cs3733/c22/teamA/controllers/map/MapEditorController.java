@@ -11,6 +11,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -18,8 +19,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 public class MapEditorController {
@@ -63,7 +64,7 @@ public class MapEditorController {
   @FXML JFXButton clearButton = new JFXButton();
 
   @FXML JFXButton backButton = new JFXButton();
-  @FXML JFXButton homeButton = new JFXButton();
+  @FXML JFXButton returnHomeButton = new JFXButton();
 
   @FXML VBox inputVBox = new VBox();
   @FXML ImageView mapDisplay = new ImageView();
@@ -77,6 +78,9 @@ public class MapEditorController {
 
   @FXML
   public void initialize() {
+    backButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+
     Polygon polygon = new Polygon();
     polygon.getPoints().addAll(new Double[] {1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 2.0, 1.0, 1.0, 1.0});
     inputVBox.setDisable(true);

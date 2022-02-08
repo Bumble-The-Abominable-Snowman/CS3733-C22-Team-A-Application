@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -40,10 +41,22 @@
    </Label>
    <Label layoutX="46.0" layoutY="55.0" prefHeight="30.0" prefWidth="67.0" text="Meal Order" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
    <Label layoutX="83.0" layoutY="152.0" text="Employee:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-   <JFXButton fx:id="backButton" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="26.0" prefWidth="55.0" text="Back" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
-   <JFXButton fx:id="returnHomeButton" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
-   <JFXButton fx:id="clearButton" layoutX="481.0" layoutY="360.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="34.0" prefWidth="112.0" text="Clear All Fields" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
-   <JFXButton fx:id="submitButton" layoutX="251.0" layoutY="338.0" mnemonicParsing="false" onAction="#createFoodRequest" text="Submit" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP" prefHeight="26.0" prefWidth="218.0" />
+   <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="26.0" prefWidth="55.0" text="Back" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor></JFXButton>
+   <JFXButton fx:id="returnHomeButton" buttonType="RAISED" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor></JFXButton>
+   <JFXButton fx:id="clearButton" buttonType="RAISED" layoutX="481.0" layoutY="360.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="34.0" prefWidth="112.0" text="Clear All Fields" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor></JFXButton>
+   <JFXButton fx:id="submitButton" buttonType="RAISED" layoutX="251.0" layoutY="338.0" mnemonicParsing="false" onAction="#createFoodRequest" prefHeight="26.0" prefWidth="218.0" text="Submit" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor></JFXButton>
    <JFXComboBox fx:id="mainChoice" layoutX="20.0" layoutY="100.0" prefHeight="28.0" prefWidth="119.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
    <JFXComboBox fx:id="sideChoice" layoutX="20.0" layoutY="186.0" prefHeight="28.0" prefWidth="119.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
    <JFXComboBox fx:id="dessertChoice" layoutX="20.0" layoutY="228.0" prefHeight="28.0" prefWidth="119.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />

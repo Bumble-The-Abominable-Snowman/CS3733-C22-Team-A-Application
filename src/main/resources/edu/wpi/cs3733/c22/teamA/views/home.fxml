@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.*?>
 <?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -28,10 +29,22 @@
                     <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
                         <children>
                             <Label text="Map" textFill="WHITE" />
-                            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="Floor 4" />
-                            <Button mnemonicParsing="false" text="Floor 3" />
-                            <Button mnemonicParsing="false" text="Floor 2" />
-                            <Button mnemonicParsing="false" text="Floor 1" />
+                            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="Floor 4">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                            <Button mnemonicParsing="false" text="Floor 3">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                            <Button mnemonicParsing="false" text="Floor 2">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                            <Button mnemonicParsing="false" text="Floor 1">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
                         </children>
                     </VBox>
                   <MenuBar maxWidth="-Infinity" GridPane.valignment="TOP">
@@ -71,23 +84,47 @@
                   <children>
                       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                           <children>
-                              <JFXButton fx:id="serviceRequestsButton" mnemonicParsing="false" onAction="#goToCreateNewServiceRequest" prefHeight="25.0" prefWidth="168.0" text="Make New Service Requests" />
-                              <JFXButton fx:id="employeesButton" mnemonicParsing="false" onAction="#goToViewEmployees" prefHeight="25.0" prefWidth="168.0" text="Employees">
+                              <JFXButton fx:id="serviceRequestsButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToCreateNewServiceRequest" prefHeight="25.0" prefWidth="168.0" text="Make New Service Requests">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></JFXButton>
+                              <JFXButton fx:id="employeesButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToViewEmployees" prefHeight="25.0" prefWidth="168.0" text="Employees">
                            <opaqueInsets>
                               <Insets />
-                           </opaqueInsets></JFXButton>
-                              <JFXButton fx:id="viewServiceRequestsButton" mnemonicParsing="false" onAction="#goToViewServiceRequest" prefHeight="25.0" prefWidth="168.0" text="View Existing Requests" />
-                              <JFXButton fx:id="equipmentTrackerButton" mnemonicParsing="false" onAction="#goToEquipmentTracker" prefHeight="25.0" prefWidth="168.0" text="View Equipment Tracker" />
-                              <JFXButton fx:id="locationDataButton" mnemonicParsing="false" onAction="#goToLocationData" prefHeight="25.0" prefWidth="168.0" text="View Locations (Table)" />
-                              <JFXButton fx:id="editLocationButton" mnemonicParsing="false" onAction="#goToEditLocationData" prefHeight="25.0" prefWidth="168.0" text="Edit Locations (Map)" />
+                           </opaqueInsets>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></JFXButton>
+                              <JFXButton fx:id="viewServiceRequestsButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToViewServiceRequest" prefHeight="25.0" prefWidth="168.0" text="View Existing Requests">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></JFXButton>
+                              <JFXButton fx:id="equipmentTrackerButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToEquipmentTracker" prefHeight="25.0" prefWidth="168.0" text="View Equipment Tracker">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></JFXButton>
+                              <JFXButton fx:id="locationDataButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToLocationData" prefHeight="25.0" prefWidth="168.0" text="View Locations (Table)">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></JFXButton>
+                              <JFXButton fx:id="editLocationButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToEditLocationData" prefHeight="25.0" prefWidth="168.0" text="Edit Locations (Map)">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></JFXButton>
                           </children>
                       </VBox>
                       <Label text="Absolute-Zero Abominable Snowmen" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                      <JFXButton fx:id="exitButton" mnemonicParsing="false" onAction="#exitHome" snapToPixel="false" text="Log Out" textAlignment="CENTER" textFill="WHITE" underline="true" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
-                      <JFXButton fx:id="settingsButton" mnemonicParsing="false" onAction="#goToSettings" text="Settings" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+                      <JFXButton fx:id="exitButton" mnemonicParsing="false" onAction="#exitHome" snapToPixel="false" text="Log Out" textAlignment="CENTER" textFill="WHITE" underline="true" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></JFXButton>
+                      <JFXButton fx:id="settingsButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToSettings" text="Settings" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
                           <GridPane.margin>
                               <Insets right="5.0" top="5.0" />
                           </GridPane.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                       </JFXButton>
                   </children>
               </GridPane>
