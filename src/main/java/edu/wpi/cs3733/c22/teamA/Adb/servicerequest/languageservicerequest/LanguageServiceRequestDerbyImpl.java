@@ -1,6 +1,9 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest;
 
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.requests.LanguageServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.requests.LaundryServiceRequest;
 import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
 
 import java.io.BufferedWriter;
@@ -23,7 +26,7 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
       Statement get = connection.createStatement();
       String str =
           String.format(
-              "SELECT * FROM ServiceRequest s, LanguageServiceRequest l WHERE (s.requestID = l.requestID) AND l.requestID = '%s'",
+              "SELECT * FROM ServiceRequestDerbyImpl s, LanguageServiceRequest l WHERE (s.requestID = l.requestID) AND l.requestID = '%s'",
               ID);
 
       ResultSet rset = get.executeQuery(str);
@@ -75,7 +78,7 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
       } else {
         str =
             String.format(
-                "UPDATE ServiceRequest SET " + field + " = '%s' WHERE requestID = '%s'",
+                "UPDATE ServiceRequestDerbyImpl SET " + field + " = '%s' WHERE requestID = '%s'",
                 change,
                 ID);
       }
@@ -121,7 +124,7 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
 
       String str =
           String.format(
-              "INSERT INTO ServiceRequest(requestID, startLocation, endLocation, "
+              "INSERT INTO ServiceRequestDerbyImpl(requestID, startLocation, endLocation, "
                   + "employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments) "
                   + " VALUES('%s', '%s', '%s', '%s', '%s', %s, '%s', '%s', '%s')",
               requestID,
@@ -153,7 +156,7 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement delete = connection.createStatement();
-      String str = String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", id);
+      String str = String.format("DELETE FROM ServiceRequestDerbyImpl WHERE requestID = '%s'", id);
       delete.execute(str);
 
     } catch (SQLException e) {
@@ -247,7 +250,7 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
   }
 
   // Write CSV for MedicalEquipmentServiceRequest table
-  public void writeLanguageServiceRequestCSV(
+  public static void writeLanguageServiceRequestCSV(
           List<LanguageServiceRequest> List, String csvFilePath) throws IOException {
 
     // create a writer
@@ -269,5 +272,44 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
       writer.newLine();
     }
     writer.close(); // close the writer
+  }
+
+  // input from CSV
+  public static void inputFromCSV(String tableName, String csvFilePath){
+
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Statement dropTable = connection.createStatement();
+
+      dropTable.execute("DELETE FROM LanguageServiceRequest");
+    } catch (SQLException e) {
+      System.out.println("delete failed");
+    }
+
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+
+      List<LanguageServiceRequest> List =
+              LanguageServiceRequestDerbyImpl.readLanguageServiceRequestCSV(
+                      csvFilePath);
+      for (LanguageServiceRequest l : List) {
+        Statement addStatement = connection.createStatement();
+        addStatement.executeUpdate(
+                "INSERT INTO LanguageServiceRequest(requestID, language) VALUES('"
+                        + l.getRequestID()
+                        + "', '"
+                        + l.getLanguage()
+                        + "')");
+      }
+    } catch (SQLException | IOException | ParseException e) {
+      System.out.println("Insertion failed!");
+    }
+  }
+
+  // Export to CSV
+  public static void exportToCSV(String tableName, String csvFilePath) throws IOException{
+    LanguageServiceRequestDAO mesr = new LanguageServiceRequestDerbyImpl();
+    LanguageServiceRequestDerbyImpl.writeLanguageServiceRequestCSV(
+            mesr.getLanguageServiceRequestList(), csvFilePath);
   }
 }

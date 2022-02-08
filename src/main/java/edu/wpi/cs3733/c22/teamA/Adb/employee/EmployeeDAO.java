@@ -24,6 +24,4 @@ public interface EmployeeDAO {
   public void deleteEmployee(String ID);
 
   public List<Employee> getEmployeeList();
-
-  public void writeEmployeeCSV(List<Employee> List, String csvFilePath) throws IOException;
 }

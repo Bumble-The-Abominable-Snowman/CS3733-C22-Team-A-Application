@@ -1,5 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest;
 
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.requests.FoodDeliveryServiceRequest;
 
 import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
@@ -21,13 +23,13 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
 
   public FoodDeliveryServiceRequestDerbyImpl(){}
 
-  public FoodDeliveryServiceRequest getFoodDeliveryRequest(String ID){
+  public FoodDeliveryServiceRequest getFoodDeliveryServiceRequest(String ID){
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement get = connection.createStatement();
       String str =
               String.format(
-                      "SELECT * FROM ServiceRequest s, FoodDeliveryServiceRequest f WHERE (s.requestID = f.requestID) AND f.requestID = '%s'",
+                      "SELECT * FROM ServiceRequestDerbyImpl s, FoodDeliveryServiceRequest f WHERE (s.requestID = f.requestID) AND f.requestID = '%s'",
                       ID);
 
       ResultSet rset = get.executeQuery(str);
@@ -71,7 +73,7 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
     }
   }
 
-  public void updateFoodDeliveryRequest(String ID, String field, Object change){
+  public void updateFoodDeliveryServiceRequest(String ID, String field, Object change){
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement update = connection.createStatement();
@@ -90,7 +92,7 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
       } else {
         str =
                 String.format(
-                        "UPDATE ServiceRequest SET " + field + " = '%s' WHERE requestID = '%s'",
+                        "UPDATE ServiceRequestDerbyImpl SET " + field + " = '%s' WHERE requestID = '%s'",
                         change,
                         ID);
       }
@@ -103,9 +105,9 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
     }
   }
 
-  public void enterFoodDeliveryRequest(FoodDeliveryServiceRequest fdsr){
+  public void enterFoodDeliveryServiceRequest(FoodDeliveryServiceRequest fdsr){
     Timestamp time = Timestamp.valueOf(fdsr.getRequestTime());
-    enterFoodDeliveryRequest(
+    enterFoodDeliveryServiceRequest(
             fdsr.getRequestID(),
             fdsr.getStartLocation(),
             fdsr.getEndLocation(),
@@ -122,7 +124,7 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
     );
   }
 
-  public void enterFoodDeliveryRequest(
+  public void enterFoodDeliveryServiceRequest(
           String requestID,
           String startLocation,
           String endLocation,
@@ -143,7 +145,7 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
 
       String str =
               String.format(
-                      "INSERT INTO ServiceRequest(requestID, startLocation, endLocation, "
+                      "INSERT INTO ServiceRequestDerbyImpl(requestID, startLocation, endLocation, "
                               + "employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments) "
                               + " VALUES('%s', '%s', '%s', '%s', '%s', %s, '%s', '%s', '%s')",
                       requestID,
@@ -172,11 +174,11 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
     }
   }
 
-  public void deleteFoodDeliveryRequest(String id){
+  public void deleteFoodDeliveryServiceRequest(String id){
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement delete = connection.createStatement();
-      String str = String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", id);
+      String str = String.format("DELETE FROM ServiceRequestDerbyImpl WHERE requestID = '%s'", id);
       delete.execute(str);
 
     } catch (SQLException e) {
@@ -186,7 +188,7 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
     }
   }
 
-  public List<FoodDeliveryServiceRequest> getFoodDeliveryRequestList(){
+  public List<FoodDeliveryServiceRequest> getFoodDeliveryServiceRequestList(){
     List<FoodDeliveryServiceRequest> reqList = new ArrayList<>();
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
@@ -279,7 +281,7 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
   }
 
   // Write CSV for FoodDeliveryServiceRequest table
-  public void writeFoodDeliveryServiceRequestCSV(
+  public static void writeFoodDeliveryServiceRequestCSV(
           List<FoodDeliveryServiceRequest> List, String csvFilePath) throws IOException {
 
     // create a writer
@@ -304,5 +306,50 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
       writer.newLine();
     }
     writer.close(); // close the writer
+  }
+
+  // input from CSV
+  public static void inputFromCSV(String tableName, String csvFilePath){
+
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Statement dropTable = connection.createStatement();
+
+      dropTable.execute("DELETE FROM FoodDeliveryServiceRequest");
+    } catch (SQLException e) {
+      System.out.println("delete failed");
+    }
+
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+
+      List<FoodDeliveryServiceRequest> List =
+              FoodDeliveryServiceRequestDerbyImpl.readFoodDeliveryServiceRequestCSV(
+                      csvFilePath);
+      for (FoodDeliveryServiceRequest l : List) {
+        Statement addStatement = connection.createStatement();
+        addStatement.executeUpdate(
+                "INSERT INTO FoodDeliveryServiceRequest(requestID, mainDish, sideDish, beverage, dessert) VALUES('"
+                        + l.getRequestID()
+                        + "', '"
+                        + l.getMainDish()
+                        + "', '"
+                        + l.getSideDish()
+                        + "', '"
+                        + l.getBeverage()
+                        + "', '"
+                        + l.getDessert()
+                        + "')");
+      }
+    } catch (SQLException | IOException | ParseException e) {
+      System.out.println("Insertion failed!");
+    }
+  }
+
+  // Export to CSV
+  public static void exportToCSV(String tableName, String csvFilePath) throws IOException{
+    FoodDeliveryServiceRequestDAO mesr = new FoodDeliveryServiceRequestDerbyImpl();
+    FoodDeliveryServiceRequestDerbyImpl.writeFoodDeliveryServiceRequestCSV(
+            mesr.getFoodDeliveryServiceRequestList(), csvFilePath);
   }
 }

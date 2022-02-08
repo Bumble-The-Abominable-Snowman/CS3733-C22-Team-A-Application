@@ -20,6 +20,4 @@ public interface MedicalEquipmentDAO {
 
   public List<MedicalEquipment> getMedicalEquipmentList();
 
-  public void writeMedicalEquipmentCSV(List<MedicalEquipment> List, String csvFilePath)
-      throws IOException;
 }

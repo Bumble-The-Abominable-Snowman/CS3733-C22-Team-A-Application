@@ -218,7 +218,7 @@ public class LocationDerbyImpl implements LocationDAO {
   }
 
   // Write CSV for location table
-  public void writeLocationCSV(List<Location> List, String csvFilePath) throws IOException {
+  public static void writeLocationCSV(List<Location> List, String csvFilePath) throws IOException {
 
     // create a writer
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
@@ -246,5 +246,54 @@ public class LocationDerbyImpl implements LocationDAO {
       writer.newLine();
     }
     writer.close(); // close the writer
+  }
+
+  // Input from CSV
+  public static void inputFromCSV(String tableName, String csvFilePath) {
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Statement deleteTable = connection.createStatement();
+
+      deleteTable.execute("DELETE FROM TowerLocations");
+    } catch (SQLException e) {
+      System.out.println("Delete failed");
+    }
+
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+
+      List<Location> locList = LocationDerbyImpl.readLocationCSV(csvFilePath);
+      for (Location l : locList) {
+        Statement addStatement = connection.createStatement();
+        addStatement.executeUpdate(
+                "INSERT INTO TowerLocations(nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName) VALUES('"
+                        + l.getNodeID()
+                        + "', "
+                        + l.getXCoord()
+                        + ", "
+                        + l.getYCoord()
+                        + ", '"
+                        + l.getFloor()
+                        + "', '"
+                        + l.getBuilding()
+                        + "', '"
+                        + l.getNodeType()
+                        + "', '"
+                        + l.getLongName()
+                        + "', '"
+                        + l.getShortName()
+                        + "')");
+      }
+    } catch (SQLException | IOException e) {
+      System.out.println("Insertion failed!");
+      return;
+    }
+    return;
+  }
+
+  // Export to CSV
+  public static void exportToCSV(String tableName, String csvFilePath) throws IOException{
+    LocationDAO Location = new LocationDerbyImpl();
+    LocationDerbyImpl.writeLocationCSV(Location.getNodeList(), csvFilePath);
   }
 }

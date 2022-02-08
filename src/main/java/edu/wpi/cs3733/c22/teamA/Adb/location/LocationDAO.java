@@ -24,5 +24,4 @@ public interface LocationDAO {
 
   public Location getLocationNode(String ID);
 
-  public void writeLocationCSV(List<Location> List, String csvFilePath) throws IOException;
 }

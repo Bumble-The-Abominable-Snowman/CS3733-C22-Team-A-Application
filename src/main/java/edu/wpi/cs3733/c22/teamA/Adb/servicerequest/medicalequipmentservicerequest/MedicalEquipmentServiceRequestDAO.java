@@ -28,7 +28,4 @@ public interface MedicalEquipmentServiceRequestDAO {
 
   List<MedicalEquipmentServiceRequest> getMedicalEquipmentServiceRequestList();
 
-  // Write CSV for MedicalEquipmentServiceRequest table
-  public void writeMedicalEquipmentServiceRequestCSV(
-      List<MedicalEquipmentServiceRequest> List, String csvFilePath) throws IOException;
 }

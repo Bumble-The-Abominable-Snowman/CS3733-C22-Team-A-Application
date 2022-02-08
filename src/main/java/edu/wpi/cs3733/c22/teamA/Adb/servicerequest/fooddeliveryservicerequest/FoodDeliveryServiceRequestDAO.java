@@ -6,13 +6,13 @@ import java.sql.*;
 
 public interface FoodDeliveryServiceRequestDAO {
 
-  FoodDeliveryServiceRequest getFoodDeliveryRequest(String ID);
+  FoodDeliveryServiceRequest getFoodDeliveryServiceRequest(String ID);
 
-  void updateFoodDeliveryRequest(String ID, String field, Object change);
+  void updateFoodDeliveryServiceRequest(String ID, String field, Object change);
 
-  void enterFoodDeliveryRequest(FoodDeliveryServiceRequest fdsr);
+  void enterFoodDeliveryServiceRequest(FoodDeliveryServiceRequest fdsr);
 
-  void enterFoodDeliveryRequest(
+  void enterFoodDeliveryServiceRequest(
           String requestID,
           String startLocation,
           String endLocation,
@@ -27,8 +27,8 @@ public interface FoodDeliveryServiceRequestDAO {
           String beverage,
           String dessert);
 
-  void deleteFoodDeliveryRequest(String id);
+  void deleteFoodDeliveryServiceRequest(String id);
 
-  List<FoodDeliveryServiceRequest> getFoodDeliveryRequestList();
+  List<FoodDeliveryServiceRequest> getFoodDeliveryServiceRequestList();
 
 }

@@ -195,7 +195,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     return list;
   }
 
-  public void writeEmployeeCSV(List<Employee> List, String csvFilePath) throws IOException {
+  public static void writeEmployeeCSV(List<Employee> List, String csvFilePath) throws IOException {
 
     // create a writer
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
@@ -223,5 +223,57 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
       writer.newLine();
     }
     writer.close(); // close the writer
+  }
+
+  // input from CSV
+  public static void inputFromCSV(String tableName, String csvFilePath) {// Check employee table
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Statement dropTable = connection.createStatement();
+
+      dropTable.execute("DELETE FROM Employee");
+    } catch (SQLException e) {
+      System.out.println("Delete failed");
+    }
+
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+
+      List<Employee> List = EmployeeDerbyImpl.readEmployeeCSV(csvFilePath);
+      for (Employee l : List) {
+        Statement addStatement = connection.createStatement();
+
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String date = originalFormat.format(l.getStartDate());
+
+        addStatement.executeUpdate(
+                "INSERT INTO Employee(employeeID, employeeType, firstName, lastName, email, phoneNum, address, startDate) VALUES('"
+                        + l.getEmployeeID()
+                        + "', '"
+                        + l.getEmployeeType()
+                        + "', '"
+                        + l.getFirstName()
+                        + "', '"
+                        + l.getLastName()
+                        + "', '"
+                        + l.getEmail()
+                        + "', '"
+                        + l.getPhoneNum()
+                        + "', '"
+                        + l.getAddress()
+                        + "', '"
+                        + date
+                        + "')");
+      }
+    } catch (SQLException | IOException | ParseException e) {
+      System.out.println("Insertion failed!");
+
+    }
+  }
+
+  // Export to CSV
+  public static void exportToCSV(String tableName, String csvFilePath) throws IOException{
+    EmployeeDAO Employee = new EmployeeDerbyImpl();
+    EmployeeDerbyImpl.writeEmployeeCSV(Employee.getEmployeeList(), csvFilePath);
   }
 }

@@ -1,5 +1,8 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest;
 
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.entities.MedicalEquipment;
 import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -21,7 +24,7 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
       Statement get = connection.createStatement();
       String str =
           String.format(
-              "SELECT * FROM ServiceRequest s, MedicalEquipmentServiceRequest m WHERE (s.requestID = m.requestID) AND m.requestID = '%s'",
+              "SELECT * FROM ServiceRequestDerbyImpl s, MedicalEquipmentServiceRequest m WHERE (s.requestID = m.requestID) AND m.requestID = '%s'",
               ID);
 
       ResultSet rset = get.executeQuery(str);
@@ -78,7 +81,7 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
       } else {
         str =
             String.format(
-                "UPDATE ServiceRequest SET " + field + " = '%s' WHERE requestID = '%s'",
+                "UPDATE ServiceRequestDerbyImpl SET " + field + " = '%s' WHERE requestID = '%s'",
                 change,
                 ID);
       }
@@ -124,7 +127,7 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
       System.out.println(strTime);
       String str =
           String.format(
-              "INSERT INTO ServiceRequest(requestID, startLocation, endLocation, "
+              "INSERT INTO ServiceRequestDerbyImpl(requestID, startLocation, endLocation, "
                   + "employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments) "
                   + " VALUES('%s', '%s', '%s', '%s', '%s', %s, '%s', '%s', '%s')",
               requestID,
@@ -159,7 +162,7 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement delete = connection.createStatement();
-      String str = String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", ID);
+      String str = String.format("DELETE FROM ServiceRequestDerbyImpl WHERE requestID = '%s'", ID);
       delete.execute(str);
 
     } catch (SQLException e) {
@@ -260,7 +263,7 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
   }
 
   // Write CSV for table
-  public void writeMedicalEquipmentServiceRequestCSV(
+  public static void writeMedicalEquipmentServiceRequestCSV(
       List<MedicalEquipmentServiceRequest> List, String csvFilePath) throws IOException {
 
     // create a writer
@@ -291,4 +294,58 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
     }
     writer.close(); // close the writer
   }
+
+  // input from CSV
+  public static void inputFromCSV(String tableName, String csvFilePath){
+    // Check MedicalEquipmentServiceRequest table
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Statement dropTable = connection.createStatement();
+
+      dropTable.execute("DELETE FROM MedicalEquipmentServiceRequest");
+    } catch (SQLException e) {
+      System.out.println("delete failed");
+    }
+
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+
+      List<MedicalEquipmentServiceRequest> List =
+              MedicalEquipmentServiceRequestDerbyImpl.readMedicalEquipmentServiceRequestCSV(
+                      csvFilePath);
+      for (MedicalEquipmentServiceRequest l : List) {
+        Statement addStatement = connection.createStatement();
+        addStatement.executeUpdate(
+                "INSERT INTO MedicalEquipmentServiceRequest(requestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, equipmentID, requestType) VALUES('"
+                        + l.getRequestID()
+                        + "', '"
+                        + l.getStartLocation()
+                        + "', '"
+                        + l.getEndLocation()
+                        + "', '"
+                        + l.getEmployeeRequested()
+                        + "', '"
+                        + l.getEmployeeAssigned()
+                        + "', '"
+                        + l.getRequestTime().toString()
+                        + "', '"
+                        + l.getRequestStatus()
+                        + "', '"
+                        + l.getEquipmentID()
+                        + "', '"
+                        + l.getRequestType()
+                        + "')");
+      }
+    } catch (SQLException | IOException | ParseException e) {
+      System.out.println("Insertion failed!");
+    }
+  }
+
+  // Export to CSV
+  public static void exportToCSV(String tableName, String csvFilePath) throws IOException{
+    MedicalEquipmentServiceRequestDAO mesr = new MedicalEquipmentServiceRequestDerbyImpl();
+    MedicalEquipmentServiceRequestDerbyImpl.writeMedicalEquipmentServiceRequestCSV(
+            mesr.getMedicalEquipmentServiceRequestList(), csvFilePath);
+  }
+
 }

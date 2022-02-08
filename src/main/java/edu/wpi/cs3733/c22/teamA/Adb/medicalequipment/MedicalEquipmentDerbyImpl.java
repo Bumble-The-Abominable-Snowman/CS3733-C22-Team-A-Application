@@ -173,7 +173,7 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
   }
 
   // Write CSV for MedicalEquipment table
-  public void writeMedicalEquipmentCSV(List<MedicalEquipment> List, String csvFilePath)
+  public static void writeMedicalEquipmentCSV(List<MedicalEquipment> List, String csvFilePath)
       throws IOException {
 
     // create a writer
@@ -199,5 +199,48 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
       writer.newLine();
     }
     writer.close(); // close the writer
+  }
+
+  // input from CSV
+  public static void inputFromCSV(String tableName, String csvFilePath) {
+    // Check MedicalEquipment table
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Statement dropTable = connection.createStatement();
+
+      dropTable.execute("DELETE FROM MedicalEquipment");
+    } catch (SQLException e) {
+      System.out.println("delete failed");
+    }
+
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+
+      List<MedicalEquipment> List =
+              MedicalEquipmentDerbyImpl.readMedicalEquipmentCSV(csvFilePath);
+      for (MedicalEquipment l : List) {
+        Statement addStatement = connection.createStatement();
+        addStatement.executeUpdate(
+                "INSERT INTO MedicalEquipment( equipmentID, equipmentType, isClean, currentLocation, isAvailable) VALUES('"
+                        + l.getEquipmentID()
+                        + "', '"
+                        + l.getEquipmentType()
+                        + "', '"
+                        + l.getIsClean()
+                        + "', '"
+                        + l.getCurrentLocation()
+                        + "', '"
+                        + l.getIsAvailable()
+                        + "')");
+      }
+    } catch (SQLException | IOException | ParseException e) {
+      System.out.println("Insertion failed!");
+    }
+  }
+
+  // Export to CSV
+  public static void exportToCSV(String tableName, String csvFilePath) throws IOException{
+    MedicalEquipmentDAO equipment = new MedicalEquipmentDerbyImpl();
+    MedicalEquipmentDerbyImpl.writeMedicalEquipmentCSV(equipment.getMedicalEquipmentList(), csvFilePath);
   }
 }

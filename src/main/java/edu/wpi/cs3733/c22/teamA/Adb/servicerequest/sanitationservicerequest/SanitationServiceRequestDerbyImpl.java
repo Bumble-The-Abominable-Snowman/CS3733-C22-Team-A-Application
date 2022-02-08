@@ -1,5 +1,8 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest;
 
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
 import edu.wpi.cs3733.c22.teamA.entities.requests.ReligiousServiceRequest;
 import edu.wpi.cs3733.c22.teamA.entities.requests.SanitationServiceRequest;
 
@@ -23,7 +26,7 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
       Statement get = connection.createStatement();
       String str =
           String.format(
-              "SELECT * FROM ServiceRequest s, SanitationServiceRequest r WHERE (s.requestID = r.requestID) AND r.requestID = '%s'",
+              "SELECT * FROM ServiceRequestDerbyImpl s, SanitationServiceRequest r WHERE (s.requestID = r.requestID) AND r.requestID = '%s'",
               id);
 
       ResultSet rset = get.executeQuery(str);
@@ -75,7 +78,7 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
       } else {
         str =
             String.format(
-                "UPDATE ServiceRequest SET " + field + " = '%s' WHERE requestID = '%s'",
+                "UPDATE ServiceRequestDerbyImpl SET " + field + " = '%s' WHERE requestID = '%s'",
                 change,
                 ID);
       }
@@ -121,7 +124,7 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
 
       String str =
           String.format(
-              "INSERT INTO ServiceRequest(requestID, startLocation, endLocation, "
+              "INSERT INTO ServiceRequestDerbyImpl(requestID, startLocation, endLocation, "
                   + "employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments) "
                   + " VALUES('%s', '%s', '%s', '%s', '%s', %s, '%s', '%s', '%s')",
               requestID,
@@ -153,7 +156,7 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement delete = connection.createStatement();
-      String str = String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", id);
+      String str = String.format("DELETE FROM ServiceRequestDerbyImpl WHERE requestID = '%s'", id);
       delete.execute(str);
 
     } catch (SQLException e) {
@@ -247,7 +250,7 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
   }
 
   // Write CSV for table
-  public void writeSanitationServiceRequestCSV(
+  public static void writeSanitationServiceRequestCSV(
           List<SanitationServiceRequest> List, String csvFilePath) throws IOException {
 
     // create a writer
@@ -269,5 +272,44 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
       writer.newLine();
     }
     writer.close(); // close the writer
+  }
+
+  // input from CSV
+  public static void inputFromCSV(String tableName, String csvFilePath){
+
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Statement dropTable = connection.createStatement();
+
+      dropTable.execute("DELETE FROM SanitationServiceRequest");
+    } catch (SQLException e) {
+      System.out.println("delete failed");
+    }
+
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+
+      List<SanitationServiceRequest> List =
+              SanitationServiceRequestDerbyImpl.readSanitationServiceRequestCSV(
+                      csvFilePath);
+      for (SanitationServiceRequest l : List) {
+        Statement addStatement = connection.createStatement();
+        addStatement.executeUpdate(
+                "INSERT INTO SanitationServiceRequest(requestID, sanitationType) VALUES('"
+                        + l.getRequestID()
+                        + "', '"
+                        + l.getSanitationType()
+                        + "')");
+      }
+    } catch (SQLException | IOException | ParseException e) {
+      System.out.println("Insertion failed!");
+    }
+  }
+
+  // Export to CSV
+  public static void exportToCSV(String tableName, String csvFilePath) throws IOException{
+    SanitationServiceRequestDAO mesr = new SanitationServiceRequestDerbyImpl();
+    SanitationServiceRequestDerbyImpl.writeSanitationServiceRequestCSV(
+            mesr.getSanitationServiceRequestList(), csvFilePath);
   }
 }
