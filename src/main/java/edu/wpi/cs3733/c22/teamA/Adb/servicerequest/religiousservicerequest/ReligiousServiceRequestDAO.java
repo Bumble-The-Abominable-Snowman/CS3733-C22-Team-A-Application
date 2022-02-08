@@ -1,8 +1,8 @@
-package edu.wpi.cs3733.c22.teamA.Adb.ServiceRequest.ReligiousServiceRequest;
+package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest;
 
 import edu.wpi.cs3733.c22.teamA.entities.requests.ReligiousServiceRequest;
-import java.util.List;
 import java.sql.*;
+import java.util.List;
 
 public interface ReligiousServiceRequestDAO {
 

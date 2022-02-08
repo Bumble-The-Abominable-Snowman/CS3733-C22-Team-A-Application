@@ -1,13 +1,13 @@
 package edu.wpi.cs3733.c22.teamA.Adb;
 
-import edu.wpi.cs3733.c22.teamA.Adb.Employee.EmployeeDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.Employee.EmployeeDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.Location.LocationDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.Location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.MedicalEquipment.MedicalEquipmentDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.MedicalEquipment.MedicalEquipmentDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.ServiceRequest.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.ServiceRequest.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.MedicalEquipment;
@@ -40,8 +40,8 @@ public class Adb {
       // Check if database exist. If not then create one.
       try {
         Connection connection =
-                DriverManager.getConnection(
-                        "jdbc:derby:HospitalDBA;"); // Modify the database name from TowerLocation to Adb
+            DriverManager.getConnection(
+                "jdbc:derby:HospitalDBA;"); // Modify the database name from TowerLocation to Adb
         isInitialized = true;
         // for better
         // recognition.
@@ -56,15 +56,15 @@ public class Adb {
       return;
     }
 
-/*    try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-      Statement drop = connection.createStatement();
-      drop.execute("DROP TABLE MedicalEquipmentServiceRequest");
+    /*    try {
+         Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+         Statement drop = connection.createStatement();
+         drop.execute("DROP TABLE MedicalEquipmentServiceRequest");
 
-    } catch (SQLException e) {
+       } catch (SQLException e) {
 
-    }
- */
+       }
+    */
 
     // Check if tables exist
     // Check Locations table.
@@ -74,7 +74,7 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-              "CREATE TABLE TowerLocations(nodeID varchar(25), xcoord int, ycoord int, floor varchar(25), building varchar(25), nodeType varchar(25), longName varchar(100), shortName varchar(50))");
+          "CREATE TABLE TowerLocations(nodeID varchar(25), xcoord int, ycoord int, floor varchar(25), building varchar(25), nodeType varchar(25), longName varchar(100), shortName varchar(50))");
 
     } catch (SQLException e) {
       System.out.println("Table TowerLocations already exist");
@@ -87,7 +87,7 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-              "CREATE TABLE Employee(employeeID varchar(25), employeeType varchar(25), firstName varchar(25), lastName varchar(25), email varchar(25), phoneNum varchar(25), address varchar(25), startDate date)");
+          "CREATE TABLE Employee(employeeID varchar(25), employeeType varchar(25), firstName varchar(25), lastName varchar(25), email varchar(25), phoneNum varchar(25), address varchar(25), startDate date)");
 
     } catch (SQLException e) {
       System.out.println("Table Employee already exist");
@@ -100,7 +100,7 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-              "CREATE TABLE MedicalEquipment(equipmentID varchar(25), equipmentType varchar(25), isClean varchar(25), currentLocation varchar(25), isAvailable varchar(25))");
+          "CREATE TABLE MedicalEquipment(equipmentID varchar(25), equipmentType varchar(25), isClean varchar(25), currentLocation varchar(25), isAvailable varchar(25))");
 
     } catch (SQLException e) {
       System.out.println("Table MedicalEquipment already exist");
@@ -112,7 +112,7 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-              "CREATE TABLE ServiceRequest(requestID varchar(25), startLocation varchar(25), endLocation varchar(25), employeeRequested varchar(25), employeeAssigned varchar(25), requestTime timestamp, requestStatus varchar(25), requestType varchar(25), comments varchar(255))");
+          "CREATE TABLE ServiceRequest(requestID varchar(25), startLocation varchar(25), endLocation varchar(25), employeeRequested varchar(25), employeeAssigned varchar(25), requestTime timestamp, requestStatus varchar(25), requestType varchar(25), comments varchar(255))");
 
     } catch (SQLException e) {
       System.out.println("Table ServiceRequest already exist");
@@ -124,7 +124,7 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-              "CREATE TABLE MedicalEquipmentServiceRequest(requestID varchar(25), equipmentID varchar(25), CONSTRAINT FOREIGN KEY requestID REFERENCES ServiceRequest(requestID))");
+          "CREATE TABLE MedicalEquipmentServiceRequest(requestID varchar(25), equipmentID varchar(25), CONSTRAINT FOREIGN KEY requestID REFERENCES ServiceRequest(requestID))");
 
     } catch (SQLException e) {
       System.out.println("Table MedicalEquipmentServiceRequest already exist");
@@ -136,7 +136,7 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-              "CREATE TABLE FoodDeliveryServiceRequest(requestID varchar(25), mainDish varchar(50), sideDish varchar(50), beverage varchar(50), dessert varchar(50), CONSTRAINT FOREIGN KEY requestID REFERENCES ServiceRequest(requestID))");
+          "CREATE TABLE FoodDeliveryServiceRequest(requestID varchar(25), mainDish varchar(50), sideDish varchar(50), beverage varchar(50), dessert varchar(50), CONSTRAINT FOREIGN KEY requestID REFERENCES ServiceRequest(requestID))");
 
     } catch (SQLException e) {
       System.out.println("Table FoodDeliveryServiceRequest already exist");
@@ -148,10 +148,10 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-              "CREATE TABLE LanguageServiceRequest(requestID varchar(25), language varchar(25), CONSTRAINT FOREIGN KEY requestID REFERENCES ServiceRequest(requestID))");
+          "CREATE TABLE LanguageServiceRequest(requestID varchar(25), language varchar(25), CONSTRAINT FOREIGN KEY requestID REFERENCES ServiceRequest(requestID))");
 
     } catch (SQLException e) {
-      System.out.println("Table LanguageServiceRequest already exist");
+      System.out.println("Table languageservicerequest already exist");
     }
 
     //   Check Laundry  table.
@@ -160,10 +160,10 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-              "CREATE TABLE LaundryServiceRequest(requestID varchar(25), washMode varchar(25), CONSTRAINT FOREIGN KEY requestID REFERENCES ServiceRequest(requestID))");
+          "CREATE TABLE LaundryServiceRequest(requestID varchar(25), washMode varchar(25), CONSTRAINT FOREIGN KEY requestID REFERENCES ServiceRequest(requestID))");
 
     } catch (SQLException e) {
-      System.out.println("Table LaundryServiceRequest already exist");
+      System.out.println("Table laundryservicerequest already exist");
     }
 
     //  Check Religious  table.
@@ -173,7 +173,7 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-              "CREATE TABLE ReligiousServiceRequest(requestID varchar(25), religion varchar(25), CONSTRAINT FOREIGN KEY requestID REFERENCES ServiceRequest(requestID))");
+          "CREATE TABLE ReligiousServiceRequest(requestID varchar(25), religion varchar(25), CONSTRAINT FOREIGN KEY requestID REFERENCES ServiceRequest(requestID))");
 
     } catch (SQLException e) {
       System.out.println("Table ReligiousServiceRequest already exist");
@@ -186,7 +186,7 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-              "CREATE TABLE SanitationServiceRequest(requestID varchar(25), sanitationType varchar(25), CONSTRAINT FOREIGN KEY requestID REFERENCES ServiceRequest(requestID))");
+          "CREATE TABLE SanitationServiceRequest(requestID varchar(25), sanitationType varchar(25), CONSTRAINT FOREIGN KEY requestID REFERENCES ServiceRequest(requestID))");
 
     } catch (SQLException e) {
       System.out.println("Table SanitationServiceRequest already exist");
@@ -196,7 +196,7 @@ public class Adb {
       inputFromCSV("TowerLocations", "edu/wpi/teama/db/TowerLocations.csv");
       inputFromCSV("Employee", "edu/wpi/teama/db/Employee.csv");
       inputFromCSV(
-              "MedicalEquipmentServiceRequest", "edu/wpi/teama/db/MedicalEquipmentServiceRequest.csv");
+          "MedicalEquipmentServiceRequest", "edu/wpi/teama/db/MedicalEquipmentServiceRequest.csv");
       inputFromCSV("MedicalEquipment", "edu/wpi/teama/db/MedicalEquipment.csv");
     }
   }
@@ -205,7 +205,7 @@ public class Adb {
   public static void inputFromCSV(String tableName, String csvFilePath) {
     switch (tableName) {
 
-      // Table name = Location
+        // Table name = Location
       case "TowerLocations":
 
         // Check location table
@@ -225,23 +225,23 @@ public class Adb {
           for (Location l : locList) {
             Statement addStatement = connection.createStatement();
             addStatement.executeUpdate(
-                    "INSERT INTO TowerLocations(nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName) VALUES('"
-                            + l.getNodeID()
-                            + "', "
-                            + l.getXCoord()
-                            + ", "
-                            + l.getYCoord()
-                            + ", '"
-                            + l.getFloor()
-                            + "', '"
-                            + l.getBuilding()
-                            + "', '"
-                            + l.getNodeType()
-                            + "', '"
-                            + l.getLongName()
-                            + "', '"
-                            + l.getShortName()
-                            + "')");
+                "INSERT INTO TowerLocations(nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName) VALUES('"
+                    + l.getNodeID()
+                    + "', "
+                    + l.getXCoord()
+                    + ", "
+                    + l.getYCoord()
+                    + ", '"
+                    + l.getFloor()
+                    + "', '"
+                    + l.getBuilding()
+                    + "', '"
+                    + l.getNodeType()
+                    + "', '"
+                    + l.getLongName()
+                    + "', '"
+                    + l.getShortName()
+                    + "')");
           }
         } catch (SQLException | IOException e) {
           System.out.println("Insertion failed!");
@@ -249,7 +249,7 @@ public class Adb {
         }
         return;
 
-      // Table name = Employee
+        // Table name = Employee
       case "Employee":
 
         // Check employee table
@@ -273,23 +273,23 @@ public class Adb {
             String date = originalFormat.format(l.getStartDate());
 
             addStatement.executeUpdate(
-                    "INSERT INTO Employee(employeeID, employeeType, firstName, lastName, email, phoneNum, address, startDate) VALUES('"
-                            + l.getEmployeeID()
-                            + "', '"
-                            + l.getEmployeeType()
-                            + "', '"
-                            + l.getFirstName()
-                            + "', '"
-                            + l.getLastName()
-                            + "', '"
-                            + l.getEmail()
-                            + "', '"
-                            + l.getPhoneNum()
-                            + "', '"
-                            + l.getAddress()
-                            + "', '"
-                            + date
-                            + "')");
+                "INSERT INTO Employee(employeeID, employeeType, firstName, lastName, email, phoneNum, address, startDate) VALUES('"
+                    + l.getEmployeeID()
+                    + "', '"
+                    + l.getEmployeeType()
+                    + "', '"
+                    + l.getFirstName()
+                    + "', '"
+                    + l.getLastName()
+                    + "', '"
+                    + l.getEmail()
+                    + "', '"
+                    + l.getPhoneNum()
+                    + "', '"
+                    + l.getAddress()
+                    + "', '"
+                    + date
+                    + "')");
           }
         } catch (SQLException | IOException | ParseException e) {
           System.out.println("Insertion failed!");
@@ -297,7 +297,7 @@ public class Adb {
         }
         return;
 
-      // Table name = MedicalEquipment
+        // Table name = MedicalEquipment
       case "MedicalEquipment":
 
         // Check MedicalEquipment table
@@ -313,21 +313,22 @@ public class Adb {
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
-          List<MedicalEquipment> List = MedicalEquipmentDerbyImpl.readMedicalEquipmentCSV(csvFilePath);
+          List<MedicalEquipment> List =
+              MedicalEquipmentDerbyImpl.readMedicalEquipmentCSV(csvFilePath);
           for (MedicalEquipment l : List) {
             Statement addStatement = connection.createStatement();
             addStatement.executeUpdate(
-                    "INSERT INTO MedicalEquipment( equipmentID, equipmentType, isClean, currentLocation, isAvailable) VALUES('"
-                            + l.getEquipmentID()
-                            + "', '"
-                            + l.getEquipmentType()
-                            + "', '"
-                            + l.getIsClean()
-                            + "', '"
-                            + l.getCurrentLocation()
-                            + "', '"
-                            + l.getIsAvailable()
-                            + "')");
+                "INSERT INTO MedicalEquipment( equipmentID, equipmentType, isClean, currentLocation, isAvailable) VALUES('"
+                    + l.getEquipmentID()
+                    + "', '"
+                    + l.getEquipmentType()
+                    + "', '"
+                    + l.getIsClean()
+                    + "', '"
+                    + l.getCurrentLocation()
+                    + "', '"
+                    + l.getIsAvailable()
+                    + "')");
           }
         } catch (SQLException | IOException | ParseException e) {
           System.out.println("Insertion failed!");
@@ -351,29 +352,30 @@ public class Adb {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
           List<MedicalEquipmentServiceRequest> List =
-                  MedicalEquipmentServiceRequestDerbyImpl.readMedicalEquipmentServiceRequestCSV(csvFilePath);
+              MedicalEquipmentServiceRequestDerbyImpl.readMedicalEquipmentServiceRequestCSV(
+                  csvFilePath);
           for (MedicalEquipmentServiceRequest l : List) {
             Statement addStatement = connection.createStatement();
             addStatement.executeUpdate(
-                    "INSERT INTO MedicalEquipmentServiceRequest(requestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, equipmentID, requestType) VALUES('"
-                            + l.getRequestID()
-                            + "', '"
-                            + l.getStartLocation()
-                            + "', '"
-                            + l.getEndLocation()
-                            + "', '"
-                            + l.getEmployeeRequested()
-                            + "', '"
-                            + l.getEmployeeAssigned()
-                            + "', '"
-                            + l.getRequestTime().toString()
-                            + "', '"
-                            + l.getRequestStatus()
-                            + "', '"
-                            + l.getEquipmentID()
-                            + "', '"
-                            + l.getRequestType()
-                            + "')");
+                "INSERT INTO MedicalEquipmentServiceRequest(requestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, equipmentID, requestType) VALUES('"
+                    + l.getRequestID()
+                    + "', '"
+                    + l.getStartLocation()
+                    + "', '"
+                    + l.getEndLocation()
+                    + "', '"
+                    + l.getEmployeeRequested()
+                    + "', '"
+                    + l.getEmployeeAssigned()
+                    + "', '"
+                    + l.getRequestTime().toString()
+                    + "', '"
+                    + l.getRequestStatus()
+                    + "', '"
+                    + l.getEquipmentID()
+                    + "', '"
+                    + l.getRequestType()
+                    + "')");
           }
         } catch (SQLException | IOException | ParseException e) {
           System.out.println("Insertion failed!");
@@ -405,8 +407,7 @@ public class Adb {
       case "MedicalEquipmentServiceRequest":
         MedicalEquipmentServiceRequestDAO mesr = new MedicalEquipmentServiceRequestDerbyImpl();
         mesr.writeMedicalEquipmentServiceRequestCSV(
-                mesr.getMedicalEquipmentServiceRequestList(), csvFilePath);
+            mesr.getMedicalEquipmentServiceRequestList(), csvFilePath);
     }
   }
 }
-

@@ -1,25 +1,26 @@
-package edu.wpi.cs3733.c22.teamA.Adb.ServiceRequest.ReligiousServiceRequest;
+package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest;
 
 import edu.wpi.cs3733.c22.teamA.entities.requests.ReligiousServiceRequest;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequestDAO {
 
-  public ReligiousServiceRequestDerbyImpl(){}
+  public ReligiousServiceRequestDerbyImpl() {}
 
   public ReligiousServiceRequest getReligiousServiceRequest(String id) {
-    try{
+    try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement get = connection.createStatement();
       String str =
-              String.format("SELECT * FROM ServiceRequest s, ReligiousServiceRequest r WHERE (s.requestID = r.requestID) AND r.requestID = '%s'", id);
+          String.format(
+              "SELECT * FROM ServiceRequest s, ReligiousServiceRequest r WHERE (s.requestID = r.requestID) AND r.requestID = '%s'",
+              id);
 
       ResultSet rset = get.executeQuery(str);
       ReligiousServiceRequest rsr = new ReligiousServiceRequest();
-      if(rset.next()){
+      if (rset.next()) {
         String requestID = rset.getString("requestID");
         String startLocation = rset.getString("startLocation");
         String endLocation = rset.getString("endLocation");
@@ -31,7 +32,9 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
         String comments = rset.getString("comments");
         String religion = rset.getString("religion");
 
-        rsr = new ReligiousServiceRequest(requestID,
+        rsr =
+            new ReligiousServiceRequest(
+                requestID,
                 startLocation,
                 endLocation,
                 employeeRequested,
@@ -40,11 +43,10 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
                 requestStatus,
                 requestType,
                 comments,
-                religion
-        );
+                religion);
       }
       return rsr;
-    }catch(SQLException e){
+    } catch (SQLException e) {
       System.out.println("Connection Failed");
       e.printStackTrace();
       return null;
@@ -56,18 +58,16 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement update = connection.createStatement();
       String str = "";
-      if(field.equals("religion")){
-        str = String.format(
-                "UPDATE ReligionServiceRequest SET "
-                        + field
-                        + " = '%s' WHERE requestID = '%s'",
+      if (field.equals("religion")) {
+        str =
+            String.format(
+                "UPDATE ReligionServiceRequest SET " + field + " = '%s' WHERE requestID = '%s'",
                 change,
                 ID);
-      }else{
-        str = String.format(
-                "UPDATE ServiceRequest SET "
-                        + field
-                        + " = '%s' WHERE requestID = '%s'",
+      } else {
+        str =
+            String.format(
+                "UPDATE ServiceRequest SET " + field + " = '%s' WHERE requestID = '%s'",
                 change,
                 ID);
       }
@@ -80,20 +80,19 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
     }
   }
 
-  public void enterReligiousServiceRequest(ReligiousServiceRequest rsr){
+  public void enterReligiousServiceRequest(ReligiousServiceRequest rsr) {
     Timestamp time = Timestamp.valueOf(rsr.getRequestTime());
     enterReligiousServiceRequest(
-            rsr.getRequestID(),
-            rsr.getStartLocation(),
-            rsr.getEndLocation(),
-            rsr.getEmployeeRequested(),
-            rsr.getEmployeeAssigned(),
-            time,
-            rsr.getRequestStatus(),
-            rsr.getRequestType(),
-            rsr.getComments(),
-            rsr.getReligion()
-    );
+        rsr.getRequestID(),
+        rsr.getStartLocation(),
+        rsr.getEndLocation(),
+        rsr.getEmployeeRequested(),
+        rsr.getEmployeeAssigned(),
+        time,
+        rsr.getRequestStatus(),
+        rsr.getRequestType(),
+        rsr.getComments(),
+        rsr.getReligion());
   }
 
   public void enterReligiousServiceRequest(
@@ -107,39 +106,38 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
       String requestType,
       String comments,
       String religion) {
-    try{
+    try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement insert = connection.createStatement();
       String strTime = "'" + requestTime.toString() + "'";
 
       String str =
-              String.format(
-                      "INSERT INTO ServiceRequest(requestID, startLocation, endLocation, "
-                              + "employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments) "
-                              + " VALUES('%s', '%s', '%s', '%s', '%s', %s, '%s', '%s', '%s')",
-                      requestID,
-                      startLocation,
-                      endLocation,
-                      employeeRequested,
-                      employeeAssigned,
-                      strTime,
-                      requestStatus,
-                      requestType,
-                      comments);
+          String.format(
+              "INSERT INTO ServiceRequest(requestID, startLocation, endLocation, "
+                  + "employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments) "
+                  + " VALUES('%s', '%s', '%s', '%s', '%s', %s, '%s', '%s', '%s')",
+              requestID,
+              startLocation,
+              endLocation,
+              employeeRequested,
+              employeeAssigned,
+              strTime,
+              requestStatus,
+              requestType,
+              comments);
 
       insert.executeQuery(str);
 
       String str2 =
-              String.format(
-                      "INSERT INTO ReligionServiceRequest(requestID, language) " +
-                              "VALUES('%s', '%s')",requestID, religion);
+          String.format(
+              "INSERT INTO ReligionServiceRequest(requestID, language) " + "VALUES('%s', '%s')",
+              requestID, religion);
       insert.execute(str2);
 
-    }catch(SQLException e){
+    } catch (SQLException e) {
       System.out.println("Failed");
       e.printStackTrace();
       return;
-
     }
   }
 
@@ -147,8 +145,7 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement delete = connection.createStatement();
-      String str =
-              String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", id);
+      String str = String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", id);
       delete.execute(str);
 
     } catch (SQLException e) {
@@ -163,7 +160,9 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement getNodeList = connection.createStatement();
-      ResultSet rset = getNodeList.executeQuery("SELECT * FROM ServiceRequest s, ReligiousServiceRequest r WHERE s.requestID=r.requestID");
+      ResultSet rset =
+          getNodeList.executeQuery(
+              "SELECT * FROM ServiceRequest s, ReligiousServiceRequest r WHERE s.requestID=r.requestID");
 
       while (rset.next()) {
         String requestID = rset.getString("requestID");
@@ -178,17 +177,17 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
         String language = rset.getString("language");
 
         ReligiousServiceRequest rsr =
-                new ReligiousServiceRequest(
-                        requestID,
-                        startLocation,
-                        endLocation,
-                        employeeRequested,
-                        employeeAssigned,
-                        requestTime,
-                        requestStatus,
-                        requestType,
-                        comments,
-                        language);
+            new ReligiousServiceRequest(
+                requestID,
+                startLocation,
+                endLocation,
+                employeeRequested,
+                employeeAssigned,
+                requestTime,
+                requestStatus,
+                requestType,
+                comments,
+                language);
         reqList.add(rsr);
       }
     } catch (SQLException e) {

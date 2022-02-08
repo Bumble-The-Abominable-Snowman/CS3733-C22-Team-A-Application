@@ -1,8 +1,8 @@
-package edu.wpi.cs3733.c22.teamA.Adb.ServiceRequest.LanguageServiceRequest;
+package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest;
 
 import edu.wpi.cs3733.c22.teamA.entities.requests.LanguageServiceRequest;
-import java.util.List;
 import java.sql.*;
+import java.util.List;
 
 public interface LanguageServiceRequestDAO {
   LanguageServiceRequest getLanguageServiceRequest(String ID);

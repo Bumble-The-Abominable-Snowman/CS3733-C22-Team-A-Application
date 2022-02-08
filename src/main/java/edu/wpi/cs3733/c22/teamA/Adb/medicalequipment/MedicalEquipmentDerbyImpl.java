@@ -1,7 +1,6 @@
-package edu.wpi.cs3733.c22.teamA.Adb.MedicalEquipment;
+package edu.wpi.cs3733.c22.teamA.Adb.medicalequipment;
 
 import edu.wpi.cs3733.c22.teamA.entities.MedicalEquipment;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -127,11 +126,11 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
 
   // Read From MedicalEquipment CSV
   public static List<MedicalEquipment> readMedicalEquipmentCSV(String csvFilePath)
-          throws IOException, ParseException {
+      throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
     Scanner lineScanner =
-            new Scanner(MedicalEquipment.class.getClassLoader().getResourceAsStream(csvFilePath));
+        new Scanner(MedicalEquipment.class.getClassLoader().getResourceAsStream(csvFilePath));
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
@@ -175,7 +174,7 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
 
   // Write CSV for MedicalEquipment table
   public void writeMedicalEquipmentCSV(List<MedicalEquipment> List, String csvFilePath)
-          throws IOException {
+      throws IOException {
 
     // create a writer
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
@@ -189,17 +188,16 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
       String isClean = String.valueOf(thisME.getIsClean());
       String isAvailable = String.valueOf(thisME.getIsAvailable());
       writer.write(
-              String.join(
-                      ",",
-                      thisME.getEquipmentID(),
-                      thisME.getEquipmentType(),
-                      isClean,
-                      thisME.getCurrentLocation(),
-                      isAvailable));
+          String.join(
+              ",",
+              thisME.getEquipmentID(),
+              thisME.getEquipmentType(),
+              isClean,
+              thisME.getCurrentLocation(),
+              isAvailable));
 
       writer.newLine();
     }
     writer.close(); // close the writer
   }
-
 }

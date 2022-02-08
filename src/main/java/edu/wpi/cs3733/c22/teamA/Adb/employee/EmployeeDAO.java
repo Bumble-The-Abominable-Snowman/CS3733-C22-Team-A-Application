@@ -1,7 +1,6 @@
-package edu.wpi.cs3733.c22.teamA.Adb.Employee;
+package edu.wpi.cs3733.c22.teamA.Adb.employee;
 
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;

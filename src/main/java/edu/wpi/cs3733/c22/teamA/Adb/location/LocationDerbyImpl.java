@@ -1,7 +1,6 @@
-package edu.wpi.cs3733.c22.teamA.Adb.Location;
+package edu.wpi.cs3733.c22.teamA.Adb.location;
 
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -174,7 +173,7 @@ public class LocationDerbyImpl implements LocationDAO {
     // System.out.println("beginning to read csv");
 
     Scanner lineScanner =
-            new Scanner(Location.class.getClassLoader().getResourceAsStream(csvFilePath));
+        new Scanner(Location.class.getClassLoader().getResourceAsStream(csvFilePath));
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
@@ -225,7 +224,7 @@ public class LocationDerbyImpl implements LocationDAO {
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(
-            "getNodeID, xCord, yCord, getFloor(),getBuilding, getNodeType, getLongName, getShortName");
+        "getNodeID, xCord, yCord, getFloor(),getBuilding, getNodeType, getLongName, getShortName");
     writer.newLine();
 
     // write location data
@@ -234,16 +233,16 @@ public class LocationDerbyImpl implements LocationDAO {
       String xCord = String.valueOf(thisLocation.getXCoord());
       String yCord = String.valueOf(thisLocation.getYCoord());
       writer.write(
-              String.join(
-                      ",",
-                      thisLocation.getNodeID(),
-                      xCord,
-                      yCord,
-                      thisLocation.getFloor(),
-                      thisLocation.getBuilding(),
-                      thisLocation.getNodeType(),
-                      thisLocation.getLongName(),
-                      thisLocation.getShortName()));
+          String.join(
+              ",",
+              thisLocation.getNodeID(),
+              xCord,
+              yCord,
+              thisLocation.getFloor(),
+              thisLocation.getBuilding(),
+              thisLocation.getNodeType(),
+              thisLocation.getLongName(),
+              thisLocation.getShortName()));
       writer.newLine();
     }
     writer.close(); // close the writer

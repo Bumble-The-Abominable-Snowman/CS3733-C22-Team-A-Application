@@ -1,23 +1,24 @@
 package edu.wpi.cs3733.c22.teamA.entities.requests;
 
+import java.sql.Timestamp;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.sql.Timestamp;
 
 @EqualsAndHashCode(callSuper = true)
 public @Data class FoodDeliveryServiceRequest extends ServiceRequest {
 
-  public FoodDeliveryServiceRequest(){}
-  public FoodDeliveryServiceRequest( String requestID,
-          String startLocation,
-          String endLocation,
-          String employeeRequested,
-          String employeeAssigned,
-          Timestamp requestTime,
-          String requestStatus,
-          String requestType,
-          String comments) {
+  public FoodDeliveryServiceRequest() {}
+
+  public FoodDeliveryServiceRequest(
+      String requestID,
+      String startLocation,
+      String endLocation,
+      String employeeRequested,
+      String employeeAssigned,
+      Timestamp requestTime,
+      String requestStatus,
+      String requestType,
+      String comments) {
     super.requestID = requestID;
     super.startLocation = startLocation;
     super.endLocation = endLocation;
@@ -28,5 +29,4 @@ public @Data class FoodDeliveryServiceRequest extends ServiceRequest {
     super.requestType = requestType;
     super.comments = comments;
   }
-
 }

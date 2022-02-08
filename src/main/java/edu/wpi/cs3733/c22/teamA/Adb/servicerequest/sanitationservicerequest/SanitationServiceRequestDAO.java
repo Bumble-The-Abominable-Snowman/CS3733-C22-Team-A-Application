@@ -1,8 +1,8 @@
-package edu.wpi.cs3733.c22.teamA.Adb.ServiceRequest.SanitationServiceRequest;
+package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest;
 
 import edu.wpi.cs3733.c22.teamA.entities.requests.SanitationServiceRequest;
-import java.util.List;
 import java.sql.*;
+import java.util.List;
 
 public interface SanitationServiceRequestDAO {
 

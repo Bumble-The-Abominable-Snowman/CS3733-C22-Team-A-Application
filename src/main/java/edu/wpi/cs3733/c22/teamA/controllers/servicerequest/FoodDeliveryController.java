@@ -1,8 +1,8 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
-import edu.wpi.cs3733.c22.teamA.Adb.Employee.EmployeeDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.Employee.EmployeeDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.Location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;

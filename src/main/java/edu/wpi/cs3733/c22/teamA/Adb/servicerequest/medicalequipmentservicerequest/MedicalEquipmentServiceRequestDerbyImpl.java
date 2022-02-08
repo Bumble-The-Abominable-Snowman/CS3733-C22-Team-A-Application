@@ -1,7 +1,6 @@
-package edu.wpi.cs3733.c22.teamA.Adb.ServiceRequest.MedicalEquipmentServiceRequest;
+package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest;
 
 import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -21,7 +20,9 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement get = connection.createStatement();
       String str =
-          String.format("SELECT * FROM ServiceRequest s, MedicalEquipmentServiceRequest m WHERE (s.requestID = m.requestID) AND m.requestID = '%s'", ID);
+          String.format(
+              "SELECT * FROM ServiceRequest s, MedicalEquipmentServiceRequest m WHERE (s.requestID = m.requestID) AND m.requestID = '%s'",
+              ID);
 
       ResultSet rset = get.executeQuery(str);
       MedicalEquipmentServiceRequest mesr = new MedicalEquipmentServiceRequest();
@@ -66,18 +67,18 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement update = connection.createStatement();
       String str = "";
-      if(field.equals("equipmentID")){
-        str = String.format(
+      if (field.equals("equipmentID")) {
+        str =
+            String.format(
                 "UPDATE MedicalEquipmentServiceRequest SET "
-                        + field
-                        + " = '%s' WHERE requestID = '%s'",
+                    + field
+                    + " = '%s' WHERE requestID = '%s'",
                 change,
                 ID);
-      }else{
-        str = String.format(
-                "UPDATE ServiceRequest SET "
-                        + field
-                        + " = '%s' WHERE requestID = '%s'",
+      } else {
+        str =
+            String.format(
+                "UPDATE ServiceRequest SET " + field + " = '%s' WHERE requestID = '%s'",
                 change,
                 ID);
       }
@@ -89,20 +90,19 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
     }
   }
 
-  public void enterMedicalEquipmentServiceRequest(MedicalEquipmentServiceRequest mesr){
+  public void enterMedicalEquipmentServiceRequest(MedicalEquipmentServiceRequest mesr) {
     Timestamp time = Timestamp.valueOf(mesr.getRequestTime());
     enterMedicalEquipmentServiceRequest(
-            mesr.getRequestID(),
-            mesr.getStartLocation(),
-            mesr.getEndLocation(),
-            mesr.getEmployeeRequested(),
-            mesr.getEmployeeAssigned(),
-            time,
-            mesr.getRequestStatus(),
-            mesr.getRequestType(),
-            mesr.getComments(),
-            mesr.getEquipmentID()
-            );
+        mesr.getRequestID(),
+        mesr.getStartLocation(),
+        mesr.getEndLocation(),
+        mesr.getEmployeeRequested(),
+        mesr.getEmployeeAssigned(),
+        time,
+        mesr.getRequestStatus(),
+        mesr.getRequestType(),
+        mesr.getComments(),
+        mesr.getEquipmentID());
   }
 
   public void enterMedicalEquipmentServiceRequest(
@@ -141,8 +141,9 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
 
       String str2 =
           String.format(
-                  "INSERT INTO MedicalEquipmentServiceRequest(requestID, equipmentID)" +
-                  " VALUES('%s', '%s')", requestID, equipmentID);
+              "INSERT INTO MedicalEquipmentServiceRequest(requestID, equipmentID)"
+                  + " VALUES('%s', '%s')",
+              requestID, equipmentID);
 
       insert.execute(str);
       connection.close();
@@ -158,8 +159,7 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement delete = connection.createStatement();
-      String str =
-          String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", ID);
+      String str = String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", ID);
       delete.execute(str);
 
     } catch (SQLException e) {
@@ -174,7 +174,9 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement getNodeList = connection.createStatement();
-      ResultSet rset = getNodeList.executeQuery("SELECT * FROM ServiceRequest s, MedicalEquipmentServiceRequest m WHERE s.requestID=m.requestID");
+      ResultSet rset =
+          getNodeList.executeQuery(
+              "SELECT * FROM ServiceRequest s, MedicalEquipmentServiceRequest m WHERE s.requestID=m.requestID");
 
       while (rset.next()) {
         String requestID = rset.getString("requestID");
@@ -211,11 +213,12 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
 
   // Read from Location CSV
   public static List<MedicalEquipmentServiceRequest> readMedicalEquipmentServiceRequestCSV(
-          String csvFilePath) throws IOException, ParseException {
+      String csvFilePath) throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
     Scanner lineScanner =
-            new Scanner(MedicalEquipmentServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
+        new Scanner(
+            MedicalEquipmentServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
@@ -258,13 +261,13 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
 
   // Write CSV for MedicalEquipmentServiceRequest table
   public void writeMedicalEquipmentServiceRequestCSV(
-          List<MedicalEquipmentServiceRequest> List, String csvFilePath) throws IOException {
+      List<MedicalEquipmentServiceRequest> List, String csvFilePath) throws IOException {
 
     // create a writer
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(
-            "RequestID, getStartLocation, getEndLocation, getEmployeeRequested, getEmployeeAssigned, requestTime, getRequestStatus, getEquipmentID, getRequestType");
+        "RequestID, getStartLocation, getEndLocation, getEmployeeRequested, getEmployeeAssigned, requestTime, getRequestStatus, getEquipmentID, getRequestType");
     writer.newLine();
 
     // write location data
@@ -272,17 +275,17 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
 
       String requestTime = String.valueOf(thisMESR.getRequestTime());
       writer.write(
-              String.join(
-                      ",",
-                      thisMESR.getRequestID(),
-                      thisMESR.getStartLocation(),
-                      thisMESR.getEndLocation(),
-                      thisMESR.getEmployeeRequested(),
-                      thisMESR.getEmployeeAssigned(),
-                      requestTime,
-                      thisMESR.getRequestStatus(),
-                      thisMESR.getEquipmentID(),
-                      thisMESR.getRequestType()));
+          String.join(
+              ",",
+              thisMESR.getRequestID(),
+              thisMESR.getStartLocation(),
+              thisMESR.getEndLocation(),
+              thisMESR.getEmployeeRequested(),
+              thisMESR.getEmployeeAssigned(),
+              requestTime,
+              thisMESR.getRequestStatus(),
+              thisMESR.getEquipmentID(),
+              thisMESR.getRequestType()));
 
       writer.newLine();
     }

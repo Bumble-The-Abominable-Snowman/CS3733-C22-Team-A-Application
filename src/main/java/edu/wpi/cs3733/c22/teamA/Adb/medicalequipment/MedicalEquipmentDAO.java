@@ -1,7 +1,6 @@
-package edu.wpi.cs3733.c22.teamA.Adb.MedicalEquipment;
+package edu.wpi.cs3733.c22.teamA.Adb.medicalequipment;
 
 import edu.wpi.cs3733.c22.teamA.entities.MedicalEquipment;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -22,5 +21,5 @@ public interface MedicalEquipmentDAO {
   public List<MedicalEquipment> getMedicalEquipmentList();
 
   public void writeMedicalEquipmentCSV(List<MedicalEquipment> List, String csvFilePath)
-          throws IOException;
+      throws IOException;
 }

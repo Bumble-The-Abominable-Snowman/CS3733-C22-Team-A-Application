@@ -1,11 +1,7 @@
-package edu.wpi.cs3733.c22.teamA.Adb.ServiceRequest.MedicalEquipmentServiceRequest;
+package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest;
 
 import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
-
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -15,17 +11,18 @@ public interface MedicalEquipmentServiceRequestDAO {
   void updateMedicalEquipmentServiceRequest(String ID, String field, String change);
 
   void enterMedicalEquipmentServiceRequest(MedicalEquipmentServiceRequest mesr);
+
   void enterMedicalEquipmentServiceRequest(
-          String requestID,
-          String startLocation,
-          String endLocation,
-          String employeeRequested,
-          String employeeAssigned,
-          Timestamp requestTime,
-          String requestStatus,
-          String requestType,
-          String comments,
-          String equipmentID);
+      String requestID,
+      String startLocation,
+      String endLocation,
+      String employeeRequested,
+      String employeeAssigned,
+      Timestamp requestTime,
+      String requestStatus,
+      String requestType,
+      String comments,
+      String equipmentID);
 
   void deleteMedicalEquipment(String ID);
 
@@ -33,5 +30,5 @@ public interface MedicalEquipmentServiceRequestDAO {
 
   // Write CSV for MedicalEquipmentServiceRequest table
   public void writeMedicalEquipmentServiceRequestCSV(
-          List<MedicalEquipmentServiceRequest> List, String csvFilePath) throws IOException;
+      List<MedicalEquipmentServiceRequest> List, String csvFilePath) throws IOException;
 }

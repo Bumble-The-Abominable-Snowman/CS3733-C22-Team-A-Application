@@ -1,7 +1,6 @@
-package edu.wpi.cs3733.c22.teamA.Adb.Employee;
+package edu.wpi.cs3733.c22.teamA.Adb.employee;
 
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -149,11 +148,11 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
 
   // Read From Employees CSV
   public static List<Employee> readEmployeeCSV(String csvFilePath)
-          throws IOException, ParseException {
+      throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
     Scanner lineScanner =
-            new Scanner(Employee.class.getClassLoader().getResourceAsStream(csvFilePath));
+        new Scanner(Employee.class.getClassLoader().getResourceAsStream(csvFilePath));
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
@@ -202,7 +201,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(
-            "getEmployeeID, getEmployeeType, getFirstName, getLastName, getEmail, getPhoneNum, getAddress, startDate");
+        "getEmployeeID, getEmployeeType, getFirstName, getLastName, getEmail, getPhoneNum, getAddress, startDate");
     writer.newLine();
 
     // write location data
@@ -210,16 +209,16 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
 
       String startDate = String.valueOf(thisEmployee.getStartDate());
       writer.write(
-              String.join(
-                      ",",
-                      thisEmployee.getEmployeeID(),
-                      thisEmployee.getEmployeeType(),
-                      thisEmployee.getFirstName(),
-                      thisEmployee.getLastName(),
-                      thisEmployee.getEmail(),
-                      thisEmployee.getPhoneNum(),
-                      thisEmployee.getAddress(),
-                      startDate));
+          String.join(
+              ",",
+              thisEmployee.getEmployeeID(),
+              thisEmployee.getEmployeeType(),
+              thisEmployee.getFirstName(),
+              thisEmployee.getLastName(),
+              thisEmployee.getEmail(),
+              thisEmployee.getPhoneNum(),
+              thisEmployee.getAddress(),
+              startDate));
 
       writer.newLine();
     }
