@@ -1,6 +1,11 @@
 package edu.wpi.cs3733.c22.teamA.Adb.ServiceRequest.MedicalEquipmentServiceRequest;
 
 import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -25,4 +30,8 @@ public interface MedicalEquipmentServiceRequestDAO {
   void deleteMedicalEquipment(String ID);
 
   List<MedicalEquipmentServiceRequest> getMedicalEquipmentServiceRequestList();
+
+  // Write CSV for MedicalEquipmentServiceRequest table
+  public void writeMedicalEquipmentServiceRequestCSV(
+          List<MedicalEquipmentServiceRequest> List, String csvFilePath) throws IOException;
 }

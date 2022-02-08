@@ -1,9 +1,16 @@
 package edu.wpi.cs3733.c22.teamA.Adb.MedicalEquipment;
 
 import edu.wpi.cs3733.c22.teamA.entities.MedicalEquipment;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
 
@@ -117,4 +124,82 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
 
     return equipList;
   }
+
+  // Read From MedicalEquipment CSV
+  public static List<MedicalEquipment> readMedicalEquipmentCSV(String csvFilePath)
+          throws IOException, ParseException {
+    // System.out.println("beginning to read csv");
+
+    Scanner lineScanner =
+            new Scanner(MedicalEquipment.class.getClassLoader().getResourceAsStream(csvFilePath));
+    Scanner dataScanner;
+    int dataIndex = 0;
+    int lineIndex = 0;
+    int intData = 0;
+    List<MedicalEquipment> list = new ArrayList<>();
+    lineScanner.nextLine();
+
+    while (lineScanner.hasNextLine()) { // Scan CSV line by line
+
+      dataScanner = new Scanner(lineScanner.nextLine());
+      dataScanner.useDelimiter(",");
+      MedicalEquipment thisME = new MedicalEquipment();
+
+      while (dataScanner.hasNext()) {
+
+        String data = dataScanner.next();
+        if (dataIndex == 0) thisME.setEquipmentID(data);
+        else if (dataIndex == 1) thisME.setEquipmentType(data);
+        else if (dataIndex == 2) {
+          Boolean boolData = Boolean.parseBoolean(data);
+          thisME.setIsClean(boolData);
+        } else if (dataIndex == 3) thisME.setCurrentLocation(data);
+        else if (dataIndex == 4) {
+          Boolean boolData = Boolean.parseBoolean(data);
+          thisME.setIsClean(boolData);
+          thisME.setIsAvailable(boolData);
+        } else System.out.println("Invalid data, I broke::" + data);
+        dataIndex++;
+      }
+
+      dataIndex = 0;
+      list.add(thisME);
+      // System.out.println(thisLocation);
+
+    }
+
+    lineIndex++;
+    lineScanner.close();
+    return list;
+  }
+
+  // Write CSV for MedicalEquipment table
+  public void writeMedicalEquipmentCSV(List<MedicalEquipment> List, String csvFilePath)
+          throws IOException {
+
+    // create a writer
+    BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
+
+    writer.write("getEquipmentID, getEquipmentType, isClean, getCurrentLocation, isAvailable");
+    writer.newLine();
+
+    // write location data
+    for (MedicalEquipment thisME : List) {
+
+      String isClean = String.valueOf(thisME.getIsClean());
+      String isAvailable = String.valueOf(thisME.getIsAvailable());
+      writer.write(
+              String.join(
+                      ",",
+                      thisME.getEquipmentID(),
+                      thisME.getEquipmentType(),
+                      isClean,
+                      thisME.getCurrentLocation(),
+                      isAvailable));
+
+      writer.newLine();
+    }
+    writer.close(); // close the writer
+  }
+
 }

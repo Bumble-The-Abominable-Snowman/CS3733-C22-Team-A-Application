@@ -1,10 +1,12 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
-import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.Employee.EmployeeDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.Employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.Location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.MedicalEquipment.MedicalEquipmentDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.MedicalEquipment.MedicalEquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.ServiceRequest.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.ServiceRequest.MedicalEquipmentServiceRequest.MedicalEquipmentServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;

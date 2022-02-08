@@ -39,7 +39,7 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
     }
 
     public List<FoodDeliveryServiceRequest> getNodeList() {
-        return foodDeliveryServiceRequest;
+        return FoodDeliveryServiceRequest;
     }
 
     public void deleteRequest(String requestID) {

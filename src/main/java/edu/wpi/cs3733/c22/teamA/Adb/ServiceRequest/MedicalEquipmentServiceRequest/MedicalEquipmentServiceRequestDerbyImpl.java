@@ -1,9 +1,16 @@
 package edu.wpi.cs3733.c22.teamA.Adb.ServiceRequest.MedicalEquipmentServiceRequest;
 
 import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipmentServiceRequestDAO {
 
@@ -200,5 +207,85 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
       e.printStackTrace();
     }
     return reqList;
+  }
+
+  // Read from Location CSV
+  public static List<MedicalEquipmentServiceRequest> readMedicalEquipmentServiceRequestCSV(
+          String csvFilePath) throws IOException, ParseException {
+    // System.out.println("beginning to read csv");
+
+    Scanner lineScanner =
+            new Scanner(MedicalEquipmentServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
+    Scanner dataScanner;
+    int dataIndex = 0;
+    int lineIndex = 0;
+    int intData = 0;
+    List<MedicalEquipmentServiceRequest> list = new ArrayList<>();
+    lineScanner.nextLine();
+
+    while (lineScanner.hasNextLine()) { // Scan CSV line by line
+
+      dataScanner = new Scanner(lineScanner.nextLine());
+      dataScanner.useDelimiter(",");
+      MedicalEquipmentServiceRequest thisMESR = new MedicalEquipmentServiceRequest();
+
+      while (dataScanner.hasNext()) {
+
+        String data = dataScanner.next();
+        if (dataIndex == 0) thisMESR.setRequestID(data);
+        else if (dataIndex == 1) thisMESR.setStartLocation(data);
+        else if (dataIndex == 2) thisMESR.setEndLocation(data);
+        else if (dataIndex == 3) thisMESR.setEmployeeRequested(data);
+        else if (dataIndex == 4) thisMESR.setEmployeeAssigned(data);
+        else if (dataIndex == 5) thisMESR.setRequestTime(data);
+        else if (dataIndex == 6) thisMESR.setRequestStatus(data);
+        else if (dataIndex == 7) thisMESR.setEquipmentID(data);
+        else if (dataIndex == 8) thisMESR.setRequestType(data);
+        else System.out.println("Invalid data, I broke::" + data);
+        dataIndex++;
+      }
+
+      dataIndex = 0;
+      list.add(thisMESR);
+      // System.out.println(thisLocation);
+
+    }
+
+    lineIndex++;
+    lineScanner.close();
+    return list;
+  }
+
+  // Write CSV for MedicalEquipmentServiceRequest table
+  public void writeMedicalEquipmentServiceRequestCSV(
+          List<MedicalEquipmentServiceRequest> List, String csvFilePath) throws IOException {
+
+    // create a writer
+    BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
+
+    writer.write(
+            "RequestID, getStartLocation, getEndLocation, getEmployeeRequested, getEmployeeAssigned, requestTime, getRequestStatus, getEquipmentID, getRequestType");
+    writer.newLine();
+
+    // write location data
+    for (MedicalEquipmentServiceRequest thisMESR : List) {
+
+      String requestTime = String.valueOf(thisMESR.getRequestTime());
+      writer.write(
+              String.join(
+                      ",",
+                      thisMESR.getRequestID(),
+                      thisMESR.getStartLocation(),
+                      thisMESR.getEndLocation(),
+                      thisMESR.getEmployeeRequested(),
+                      thisMESR.getEmployeeAssigned(),
+                      requestTime,
+                      thisMESR.getRequestStatus(),
+                      thisMESR.getEquipmentID(),
+                      thisMESR.getRequestType()));
+
+      writer.newLine();
+    }
+    writer.close(); // close the writer
   }
 }

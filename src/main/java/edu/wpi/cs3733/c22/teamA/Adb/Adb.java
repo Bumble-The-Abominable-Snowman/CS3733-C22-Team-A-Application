@@ -221,7 +221,7 @@ public class Adb {
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
-          List<Location> locList = ReadCSV.readLocationCSV(csvFilePath);
+          List<Location> locList = LocationDerbyImpl.readLocationCSV(csvFilePath);
           for (Location l : locList) {
             Statement addStatement = connection.createStatement();
             addStatement.executeUpdate(
@@ -265,7 +265,7 @@ public class Adb {
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
-          List<Employee> List = ReadCSV.readEmployeeCSV(csvFilePath);
+          List<Employee> List = EmployeeDerbyImpl.readEmployeeCSV(csvFilePath);
           for (Employee l : List) {
             Statement addStatement = connection.createStatement();
 
@@ -313,7 +313,7 @@ public class Adb {
         try {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
-          List<MedicalEquipment> List = ReadCSV.readMedicalEquipmentCSV(csvFilePath);
+          List<MedicalEquipment> List = MedicalEquipmentDerbyImpl.readMedicalEquipmentCSV(csvFilePath);
           for (MedicalEquipment l : List) {
             Statement addStatement = connection.createStatement();
             addStatement.executeUpdate(
@@ -351,7 +351,7 @@ public class Adb {
           Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
           List<MedicalEquipmentServiceRequest> List =
-                  ReadCSV.readMedicalEquipmentServiceRequestCSV(csvFilePath);
+                  MedicalEquipmentServiceRequestDerbyImpl.readMedicalEquipmentServiceRequestCSV(csvFilePath);
           for (MedicalEquipmentServiceRequest l : List) {
             Statement addStatement = connection.createStatement();
             addStatement.executeUpdate(
@@ -392,19 +392,19 @@ public class Adb {
     switch (tableName) {
       case "TowerLocations":
         LocationDAO Location = new LocationDerbyImpl();
-        WriteCSV.writeLocationCSV(Location.getNodeList(), csvFilePath);
+        Location.writeLocationCSV(Location.getNodeList(), csvFilePath);
 
       case "Employee":
         EmployeeDAO Employee = new EmployeeDerbyImpl();
-        WriteCSV.writeEmployeeCSV(Employee.getEmployeeList(), csvFilePath);
+        Employee.writeEmployeeCSV(Employee.getEmployeeList(), csvFilePath);
 
       case "MedicalEquipment":
         MedicalEquipmentDAO equipment = new MedicalEquipmentDerbyImpl();
-        WriteCSV.writeMedicalEquipmentCSV(equipment.getMedicalEquipmentList(), csvFilePath);
+        equipment.writeMedicalEquipmentCSV(equipment.getMedicalEquipmentList(), csvFilePath);
 
       case "MedicalEquipmentServiceRequest":
         MedicalEquipmentServiceRequestDAO mesr = new MedicalEquipmentServiceRequestDerbyImpl();
-        WriteCSV.writeMedicalEquipmentServiceRequestCSV(
+        mesr.writeMedicalEquipmentServiceRequestCSV(
                 mesr.getMedicalEquipmentServiceRequestList(), csvFilePath);
     }
   }

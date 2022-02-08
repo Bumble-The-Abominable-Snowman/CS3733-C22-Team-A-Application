@@ -1,9 +1,15 @@
 package edu.wpi.cs3733.c22.teamA.Adb.Location;
 
 import edu.wpi.cs3733.c22.teamA.entities.Location;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class LocationDerbyImpl implements LocationDAO {
   List<Location> Location;
@@ -161,5 +167,85 @@ public class LocationDerbyImpl implements LocationDAO {
       e.printStackTrace();
       return null;
     }
+  }
+
+  // Read from Location CSV
+  public static List<Location> readLocationCSV(String csvFilePath) throws IOException {
+    // System.out.println("beginning to read csv");
+
+    Scanner lineScanner =
+            new Scanner(Location.class.getClassLoader().getResourceAsStream(csvFilePath));
+    Scanner dataScanner;
+    int dataIndex = 0;
+    int lineIndex = 0;
+    int intData = 0;
+    List<Location> list = new ArrayList<>();
+    lineScanner.nextLine();
+
+    while (lineScanner.hasNextLine()) { // Scan CSV line by line
+
+      dataScanner = new Scanner(lineScanner.nextLine());
+      dataScanner.useDelimiter(",");
+      Location thisLocation = new Location();
+
+      while (dataScanner.hasNext()) {
+
+        String data = dataScanner.next();
+        if (dataIndex == 0) thisLocation.setNodeID(data);
+        else if (dataIndex == 1) {
+          intData = Integer.parseInt(data);
+          thisLocation.setXCoord(intData);
+        } else if (dataIndex == 2) {
+          intData = Integer.parseInt(data);
+          thisLocation.setYCoord(intData);
+        } else if (dataIndex == 3) thisLocation.setFloor(data);
+        else if (dataIndex == 4) thisLocation.setBuilding(data);
+        else if (dataIndex == 5) thisLocation.setNodeType(data);
+        else if (dataIndex == 6) thisLocation.setLongName(data);
+        else if (dataIndex == 7) thisLocation.setShortName(data);
+        else System.out.println("Invalid data, I broke::" + data);
+        dataIndex++;
+      }
+
+      dataIndex = 0;
+      list.add(thisLocation);
+      // System.out.println(thisLocation);
+
+    }
+
+    lineIndex++;
+    lineScanner.close();
+    return list;
+  }
+
+  // Write CSV for location table
+  public void writeLocationCSV(List<Location> List, String csvFilePath) throws IOException {
+
+    // create a writer
+    BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
+
+    writer.write(
+            "getNodeID, xCord, yCord, getFloor(),getBuilding, getNodeType, getLongName, getShortName");
+    writer.newLine();
+
+    // write location data
+    for (Location thisLocation : List) {
+
+      String xCord = String.valueOf(thisLocation.getXCoord());
+      String yCord = String.valueOf(thisLocation.getYCoord());
+      writer.write(
+              String.join(
+                      ",",
+                      thisLocation.getNodeID(),
+                      xCord,
+                      yCord,
+                      thisLocation.getFloor(),
+                      thisLocation.getBuilding(),
+                      thisLocation.getNodeType(),
+                      thisLocation.getLongName(),
+                      thisLocation.getShortName()));
+      writer.newLine();
+    }
+    writer.close(); // close the writer
   }
 }
