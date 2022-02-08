@@ -3,12 +3,16 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest.FoodDeliveryServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest.FoodDeliveryServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.requests.FoodDeliveryServiceRequest;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -72,18 +76,28 @@ public class FoodDeliveryController extends GenericServiceRequestsController {
   }
 
   @FXML
-  private void createFoodRequest() throws IOException {
-    FoodDeliveryServiceRequest aRequest =
-        new FoodDeliveryServiceRequest(
-            mainChoice.getValue(),
-            sideChoice.getValue(),
-            drinkChoice.getValue(),
-            dessertChoice.getValue(),
-            (String) roomChoice.getSelectionModel().getSelectedItem(),
-            (String) employeeChoice.getSelectionModel().getSelectedItem(),
-            commentsText.getText());
+  private FoodDeliveryServiceRequest createFoodRequest() throws IOException {
+    return new FoodDeliveryServiceRequest(
+        "PlaceHolderID",
+        "N/A",
+        roomChoice.getSelectionModel().getSelectedItem().toString(),
+        "Alex",
+        employeeChoice.getSelectionModel().getSelectedItem().toString(),
+        new Timestamp((new Date()).getTime()).toString(),
+        "NEW",
+        "Food Delivery",
+        commentsText.getText(),
+        mainChoice.getValue(),
+        sideChoice.getValue(),
+        drinkChoice.getValue(),
+        dessertChoice.getValue());
   }
 
   @FXML
-  void submitRequest() {}
+  void submitRequest() throws IOException {
+    FoodDeliveryServiceRequest foodDeliveryServiceRequest = createFoodRequest();
+    FoodDeliveryServiceRequestDAO foodDeliveryServiceRequestDAO =
+        new FoodDeliveryServiceRequestDerbyImpl();
+    foodDeliveryServiceRequestDAO.enterRequest(foodDeliveryServiceRequest);
+  }
 }

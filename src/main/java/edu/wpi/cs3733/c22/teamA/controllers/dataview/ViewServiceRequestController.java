@@ -9,12 +9,11 @@ import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicereques
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.requests.ServiceRequest;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import edu.wpi.cs3733.c22.teamA.entities.requests.ServiceRequest;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,24 +32,18 @@ public class ViewServiceRequestController implements Initializable {
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     // Create all columns in the tracker table
-    JFXTreeTableColumn<ServiceRequest, String> reqID =
-        new JFXTreeTableColumn<>("ID");
+    JFXTreeTableColumn<ServiceRequest, String> reqID = new JFXTreeTableColumn<>("ID");
     JFXTreeTableColumn<ServiceRequest, String> startLoc =
         new JFXTreeTableColumn<>("Start Location");
-    JFXTreeTableColumn<ServiceRequest, String> endLoc =
-        new JFXTreeTableColumn<>("End Location");
+    JFXTreeTableColumn<ServiceRequest, String> endLoc = new JFXTreeTableColumn<>("End Location");
     JFXTreeTableColumn<ServiceRequest, String> employeeReq =
         new JFXTreeTableColumn<>("Requested By");
     JFXTreeTableColumn<ServiceRequest, String> employeeAss =
         new JFXTreeTableColumn<>("Employee Assigned");
-    JFXTreeTableColumn<ServiceRequest, String> reqTime =
-        new JFXTreeTableColumn<>("Request Time");
-    JFXTreeTableColumn<ServiceRequest, String> reqStatus =
-        new JFXTreeTableColumn<>("Status");
-    JFXTreeTableColumn<ServiceRequest, String> reqType =
-        new JFXTreeTableColumn<>("Type");
-    JFXTreeTableColumn<ServiceRequest, String> comments =
-            new JFXTreeTableColumn<>("Comments");
+    JFXTreeTableColumn<ServiceRequest, String> reqTime = new JFXTreeTableColumn<>("Request Time");
+    JFXTreeTableColumn<ServiceRequest, String> reqStatus = new JFXTreeTableColumn<>("Status");
+    JFXTreeTableColumn<ServiceRequest, String> reqType = new JFXTreeTableColumn<>("Type");
+    JFXTreeTableColumn<ServiceRequest, String> comments = new JFXTreeTableColumn<>("Comments");
     reqID.setPrefWidth(80);
     startLoc.setPrefWidth(80);
     endLoc.setPrefWidth(80);

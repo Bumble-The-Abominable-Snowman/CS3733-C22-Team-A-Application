@@ -42,7 +42,7 @@ public class LaundryServiceRequestController extends GenericServiceRequestsContr
     if (!washMode.getValue().equals("Wash Mode")) {
       LaundryServiceRequest laundryServiceRequest = new LaundryServiceRequest();
       laundryServiceRequest.setWashMode(washMode.getValue());
-      laundryServiceRequest.setSpecialInstructions(specialNotes.getCharacters().toString());
+      laundryServiceRequest.setComments(specialNotes.getCharacters().toString());
 
       // send request to database
     }

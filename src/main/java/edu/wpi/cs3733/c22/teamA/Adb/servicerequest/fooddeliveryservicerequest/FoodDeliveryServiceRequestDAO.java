@@ -19,6 +19,8 @@ public interface FoodDeliveryServiceRequestDAO {
       String employee,
       String comments);
 
+  public void enterRequest(FoodDeliveryServiceRequest foodDeliveryServiceRequest);
+
   public void updateRequest(String ID, String field, Object change);
 
   public FoodDeliveryServiceRequest getRequest(String ID);

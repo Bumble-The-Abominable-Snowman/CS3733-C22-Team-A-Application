@@ -117,6 +117,45 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
     }
   }
 
+  public void enterRequest(FoodDeliveryServiceRequest foodDeliveryServiceRequest) {
+
+    String requestID = foodDeliveryServiceRequest.getRequestID();
+    String mainDish = foodDeliveryServiceRequest.getRequestID();
+    String sideDish = foodDeliveryServiceRequest.getRequestID();
+    String beverage = foodDeliveryServiceRequest.getRequestID();
+    String dessert = foodDeliveryServiceRequest.getRequestID();
+    String roomNum = foodDeliveryServiceRequest.getRequestID();
+    String comments = foodDeliveryServiceRequest.getRequestID();
+    String employee = foodDeliveryServiceRequest.getEmployeeAssigned();
+
+    String tableName = "FoodDeliveryServiceRequest";
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Statement enterNode = connection.createStatement();
+
+      String str =
+          String.format(
+              "INSERT INTO "
+                  + tableName
+                  + "(requestID, mainDish, sideDish, beverage, dessert, roomNum, employee, comments)"
+                  + "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+              requestID,
+              mainDish,
+              sideDish,
+              beverage,
+              dessert,
+              roomNum,
+              employee,
+              comments); // insert values from input.
+
+      enterNode.execute(str);
+
+    } catch (SQLException e) {
+      System.out.println("Failed");
+      e.printStackTrace();
+    }
+  }
+
   public void updateRequest(String ID, String field, Object change) {
 
     String tableName = "FoodDeliveryServiceRequest";

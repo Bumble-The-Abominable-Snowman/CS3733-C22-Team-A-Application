@@ -8,6 +8,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicereques
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
+import edu.wpi.cs3733.c22.teamA.entities.requests.LanguageServiceRequest;
 import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -124,26 +125,26 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
 
   @FXML
   void submitRequest() throws IOException {
-    MedicalEquipmentServiceRequest medicalEquipmentServiceRequest =
-        new MedicalEquipmentServiceRequest();
     if (!typeChoiceBox.getSelectionModel().getSelectedItem().equals("Type")
         && toChoiceBox.getSelectionModel().getSelectedItem() != null
         && employeeChoiceBox.getSelectionModel().getSelectedItem() != null) {
       // pass medical service request object
       MedicalEquipmentServiceRequestDAO medicalEquipmentServiceRequestDAO =
           new MedicalEquipmentServiceRequestDerbyImpl();
+      MedicalEquipmentServiceRequest medicalEquipmentServiceRequest =
+                   new MedicalEquipmentServiceRequest(
+              "PlaceHolderID",
+              fromChoiceBox.getSelectionModel().getSelectedItem().toString(),
+              toChoiceBox.getSelectionModel().getSelectedItem().toString(),
+              "Alex",
+              employeeChoiceBox.getSelectionModel().getSelectedItem().toString(),
+              new Timestamp((new Date()).getTime()).toString(),
+              "NEW",
+              "Medical Equipment",
+              "N/A",
+        typeChoiceBox.getSelectionModel().getSelectedItem().toString());
 
-      medicalEquipmentServiceRequestDAO.enterMedicalEquipmentServiceRequest(
-          Integer.toString(rand.nextInt(10000)),
-          fromChoiceBox.getValue().toString(),
-          toChoiceBox.getSelectionModel().getSelectedItem().toString(),
-          "Alex Sun",
-          employeeChoiceBox.getSelectionModel().getSelectedItem().toString(),
-          new Timestamp((new Date()).getTime()),
-          statusChoiceBox.getSelectionModel().getSelectedItem().toString(),
-          typeChoiceBox.getSelectionModel().getSelectedItem().toString(),
-          "MedicalEquipmentRequest");
-
+      medicalEquipmentServiceRequestDAO.enterMedicalEquipmentServiceRequest(medicalEquipmentServiceRequest);
       this.returnToHomeScene();
     }
   }
