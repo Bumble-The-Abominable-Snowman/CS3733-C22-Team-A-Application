@@ -5,7 +5,7 @@ import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.SanitationServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.requests.SanitationServiceRequest;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

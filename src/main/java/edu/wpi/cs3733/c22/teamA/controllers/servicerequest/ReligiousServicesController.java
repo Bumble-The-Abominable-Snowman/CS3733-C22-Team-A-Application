@@ -8,7 +8,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.ReligiousServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.requests.ReligiousServiceRequest;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
