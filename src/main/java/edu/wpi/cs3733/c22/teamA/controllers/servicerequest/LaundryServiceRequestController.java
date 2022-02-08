@@ -1,12 +1,17 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.requests.LaundryServiceRequest;
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import org.apache.commons.lang3.SerializationUtils;
 
 public class LaundryServiceRequestController extends GenericServiceRequestsController {
   @FXML private Button floor4Button;
@@ -22,8 +27,6 @@ public class LaundryServiceRequestController extends GenericServiceRequestsContr
   @FXML private Button backButton;
   @FXML private Button clearButton;
 
-  private FXMLLoader loader = new FXMLLoader();
-
   @FXML
   public void initialize() {
     sceneID = SceneController.SCENES.LAUNDRY_SERVICE_REQUEST_SCENE;
@@ -34,7 +37,7 @@ public class LaundryServiceRequestController extends GenericServiceRequestsContr
   }
 
   @FXML
-  void submitRequest() {
+  void submitRequest() throws IOException, TimeoutException {
     System.out.print("\nNew request, got some work to do bud!\n");
     System.out.printf("Selected wash mode is : %s\n", washMode.getValue());
     System.out.printf(
@@ -44,7 +47,16 @@ public class LaundryServiceRequestController extends GenericServiceRequestsContr
       laundryServiceRequest.setWashMode(washMode.getValue());
       laundryServiceRequest.setSpecialInstructions(specialNotes.getCharacters().toString());
 
+      // serialize the entity
+      byte[] data = SerializationUtils.serialize(laundryServiceRequest);
+
       // send request to database
+      try (Connection connection = Aapp.factory.newConnection();
+          Channel channel = connection.createChannel()) {
+        channel.exchangeDeclare("service_requests/laundry", "topic");
+
+        channel.basicPublish("service_requests/laundry", "laundryKey", null, data);
+      }
     }
   }
 

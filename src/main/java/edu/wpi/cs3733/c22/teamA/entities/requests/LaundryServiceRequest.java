@@ -1,12 +1,14 @@
 package edu.wpi.cs3733.c22.teamA.entities.requests;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
-public @Data class LaundryServiceRequest extends RecursiveTreeObject<LaundryServiceRequest> {
+public @Data class LaundryServiceRequest extends RecursiveTreeObject<LaundryServiceRequest>
+    implements Serializable {
   private String requestID;
   private String startLocation;
   private String endLocation;
