@@ -6,7 +6,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.Location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.requests.FoodDeliveryRequest;
+import edu.wpi.cs3733.c22.teamA.entities.requests.FoodDeliveryServiceRequest;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.stream.Collectors;
@@ -73,8 +73,8 @@ public class FoodDeliveryController extends GenericServiceRequestsController {
 
   @FXML
   private void createFoodRequest() throws IOException {
-    FoodDeliveryRequest aRequest =
-        new FoodDeliveryRequest(
+    FoodDeliveryServiceRequest aRequest =
+        new FoodDeliveryServiceRequest(
             mainChoice.getValue(),
             sideChoice.getValue(),
             drinkChoice.getValue(),

@@ -1,13 +1,12 @@
 package edu.wpi.cs3733.c22.teamA.Adb.ServiceRequest.FoodDeliveryServiceRequest;
 
-import edu.wpi.cs3733.c22.teamA.entities.requests.FoodDeliveryRequest;
+import edu.wpi.cs3733.c22.teamA.entities.requests.FoodDeliveryServiceRequest;
 
-import java.sql.*;
 import java.util.List;
 
-public interface FoodDeliveryRequestDAO {
+public interface FoodDeliveryServiceRequestDAO {
 
-    public List<FoodDeliveryRequest> getNodeList();
+    public List<FoodDeliveryServiceRequest> getNodeList();
 
     public void deleteRequest(String requestID);
 
@@ -16,6 +15,6 @@ public interface FoodDeliveryRequestDAO {
 
     public void updateRequest(String ID, String field, Object change);
 
-    public FoodDeliveryRequest getRequest(String ID);
+    public FoodDeliveryServiceRequest getRequest(String ID);
 
 }
