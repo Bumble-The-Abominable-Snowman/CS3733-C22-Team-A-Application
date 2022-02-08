@@ -59,5 +59,8 @@
    <JFXComboBox fx:id="washMode" layoutX="34.0" layoutY="180.0" prefHeight="28.0" prefWidth="112.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
    <JFXComboBox fx:id="toLocationChoice" layoutX="225.0" layoutY="180.0" prefHeight="28.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
    <JFXComboBox fx:id="employeeChoice" layoutX="443.0" layoutY="93.0" prefHeight="28.0" prefWidth="112.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-   <TextArea fx:id="commentsBox" layoutX="411.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="180" prefHeight="100.0" prefWidth="148.0" promptText="Special Instructions/Notes" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+   <TextArea fx:id="commentsBox" layoutX="411.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="180" prefHeight="100.0" prefWidth="148.0" promptText="Special Instructions/Notes" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+      <font>
+         <Font name="System Italic" size="12.0" />
+      </font></TextArea>
 </GridPane>
