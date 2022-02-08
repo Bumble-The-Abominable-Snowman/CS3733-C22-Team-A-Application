@@ -4,10 +4,13 @@ import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.DeliverCallback;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipmentservicerequest.MedicalEquipmentServiceRequestImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
+import edu.wpi.cs3733.c22.teamA.entities.requests.LaundryServiceRequest;
 import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
 import java.io.IOException;
 import java.net.URL;
@@ -21,6 +24,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import lombok.SneakyThrows;
+import org.apache.commons.lang3.SerializationUtils;
 
 public class ViewServiceRequestController implements Initializable {
   @FXML Button backButton;
@@ -28,6 +33,7 @@ public class ViewServiceRequestController implements Initializable {
 
   private final SceneController sceneController = Aapp.sceneController;
 
+  @SneakyThrows
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     // Create all columns in the tracker table
@@ -118,6 +124,47 @@ public class ViewServiceRequestController implements Initializable {
             equipmentID,
             reqType);
     requestsTable.setRoot(root);
+
+    //        Task task =
+    //                new Task<Void>() {
+    //                  @Override
+    //                  protected Void call() throws Exception {
+    //                    while (true) {
+    //                      Platform.runLater(
+    //                              new Runnable() {
+    //                                @Override
+    //                                public void run() {
+    //                                  messageLabel.setText("incomingMessage: " + incomingMessage);
+    //                                }
+    //                              });
+    //
+    //                      TimeUnit.MILLISECONDS.sleep(100);
+    //                    }
+    //                  }
+    //                };
+    //        new Thread(task).start();
+
+    String EXCHANGE_NAME = "service_requests/laundry";
+
+    Channel channel = Aapp.connection.createChannel();
+
+    channel.exchangeDeclare(EXCHANGE_NAME, "topic");
+    String queueName = channel.queueDeclare().getQueue();
+
+    channel.queueBind(queueName, EXCHANGE_NAME, "com.cs377.c22.teamA");
+
+    System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
+
+    DeliverCallback deliverCallback =
+        (consumerTag, delivery) -> {
+
+          // here is the incoming service request object
+          LaundryServiceRequest laundryServiceRequest =
+              (LaundryServiceRequest) SerializationUtils.deserialize(delivery.getBody());
+
+          System.out.println(" [x] Received '" + laundryServiceRequest);
+        };
+    channel.basicConsume(queueName, true, deliverCallback, consumerTag -> {});
   }
 
   @FXML

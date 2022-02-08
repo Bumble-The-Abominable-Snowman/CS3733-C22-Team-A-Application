@@ -21,4 +21,26 @@ public @Data class LaundryServiceRequest extends RecursiveTreeObject<LaundryServ
 
   private String washMode;
   private String specialInstructions;
+
+  public String toString() {
+    return this.requestID
+        + "\t"
+        + this.startLocation
+        + "\t"
+        + this.endLocation
+        + "\t"
+        + this.employeeRequested
+        + "\t"
+        + this.employeeAssigned
+        + "\t"
+        + this.requestTime
+        + "\t"
+        + this.requestStatus
+        + "\t"
+        + this.equipmentID
+        + "\t"
+        + this.washMode
+        + "\t"
+        + this.specialInstructions;
+  }
 }

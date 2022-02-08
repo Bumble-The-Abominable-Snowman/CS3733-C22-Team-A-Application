@@ -55,7 +55,7 @@ public class LaundryServiceRequestController extends GenericServiceRequestsContr
           Channel channel = connection.createChannel()) {
         channel.exchangeDeclare("service_requests/laundry", "topic");
 
-        channel.basicPublish("service_requests/laundry", "laundryKey", null, data);
+        channel.basicPublish("service_requests/laundry", "com.cs377.c22.teamA", null, data);
       }
     }
   }

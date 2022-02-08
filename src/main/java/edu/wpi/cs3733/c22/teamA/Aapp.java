@@ -25,8 +25,8 @@ public class Aapp extends Application {
   public void init() throws IOException {
     log.info("Starting Up");
 
-    Aapp.factory.setHost("198.199.83.208");
-    Aapp.factory.setPort(5672); // 5672 for regular connections, 5671 for connections that use TLS
+    factory.setHost("198.199.83.208");
+    factory.setPort(5672); // 5672 for regular connections, 5671 for connections that use TLS
   }
 
   @Override
