@@ -1,9 +1,17 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest;
 
 import edu.wpi.cs3733.c22.teamA.entities.requests.LaundryServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO {
   public LaundryServiceRequestDerbyImpl() {}
@@ -194,5 +202,71 @@ public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO 
       e.printStackTrace();
     }
     return reqList;
+  }
+
+  // Read from CSV
+  public static List<LaundryServiceRequest> readLaundryServiceRequestCSV(
+          String csvFilePath) throws IOException, ParseException {
+    // System.out.println("beginning to read csv");
+
+    Scanner lineScanner =
+            new Scanner(
+                    LaundryServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
+    Scanner dataScanner;
+    int dataIndex = 0;
+    int lineIndex = 0;
+    int intData = 0;
+    List<LaundryServiceRequest> list = new ArrayList<>();
+    lineScanner.nextLine();
+
+    while (lineScanner.hasNextLine()) { // Scan CSV line by line
+
+      dataScanner = new Scanner(lineScanner.nextLine());
+      dataScanner.useDelimiter(",");
+      LaundryServiceRequest thisLSR = new LaundryServiceRequest();
+
+      while (dataScanner.hasNext()) {
+
+        String data = dataScanner.next();
+        if (dataIndex == 0) thisLSR.setRequestID(data);
+        else if (dataIndex == 1) thisLSR.setWashMode(data);
+        else System.out.println("Invalid data, I broke::" + data);
+        dataIndex++;
+      }
+
+      dataIndex = 0;
+      list.add(thisLSR);
+      // System.out.println(thisLocation);
+
+    }
+
+    lineIndex++;
+    lineScanner.close();
+    return list;
+  }
+
+  // Write CSV for table
+  public void writeLaundryServiceRequestCSV(
+          List<LaundryServiceRequest> List, String csvFilePath) throws IOException {
+
+    // create a writer
+    BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
+
+    writer.write(
+            "RequestID, WashMode");
+    writer.newLine();
+
+    // write location data
+    for (LaundryServiceRequest thisLSR : List) {
+
+      writer.write(
+              String.join(
+                      ",",
+                      thisLSR.getRequestID(),
+                      thisLSR.getWashMode()));
+
+      writer.newLine();
+    }
+    writer.close(); // close the writer
   }
 }

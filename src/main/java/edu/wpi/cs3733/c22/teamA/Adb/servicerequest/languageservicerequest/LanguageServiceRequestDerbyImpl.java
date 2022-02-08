@@ -1,9 +1,17 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest;
 
 import edu.wpi.cs3733.c22.teamA.entities.requests.LanguageServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDAO {
 
@@ -15,7 +23,7 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
       Statement get = connection.createStatement();
       String str =
           String.format(
-              "SELECT * FROM ServiceRequest s, languageservicerequest l WHERE (s.requestID = l.requestID) AND l.requestID = '%s'",
+              "SELECT * FROM ServiceRequest s, LanguageServiceRequest l WHERE (s.requestID = l.requestID) AND l.requestID = '%s'",
               ID);
 
       ResultSet rset = get.executeQuery(str);
@@ -61,7 +69,7 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
       if (field.equals("language")) {
         str =
             String.format(
-                "UPDATE languageservicerequest SET " + field + " = '%s' WHERE requestID = '%s'",
+                "UPDATE LanguageServiceRequest SET " + field + " = '%s' WHERE requestID = '%s'",
                 change,
                 ID);
       } else {
@@ -130,7 +138,7 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
 
       String str2 =
           String.format(
-              "INSERT INTO languageservicerequest(requestID, language) " + "VALUES('%s', '%s')",
+              "INSERT INTO LanguageServiceRequest(requestID, language) " + "VALUES('%s', '%s')",
               requestID, language);
       insert.execute(str2);
 
@@ -162,7 +170,7 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
       Statement getNodeList = connection.createStatement();
       ResultSet rset =
           getNodeList.executeQuery(
-              "SELECT * FROM ServiceRequest s, LanguageServiceRequest l WHERE s.requestID=l.requestID");
+              "SELECT * FROM ServiceRequest s JOIN LanguageServiceRequest l ON s.requestID=l.requestID");
 
       while (rset.next()) {
         String requestID = rset.getString("requestID");
@@ -195,5 +203,71 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
       e.printStackTrace();
     }
     return reqList;
+  }
+
+  // Read from Location CSV
+  public static List<LanguageServiceRequest> readLanguageServiceRequestCSV(
+          String csvFilePath) throws IOException, ParseException {
+    // System.out.println("beginning to read csv");
+
+    Scanner lineScanner =
+            new Scanner(
+                    LanguageServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
+    Scanner dataScanner;
+    int dataIndex = 0;
+    int lineIndex = 0;
+    int intData = 0;
+    List<LanguageServiceRequest> list = new ArrayList<>();
+    lineScanner.nextLine();
+
+    while (lineScanner.hasNextLine()) { // Scan CSV line by line
+
+      dataScanner = new Scanner(lineScanner.nextLine());
+      dataScanner.useDelimiter(",");
+      LanguageServiceRequest thisLSR = new LanguageServiceRequest();
+
+      while (dataScanner.hasNext()) {
+
+        String data = dataScanner.next();
+        if (dataIndex == 0) thisLSR.setRequestID(data);
+        else if (dataIndex == 1) thisLSR.setLanguage(data);
+        else System.out.println("Invalid data, I broke::" + data);
+        dataIndex++;
+      }
+
+      dataIndex = 0;
+      list.add(thisLSR);
+      // System.out.println(thisLocation);
+
+    }
+
+    lineIndex++;
+    lineScanner.close();
+    return list;
+  }
+
+  // Write CSV for MedicalEquipmentServiceRequest table
+  public void writeLanguageServiceRequestCSV(
+          List<LanguageServiceRequest> List, String csvFilePath) throws IOException {
+
+    // create a writer
+    BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
+
+    writer.write(
+            "RequestID, Language");
+    writer.newLine();
+
+    // write location data
+    for (LanguageServiceRequest thisLSR : List) {
+
+      writer.write(
+              String.join(
+                      ",",
+                      thisLSR.getRequestID(),
+                      thisLSR.getLanguage()));
+
+      writer.newLine();
+    }
+    writer.close(); // close the writer
   }
 }

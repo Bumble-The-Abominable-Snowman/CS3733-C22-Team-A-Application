@@ -1,9 +1,17 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest;
 
+import edu.wpi.cs3733.c22.teamA.entities.requests.ReligiousServiceRequest;
 import edu.wpi.cs3733.c22.teamA.entities.requests.SanitationServiceRequest;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class SanitationServiceRequestDerbyImpl implements SanitationServiceRequestDAO {
 
@@ -195,5 +203,71 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
       e.printStackTrace();
     }
     return reqList;
+  }
+
+  // Read from CSV
+  public static List<SanitationServiceRequest> readSanitationServiceRequestCSV(
+          String csvFilePath) throws IOException, ParseException {
+    // System.out.println("beginning to read csv");
+
+    Scanner lineScanner =
+            new Scanner(
+                    SanitationServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
+    Scanner dataScanner;
+    int dataIndex = 0;
+    int lineIndex = 0;
+    int intData = 0;
+    List<SanitationServiceRequest> list = new ArrayList<>();
+    lineScanner.nextLine();
+
+    while (lineScanner.hasNextLine()) { // Scan CSV line by line
+
+      dataScanner = new Scanner(lineScanner.nextLine());
+      dataScanner.useDelimiter(",");
+      SanitationServiceRequest thisSSR = new SanitationServiceRequest();
+
+      while (dataScanner.hasNext()) {
+
+        String data = dataScanner.next();
+        if (dataIndex == 0) thisSSR.setRequestID(data);
+        else if (dataIndex == 1) thisSSR.setSanitationType(data);
+        else System.out.println("Invalid data, I broke::" + data);
+        dataIndex++;
+      }
+
+      dataIndex = 0;
+      list.add(thisSSR);
+      // System.out.println(thisLocation);
+
+    }
+
+    lineIndex++;
+    lineScanner.close();
+    return list;
+  }
+
+  // Write CSV for table
+  public void writeSanitationServiceRequestCSV(
+          List<SanitationServiceRequest> List, String csvFilePath) throws IOException {
+
+    // create a writer
+    BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
+
+    writer.write(
+            "RequestID, SanitationType");
+    writer.newLine();
+
+    // write location data
+    for (SanitationServiceRequest thisSSR : List) {
+
+      writer.write(
+              String.join(
+                      ",",
+                      thisSSR.getRequestID(),
+                      thisSSR.getSanitationType()));
+
+      writer.newLine();
+    }
+    writer.close(); // close the writer
   }
 }

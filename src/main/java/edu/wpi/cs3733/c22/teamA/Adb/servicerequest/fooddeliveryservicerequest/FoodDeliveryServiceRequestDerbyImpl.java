@@ -1,9 +1,17 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest;
 
 import edu.wpi.cs3733.c22.teamA.entities.requests.FoodDeliveryServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceRequestDAO {
 
@@ -232,5 +240,77 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
       e.printStackTrace();
       return null;
     }
+  }
+
+  // Read from FoodDeliveryServiceRequest CSV
+  public static List<FoodDeliveryServiceRequest> readFoodDeliveryServiceRequestCSV(
+          String csvFilePath) throws IOException, ParseException {
+    // System.out.println("beginning to read csv");
+
+    Scanner lineScanner =
+            new Scanner(
+                    FoodDeliveryServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
+    Scanner dataScanner;
+    int dataIndex = 0;
+    int lineIndex = 0;
+    int intData = 0;
+    List<FoodDeliveryServiceRequest> list = new ArrayList<>();
+    lineScanner.nextLine();
+
+    while (lineScanner.hasNextLine()) { // Scan CSV line by line
+
+      dataScanner = new Scanner(lineScanner.nextLine());
+      dataScanner.useDelimiter(",");
+      FoodDeliveryServiceRequest FDSR = new FoodDeliveryServiceRequest();
+
+      while (dataScanner.hasNext()) {
+
+        String data = dataScanner.next();
+        if (dataIndex == 0) FDSR.setRequestID(data);
+        else if (dataIndex == 1) FDSR.setMainDish(data);
+        else if (dataIndex == 2) FDSR.setSideDish(data);
+        else if (dataIndex == 3) FDSR.setBeverage(data);
+        else if (dataIndex == 4) FDSR.setDessert(data);
+        else System.out.println("Invalid data, I broke::" + data);
+        dataIndex++;
+      }
+
+      dataIndex = 0;
+      list.add(FDSR);
+      // System.out.println(thisLocation);
+
+    }
+
+    lineIndex++;
+    lineScanner.close();
+    return list;
+  }
+
+  // Write CSV for FoodDeliveryServiceRequest table
+  public void writeFoodDeliveryServiceRequestCSV(
+          List<FoodDeliveryServiceRequest> List, String csvFilePath) throws IOException {
+
+    // create a writer
+    BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
+
+    writer.write(
+            "RequestID, MainDish, SideDish, Beverage, Dessert");
+    writer.newLine();
+
+    // write location data
+    for (FoodDeliveryServiceRequest thisFDSR : List) {
+
+      writer.write(
+              String.join(
+                      ",",
+                      thisFDSR.getRequestID(),
+                      thisFDSR.getMainDish(),
+                      thisFDSR.getSideDish(),
+                      thisFDSR.getBeverage(),
+                      thisFDSR.getDessert()));
+
+      writer.newLine();
+    }
+    writer.close(); // close the writer
   }
 }

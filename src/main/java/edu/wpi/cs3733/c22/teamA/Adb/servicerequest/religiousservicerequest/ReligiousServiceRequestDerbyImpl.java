@@ -1,9 +1,17 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest;
 
+import edu.wpi.cs3733.c22.teamA.entities.requests.LaundryServiceRequest;
 import edu.wpi.cs3733.c22.teamA.entities.requests.ReligiousServiceRequest;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequestDAO {
 
@@ -195,5 +203,71 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
       e.printStackTrace();
     }
     return reqList;
+  }
+
+  // Read from CSV
+  public static List<ReligiousServiceRequest> readReligiousServiceRequestCSV(
+          String csvFilePath) throws IOException, ParseException {
+    // System.out.println("beginning to read csv");
+
+    Scanner lineScanner =
+            new Scanner(
+                    ReligiousServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
+    Scanner dataScanner;
+    int dataIndex = 0;
+    int lineIndex = 0;
+    int intData = 0;
+    List<ReligiousServiceRequest> list = new ArrayList<>();
+    lineScanner.nextLine();
+
+    while (lineScanner.hasNextLine()) { // Scan CSV line by line
+
+      dataScanner = new Scanner(lineScanner.nextLine());
+      dataScanner.useDelimiter(",");
+      ReligiousServiceRequest thisRSR = new ReligiousServiceRequest();
+
+      while (dataScanner.hasNext()) {
+
+        String data = dataScanner.next();
+        if (dataIndex == 0) thisRSR.setRequestID(data);
+        else if (dataIndex == 1) thisRSR.setReligion(data);
+        else System.out.println("Invalid data, I broke::" + data);
+        dataIndex++;
+      }
+
+      dataIndex = 0;
+      list.add(thisRSR);
+      // System.out.println(thisLocation);
+
+    }
+
+    lineIndex++;
+    lineScanner.close();
+    return list;
+  }
+
+  // Write CSV for table
+  public void writeReligiousServiceRequestCSV(
+          List<ReligiousServiceRequest> List, String csvFilePath) throws IOException {
+
+    // create a writer
+    BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
+
+    writer.write(
+            "RequestID, Religion");
+    writer.newLine();
+
+    // write location data
+    for (ReligiousServiceRequest thisRSR : List) {
+
+      writer.write(
+              String.join(
+                      ",",
+                      thisRSR.getRequestID(),
+                      thisRSR.getReligion()));
+
+      writer.newLine();
+    }
+    writer.close(); // close the writer
   }
 }

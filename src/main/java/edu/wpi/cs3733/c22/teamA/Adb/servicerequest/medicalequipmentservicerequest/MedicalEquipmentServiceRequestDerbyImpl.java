@@ -211,7 +211,7 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
     return reqList;
   }
 
-  // Read from Location CSV
+  // Read from CSV
   public static List<MedicalEquipmentServiceRequest> readMedicalEquipmentServiceRequestCSV(
       String csvFilePath) throws IOException, ParseException {
     // System.out.println("beginning to read csv");
@@ -259,7 +259,7 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
     return list;
   }
 
-  // Write CSV for MedicalEquipmentServiceRequest table
+  // Write CSV for table
   public void writeMedicalEquipmentServiceRequestCSV(
       List<MedicalEquipmentServiceRequest> List, String csvFilePath) throws IOException {
 
