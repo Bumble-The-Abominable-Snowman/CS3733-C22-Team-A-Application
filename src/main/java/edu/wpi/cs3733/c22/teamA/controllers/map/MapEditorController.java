@@ -7,7 +7,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.fxml.FXML;
@@ -15,6 +15,8 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -64,6 +66,7 @@ public class MapEditorController {
   @FXML JFXButton homeButton = new JFXButton();
 
   @FXML VBox inputVBox = new VBox();
+  @FXML ImageView mapDisplay = new ImageView();
 
   LocationDAO locationBase = new LocationDerbyImpl();
   List<Location> locationFromDatabase = locationBase.getNodeList();
@@ -77,6 +80,90 @@ public class MapEditorController {
     Polygon polygon = new Polygon();
     polygon.getPoints().addAll(new Double[] {1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 2.0, 1.0, 1.0, 1.0});
     inputVBox.setDisable(true);
+    locations.addAll(new ArrayList<>(new LocationDerbyImpl().getNodeList()));
+
+    floorSelectionComboBox.getItems().removeAll(floorSelectionComboBox.getItems());
+    floorSelectionComboBox
+        .getItems()
+        .addAll("Choose Floor:", "Floor 1", "Floor 2", "Floor 3", "L1", "L2", "Ground");
+    floorSelectionComboBox.getSelectionModel().select("Choose Floor:");
+    floorSelectionComboBox
+        .getSelectionModel()
+        .selectedItemProperty()
+        .addListener(
+            (obs, oldValue, newValue) -> {
+              if (newValue.equals("Choose Floor:")) {
+              } else {
+                String floor;
+                if (newValue.equals("Floor 1")) {
+                  floor = "1";
+                  File map = new File("edu/wpi/cs3733/c22/teamA/images/1st Floor.png");
+                  Image image = new Image(String.valueOf((map)));
+                  mapDisplay.setImage(image);
+                } else if (newValue.equals("Floor 2")) {
+                  floor = "2";
+                  File map = new File("edu/wpi/cs3733/c22/teamA/images/2nd Floor.png");
+                  Image image = new Image(String.valueOf((map)));
+                  mapDisplay.setImage(image);
+                } else if (newValue.equals("Floor 3")) {
+                  floor = "3";
+                  File map = new File("edu/wpi/cs3733/c22/teamA/images/3rd Floor.png");
+                  Image image = new Image(String.valueOf((map)));
+                  mapDisplay.setImage(image);
+                } else if (newValue.equals("L1")) {
+                  floor = "L1";
+                  File map = new File("edu/wpi/cs3733/c22/teamA/images/LL1.png");
+                  Image image = new Image(String.valueOf((map)));
+                  mapDisplay.setImage(image);
+                } else if (newValue.equals("L2")) {
+                  floor = "L2";
+                  File map = new File("edu/wpi/cs3733/c22/teamA/images/LL2.png");
+                  Image image = new Image(String.valueOf((map)));
+                  mapDisplay.setImage(image);
+                } else {
+                  floor = "Ground";
+                  File map = new File("edu/wpi/cs3733/c22/teamA/images/Ground Floor.png");
+                  Image image = new Image(String.valueOf((map)));
+                  mapDisplay.setImage(image);
+                }
+
+                // anchorPane.getChildren().clear();
+                // anchorPane.getChildren().add(floorSelectionComboBox);
+                for (Location location : locations) {
+                  if (location.getFloor().equals(floor)) {
+                    Button button = new Button();
+                    final Delta dragDelta = new Delta();
+                    button.setMinWidth(4.0);
+                    button.setMinHeight(2.0);
+                    button.setShape(locationMarkerShape);
+                    button.setLayoutX(location.getXCoord() - 512);
+                    button.setLayoutY(location.getYCoord() - 512);
+                    button.setPickOnBounds(false);
+                    button.setStyle("-fx-background-color: Blue");
+
+                    button.setOnAction(
+                        event -> {
+                          highlight(button, selectedButton);
+                        });
+                    button.setOnMousePressed(
+                        mouseEvent -> {
+                          // record a delta distance for the drag and drop operation.
+                          dragDelta.x = button.getLayoutX() - mouseEvent.getSceneX();
+                          dragDelta.y = button.getLayoutY() - mouseEvent.getSceneY();
+                          button.setCursor(Cursor.MOVE);
+                        });
+                    button.setOnMouseReleased(mouseEvent -> button.setCursor(Cursor.HAND));
+                    button.setOnMouseDragged(
+                        mouseEvent -> {
+                          button.setLayoutX(mouseEvent.getSceneX() + dragDelta.x);
+                          button.setLayoutY(mouseEvent.getSceneY() + dragDelta.y);
+                        });
+                    button.setOnMouseEntered(mouseEvent -> button.setCursor(Cursor.HAND));
+                    drawButton(button);
+                  }
+                }
+              }
+            });
   }
 
   @FXML
@@ -198,71 +285,6 @@ public class MapEditorController {
   public void returnToSelectServiceScene() throws IOException {
     sceneController.switchScene(SceneController.SCENES.HOME_SCENE);
     locations.addAll(new ArrayList<>(new LocationDerbyImpl().getNodeList()));
-
-    floorSelectionComboBox.getItems().removeAll(floorSelectionComboBox.getItems());
-    floorSelectionComboBox
-        .getItems()
-        .addAll("Choose Floor:", "Floor 1", "Floor 2", "Floor 3", "L1", "L2", "Ground");
-    floorSelectionComboBox.getSelectionModel().select("Choose Floor:");
-    floorSelectionComboBox
-        .getSelectionModel()
-        .selectedItemProperty()
-        .addListener(
-            (obs, oldValue, newValue) -> {
-              if (newValue.equals("Choose Floor:")) {
-              } else {
-                String floor;
-                if (newValue.equals("Floor 1")) {
-                  floor = "1";
-                } else if (newValue.equals("Floor 2")) {
-                  floor = "2";
-                } else if (newValue.equals("Floor 3")) {
-                  floor = "3";
-                } else if (newValue.equals("L1")) {
-                  floor = "L1";
-                } else if (newValue.equals("L2")) {
-                  floor = "L2";
-                } else {
-                  floor = "Ground";
-                }
-
-                anchorPane.getChildren().clear();
-                anchorPane.getChildren().add(floorSelectionComboBox);
-                for (Location location : locations) {
-                  if (location.getFloor().equals(floor)) {
-                    Button button = new Button();
-                    final Delta dragDelta = new Delta();
-                    button.setMinWidth(4.0);
-                    button.setMinHeight(2.0);
-                    button.setShape(locationMarkerShape);
-                    button.setLayoutX(location.getXCoord() / 2.0 - 600); // top left coord
-                    button.setLayoutY(location.getYCoord() / 2.0 - 400); // center at (7.5, 10)
-                    button.setPickOnBounds(false);
-                    button.setStyle("-fx-background-color: Blue");
-
-                    button.setOnAction(
-                        event -> {
-                          highlight(button, selectedButton);
-                        });
-                    button.setOnMousePressed(
-                        mouseEvent -> {
-                          // record a delta distance for the drag and drop operation.
-                          dragDelta.x = button.getLayoutX() - mouseEvent.getSceneX();
-                          dragDelta.y = button.getLayoutY() - mouseEvent.getSceneY();
-                          button.setCursor(Cursor.MOVE);
-                        });
-                    button.setOnMouseReleased(mouseEvent -> button.setCursor(Cursor.HAND));
-                    button.setOnMouseDragged(
-                        mouseEvent -> {
-                          button.setLayoutX(mouseEvent.getSceneX() + dragDelta.x);
-                          button.setLayoutY(mouseEvent.getSceneY() + dragDelta.y);
-                        });
-                    button.setOnMouseEntered(mouseEvent -> button.setCursor(Cursor.HAND));
-                    drawButton(button);
-                  }
-                }
-              }
-            });
   }
 
   // records relative x and y co-ordinates.
