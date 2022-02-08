@@ -1,9 +1,13 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.requests.SanitationServiceRequest;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -46,12 +50,21 @@ public class SanitationServicesController extends GenericServiceRequestsControll
   @FXML
   void submitRequest() {
     // Create request object
-    SanitationServiceRequest request = new SanitationServiceRequest();
-    if (typeMenu.getSelectionModel().getSelectedItem().equals("Other"))
-      request.setSanitationType(typeOtherBox.getText());
-    else request.setSanitationType(typeMenu.getSelectionModel().getSelectedItem());
-    request.setLocation(locationMenu.getSelectionModel().getSelectedItem());
-    request.setNotes(specialNotes.getText());
+    SanitationServiceRequest sanitationServiceRequest =
+        new SanitationServiceRequest(
+            "PlaceHolderID",
+            "N/A",
+            locationMenu.getSelectionModel().getSelectedItem(),
+            "Alex",
+            "employee",
+            new Timestamp((new Date()).getTime()).toString(),
+            "NEW",
+            "Language Interpreter",
+            "N/A",
+            typeMenu.getValue());
+    SanitationServiceRequestDAO sanitationServiceRequestDAO =
+        new SanitationServiceRequestDerbyImpl();
+    sanitationServiceRequestDAO.enterSanitationServiceRequest(sanitationServiceRequest);
     // Submit to database
   }
 }
