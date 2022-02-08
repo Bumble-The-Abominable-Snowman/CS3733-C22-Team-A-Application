@@ -2,26 +2,33 @@ package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest;
 
 import edu.wpi.cs3733.c22.teamA.entities.requests.FoodDeliveryServiceRequest;
 import java.util.List;
+import java.sql.*;
 
 public interface FoodDeliveryServiceRequestDAO {
 
-  public List<FoodDeliveryServiceRequest> getNodeList();
+  FoodDeliveryServiceRequest getFoodDeliveryRequest(String ID);
 
-  public void deleteRequest(String requestID);
+  void updateFoodDeliveryRequest(String ID, String field, Object change);
 
-  public void enterRequest(
-      String requestID,
-      String mainDish,
-      String sideDish,
-      String beverage,
-      String dessert,
-      String roomNum,
-      String employee,
-      String comments);
+  void enterFoodDeliveryRequest(FoodDeliveryServiceRequest fdsr);
 
-  public void enterRequest(FoodDeliveryServiceRequest foodDeliveryServiceRequest);
+  void enterFoodDeliveryRequest(
+          String requestID,
+          String startLocation,
+          String endLocation,
+          String employeeRequested,
+          String employeeAssigned,
+          Timestamp requestTime,
+          String requestStatus,
+          String requestType,
+          String comments,
+          String mainDish,
+          String sideDish,
+          String beverage,
+          String dessert);
 
-  public void updateRequest(String ID, String field, Object change);
+  void deleteFoodDeliveryRequest(String id);
 
-  public FoodDeliveryServiceRequest getRequest(String ID);
+  List<FoodDeliveryServiceRequest> getFoodDeliveryRequestList();
+
 }
