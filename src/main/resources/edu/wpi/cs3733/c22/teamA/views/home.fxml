@@ -45,22 +45,22 @@
                     <menus>
                       <Menu mnemonicParsing="false" text="Menu">
                         <items>
-                          <MenuItem mnemonicParsing="false" text="New Request" onAction="#goToCreateNewServiceRequest"/>
+                          <MenuItem mnemonicParsing="false" onAction="#goToCreateNewServiceRequest" text="New Request" />
                         </items>
                         <items>
-                            <MenuItem mnemonicParsing="false" text="Employees" onAction="#goToViewEmployees"/>
+                            <MenuItem mnemonicParsing="false" onAction="#goToViewEmployees" text="Employees" />
                         </items>
                         <items>
-                            <MenuItem mnemonicParsing="false" text="Existing Requests" onAction="#goToViewServiceRequest"/>
+                            <MenuItem mnemonicParsing="false" onAction="#goToViewServiceRequest" text="Existing Requests" />
                         </items>
                         <items>
-                            <MenuItem mnemonicParsing="false" text="Equipment Tracker" onAction="#goToEquipmentTracker"/>
+                            <MenuItem mnemonicParsing="false" onAction="#goToEquipmentTracker" text="Equipment Tracker" />
                         </items>
                         <items>
-                          <MenuItem mnemonicParsing="false" text="View Map" onAction="#goToLocationData"/>
+                          <MenuItem mnemonicParsing="false" onAction="#goToLocationData" text="View Map" />
                         </items>
                         <items>
-                          <MenuItem mnemonicParsing="false" text="Settings" onAction="#goTosettings"/>
+                          <MenuItem mnemonicParsing="false" onAction="#goTosettings" text="Settings" />
                         </items>
                       </Menu>
                     </menus>
@@ -79,14 +79,15 @@
                       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                           <children>
                               <Button fx:id="serviceRequestsButton" mnemonicParsing="false" onAction="#goToCreateNewServiceRequest" prefHeight="25.0" prefWidth="168.0" text="Make New Service Requests" />
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="168.0" text="Employees" onAction="#goToViewEmployees"/>
+                              <Button mnemonicParsing="false" onAction="#goToViewEmployees" prefHeight="25.0" prefWidth="168.0" text="Employees" />
                               <Button fx:id="serviceRequestsButton1" mnemonicParsing="false" onAction="#goToViewServiceRequest" prefHeight="25.0" prefWidth="168.0" text="View Existing Requests" />
                               <Button fx:id="equipmentTrackerButton" mnemonicParsing="false" onAction="#goToEquipmentTracker" prefHeight="25.0" prefWidth="168.0" text="View Equipment Tracker" />
-                              <Button fx:id="locationDataButton" mnemonicParsing="false" onAction="#goToLocationData" prefHeight="25.0" prefWidth="168.0" text="View Locations (Map)" />
+                              <Button fx:id="locationDataButton" mnemonicParsing="false" onAction="#goToLocationData" prefHeight="25.0" prefWidth="168.0" text="View Locations (Table)" />
+                        <Button fx:id="editLocationButton" mnemonicParsing="false" onAction="#goToEditLocationData" prefHeight="25.0" prefWidth="168.0" text="Edit Locations (Map)" />
                           </children>
                       </VBox>
                       <Label text="Absolute-Zero Abominable Snowmen" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                      <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitApp" snapToPixel="false" text="Exit" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+                      <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitHome" snapToPixel="false" text="Log out" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
                       <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#goTosettings" text="Settings" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
                           <GridPane.margin>
                               <Insets right="5.0" top="5.0" />
