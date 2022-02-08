@@ -12,6 +12,7 @@ public class SettingsController {
   @FXML private Button homeButton;
   @FXML private Button backButton;
   @FXML private Button loadFromBackupButton;
+  @FXML private Button exportToBackupButton;
   private FXMLLoader loader = new FXMLLoader();
   private final SceneController sceneController = Aapp.sceneController;
 

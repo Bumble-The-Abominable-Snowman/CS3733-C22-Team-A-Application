@@ -6,6 +6,11 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 
 public class HomeController {
   @FXML private JFXButton settingsButton;
@@ -13,10 +18,30 @@ public class HomeController {
   @FXML private JFXButton viewServiceRequestsButton;
   @FXML private JFXButton equipmentTrackerButton;
   @FXML private JFXButton locationDataButton;
+  @FXML private JFXButton editLocationButton;
+  @FXML private JFXButton employeesButton;
   @FXML private JFXButton exitButton;
   private FXMLLoader loader = new FXMLLoader();
 
   private final SceneController sceneController = Aapp.sceneController;
+
+  @FXML
+  private void initialize() {
+    settingsButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+    serviceRequestsButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(20), Insets.EMPTY)));
+    viewServiceRequestsButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(20), Insets.EMPTY)));
+    equipmentTrackerButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(20), Insets.EMPTY)));
+    locationDataButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(20), Insets.EMPTY)));
+    editLocationButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+    employeesButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+  }
 
   @FXML
   private void goToCreateNewServiceRequest() throws IOException {

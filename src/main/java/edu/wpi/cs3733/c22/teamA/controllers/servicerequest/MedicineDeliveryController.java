@@ -33,7 +33,7 @@ public class MedicineDeliveryController extends GenericServiceRequestsController
 
   @FXML
   public void initialize() throws ParseException {
-    sceneID = SceneController.SCENES.MEDICINE_DELIVERY_REQUEST_SCENE;
+    sceneID = SceneController.SCENES.MEDICINE_DELIVERY_SERVICE_REQUEST_SCENE;
 
     commentsBox.setWrapText(true);
 

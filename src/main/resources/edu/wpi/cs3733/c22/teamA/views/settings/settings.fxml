@@ -8,6 +8,6 @@
       <Button fx:id="homeButton" layoutX="526.0" layoutY="346.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" />
       <Button fx:id="backButton" layoutX="43.0" layoutY="342.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="41.0" text="Back" />
       <Button fx:id="loadFromBackupButton" layoutX="236.0" layoutY="43.0" mnemonicParsing="false" onAction="#loadFromBackup" text="Load from backup" />
-      <Button fx:id="ExportToBackupButton" layoutX="240.0" layoutY="81.0" mnemonicParsing="false" onAction="#exportToBackup" text="Export to backup" />
+      <Button fx:id="exportToBackupButton" layoutX="240.0" layoutY="81.0" mnemonicParsing="false" onAction="#exportToBackup" text="Export to backup" />
    </children>
 </AnchorPane>

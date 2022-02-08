@@ -33,7 +33,7 @@ public class FloralDeliveryController extends GenericServiceRequestsController {
 
   @FXML
   public void initialize() throws ParseException {
-    sceneID = SceneController.SCENES.FLORAL_DELIVERY_REQUEST_SCENE;
+    sceneID = SceneController.SCENES.FLORAL_DELIVERY_SERVICE_REQUEST_SCENE;
 
     commentsBox.setWrapText(true);
 

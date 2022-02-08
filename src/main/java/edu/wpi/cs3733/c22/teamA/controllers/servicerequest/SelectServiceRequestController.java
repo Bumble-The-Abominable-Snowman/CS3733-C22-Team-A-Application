@@ -6,6 +6,11 @@ import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 
 public class SelectServiceRequestController {
 
@@ -21,6 +26,28 @@ public class SelectServiceRequestController {
   private FXMLLoader loader = new FXMLLoader();
 
   private final SceneController sceneController = Aapp.sceneController;
+
+  @FXML
+  private void initialize() {
+    medicalEquipmentDeliveryButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+    religiousRequestsButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+    sanitationServicesButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+    laundryServicesButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+    languageServicesButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+    floralServicesButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+    medicineDeliveryButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+    foodDeliveryButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+    backButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+  }
 
   @FXML
   private void goToMedicalEquipmentDeliveryScene() throws IOException {
@@ -55,12 +82,12 @@ public class SelectServiceRequestController {
 
   @FXML
   private void goToFloralDelivery() throws IOException {
-    sceneController.switchScene(SceneController.SCENES.FLORAL_DELIVERY_REQUEST_SCENE);
+    sceneController.switchScene(SceneController.SCENES.FLORAL_DELIVERY_SERVICE_REQUEST_SCENE);
   }
 
   @FXML
   private void goToMedicineDelivery() throws IOException {
-    sceneController.switchScene(SceneController.SCENES.MEDICINE_DELIVERY_REQUEST_SCENE);
+    sceneController.switchScene(SceneController.SCENES.MEDICINE_DELIVERY_SERVICE_REQUEST_SCENE);
   }
 
   @FXML
