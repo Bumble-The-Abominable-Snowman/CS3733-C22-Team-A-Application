@@ -57,7 +57,6 @@ public class SceneController {
     addScene(SCENES.EXPORT_TO_BACKUP_SCENE, "views/SettingsViews/exportToBackup.fxml");
 
     addScene(SCENES.MAP_EDITOR_SCENE, "views/map/mapEditor.fxml");
-
   }
 
   public void addScene(SCENES name, String pathToFXML) {

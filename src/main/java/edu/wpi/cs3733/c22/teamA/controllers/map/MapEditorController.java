@@ -4,12 +4,12 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Polygon;
 
@@ -64,27 +64,44 @@ public class MapEditorController {
                 anchorPane.getChildren().add(floorSelectionComboBox);
                 for (Location location : locations) {
                   if (location.getFloor().equals(floor)) {
-                    Button newButton = new Button();
-                    newButton.setMinWidth(4.0);
-                    newButton.setMinHeight(2.0);
-                    newButton.setShape(locationMarkerShape);
-                    newButton.setLayoutX(location.getXCoord() / 2.0 - 600); // top left coord
-                    newButton.setLayoutY(location.getYCoord() / 2.0 - 400); // center at (7.5, 10)
-                    newButton.setPickOnBounds(false);
-                    newButton.setStyle("-fx-background-color: Blue");
-                    newButton.setOnAction(
-                        new EventHandler<>() {
-                          @Override
-                          public void handle(ActionEvent event) {
-                            highlight(newButton, selectedButton);
-                            // selectedButton = newButton;
-                          }
+                    Button button = new Button();
+                    final Delta dragDelta = new Delta();
+                    button.setMinWidth(4.0);
+                    button.setMinHeight(2.0);
+                    button.setShape(locationMarkerShape);
+                    button.setLayoutX(location.getXCoord() / 2.0 - 600); // top left coord
+                    button.setLayoutY(location.getYCoord() / 2.0 - 400); // center at (7.5, 10)
+                    button.setPickOnBounds(false);
+                    button.setStyle("-fx-background-color: Blue");
+
+                    button.setOnAction(
+                        event -> {
+                          highlight(button, selectedButton);
                         });
-                    drawButton(newButton);
+                    button.setOnMousePressed(
+                        mouseEvent -> {
+                          // record a delta distance for the drag and drop operation.
+                          dragDelta.x = button.getLayoutX() - mouseEvent.getSceneX();
+                          dragDelta.y = button.getLayoutY() - mouseEvent.getSceneY();
+                          button.setCursor(Cursor.MOVE);
+                        });
+                    button.setOnMouseReleased(mouseEvent -> button.setCursor(Cursor.HAND));
+                    button.setOnMouseDragged(
+                        mouseEvent -> {
+                          button.setLayoutX(mouseEvent.getSceneX() + dragDelta.x);
+                          button.setLayoutY(mouseEvent.getSceneY() + dragDelta.y);
+                        });
+                    button.setOnMouseEntered(mouseEvent -> button.setCursor(Cursor.HAND));
+                    drawButton(button);
                   }
                 }
               }
             });
+  }
+
+  // records relative x and y co-ordinates.
+  private class Delta {
+    double x, y;
   }
 
   private void drawButton(Button button) {
