@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class ReligiousServiceRequest extends ServiceRequest {
 
-  String religion;
+  private String religion;
 
   public ReligiousServiceRequest() {}
 
