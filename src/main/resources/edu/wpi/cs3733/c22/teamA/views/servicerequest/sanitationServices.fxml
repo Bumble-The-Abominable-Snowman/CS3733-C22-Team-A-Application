@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.text.Font?>
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
-<?import javafx.scene.layout.GridPane?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.servicerequest.SanitationServicesController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.servicerequest.SanitationServicesController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -23,7 +19,7 @@
     </rowConstraints>
     <Label alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" prefHeight="38.0" prefWidth="200.0" text="Sanitation Requests" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
         <font>
-            <Font size="19.0" />
+            <Font name="System Bold" size="19.0" />
         </font>
     </Label>
     <Label alignment="CENTER" layoutX="232.0" layoutY="89.0" prefHeight="34.0" prefWidth="137.0" text="Map (To Be Added)" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
@@ -36,6 +32,8 @@
             <Font size="17.0" />
         </font>
     </Label>
+    <Label layoutX="83.0" layoutY="152.0" text="Type:" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+    <Label layoutX="83.0" layoutY="152.0" text="Employee:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
     <JFXButton fx:id="returnHomeButton" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
     <JFXButton fx:id="clearButton" layoutX="481.0" layoutY="360.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="34.0" prefWidth="112.0" text="Clear All Fields" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
     <JFXButton fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="34.0" prefWidth="41.0" text="Back" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
@@ -43,6 +41,6 @@
     <JFXComboBox fx:id="typeChoice" layoutX="34.0" layoutY="180.0" prefHeight="28.0" prefWidth="112.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
     <JFXComboBox fx:id="toLocationChoice" layoutX="225.0" layoutY="180.0" prefHeight="28.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
     <JFXComboBox fx:id="employeeChoice" layoutX="443.0" layoutY="93.0" prefHeight="28.0" prefWidth="112.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-    <TextArea fx:id="typeOtherBox" layoutX="35.0" layoutY="181.0" maxHeight="-Infinity" maxWidth="180" prefHeight="100.0" prefWidth="148.0" promptText="Please specify" visible="false" wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" GridPane.halignment="CENTER" />
+    <TextArea fx:id="typeOtherBox" layoutX="35.0" layoutY="181.0" maxHeight="-Infinity" maxWidth="180" prefHeight="100.0" prefWidth="148.0" promptText="Please specify" visible="false" wrapText="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
     <TextArea fx:id="commentsBox" layoutX="411.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="180" prefHeight="100.0" prefWidth="148.0" promptText="Special Instructions/Notes" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
 </GridPane>

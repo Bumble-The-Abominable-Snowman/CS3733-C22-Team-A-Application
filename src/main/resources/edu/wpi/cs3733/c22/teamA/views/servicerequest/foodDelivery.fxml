@@ -20,12 +20,12 @@
    </rowConstraints>
    <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="240.0" prefHeight="15.0" prefWidth="138.0" text="Food Delivery" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
       <font>
-         <Font size="19.0" />
+         <Font name="System Bold" size="19.0" />
       </font>
    </Label>
-   <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="240.0" prefHeight="23.0" prefWidth="138.0" text="Requests" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+   <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="240.0" prefHeight="19.0" prefWidth="138.0" text="Requests" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
       <font>
-         <Font size="19.0" />
+         <Font name="System Bold" size="19.0" />
       </font>
    </Label>
    <Label layoutX="46.0" layoutY="55.0" prefHeight="30.0" prefWidth="67.0" text="Meal Order" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
@@ -39,6 +39,7 @@
          <Font size="17.0" />
       </font>
    </Label>
+   <Label layoutX="83.0" layoutY="152.0" text="Employee:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
    <JFXButton fx:id="homeButton" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
    <JFXButton fx:id="clearButton" layoutX="481.0" layoutY="360.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="34.0" prefWidth="112.0" text="Clear All Fields" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
    <JFXButton fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="34.0" prefWidth="41.0" text="Back" GridPane.halignment="LEFT" GridPane.valignment="TOP" />

@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.*?>
 
-<GridPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="edu.wpi.cs3733.c22.teamA.controllers.servicerequest.MedicineDeliveryController"
-            prefHeight="400.0" prefWidth="600.0">
+<GridPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.servicerequest.MedicineDeliveryController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -23,7 +19,7 @@
     </rowConstraints>
     <Label alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" prefHeight="38.0" prefWidth="200.0" text="Medicine Delivery" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
         <font>
-            <Font size="19.0" />
+            <Font name="System Bold" size="19.0" />
         </font>
     </Label>
     <Label alignment="CENTER" layoutX="232.0" layoutY="89.0" prefHeight="34.0" prefWidth="137.0" text="Map (To Be Added)" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
@@ -36,11 +32,13 @@
             <Font size="17.0" />
         </font>
     </Label>
-    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="210.0" layoutY="21.0" prefHeight="43.0" prefWidth="200.0" text="Requests" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="210.0" layoutY="21.0" prefHeight="56.0" prefWidth="200.0" text="Requests" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
         <font>
-            <Font size="19.0" />
+            <Font name="System Bold" size="19.0" />
         </font>
     </Label>
+    <Label layoutX="83.0" layoutY="152.0" text="Medicine:" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+    <Label layoutX="83.0" layoutY="152.0" text="Employee:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
     <JFXButton fx:id="returnHomeButton" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
     <JFXButton fx:id="clearButton" layoutX="481.0" layoutY="360.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="34.0" prefWidth="112.0" text="Clear All Fields" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
     <JFXButton fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="34.0" prefWidth="41.0" text="Back" GridPane.halignment="LEFT" GridPane.valignment="TOP" />

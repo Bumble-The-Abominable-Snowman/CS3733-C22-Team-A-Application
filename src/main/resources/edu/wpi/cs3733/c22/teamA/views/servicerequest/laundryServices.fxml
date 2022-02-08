@@ -19,7 +19,7 @@
    </rowConstraints>
    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" prefHeight="38.0" prefWidth="200.0" text="Laundry Service" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
       <font>
-         <Font size="19.0" />
+         <Font name="System Bold" size="19.0" />
       </font>
    </Label>
    <Label alignment="CENTER" layoutX="232.0" layoutY="89.0" prefHeight="34.0" prefWidth="137.0" text="Map (To Be Added)" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
@@ -32,11 +32,13 @@
          <Font size="17.0" />
       </font>
    </Label>
-   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="210.0" layoutY="21.0" prefHeight="43.0" prefWidth="200.0" text="Requests" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="210.0" layoutY="21.0" prefHeight="55.0" prefWidth="200.0" text="Requests" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
       <font>
-         <Font size="19.0" />
+         <Font name="System Bold" size="19.0" />
       </font>
    </Label>
+   <Label layoutX="83.0" layoutY="152.0" text="Wash Mode:" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+   <Label layoutX="83.0" layoutY="152.0" text="Employee:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
    <JFXButton fx:id="returnHomeButton" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
    <JFXButton fx:id="clearButton" layoutX="481.0" layoutY="360.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="34.0" prefWidth="112.0" text="Clear All Fields" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
    <JFXButton fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="34.0" prefWidth="41.0" text="Back" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
