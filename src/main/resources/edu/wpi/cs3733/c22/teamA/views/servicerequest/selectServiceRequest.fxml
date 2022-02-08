@@ -13,15 +13,13 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
-   <children>
-      <JFXButton fx:id="medicalEquipmentDeliveryButton" alignment="CENTER" mnemonicParsing="false" onAction="#goToMedicalEquipmentDeliveryScene" text="Medical Equipment Delivery" GridPane.halignment="CENTER" />
-      <JFXButton fx:id="foodDeliveryButton" mnemonicParsing="false" onAction="#goToFoodDelivery" text="Food Delivery" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-      <JFXButton fx:id="languageServicesButton" alignment="CENTER" mnemonicParsing="false" onAction="#goToLanguageServices" text="Language Services" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-      <JFXButton fx:id="religiousRequestsButton" mnemonicParsing="false" onAction="#goToReligiousRequests" text="Religious Requests" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-      <JFXButton fx:id="laundryServicesButton" mnemonicParsing="false" onAction="#goToLaundryServices" text="Laundry Services" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-      <JFXButton fx:id="sanitationServicesButton" mnemonicParsing="false" onAction="#goToSanitationServices" text="Sanitation Services" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-      <JFXButton fx:id="floralServicesButton" mnemonicParsing="false" onAction="#goToFloralDelivery" text="Floral Delivery" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-      <JFXButton fx:id="medicineDeliveryButton" mnemonicParsing="false" onAction="#goToMedicineDelivery" text="Medicine Delivery" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-      <JFXButton fx:id="backButton" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="26.0" prefWidth="55.0" text="Back" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
-   </children>
+    <JFXButton fx:id="medicalEquipmentDeliveryButton" alignment="CENTER" mnemonicParsing="false" onAction="#goToMedicalEquipmentDeliveryScene" text="Medical Equipment Delivery" GridPane.halignment="CENTER" />
+    <JFXButton fx:id="foodDeliveryButton" mnemonicParsing="false" onAction="#goToFoodDelivery" text="Food Delivery" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+    <JFXButton fx:id="languageServicesButton" alignment="CENTER" mnemonicParsing="false" onAction="#goToLanguageServices" text="Language Services" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+    <JFXButton fx:id="religiousRequestsButton" mnemonicParsing="false" onAction="#goToReligiousRequests" text="Religious Requests" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+    <JFXButton fx:id="laundryServicesButton" mnemonicParsing="false" onAction="#goToLaundryServices" text="Laundry Services" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+    <JFXButton fx:id="sanitationServicesButton" mnemonicParsing="false" onAction="#goToSanitationServices" text="Sanitation Services" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+    <JFXButton fx:id="floralServicesButton" mnemonicParsing="false" onAction="#goToFloralDelivery" text="Floral Delivery" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+    <JFXButton fx:id="medicineDeliveryButton" mnemonicParsing="false" onAction="#goToMedicineDelivery" text="Medicine Delivery" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+    <JFXButton fx:id="backButton" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="26.0" prefWidth="55.0" text="Back" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
 </GridPane>
