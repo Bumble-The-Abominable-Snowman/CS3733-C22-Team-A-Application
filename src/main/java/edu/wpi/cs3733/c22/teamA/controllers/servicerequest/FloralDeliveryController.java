@@ -8,7 +8,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.requests.LanguageInterpreterRequest;
+import edu.wpi.cs3733.c22.teamA.entities.requests.FloralDeliveryRequest;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,18 +17,19 @@ import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
-public class LanguageInterpreterController extends GenericServiceRequestsController {
+public class FloralDeliveryController extends GenericServiceRequestsController {
   @FXML private JFXButton backButton;
   @FXML private JFXButton returnHomeButton;
   @FXML private JFXButton clearButton;
   @FXML private JFXButton submitButton;
-  @FXML private JFXComboBox<String> languageChoice;
+  @FXML private JFXComboBox<String> flowerChoice;
+  @FXML private JFXComboBox<String> bouquetTypeChoice;
   @FXML private JFXComboBox<String> toLocationChoice;
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
@@ -37,7 +38,7 @@ public class LanguageInterpreterController extends GenericServiceRequestsControl
 
   @FXML
   public void initialize() throws ParseException {
-    sceneID = SceneController.SCENES.LANGUAGE_INTERPRETER_SERVICE_REQUEST_SCENE;
+    sceneID = SceneController.SCENES.FLORAL_DELIVERY_SERVICE_REQUEST_SCENE;
 
     backButton.setBackground(
         new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
@@ -50,22 +51,17 @@ public class LanguageInterpreterController extends GenericServiceRequestsControl
 
     commentsBox.setWrapText(true);
 
-    languageChoice.getItems().removeAll(languageChoice.getItems());
-    languageChoice
+    flowerChoice.getItems().removeAll(flowerChoice.getItems());
+    flowerChoice
         .getItems()
-        .addAll(
-            "American Sign Language",
-            "Arabic",
-            "French",
-            "German",
-            "Italian",
-            "Japanese",
-            "Korean",
-            "Mandarin",
-            "Russian",
-            "Spanish");
-    languageChoice.getSelectionModel().select("Language");
-    languageChoice.setVisibleRowCount(5);
+        .addAll("Carnation", "Daisy", "Forget-Me-Not", "Lily", "Orchid", "Rose", "Tulip");
+    flowerChoice.getSelectionModel().select("Flower");
+    flowerChoice.setVisibleRowCount(5);
+
+    bouquetTypeChoice.getItems().removeAll(bouquetTypeChoice.getItems());
+    bouquetTypeChoice.getItems().addAll("Full Bouquet", "Single Flower");
+    bouquetTypeChoice.getSelectionModel().select("Bouquet Type");
+    bouquetTypeChoice.setVisibleRowCount(5);
 
     toLocationChoice.getItems().removeAll(toLocationChoice.getItems());
     toLocationChoice
@@ -100,20 +96,22 @@ public class LanguageInterpreterController extends GenericServiceRequestsControl
   }
 
   @FXML
-  private void createLanguageRequest(LanguageInterpreterRequest langRequest) {
-    langRequest.setLanguage(languageChoice.getValue());
-    langRequest.setToLocation(toLocationChoice.getValue());
-    langRequest.setRequestedEmployee(employeeChoice.getValue());
-    langRequest.setToLocation(commentsBox.getText());
+  private void createFloralRequest(FloralDeliveryRequest floralRequest) {
+    floralRequest.setFlower(flowerChoice.getValue());
+    floralRequest.setBouquetType(bouquetTypeChoice.getValue());
+    floralRequest.setToLocation(toLocationChoice.getValue());
+    floralRequest.setRequestedEmployee(employeeChoice.getValue());
+    floralRequest.setToLocation(commentsBox.getText());
   }
 
   @FXML
   void submitRequest() throws IOException {
-    LanguageInterpreterRequest langRequest = new LanguageInterpreterRequest();
-    if (!languageChoice.getSelectionModel().getSelectedItem().equals("Language")
+    FloralDeliveryRequest floralRequest = new FloralDeliveryRequest();
+    if (!flowerChoice.getSelectionModel().getSelectedItem().equals("Flower")
+        && !bouquetTypeChoice.getSelectionModel().getSelectedItem().equals("Bouquet Type")
         && toLocationChoice.getSelectionModel().getSelectedItem() != null
         && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
-      this.createLanguageRequest(langRequest);
+      this.createFloralRequest(floralRequest);
       this.returnToHomeScene();
     }
   }
