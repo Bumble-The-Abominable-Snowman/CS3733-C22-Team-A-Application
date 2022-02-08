@@ -1,14 +1,17 @@
 package edu.wpi.teama.entities.requests;
 
 import java.sql.Timestamp;
+import lombok.Getter;
+import lombok.Setter;
 
-public class MedicalEquipmentServiceRequest extends ServiceRequest {
+@Getter
+@Setter
+public class SanitationServiceRequest extends ServiceRequest {
+  private String sanitationType;
 
-  private String equipmentID;
+  public SanitationServiceRequest() {}
 
-  public MedicalEquipmentServiceRequest() {}
-
-  public MedicalEquipmentServiceRequest(
+  public SanitationServiceRequest(
       String requestID,
       String startLocation,
       String endLocation,
@@ -18,7 +21,7 @@ public class MedicalEquipmentServiceRequest extends ServiceRequest {
       String requestStatus,
       String requestType,
       String comments,
-      String equipmentID) {
+      String sanitationType) {
     super.requestID = requestID;
     super.startLocation = startLocation;
     super.endLocation = endLocation;
@@ -27,16 +30,16 @@ public class MedicalEquipmentServiceRequest extends ServiceRequest {
     Timestamp rt = Timestamp.valueOf(requestTime);
     super.requestTime = rt;
     super.requestStatus = requestStatus;
-    this.equipmentID = equipmentID;
     super.requestType = requestType;
     super.comments = comments;
+    this.sanitationType = sanitationType;
   }
 
-  public String getEquipmentID() {
-    return equipmentID;
+  public String getSanitationType() {
+    return sanitationType;
   }
 
-  public void setEquipmentID(String equipmentID) {
-    this.equipmentID = equipmentID;
+  public void setSanitationType(String sanitationType) {
+    this.sanitationType = sanitationType;
   }
 }

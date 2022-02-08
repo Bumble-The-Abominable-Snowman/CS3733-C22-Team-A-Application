@@ -1,6 +1,6 @@
-package edu.wpi.cs3733.c22.teamA.Adb.medicalequipmentservicerequest;
+package edu.wpi.teama.Adb.ServiceRequest.MedicalEquipmentServiceRequest;
 
-import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
+import edu.wpi.teama.entities.requests.MedicalEquipmentServiceRequest;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement get = connection.createStatement();
       String str =
-          String.format("SELECT * FROM MedicalEquipmentServiceRequest WHERE requestID = '%s'", ID);
+          String.format("SELECT * FROM ServiceRequest s, MedicalEquipmentServiceRequest m WHERE (s.requestID = m.requestID) AND m.requestID = '%s'", ID);
 
       ResultSet rset = get.executeQuery(str);
       MedicalEquipmentServiceRequest mesr = new MedicalEquipmentServiceRequest();
@@ -28,8 +28,9 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
         String employeeAssigned = rset.getString("employeeAssigned");
         String requestTime = rset.getString("requestTime");
         String requestStatus = rset.getString("requestStatus");
-        String equipmentID = rset.getString("equipmentID");
         String requestType = rset.getString("requestType");
+        String comments = rset.getString("comments");
+        String equipmentID = rset.getString("equipmentID");
         System.out.println(requestType);
         mesr =
             new MedicalEquipmentServiceRequest(
@@ -40,8 +41,9 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
                 employeeAssigned,
                 requestTime,
                 requestStatus,
-                equipmentID,
-                requestType);
+                comments,
+                requestType,
+                equipmentID);
       }
       return mesr;
 
@@ -56,19 +58,44 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement update = connection.createStatement();
-      String str =
-          String.format(
-              "UPDATE MedicalEquipmentServiceRequest SET "
-                  + field
-                  + " = '%s' WHERE requestID = '%s'",
-              change,
-              ID);
+      String str = "";
+      if(field.equals("equipmentID")){
+        str = String.format(
+                "UPDATE MedicalEquipmentServiceRequest SET "
+                        + field
+                        + " = '%s' WHERE requestID = '%s'",
+                change,
+                ID);
+      }else{
+        str = String.format(
+                "UPDATE ServiceRequest SET "
+                        + field
+                        + " = '%s' WHERE requestID = '%s'",
+                change,
+                ID);
+      }
       update.execute(str);
     } catch (SQLException e) {
       System.out.println("Failed");
       e.printStackTrace();
       return;
     }
+  }
+
+  public void enterMedicalEquipmentServiceRequest(MedicalEquipmentServiceRequest mesr){
+    Timestamp time = Timestamp.valueOf(mesr.getRequestTime());
+    enterMedicalEquipmentServiceRequest(
+            mesr.getRequestID(),
+            mesr.getStartLocation(),
+            mesr.getEndLocation(),
+            mesr.getEmployeeRequested(),
+            mesr.getEmployeeAssigned(),
+            time,
+            mesr.getRequestStatus(),
+            mesr.getRequestType(),
+            mesr.getComments(),
+            mesr.getEquipmentID()
+            );
   }
 
   public void enterMedicalEquipmentServiceRequest(
@@ -79,8 +106,9 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
       String employeeAssigned,
       Timestamp requestTime,
       String requestStatus,
-      String equipmentID,
-      String requestType) {
+      String requestType,
+      String comments,
+      String equipmentID) {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement insert = connection.createStatement();
@@ -89,8 +117,8 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
       System.out.println(strTime);
       String str =
           String.format(
-              "INSERT INTO MedicalEquipmentServiceRequest(requestID, startLocation, endLocation, "
-                  + "employeeRequested, employeeAssigned, requestTime, requestStatus, equipmentID, requestType) "
+              "INSERT INTO ServiceRequest(requestID, startLocation, endLocation, "
+                  + "employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments) "
                   + " VALUES('%s', '%s', '%s', '%s', '%s', %s, '%s', '%s', '%s')",
               requestID,
               startLocation,
@@ -99,8 +127,16 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
               employeeAssigned,
               strTime,
               requestStatus,
-              equipmentID,
-              requestType);
+              requestType,
+              comments);
+
+      insert.execute(str);
+
+      String str2 =
+          String.format(
+                  "INSERT INTO MedicalEquipmentServiceRequest(requestID, equipmentID)" +
+                  " VALUES('%s', '%s')", requestID, equipmentID);
+
       insert.execute(str);
       connection.close();
 
@@ -116,7 +152,7 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement delete = connection.createStatement();
       String str =
-          String.format("DELETE FROM MedicalEquipmentServiceRequest WHERE requestID = '%s'", ID);
+          String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", ID);
       delete.execute(str);
 
     } catch (SQLException e) {
@@ -131,7 +167,7 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement getNodeList = connection.createStatement();
-      ResultSet rset = getNodeList.executeQuery("SELECT * FROM MedicalEquipmentServiceRequest");
+      ResultSet rset = getNodeList.executeQuery("SELECT * FROM ServiceRequest s, MedicalEquipmentServiceRequest m WHERE s.requestID=m.requestID");
 
       while (rset.next()) {
         String requestID = rset.getString("requestID");
@@ -141,8 +177,9 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
         String employeeAssigned = rset.getString("employeeAssigned");
         String requestTime = rset.getString("requestTime");
         String requestStatus = rset.getString("requestStatus");
-        String equipmentID = rset.getString("equipmentID");
         String requestType = rset.getString("requestType");
+        String comments = rset.getString("comments");
+        String equipmentID = rset.getString("equipmentID");
 
         MedicalEquipmentServiceRequest mesr =
             new MedicalEquipmentServiceRequest(
@@ -153,8 +190,9 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
                 employeeAssigned,
                 requestTime,
                 requestStatus,
-                equipmentID,
-                requestType);
+                comments,
+                requestType,
+                equipmentID);
         reqList.add(mesr);
       }
     } catch (SQLException e) {

@@ -2,13 +2,12 @@ package edu.wpi.teama.entities.requests;
 
 import java.sql.Timestamp;
 
-public class MedicalEquipmentServiceRequest extends ServiceRequest {
+public class LanguageServiceRequest extends ServiceRequest {
+  private String language;
 
-  private String equipmentID;
+  public LanguageServiceRequest() {}
 
-  public MedicalEquipmentServiceRequest() {}
-
-  public MedicalEquipmentServiceRequest(
+  public LanguageServiceRequest(
       String requestID,
       String startLocation,
       String endLocation,
@@ -18,7 +17,7 @@ public class MedicalEquipmentServiceRequest extends ServiceRequest {
       String requestStatus,
       String requestType,
       String comments,
-      String equipmentID) {
+      String language) {
     super.requestID = requestID;
     super.startLocation = startLocation;
     super.endLocation = endLocation;
@@ -27,16 +26,16 @@ public class MedicalEquipmentServiceRequest extends ServiceRequest {
     Timestamp rt = Timestamp.valueOf(requestTime);
     super.requestTime = rt;
     super.requestStatus = requestStatus;
-    this.equipmentID = equipmentID;
     super.requestType = requestType;
     super.comments = comments;
+    this.language = language;
   }
 
-  public String getEquipmentID() {
-    return equipmentID;
+  public String getLanguage() {
+    return language;
   }
 
-  public void setEquipmentID(String equipmentID) {
-    this.equipmentID = equipmentID;
+  public void setLanguage(String language) {
+    this.language = language;
   }
 }

@@ -2,13 +2,13 @@ package edu.wpi.teama.entities.requests;
 
 import java.sql.Timestamp;
 
-public class MedicalEquipmentServiceRequest extends ServiceRequest {
+public class ReligiousServiceRequest extends ServiceRequest {
 
-  private String equipmentID;
+  String religion;
 
-  public MedicalEquipmentServiceRequest() {}
+  public ReligiousServiceRequest() {}
 
-  public MedicalEquipmentServiceRequest(
+  public ReligiousServiceRequest(
       String requestID,
       String startLocation,
       String endLocation,
@@ -18,7 +18,7 @@ public class MedicalEquipmentServiceRequest extends ServiceRequest {
       String requestStatus,
       String requestType,
       String comments,
-      String equipmentID) {
+      String religions) {
     super.requestID = requestID;
     super.startLocation = startLocation;
     super.endLocation = endLocation;
@@ -27,16 +27,16 @@ public class MedicalEquipmentServiceRequest extends ServiceRequest {
     Timestamp rt = Timestamp.valueOf(requestTime);
     super.requestTime = rt;
     super.requestStatus = requestStatus;
-    this.equipmentID = equipmentID;
     super.requestType = requestType;
     super.comments = comments;
+    this.religion = religion;
   }
 
-  public String getEquipmentID() {
-    return equipmentID;
+  public String getReligion() {
+    return religion;
   }
 
-  public void setEquipmentID(String equipmentID) {
-    this.equipmentID = equipmentID;
+  public void setReligion(String religion) {
+    this.religion = religion;
   }
 }

@@ -1,6 +1,6 @@
-package edu.wpi.cs3733.c22.teamA.Adb.location;
+package edu.wpi.teama.Adb.Location;
 
-import edu.wpi.cs3733.c22.teamA.entities.Location;
+import edu.wpi.teama.entities.Location;
 import java.util.List;
 
 public interface LocationDAO {
