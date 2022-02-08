@@ -27,6 +27,7 @@ public class SceneController {
     SETTINGS_SCENE,
     LOAD_FROM_BACKUP_SCENE,
     EXPORT_TO_BACKUP_SCENE,
+    MAP_EDITOR_SCENE
   }
 
   private final HashMap<SCENES, String> screenMap = new HashMap<>();
@@ -56,9 +57,11 @@ public class SceneController {
     addScene(SCENES.VIEW_SERVICE_REQUEST_SCENE, "views/dataview/viewServiceRequest.fxml");
     addScene(SCENES.VIEW_EMPLOYEES_SCENE, "views/dataview/employeeData.fxml");
 
-    addScene(SCENES.SETTINGS_SCENE, "views/settings/settings.fxml");
-    addScene(SCENES.LOAD_FROM_BACKUP_SCENE, "views/settings/loadFromBackup.fxml");
-    addScene(SCENES.EXPORT_TO_BACKUP_SCENE, "views/settings/exportToBackup.fxml");
+    addScene(SCENES.SETTINGS_SCENE, "views/SettingsViews/settings.fxml");
+    addScene(SCENES.LOAD_FROM_BACKUP_SCENE, "views/SettingsViews/loadFromBackup.fxml");
+    addScene(SCENES.EXPORT_TO_BACKUP_SCENE, "views/SettingsViews/exportToBackup.fxml");
+
+    addScene(SCENES.MAP_EDITOR_SCENE, "views/map/mapEditor.fxml");
   }
 
   public void addScene(SCENES name, String pathToFXML) {
