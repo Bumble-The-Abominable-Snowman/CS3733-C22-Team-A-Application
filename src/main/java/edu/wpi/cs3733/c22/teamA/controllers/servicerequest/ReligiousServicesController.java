@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
@@ -20,11 +21,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 
 public class ReligiousServicesController extends GenericServiceRequestsController {
-  @FXML private TextArea specialNotes;
-  @FXML private JFXComboBox religionChoiceBox;
-  @FXML private JFXComboBox toChoiceBox;
-  @FXML private JFXComboBox employeeChoiceBox;
-  @FXML private JFXComboBox denomChoiceBox;
+  @FXML private TextArea commentsBox;
+  @FXML private JFXButton returnHomeButton;
+  @FXML private JFXComboBox religionChoice;
+  @FXML private JFXComboBox toLocationChoice;
+  @FXML private JFXComboBox employeeChoice;
+  @FXML private JFXComboBox denominationChoice;
 
   private List<String> christianDenom = new ArrayList<>();
   private List<String> nonDenom = new ArrayList<>();
@@ -62,45 +64,45 @@ public class ReligiousServicesController extends GenericServiceRequestsControlle
   @FXML
   private void initialize() throws ParseException {
     sceneID = SceneController.SCENES.RELIGIOUS_SERVICE_REQUEST_SCENE;
-    specialNotes.setWrapText(true);
+    commentsBox.setWrapText(true);
 
-    religionChoiceBox.getItems().removeAll(religionChoiceBox.getItems());
-    religionChoiceBox.getItems().addAll("Christian", "Non-Religious", "Other");
-    religionChoiceBox.getSelectionModel().select("Type");
-    religionChoiceBox
+    religionChoice.getItems().removeAll(religionChoice.getItems());
+    religionChoice.getItems().addAll("Christian", "Non-Religious", "Other");
+    religionChoice.getSelectionModel().select("Type");
+    religionChoice
         .getSelectionModel()
         .selectedItemProperty()
         .addListener(
             (obs, oldValue, newValue) -> {
               if (newValue.equals("Type")) {
-                denomChoiceBox.getItems().clear();
-                denomChoiceBox.setDisable(true);
+                denominationChoice.getItems().clear();
+                denominationChoice.setDisable(true);
               } else if (newValue.equals("Christian")) {
-                denomChoiceBox.getItems().clear();
-                denomChoiceBox.getItems().setAll(christianDenom);
-                denomChoiceBox.getSelectionModel().select(christianDenom.get(0));
-                denomChoiceBox.setDisable(false);
+                denominationChoice.getItems().clear();
+                denominationChoice.getItems().setAll(christianDenom);
+                denominationChoice.getSelectionModel().select(christianDenom.get(0));
+                denominationChoice.setDisable(false);
               } else if (newValue.equals("Non-Religious")) {
-                denomChoiceBox.getItems().clear();
-                denomChoiceBox.getItems().setAll(nonDenom);
-                denomChoiceBox.getSelectionModel().select(nonDenom.get(0));
-                denomChoiceBox.setDisable(false);
+                denominationChoice.getItems().clear();
+                denominationChoice.getItems().setAll(nonDenom);
+                denominationChoice.getSelectionModel().select(nonDenom.get(0));
+                denominationChoice.setDisable(false);
               } else if (newValue.equals("Other")) {
-                denomChoiceBox.getItems().clear();
-                denomChoiceBox.getItems().setAll(otherDenom);
-                denomChoiceBox.getSelectionModel().select(otherDenom.get(0));
-                denomChoiceBox.setDisable(false);
+                denominationChoice.getItems().clear();
+                denominationChoice.getItems().setAll(otherDenom);
+                denominationChoice.getSelectionModel().select(otherDenom.get(0));
+                denominationChoice.setDisable(false);
               }
             });
-    denomChoiceBox.getItems().removeAll(denomChoiceBox.getItems());
-    toChoiceBox.getItems().removeAll(toChoiceBox.getItems());
-    toChoiceBox
+    denominationChoice.getItems().removeAll(denominationChoice.getItems());
+    toLocationChoice.getItems().removeAll(toLocationChoice.getItems());
+    toLocationChoice
         .getItems()
         .addAll(
             new LocationDerbyImpl()
                 .getNodeList().stream().map(Location::getShortName).collect(Collectors.toList()));
-    toChoiceBox.setVisibleRowCount(5);
-    employeeChoiceBox.setVisibleRowCount(5);
+    toLocationChoice.setVisibleRowCount(5);
+    employeeChoice.setVisibleRowCount(5);
 
     EmployeeDAO EmployeeDAO = new EmployeeDerbyImpl();
     String input = "2022-02-01";
@@ -109,7 +111,7 @@ public class ReligiousServicesController extends GenericServiceRequestsControlle
     EmployeeDAO.enterEmployee(
         "001", "Admin", "Yanbo", "Dai", "ydai2@wpi.edu", "0000000000", "100 institute Rd", date);
 
-    employeeChoiceBox
+    employeeChoice
         .getItems()
         .addAll(
             EmployeeDAO.getEmployeeList().stream()
@@ -120,9 +122,9 @@ public class ReligiousServicesController extends GenericServiceRequestsControlle
   @FXML
   void submitRequest() throws IOException {
     ReligiousServiceRequest religiousServiceRequest = new ReligiousServiceRequest();
-    if (!religionChoiceBox.getSelectionModel().getSelectedItem().equals("Type")
-        && toChoiceBox.getSelectionModel().getSelectedItem() != null
-        && employeeChoiceBox.getSelectionModel().getSelectedItem() != null) {
+    if (!religionChoice.getSelectionModel().getSelectedItem().equals("Type")
+        && toLocationChoice.getSelectionModel().getSelectedItem() != null
+        && employeeChoice.getSelectionModel().getSelectedItem() != null) {
       // pass religious service request object
       this.returnToHomeScene();
     }
