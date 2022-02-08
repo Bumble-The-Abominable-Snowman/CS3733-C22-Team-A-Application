@@ -8,14 +8,13 @@ import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.Langua
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
+import edu.wpi.cs3733.c22.teamA.entities.requests.LanguageServiceRequest;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.stream.Collectors;
-
-import edu.wpi.cs3733.c22.teamA.entities.requests.LanguageServiceRequest;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -92,7 +91,8 @@ public class LanguageInterpreterController extends GenericServiceRequestsControl
     if (!languageChoice.getSelectionModel().getSelectedItem().equals("Language")
         && toLocationChoice.getSelectionModel().getSelectedItem() != null
         && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
-      LanguageServiceRequest languageServiceRequest = new LanguageServiceRequest(
+      LanguageServiceRequest languageServiceRequest =
+          new LanguageServiceRequest(
               "PlaceHolderID",
               "N/A",
               toLocationChoice.getSelectionModel().getSelectedItem(),

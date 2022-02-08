@@ -27,7 +27,10 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
         String requestStatus = rset.getString("requestStatus");
         String requestType = rset.getString("requestType");
         String comments = rset.getString("comments");
-
+        String mainDish = rset.getString("mainDish");
+        String sideDish = rset.getString("sideDish");
+        String beverage = rset.getString("beverage");
+        String dessert = rset.getString("dessert");
         FoodDeliveryServiceRequest f =
             new FoodDeliveryServiceRequest(
                 requestID,
@@ -38,7 +41,11 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
                 requestTime,
                 requestStatus,
                 requestType,
-                comments);
+                comments,
+                mainDish,
+                sideDish,
+                beverage,
+                dessert);
         FoodDeliveryServiceRequest.add(f);
       }
     } catch (SQLException e) {
@@ -149,17 +156,33 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
       // process results
       if (rset.next()) {
         String requestID = rset.getString("requestID");
+        String startLocation = rset.getString("startLocation");
+        String endLocation = rset.getString("endLocation");
+        String employeeRequested = rset.getString("employeeRequested");
+        String employeeAssigned = rset.getString("employeeAssigned");
+        String requestTime = rset.getString("requestTime");
+        String requestStatus = rset.getString("requestStatus");
+        String requestType = rset.getString("requestType");
+        String comments = rset.getString("comments");
         String mainDish = rset.getString("mainDish");
         String sideDish = rset.getString("sideDish");
         String beverage = rset.getString("beverage");
         String dessert = rset.getString("dessert");
-        String roomNum = rset.getString("roomNum");
-        String employee = rset.getString("employee");
-        String comments = rset.getString("comments");
-
         f =
             new FoodDeliveryServiceRequest(
-                requestID, mainDish, sideDish, beverage, dessert, roomNum, employee, comments);
+                requestID,
+                startLocation,
+                endLocation,
+                employeeRequested,
+                employeeAssigned,
+                requestTime,
+                requestStatus,
+                requestType,
+                comments,
+                mainDish,
+                sideDish,
+                beverage,
+                dessert);
       }
 
       // Return the location object

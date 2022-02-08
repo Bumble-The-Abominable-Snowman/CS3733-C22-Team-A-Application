@@ -6,6 +6,10 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 public @Data class FoodDeliveryServiceRequest extends ServiceRequest {
+  private String mainDish;
+  private String sideDish;
+  private String beverage;
+  private String dessert;
 
   public FoodDeliveryServiceRequest() {}
 
@@ -15,18 +19,27 @@ public @Data class FoodDeliveryServiceRequest extends ServiceRequest {
       String endLocation,
       String employeeRequested,
       String employeeAssigned,
-      Timestamp requestTime,
+      String requestTime,
       String requestStatus,
       String requestType,
-      String comments) {
+      String comments,
+      String mainDish,
+      String sideDish,
+      String beverage,
+      String dessert) {
     super.requestID = requestID;
     super.startLocation = startLocation;
     super.endLocation = endLocation;
     super.employeeRequested = employeeRequested;
     super.employeeAssigned = employeeAssigned;
-    super.requestTime = requestTime;
+    Timestamp rt = Timestamp.valueOf(requestTime);
+    super.requestTime = rt;
     super.requestStatus = requestStatus;
     super.requestType = requestType;
     super.comments = comments;
+    this.mainDish = mainDish;
+    this.sideDish = sideDish;
+    this.beverage = beverage;
+    this.dessert = dessert;
   }
 }
