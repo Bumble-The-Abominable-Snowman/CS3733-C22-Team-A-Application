@@ -1,11 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest;
 
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
-import edu.wpi.cs3733.c22.teamA.entities.requests.ReligiousServiceRequest;
 import edu.wpi.cs3733.c22.teamA.entities.requests.SanitationServiceRequest;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -209,13 +204,13 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
   }
 
   // Read from CSV
-  public static List<SanitationServiceRequest> readSanitationServiceRequestCSV(
-          String csvFilePath) throws IOException, ParseException {
+  public static List<SanitationServiceRequest> readSanitationServiceRequestCSV(String csvFilePath)
+      throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
     Scanner lineScanner =
-            new Scanner(
-                    SanitationServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
+        new Scanner(
+            SanitationServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
@@ -233,7 +228,15 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
 
         String data = dataScanner.next();
         if (dataIndex == 0) thisSSR.setRequestID(data);
-        else if (dataIndex == 1) thisSSR.setSanitationType(data);
+        else if (dataIndex == 1) thisSSR.setStartLocation(data);
+        else if (dataIndex == 2) thisSSR.setEndLocation(data);
+        else if (dataIndex == 3) thisSSR.setEmployeeRequested(data);
+        else if (dataIndex == 4) thisSSR.setEmployeeAssigned(data);
+        else if (dataIndex == 5) thisSSR.setRequestTime(data);
+        else if (dataIndex == 6) thisSSR.setRequestStatus(data);
+        else if (dataIndex == 7) thisSSR.setRequestType(data);
+        else if (dataIndex == 8) thisSSR.setComments(data);
+        else if (dataIndex == 9) thisSSR.setSanitationType(data);
         else System.out.println("Invalid data, I broke::" + data);
         dataIndex++;
       }
@@ -251,23 +254,31 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
 
   // Write CSV for table
   public static void writeSanitationServiceRequestCSV(
-          List<SanitationServiceRequest> List, String csvFilePath) throws IOException {
+      List<SanitationServiceRequest> List, String csvFilePath) throws IOException {
 
     // create a writer
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(
-            "RequestID, SanitationType");
+        "RequestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments, SanitationType");
     writer.newLine();
 
     // write location data
     for (SanitationServiceRequest thisSSR : List) {
 
       writer.write(
-              String.join(
-                      ",",
-                      thisSSR.getRequestID(),
-                      thisSSR.getSanitationType()));
+          String.join(
+              ",",
+              thisSSR.getRequestID(),
+              thisSSR.getStartLocation(),
+              thisSSR.getEndLocation(),
+              thisSSR.getEmployeeRequested(),
+              thisSSR.getEmployeeAssigned(),
+              thisSSR.getRequestTime(),
+              thisSSR.getRequestStatus(),
+              thisSSR.getRequestType(),
+              thisSSR.getComments(),
+              thisSSR.getSanitationType()));
 
       writer.newLine();
     }
@@ -275,7 +286,7 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
   }
 
   // input from CSV
-  public static void inputFromCSV(String tableName, String csvFilePath){
+  public static void inputFromCSV(String tableName, String csvFilePath) {
 
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
@@ -290,16 +301,39 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
       List<SanitationServiceRequest> List =
-              SanitationServiceRequestDerbyImpl.readSanitationServiceRequestCSV(
-                      csvFilePath);
+          SanitationServiceRequestDerbyImpl.readSanitationServiceRequestCSV(csvFilePath);
       for (SanitationServiceRequest l : List) {
         Statement addStatement = connection.createStatement();
+
+        // add to sub table
         addStatement.executeUpdate(
-                "INSERT INTO SanitationServiceRequest(requestID, sanitationType) VALUES('"
-                        + l.getRequestID()
-                        + "', '"
-                        + l.getSanitationType()
-                        + "')");
+            "INSERT INTO SanitationServiceRequest(requestID, sanitationType) VALUES('"
+                + l.getRequestID()
+                + "', '"
+                + l.getSanitationType()
+                + "')");
+
+        // add to ServiceRequest table
+        addStatement.executeUpdate(
+            "INSERT INTO ServiceRequest(requestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments) VALUES('"
+                + l.getRequestID()
+                + "', '"
+                + l.getStartLocation()
+                + "', '"
+                + l.getEndLocation()
+                + "', '"
+                + l.getEmployeeRequested()
+                + "', '"
+                + l.getEmployeeAssigned()
+                + "', '"
+                + l.getRequestTime()
+                + "', '"
+                + l.getRequestStatus()
+                + "', '"
+                + l.getRequestType()
+                + "', '"
+                + l.getComments()
+                + "')");
       }
     } catch (SQLException | IOException | ParseException e) {
       System.out.println("Insertion failed!");
@@ -307,9 +341,9 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
   }
 
   // Export to CSV
-  public static void exportToCSV(String tableName, String csvFilePath) throws IOException{
+  public static void exportToCSV(String tableName, String csvFilePath) throws IOException {
     SanitationServiceRequestDAO mesr = new SanitationServiceRequestDerbyImpl();
     SanitationServiceRequestDerbyImpl.writeSanitationServiceRequestCSV(
-            mesr.getSanitationServiceRequestList(), csvFilePath);
+        mesr.getSanitationServiceRequestList(), csvFilePath);
   }
 }

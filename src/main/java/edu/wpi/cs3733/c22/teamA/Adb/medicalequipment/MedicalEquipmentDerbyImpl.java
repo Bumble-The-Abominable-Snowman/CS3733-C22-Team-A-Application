@@ -216,22 +216,21 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
-      List<MedicalEquipment> List =
-              MedicalEquipmentDerbyImpl.readMedicalEquipmentCSV(csvFilePath);
+      List<MedicalEquipment> List = MedicalEquipmentDerbyImpl.readMedicalEquipmentCSV(csvFilePath);
       for (MedicalEquipment l : List) {
         Statement addStatement = connection.createStatement();
         addStatement.executeUpdate(
-                "INSERT INTO MedicalEquipment( equipmentID, equipmentType, isClean, currentLocation, isAvailable) VALUES('"
-                        + l.getEquipmentID()
-                        + "', '"
-                        + l.getEquipmentType()
-                        + "', '"
-                        + l.getIsClean()
-                        + "', '"
-                        + l.getCurrentLocation()
-                        + "', '"
-                        + l.getIsAvailable()
-                        + "')");
+            "INSERT INTO MedicalEquipment( equipmentID, equipmentType, isClean, currentLocation, isAvailable) VALUES('"
+                + l.getEquipmentID()
+                + "', '"
+                + l.getEquipmentType()
+                + "', '"
+                + l.getIsClean()
+                + "', '"
+                + l.getCurrentLocation()
+                + "', '"
+                + l.getIsAvailable()
+                + "')");
       }
     } catch (SQLException | IOException | ParseException e) {
       System.out.println("Insertion failed!");
@@ -239,8 +238,9 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
   }
 
   // Export to CSV
-  public static void exportToCSV(String tableName, String csvFilePath) throws IOException{
+  public static void exportToCSV(String tableName, String csvFilePath) throws IOException {
     MedicalEquipmentDAO equipment = new MedicalEquipmentDerbyImpl();
-    MedicalEquipmentDerbyImpl.writeMedicalEquipmentCSV(equipment.getMedicalEquipmentList(), csvFilePath);
+    MedicalEquipmentDerbyImpl.writeMedicalEquipmentCSV(
+        equipment.getMedicalEquipmentList(), csvFilePath);
   }
 }

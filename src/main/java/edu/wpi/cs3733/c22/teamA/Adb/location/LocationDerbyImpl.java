@@ -266,23 +266,23 @@ public class LocationDerbyImpl implements LocationDAO {
       for (Location l : locList) {
         Statement addStatement = connection.createStatement();
         addStatement.executeUpdate(
-                "INSERT INTO TowerLocations(nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName) VALUES('"
-                        + l.getNodeID()
-                        + "', "
-                        + l.getXCoord()
-                        + ", "
-                        + l.getYCoord()
-                        + ", '"
-                        + l.getFloor()
-                        + "', '"
-                        + l.getBuilding()
-                        + "', '"
-                        + l.getNodeType()
-                        + "', '"
-                        + l.getLongName()
-                        + "', '"
-                        + l.getShortName()
-                        + "')");
+            "INSERT INTO TowerLocations(nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName) VALUES('"
+                + l.getNodeID()
+                + "', "
+                + l.getXCoord()
+                + ", "
+                + l.getYCoord()
+                + ", '"
+                + l.getFloor()
+                + "', '"
+                + l.getBuilding()
+                + "', '"
+                + l.getNodeType()
+                + "', '"
+                + l.getLongName()
+                + "', '"
+                + l.getShortName()
+                + "')");
       }
     } catch (SQLException | IOException e) {
       System.out.println("Insertion failed!");
@@ -292,7 +292,7 @@ public class LocationDerbyImpl implements LocationDAO {
   }
 
   // Export to CSV
-  public static void exportToCSV(String tableName, String csvFilePath) throws IOException{
+  public static void exportToCSV(String tableName, String csvFilePath) throws IOException {
     LocationDAO Location = new LocationDerbyImpl();
     LocationDerbyImpl.writeLocationCSV(Location.getNodeList(), csvFilePath);
   }

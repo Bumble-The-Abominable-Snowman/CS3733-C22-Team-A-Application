@@ -1,11 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest;
 
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.requests.LaundryServiceRequest;
-import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
-import edu.wpi.cs3733.c22.teamA.entities.requests.ReligiousServiceRequest;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -208,13 +203,12 @@ public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO 
   }
 
   // Read from CSV
-  public static List<LaundryServiceRequest> readLaundryServiceRequestCSV(
-          String csvFilePath) throws IOException, ParseException {
+  public static List<LaundryServiceRequest> readLaundryServiceRequestCSV(String csvFilePath)
+      throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
     Scanner lineScanner =
-            new Scanner(
-                    LaundryServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
+        new Scanner(LaundryServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
@@ -232,7 +226,15 @@ public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO 
 
         String data = dataScanner.next();
         if (dataIndex == 0) thisLSR.setRequestID(data);
-        else if (dataIndex == 1) thisLSR.setWashMode(data);
+        else if (dataIndex == 1) thisLSR.setStartLocation(data);
+        else if (dataIndex == 2) thisLSR.setEndLocation(data);
+        else if (dataIndex == 3) thisLSR.setEmployeeRequested(data);
+        else if (dataIndex == 4) thisLSR.setEmployeeAssigned(data);
+        else if (dataIndex == 5) thisLSR.setRequestTime(data);
+        else if (dataIndex == 6) thisLSR.setRequestStatus(data);
+        else if (dataIndex == 7) thisLSR.setRequestType(data);
+        else if (dataIndex == 8) thisLSR.setComments(data);
+        else if (dataIndex == 9) thisLSR.setWashMode(data);
         else System.out.println("Invalid data, I broke::" + data);
         dataIndex++;
       }
@@ -250,23 +252,31 @@ public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO 
 
   // Write CSV for table
   public static void writeLaundryServiceRequestCSV(
-          List<LaundryServiceRequest> List, String csvFilePath) throws IOException {
+      List<LaundryServiceRequest> List, String csvFilePath) throws IOException {
 
     // create a writer
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(
-            "RequestID, WashMode");
+        "RequestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments, WashMode");
     writer.newLine();
 
     // write location data
     for (LaundryServiceRequest thisLSR : List) {
 
       writer.write(
-              String.join(
-                      ",",
-                      thisLSR.getRequestID(),
-                      thisLSR.getWashMode()));
+          String.join(
+              ",",
+              thisLSR.getRequestID(),
+              thisLSR.getStartLocation(),
+              thisLSR.getEndLocation(),
+              thisLSR.getEmployeeRequested(),
+              thisLSR.getEmployeeAssigned(),
+              thisLSR.getRequestTime(),
+              thisLSR.getRequestStatus(),
+              thisLSR.getRequestType(),
+              thisLSR.getComments(),
+              thisLSR.getWashMode()));
 
       writer.newLine();
     }
@@ -274,7 +284,7 @@ public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO 
   }
 
   // input from CSV
-  public static void inputFromCSV(String tableName, String csvFilePath){
+  public static void inputFromCSV(String tableName, String csvFilePath) {
 
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
@@ -289,16 +299,39 @@ public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO 
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
       List<LaundryServiceRequest> List =
-              LaundryServiceRequestDerbyImpl.readLaundryServiceRequestCSV(
-                      csvFilePath);
+          LaundryServiceRequestDerbyImpl.readLaundryServiceRequestCSV(csvFilePath);
       for (LaundryServiceRequest l : List) {
         Statement addStatement = connection.createStatement();
+
+        // add to sub table
         addStatement.executeUpdate(
-                "INSERT INTO LaundryServiceRequest(requestID, washMode) VALUES('"
-                        + l.getRequestID()
-                        + "', '"
-                        + l.getWashMode()
-                        + "')");
+            "INSERT INTO LaundryServiceRequest(requestID, washMode) VALUES('"
+                + l.getRequestID()
+                + "', '"
+                + l.getWashMode()
+                + "')");
+
+        // add to ServiceRequest table
+        addStatement.executeUpdate(
+            "INSERT INTO ServiceRequest(requestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments) VALUES('"
+                + l.getRequestID()
+                + "', '"
+                + l.getStartLocation()
+                + "', '"
+                + l.getEndLocation()
+                + "', '"
+                + l.getEmployeeRequested()
+                + "', '"
+                + l.getEmployeeAssigned()
+                + "', '"
+                + l.getRequestTime()
+                + "', '"
+                + l.getRequestStatus()
+                + "', '"
+                + l.getRequestType()
+                + "', '"
+                + l.getComments()
+                + "')");
       }
     } catch (SQLException | IOException | ParseException e) {
       System.out.println("Insertion failed!");
@@ -306,9 +339,9 @@ public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO 
   }
 
   // Export to CSV
-  public static void exportToCSV(String tableName, String csvFilePath) throws IOException{
+  public static void exportToCSV(String tableName, String csvFilePath) throws IOException {
     LaundryServiceRequestDAO mesr = new LaundryServiceRequestDerbyImpl();
     LaundryServiceRequestDerbyImpl.writeLaundryServiceRequestCSV(
-            mesr.getLaundryServiceRequestList(), csvFilePath);
+        mesr.getLaundryServiceRequestList(), csvFilePath);
   }
 }

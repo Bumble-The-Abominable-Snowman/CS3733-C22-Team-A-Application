@@ -98,6 +98,6 @@ public class FoodDeliveryController extends GenericServiceRequestsController {
     FoodDeliveryServiceRequest foodDeliveryServiceRequest = createFoodRequest();
     FoodDeliveryServiceRequestDAO foodDeliveryServiceRequestDAO =
         new FoodDeliveryServiceRequestDerbyImpl();
-    foodDeliveryServiceRequestDAO.enterRequest(foodDeliveryServiceRequest);
+    foodDeliveryServiceRequestDAO.enterFoodDeliveryServiceRequest(foodDeliveryServiceRequest);
   }
 }

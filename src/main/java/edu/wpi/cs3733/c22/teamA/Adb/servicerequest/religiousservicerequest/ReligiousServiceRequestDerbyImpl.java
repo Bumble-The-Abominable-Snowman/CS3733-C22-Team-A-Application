@@ -1,11 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest;
 
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.entities.requests.LaundryServiceRequest;
 import edu.wpi.cs3733.c22.teamA.entities.requests.ReligiousServiceRequest;
-import edu.wpi.cs3733.c22.teamA.entities.requests.SanitationServiceRequest;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -209,13 +204,13 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
   }
 
   // Read from CSV
-  public static List<ReligiousServiceRequest> readReligiousServiceRequestCSV(
-          String csvFilePath) throws IOException, ParseException {
+  public static List<ReligiousServiceRequest> readReligiousServiceRequestCSV(String csvFilePath)
+      throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
     Scanner lineScanner =
-            new Scanner(
-                    ReligiousServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
+        new Scanner(
+            ReligiousServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
@@ -233,7 +228,15 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
 
         String data = dataScanner.next();
         if (dataIndex == 0) thisRSR.setRequestID(data);
-        else if (dataIndex == 1) thisRSR.setReligion(data);
+        else if (dataIndex == 1) thisRSR.setStartLocation(data);
+        else if (dataIndex == 2) thisRSR.setEndLocation(data);
+        else if (dataIndex == 3) thisRSR.setEmployeeRequested(data);
+        else if (dataIndex == 4) thisRSR.setEmployeeAssigned(data);
+        else if (dataIndex == 5) thisRSR.setRequestTime(data);
+        else if (dataIndex == 6) thisRSR.setRequestStatus(data);
+        else if (dataIndex == 7) thisRSR.setRequestType(data);
+        else if (dataIndex == 8) thisRSR.setComments(data);
+        else if (dataIndex == 9) thisRSR.setReligion(data);
         else System.out.println("Invalid data, I broke::" + data);
         dataIndex++;
       }
@@ -251,23 +254,31 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
 
   // Write CSV for table
   public static void writeReligiousServiceRequestCSV(
-          List<ReligiousServiceRequest> List, String csvFilePath) throws IOException {
+      List<ReligiousServiceRequest> List, String csvFilePath) throws IOException {
 
     // create a writer
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(
-            "RequestID, Religion");
+        "RequestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments, Religion");
     writer.newLine();
 
-    // write location data
+    // write data
     for (ReligiousServiceRequest thisRSR : List) {
 
       writer.write(
-              String.join(
-                      ",",
-                      thisRSR.getRequestID(),
-                      thisRSR.getReligion()));
+          String.join(
+              ",",
+              thisRSR.getRequestID(),
+              thisRSR.getStartLocation(),
+              thisRSR.getEndLocation(),
+              thisRSR.getEmployeeRequested(),
+              thisRSR.getEmployeeAssigned(),
+              thisRSR.getRequestTime(),
+              thisRSR.getRequestStatus(),
+              thisRSR.getRequestType(),
+              thisRSR.getComments(),
+              thisRSR.getReligion()));
 
       writer.newLine();
     }
@@ -275,7 +286,7 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
   }
 
   // input from CSV
-  public static void inputFromCSV(String tableName, String csvFilePath){
+  public static void inputFromCSV(String tableName, String csvFilePath) {
 
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
@@ -290,16 +301,39 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
       List<ReligiousServiceRequest> List =
-              ReligiousServiceRequestDerbyImpl.readReligiousServiceRequestCSV(
-                      csvFilePath);
+          ReligiousServiceRequestDerbyImpl.readReligiousServiceRequestCSV(csvFilePath);
       for (ReligiousServiceRequest l : List) {
         Statement addStatement = connection.createStatement();
+
+        // add to sub table
         addStatement.executeUpdate(
-                "INSERT INTO ReligiousServiceRequest(requestID, religion) VALUES('"
-                        + l.getRequestID()
-                        + "', '"
-                        + l.getReligion()
-                        + "')");
+            "INSERT INTO ReligiousServiceRequest(requestID, religion) VALUES('"
+                + l.getRequestID()
+                + "', '"
+                + l.getReligion()
+                + "')");
+
+        // add to ServiceRequest table
+        addStatement.executeUpdate(
+            "INSERT INTO ServiceRequest(requestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments) VALUES('"
+                + l.getRequestID()
+                + "', '"
+                + l.getStartLocation()
+                + "', '"
+                + l.getEndLocation()
+                + "', '"
+                + l.getEmployeeRequested()
+                + "', '"
+                + l.getEmployeeAssigned()
+                + "', '"
+                + l.getRequestTime()
+                + "', '"
+                + l.getRequestStatus()
+                + "', '"
+                + l.getRequestType()
+                + "', '"
+                + l.getComments()
+                + "')");
       }
     } catch (SQLException | IOException | ParseException e) {
       System.out.println("Insertion failed!");
@@ -307,9 +341,9 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
   }
 
   // Export to CSV
-  public static void exportToCSV(String tableName, String csvFilePath) throws IOException{
+  public static void exportToCSV(String tableName, String csvFilePath) throws IOException {
     ReligiousServiceRequestDAO mesr = new ReligiousServiceRequestDerbyImpl();
     ReligiousServiceRequestDerbyImpl.writeReligiousServiceRequestCSV(
-            mesr.getReligiousServiceRequestList(), csvFilePath);
+        mesr.getReligiousServiceRequestList(), csvFilePath);
   }
 }

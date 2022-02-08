@@ -1,22 +1,10 @@
 package edu.wpi.cs3733.c22.teamA.Adb;
 
-import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.entities.Employee;
-import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.MedicalEquipment;
-import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
-import java.io.IOException;
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.List;
 
 public class Adb {
 
@@ -196,10 +184,10 @@ public class Adb {
     if (!isInitialized) {
       LocationDerbyImpl.inputFromCSV("TowerLocations", "edu/wpi/teama/db/TowerLocations.csv");
       EmployeeDerbyImpl.inputFromCSV("Employee", "edu/wpi/teama/db/Employee.csv");
-      MedicalEquipmentDerbyImpl.inputFromCSV("MedicalEquipment", "edu/wpi/teama/db/MedicalEquipment.csv");
+      MedicalEquipmentDerbyImpl.inputFromCSV(
+          "MedicalEquipment", "edu/wpi/teama/db/MedicalEquipment.csv");
       MedicalEquipmentServiceRequestDerbyImpl.inputFromCSV(
-              "MedicalEquipmentServiceRequest", "edu/wpi/teama/db/MedicalEquipmentServiceRequest.csv");
-
+          "MedicalEquipmentServiceRequest", "edu/wpi/teama/db/MedicalEquipmentServiceRequest.csv");
     }
   }
 }

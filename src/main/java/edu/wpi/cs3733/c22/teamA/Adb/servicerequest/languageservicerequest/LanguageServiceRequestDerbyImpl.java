@@ -1,11 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest;
 
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.requests.LanguageServiceRequest;
-import edu.wpi.cs3733.c22.teamA.entities.requests.LaundryServiceRequest;
-import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -209,13 +204,12 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
   }
 
   // Read from Location CSV
-  public static List<LanguageServiceRequest> readLanguageServiceRequestCSV(
-          String csvFilePath) throws IOException, ParseException {
+  public static List<LanguageServiceRequest> readLanguageServiceRequestCSV(String csvFilePath)
+      throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
     Scanner lineScanner =
-            new Scanner(
-                    LanguageServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
+        new Scanner(LanguageServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
@@ -233,7 +227,15 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
 
         String data = dataScanner.next();
         if (dataIndex == 0) thisLSR.setRequestID(data);
-        else if (dataIndex == 1) thisLSR.setLanguage(data);
+        else if (dataIndex == 1) thisLSR.setStartLocation(data);
+        else if (dataIndex == 2) thisLSR.setEndLocation(data);
+        else if (dataIndex == 3) thisLSR.setEmployeeRequested(data);
+        else if (dataIndex == 4) thisLSR.setEmployeeAssigned(data);
+        else if (dataIndex == 5) thisLSR.setRequestTime(data);
+        else if (dataIndex == 6) thisLSR.setRequestStatus(data);
+        else if (dataIndex == 7) thisLSR.setRequestType(data);
+        else if (dataIndex == 8) thisLSR.setComments(data);
+        else if (dataIndex == 9) thisLSR.setLanguage(data);
         else System.out.println("Invalid data, I broke::" + data);
         dataIndex++;
       }
@@ -251,23 +253,31 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
 
   // Write CSV for MedicalEquipmentServiceRequest table
   public static void writeLanguageServiceRequestCSV(
-          List<LanguageServiceRequest> List, String csvFilePath) throws IOException {
+      List<LanguageServiceRequest> List, String csvFilePath) throws IOException {
 
     // create a writer
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(
-            "RequestID, Language");
+        "RequestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments, Language");
     writer.newLine();
 
     // write location data
     for (LanguageServiceRequest thisLSR : List) {
 
       writer.write(
-              String.join(
-                      ",",
-                      thisLSR.getRequestID(),
-                      thisLSR.getLanguage()));
+          String.join(
+              ",",
+              thisLSR.getRequestID(),
+              thisLSR.getStartLocation(),
+              thisLSR.getEndLocation(),
+              thisLSR.getEmployeeRequested(),
+              thisLSR.getEmployeeAssigned(),
+              thisLSR.getRequestTime(),
+              thisLSR.getRequestStatus(),
+              thisLSR.getRequestType(),
+              thisLSR.getComments(),
+              thisLSR.getLanguage()));
 
       writer.newLine();
     }
@@ -275,7 +285,7 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
   }
 
   // input from CSV
-  public static void inputFromCSV(String tableName, String csvFilePath){
+  public static void inputFromCSV(String tableName, String csvFilePath) {
 
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
@@ -290,16 +300,39 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
       List<LanguageServiceRequest> List =
-              LanguageServiceRequestDerbyImpl.readLanguageServiceRequestCSV(
-                      csvFilePath);
+          LanguageServiceRequestDerbyImpl.readLanguageServiceRequestCSV(csvFilePath);
       for (LanguageServiceRequest l : List) {
         Statement addStatement = connection.createStatement();
+
+        // add sub table
         addStatement.executeUpdate(
-                "INSERT INTO LanguageServiceRequest(requestID, language) VALUES('"
-                        + l.getRequestID()
-                        + "', '"
-                        + l.getLanguage()
-                        + "')");
+            "INSERT INTO LanguageServiceRequest(requestID, language) VALUES('"
+                + l.getRequestID()
+                + "', '"
+                + l.getLanguage()
+                + "')");
+
+        // add to ServiceRequest table
+        addStatement.executeUpdate(
+            "INSERT INTO ServiceRequest(requestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments) VALUES('"
+                + l.getRequestID()
+                + "', '"
+                + l.getStartLocation()
+                + "', '"
+                + l.getEndLocation()
+                + "', '"
+                + l.getEmployeeRequested()
+                + "', '"
+                + l.getEmployeeAssigned()
+                + "', '"
+                + l.getRequestTime()
+                + "', '"
+                + l.getRequestStatus()
+                + "', '"
+                + l.getRequestType()
+                + "', '"
+                + l.getComments()
+                + "')");
       }
     } catch (SQLException | IOException | ParseException e) {
       System.out.println("Insertion failed!");
@@ -307,9 +340,9 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
   }
 
   // Export to CSV
-  public static void exportToCSV(String tableName, String csvFilePath) throws IOException{
+  public static void exportToCSV(String tableName, String csvFilePath) throws IOException {
     LanguageServiceRequestDAO mesr = new LanguageServiceRequestDerbyImpl();
     LanguageServiceRequestDerbyImpl.writeLanguageServiceRequestCSV(
-            mesr.getLanguageServiceRequestList(), csvFilePath);
+        mesr.getLanguageServiceRequestList(), csvFilePath);
   }
 }
