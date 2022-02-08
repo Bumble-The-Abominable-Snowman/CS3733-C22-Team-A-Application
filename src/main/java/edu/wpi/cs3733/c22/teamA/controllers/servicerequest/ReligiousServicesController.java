@@ -18,15 +18,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 
 public class ReligiousServicesController extends GenericServiceRequestsController {
-  @FXML private TextArea commentsBox;
+  @FXML private JFXButton backButton;
   @FXML private JFXButton returnHomeButton;
-  @FXML private JFXComboBox religionChoice;
-  @FXML private JFXComboBox toLocationChoice;
-  @FXML private JFXComboBox employeeChoice;
-  @FXML private JFXComboBox denominationChoice;
+  @FXML private JFXComboBox<String> religionChoice;
+  @FXML private JFXComboBox<String> denominationChoice;
+  @FXML private JFXComboBox<String> toLocationChoice;
+  @FXML private JFXComboBox<String> employeeChoice;
+  @FXML private TextArea commentsBox;
 
   private List<String> christianDenom = new ArrayList<>();
   private List<String> nonDenom = new ArrayList<>();
@@ -64,6 +70,10 @@ public class ReligiousServicesController extends GenericServiceRequestsControlle
   @FXML
   private void initialize() throws ParseException {
     sceneID = SceneController.SCENES.RELIGIOUS_SERVICE_REQUEST_SCENE;
+
+    backButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+
     commentsBox.setWrapText(true);
 
     religionChoice.getItems().removeAll(religionChoice.getItems());

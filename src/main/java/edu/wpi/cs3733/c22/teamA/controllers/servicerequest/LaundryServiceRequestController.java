@@ -7,26 +7,36 @@ import edu.wpi.cs3733.c22.teamA.entities.requests.LaundryServiceRequest;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 
 public class LaundryServiceRequestController extends GenericServiceRequestsController {
 
   @FXML private Label locationLabel;
-  @FXML private TextArea commentsBox;
-  @FXML private JFXComboBox<String> toLocationChoice;
-  @FXML private JFXComboBox<String> washMode;
-  @FXML private JFXComboBox<String> employeeChoice;
-  @FXML private JFXButton returnHomeButton;
-  @FXML private JFXButton submitButton;
   @FXML private JFXButton backButton;
+  @FXML private JFXButton returnHomeButton;
   @FXML private JFXButton clearButton;
+  @FXML private JFXButton submitButton;
+  @FXML private JFXComboBox<String> washMode;
+  @FXML private JFXComboBox<String> toLocationChoice;
+  @FXML private JFXComboBox<String> employeeChoice;
+  @FXML private TextArea commentsBox;
 
   private FXMLLoader loader = new FXMLLoader();
 
   @FXML
   public void initialize() {
     sceneID = SceneController.SCENES.LAUNDRY_SERVICE_REQUEST_SCENE;
+
+    backButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+
+    commentsBox.setWrapText(true);
 
     washMode.getItems().removeAll(washMode.getItems());
     washMode.getItems().addAll("Colors", "Whites", "Perm. press", "Save the trees!");

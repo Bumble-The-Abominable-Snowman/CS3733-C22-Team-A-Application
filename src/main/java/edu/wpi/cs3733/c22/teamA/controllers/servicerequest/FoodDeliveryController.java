@@ -14,50 +14,58 @@ import java.text.ParseException;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 
 public class FoodDeliveryController extends GenericServiceRequestsController {
   @FXML private JFXButton backButton;
-  @FXML private JFXButton returnButton;
+  @FXML private JFXButton returnHomeButton;
   @FXML private JFXButton clearButton;
-  @FXML private JFXComboBox typeMenu;
   @FXML private JFXButton submitButton;
   @FXML private JFXComboBox<String> mainChoice;
-  @FXML private JFXComboBox<String> drinkChoice;
   @FXML private JFXComboBox<String> sideChoice;
   @FXML private JFXComboBox<String> dessertChoice;
-  @FXML private JFXComboBox roomChoice;
-  @FXML private JFXComboBox employeeChoice;
-  @FXML private TextArea commentsText;
+  @FXML private JFXComboBox<String> drinkChoice;
+  @FXML private JFXComboBox<String> toLocationChoice;
+  @FXML private JFXComboBox<String> employeeChoice;
+  @FXML private TextArea commentsBox;
   private FXMLLoader loader = new FXMLLoader();
 
   @FXML
   public void initialize() throws ParseException {
     sceneID = SceneController.SCENES.FOOD_DELIVERY_SERVICE_REQUEST_SCENE;
 
+    backButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+
+    commentsBox.setWrapText(true);
+
     mainChoice.getItems().addAll("Turkey Sandwich", "Grilled Cheese Sandwich", "Friend Chicken");
     drinkChoice.getItems().addAll("Water", "Juice", "Milk");
     sideChoice.getItems().addAll("French Fries", "Apple", "Biscuit");
     dessertChoice.getItems().addAll("Cookie", "Brownie", "Cinnamon Roll");
-    roomChoice.getItems().addAll(000, 101, 102, 103);
     mainChoice.getSelectionModel().select("Entree");
     drinkChoice.getSelectionModel().select("Beverage");
     sideChoice.getSelectionModel().select("Side");
     dessertChoice.getSelectionModel().select("Dessert");
-    roomChoice.getSelectionModel().select(0);
+    toLocationChoice.getSelectionModel().select(0);
     mainChoice.getSelectionModel().selectedItemProperty();
     drinkChoice.getSelectionModel().selectedItemProperty();
     sideChoice.getSelectionModel().selectedItemProperty();
     dessertChoice.getSelectionModel().selectedItemProperty();
-    roomChoice.getSelectionModel().selectedItemProperty();
+    toLocationChoice.getSelectionModel().selectedItemProperty();
 
-    roomChoice.getItems().removeAll(roomChoice.getItems());
-    roomChoice
+    toLocationChoice.getItems().removeAll(toLocationChoice.getItems());
+    toLocationChoice
         .getItems()
         .addAll(
             new LocationDerbyImpl()
                 .getNodeList().stream().map(Location::getShortName).collect(Collectors.toList()));
-    roomChoice.setVisibleRowCount(5);
+    toLocationChoice.setVisibleRowCount(5);
     employeeChoice.setVisibleRowCount(5);
 
     EmployeeDAO EmployeeDAO = new EmployeeDerbyImpl();
@@ -78,9 +86,9 @@ public class FoodDeliveryController extends GenericServiceRequestsController {
             sideChoice.getValue(),
             drinkChoice.getValue(),
             dessertChoice.getValue(),
-            (String) roomChoice.getSelectionModel().getSelectedItem(),
+            (String) toLocationChoice.getSelectionModel().getSelectedItem(),
             (String) employeeChoice.getSelectionModel().getSelectedItem(),
-            commentsText.getText());
+            commentsBox.getText());
   }
 
   @FXML

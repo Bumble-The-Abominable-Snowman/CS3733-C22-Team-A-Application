@@ -16,16 +16,21 @@ import java.util.Date;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 
 public class LanguageInterpreterController extends GenericServiceRequestsController {
-  @FXML private JFXButton returnHomeButton;
-  @FXML private JFXButton submitButton;
   @FXML private JFXButton backButton;
+  @FXML private JFXButton returnHomeButton;
   @FXML private JFXButton clearButton;
-  @FXML private JFXComboBox<String> employeeChoice;
-  @FXML private JFXComboBox<String> toLocationChoice;
+  @FXML private JFXButton submitButton;
   @FXML private JFXComboBox<String> languageChoice;
+  @FXML private JFXComboBox<String> toLocationChoice;
+  @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
 
   private FXMLLoader loader = new FXMLLoader();
@@ -33,6 +38,9 @@ public class LanguageInterpreterController extends GenericServiceRequestsControl
   @FXML
   public void initialize() throws ParseException {
     sceneID = SceneController.SCENES.LANGUAGE_INTERPRETER_SERVICE_REQUEST_SCENE;
+
+    backButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
 
     commentsBox.setWrapText(true);
 

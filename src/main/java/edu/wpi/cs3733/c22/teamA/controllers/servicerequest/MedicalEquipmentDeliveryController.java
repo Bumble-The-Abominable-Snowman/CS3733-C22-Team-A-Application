@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
@@ -20,15 +21,22 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 
 public class MedicalEquipmentDeliveryController extends GenericServiceRequestsController {
-  @FXML private JFXComboBox statusChoiceBox;
-  @FXML private TextArea specialNotes;
-  @FXML private JFXComboBox employeeChoiceBox;
-  @FXML private JFXComboBox toChoiceBox;
+  @FXML private JFXButton backButton;
+  @FXML private JFXButton returnHomeButton;
   @FXML private JFXComboBox typeChoiceBox;
   @FXML private JFXComboBox fromChoiceBox;
+  @FXML private JFXComboBox statusChoiceBox;
+  @FXML private JFXComboBox toChoiceBox;
+  @FXML private JFXComboBox employeeChoiceBox;
+  @FXML private TextArea commentsBox;
 
   private FXMLLoader loader = new FXMLLoader();
   private List<String> bedLocations = new ArrayList<>();
@@ -64,7 +72,10 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
   private void initialize() throws ParseException {
     sceneID = SceneController.SCENES.MEDICAL_EQUIPMENT_DELIVERY_SERVICE_REQUEST_SCENE;
 
-    specialNotes.setWrapText(true);
+    backButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+
+    commentsBox.setWrapText(true);
 
     typeChoiceBox.getItems().removeAll(typeChoiceBox.getItems());
     typeChoiceBox.getItems().addAll("Type", "Bed", "XRAY", "Infusion Pump", "Patient Recliner");

@@ -51,5 +51,5 @@
     <JFXComboBox fx:id="toChoiceBox" prefHeight="25.0" prefWidth="144.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
     <JFXComboBox fx:id="fromChoiceBox" prefHeight="25.0" prefWidth="130.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
     <JFXComboBox fx:id="typeChoiceBox" prefHeight="25.0" prefWidth="133.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-    <TextArea fx:id="specialNotes" maxHeight="-Infinity" prefHeight="106.0" prefWidth="180.0" promptText="Special Instructions/Notes" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+    <TextArea fx:id="commentsBox" maxHeight="-Infinity" prefHeight="106.0" prefWidth="180.0" promptText="Special Instructions/Notes" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
 </GridPane>

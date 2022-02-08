@@ -8,19 +8,31 @@ import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.requests.SanitationServiceRequest;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 
 public class SanitationServicesController extends GenericServiceRequestsController {
-  @FXML private TextArea commentsBox;
-  @FXML private TextArea typeOtherBox;
+  @FXML private JFXButton backButton;
   @FXML private JFXButton returnHomeButton;
   @FXML private JFXComboBox<String> typeChoice;
-  @FXML private JFXComboBox<String> employeeChoice;
   @FXML private JFXComboBox<String> toLocationChoice;
+  @FXML private JFXComboBox<String> employeeChoice;
+  @FXML private TextArea commentsBox;
+  @FXML private TextArea typeOtherBox;
 
   @FXML
   private void initialize() {
     sceneID = SceneController.SCENES.SANITATION_SERVICE_REQUEST_SCENE;
+
+    backButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+
+    commentsBox.setWrapText(true);
+    typeOtherBox.setWrapText(true);
 
     // Put sanitation types in temporary type menu
     typeChoice.getItems().addAll("Decontaminate Area", "Floor Spill", "Other");
