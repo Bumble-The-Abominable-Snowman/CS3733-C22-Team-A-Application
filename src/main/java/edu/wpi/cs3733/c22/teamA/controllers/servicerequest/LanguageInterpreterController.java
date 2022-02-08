@@ -41,6 +41,12 @@ public class LanguageInterpreterController extends GenericServiceRequestsControl
 
     backButton.setBackground(
         new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+    returnHomeButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+    clearButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+    submitButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
 
     commentsBox.setWrapText(true);
 

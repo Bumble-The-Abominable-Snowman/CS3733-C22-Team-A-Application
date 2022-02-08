@@ -28,6 +28,8 @@ import javafx.scene.paint.Color;
 public class ReligiousServicesController extends GenericServiceRequestsController {
   @FXML private JFXButton backButton;
   @FXML private JFXButton returnHomeButton;
+  @FXML private JFXButton clearButton;
+  @FXML private JFXButton submitButton;
   @FXML private JFXComboBox<String> religionChoice;
   @FXML private JFXComboBox<String> denominationChoice;
   @FXML private JFXComboBox<String> toLocationChoice;
@@ -72,6 +74,12 @@ public class ReligiousServicesController extends GenericServiceRequestsControlle
     sceneID = SceneController.SCENES.RELIGIOUS_SERVICE_REQUEST_SCENE;
 
     backButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+    returnHomeButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+    clearButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+    submitButton.setBackground(
         new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
 
     commentsBox.setWrapText(true);

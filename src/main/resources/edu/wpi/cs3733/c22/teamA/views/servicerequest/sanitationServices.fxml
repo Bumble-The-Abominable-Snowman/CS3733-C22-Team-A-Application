@@ -34,9 +34,9 @@
     </Label>
     <Label layoutX="83.0" layoutY="152.0" text="Type:" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
     <Label layoutX="83.0" layoutY="152.0" text="Employee:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+    <JFXButton fx:id="backButton" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="26.0" prefWidth="55.0" text="Back" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
     <JFXButton fx:id="returnHomeButton" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
     <JFXButton fx:id="clearButton" layoutX="481.0" layoutY="360.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="34.0" prefWidth="112.0" text="Clear All Fields" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
-    <JFXButton fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="34.0" prefWidth="41.0" text="Back" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
     <JFXButton fx:id="submitButton" layoutX="191.0" layoutY="340.0" mnemonicParsing="false" onAction="#submitRequest" prefHeight="26.0" prefWidth="218.0" text="Submit" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
     <JFXComboBox fx:id="typeChoice" layoutX="34.0" layoutY="180.0" prefHeight="28.0" prefWidth="112.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
     <JFXComboBox fx:id="toLocationChoice" layoutX="225.0" layoutY="180.0" prefHeight="28.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />

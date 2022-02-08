@@ -18,6 +18,8 @@ import javafx.scene.paint.Color;
 public class SanitationServicesController extends GenericServiceRequestsController {
   @FXML private JFXButton backButton;
   @FXML private JFXButton returnHomeButton;
+  @FXML private JFXButton clearButton;
+  @FXML private JFXButton submitButton;
   @FXML private JFXComboBox<String> typeChoice;
   @FXML private JFXComboBox<String> toLocationChoice;
   @FXML private JFXComboBox<String> employeeChoice;
@@ -29,6 +31,12 @@ public class SanitationServicesController extends GenericServiceRequestsControll
     sceneID = SceneController.SCENES.SANITATION_SERVICE_REQUEST_SCENE;
 
     backButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+    returnHomeButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+    clearButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+    submitButton.setBackground(
         new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
 
     commentsBox.setWrapText(true);
