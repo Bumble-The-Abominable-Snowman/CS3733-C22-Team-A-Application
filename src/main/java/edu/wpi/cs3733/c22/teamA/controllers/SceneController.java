@@ -21,6 +21,7 @@ public class SceneController {
     SANITATION_SERVICE_REQUEST_SCENE,
     VIEW_MEDICAL_EQUIPMENT_SCENE,
     VIEW_LOCATION_DATA_SCENE,
+    VIEW_EDIT_LOCATION_DATA,
     VIEW_SERVICE_REQUEST_SCENE,
     VIEW_EMPLOYEES_SCENE,
     SETTINGS_SCENE,
@@ -53,6 +54,7 @@ public class SceneController {
 
     addScene(SCENES.VIEW_MEDICAL_EQUIPMENT_SCENE, "views/dataview/medicalEquipmentData.fxml");
     addScene(SCENES.VIEW_LOCATION_DATA_SCENE, "views/dataview/locationData.fxml");
+    addScene(SCENES.VIEW_EDIT_LOCATION_DATA, "views/map/mapEditor.fxml");
     addScene(SCENES.VIEW_SERVICE_REQUEST_SCENE, "views/dataview/viewServiceRequest.fxml");
     addScene(SCENES.VIEW_EMPLOYEES_SCENE, "views/dataview/employeeData.fxml");
 

@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="edu.wpi.cs3733.c22.teamA.controllers.map.MapEditorController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.map.MapEditorController">
+   <children>
+      <JFXCheckBox fx:id="dragToggleBox" alignment="CENTER" layoutX="14.0" layoutY="306.0" prefHeight="22.0" prefWidth="176.0" text="Toggle Drag/Drop Locations" wrapText="true" />
+      <JFXCheckBox fx:id="textToggleBox" alignment="CENTER" layoutX="14.0" layoutY="328.0" prefHeight="22.0" prefWidth="82.0" text="Toggle Text" wrapText="true" />
+      <JFXCheckBox fx:id="equipToggleBox" alignment="CENTER" layoutX="14.0" layoutY="350.0" prefHeight="22.0" prefWidth="75.0" text="Toggle Equipment View" wrapText="true" />
+      <JFXButton fx:id="viewTableButton" layoutX="14.0" layoutY="273.0" onAction="#goToLocationTable" prefHeight="25.0" prefWidth="176.0" text="View Table" />
+      <JFXButton fx:id="newLocButton" layoutX="14.0" layoutY="248.0" onAction="#newLocPressed" prefHeight="25.0" prefWidth="176.0" text="New Location" />
+      <JFXButton fx:id="homeButton" layoutX="536.0" layoutY="14.0" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" />
+      <JFXButton fx:id="backButton" layoutX="14.0" layoutY="14.0" onAction="#returnToSelectServiceScene" prefHeight="34.0" prefWidth="41.0" ripplerFill="#01495b" text="Back" />
+      <VBox layoutX="14.0" layoutY="48.0" prefHeight="196.0" prefWidth="176.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="181.0" text="Which Floor?" />
+            <JFXButton fx:id="groundFloorButton" prefHeight="25.0" prefWidth="181.0" text="Ground Floor" />
+            <JFXButton fx:id="lowerFloorOneButton" prefHeight="25.0" prefWidth="176.0" text="LL1" />
+            <JFXButton fx:id="lowerFloorTwoButton" prefHeight="25.0" prefWidth="182.0" text="LL2" />
+            <JFXButton fx:id="floorOneButton" prefHeight="25.0" prefWidth="176.0" text="Floor 1" />
+            <JFXButton fx:id="floorTwoButton" prefHeight="25.0" prefWidth="177.0" text="Floor 2" />
+            <JFXButton fx:id="floorThreeButton" prefHeight="25.0" prefWidth="178.0" text="Floor 3" />
+            <JFXButton fx:id="floorFourteenButton" prefHeight="25.0" prefWidth="180.0" text="Floor 14" />
+         </children>
+      </VBox>
+      <Label alignment="CENTER" layoutX="190.0" layoutY="48.0" prefHeight="301.0" prefWidth="259.0" text="Map">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Label>
+      <VBox fx:id="inputVBox" layoutX="465.0" layoutY="46.0" prefHeight="355.0" prefWidth="121.0">
+         <children>
+            <JFXTextArea fx:id="nodeIDText" prefHeight="29.0" prefWidth="121.0" promptText="NodeID" />
+            <JFXTextArea prefHeight="29.0" prefWidth="121.0" promptText="XPOS" fx:id="xPosText" />
+            <JFXTextArea fx:id="yPosText" prefHeight="29.0" prefWidth="121.0" promptText="YPOS" />
+            <JFXTextArea fx:id="floorText" prefHeight="29.0" prefWidth="121.0" promptText="FLOOR" />
+            <JFXTextArea fx:id="towerText" prefHeight="29.0" prefWidth="121.0" promptText="BUILDING" />
+            <JFXTextArea fx:id="typeText" prefHeight="29.0" prefWidth="121.0" promptText="TYPE" />
+            <JFXTextArea fx:id="longnameText" prefHeight="29.0" prefWidth="121.0" promptText="LONGNAME" />
+            <JFXTextArea fx:id="shortnameText" prefHeight="29.0" prefWidth="121.0" promptText="SHORTNAME" />
+            <JFXButton fx:id="saveButton" onAction="#saveNewLocation" prefHeight="25.0" prefWidth="122.0" text="Save" />
+            <JFXButton fx:id="editButton" onAction="#editLocation" prefHeight="25.0" prefWidth="122.0" text="Edit" />
+            <JFXButton fx:id="clearButton" onAction="#clearSubmission" prefHeight="25.0" prefWidth="123.0" text="Delete" />
+         </children>
+      </VBox>
+      <Label fx:id="topTextLabel" alignment="CENTER" layoutX="209.0" layoutY="14.0" prefHeight="34.0" prefWidth="221.0" text="MAP EDITOR" />
+   </children>
 </AnchorPane>
