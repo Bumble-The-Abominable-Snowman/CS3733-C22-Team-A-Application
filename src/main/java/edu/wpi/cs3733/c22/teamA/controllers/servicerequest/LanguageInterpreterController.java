@@ -3,14 +3,19 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.stream.Collectors;
+
+import edu.wpi.cs3733.c22.teamA.entities.requests.LanguageServiceRequest;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -83,20 +88,24 @@ public class LanguageInterpreterController extends GenericServiceRequestsControl
   }
 
   @FXML
-  private void createLanguageRequest(LanguageInterpreterRequest langRequest) {
-    langRequest.setLanguage(languageChoice.getValue());
-    langRequest.setToLocation(toLocationChoice.getValue());
-    langRequest.setRequestedEmployee(employeeChoice.getValue());
-    langRequest.setToLocation(commentsBox.getText());
-  }
-
-  @FXML
   void submitRequest() throws IOException {
-    LanguageInterpreterRequest langRequest = new LanguageInterpreterRequest();
     if (!languageChoice.getSelectionModel().getSelectedItem().equals("Language")
         && toLocationChoice.getSelectionModel().getSelectedItem() != null
         && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
-      this.createLanguageRequest(langRequest);
+      LanguageServiceRequest languageServiceRequest = new LanguageServiceRequest(
+              "PlaceHolderID",
+              "N/A",
+              toLocationChoice.getSelectionModel().getSelectedItem(),
+              "Alex",
+              employeeChoice.getSelectionModel().getSelectedItem(),
+              new Timestamp((new Date()).getTime()).toString(),
+              "NEW",
+              "Language Interpreter",
+              "N/A",
+              languageChoice.getValue());
+
+      LanguageServiceRequestDAO languageServiceRequestDAO = new LanguageServiceRequestDerbyImpl();
+      languageServiceRequestDAO.enterLanguageServiceRequest(languageServiceRequest);
       this.returnToHomeScene();
     }
   }
