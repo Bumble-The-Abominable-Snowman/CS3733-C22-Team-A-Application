@@ -2,14 +2,18 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.requests.ReligiousServiceRequest;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -139,11 +143,24 @@ public class ReligiousServicesController extends GenericServiceRequestsControlle
 
   @FXML
   void submitRequest() throws IOException {
-    ReligiousServiceRequest religiousServiceRequest = new ReligiousServiceRequest();
     if (!religionChoice.getSelectionModel().getSelectedItem().equals("Type")
         && toLocationChoice.getSelectionModel().getSelectedItem() != null
         && employeeChoice.getSelectionModel().getSelectedItem() != null) {
-      // pass religious service request object
+      ReligiousServiceRequest religiousServiceRequest =
+          new ReligiousServiceRequest(
+              "PlaceHolderID",
+              "N/A",
+              toLocationChoice.getSelectionModel().getSelectedItem(),
+              Aapp.factory.getUsername(),
+              employeeChoice.getSelectionModel().getSelectedItem(),
+              new Timestamp((new Date()).getTime()).toString(),
+              "NEW",
+              "Religious Services",
+              "N/A",
+              religionChoice.getValue());
+      ReligiousServiceRequestDAO religiousServiceRequestDAO =
+          new ReligiousServiceRequestDerbyImpl();
+      religiousServiceRequestDAO.enterReligiousServiceRequest(religiousServiceRequest);
       this.returnToHomeScene();
     }
   }
