@@ -71,31 +71,31 @@ public class ExportToBackupController {
       switch (TypeCSV.getSelectionModel().getSelectedItem().toString()) {
         case "TowerLocations":
           LocationDerbyImpl.exportToCSV("Location", filepath);
-          return;
+          break;
         case "Employee":
           EmployeeDerbyImpl.exportToCSV("Employee", filepath);
-          return;
+          break;
         case "MedicalEquipment":
           MedicalEquipmentDerbyImpl.exportToCSV("MedicalEquipment", filepath);
-          return;
+          break;
         case "LanguageServiceRequest":
           LanguageServiceRequestDerbyImpl.exportToCSV("LanguageServiceRequest", filepath);
-          return;
+          break;
         case "MedicalEquipmentServiceRequest":
           LanguageServiceRequestDerbyImpl.exportToCSV("MedicalEquipmentServiceRequest", filepath);
-          return;
+          break;
         case "FoodDeliveryServiceRequest":
           FoodDeliveryServiceRequestDerbyImpl.exportToCSV("FoodDeliveryServiceRequest", filepath);
-          return;
+          break;
         case "LaundryServiceRequest":
           LaundryServiceRequestDerbyImpl.exportToCSV("LaundryServiceRequest", filepath);
-          return;
+          break;
         case "ReligiousServiceRequest":
           ReligiousServiceRequestDerbyImpl.exportToCSV("ReligiousServiceRequest", filepath);
-          return;
+          break;
         case "SanitationServiceRequest":
           SanitationServiceRequestDerbyImpl.exportToCSV("SanitationServiceRequest", filepath);
-          return;
+          break;
       }
       //      Adb.exportToCSV(TypeCSV.getValue(), filepath);
 
