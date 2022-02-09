@@ -30,23 +30,23 @@ public class SelectServiceRequestController {
   @FXML
   private void initialize() {
     medicalEquipmentDeliveryButton.setBackground(
-        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
     religiousRequestsButton.setBackground(
-        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
     sanitationServicesButton.setBackground(
-        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
     laundryServicesButton.setBackground(
-        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
     languageServicesButton.setBackground(
-        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
     floralServicesButton.setBackground(
-        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
     medicineDeliveryButton.setBackground(
-        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
     foodDeliveryButton.setBackground(
-        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
     backButton.setBackground(
-        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
   }
 
   @FXML

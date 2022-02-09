@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
+import com.jfoenix.controls.JFXButton;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -14,6 +15,8 @@ public class LogInController {
   @FXML private Text welcomeBox;
   @FXML private TextField usernameBox;
   @FXML private PasswordField passwordBox;
+  @FXML private JFXButton logInButton;
+  @FXML private JFXButton exitButton;
 
   private final SceneController sceneController = Aapp.sceneController;
 
