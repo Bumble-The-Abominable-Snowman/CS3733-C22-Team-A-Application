@@ -1,7 +1,14 @@
 package edu.wpi.cs3733.c22.teamA.controllers.settings;
 
 import edu.wpi.cs3733.c22.teamA.Aapp;
-import edu.wpi.cs3733.c22.teamA.Adb.Adb;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest.FoodDeliveryServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import java.io.File;
 import java.io.IOException;
@@ -48,7 +55,16 @@ public class LoadFromBackupController {
 
     TypeCSV.getItems().removeAll(TypeCSV.getItems());
     TypeCSV.getItems()
-        .addAll("TowerLocations", "Employee", "MedicalEquipment", "MedicalEquipmentServiceRequest");
+        .addAll(
+            "TowerLocations",
+            "Employee",
+            "MedicalEquipment",
+            "LanguageServiceRequest",
+            "MedicalEquipmentServiceRequest",
+            "FoodDeliveryServiceRequest",
+            "LaundryServiceRequest",
+            "ReligiousServiceRequest",
+            "SanitationServiceRequest");
     TypeCSV.setValue("CSV Type");
   }
 
@@ -63,7 +79,7 @@ public class LoadFromBackupController {
 
   @FXML
   public void refreshFiles(ActionEvent actionEvent) {
-    File f = new File("src/main/resources/edu/wpi/teama/db");
+    File f = new File("src/main/resources/edu/wpi/cs3733/c22/teamA/db/");
 
     ObservableList<String> items = FXCollections.observableArrayList();
 
@@ -77,12 +93,41 @@ public class LoadFromBackupController {
     fileList.setItems(items);
   }
 
-  public void loadFromBackup(ActionEvent actionEvent) {
-    // TODO: load csv file and populate the db given a filepath
-    String filepath = "edu/wpi/teama/db/" + lastSelectedFile;
+  public void loadFromBackup(ActionEvent actionEvent) throws IOException {
+    String filepath = "edu/wpi/cs3733/c22/teamA/db/" + lastSelectedFile;
 
     if (!TypeCSV.getValue().equals("CSV Type") && lastSelectedFile.length() > 4) {
-      Adb.inputFromCSV(TypeCSV.getValue(), filepath);
+      //      Adb.inputFromCSV(TypeCSV.getValue(), filepath);
+
+      switch (TypeCSV.getSelectionModel().getSelectedItem().toString()) {
+        case "TowerLocations":
+          LocationDerbyImpl.inputFromCSV("Location", filepath);
+          break;
+        case "Employee":
+          EmployeeDerbyImpl.inputFromCSV("Employee", filepath);
+          break;
+        case "MedicalEquipment":
+          MedicalEquipmentDerbyImpl.inputFromCSV("MedicalEquipment", filepath);
+          break;
+        case "LanguageServiceRequest":
+          LanguageServiceRequestDerbyImpl.inputFromCSV("LanguageServiceRequest", filepath);
+          break;
+        case "MedicalEquipmentServiceRequest":
+          LanguageServiceRequestDerbyImpl.inputFromCSV("MedicalEquipmentServiceRequest", filepath);
+          break;
+        case "FoodDeliveryServiceRequest":
+          FoodDeliveryServiceRequestDerbyImpl.inputFromCSV("FoodDeliveryServiceRequest", filepath);
+          break;
+        case "LaundryServiceRequest":
+          LaundryServiceRequestDerbyImpl.inputFromCSV("LaundryServiceRequest", filepath);
+          break;
+        case "ReligiousServiceRequest":
+          ReligiousServiceRequestDerbyImpl.inputFromCSV("ReligiousServiceRequest", filepath);
+          break;
+        case "SanitationServiceRequest":
+          SanitationServiceRequestDerbyImpl.inputFromCSV("SanitationServiceRequest", filepath);
+          break;
+      }
 
       selectedFileText.setText("Success!");
       selectedFileText.setFill(Color.GREEN);

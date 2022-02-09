@@ -1,17 +1,19 @@
 package edu.wpi.cs3733.c22.teamA.entities.requests;
 
 import java.sql.Timestamp;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@Getter
-@Setter
-public class SanitationServiceRequest extends ServiceRequest {
-  private String sanitationType;
+@EqualsAndHashCode(callSuper = true)
+public @Data class FoodDeliveryServiceRequest extends ServiceRequest {
+  private String mainDish;
+  private String sideDish;
+  private String beverage;
+  private String dessert;
 
-  public SanitationServiceRequest() {}
+  public FoodDeliveryServiceRequest() {}
 
-  public SanitationServiceRequest(
+  public FoodDeliveryServiceRequest(
       String requestID,
       String startLocation,
       String endLocation,
@@ -21,7 +23,10 @@ public class SanitationServiceRequest extends ServiceRequest {
       String requestStatus,
       String requestType,
       String comments,
-      String sanitationType) {
+      String mainDish,
+      String sideDish,
+      String beverage,
+      String dessert) {
     super.requestID = requestID;
     super.startLocation = startLocation;
     super.endLocation = endLocation;
@@ -32,14 +37,9 @@ public class SanitationServiceRequest extends ServiceRequest {
     super.requestStatus = requestStatus;
     super.requestType = requestType;
     super.comments = comments;
-    this.sanitationType = sanitationType;
-  }
-
-  public String getSanitationType() {
-    return sanitationType;
-  }
-
-  public void setSanitationType(String sanitationType) {
-    this.sanitationType = sanitationType;
+    this.mainDish = mainDish;
+    this.sideDish = sideDish;
+    this.beverage = beverage;
+    this.dessert = dessert;
   }
 }

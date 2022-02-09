@@ -1,17 +1,13 @@
 package edu.wpi.cs3733.c22.teamA.entities.requests;
 
 import java.sql.Timestamp;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-public class SanitationServiceRequest extends ServiceRequest {
-  private String sanitationType;
+public class LanguageServiceRequest extends ServiceRequest {
+  private String language;
 
-  public SanitationServiceRequest() {}
+  public LanguageServiceRequest() {}
 
-  public SanitationServiceRequest(
+  public LanguageServiceRequest(
       String requestID,
       String startLocation,
       String endLocation,
@@ -21,7 +17,7 @@ public class SanitationServiceRequest extends ServiceRequest {
       String requestStatus,
       String requestType,
       String comments,
-      String sanitationType) {
+      String language) {
     super.requestID = requestID;
     super.startLocation = startLocation;
     super.endLocation = endLocation;
@@ -32,14 +28,14 @@ public class SanitationServiceRequest extends ServiceRequest {
     super.requestStatus = requestStatus;
     super.requestType = requestType;
     super.comments = comments;
-    this.sanitationType = sanitationType;
+    this.language = language;
   }
 
-  public String getSanitationType() {
-    return sanitationType;
+  public String getLanguage() {
+    return language;
   }
 
-  public void setSanitationType(String sanitationType) {
-    this.sanitationType = sanitationType;
+  public void setLanguage(String language) {
+    this.language = language;
   }
 }
