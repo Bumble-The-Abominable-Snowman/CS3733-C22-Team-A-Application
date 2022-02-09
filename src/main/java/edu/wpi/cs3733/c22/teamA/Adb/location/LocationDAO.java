@@ -9,6 +9,8 @@ public interface LocationDAO {
 
   public void deleteLocationNode(String ID);
 
+  public void enterLocationNode(Location location);
+
   public void enterLocationNode(
       String ID,
       int xcoord,
