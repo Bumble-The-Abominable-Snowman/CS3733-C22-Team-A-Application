@@ -1,6 +1,14 @@
 package edu.wpi.cs3733.c22.teamA.controllers.settings;
 
 import edu.wpi.cs3733.c22.teamA.Aapp;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest.FoodDeliveryServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import java.io.IOException;
 import javafx.event.ActionEvent;
@@ -25,7 +33,16 @@ public class ExportToBackupController {
   public void initialize() {
     TypeCSV.getItems().removeAll(TypeCSV.getItems());
     TypeCSV.getItems()
-        .addAll("TowerLocations", "Employee", "MedicalEquipment", "MedicalEquipmentServiceRequest");
+        .addAll(
+            "TowerLocations",
+            "Employee",
+            "MedicalEquipment",
+            "LanguageServiceRequest",
+            "MedicalEquipmentServiceRequest",
+            "FoodDeliveryServiceRequest",
+            "LaundryServiceRequest",
+            "ReligiousServiceRequest",
+            "SanitationServiceRequest");
     TypeCSV.setValue("CSV Type");
   }
 
@@ -40,15 +57,45 @@ public class ExportToBackupController {
 
   public void exportToBackup(ActionEvent actionEvent) throws IOException {
     String input = filename.getCharacters().toString();
-
-    if (!TypeCSV.getValue().equals("CSV Type") && input.length() > 0) {
+    System.out.println(input.length());
+    if (!TypeCSV.getSelectionModel().getSelectedItem().equals("CSV Type") && input.length() > 0) {
       System.out.println(input);
 
       String filepath;
       if (input.endsWith(".csv")) {
-        filepath = "src/main/resources/edu/wpi/teama/db/" + input;
+        filepath = "src/main/resources/edu/wpi/cs3733/c22/teamA/db/" + input;
       } else {
-        filepath = "src/main/resources/edu/wpi/teama/db/" + input + ".csv";
+        filepath = "src/main/resources/edu/wpi/cs3733/c22/teamA/db/" + input + ".csv";
+      }
+
+      switch (TypeCSV.getSelectionModel().getSelectedItem().toString()) {
+        case "TowerLocations":
+          LocationDerbyImpl.exportToCSV("Location", filepath);
+          return;
+        case "Employee":
+          EmployeeDerbyImpl.exportToCSV("Employee", filepath);
+          return;
+        case "MedicalEquipment":
+          MedicalEquipmentDerbyImpl.exportToCSV("MedicalEquipment", filepath);
+          return;
+        case "LanguageServiceRequest":
+          LanguageServiceRequestDerbyImpl.exportToCSV("LanguageServiceRequest", filepath);
+          return;
+        case "MedicalEquipmentServiceRequest":
+          LanguageServiceRequestDerbyImpl.exportToCSV("MedicalEquipmentServiceRequest", filepath);
+          return;
+        case "FoodDeliveryServiceRequest":
+          FoodDeliveryServiceRequestDerbyImpl.exportToCSV("FoodDeliveryServiceRequest", filepath);
+          return;
+        case "LaundryServiceRequest":
+          LaundryServiceRequestDerbyImpl.exportToCSV("LaundryServiceRequest", filepath);
+          return;
+        case "ReligiousServiceRequest":
+          ReligiousServiceRequestDerbyImpl.exportToCSV("ReligiousServiceRequest", filepath);
+          return;
+        case "SanitationServiceRequest":
+          SanitationServiceRequestDerbyImpl.exportToCSV("SanitationServiceRequest", filepath);
+          return;
       }
       //      Adb.exportToCSV(TypeCSV.getValue(), filepath);
 
