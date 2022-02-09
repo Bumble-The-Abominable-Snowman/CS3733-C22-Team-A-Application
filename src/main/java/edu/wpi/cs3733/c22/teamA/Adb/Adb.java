@@ -3,7 +3,11 @@ package edu.wpi.cs3733.c22.teamA.Adb;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
 import java.sql.*;
 
 public class Adb {
@@ -208,6 +212,14 @@ public class Adb {
       MedicalEquipmentServiceRequestDerbyImpl.inputFromCSV(
           "MedicalEquipmentServiceRequest",
           "edu/wpi/cs3733/c22/teamA/db/MedicalEquipmentServiceRequest.csv");
+      ReligiousServiceRequestDerbyImpl.inputFromCSV(
+          "ReligiousServiceRequest", "edu/wpi/cs3733/c22/teamA/db/ReligiousServiceRequest.csv");
+      SanitationServiceRequestDerbyImpl.inputFromCSV(
+          "SanitationServiceRequest", "edu/wpi/cs3733/c22/teamA/db/SanitationServiceRequest.csv");
+      LaundryServiceRequestDerbyImpl.inputFromCSV(
+          "LaundryServiceRequest", "edu/wpi/cs3733/c22/teamA/db/LaundryServiceRequest.csv");
+      LanguageServiceRequestDerbyImpl.inputFromCSV(
+          "LanguageServiceRequest", "edu/wpi/cs3733/c22/teamA/db/LanguageServiceRequest.csv");
     }
   }
 }

@@ -291,10 +291,10 @@ public class DefaultTest {
   public void testLanguage() throws IOException {
     Adb.initialConnection();
 
-    LanguageServiceRequestDerbyImpl.inputFromCSV(
-        "LanguageServiceRequest", "edu/wpi/cs3733/c22/teamA/db/LanguageServiceRequest.csv");
+        LanguageServiceRequestDerbyImpl.inputFromCSV(
+            "LanguageServiceRequest", "edu/wpi/cs3733/c22/teamA/db/LanguageServiceRequest.csv");
 
-    LanguageServiceRequestDerbyImpl derby = new LanguageServiceRequestDerbyImpl();
+        LanguageServiceRequestDerbyImpl derby = new LanguageServiceRequestDerbyImpl();
         LanguageServiceRequest lsr =
             new LanguageServiceRequest(
                 "lan124",
@@ -320,9 +320,9 @@ public class DefaultTest {
         List<LanguageServiceRequest> list = derby.getLanguageServiceRequestList();
         System.out.println("First element language: " + list.get(0).getLanguage());
         System.out.println("testing delete");
-        derby.deleteLanguageServiceRequest("lan123");
-        LanguageServiceRequestDerbyImpl.exportToCSV(
-            "LanguageServiceRequest",
-            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/LanguageServiceRequest.csv");
+            derby.deleteLanguageServiceRequest("lan123");
+            LanguageServiceRequestDerbyImpl.exportToCSV(
+                "LanguageServiceRequest",
+                "src/main/resources/edu/wpi/cs3733/c22/teamA/db/LanguageServiceRequest.csv");
   }
 }
