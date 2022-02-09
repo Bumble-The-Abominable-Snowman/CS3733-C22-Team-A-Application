@@ -2,6 +2,7 @@ package edu.wpi.cs3733.c22.teamA.Adb.employee;
 
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -198,6 +199,8 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
   public static void writeEmployeeCSV(List<Employee> List, String csvFilePath) throws IOException {
 
     // create a writer
+    File file = new File(csvFilePath);
+    file.createNewFile();
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(
