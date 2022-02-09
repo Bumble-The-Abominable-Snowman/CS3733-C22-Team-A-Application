@@ -18,9 +18,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 
 public class EmployeeDataController implements Initializable {
   @FXML Button backButton;
@@ -30,6 +35,9 @@ public class EmployeeDataController implements Initializable {
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
+    backButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+
     // Create all columns in the tracker table
     JFXTreeTableColumn<Employee, String> employeeID = new JFXTreeTableColumn<>("ID");
     JFXTreeTableColumn<Employee, String> employeeType = new JFXTreeTableColumn<>("Type");

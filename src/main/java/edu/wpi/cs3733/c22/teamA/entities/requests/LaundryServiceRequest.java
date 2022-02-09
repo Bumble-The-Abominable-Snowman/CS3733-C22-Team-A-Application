@@ -1,46 +1,45 @@
 package edu.wpi.cs3733.c22.teamA.entities.requests;
 
-import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import java.io.Serializable;
 import java.sql.Timestamp;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
-public @Data class LaundryServiceRequest extends RecursiveTreeObject<LaundryServiceRequest>
-    implements Serializable {
-  private String requestID;
-  private String startLocation;
-  private String endLocation;
-  private String employeeRequested;
-  private String employeeAssigned;
-  private Timestamp requestTime;
-  private String requestStatus;
-  private String equipmentID;
-  private String requestType;
+public @Data class LaundryServiceRequest extends ServiceRequest {
 
   private String washMode;
-  private String specialInstructions;
 
-  public String toString() {
-    return this.requestID
-        + "\t"
-        + this.startLocation
-        + "\t"
-        + this.endLocation
-        + "\t"
-        + this.employeeRequested
-        + "\t"
-        + this.employeeAssigned
-        + "\t"
-        + this.requestTime
-        + "\t"
-        + this.requestStatus
-        + "\t"
-        + this.equipmentID
-        + "\t"
-        + this.washMode
-        + "\t"
-        + this.specialInstructions;
+  public LaundryServiceRequest() {}
+
+  public LaundryServiceRequest(
+      String requestID,
+      String startLocation,
+      String endLocation,
+      String employeeRequested,
+      String employeeAssigned,
+      String requestTime,
+      String requestStatus,
+      String requestType,
+      String comments,
+      String washMode) {
+    super.requestID = requestID;
+    super.startLocation = startLocation;
+    super.endLocation = endLocation;
+    super.employeeRequested = employeeRequested;
+    super.employeeAssigned = employeeAssigned;
+    Timestamp rt = Timestamp.valueOf(requestTime);
+    super.requestTime = rt;
+    super.requestStatus = requestStatus;
+    super.requestType = requestType;
+    super.comments = comments;
+    this.washMode = washMode;
+  }
+
+  public String getWashMode() {
+    return washMode;
+  }
+
+  public void setWashMode(String washMode) {
+    this.washMode = washMode;
   }
 }

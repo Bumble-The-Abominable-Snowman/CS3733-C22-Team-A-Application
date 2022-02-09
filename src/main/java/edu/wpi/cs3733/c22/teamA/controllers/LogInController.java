@@ -33,6 +33,7 @@ public class LogInController {
 
       welcomeBox.setText("Unsuccesful login!");
       welcomeBox.setFill(Color.RED);
+      sceneController.switchScene(SceneController.SCENES.HOME_SCENE);
 
       usernameBox.setText("");
       passwordBox.setText("");

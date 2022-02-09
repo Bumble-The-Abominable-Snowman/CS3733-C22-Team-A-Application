@@ -1,12 +1,13 @@
 package edu.wpi.cs3733.c22.teamA.controllers.dataview;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.MedicalEquipment;
 import java.io.IOException;
@@ -18,18 +19,25 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.geometry.Insets;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 
 public class MedicalEquipmentDataController implements Initializable {
-  @FXML Button backButton;
+  @FXML JFXButton backButton;
   @FXML JFXTreeTableView<MedicalEquipment> equipmentTable;
 
   private final SceneController sceneController = Aapp.sceneController;
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
+    backButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+
     // Create all columns in the tracker table
     JFXTreeTableColumn<MedicalEquipment, String> id = new JFXTreeTableColumn<>("ID");
     JFXTreeTableColumn<MedicalEquipment, String> type = new JFXTreeTableColumn<>("Type");
@@ -64,7 +72,7 @@ public class MedicalEquipmentDataController implements Initializable {
             new SimpleStringProperty(param.getValue().getValue().getIsAvailable() ? "Yes" : "No"));
 
     // Grab equipment from database
-    MedicalEquipmentDAO database = new MedicalEquipmentImpl();
+    MedicalEquipmentDAO database = new MedicalEquipmentDerbyImpl();
     List<MedicalEquipment> equipFromDatabase = database.getMedicalEquipmentList();
     ObservableList<MedicalEquipment> equipment = FXCollections.observableArrayList();
     for (MedicalEquipment item : equipFromDatabase) {

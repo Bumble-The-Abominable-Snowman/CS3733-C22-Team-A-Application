@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXTreeTableView?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.dataview.LocationDataController">
-   <children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.dataview.LocationDataController">
       <Label layoutX="195.0" layoutY="10.0" text="Location Data">
          <font>
-            <Font size="32.0" />
+            <Font name="System Bold" size="32.0" />
          </font>
       </Label>
       <JFXTreeTableView fx:id="locationTable" layoutX="20.0" layoutY="67.0" prefHeight="318.0" prefWidth="559.0" showRoot="false" />
-      <Button fx:id="backButton" layoutX="22.0" layoutY="21.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="26.0" prefWidth="55.0" text="Back" />
-   </children>
+      <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="26.0" prefWidth="55.0" text="Back">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor></JFXButton>
 </AnchorPane>

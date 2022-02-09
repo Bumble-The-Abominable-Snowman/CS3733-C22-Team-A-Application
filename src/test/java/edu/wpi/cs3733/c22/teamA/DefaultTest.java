@@ -5,9 +5,18 @@
 package edu.wpi.cs3733.c22.teamA;
 
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest.FoodDeliveryServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.entities.requests.*;
 import java.io.IOException;
-import java.sql.Connection;
+import java.sql.*;
 import java.text.ParseException;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class DefaultTest {
@@ -17,7 +26,6 @@ public class DefaultTest {
 
     Connection connection = null;
     Adb.initialConnection();
-    Adb.inputFromCSV("TowerLocations", "edu/wpi/cs3733/c22/teamA/db/TowerLocations.csv");
 
     // Test on Location table (Fixed)
     //    LocationDAO Location = new LocationDerbyImpl();
@@ -89,7 +97,7 @@ public class DefaultTest {
     //
     //    // Test on Medical Equipment
     //    Adb.inputFromCSV("MedicalEquipment", "edu/wpi/teama/db/MedicalEquipment.csv");
-    //    MedicalEquipmentDAO equipment = new MedicalEquipmentImpl();
+    //    MedicalEquipmentDAO equipment = new MedicalEquipmentDerbyImpl();
     //    /*    System.out.println("Testing enter");
     //    equipment.enterMedicalEquipment("EQ1235", "Bed", true, "FDEPT00101", true);
     //    equipment.enterMedicalEquipment("EQ5679", "Xray machine", false, "FDEPT00201", true);
@@ -110,7 +118,7 @@ public class DefaultTest {
     // ************************************************************************************************** */
 
     // Test on MedicalEquipmentServiceRequest
-    //    MedicalEquipmentServiceRequestDAO mesr = new MedicalEquipmentServiceRequestImpl();
+    //    MedicalEquipmentServiceRequestDAO mesr = new MedicalEquipmentServiceRequestDerbyImpl();
     //    System.out.println("Testing enter");
     //
     //    Adb.inputFromCSV(
@@ -147,5 +155,248 @@ public class DefaultTest {
     //    mesr.deleteMedicalEquipment("REQ124");
     //
     // WriteCSV.writeMedicalEquipmentServiceRequestCSV(mesr.getMedicalEquipmentServiceRequestList());
+  }
+
+  @Test
+  public void testReligious() throws IOException {
+    Adb.initialConnection();
+
+    ReligiousServiceRequestDerbyImpl.inputFromCSV(
+        "ReligiousServiceRequest", "edu/wpi/cs3733/c22/teamA/db/ReligiousServiceRequest.csv");
+
+    ReligiousServiceRequestDAO derby = new ReligiousServiceRequestDerbyImpl();
+    ReligiousServiceRequest rsr =
+        new ReligiousServiceRequest(
+            "rel123",
+            "start",
+            "end",
+            "emp1",
+            "emp2",
+            "2020-01-01 12:45:00",
+            "In Progress",
+            "High Priority",
+            "no additional comments",
+            "Christain");
+
+    ReligiousServiceRequest rsr1 =
+        new ReligiousServiceRequest(
+            "rel124",
+            "start",
+            "end",
+            "emp1",
+            "emp2",
+            "2020-01-01 12:45:00",
+            "In Progress",
+            "High Priority",
+            "no additional comments",
+            "Judiasm");
+
+    System.out.println("Testing enter");
+    derby.enterReligiousServiceRequest(rsr);
+    derby.enterReligiousServiceRequest(rsr1);
+    System.out.println("Testing get");
+    ReligiousServiceRequest rsr2 = derby.getReligiousServiceRequest("rel123");
+    System.out.println("Got RequestID: " + rsr2.getRequestID());
+    System.out.println("Testing update: updating religion to 'Judiasm'");
+    derby.updateReligiousServiceRequest("rel123", "religion", "Judiasm");
+    System.out.println("Testing getList");
+    List<ReligiousServiceRequest> list = derby.getReligiousServiceRequestList();
+    System.out.println("First element religion: " + list.get(0).getReligion());
+    System.out.println("testing delete");
+    derby.deleteReligiousServiceRequest("rel123");
+    derby.deleteReligiousServiceRequest("rel124");
+    ReligiousServiceRequestDerbyImpl.writeReligiousServiceRequestCSV(
+        derby.getReligiousServiceRequestList(),
+        "edu/wpi/cs3733/c22/teamA/db/ReligiousServiceRequest.csv");
+  }
+
+  @Test
+  public void testSanitation() throws IOException {
+    Adb.initialConnection();
+
+    SanitationServiceRequestDerbyImpl.inputFromCSV(
+        "SanitationServiceRequest", "edu/wpi/cs3733/c22/teamA/db/SanitationServiceRequest.csv");
+    SanitationServiceRequestDerbyImpl derby = new SanitationServiceRequestDerbyImpl();
+    SanitationServiceRequest ssr =
+        new SanitationServiceRequest(
+            "san123",
+            "start",
+            "end",
+            "emp1",
+            "emp2",
+            "2020-01-01 12:45:00",
+            "In Progress",
+            "High Priority",
+            "no additional comments",
+            "floor");
+    System.out.println("Testing enter");
+    derby.enterSanitationServiceRequest(ssr);
+    System.out.println("Testing get");
+    SanitationServiceRequest rsr2 = derby.getSanitationServiceRequest("san123");
+    System.out.println("Got RequestID: " + rsr2.getRequestID());
+    System.out.println("Testing update: updating religion to 'super'");
+    derby.updateSanitationServiceRequest("san123", "sanitationType", "super");
+    SanitationServiceRequest rsr3 = derby.getSanitationServiceRequest("san123");
+    System.out.println("Got santype: " + rsr3.getSanitationType());
+    System.out.println("Testing getList");
+    List<SanitationServiceRequest> list = derby.getSanitationServiceRequestList();
+    System.out.println("First element santype: " + list.get(0).getSanitationType());
+    System.out.println("testing delete");
+    derby.deleteSanitationServiceRequest("san123");
+    SanitationServiceRequestDerbyImpl.exportToCSV(
+        "SanitationServiceRequest",
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/SanitationServiceRequest.csv");
+  }
+
+  @Test
+  public void testLaundry() throws IOException {
+    Adb.initialConnection();
+    LaundryServiceRequestDerbyImpl derby = new LaundryServiceRequestDerbyImpl();
+
+    LaundryServiceRequestDerbyImpl.inputFromCSV(
+        "LaundryServiceRequest", "edu/wpi/cs3733/c22/teamA/db/LaundryServiceRequest.csv");
+    LaundryServiceRequest lsr =
+        new LaundryServiceRequest(
+            "lan123",
+            "start",
+            "end",
+            "emp1",
+            "emp2",
+            "2020-01-01 12:45:00",
+            "In Progress",
+            "High Priority",
+            "no additional comments",
+            "Normal Wash");
+    System.out.println("Testing enter");
+    derby.enterLaundryServiceRequest(lsr);
+    System.out.println("Testing get");
+    LaundryServiceRequest rsr2 = derby.getLaundryServiceRequest("lan123");
+    System.out.println("Got RequestID: " + rsr2.getRequestID());
+    System.out.println("Testing update: updating washMode to 'Super Wash'");
+    derby.updateLaundryServiceRequest("lan123", "washMode", "Super Wash");
+    LaundryServiceRequest rsr3 = derby.getLaundryServiceRequest("lan123");
+    System.out.println("Got washMode: " + rsr3.getWashMode());
+    System.out.println("Testing getList");
+    List<LaundryServiceRequest> list = derby.getLaundryServiceRequestList();
+    System.out.println("First element washMode: " + list.get(0).getWashMode());
+    System.out.println("testing delete");
+    // derby.deleteLaundryServiceRequest("lan123");
+    LaundryServiceRequestDerbyImpl.exportToCSV(
+        "LaundryServiceRequest",
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/LaundryServiceRequest.csv");
+  }
+
+  @Test
+  public void testLanguage() throws IOException {
+    Adb.initialConnection();
+
+    LanguageServiceRequestDerbyImpl.inputFromCSV(
+        "LanguageServiceRequest", "edu/wpi/cs3733/c22/teamA/db/LanguageServiceRequest.csv");
+
+    LanguageServiceRequestDerbyImpl derby = new LanguageServiceRequestDerbyImpl();
+    LanguageServiceRequest lsr =
+        new LanguageServiceRequest(
+            "lan124",
+            "start",
+            "end",
+            "emp1",
+            "emp2",
+            "2020-01-01 12:45:00",
+            "In Progress",
+            "High Priority",
+            "no additional comments",
+            "Normal Wash");
+    System.out.println("Testing enter");
+    derby.enterLanguageServiceRequest(lsr);
+    System.out.println("Testing get");
+    LanguageServiceRequest rsr2 = derby.getLanguageServiceRequest("lan123");
+    System.out.println("Got RequestID: " + rsr2.getRequestID());
+    System.out.println("Testing update: updating washMode to 'Super Wash'");
+    derby.updateLanguageServiceRequest("lan123", "language", "Super Wash");
+    LanguageServiceRequest rsr3 = derby.getLanguageServiceRequest("lan123");
+    System.out.println("Got washMode: " + rsr3.getLanguage());
+    System.out.println("Testing getList");
+    List<LanguageServiceRequest> list = derby.getLanguageServiceRequestList();
+    System.out.println("First element language: " + list.get(0).getLanguage());
+    System.out.println("testing delete");
+    derby.deleteLanguageServiceRequest("lan123");
+    LanguageServiceRequestDerbyImpl.exportToCSV(
+        "LanguageServiceRequest",
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/LanguageServiceRequest.csv");
+  }
+
+  @Test
+  public void testFoodDelivery() throws IOException {
+
+    Adb.initialConnection();
+
+    FoodDeliveryServiceRequestDerbyImpl.inputFromCSV(
+        "FoodDeliveryServiceRequest", "edu/wpi/cs3733/c22/teamA/db/FoodDeliveryServiceRequest.csv");
+
+    FoodDeliveryServiceRequestDerbyImpl derby = new FoodDeliveryServiceRequestDerbyImpl();
+    FoodDeliveryServiceRequest fdsr =
+        new FoodDeliveryServiceRequest(
+            "fod123",
+            "start",
+            "end",
+            "emp1",
+            "emp2",
+            "2020-01-01 12:45:00",
+            "In Progress",
+            "High Priority",
+            "no additional comments",
+            "Steak",
+            "Fries",
+            "Soda",
+            "Cake");
+    System.out.println("Testing enter");
+    derby.enterFoodDeliveryRequest(fdsr);
+    System.out.println("Testing get");
+    FoodDeliveryServiceRequest rsr2 = derby.getFoodDeliveryRequest("fod123");
+    System.out.println("Got RequestID: " + rsr2.getRequestID());
+    System.out.println("Testing update: updating dessert to 'cookie'");
+    derby.updateFoodDeliveryRequest("fod123", "dessert", "cookie");
+    FoodDeliveryServiceRequest rsr3 = derby.getFoodDeliveryRequest("fod123");
+    System.out.println("Got dessert: " + rsr3.getDessert());
+    System.out.println("Testing getList");
+    List<FoodDeliveryServiceRequest> list = derby.getFoodDeliveryRequestList();
+    System.out.println("First element dessert: " + list.get(0).getDessert());
+    System.out.println("testing delete");
+    derby.deleteFoodDeliveryRequest("fod123");
+    FoodDeliveryServiceRequestDerbyImpl.exportToCSV(
+        "FoodDeliveryServiceRequest",
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/FoodDeliveryServiceRequest.csv");
+  }
+
+  @Test
+  public void testMedicalEquipment() {
+    Adb.initialConnection();
+    MedicalEquipmentServiceRequestDerbyImpl derby = new MedicalEquipmentServiceRequestDerbyImpl();
+    MedicalEquipmentServiceRequest mesr =
+        new MedicalEquipmentServiceRequest(
+            "meq123",
+            "start",
+            "end",
+            "emp1",
+            "emp2",
+            "2020-01-01 12:45:00",
+            "In Progress",
+            "High Priority",
+            "no additional comments",
+            "bed1");
+    System.out.println("Testing enter");
+    derby.enterMedicalEquipmentServiceRequest(mesr);
+    System.out.println("Testing get");
+    MedicalEquipmentServiceRequest rsr2 = derby.getMedicalEquipmentServiceRequest("meq123");
+    System.out.println("Got RequestID: " + rsr2.getRequestID());
+    System.out.println("Testing update: updating equipmentID to 'xray1'");
+    derby.updateMedicalEquipmentServiceRequest("meq123", "equipmentID", "xray1");
+    MedicalEquipmentServiceRequest rsr3 = derby.getMedicalEquipmentServiceRequest("meq123");
+    System.out.println("Got washMode: " + rsr3.getEquipmentID());
+    System.out.println("Testing getList");
+    List<MedicalEquipmentServiceRequest> list = derby.getMedicalEquipmentServiceRequestList();
+    System.out.println("First element language: " + list.get(0).getEquipmentID());
+    System.out.println("testing delete");
+    derby.deleteMedicalEquipment("meq123");
   }
 }
