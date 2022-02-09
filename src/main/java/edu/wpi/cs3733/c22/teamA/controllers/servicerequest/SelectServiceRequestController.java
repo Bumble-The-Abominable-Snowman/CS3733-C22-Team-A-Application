@@ -3,6 +3,7 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 import com.jfoenix.controls.JFXButton;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +29,7 @@ public class SelectServiceRequestController {
   private final SceneController sceneController = Aapp.sceneController;
 
   @FXML
-  private void initialize() {
+  private void initialize() throws FileNotFoundException {
     medicalEquipmentDeliveryButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
     religiousRequestsButton.setBackground(

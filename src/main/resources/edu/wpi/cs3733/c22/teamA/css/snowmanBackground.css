@@ -1,0 +1,4 @@
+.snowmanBackground {
+    -fx-background-image: url('../images/snowmanpic.jpg');
+    -fx-background-size: 100% 100%;
+}

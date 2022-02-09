@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.settings.ExportToBackupController">
+<AnchorPane styleClass="snowmanBackground" stylesheets="@snowman/snowmanBackground.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.settings.ExportToBackupController">
    <children>
       <Button fx:id="homeButton" layoutX="526.0" layoutY="346.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" />
       <Button fx:id="backButton" layoutX="43.0" layoutY="342.0" mnemonicParsing="false" onAction="#returnToSettingsScene" prefHeight="34.0" prefWidth="41.0" text="Back" />
