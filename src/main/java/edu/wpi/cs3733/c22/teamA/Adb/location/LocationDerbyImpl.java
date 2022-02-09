@@ -67,6 +67,18 @@ public class LocationDerbyImpl implements LocationDAO {
     }
   }
 
+  public void enterLocationNode(Location location) {
+    enterLocationNode(
+        location.getNodeID(),
+        location.getXCoord(),
+        location.getYCoord(),
+        location.getFloor(),
+        location.getBuilding(),
+        location.getNodeType(),
+        location.getLongName(),
+        location.getShortName());
+  }
+
   // Method to add node to location table.
   public void enterLocationNode(
       String ID,
