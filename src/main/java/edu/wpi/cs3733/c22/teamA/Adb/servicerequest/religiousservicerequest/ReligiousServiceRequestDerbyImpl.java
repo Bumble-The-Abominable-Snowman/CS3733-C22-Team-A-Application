@@ -21,7 +21,7 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
       Statement get = connection.createStatement();
       String str =
           String.format(
-              "SELECT * FROM ServiceRequestDerbyImpl s, ReligiousServiceRequest r WHERE (s.requestID = r.requestID) AND r.requestID = '%s'",
+              "SELECT * FROM ServiceRequest s, ReligiousServiceRequest r WHERE (s.requestID = r.requestID) AND r.requestID = '%s'",
               id);
 
       ResultSet rset = get.executeQuery(str);
@@ -119,7 +119,7 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
 
       String str =
           String.format(
-              "INSERT INTO ServiceRequestDerbyImpl(requestID, startLocation, endLocation, "
+              "INSERT INTO ServiceRequest(requestID, startLocation, endLocation, "
                   + "employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments) "
                   + " VALUES('%s', '%s', '%s', '%s', '%s', %s, '%s', '%s', '%s')",
               requestID,
@@ -151,8 +151,11 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement delete = connection.createStatement();
-      String str = String.format("DELETE FROM ServiceRequestDerbyImpl WHERE requestID = '%s'", id);
+      String str = String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", id);
       delete.execute(str);
+
+      delete.execute(
+          String.format("DELETE FROM ReligiousServiceRequest WHERE requestID = '%s'", id));
 
     } catch (SQLException e) {
       System.out.println("Failed");
@@ -180,7 +183,7 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
         String requestStatus = rset.getString("requestStatus");
         String requestType = rset.getString("requestType");
         String comments = rset.getString("comments");
-        String language = rset.getString("language");
+        String religion = rset.getString("religion");
 
         ReligiousServiceRequest rsr =
             new ReligiousServiceRequest(
@@ -193,7 +196,7 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
                 requestStatus,
                 requestType,
                 comments,
-                language);
+                religion);
         reqList.add(rsr);
       }
     } catch (SQLException e) {
