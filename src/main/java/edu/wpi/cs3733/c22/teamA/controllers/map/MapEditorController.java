@@ -19,7 +19,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -76,6 +75,7 @@ public class MapEditorController {
   List<Location> locationFromDatabase = locationBase.getNodeList();
   Location selectedLocation;
   HashMap<Button, Location> buttonLocation = new HashMap<>();
+  ArrayList<Label> labels = new ArrayList<>();
   String currentID = "";
 
   private final SceneController sceneController = Aapp.sceneController;
@@ -106,6 +106,7 @@ public class MapEditorController {
         .selectedItemProperty()
         .addListener(
             (obs, oldValue, newValue) -> {
+              clearButtonsLabel();
               if (newValue.equals("Choose Floor:")) {
                 mapDisplay.setVisible(false);
               } else {
@@ -155,6 +156,7 @@ public class MapEditorController {
                   if (location.getFloor().equals(floor)) {
                     Button button = new Button();
                     Label label = new Label();
+                    labels.add(label);
                     label.setText(location.getShortName());
                     label.setFont(new Font(15));
                     final Delta dragDelta = new Delta();
@@ -178,8 +180,8 @@ public class MapEditorController {
 
                     button.setOnAction(
                         event -> {
-                          highlight(button, selectedButton);
-                          selectedButton = button;
+                          // highlight(button, selectedButton);
+                          // selectedButton = button;
                           existingLocSelected(buttonLocation.get(button));
                           currentID = buttonLocation.get(button).getNodeID();
                         });
@@ -192,12 +194,18 @@ public class MapEditorController {
                           existingLocSelected(buttonLocation.get(button));
                           editButton.setDisable(false);
                           deleteButton.setDisable(false);
+                          saveButton.setDisable(true);
+                          clearButton.setDisable(true);
                         });
                     button.setOnMouseReleased(mouseEvent -> button.setCursor(Cursor.HAND));
                     button.setOnMouseDragged(
                         mouseEvent -> {
                           button.setLayoutX(mouseEvent.getSceneX() + dragDelta.x);
                           button.setLayoutY(mouseEvent.getSceneY() + dragDelta.y);
+                          xPosText.setText(
+                              String.valueOf(button.getLayoutX() - mapDisplay.getLayoutX() + 8));
+                          yPosText.setText(
+                              String.valueOf(button.getLayoutY() - mapDisplay.getLayoutY() + 24));
                         });
                     button.setOnMouseEntered(mouseEvent -> button.setCursor(Cursor.HAND));
                     draw(button, label);
@@ -205,6 +213,16 @@ public class MapEditorController {
                 }
               }
             });
+  }
+
+  public void clearButtonsLabel() {
+    for (Button b : buttonLocation.keySet()) {
+      anchorPane.getChildren().remove(b);
+    }
+    for (Label l : labels) {
+      anchorPane.getChildren().remove(l);
+    }
+    labels.clear();
   }
 
   @FXML
@@ -215,6 +233,7 @@ public class MapEditorController {
   @FXML
   public void deleteLocation() {
     locationBase.deleteLocationNode(nodeIDText.getText());
+    this.initialize();
   }
 
   // as long as each diamond on the map is assigned a whole
