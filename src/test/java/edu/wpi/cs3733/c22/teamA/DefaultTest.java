@@ -398,6 +398,5 @@ public class DefaultTest {
     System.out.println("First element language: " + list.get(0).getEquipmentID());
     System.out.println("testing delete");
     derby.deleteMedicalEquipment("meq123");
-
   }
 }

@@ -2,6 +2,7 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
@@ -94,7 +95,7 @@ public class FoodDeliveryController extends GenericServiceRequestsController {
         "PlaceHolderID",
         "N/A",
         toLocationChoice.getSelectionModel().getSelectedItem().toString(),
-        "Alex",
+        Aapp.factory.getUsername(),
         employeeChoice.getSelectionModel().getSelectedItem().toString(),
         new Timestamp((new Date()).getTime()).toString(),
         "NEW",

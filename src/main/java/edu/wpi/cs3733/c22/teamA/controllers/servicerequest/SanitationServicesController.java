@@ -2,6 +2,7 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
@@ -79,11 +80,11 @@ public class SanitationServicesController extends GenericServiceRequestsControll
             "PlaceHolderID",
             "N/A",
             toLocationChoice.getSelectionModel().getSelectedItem(),
-            "Alex",
+            Aapp.factory.getUsername(),
             "employee",
             new Timestamp((new Date()).getTime()).toString(),
             "NEW",
-            "Language Interpreter",
+            "Sanitation Services",
             "N/A",
             typeChoice.getValue());
     SanitationServiceRequestDAO sanitationServiceRequestDAO =
