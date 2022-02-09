@@ -1,16 +1,22 @@
 package edu.wpi.cs3733.c22.teamA.controllers.map;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextArea;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import java.io.*;
+import edu.wpi.cs3733.c22.teamA.entities.MedicalEquipment;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -25,29 +31,19 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 
 public class MapEditorController {
+  @FXML private JFXCheckBox locationToggle;
+  @FXML private JFXCheckBox dragToggleBox;
+  @FXML private JFXCheckBox equipToggleBox;
+  @FXML private JFXCheckBox textToggleBox;
   @FXML private JFXButton deleteButton;
   @FXML private ComboBox floorSelectionComboBox;
   @FXML private AnchorPane anchorPane;
   private List<Button> locationMarkers;
   private List<Location> locations;
+  private List<MedicalEquipment> medicalEquipments;
   private Polygon locationMarkerShape = new Polygon();
+  private Polygon equipmentMarkerShape = new Polygon();
   private Button selectedButton;
-
-  public MapEditorController() {
-    locationMarkers = new ArrayList<>();
-    locations = new ArrayList<>();
-    // locationMarkerShape.getPoints().addAll(new Double[] {2.0, 8.0, 0.0, 4.0, 2.0, 0.0, 4.0,
-    // 4.0});
-    locationMarkerShape.getPoints().addAll(new Double[] {1.0, 4.0, 0.0, 2.0, 1.0, 0.0, 2.0, 2.0});
-  }
-
-  @FXML JFXButton groundFloorButton = new JFXButton();
-  @FXML JFXButton lowerFloorOneButton = new JFXButton();
-  @FXML JFXButton lowerFloorTwoButton = new JFXButton();
-  @FXML JFXButton floorOneButton = new JFXButton();
-  @FXML JFXButton floorTwoButton = new JFXButton();
-  @FXML JFXButton floorThreeButton = new JFXButton();
-  @FXML JFXButton floorFourteenButton = new JFXButton();
 
   @FXML JFXTextArea nodeIDText = new JFXTextArea();
   @FXML JFXTextArea xPosText = new JFXTextArea();
@@ -72,13 +68,26 @@ public class MapEditorController {
   @FXML ImageView mapDisplay = new ImageView();
 
   LocationDAO locationBase = new LocationDerbyImpl();
-  List<Location> locationFromDatabase = locationBase.getNodeList();
+  MedicalEquipmentDAO medicalEquipmentDao = new MedicalEquipmentDerbyImpl();
   Location selectedLocation;
   HashMap<Button, Location> buttonLocation = new HashMap<>();
+  HashMap<Button, Label> buttonLabel = new HashMap<>();
+  HashMap<Button, MedicalEquipment> buttonEquipment = new HashMap<>();
   ArrayList<Label> labels = new ArrayList<>();
+  ArrayList<Button> medicalButtons = new ArrayList<>();
   String currentID = "";
 
   private final SceneController sceneController = Aapp.sceneController;
+
+  public MapEditorController() {
+    locationMarkers = new ArrayList<>();
+    locations = new ArrayList<>();
+    medicalEquipments = new ArrayList<>();
+    // locationMarkerShape.getPoints().addAll(new Double[] {2.0, 8.0, 0.0, 4.0, 2.0, 0.0, 4.0,
+    // 4.0});
+    locationMarkerShape.getPoints().addAll(new Double[] {1.0, 4.0, 0.0, 2.0, 1.0, 0.0, 2.0, 2.0});
+    equipmentMarkerShape.getPoints().addAll(new Double[] {0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0});
+  }
 
   @FXML
   public void initialize() {
@@ -95,11 +104,42 @@ public class MapEditorController {
     polygon.getPoints().addAll(new Double[] {1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 2.0, 1.0, 1.0, 1.0});
     inputVBox.setDisable(true);
     locations.addAll(new ArrayList<>(new LocationDerbyImpl().getNodeList()));
+    medicalEquipments.addAll(
+        new ArrayList<>(new MedicalEquipmentDerbyImpl().getMedicalEquipmentList()));
+    for (MedicalEquipment m : medicalEquipments) {
+      System.out.println(m.getCurrentLocation());
+    }
+
+    dragToggleBox.setSelected(true);
+    textToggleBox.setSelected(true);
+    equipToggleBox.setSelected(true);
+    locationToggle.setSelected(true);
 
     floorSelectionComboBox.getItems().removeAll(floorSelectionComboBox.getItems());
     floorSelectionComboBox
         .getItems()
         .addAll("Choose Floor:", "Floor 1", "Floor 2", "Floor 3", "L1", "L2", "Ground");
+
+    equipToggleBox
+        .selectedProperty()
+        .addListener(
+            (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
+              showMedicalButtons(new_val);
+            });
+
+    locationToggle
+        .selectedProperty()
+        .addListener(
+            (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
+              showButtons(new_val);
+            });
+
+    textToggleBox
+        .selectedProperty()
+        .addListener(
+            (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
+              drawLabels(new_val);
+            });
     floorSelectionComboBox.getSelectionModel().select("Choose Floor:");
     floorSelectionComboBox
         .getSelectionModel()
@@ -151,7 +191,10 @@ public class MapEditorController {
 
                 // anchorPane.getChildren().clear();
                 // anchorPane.getChildren().add(floorSelectionComboBox);
+                HashMap<String, Location> roomNames = new HashMap<>();
+
                 for (Location location : locations) {
+                  roomNames.put(location.getNodeID(), location);
                   int count = 0;
                   if (location.getFloor().equals(floor)) {
                     Button button = new Button();
@@ -174,6 +217,7 @@ public class MapEditorController {
                     }
                     count++;
 
+                    buttonLabel.put(button, label);
                     buttonLocation.put(button, location);
                     button.setPickOnBounds(false);
                     button.setStyle("-fx-background-color: #78aaf0");
@@ -200,13 +244,125 @@ public class MapEditorController {
                     button.setOnMouseReleased(mouseEvent -> button.setCursor(Cursor.HAND));
                     button.setOnMouseDragged(
                         mouseEvent -> {
-                          button.setLayoutX(mouseEvent.getSceneX() + dragDelta.x);
-                          button.setLayoutY(mouseEvent.getSceneY() + dragDelta.y);
-                          xPosText.setText(
-                              String.valueOf(button.getLayoutX() - mapDisplay.getLayoutX() + 8));
-                          yPosText.setText(
-                              String.valueOf(button.getLayoutY() - mapDisplay.getLayoutY() + 24));
+                          if (dragToggleBox.isSelected()) {
+                            button.setLayoutX(mouseEvent.getSceneX() + dragDelta.x);
+                            button.setLayoutY(mouseEvent.getSceneY() + dragDelta.y);
+                            xPosText.setText(
+                                String.valueOf(button.getLayoutX() - mapDisplay.getLayoutX() + 8));
+                            yPosText.setText(
+                                String.valueOf(button.getLayoutY() - mapDisplay.getLayoutY() + 24));
+                            //
+                            // xPosText.setText(String.valueOf(mouseEvent.getSceneX() +
+                            // dragDelta.x));
+                            //
+                            // yPosText.setText(String.valueOf(mouseEvent.getSceneY() +
+                            // dragDelta.y));
+                            Label correspondingLabel = buttonLabel.get(button);
+                            correspondingLabel.setLayoutX(mouseEvent.getSceneX() + dragDelta.x + 8);
+                            correspondingLabel.setLayoutY(
+                                mouseEvent.getSceneY() + dragDelta.y - 24);
+                          }
                         });
+                    button.setOnMouseEntered(mouseEvent -> button.setCursor(Cursor.HAND));
+                    draw(button, label);
+                  }
+                }
+                for (MedicalEquipment medicalEquipment : medicalEquipments) {
+                  System.out.println(medicalEquipment.getCurrentLocation());
+                  System.out.println(roomNames.containsKey(medicalEquipment.getCurrentLocation()));
+                  if (roomNames.containsKey(medicalEquipment.getCurrentLocation())) {
+
+                    Button button = new Button();
+                    Label label = new Label();
+                    labels.add(label);
+                    label.setText(medicalEquipment.getEquipmentType());
+                    label.setFont(new Font(15));
+                    final Delta dragDelta = new Delta();
+                    button.setMinWidth(4.0);
+                    button.setMinHeight(2.0);
+                    button.setShape(equipmentMarkerShape);
+                    button.setLayoutX(
+                        roomNames.get(medicalEquipment.getCurrentLocation()).getXCoord()
+                            + mapDisplay.getLayoutX()
+                            - 8
+                            + 10);
+                    button.setLayoutY(
+                        roomNames.get(medicalEquipment.getCurrentLocation()).getYCoord()
+                            + mapDisplay.getLayoutY()
+                            - 24
+                            + 10);
+
+                    label.setLayoutX(
+                        roomNames.get(medicalEquipment.getCurrentLocation()).getXCoord()
+                            + mapDisplay.getLayoutX()
+                            - 8
+                            + 7.5
+                            + 10);
+                    label.setLayoutY(
+                        roomNames.get(medicalEquipment.getCurrentLocation()).getYCoord()
+                            + mapDisplay.getLayoutY()
+                            - 24
+                            - 15
+                            + 10);
+
+                    buttonEquipment.put(button, medicalEquipment);
+                    medicalButtons.add(button);
+                    buttonLabel.put(button, label);
+                    buttonLocation.put(
+                        button, roomNames.get(medicalEquipment.getCurrentLocation()));
+                    button.setPickOnBounds(false);
+                    button.setStyle("-fx-background-color: RED");
+
+                    button.setOnAction(
+                        event -> {
+                          // highlight(button, selectedButton);
+                          // selectedButton = button;
+                          existingLocSelected(buttonLocation.get(button));
+                          currentID = buttonLocation.get(button).getNodeID();
+                        });
+                    button.setOnMousePressed(
+                        mouseEvent -> {
+                          // record a delta distance for the drag and drop operation.
+                          dragDelta.x = button.getLayoutX() - mouseEvent.getSceneX();
+                          dragDelta.y = button.getLayoutY() - mouseEvent.getSceneY();
+                          button.setCursor(Cursor.MOVE);
+                          existingEquipmentSelected(buttonEquipment.get(button));
+                          editButton.setDisable(false);
+                          deleteButton.setDisable(false);
+                          saveButton.setDisable(true);
+                          clearButton.setDisable(true);
+                        });
+                    button.setOnMouseReleased(mouseEvent -> button.setCursor(Cursor.HAND));
+                    //                    button.setOnMouseDragged(
+                    //                            mouseEvent -> {
+                    //                              if (dragToggleBox.isSelected()) {
+                    //                                button.setLayoutX(mouseEvent.getSceneX() +
+                    // dragDelta.x);
+                    //                                button.setLayoutY(mouseEvent.getSceneY() +
+                    // dragDelta.y);
+                    //                                xPosText.setText(
+                    //                                        String.valueOf(button.getLayoutX() -
+                    // mapDisplay.getLayoutX() + 8));
+                    //                                yPosText.setText(
+                    //                                        String.valueOf(button.getLayoutY() -
+                    // mapDisplay.getLayoutY() + 24));
+                    //                                //
+                    //                                //
+                    // xPosText.setText(String.valueOf(mouseEvent.getSceneX() +
+                    //                                // dragDelta.x));
+                    //                                //
+                    //                                //
+                    // yPosText.setText(String.valueOf(mouseEvent.getSceneY() +
+                    //                                // dragDelta.y));
+                    //                                Label correspondingLabel =
+                    // buttonLabel.get(button);
+                    //
+                    // correspondingLabel.setLayoutX(mouseEvent.getSceneX() + dragDelta.x + 8);
+                    //                                correspondingLabel.setLayoutY(
+                    //                                        mouseEvent.getSceneY() + dragDelta.y -
+                    // 24);
+                    //                              }
+                    //                            });
                     button.setOnMouseEntered(mouseEvent -> button.setCursor(Cursor.HAND));
                     draw(button, label);
                   }
@@ -225,9 +381,83 @@ public class MapEditorController {
     labels.clear();
   }
 
+  public void drawLabels(boolean value) {
+    for (Label l : labels) {
+      l.setVisible(value);
+    }
+  }
+
+  public void showButtons(boolean value) {
+    for (Button b : buttonLocation.keySet()) {
+      b.setVisible(value);
+    }
+  }
+
+  public void showMedicalButtons(boolean value) {
+    for (Button b : medicalButtons) {
+      b.setVisible(value);
+    }
+  }
+
   @FXML
   public void newLocPressed() {
-    inputVBox.setDisable(false);
+    Button button = new Button();
+    Label label = new Label();
+    labels.add(label);
+    label.setText("New Location");
+    label.setFont(new Font(15));
+    final Delta dragDelta = new Delta();
+    button.setMinWidth(4.0);
+    button.setMinHeight(2.0);
+    button.setShape(locationMarkerShape);
+    button.setLayoutX(mapDisplay.getLayoutX() - 8);
+    button.setLayoutY(mapDisplay.getLayoutY() - 24);
+
+    label.setLayoutX(mapDisplay.getLayoutX() - 8 + 7.5);
+    label.setLayoutY(mapDisplay.getLayoutY() - 24 - 15);
+
+    buttonLabel.put(button, label);
+    buttonLocation.put(button, new Location());
+    labels.add(label);
+
+    button.setPickOnBounds(false);
+    button.setStyle("-fx-background-color: #78aaf0");
+
+    button.setOnAction(
+        event -> {
+          // highlight(button, selectedButton);
+          // selectedButton = button;
+          existingLocSelected(buttonLocation.get(button));
+          currentID = buttonLocation.get(button).getNodeID();
+        });
+    button.setOnMousePressed(
+        mouseEvent -> {
+          // record a delta distance for the drag and drop operation.
+          dragDelta.x = button.getLayoutX() - mouseEvent.getSceneX();
+          dragDelta.y = button.getLayoutY() - mouseEvent.getSceneY();
+          button.setCursor(Cursor.MOVE);
+          existingLocSelected(buttonLocation.get(button));
+          editButton.setDisable(false);
+          deleteButton.setDisable(false);
+          saveButton.setDisable(true);
+          clearButton.setDisable(true);
+        });
+    button.setOnMouseReleased(mouseEvent -> button.setCursor(Cursor.HAND));
+    button.setOnMouseDragged(
+        mouseEvent -> {
+          if (dragToggleBox.isSelected()) {
+            button.setLayoutX(mouseEvent.getSceneX() + dragDelta.x);
+            button.setLayoutY(mouseEvent.getSceneY() + dragDelta.y);
+            xPosText.setText(String.valueOf(button.getLayoutX() - mapDisplay.getLayoutX() + 8));
+            yPosText.setText(String.valueOf(button.getLayoutY() - mapDisplay.getLayoutY() + 24));
+
+            Label correspondingLabel = buttonLabel.get(button);
+            correspondingLabel.setLayoutX(mouseEvent.getSceneX() + dragDelta.x + 8);
+            correspondingLabel.setLayoutY(mouseEvent.getSceneY() + dragDelta.y - 24);
+          }
+        });
+    button.setOnMouseEntered(mouseEvent -> button.setCursor(Cursor.HAND));
+    draw(button, label);
   }
 
   @FXML
@@ -251,13 +481,36 @@ public class MapEditorController {
     longnameText.setEditable(false);
     shortnameText.setEditable(false);
     nodeIDText.setText(selectedLocation.getNodeID());
-    xPosText.setText(String.valueOf(selectedLocation.getXCoord()));
-    yPosText.setText(String.valueOf(selectedLocation.getYCoord()));
+    if (xPosText.getText() == null || xPosText.getText().equals("")) {
+      xPosText.setText(String.valueOf(selectedLocation.getXCoord()));
+      yPosText.setText(String.valueOf(selectedLocation.getYCoord()));
+    }
+
     floorText.setText(selectedLocation.getFloor());
     buildingText.setText(selectedLocation.getBuilding());
     typeText.setText(selectedLocation.getNodeType());
     longnameText.setText(selectedLocation.getLongName());
     shortnameText.setText(selectedLocation.getShortName());
+  }
+
+  public void existingEquipmentSelected(MedicalEquipment medicalEquipment) {
+    inputVBox.setDisable(false);
+
+    nodeIDText.setEditable(false);
+    xPosText.setEditable(false);
+    yPosText.setEditable(false);
+    floorText.setEditable(false);
+    buildingText.setEditable(false);
+    typeText.setEditable(false);
+    longnameText.setEditable(false);
+    shortnameText.setEditable(false);
+
+    nodeIDText.setText(medicalEquipment.getEquipmentID());
+    floorText.setText("");
+    buildingText.setText("");
+    typeText.setText(medicalEquipment.getEquipmentType());
+    longnameText.setText("N/A");
+    shortnameText.setText(medicalEquipment.getCurrentLocation());
   }
 
   public void saveChanges() {
