@@ -100,7 +100,7 @@ public class FoodDeliveryController extends GenericServiceRequestsController {
         new Timestamp((new Date()).getTime()).toString(),
         "NEW",
         "Food Delivery",
-        commentsBox.getText(),
+        commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
         mainChoice.getValue(),
         sideChoice.getValue(),
         drinkChoice.getValue(),

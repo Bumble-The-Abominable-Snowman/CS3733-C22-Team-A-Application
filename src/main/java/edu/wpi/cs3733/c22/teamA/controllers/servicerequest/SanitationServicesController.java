@@ -85,7 +85,7 @@ public class SanitationServicesController extends GenericServiceRequestsControll
             new Timestamp((new Date()).getTime()).toString(),
             "NEW",
             "Sanitation Services",
-            "N/A",
+            commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
             typeChoice.getValue());
     SanitationServiceRequestDAO sanitationServiceRequestDAO =
         new SanitationServiceRequestDerbyImpl();

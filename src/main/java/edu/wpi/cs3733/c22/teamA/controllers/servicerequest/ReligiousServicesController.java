@@ -156,7 +156,7 @@ public class ReligiousServicesController extends GenericServiceRequestsControlle
               new Timestamp((new Date()).getTime()).toString(),
               "NEW",
               "Religious Services",
-              "N/A",
+              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               religionChoice.getValue());
       ReligiousServiceRequestDAO religiousServiceRequestDAO =
           new ReligiousServiceRequestDerbyImpl();

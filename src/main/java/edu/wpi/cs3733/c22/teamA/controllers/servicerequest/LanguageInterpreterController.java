@@ -118,7 +118,7 @@ public class LanguageInterpreterController extends GenericServiceRequestsControl
               new Timestamp((new Date()).getTime()).toString(),
               "NEW",
               "Language Interpreter",
-              "N/A",
+              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               languageChoice.getValue());
 
       LanguageServiceRequestDAO languageServiceRequestDAO = new LanguageServiceRequestDerbyImpl();

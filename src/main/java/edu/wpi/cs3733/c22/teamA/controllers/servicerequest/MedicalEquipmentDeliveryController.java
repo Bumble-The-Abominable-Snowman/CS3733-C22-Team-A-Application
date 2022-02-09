@@ -163,7 +163,7 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
               new Timestamp((new Date()).getTime()).toString(),
               "NEW",
               "Medical Equipment",
-              "N/A",
+              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               typeChoice.getSelectionModel().getSelectedItem().toString());
 
       medicalEquipmentServiceRequestDAO.enterMedicalEquipmentServiceRequest(
