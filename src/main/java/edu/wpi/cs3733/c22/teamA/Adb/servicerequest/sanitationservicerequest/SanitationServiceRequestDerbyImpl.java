@@ -2,6 +2,7 @@ package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest;
 
 import edu.wpi.cs3733.c22.teamA.entities.requests.SanitationServiceRequest;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -261,6 +262,7 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
       List<SanitationServiceRequest> List, String csvFilePath) throws IOException {
 
     // create a writer
+    File file = new File(csvFilePath);
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(

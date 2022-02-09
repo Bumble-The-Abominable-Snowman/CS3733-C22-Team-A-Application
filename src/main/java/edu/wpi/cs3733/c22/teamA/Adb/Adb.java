@@ -112,6 +112,9 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
+          "CREATE TABLE MedicalEquipmentServiceRequest(requestID varchar(25), equipmentID varchar(25))");
+
+      addTable.execute(
           "CREATE TABLE MedicalEquipmentServiceRequest(requestID varchar(25), equipmentID varchar(25), CONSTRAINT FOREIGN KEY requestID REFERENCES ServiceRequest(requestID))");
 
     } catch (SQLException e) {
@@ -122,6 +125,9 @@ public class Adb {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement addTable = connection.createStatement();
+
+      addTable.execute(
+          "CREATE TABLE FoodDeliveryServiceRequest(requestID varchar(25), mainDish varchar(50), sideDish varchar(50), beverage varchar(50), dessert varchar(50))");
 
       addTable.execute(
           "CREATE TABLE FoodDeliveryServiceRequest(requestID varchar(25), mainDish varchar(50), sideDish varchar(50), beverage varchar(50), dessert varchar(50), CONSTRAINT FOREIGN KEY requestID REFERENCES ServiceRequest(requestID))");
@@ -136,6 +142,9 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
+          "CREATE TABLE LanguageServiceRequest(requestID varchar(25), language varchar(25))");
+
+      addTable.execute(
           "CREATE TABLE LanguageServiceRequest(requestID varchar(25), language varchar(25), CONSTRAINT FOREIGN KEY requestID REFERENCES ServiceRequest(requestID))");
 
     } catch (SQLException e) {
@@ -146,6 +155,9 @@ public class Adb {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement addTable = connection.createStatement();
+
+      addTable.execute(
+          "CREATE TABLE LaundryServiceRequest(requestID varchar(25), washMode varchar(25))");
 
       addTable.execute(
           "CREATE TABLE LaundryServiceRequest(requestID varchar(25), washMode varchar(25), CONSTRAINT FOREIGN KEY requestID REFERENCES ServiceRequest(requestID))");
@@ -161,6 +173,9 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
+          "CREATE TABLE ReligiousServiceRequest(requestID varchar(25), religion varchar(25))");
+
+      addTable.execute(
           "CREATE TABLE ReligiousServiceRequest(requestID varchar(25), religion varchar(25), CONSTRAINT FOREIGN KEY requestID REFERENCES ServiceRequest(requestID))");
 
     } catch (SQLException e) {
@@ -172,6 +187,9 @@ public class Adb {
 
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement addTable = connection.createStatement();
+
+      addTable.execute(
+          "CREATE TABLE SanitationServiceRequest(requestID varchar(25), sanitationType varchar(25))");
 
       addTable.execute(
           "CREATE TABLE SanitationServiceRequest(requestID varchar(25), sanitationType varchar(25), CONSTRAINT FOREIGN KEY requestID REFERENCES ServiceRequest(requestID))");
