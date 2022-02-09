@@ -2,6 +2,7 @@ package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest;
 
 import edu.wpi.cs3733.c22.teamA.entities.requests.SanitationServiceRequest;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -77,7 +78,6 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
                 change,
                 ID);
       }
-
       update.execute(str);
     } catch (SQLException e) {
       System.out.println("Failed");
@@ -133,6 +133,7 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
               comments);
 
       insert.executeUpdate(str);
+
       String str2 =
           String.format(
               "INSERT INTO SanitationServiceRequest(requestID, sanitationType) "
@@ -154,6 +155,9 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
       Statement delete = connection.createStatement();
       String str = String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", id);
       delete.execute(str);
+
+      delete.execute(
+          String.format("DELETE FROM SanitationServiceRequest WHERE requestID = '%s'", id));
 
     } catch (SQLException e) {
       System.out.println("Failed");
@@ -258,6 +262,8 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
       List<SanitationServiceRequest> List, String csvFilePath) throws IOException {
 
     // create a writer
+    File file = new File(csvFilePath);
+    file.createNewFile();
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(
