@@ -179,7 +179,7 @@ public class DefaultTest {
     derby.updateReligiousServiceRequest("rel123", "religion", "Judiasm");
     System.out.println("Testing getList");
     List<ReligiousServiceRequest> list = derby.getReligiousServiceRequestList();
-    System.out.println("First element religion: " + list.get(1).getReligion());
+    System.out.println("First element religion: " + list.get(0).getReligion());
     System.out.println("testing delete");
     derby.deleteReligiousServiceRequest("rel123");
   }

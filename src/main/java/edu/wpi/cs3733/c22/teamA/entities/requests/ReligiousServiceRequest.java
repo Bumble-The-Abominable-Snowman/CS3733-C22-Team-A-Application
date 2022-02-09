@@ -18,7 +18,7 @@ public class ReligiousServiceRequest extends ServiceRequest {
       String requestStatus,
       String requestType,
       String comments,
-      String religions) {
+      String religion) {
     super.requestID = requestID;
     super.startLocation = startLocation;
     super.endLocation = endLocation;
