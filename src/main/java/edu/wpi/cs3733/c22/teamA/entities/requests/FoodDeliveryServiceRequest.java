@@ -1,14 +1,19 @@
 package edu.wpi.cs3733.c22.teamA.entities.requests;
 
 import java.sql.Timestamp;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-public class ReligiousServiceRequest extends ServiceRequest {
+@EqualsAndHashCode(callSuper = true)
+public @Data class FoodDeliveryServiceRequest extends ServiceRequest {
+  private String mainDish;
+  private String sideDish;
+  private String beverage;
+  private String dessert;
 
-  private String religion;
+  public FoodDeliveryServiceRequest() {}
 
-  public ReligiousServiceRequest() {}
-
-  public ReligiousServiceRequest(
+  public FoodDeliveryServiceRequest(
       String requestID,
       String startLocation,
       String endLocation,
@@ -18,7 +23,10 @@ public class ReligiousServiceRequest extends ServiceRequest {
       String requestStatus,
       String requestType,
       String comments,
-      String religion) {
+      String mainDish,
+      String sideDish,
+      String beverage,
+      String dessert) {
     super.requestID = requestID;
     super.startLocation = startLocation;
     super.endLocation = endLocation;
@@ -29,15 +37,9 @@ public class ReligiousServiceRequest extends ServiceRequest {
     super.requestStatus = requestStatus;
     super.requestType = requestType;
     super.comments = comments;
-    this.religion = religion;
-  }
-
-  public String getReligion() {
-    return religion;
-  }
-
-  public void setReligion(String religion) {
-    this.religion = religion;
+    this.mainDish = mainDish;
+    this.sideDish = sideDish;
+    this.beverage = beverage;
+    this.dessert = dessert;
   }
 }
-

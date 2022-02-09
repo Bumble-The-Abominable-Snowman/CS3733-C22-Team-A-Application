@@ -1,7 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.controllers.settings;
 
 import edu.wpi.cs3733.c22.teamA.Aapp;
-import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import java.io.IOException;
 import javafx.event.ActionEvent;
@@ -51,7 +50,7 @@ public class ExportToBackupController {
       } else {
         filepath = "src/main/resources/edu/wpi/teama/db/" + input + ".csv";
       }
-      Adb.exportToCSV(TypeCSV.getValue(), filepath);
+      //      Adb.exportToCSV(TypeCSV.getValue(), filepath);
 
       exportFileText.setText(filepath);
       exportFileText.setFill(Color.GREEN);

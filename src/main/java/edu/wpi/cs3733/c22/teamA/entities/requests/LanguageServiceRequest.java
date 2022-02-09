@@ -2,13 +2,12 @@ package edu.wpi.cs3733.c22.teamA.entities.requests;
 
 import java.sql.Timestamp;
 
-public class ReligiousServiceRequest extends ServiceRequest {
+public class LanguageServiceRequest extends ServiceRequest {
+  private String language;
 
-  private String religion;
+  public LanguageServiceRequest() {}
 
-  public ReligiousServiceRequest() {}
-
-  public ReligiousServiceRequest(
+  public LanguageServiceRequest(
       String requestID,
       String startLocation,
       String endLocation,
@@ -18,7 +17,7 @@ public class ReligiousServiceRequest extends ServiceRequest {
       String requestStatus,
       String requestType,
       String comments,
-      String religion) {
+      String language) {
     super.requestID = requestID;
     super.startLocation = startLocation;
     super.endLocation = endLocation;
@@ -29,15 +28,14 @@ public class ReligiousServiceRequest extends ServiceRequest {
     super.requestStatus = requestStatus;
     super.requestType = requestType;
     super.comments = comments;
-    this.religion = religion;
+    this.language = language;
   }
 
-  public String getReligion() {
-    return religion;
+  public String getLanguage() {
+    return language;
   }
 
-  public void setReligion(String religion) {
-    this.religion = religion;
+  public void setLanguage(String language) {
+    this.language = language;
   }
 }
-

@@ -1,7 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.controllers.settings;
 
 import edu.wpi.cs3733.c22.teamA.Aapp;
-import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import java.io.File;
 import java.io.IOException;
@@ -82,7 +81,7 @@ public class LoadFromBackupController {
     String filepath = "edu/wpi/teama/db/" + lastSelectedFile;
 
     if (!TypeCSV.getValue().equals("CSV Type") && lastSelectedFile.length() > 4) {
-      Adb.inputFromCSV(TypeCSV.getValue(), filepath);
+      //      Adb.inputFromCSV(TypeCSV.getValue(), filepath);
 
       selectedFileText.setText("Success!");
       selectedFileText.setFill(Color.GREEN);

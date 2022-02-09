@@ -5,8 +5,8 @@ import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipmentservicerequest.MedicalEquipmentServiceRequestImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
@@ -144,25 +144,29 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
 
   @FXML
   void submitRequest() throws IOException {
-    MedicalEquipmentServiceRequest medicalEquipmentServiceRequest =
-        new MedicalEquipmentServiceRequest();
-    if (!typeChoice.getSelectionModel().getSelectedItem().equals("Type")
-        && toLocationChoice.getSelectionModel().getSelectedItem() != null
-        && employeeChoice.getSelectionModel().getSelectedItem() != null) {
+
+    if (!typeChoiceBox.getSelectionModel().getSelectedItem().equals("Type")
+        && toChoiceBox.getSelectionModel().getSelectedItem() != null
+        && employeeChoiceBox.getSelectionModel().getSelectedItem() != null) {
+
       // pass medical service request object
       MedicalEquipmentServiceRequestDAO medicalEquipmentServiceRequestDAO =
-          new MedicalEquipmentServiceRequestImpl();
+          new MedicalEquipmentServiceRequestDerbyImpl();
+      MedicalEquipmentServiceRequest medicalEquipmentServiceRequest =
+          new MedicalEquipmentServiceRequest(
+              "PlaceHolderID",
+              fromChoiceBox.getSelectionModel().getSelectedItem().toString(),
+              toChoiceBox.getSelectionModel().getSelectedItem().toString(),
+              "Alex",
+              employeeChoiceBox.getSelectionModel().getSelectedItem().toString(),
+              new Timestamp((new Date()).getTime()).toString(),
+              "NEW",
+              "Medical Equipment",
+              "N/A",
+              typeChoiceBox.getSelectionModel().getSelectedItem().toString());
 
       medicalEquipmentServiceRequestDAO.enterMedicalEquipmentServiceRequest(
-          Integer.toString(rand.nextInt(10000)),
-          fromChoice.getValue().toString(),
-          toLocationChoice.getSelectionModel().getSelectedItem().toString(),
-          "Alex Sun",
-          employeeChoice.getSelectionModel().getSelectedItem().toString(),
-          new Timestamp((new Date()).getTime()),
-          statusChoice.getSelectionModel().getSelectedItem().toString(),
-          typeChoice.getSelectionModel().getSelectedItem().toString(),
-          "MedicalEquipmentRequest");
+          medicalEquipmentServiceRequest);
 
       this.returnToHomeScene();
     }

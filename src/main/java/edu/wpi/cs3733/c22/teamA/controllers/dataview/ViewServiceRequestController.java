@@ -6,10 +6,11 @@ import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.cs3733.c22.teamA.Aapp;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipmentservicerequest.MedicalEquipmentServiceRequestImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.requests.ServiceRequest;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -28,8 +29,10 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
 public class ViewServiceRequestController implements Initializable {
+
   @FXML JFXButton backButton;
-  @FXML JFXTreeTableView<MedicalEquipmentServiceRequest> requestsTable;
+  @FXML JFXTreeTableView<ServiceRequest> requestsTable;
+
 
   private final SceneController sceneController = Aapp.sceneController;
 
@@ -39,24 +42,18 @@ public class ViewServiceRequestController implements Initializable {
         new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
 
     // Create all columns in the tracker table
-    JFXTreeTableColumn<MedicalEquipmentServiceRequest, String> reqID =
-        new JFXTreeTableColumn<>("ID");
-    JFXTreeTableColumn<MedicalEquipmentServiceRequest, String> startLoc =
+    JFXTreeTableColumn<ServiceRequest, String> reqID = new JFXTreeTableColumn<>("ID");
+    JFXTreeTableColumn<ServiceRequest, String> startLoc =
         new JFXTreeTableColumn<>("Start Location");
-    JFXTreeTableColumn<MedicalEquipmentServiceRequest, String> endLoc =
-        new JFXTreeTableColumn<>("End Location");
-    JFXTreeTableColumn<MedicalEquipmentServiceRequest, String> employeeReq =
+    JFXTreeTableColumn<ServiceRequest, String> endLoc = new JFXTreeTableColumn<>("End Location");
+    JFXTreeTableColumn<ServiceRequest, String> employeeReq =
         new JFXTreeTableColumn<>("Requested By");
-    JFXTreeTableColumn<MedicalEquipmentServiceRequest, String> employeeAss =
+    JFXTreeTableColumn<ServiceRequest, String> employeeAss =
         new JFXTreeTableColumn<>("Employee Assigned");
-    JFXTreeTableColumn<MedicalEquipmentServiceRequest, String> reqTime =
-        new JFXTreeTableColumn<>("Request Time");
-    JFXTreeTableColumn<MedicalEquipmentServiceRequest, String> reqStatus =
-        new JFXTreeTableColumn<>("Status");
-    JFXTreeTableColumn<MedicalEquipmentServiceRequest, String> equipmentID =
-        new JFXTreeTableColumn<>("Equipment ID");
-    JFXTreeTableColumn<MedicalEquipmentServiceRequest, String> reqType =
-        new JFXTreeTableColumn<>("Type");
+    JFXTreeTableColumn<ServiceRequest, String> reqTime = new JFXTreeTableColumn<>("Request Time");
+    JFXTreeTableColumn<ServiceRequest, String> reqStatus = new JFXTreeTableColumn<>("Status");
+    JFXTreeTableColumn<ServiceRequest, String> reqType = new JFXTreeTableColumn<>("Type");
+    JFXTreeTableColumn<ServiceRequest, String> comments = new JFXTreeTableColumn<>("Comments");
     reqID.setPrefWidth(80);
     startLoc.setPrefWidth(80);
     endLoc.setPrefWidth(80);
@@ -64,7 +61,7 @@ public class ViewServiceRequestController implements Initializable {
     employeeAss.setPrefWidth(80);
     reqTime.setPrefWidth(80);
     reqStatus.setPrefWidth(80);
-    equipmentID.setPrefWidth(80);
+    comments.setPrefWidth(80);
     reqType.setPrefWidth(80);
     reqID.setStyle("-fx-alignment: center ;");
     startLoc.setStyle("-fx-alignment: center ;");
@@ -73,46 +70,47 @@ public class ViewServiceRequestController implements Initializable {
     employeeAss.setStyle("-fx-alignment: center ;");
     reqTime.setStyle("-fx-alignment: center ;");
     reqStatus.setStyle("-fx-alignment: center ;");
-    equipmentID.setStyle("-fx-alignment: center ;");
+    comments.setStyle("-fx-alignment: center ;");
     reqType.setStyle("-fx-alignment: center ;");
     reqID.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
+        (TreeTableColumn.CellDataFeatures<ServiceRequest, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getRequestID()));
     startLoc.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
+        (TreeTableColumn.CellDataFeatures<ServiceRequest, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getStartLocation()));
     endLoc.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
+        (TreeTableColumn.CellDataFeatures<ServiceRequest, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getEndLocation()));
     employeeReq.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
+        (TreeTableColumn.CellDataFeatures<ServiceRequest, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getEmployeeRequested()));
     employeeAss.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
+        (TreeTableColumn.CellDataFeatures<ServiceRequest, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getEmployeeAssigned()));
     reqTime.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
+        (TreeTableColumn.CellDataFeatures<ServiceRequest, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getRequestTime()));
     reqStatus.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
+        (TreeTableColumn.CellDataFeatures<ServiceRequest, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getRequestStatus()));
-    equipmentID.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().getEquipmentID()));
+    comments.setCellValueFactory(
+        (TreeTableColumn.CellDataFeatures<ServiceRequest, String> param) ->
+            new SimpleStringProperty(param.getValue().getValue().getComments()));
     reqType.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<MedicalEquipmentServiceRequest, String> param) ->
+        (TreeTableColumn.CellDataFeatures<ServiceRequest, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getRequestType()));
-    MedicalEquipmentServiceRequestDAO serviceRequestBase = new MedicalEquipmentServiceRequestImpl();
+    MedicalEquipmentServiceRequestDAO serviceRequestBase =
+        new MedicalEquipmentServiceRequestDerbyImpl();
     List<MedicalEquipmentServiceRequest> employeeFromDatabase =
         serviceRequestBase.getMedicalEquipmentServiceRequestList();
-    ObservableList<MedicalEquipmentServiceRequest> requests = FXCollections.observableArrayList();
-    for (MedicalEquipmentServiceRequest currLoc : employeeFromDatabase) {
+    ObservableList<ServiceRequest> requests = FXCollections.observableArrayList();
+    for (ServiceRequest currLoc : employeeFromDatabase) {
       requests.add(currLoc);
     }
 
     // Sets up the table and puts the equipment data under the columns
-    final TreeItem<MedicalEquipmentServiceRequest> root =
-        new RecursiveTreeItem<>(requests, RecursiveTreeObject::getChildren);
+    final TreeItem<ServiceRequest> root =
+        new RecursiveTreeItem<ServiceRequest>(requests, RecursiveTreeObject::getChildren);
     requestsTable
         .getColumns()
         .setAll(
@@ -123,8 +121,8 @@ public class ViewServiceRequestController implements Initializable {
             employeeAss,
             reqTime,
             reqStatus,
-            equipmentID,
-            reqType);
+            reqType,
+            comments);
     requestsTable.setRoot(root);
   }
 
