@@ -21,7 +21,7 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
       Statement get = connection.createStatement();
       String str =
           String.format(
-              "SELECT * FROM ServiceRequestDerbyImpl s, SanitationServiceRequest r WHERE (s.requestID = r.requestID) AND r.requestID = '%s'",
+              "SELECT * FROM ServiceRequest s, SanitationServiceRequest r WHERE (s.requestID = r.requestID) AND r.requestID = '%s'",
               id);
 
       ResultSet rset = get.executeQuery(str);
@@ -73,7 +73,7 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
       } else {
         str =
             String.format(
-                "UPDATE ServiceRequestDerbyImpl SET " + field + " = '%s' WHERE requestID = '%s'",
+                "UPDATE ServiceRequest SET " + field + " = '%s' WHERE requestID = '%s'",
                 change,
                 ID);
       }
@@ -119,7 +119,7 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
 
       String str =
           String.format(
-              "INSERT INTO ServiceRequestDerbyImpl(requestID, startLocation, endLocation, "
+              "INSERT INTO ServiceRequest(requestID, startLocation, endLocation, "
                   + "employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments) "
                   + " VALUES('%s', '%s', '%s', '%s', '%s', %s, '%s', '%s', '%s')",
               requestID,
@@ -152,7 +152,7 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement delete = connection.createStatement();
-      String str = String.format("DELETE FROM ServiceRequestDerbyImpl WHERE requestID = '%s'", id);
+      String str = String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", id);
       delete.execute(str);
 
     } catch (SQLException e) {
