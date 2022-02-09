@@ -108,16 +108,24 @@ public class LocationDerbyImpl implements LocationDAO {
   }
 
   // Method to update nodes from location table.
-  public void updateLocation(String ID, String field, String change) {
+  public void updateLocation(String ID, String field, Object change) {
 
     String tableName = "TowerLocations";
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement updateCoords = connection.createStatement();
 
-      String str =
-          String.format(
-              "update " + tableName + " set " + field + " = %s where nodeID = '%s'", change, ID);
+      String str = "";
+      if (change instanceof String) {
+        str =
+            String.format(
+                "update " + tableName + " set " + field + " = %s where nodeID = '%s'", change, ID);
+      } else {
+        str =
+            String.format(
+                "update " + tableName + " set " + field + " = " + change + " where nodeID = '%s'",
+                ID);
+      }
       updateCoords.execute(str);
 
     } catch (SQLException e) {

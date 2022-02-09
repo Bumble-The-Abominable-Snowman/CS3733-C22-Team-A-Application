@@ -332,38 +332,38 @@ public class DefaultTest {
     FoodDeliveryServiceRequestDerbyImpl.inputFromCSV(
         "FoodDeliveryServiceRequest", "edu/wpi/cs3733/c22/teamA/db/FoodDeliveryServiceRequest.csv");
 
-        FoodDeliveryServiceRequestDerbyImpl derby = new FoodDeliveryServiceRequestDerbyImpl();
-        FoodDeliveryServiceRequest fdsr =
-            new FoodDeliveryServiceRequest(
-                "fod123",
-                "start",
-                "end",
-                "emp1",
-                "emp2",
-                "2020-01-01 12:45:00",
-                "In Progress",
-                "High Priority",
-                "no additional comments",
-                "Steak",
-                "Fries",
-                "Soda",
-                "Cake");
-        System.out.println("Testing enter");
-        derby.enterFoodDeliveryRequest(fdsr);
-        System.out.println("Testing get");
-        FoodDeliveryServiceRequest rsr2 = derby.getFoodDeliveryRequest("fod123");
-        System.out.println("Got RequestID: " + rsr2.getRequestID());
-        System.out.println("Testing update: updating dessert to 'cookie'");
-        derby.updateFoodDeliveryRequest("fod123", "dessert", "cookie");
-        FoodDeliveryServiceRequest rsr3 = derby.getFoodDeliveryRequest("fod123");
-        System.out.println("Got dessert: " + rsr3.getDessert());
-        System.out.println("Testing getList");
-        List<FoodDeliveryServiceRequest> list = derby.getFoodDeliveryRequestList();
-        System.out.println("First element dessert: " + list.get(0).getDessert());
-        System.out.println("testing delete");
-        derby.deleteFoodDeliveryRequest("fod123");
-        FoodDeliveryServiceRequestDerbyImpl.exportToCSV(
-            "FoodDeliveryServiceRequest",
-            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/FoodDeliveryServiceRequest.csv");
+    FoodDeliveryServiceRequestDerbyImpl derby = new FoodDeliveryServiceRequestDerbyImpl();
+    FoodDeliveryServiceRequest fdsr =
+        new FoodDeliveryServiceRequest(
+            "fod123",
+            "start",
+            "end",
+            "emp1",
+            "emp2",
+            "2020-01-01 12:45:00",
+            "In Progress",
+            "High Priority",
+            "no additional comments",
+            "Steak",
+            "Fries",
+            "Soda",
+            "Cake");
+    System.out.println("Testing enter");
+    derby.enterFoodDeliveryRequest(fdsr);
+    System.out.println("Testing get");
+    FoodDeliveryServiceRequest rsr2 = derby.getFoodDeliveryRequest("fod123");
+    System.out.println("Got RequestID: " + rsr2.getRequestID());
+    System.out.println("Testing update: updating dessert to 'cookie'");
+    derby.updateFoodDeliveryRequest("fod123", "dessert", "cookie");
+    FoodDeliveryServiceRequest rsr3 = derby.getFoodDeliveryRequest("fod123");
+    System.out.println("Got dessert: " + rsr3.getDessert());
+    System.out.println("Testing getList");
+    List<FoodDeliveryServiceRequest> list = derby.getFoodDeliveryRequestList();
+    System.out.println("First element dessert: " + list.get(0).getDessert());
+    System.out.println("testing delete");
+    derby.deleteFoodDeliveryRequest("fod123");
+    FoodDeliveryServiceRequestDerbyImpl.exportToCSV(
+        "FoodDeliveryServiceRequest",
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/FoodDeliveryServiceRequest.csv");
   }
 }
