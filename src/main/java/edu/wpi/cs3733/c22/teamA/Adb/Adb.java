@@ -222,7 +222,8 @@ public class Adb {
       LanguageServiceRequestDerbyImpl.inputFromCSV(
           "LanguageServiceRequest", "edu/wpi/cs3733/c22/teamA/db/LanguageServiceRequest.csv");
       FoodDeliveryServiceRequestDerbyImpl.inputFromCSV(
-              "FoodDeliveryServiceRequest", "edu/wpi/cs3733/c22/teamA/db/FoodDeliveryServiceRequest.csv");
+          "FoodDeliveryServiceRequest",
+          "edu/wpi/cs3733/c22/teamA/db/FoodDeliveryServiceRequest.csv");
     }
   }
 }

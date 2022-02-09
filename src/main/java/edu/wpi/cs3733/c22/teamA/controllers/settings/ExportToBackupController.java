@@ -1,5 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.controllers.settings;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
@@ -13,24 +15,37 @@ import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class ExportToBackupController {
   @FXML public Button refreshButton;
+  @FXML private JFXButton backButton;
+  @FXML private JFXButton returnHomeButton;
+  @FXML private JFXButton exportToBackupButton;
   @FXML public TextField filename;
   @FXML public Text exportFileText;
-  @FXML private ChoiceBox<String> TypeCSV;
+  @FXML private JFXComboBox<String> TypeCSV;
   @FXML private ListView<String> fileList;
 
   private final SceneController sceneController = Aapp.sceneController;
 
   @FXML
   public void initialize() {
+    backButton.setBackground(
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
+    exportToBackupButton.setBackground(
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(20), Insets.EMPTY)));
+    returnHomeButton.setBackground(
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
+
     TypeCSV.getItems().removeAll(TypeCSV.getItems());
     TypeCSV.getItems()
         .addAll(
