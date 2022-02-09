@@ -27,9 +27,9 @@ public class MedicalEquipmentServiceRequest extends ServiceRequest {
     Timestamp rt = Timestamp.valueOf(requestTime);
     super.requestTime = rt;
     super.requestStatus = requestStatus;
-    this.equipmentID = equipmentID;
     super.requestType = requestType;
     super.comments = comments;
+    this.equipmentID = equipmentID;
   }
 
   public String getEquipmentID() {
