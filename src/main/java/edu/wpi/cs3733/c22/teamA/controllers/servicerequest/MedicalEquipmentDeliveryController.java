@@ -145,9 +145,9 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
   @FXML
   void submitRequest() throws IOException {
 
-    if (!typeChoiceBox.getSelectionModel().getSelectedItem().equals("Type")
-        && toChoiceBox.getSelectionModel().getSelectedItem() != null
-        && employeeChoiceBox.getSelectionModel().getSelectedItem() != null) {
+    if (!typeChoice.getSelectionModel().getSelectedItem().equals("Type")
+        && toLocationChoice.getSelectionModel().getSelectedItem() != null
+        && employeeChoice.getSelectionModel().getSelectedItem() != null) {
 
       // pass medical service request object
       MedicalEquipmentServiceRequestDAO medicalEquipmentServiceRequestDAO =
@@ -155,15 +155,15 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
       MedicalEquipmentServiceRequest medicalEquipmentServiceRequest =
           new MedicalEquipmentServiceRequest(
               "PlaceHolderID",
-              fromChoiceBox.getSelectionModel().getSelectedItem().toString(),
-              toChoiceBox.getSelectionModel().getSelectedItem().toString(),
+              fromChoice.getSelectionModel().getSelectedItem().toString(),
+              toLocationChoice.getSelectionModel().getSelectedItem().toString(),
               "Alex",
-              employeeChoiceBox.getSelectionModel().getSelectedItem().toString(),
+              employeeChoice.getSelectionModel().getSelectedItem().toString(),
               new Timestamp((new Date()).getTime()).toString(),
               "NEW",
               "Medical Equipment",
               "N/A",
-              typeChoiceBox.getSelectionModel().getSelectedItem().toString());
+              typeChoice.getSelectionModel().getSelectedItem().toString());
 
       medicalEquipmentServiceRequestDAO.enterMedicalEquipmentServiceRequest(
           medicalEquipmentServiceRequest);

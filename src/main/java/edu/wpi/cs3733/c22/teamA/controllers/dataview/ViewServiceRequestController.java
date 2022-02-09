@@ -33,7 +33,6 @@ public class ViewServiceRequestController implements Initializable {
   @FXML JFXButton backButton;
   @FXML JFXTreeTableView<ServiceRequest> requestsTable;
 
-
   private final SceneController sceneController = Aapp.sceneController;
 
   @Override

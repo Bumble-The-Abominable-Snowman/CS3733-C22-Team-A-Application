@@ -93,18 +93,18 @@ public class FoodDeliveryController extends GenericServiceRequestsController {
     return new FoodDeliveryServiceRequest(
         "PlaceHolderID",
         "N/A",
-        roomChoice.getSelectionModel().getSelectedItem().toString(),
+        toLocationChoice.getSelectionModel().getSelectedItem().toString(),
         "Alex",
         employeeChoice.getSelectionModel().getSelectedItem().toString(),
         new Timestamp((new Date()).getTime()).toString(),
         "NEW",
         "Food Delivery",
-        commentsText.getText(),
+        commentsBox.getText(),
         mainChoice.getValue(),
         sideChoice.getValue(),
         drinkChoice.getValue(),
-        dessertChoice.getValue());}
-
+        dessertChoice.getValue());
+  }
 
   @FXML
   void submitRequest() throws IOException {

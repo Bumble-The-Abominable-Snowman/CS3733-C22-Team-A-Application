@@ -10,7 +10,6 @@ import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.requests.SanitationServiceRequest;
 import java.sql.Timestamp;
 import java.util.Date;
-
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -79,14 +78,14 @@ public class SanitationServicesController extends GenericServiceRequestsControll
         new SanitationServiceRequest(
             "PlaceHolderID",
             "N/A",
-            locationMenu.getSelectionModel().getSelectedItem(),
+            toLocationChoice.getSelectionModel().getSelectedItem(),
             "Alex",
             "employee",
             new Timestamp((new Date()).getTime()).toString(),
             "NEW",
             "Language Interpreter",
             "N/A",
-            typeMenu.getValue());
+            typeChoice.getValue());
     SanitationServiceRequestDAO sanitationServiceRequestDAO =
         new SanitationServiceRequestDerbyImpl();
     sanitationServiceRequestDAO.enterSanitationServiceRequest(sanitationServiceRequest);
