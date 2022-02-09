@@ -9,6 +9,7 @@ import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -22,6 +23,7 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.text.Font;
 
 public class MapEditorController {
   @FXML private ComboBox floorSelectionComboBox;
@@ -73,11 +75,13 @@ public class MapEditorController {
   List<Location> locationFromDatabase = locationBase.getNodeList();
   Location newFillerLoc = locationFromDatabase.get(0);
   Location selectedLocation;
+  HashMap<Button, Location> buttonLocation = new HashMap<>();
 
   private final SceneController sceneController = Aapp.sceneController;
 
   @FXML
   public void initialize() {
+    mapDisplay.setVisible(false);
     backButton.setBackground(
         new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
 
@@ -97,34 +101,41 @@ public class MapEditorController {
         .addListener(
             (obs, oldValue, newValue) -> {
               if (newValue.equals("Choose Floor:")) {
+                mapDisplay.setVisible(false);
               } else {
                 String floor;
                 if (newValue.equals("Floor 1")) {
+                  mapDisplay.setVisible(true);
                   floor = "1";
                   File map = new File("edu/wpi/cs3733/c22/teamA/images/1st Floor.png");
                   Image image = new Image(String.valueOf((map)));
                   mapDisplay.setImage(image);
                 } else if (newValue.equals("Floor 2")) {
+                  mapDisplay.setVisible(true);
                   floor = "2";
                   File map = new File("edu/wpi/cs3733/c22/teamA/images/2nd Floor.png");
                   Image image = new Image(String.valueOf((map)));
                   mapDisplay.setImage(image);
                 } else if (newValue.equals("Floor 3")) {
+                  mapDisplay.setVisible(true);
                   floor = "3";
                   File map = new File("edu/wpi/cs3733/c22/teamA/images/3rd Floor.png");
                   Image image = new Image(String.valueOf((map)));
                   mapDisplay.setImage(image);
                 } else if (newValue.equals("L1")) {
+                  mapDisplay.setVisible(true);
                   floor = "L1";
                   File map = new File("edu/wpi/cs3733/c22/teamA/images/LL1.png");
                   Image image = new Image(String.valueOf((map)));
                   mapDisplay.setImage(image);
                 } else if (newValue.equals("L2")) {
+                  mapDisplay.setVisible(true);
                   floor = "L2";
                   File map = new File("edu/wpi/cs3733/c22/teamA/images/LL2.png");
                   Image image = new Image(String.valueOf((map)));
                   mapDisplay.setImage(image);
                 } else {
+                  mapDisplay.setVisible(true);
                   floor = "Ground";
                   File map = new File("edu/wpi/cs3733/c22/teamA/images/Ground Floor.png");
                   Image image = new Image(String.valueOf((map)));
@@ -134,20 +145,36 @@ public class MapEditorController {
                 // anchorPane.getChildren().clear();
                 // anchorPane.getChildren().add(floorSelectionComboBox);
                 for (Location location : locations) {
+                  int count = 0;
                   if (location.getFloor().equals(floor)) {
                     Button button = new Button();
+                    Label label = new Label();
+                    label.setText(location.getShortName());
+                    label.setFont(new Font(15));
                     final Delta dragDelta = new Delta();
                     button.setMinWidth(4.0);
                     button.setMinHeight(2.0);
                     button.setShape(locationMarkerShape);
                     button.setLayoutX(location.getXCoord() - 512);
                     button.setLayoutY(location.getYCoord() - 512);
+                    if (count % 2 == 0) {
+                      label.setLayoutX(location.getXCoord() - 512 + 7.5);
+                      label.setLayoutY(location.getYCoord() - 512 - 15);
+                    } else {
+                      label.setLayoutX(location.getXCoord() - 512 - 20);
+                      label.setLayoutY(location.getYCoord() - 512 - 15);
+                    }
+                    count++;
+
+                    buttonLocation.put(button, location);
                     button.setPickOnBounds(false);
-                    button.setStyle("-fx-background-color: Blue");
+                    button.setStyle("-fx-background-color: #78aaf0");
 
                     button.setOnAction(
                         event -> {
                           highlight(button, selectedButton);
+                          selectedButton = button;
+                          existingLocSelected(buttonLocation.get(button));
                         });
                     button.setOnMousePressed(
                         mouseEvent -> {
@@ -155,6 +182,7 @@ public class MapEditorController {
                           dragDelta.x = button.getLayoutX() - mouseEvent.getSceneX();
                           dragDelta.y = button.getLayoutY() - mouseEvent.getSceneY();
                           button.setCursor(Cursor.MOVE);
+                          existingLocSelected(buttonLocation.get(button));
                         });
                     button.setOnMouseReleased(mouseEvent -> button.setCursor(Cursor.HAND));
                     button.setOnMouseDragged(
@@ -163,7 +191,7 @@ public class MapEditorController {
                           button.setLayoutY(mouseEvent.getSceneY() + dragDelta.y);
                         });
                     button.setOnMouseEntered(mouseEvent -> button.setCursor(Cursor.HAND));
-                    drawButton(button);
+                    draw(button, label);
                   }
                 }
               }
@@ -296,14 +324,16 @@ public class MapEditorController {
     double x, y;
   }
 
-  private void drawButton(Button button) {
+  private void draw(Button button, Label label) {
     anchorPane.getChildren().add(button);
+    anchorPane.getChildren().add(label);
   }
 
   private void highlight(Button button, Button oldButton) {
-    button.setStyle("-fx-border-style: dashed");
+    button.setStyle("-fx-background-color: RED");
+    oldButton.getStyleClass().clear();
     oldButton.setStyle(null);
-    oldButton.setStyle("-fx-background-color: Blue");
+    oldButton.setStyle("-fx-background-color: #78aaf0");
   }
 
   private static class LocationMarker {
