@@ -4,6 +4,8 @@ import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.MedicalEquipment;
 import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
+
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,8 +17,8 @@ public class ReadCSV {
   public static List<Location> readLocationCSV(String csvFilePath) throws IOException {
     // System.out.println("beginning to read csv");
 
-    Scanner lineScanner =
-        new Scanner(ReadCSV.class.getClassLoader().getResourceAsStream(csvFilePath));
+    File lineScannerFile = new File(csvFilePath);
+    Scanner lineScanner = new Scanner(lineScannerFile);
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
@@ -65,8 +67,8 @@ public class ReadCSV {
       throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
-    Scanner lineScanner =
-        new Scanner(ReadCSV.class.getClassLoader().getResourceAsStream(csvFilePath));
+    File lineScannerFile = new File(csvFilePath);
+    Scanner lineScanner = new Scanner(lineScannerFile);
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
@@ -114,8 +116,8 @@ public class ReadCSV {
       throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
-    Scanner lineScanner =
-        new Scanner(ReadCSV.class.getClassLoader().getResourceAsStream(csvFilePath));
+    File lineScannerFile = new File(csvFilePath);
+    Scanner lineScanner = new Scanner(lineScannerFile);
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
@@ -162,8 +164,8 @@ public class ReadCSV {
       String csvFilePath) throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
-    Scanner lineScanner =
-        new Scanner(ReadCSV.class.getClassLoader().getResourceAsStream(csvFilePath));
+    File lineScannerFile = new File(csvFilePath);
+    Scanner lineScanner = new Scanner(lineScannerFile);
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
