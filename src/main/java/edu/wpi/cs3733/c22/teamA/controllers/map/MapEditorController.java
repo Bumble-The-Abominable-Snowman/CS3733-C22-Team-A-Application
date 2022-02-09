@@ -140,8 +140,8 @@ public class MapEditorController {
                     button.setMinWidth(4.0);
                     button.setMinHeight(2.0);
                     button.setShape(locationMarkerShape);
-                    button.setLayoutX(location.getXCoord() - 512);
-                    button.setLayoutY(location.getYCoord() - 512);
+                    button.setLayoutX(location.getXCoord() + mapDisplay.getLayoutX() - 8);
+                    button.setLayoutY(location.getYCoord() + mapDisplay.getLayoutY() - 24);
                     button.setPickOnBounds(false);
                     button.setStyle("-fx-background-color: Blue");
 
