@@ -256,44 +256,8 @@ public class DefaultTest {
 
     LaundryServiceRequestDerbyImpl.inputFromCSV(
         "LaundryServiceRequest", "edu/wpi/cs3733/c22/teamA/db/LaundryServiceRequest.csv");
-        LaundryServiceRequest lsr =
-            new LaundryServiceRequest(
-                "lan123",
-                "start",
-                "end",
-                "emp1",
-                "emp2",
-                "2020-01-01 12:45:00",
-                "In Progress",
-                "High Priority",
-                "no additional comments",
-                "Normal Wash");
-        System.out.println("Testing enter");
-        derby.enterLaundryServiceRequest(lsr);
-        System.out.println("Testing get");
-        LaundryServiceRequest rsr2 = derby.getLaundryServiceRequest("lan123");
-        System.out.println("Got RequestID: " + rsr2.getRequestID());
-        System.out.println("Testing update: updating washMode to 'Super Wash'");
-        derby.updateLaundryServiceRequest("lan123", "washMode", "Super Wash");
-        LaundryServiceRequest rsr3 = derby.getLaundryServiceRequest("lan123");
-        System.out.println("Got washMode: " + rsr3.getWashMode());
-        System.out.println("Testing getList");
-        List<LaundryServiceRequest> list = derby.getLaundryServiceRequestList();
-        System.out.println("First element washMode: " + list.get(0).getWashMode());
-        System.out.println("testing delete");
-        // derby.deleteLaundryServiceRequest("lan123");
-        LaundryServiceRequestDerbyImpl.exportToCSV(
-            "LaundryServiceRequest",
-            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/LaundryServiceRequest.csv");
-  }
-
-  @Test
-  public void testLanguage() {
-    Adb.initialConnection();
-
-    LanguageServiceRequestDerbyImpl derby = new LanguageServiceRequestDerbyImpl();
-    LanguageServiceRequest lsr =
-        new LanguageServiceRequest(
+    LaundryServiceRequest lsr =
+        new LaundryServiceRequest(
             "lan123",
             "start",
             "end",
@@ -305,18 +269,60 @@ public class DefaultTest {
             "no additional comments",
             "Normal Wash");
     System.out.println("Testing enter");
-    derby.enterLanguageServiceRequest(lsr);
+    derby.enterLaundryServiceRequest(lsr);
     System.out.println("Testing get");
-    LanguageServiceRequest rsr2 = derby.getLanguageServiceRequest("lan123");
+    LaundryServiceRequest rsr2 = derby.getLaundryServiceRequest("lan123");
     System.out.println("Got RequestID: " + rsr2.getRequestID());
     System.out.println("Testing update: updating washMode to 'Super Wash'");
-    derby.updateLanguageServiceRequest("lan123", "language", "Super Wash");
-    LanguageServiceRequest rsr3 = derby.getLanguageServiceRequest("lan123");
-    System.out.println("Got washMode: " + rsr3.getLanguage());
+    derby.updateLaundryServiceRequest("lan123", "washMode", "Super Wash");
+    LaundryServiceRequest rsr3 = derby.getLaundryServiceRequest("lan123");
+    System.out.println("Got washMode: " + rsr3.getWashMode());
     System.out.println("Testing getList");
-    List<LanguageServiceRequest> list = derby.getLanguageServiceRequestList();
-    System.out.println("First element language: " + list.get(0).getLanguage());
+    List<LaundryServiceRequest> list = derby.getLaundryServiceRequestList();
+    System.out.println("First element washMode: " + list.get(0).getWashMode());
     System.out.println("testing delete");
-    derby.deleteLanguageServiceRequest("lan123");
+    // derby.deleteLaundryServiceRequest("lan123");
+    LaundryServiceRequestDerbyImpl.exportToCSV(
+        "LaundryServiceRequest",
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/LaundryServiceRequest.csv");
+  }
+
+  @Test
+  public void testLanguage() throws IOException {
+    Adb.initialConnection();
+
+    LanguageServiceRequestDerbyImpl.inputFromCSV(
+        "LanguageServiceRequest", "edu/wpi/cs3733/c22/teamA/db/LanguageServiceRequest.csv");
+
+    LanguageServiceRequestDerbyImpl derby = new LanguageServiceRequestDerbyImpl();
+        LanguageServiceRequest lsr =
+            new LanguageServiceRequest(
+                "lan124",
+                "start",
+                "end",
+                "emp1",
+                "emp2",
+                "2020-01-01 12:45:00",
+                "In Progress",
+                "High Priority",
+                "no additional comments",
+                "Normal Wash");
+        System.out.println("Testing enter");
+        derby.enterLanguageServiceRequest(lsr);
+        System.out.println("Testing get");
+        LanguageServiceRequest rsr2 = derby.getLanguageServiceRequest("lan123");
+        System.out.println("Got RequestID: " + rsr2.getRequestID());
+        System.out.println("Testing update: updating washMode to 'Super Wash'");
+        derby.updateLanguageServiceRequest("lan123", "language", "Super Wash");
+        LanguageServiceRequest rsr3 = derby.getLanguageServiceRequest("lan123");
+        System.out.println("Got washMode: " + rsr3.getLanguage());
+        System.out.println("Testing getList");
+        List<LanguageServiceRequest> list = derby.getLanguageServiceRequestList();
+        System.out.println("First element language: " + list.get(0).getLanguage());
+        System.out.println("testing delete");
+        derby.deleteLanguageServiceRequest("lan123");
+        LanguageServiceRequestDerbyImpl.exportToCSV(
+            "LanguageServiceRequest",
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/LanguageServiceRequest.csv");
   }
 }
