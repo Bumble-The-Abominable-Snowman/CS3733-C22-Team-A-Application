@@ -3,6 +3,7 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
 import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -32,5 +33,5 @@ public abstract class GenericServiceRequestsController {
   }
 
   @FXML
-  abstract void submitRequest() throws IOException;
+  abstract void submitRequest() throws IOException, TimeoutException;
 }
