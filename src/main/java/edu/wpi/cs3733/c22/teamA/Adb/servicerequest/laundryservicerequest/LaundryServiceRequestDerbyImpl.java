@@ -21,7 +21,7 @@ public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO 
       Statement get = connection.createStatement();
       String str =
           String.format(
-              "SELECT * FROM ServiceRequestDerbyImpl s, laundryservicerequest l WHERE (s.requestID = l.requestID) AND l.requestID = '%s'",
+              "SELECT * FROM ServiceRequest s, LaundryServiceRequest l WHERE (s.requestID = l.requestID) AND l.requestID = '%s'",
               id);
 
       ResultSet rset = get.executeQuery(str);
@@ -67,13 +67,13 @@ public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO 
       if (field.equals("washMode")) {
         str =
             String.format(
-                "UPDATE laundryservicerequest SET " + field + " = '%s' WHERE requestID = '%s'",
+                "UPDATE LaundryServiceRequest SET " + field + " = '%s' WHERE requestID = '%s'",
                 change,
                 ID);
       } else {
         str =
             String.format(
-                "UPDATE ServiceRequestDerbyImpl SET " + field + " = '%s' WHERE requestID = '%s'",
+                "UPDATE ServiceRequest SET " + field + " = '%s' WHERE requestID = '%s'",
                 change,
                 ID);
       }
@@ -119,7 +119,7 @@ public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO 
 
       String str =
           String.format(
-              "INSERT INTO ServiceRequestDerbyImpl(requestID, startLocation, endLocation, "
+              "INSERT INTO ServiceRequest(requestID, startLocation, endLocation, "
                   + "employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments) "
                   + " VALUES('%s', '%s', '%s', '%s', '%s', %s, '%s', '%s', '%s')",
               requestID,
@@ -132,11 +132,11 @@ public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO 
               requestType,
               comments);
 
-      insert.executeQuery(str);
+      insert.execute(str);
 
       String str2 =
           String.format(
-              "INSERT INTO laundryservicerequest(requestID, language) " + "VALUES('%s', '%s')",
+              "INSERT INTO LaundryServiceRequest(requestID, washMode) " + "VALUES('%s', '%s')",
               requestID, washMode);
       insert.execute(str2);
 
@@ -151,8 +151,10 @@ public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO 
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement delete = connection.createStatement();
-      String str = String.format("DELETE FROM ServiceRequestDerbyImpl WHERE requestID = '%s'", id);
+      String str = String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", id);
       delete.execute(str);
+
+      delete.execute(String.format("DELETE FROM LaundryServiceRequest WHERE requestID = '%s'", id));
 
     } catch (SQLException e) {
       System.out.println("Failed");

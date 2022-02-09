@@ -5,16 +5,17 @@
 package edu.wpi.cs3733.c22.teamA;
 
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.entities.requests.LaundryServiceRequest;
 import edu.wpi.cs3733.c22.teamA.entities.requests.ReligiousServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.requests.SanitationServiceRequest;
 import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
 import java.util.List;
-
-import edu.wpi.cs3733.c22.teamA.entities.requests.SanitationServiceRequest;
 import org.junit.jupiter.api.Test;
 
 public class DefaultTest {
@@ -163,31 +164,31 @@ public class DefaultTest {
         "ReligiousServiceRequest", "edu/wpi/cs3733/c22/teamA/db/ReligiousServiceRequest.csv");
 
     ReligiousServiceRequestDAO derby = new ReligiousServiceRequestDerbyImpl();
-     ReligiousServiceRequest rsr =
-          new ReligiousServiceRequest(
-               "rel123",
-              "start",
-             "end",
-               "emp1",
-              "emp2",
-               "2020-01-01 12:45:00",
-              "In Progress",
-             "High Priority",
-              "no additional comments",
-                "Christain");
+    ReligiousServiceRequest rsr =
+        new ReligiousServiceRequest(
+            "rel123",
+            "start",
+            "end",
+            "emp1",
+            "emp2",
+            "2020-01-01 12:45:00",
+            "In Progress",
+            "High Priority",
+            "no additional comments",
+            "Christain");
 
-     ReligiousServiceRequest rsr1 =
-     new ReligiousServiceRequest(
-               "rel124",
-               "start",
-               "end",
-                "emp1",
-               "emp2",
-              "2020-01-01 12:45:00",
-             "In Progress",
-              "High Priority",
-              "no additional comments",
-               "Judiasm");
+    ReligiousServiceRequest rsr1 =
+        new ReligiousServiceRequest(
+            "rel124",
+            "start",
+            "end",
+            "emp1",
+            "emp2",
+            "2020-01-01 12:45:00",
+            "In Progress",
+            "High Priority",
+            "no additional comments",
+            "Judiasm");
 
     System.out.println("Testing enter");
     derby.enterReligiousServiceRequest(rsr);
@@ -204,8 +205,8 @@ public class DefaultTest {
     derby.deleteReligiousServiceRequest("rel123");
     derby.deleteReligiousServiceRequest("rel124");
     ReligiousServiceRequestDerbyImpl.writeReligiousServiceRequestCSV(
-    derby.getReligiousServiceRequestList(),
-            "edu/wpi/cs3733/c22/teamA/db/ReligiousServiceRequest.csv");
+        derby.getReligiousServiceRequestList(),
+        "edu/wpi/cs3733/c22/teamA/db/ReligiousServiceRequest.csv");
   }
 
   @Test
@@ -214,35 +215,68 @@ public class DefaultTest {
 
     SanitationServiceRequestDerbyImpl.inputFromCSV(
         "SanitationServiceRequest", "edu/wpi/cs3733/c22/teamA/db/SanitationServiceRequest.csv");
-        SanitationServiceRequestDerbyImpl derby = new SanitationServiceRequestDerbyImpl();
-        SanitationServiceRequest ssr =
-            new SanitationServiceRequest(
-                "san123",
-                "start",
-                "end",
-                "emp1",
-                "emp2",
-                "2020-01-01 12:45:00",
-                "In Progress",
-                "High Priority",
-                "no additional comments",
-                "floor");
-        System.out.println("Testing enter");
-        derby.enterSanitationServiceRequest(ssr);
-        System.out.println("Testing get");
-        SanitationServiceRequest rsr2 = derby.getSanitationServiceRequest("san123");
-        System.out.println("Got RequestID: " + rsr2.getRequestID());
-        System.out.println("Testing update: updating religion to 'super'");
-        derby.updateSanitationServiceRequest("san123", "sanitationType", "super");
-        SanitationServiceRequest rsr3 = derby.getSanitationServiceRequest("san123");
-        System.out.println("Got santype: " + rsr3.getSanitationType());
-        System.out.println("Testing getList");
-        List<SanitationServiceRequest> list = derby.getSanitationServiceRequestList();
-        System.out.println("First element santype: " + list.get(0).getSanitationType());
-        System.out.println("testing delete");
-        derby.deleteSanitationServiceRequest("san123");
-        SanitationServiceRequestDerbyImpl.exportToCSV(
-            "SanitationServiceRequest",
-            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/SanitationServiceRequest.csv");
+    SanitationServiceRequestDerbyImpl derby = new SanitationServiceRequestDerbyImpl();
+    SanitationServiceRequest ssr =
+        new SanitationServiceRequest(
+            "san123",
+            "start",
+            "end",
+            "emp1",
+            "emp2",
+            "2020-01-01 12:45:00",
+            "In Progress",
+            "High Priority",
+            "no additional comments",
+            "floor");
+    System.out.println("Testing enter");
+    derby.enterSanitationServiceRequest(ssr);
+    System.out.println("Testing get");
+    SanitationServiceRequest rsr2 = derby.getSanitationServiceRequest("san123");
+    System.out.println("Got RequestID: " + rsr2.getRequestID());
+    System.out.println("Testing update: updating religion to 'super'");
+    derby.updateSanitationServiceRequest("san123", "sanitationType", "super");
+    SanitationServiceRequest rsr3 = derby.getSanitationServiceRequest("san123");
+    System.out.println("Got santype: " + rsr3.getSanitationType());
+    System.out.println("Testing getList");
+    List<SanitationServiceRequest> list = derby.getSanitationServiceRequestList();
+    System.out.println("First element santype: " + list.get(0).getSanitationType());
+    System.out.println("testing delete");
+    derby.deleteSanitationServiceRequest("san123");
+    SanitationServiceRequestDerbyImpl.exportToCSV(
+        "SanitationServiceRequest",
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/SanitationServiceRequest.csv");
+  }
+
+  @Test
+  public void testLaundry() {
+    Adb.initialConnection();
+    LaundryServiceRequestDerbyImpl derby = new LaundryServiceRequestDerbyImpl();
+
+    LaundryServiceRequest lsr =
+        new LaundryServiceRequest(
+            "lan123",
+            "start",
+            "end",
+            "emp1",
+            "emp2",
+            "2020-01-01 12:45:00",
+            "In Progress",
+            "High Priority",
+            "no additional comments",
+            "Normal Wash");
+    System.out.println("Testing enter");
+    derby.enterLaundryServiceRequest(lsr);
+    System.out.println("Testing get");
+    LaundryServiceRequest rsr2 = derby.getLaundryServiceRequest("lan123");
+    System.out.println("Got RequestID: " + rsr2.getRequestID());
+    System.out.println("Testing update: updating washMode to 'Super Wash'");
+    derby.updateLaundryServiceRequest("lan123", "washMode", "Super Wash");
+    LaundryServiceRequest rsr3 = derby.getLaundryServiceRequest("lan123");
+    System.out.println("Got washMode: " + rsr3.getWashMode());
+    System.out.println("Testing getList");
+    List<LaundryServiceRequest> list = derby.getLaundryServiceRequestList();
+    System.out.println("First element washMode: " + list.get(0).getWashMode());
+    System.out.println("testing delete");
+    derby.deleteLaundryServiceRequest("lan123");
   }
 }
