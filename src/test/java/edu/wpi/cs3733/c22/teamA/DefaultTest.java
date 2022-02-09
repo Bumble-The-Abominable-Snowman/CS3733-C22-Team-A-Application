@@ -250,36 +250,41 @@ public class DefaultTest {
   }
 
   @Test
-  public void testLaundry() {
+  public void testLaundry() throws IOException {
     Adb.initialConnection();
     LaundryServiceRequestDerbyImpl derby = new LaundryServiceRequestDerbyImpl();
 
-    LaundryServiceRequest lsr =
-        new LaundryServiceRequest(
-            "lan123",
-            "start",
-            "end",
-            "emp1",
-            "emp2",
-            "2020-01-01 12:45:00",
-            "In Progress",
-            "High Priority",
-            "no additional comments",
-            "Normal Wash");
-    System.out.println("Testing enter");
-    derby.enterLaundryServiceRequest(lsr);
-    System.out.println("Testing get");
-    LaundryServiceRequest rsr2 = derby.getLaundryServiceRequest("lan123");
-    System.out.println("Got RequestID: " + rsr2.getRequestID());
-    System.out.println("Testing update: updating washMode to 'Super Wash'");
-    derby.updateLaundryServiceRequest("lan123", "washMode", "Super Wash");
-    LaundryServiceRequest rsr3 = derby.getLaundryServiceRequest("lan123");
-    System.out.println("Got washMode: " + rsr3.getWashMode());
-    System.out.println("Testing getList");
-    List<LaundryServiceRequest> list = derby.getLaundryServiceRequestList();
-    System.out.println("First element washMode: " + list.get(0).getWashMode());
-    System.out.println("testing delete");
-    derby.deleteLaundryServiceRequest("lan123");
+    LaundryServiceRequestDerbyImpl.inputFromCSV(
+        "LaundryServiceRequest", "edu/wpi/cs3733/c22/teamA/db/LaundryServiceRequest.csv");
+        LaundryServiceRequest lsr =
+            new LaundryServiceRequest(
+                "lan123",
+                "start",
+                "end",
+                "emp1",
+                "emp2",
+                "2020-01-01 12:45:00",
+                "In Progress",
+                "High Priority",
+                "no additional comments",
+                "Normal Wash");
+        System.out.println("Testing enter");
+        derby.enterLaundryServiceRequest(lsr);
+        System.out.println("Testing get");
+        LaundryServiceRequest rsr2 = derby.getLaundryServiceRequest("lan123");
+        System.out.println("Got RequestID: " + rsr2.getRequestID());
+        System.out.println("Testing update: updating washMode to 'Super Wash'");
+        derby.updateLaundryServiceRequest("lan123", "washMode", "Super Wash");
+        LaundryServiceRequest rsr3 = derby.getLaundryServiceRequest("lan123");
+        System.out.println("Got washMode: " + rsr3.getWashMode());
+        System.out.println("Testing getList");
+        List<LaundryServiceRequest> list = derby.getLaundryServiceRequestList();
+        System.out.println("First element washMode: " + list.get(0).getWashMode());
+        System.out.println("testing delete");
+        // derby.deleteLaundryServiceRequest("lan123");
+        LaundryServiceRequestDerbyImpl.exportToCSV(
+            "LaundryServiceRequest",
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/LaundryServiceRequest.csv");
   }
 
   @Test
