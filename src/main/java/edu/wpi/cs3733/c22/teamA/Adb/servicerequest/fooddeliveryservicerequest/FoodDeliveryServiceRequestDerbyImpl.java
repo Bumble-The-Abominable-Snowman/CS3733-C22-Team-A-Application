@@ -1,10 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest;
 
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.requests.FoodDeliveryServiceRequest;
-import edu.wpi.cs3733.c22.teamA.entities.requests.LanguageServiceRequest;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -232,12 +228,13 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
   }
 
   // Read from Location CSV
-  public static List<FoodDeliveryServiceRequest> readFoodDeliveryServiceRequestCSV(String csvFilePath)
-          throws IOException, ParseException {
+  public static List<FoodDeliveryServiceRequest> readFoodDeliveryServiceRequestCSV(
+      String csvFilePath) throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
     Scanner lineScanner =
-            new Scanner(FoodDeliveryServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
+        new Scanner(
+            FoodDeliveryServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
@@ -283,34 +280,34 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
 
   // Write CSV for MedicalEquipmentServiceRequest table
   public static void writeFoodDeliveryServiceRequestCSV(
-          List<FoodDeliveryServiceRequest> List, String csvFilePath) throws IOException {
+      List<FoodDeliveryServiceRequest> List, String csvFilePath) throws IOException {
 
     // create a writer
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(
-            "RequestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments, mainDish, sideDish, beverage, dessert");
+        "RequestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments, mainDish, sideDish, beverage, dessert");
     writer.newLine();
 
     // write location data
     for (FoodDeliveryServiceRequest thisLSR : List) {
 
       writer.write(
-              String.join(
-                      ",",
-                      thisLSR.getRequestID(),
-                      thisLSR.getStartLocation(),
-                      thisLSR.getEndLocation(),
-                      thisLSR.getEmployeeRequested(),
-                      thisLSR.getEmployeeAssigned(),
-                      thisLSR.getRequestTime(),
-                      thisLSR.getRequestStatus(),
-                      thisLSR.getRequestType(),
-                      thisLSR.getComments(),
-                      thisLSR.getMainDish(),
-                      thisLSR.getSideDish(),
-                      thisLSR.getBeverage(),
-                      thisLSR.getDessert()));
+          String.join(
+              ",",
+              thisLSR.getRequestID(),
+              thisLSR.getStartLocation(),
+              thisLSR.getEndLocation(),
+              thisLSR.getEmployeeRequested(),
+              thisLSR.getEmployeeAssigned(),
+              thisLSR.getRequestTime(),
+              thisLSR.getRequestStatus(),
+              thisLSR.getRequestType(),
+              thisLSR.getComments(),
+              thisLSR.getMainDish(),
+              thisLSR.getSideDish(),
+              thisLSR.getBeverage(),
+              thisLSR.getDessert()));
 
       writer.newLine();
     }
@@ -333,45 +330,45 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
 
       List<FoodDeliveryServiceRequest> List =
-              FoodDeliveryServiceRequestDerbyImpl.readFoodDeliveryServiceRequestCSV(csvFilePath);
+          FoodDeliveryServiceRequestDerbyImpl.readFoodDeliveryServiceRequestCSV(csvFilePath);
       for (FoodDeliveryServiceRequest l : List) {
         Statement addStatement = connection.createStatement();
 
         // add sub table
         addStatement.executeUpdate(
-                "INSERT INTO FoodDeliveryServiceRequest(requestID, mainDish, sideDish, beverage, dessert) VALUES('"
-                        + l.getRequestID()
-                        + "', '"
-                        + l.getMainDish()
-                        + "', '"
-                        + l.getSideDish()
-                        + "', '"
-                        + l.getBeverage()
-                        + "', '"
-                        + l.getDessert()
-                        + "')");
+            "INSERT INTO FoodDeliveryServiceRequest(requestID, mainDish, sideDish, beverage, dessert) VALUES('"
+                + l.getRequestID()
+                + "', '"
+                + l.getMainDish()
+                + "', '"
+                + l.getSideDish()
+                + "', '"
+                + l.getBeverage()
+                + "', '"
+                + l.getDessert()
+                + "')");
 
         // add to ServiceRequest table
         addStatement.executeUpdate(
-                "INSERT INTO ServiceRequest(requestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments) VALUES('"
-                        + l.getRequestID()
-                        + "', '"
-                        + l.getStartLocation()
-                        + "', '"
-                        + l.getEndLocation()
-                        + "', '"
-                        + l.getEmployeeRequested()
-                        + "', '"
-                        + l.getEmployeeAssigned()
-                        + "', '"
-                        + l.getRequestTime()
-                        + "', '"
-                        + l.getRequestStatus()
-                        + "', '"
-                        + l.getRequestType()
-                        + "', '"
-                        + l.getComments()
-                        + "')");
+            "INSERT INTO ServiceRequest(requestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments) VALUES('"
+                + l.getRequestID()
+                + "', '"
+                + l.getStartLocation()
+                + "', '"
+                + l.getEndLocation()
+                + "', '"
+                + l.getEmployeeRequested()
+                + "', '"
+                + l.getEmployeeAssigned()
+                + "', '"
+                + l.getRequestTime()
+                + "', '"
+                + l.getRequestStatus()
+                + "', '"
+                + l.getRequestType()
+                + "', '"
+                + l.getComments()
+                + "')");
       }
     } catch (SQLException | IOException | ParseException e) {
       System.out.println("Insertion failed!");
@@ -382,6 +379,6 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
   public static void exportToCSV(String tableName, String csvFilePath) throws IOException {
     FoodDeliveryServiceRequestDAO mesr = new FoodDeliveryServiceRequestDerbyImpl();
     FoodDeliveryServiceRequestDerbyImpl.writeFoodDeliveryServiceRequestCSV(
-            mesr.getFoodDeliveryRequestList(), csvFilePath);
+        mesr.getFoodDeliveryRequestList(), csvFilePath);
   }
 }

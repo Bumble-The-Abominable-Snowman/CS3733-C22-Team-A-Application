@@ -182,12 +182,14 @@ public class Adb {
 
     // Initialize the database and input data
     if (!isInitialized) {
-      LocationDerbyImpl.inputFromCSV("TowerLocations", "edu/wpi/teama/db/TowerLocations.csv");
-      EmployeeDerbyImpl.inputFromCSV("Employee", "edu/wpi/teama/db/Employee.csv");
+      LocationDerbyImpl.inputFromCSV(
+          "TowerLocations", "edu/wpi/cs3733/c22/teamA/db/TowerLocations.csv");
+      EmployeeDerbyImpl.inputFromCSV("Employee", "edu/wpi/cs3733/c22/teamA/db/Employee.csv");
       MedicalEquipmentDerbyImpl.inputFromCSV(
-          "MedicalEquipment", "edu/wpi/teama/db/MedicalEquipment.csv");
+          "MedicalEquipment", "edu/wpi/cs3733/c22/teamA/db/MedicalEquipment.csv");
       MedicalEquipmentServiceRequestDerbyImpl.inputFromCSV(
-          "MedicalEquipmentServiceRequest", "edu/wpi/teama/db/MedicalEquipmentServiceRequest.csv");
+          "MedicalEquipmentServiceRequest",
+          "edu/wpi/cs3733/c22/teamA/db/MedicalEquipmentServiceRequest.csv");
     }
   }
 }
