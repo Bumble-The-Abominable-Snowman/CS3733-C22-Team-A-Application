@@ -40,3 +40,4 @@ public class ReligiousServiceRequest extends ServiceRequest {
     this.religion = religion;
   }
 }
+

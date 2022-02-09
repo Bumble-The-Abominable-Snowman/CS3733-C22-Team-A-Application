@@ -1,5 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
@@ -19,15 +21,24 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 
 public class MedicalEquipmentDeliveryController extends GenericServiceRequestsController {
-  @FXML private ComboBox statusChoiceBox;
-  @FXML private TextArea specialNotes;
-  @FXML private ComboBox employeeChoiceBox;
-  @FXML private ComboBox toChoiceBox;
-  @FXML private ComboBox typeChoiceBox;
-  @FXML private ComboBox fromChoiceBox;
+  @FXML private JFXButton backButton;
+  @FXML private JFXButton returnHomeButton;
+  @FXML private JFXButton clearButton;
+  @FXML private JFXButton submitButton;
+  @FXML private JFXComboBox<String> typeChoice;
+  @FXML private JFXComboBox<String> fromChoice;
+  @FXML private JFXComboBox<String> statusChoice;
+  @FXML private JFXComboBox<String> toLocationChoice;
+  @FXML private JFXComboBox<String> employeeChoice;
+  @FXML private TextArea commentsBox;
 
   private FXMLLoader loader = new FXMLLoader();
   private List<String> bedLocations = new ArrayList<>();
@@ -63,70 +74,81 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
   private void initialize() throws ParseException {
     sceneID = SceneController.SCENES.MEDICAL_EQUIPMENT_DELIVERY_SERVICE_REQUEST_SCENE;
 
-    specialNotes.setWrapText(true);
+    backButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+    returnHomeButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+    clearButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+    submitButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
 
-    typeChoiceBox.getItems().removeAll(typeChoiceBox.getItems());
-    typeChoiceBox.getItems().addAll("Type", "Bed", "XRAY", "Infusion Pump", "Patient Recliner");
-    typeChoiceBox.getSelectionModel().select("Type");
-    typeChoiceBox
+    commentsBox.setWrapText(true);
+
+    typeChoice.getItems().removeAll(typeChoice.getItems());
+    typeChoice.getItems().addAll("Type", "Bed", "XRAY", "Infusion Pump", "Patient Recliner");
+    typeChoice.getSelectionModel().select("Type");
+    typeChoice
         .getSelectionModel()
         .selectedItemProperty()
         .addListener(
             (obs, oldValue, newValue) -> {
               if (newValue.equals("Type")) {
-                fromChoiceBox.getItems().clear();
-                fromChoiceBox.setDisable(true);
+                fromChoice.getItems().clear();
+                fromChoice.setDisable(true);
               } else if (newValue.equals("Bed")) {
-                fromChoiceBox.getItems().clear();
-                fromChoiceBox.getItems().setAll(bedLocations);
-                fromChoiceBox.getSelectionModel().select(bedLocations.get(0));
-                fromChoiceBox.setDisable(false);
+                fromChoice.getItems().clear();
+                fromChoice.getItems().setAll(bedLocations);
+                fromChoice.getSelectionModel().select(bedLocations.get(0));
+                fromChoice.setDisable(false);
               } else if (newValue.equals("XRAY")) {
-                fromChoiceBox.getItems().clear();
-                fromChoiceBox.getItems().setAll(xrayLocations);
-                fromChoiceBox.getSelectionModel().select(xrayLocations.get(0));
-                fromChoiceBox.setDisable(false);
+                fromChoice.getItems().clear();
+                fromChoice.getItems().setAll(xrayLocations);
+                fromChoice.getSelectionModel().select(xrayLocations.get(0));
+                fromChoice.setDisable(false);
               } else if (newValue.equals("Infusion Pump")) {
-                fromChoiceBox.getItems().clear();
-                fromChoiceBox.getItems().setAll(infusionPumpLocations);
-                fromChoiceBox.getSelectionModel().select(infusionPumpLocations.get(0));
-                fromChoiceBox.setDisable(false);
+                fromChoice.getItems().clear();
+                fromChoice.getItems().setAll(infusionPumpLocations);
+                fromChoice.getSelectionModel().select(infusionPumpLocations.get(0));
+                fromChoice.setDisable(false);
               } else if (newValue.equals("Patient Recliner")) {
-                fromChoiceBox.getItems().clear();
-                fromChoiceBox.getItems().setAll(reclinerLocations);
-                fromChoiceBox.getSelectionModel().select(reclinerLocations.get(0));
-                fromChoiceBox.setDisable(false);
+                fromChoice.getItems().clear();
+                fromChoice.getItems().setAll(reclinerLocations);
+                fromChoice.getSelectionModel().select(reclinerLocations.get(0));
+                fromChoice.setDisable(false);
               }
             });
 
-    fromChoiceBox.getItems().removeAll(fromChoiceBox.getItems());
-    toChoiceBox.getItems().removeAll(toChoiceBox.getItems());
-    toChoiceBox
+    fromChoice.getItems().removeAll(fromChoice.getItems());
+    toLocationChoice.getItems().removeAll(toLocationChoice.getItems());
+    toLocationChoice
         .getItems()
         .addAll(
             new LocationDerbyImpl()
                 .getNodeList().stream().map(Location::getShortName).collect(Collectors.toList()));
-    toChoiceBox.setVisibleRowCount(5);
-    employeeChoiceBox.setVisibleRowCount(5);
+    toLocationChoice.setVisibleRowCount(5);
+    employeeChoice.setVisibleRowCount(5);
 
     EmployeeDAO EmployeeDAO = new EmployeeDerbyImpl();
 
-    employeeChoiceBox
+    employeeChoice
         .getItems()
         .addAll(
             EmployeeDAO.getEmployeeList().stream()
                 .map(Employee::getFirstName)
                 .collect(Collectors.toList()));
 
-    statusChoiceBox.getItems().removeAll(statusChoiceBox.getItems());
-    statusChoiceBox.getItems().setAll(status);
+    statusChoice.getItems().removeAll(statusChoice.getItems());
+    statusChoice.getItems().setAll(status);
   }
 
   @FXML
   void submitRequest() throws IOException {
+
     if (!typeChoiceBox.getSelectionModel().getSelectedItem().equals("Type")
         && toChoiceBox.getSelectionModel().getSelectedItem() != null
         && employeeChoiceBox.getSelectionModel().getSelectedItem() != null) {
+
       // pass medical service request object
       MedicalEquipmentServiceRequestDAO medicalEquipmentServiceRequestDAO =
           new MedicalEquipmentServiceRequestDerbyImpl();
@@ -145,6 +167,7 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
 
       medicalEquipmentServiceRequestDAO.enterMedicalEquipmentServiceRequest(
           medicalEquipmentServiceRequest);
+
       this.returnToHomeScene();
     }
   }

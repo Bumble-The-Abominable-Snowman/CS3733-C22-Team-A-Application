@@ -12,16 +12,16 @@ public class SanitationServiceRequest extends ServiceRequest {
   public SanitationServiceRequest() {}
 
   public SanitationServiceRequest(
-      String requestID,
-      String startLocation,
-      String endLocation,
-      String employeeRequested,
-      String employeeAssigned,
-      String requestTime,
-      String requestStatus,
-      String requestType,
-      String comments,
-      String sanitationType) {
+          String requestID,
+          String startLocation,
+          String endLocation,
+          String employeeRequested,
+          String employeeAssigned,
+          String requestTime,
+          String requestStatus,
+          String requestType,
+          String comments,
+          String sanitationType) {
     super.requestID = requestID;
     super.startLocation = startLocation;
     super.endLocation = endLocation;
