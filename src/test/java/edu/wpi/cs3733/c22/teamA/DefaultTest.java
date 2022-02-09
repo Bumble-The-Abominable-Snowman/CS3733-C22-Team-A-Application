@@ -8,6 +8,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest.FoodDeliveryServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
@@ -365,5 +366,38 @@ public class DefaultTest {
     FoodDeliveryServiceRequestDerbyImpl.exportToCSV(
         "FoodDeliveryServiceRequest",
         "src/main/resources/edu/wpi/cs3733/c22/teamA/db/FoodDeliveryServiceRequest.csv");
+  }
+
+  @Test
+  public void testMedicalEquipment() {
+    Adb.initialConnection();
+    MedicalEquipmentServiceRequestDerbyImpl derby = new MedicalEquipmentServiceRequestDerbyImpl();
+    MedicalEquipmentServiceRequest mesr =
+        new MedicalEquipmentServiceRequest(
+            "meq123",
+            "start",
+            "end",
+            "emp1",
+            "emp2",
+            "2020-01-01 12:45:00",
+            "In Progress",
+            "High Priority",
+            "no additional comments",
+            "bed1");
+    System.out.println("Testing enter");
+    derby.enterMedicalEquipmentServiceRequest(mesr);
+    System.out.println("Testing get");
+    MedicalEquipmentServiceRequest rsr2 = derby.getMedicalEquipmentServiceRequest("meq123");
+    System.out.println("Got RequestID: " + rsr2.getRequestID());
+    System.out.println("Testing update: updating equipmentID to 'xray1'");
+    derby.updateMedicalEquipmentServiceRequest("meq123", "equipmentID", "xray1");
+    MedicalEquipmentServiceRequest rsr3 = derby.getMedicalEquipmentServiceRequest("meq123");
+    System.out.println("Got washMode: " + rsr3.getEquipmentID());
+    System.out.println("Testing getList");
+    List<MedicalEquipmentServiceRequest> list = derby.getMedicalEquipmentServiceRequestList();
+    System.out.println("First element language: " + list.get(0).getEquipmentID());
+    System.out.println("testing delete");
+    derby.deleteMedicalEquipment("meq123");
+
   }
 }

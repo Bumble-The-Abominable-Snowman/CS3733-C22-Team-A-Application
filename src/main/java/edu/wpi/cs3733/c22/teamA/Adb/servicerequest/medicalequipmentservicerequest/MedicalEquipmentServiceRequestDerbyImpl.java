@@ -22,14 +22,12 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
       Statement get = connection.createStatement();
       String str =
           String.format(
-              "SELECT * FROM ServiceRequestDerbyImpl s, MedicalEquipmentServiceRequest m WHERE (s.requestID = m.requestID) AND m.requestID = '%s'",
+              "SELECT * FROM ServiceRequest s, MedicalEquipmentServiceRequest m WHERE (s.requestID = m.requestID) AND m.requestID = '%s'",
               ID);
 
       ResultSet rset = get.executeQuery(str);
       MedicalEquipmentServiceRequest mesr = new MedicalEquipmentServiceRequest();
-      System.out.println("hello");
       if (rset.next()) {
-        System.out.println("hi");
         String requestID = rset.getString("requestID");
         String startLocation = rset.getString("startLocation");
         String endLocation = rset.getString("endLocation");
@@ -79,7 +77,7 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
       } else {
         str =
             String.format(
-                "UPDATE ServiceRequestDerbyImpl SET " + field + " = '%s' WHERE requestID = '%s'",
+                "UPDATE ServiceRequest SET " + field + " = '%s' WHERE requestID = '%s'",
                 change,
                 ID);
       }
@@ -122,10 +120,9 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
       Statement insert = connection.createStatement();
 
       String strTime = "'" + requestTime.toString() + "'";
-      System.out.println(strTime);
       String str =
           String.format(
-              "INSERT INTO ServiceRequestDerbyImpl(requestID, startLocation, endLocation, "
+              "INSERT INTO ServiceRequest(requestID, startLocation, endLocation, "
                   + "employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments) "
                   + " VALUES('%s', '%s', '%s', '%s', '%s', %s, '%s', '%s', '%s')",
               requestID,
@@ -137,7 +134,6 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
               requestStatus,
               requestType,
               comments);
-
       insert.execute(str);
 
       String str2 =
@@ -146,7 +142,8 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
                   + " VALUES('%s', '%s')",
               requestID, equipmentID);
 
-      insert.execute(str);
+      insert.execute(str2);
+
       connection.close();
 
     } catch (SQLException e) {
@@ -160,8 +157,11 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement delete = connection.createStatement();
-      String str = String.format("DELETE FROM ServiceRequestDerbyImpl WHERE requestID = '%s'", ID);
+      String str = String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", ID);
       delete.execute(str);
+
+      delete.execute(
+          String.format("DELETE FROM MedicalEquipmentServiceRequest WHERE requestID = '%s'", ID));
 
     } catch (SQLException e) {
       System.out.println("Failed");
