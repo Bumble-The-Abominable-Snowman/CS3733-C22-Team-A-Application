@@ -150,7 +150,7 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
               requestType,
               comments);
 
-      insert.executeQuery(str);
+      insert.execute(str);
 
       String str2 =
           String.format(
@@ -172,6 +172,9 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
       Statement delete = connection.createStatement();
       String str = String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", id);
       delete.execute(str);
+
+      delete.execute(
+          String.format("DELETE FROM FoodDeliveryServiceRequest WHERE requestID = '%s'", id));
 
     } catch (SQLException e) {
       System.out.println("Failed");
