@@ -161,14 +161,14 @@ public class MapEditorController {
                     button.setMinWidth(4.0);
                     button.setMinHeight(2.0);
                     button.setShape(locationMarkerShape);
-                    button.setLayoutX(location.getXCoord() - 512);
-                    button.setLayoutY(location.getYCoord() - 512);
+                    button.setLayoutX(location.getXCoord() + mapDisplay.getLayoutX() - 8);
+                    button.setLayoutY(location.getYCoord() + mapDisplay.getLayoutY() - 24);
                     if (count % 2 == 0) {
-                      label.setLayoutX(location.getXCoord() - 512 + 7.5);
-                      label.setLayoutY(location.getYCoord() - 512 - 15);
+                      label.setLayoutX(location.getXCoord() + mapDisplay.getLayoutX() - 8 + 7.5);
+                      label.setLayoutY(location.getYCoord() + mapDisplay.getLayoutY() - 24 - 15);
                     } else {
-                      label.setLayoutX(location.getXCoord() - 512 - 20);
-                      label.setLayoutY(location.getYCoord() - 512 - 15);
+                      label.setLayoutX(location.getXCoord() + mapDisplay.getLayoutX() - 8 - 20);
+                      label.setLayoutY(location.getYCoord() + mapDisplay.getLayoutY() - 24 - 15);
                     }
                     count++;
 

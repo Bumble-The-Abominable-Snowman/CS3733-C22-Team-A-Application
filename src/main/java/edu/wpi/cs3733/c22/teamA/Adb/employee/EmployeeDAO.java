@@ -8,7 +8,7 @@ public interface EmployeeDAO {
 
   public Employee getEmployee(String ID);
 
-  public void updateEmployee(String ID, String field, String change);
+  public void updateEmployee(String ID, String field, Object change);
 
   public void enterEmployee(
       String employeeID,

@@ -2,6 +2,7 @@ package edu.wpi.cs3733.c22.teamA.Adb.location;
 
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -119,16 +120,24 @@ public class LocationDerbyImpl implements LocationDAO {
   }
 
   // Method to update nodes from location table.
-  public void updateLocation(String ID, String field, String change) {
+  public void updateLocation(String ID, String field, Object change) {
 
     String tableName = "TowerLocations";
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement updateCoords = connection.createStatement();
 
-      String str =
-          String.format(
-              "update " + tableName + " set " + field + " = %s where nodeID = '%s'", change, ID);
+      String str = "";
+      if (change instanceof String) {
+        str =
+            String.format(
+                "update " + tableName + " set " + field + " = %s where nodeID = '%s'", change, ID);
+      } else {
+        str =
+            String.format(
+                "update " + tableName + " set " + field + " = " + change + " where nodeID = '%s'",
+                ID);
+      }
       updateCoords.execute(str);
 
     } catch (SQLException e) {
@@ -233,6 +242,8 @@ public class LocationDerbyImpl implements LocationDAO {
   public static void writeLocationCSV(List<Location> List, String csvFilePath) throws IOException {
 
     // create a writer
+    File file = new File(csvFilePath);
+    file.createNewFile();
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(
