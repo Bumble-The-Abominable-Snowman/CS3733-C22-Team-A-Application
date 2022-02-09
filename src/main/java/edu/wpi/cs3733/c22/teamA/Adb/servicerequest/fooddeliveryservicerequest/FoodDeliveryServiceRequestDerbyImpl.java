@@ -2,6 +2,7 @@ package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest;
 
 import edu.wpi.cs3733.c22.teamA.entities.requests.FoodDeliveryServiceRequest;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -149,7 +150,7 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
               requestType,
               comments);
 
-      insert.executeQuery(str);
+      insert.execute(str);
 
       String str2 =
           String.format(
@@ -171,6 +172,9 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
       Statement delete = connection.createStatement();
       String str = String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", id);
       delete.execute(str);
+
+      delete.execute(
+          String.format("DELETE FROM FoodDeliveryServiceRequest WHERE requestID = '%s'", id));
 
     } catch (SQLException e) {
       System.out.println("Failed");
@@ -283,6 +287,8 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
       List<FoodDeliveryServiceRequest> List, String csvFilePath) throws IOException {
 
     // create a writer
+    File file = new File(csvFilePath);
+    file.createNewFile();
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(
