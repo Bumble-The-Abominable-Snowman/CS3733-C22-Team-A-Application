@@ -263,6 +263,7 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
 
     // create a writer
     File file = new File(csvFilePath);
+    file.createNewFile();
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(

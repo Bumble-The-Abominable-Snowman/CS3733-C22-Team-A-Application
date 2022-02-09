@@ -2,6 +2,7 @@ package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest;
 
 import edu.wpi.cs3733.c22.teamA.entities.requests.LaundryServiceRequest;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -255,6 +256,8 @@ public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO 
       List<LaundryServiceRequest> List, String csvFilePath) throws IOException {
 
     // create a writer
+    File file = new File(csvFilePath);
+    file.createNewFile();
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(

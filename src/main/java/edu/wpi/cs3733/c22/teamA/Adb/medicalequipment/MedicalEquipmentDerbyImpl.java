@@ -2,6 +2,7 @@ package edu.wpi.cs3733.c22.teamA.Adb.medicalequipment;
 
 import edu.wpi.cs3733.c22.teamA.entities.MedicalEquipment;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -177,6 +178,8 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
       throws IOException {
 
     // create a writer
+    File file = new File(csvFilePath);
+    file.createNewFile();
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write("getEquipmentID, getEquipmentType, isClean, getCurrentLocation, isAvailable");
