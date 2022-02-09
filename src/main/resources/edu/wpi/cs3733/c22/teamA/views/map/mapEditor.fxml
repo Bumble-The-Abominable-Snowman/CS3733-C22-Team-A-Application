@@ -6,13 +6,12 @@
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane styleClass="snowmanBackground" stylesheets="@snowman/snowmanBackground.css" fx:id="anchorPane" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: LIGHTBLUE;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.map.MapEditorController">
+<AnchorPane fx:id="anchorPane" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: LIGHTBLUE;" styleClass="snowmanBackground" stylesheets="@snowman/snowmanBackground.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.map.MapEditorController">
    <children>
       <JFXCheckBox fx:id="dragToggleBox" alignment="CENTER" layoutX="49.0" layoutY="847.0" prefHeight="22.0" prefWidth="176.0" text="Toggle Drag/Drop Locations" wrapText="true" />
       <JFXCheckBox fx:id="textToggleBox" alignment="CENTER" layoutX="49.0" layoutY="876.0" prefHeight="22.0" prefWidth="82.0" text="Toggle Text" wrapText="true" />
@@ -76,11 +75,7 @@
       </VBox>
       <Label fx:id="topTextLabel" alignment="CENTER" layoutX="851.0" layoutY="-3.0" prefHeight="34.0" prefWidth="221.0" text="MAP EDITOR" />
       <JFXComboBox fx:id="floorSelectionComboBox" layoutX="131.0" layoutY="286.0" unFocusColor="WHITE" />
-      <ImageView fx:id="mapDisplay" fitHeight="1025.0" fitWidth="1050.0" layoutX="436.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../images/3rd%20Floor.png" />
-         </image>
-      </ImageView>
+      <ImageView fx:id="mapDisplay" fitHeight="1025.0" fitWidth="1050.0" layoutX="436.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" />
       <JFXCheckBox fx:id="locationToggle" layoutX="49.0" layoutY="823.0" text="Toggle Location View" />
    </children>
 </AnchorPane>
