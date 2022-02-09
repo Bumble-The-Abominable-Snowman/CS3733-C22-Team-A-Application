@@ -43,15 +43,30 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
     }
   }
 
-  public void updateMedicalEquipment(String ID, String field, String change) {
+  public void updateMedicalEquipment(String ID, String field, Object change) {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement update = connection.createStatement();
-      String str =
-          String.format(
-              "UPDATE MedicalEquipment SET " + field + " = %s WHERE equipmentID = '%s'",
-              change,
-              ID);
+
+      String str = "";
+      if (change instanceof String) {
+        str =
+            String.format(
+                "UPDATE MedicalEquipment SET " + field + " = %s WHERE equipmentID = '%s'",
+                change,
+                ID);
+      } else {
+        String change1 = String.valueOf(change);
+        str =
+            String.format(
+                "UPDATE MedicalEquipment SET "
+                    + field
+                    + " = '"
+                    + change1
+                    + "' WHERE equipmentID = '%s'",
+                ID);
+      }
+
       update.execute(str);
     } catch (SQLException e) {
       System.out.println("Failed");

@@ -49,13 +49,30 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     }
   }
 
-  public void updateEmployee(String ID, String field, String change) {
+  public void updateEmployee(String ID, String field, Object change) {
     try {
       Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
       Statement update = connection.createStatement();
-      String str =
-          String.format(
-              "UPDATE Employee SET " + field + " = '%s' WHERE employeeID = '%s'", change, ID);
+
+      String str = "";
+      if (change instanceof String) {
+        str =
+            String.format(
+                "UPDATE Employee SET " + field + " = '%s' WHERE employeeID = '%s'", change, ID);
+      } else {
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String startDateStr = originalFormat.format(change);
+
+        str =
+            String.format(
+                "UPDATE Employee SET "
+                    + field
+                    + " = '"
+                    + startDateStr
+                    + "' WHERE employeeID = '%s'",
+                ID);
+      }
+
       update.execute(str);
     } catch (SQLException e) {
       System.out.println("Failed");

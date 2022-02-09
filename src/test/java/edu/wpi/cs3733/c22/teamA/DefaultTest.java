@@ -296,7 +296,7 @@ public class DefaultTest {
     LanguageServiceRequestDerbyImpl derby = new LanguageServiceRequestDerbyImpl();
     LanguageServiceRequest lsr =
         new LanguageServiceRequest(
-            "lan123",
+            "lan124",
             "start",
             "end",
             "emp1",
@@ -326,9 +326,12 @@ public class DefaultTest {
   }
 
   @Test
-  public void testFoodDelivery() {
+  public void testFoodDelivery() throws IOException {
 
     Adb.initialConnection();
+
+    FoodDeliveryServiceRequestDerbyImpl.inputFromCSV(
+        "FoodDeliveryServiceRequest", "edu/wpi/cs3733/c22/teamA/db/FoodDeliveryServiceRequest.csv");
 
     FoodDeliveryServiceRequestDerbyImpl derby = new FoodDeliveryServiceRequestDerbyImpl();
     FoodDeliveryServiceRequest fdsr =
@@ -360,6 +363,9 @@ public class DefaultTest {
     System.out.println("First element dessert: " + list.get(0).getDessert());
     System.out.println("testing delete");
     derby.deleteFoodDeliveryRequest("fod123");
+    FoodDeliveryServiceRequestDerbyImpl.exportToCSV(
+        "FoodDeliveryServiceRequest",
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/FoodDeliveryServiceRequest.csv");
   }
 
   @Test

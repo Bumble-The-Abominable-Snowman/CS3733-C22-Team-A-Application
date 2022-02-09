@@ -6,7 +6,7 @@ import java.util.List;
 public interface MedicalEquipmentDAO {
   public MedicalEquipment getMedicalEquipment(String ID);
 
-  public void updateMedicalEquipment(String ID, String field, String change);
+  public void updateMedicalEquipment(String ID, String field, Object change);
 
   public void enterMedicalEquipment(
       String equipmentID,
