@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.controllers.dataview;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
@@ -19,18 +20,26 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.geometry.Insets;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 
 public class ViewServiceRequestController implements Initializable {
-  @FXML Button backButton;
+
+  @FXML JFXButton backButton;
   @FXML JFXTreeTableView<ServiceRequest> requestsTable;
 
   private final SceneController sceneController = Aapp.sceneController;
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
+    backButton.setBackground(
+        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+
     // Create all columns in the tracker table
     JFXTreeTableColumn<ServiceRequest, String> reqID = new JFXTreeTableColumn<>("ID");
     JFXTreeTableColumn<ServiceRequest, String> startLoc =

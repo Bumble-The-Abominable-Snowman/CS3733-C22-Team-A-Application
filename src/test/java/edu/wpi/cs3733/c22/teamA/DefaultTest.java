@@ -155,8 +155,12 @@ public class DefaultTest {
   }
 
   @Test
-  public void testReligious() {
+  public void testReligious() throws IOException {
     Adb.initialConnection();
+
+    ReligiousServiceRequestDerbyImpl.inputFromCSV(
+        "ReligiousServiceRequest", "edu/wpi/cs3733/c22/teamA/db/ReligiousServiceRequest.csv");
+
     ReligiousServiceRequestDAO derby = new ReligiousServiceRequestDerbyImpl();
     ReligiousServiceRequest rsr =
         new ReligiousServiceRequest(
@@ -170,8 +174,23 @@ public class DefaultTest {
             "High Priority",
             "no additional comments",
             "Christain");
+
+    ReligiousServiceRequest rsr1 =
+        new ReligiousServiceRequest(
+            "rel124",
+            "start",
+            "end",
+            "emp1",
+            "emp2",
+            "2020-01-01 12:45:00",
+            "In Progress",
+            "High Priority",
+            "no additional comments",
+            "Judiasm");
+
     System.out.println("Testing enter");
     derby.enterReligiousServiceRequest(rsr);
+    derby.enterReligiousServiceRequest(rsr1);
     System.out.println("Testing get");
     ReligiousServiceRequest rsr2 = derby.getReligiousServiceRequest("rel123");
     System.out.println("Got RequestID: " + rsr2.getRequestID());
@@ -182,6 +201,10 @@ public class DefaultTest {
     System.out.println("First element religion: " + list.get(0).getReligion());
     System.out.println("testing delete");
     derby.deleteReligiousServiceRequest("rel123");
+    derby.deleteReligiousServiceRequest("rel124");
+    ReligiousServiceRequestDerbyImpl.writeReligiousServiceRequestCSV(
+        derby.getReligiousServiceRequestList(),
+        "edu/wpi/cs3733/c22/teamA/db/ReligiousServiceRequest.csv");
   }
 
   @Test

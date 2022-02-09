@@ -19,6 +19,8 @@ public class SceneController {
     MEDICAL_EQUIPMENT_DELIVERY_SERVICE_REQUEST_SCENE,
     RELIGIOUS_SERVICE_REQUEST_SCENE,
     SANITATION_SERVICE_REQUEST_SCENE,
+    FLORAL_DELIVERY_SERVICE_REQUEST_SCENE,
+    MEDICINE_DELIVERY_SERVICE_REQUEST_SCENE,
     VIEW_MEDICAL_EQUIPMENT_SCENE,
     VIEW_LOCATION_DATA_SCENE,
     VIEW_EDIT_LOCATION_DATA,
@@ -50,6 +52,11 @@ public class SceneController {
     addScene(SCENES.RELIGIOUS_SERVICE_REQUEST_SCENE, "views/servicerequest/religiousServices.fxml");
     addScene(
         SCENES.SANITATION_SERVICE_REQUEST_SCENE, "views/servicerequest/sanitationServices.fxml");
+    addScene(
+        SCENES.FLORAL_DELIVERY_SERVICE_REQUEST_SCENE, "views/servicerequest/floralDelivery.fxml");
+    addScene(
+        SCENES.MEDICINE_DELIVERY_SERVICE_REQUEST_SCENE,
+        "views/servicerequest/medicineDelivery.fxml");
 
     addScene(SCENES.VIEW_MEDICAL_EQUIPMENT_SCENE, "views/dataview/medicalEquipmentData.fxml");
     addScene(SCENES.VIEW_LOCATION_DATA_SCENE, "views/dataview/locationData.fxml");
@@ -57,7 +64,7 @@ public class SceneController {
     addScene(SCENES.VIEW_SERVICE_REQUEST_SCENE, "views/dataview/viewServiceRequest.fxml");
     addScene(SCENES.VIEW_EMPLOYEES_SCENE, "views/dataview/employeeData.fxml");
 
-    addScene(SCENES.SETTINGS_SCENE, "views/SettingsViews/settings.fxml");
+    addScene(SCENES.SETTINGS_SCENE, "views/settings/settings.fxml");
     addScene(SCENES.LOAD_FROM_BACKUP_SCENE, "views/SettingsViews/loadFromBackup.fxml");
     addScene(SCENES.EXPORT_TO_BACKUP_SCENE, "views/SettingsViews/exportToBackup.fxml");
 
