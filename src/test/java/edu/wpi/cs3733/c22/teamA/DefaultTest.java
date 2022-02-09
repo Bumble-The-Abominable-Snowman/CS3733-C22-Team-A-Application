@@ -205,11 +205,13 @@ public class DefaultTest {
     System.out.println("Testing get");
     SanitationServiceRequest rsr2 = derby.getSanitationServiceRequest("san123");
     System.out.println("Got RequestID: " + rsr2.getRequestID());
-    System.out.println("Testing update: updating religion to 'Judiasm'");
-    derby.updateSanitationServiceRequest("rel123", "religion", "Judiasm");
+    System.out.println("Testing update: updating religion to 'super'");
+    derby.updateSanitationServiceRequest("san123", "sanitationType", "super");
+    SanitationServiceRequest rsr3 = derby.getSanitationServiceRequest("san123");
+    System.out.println("Got santype: " + rsr3.getSanitationType());
     System.out.println("Testing getList");
     List<SanitationServiceRequest> list = derby.getSanitationServiceRequestList();
-    System.out.println("First element santype: " + list.get(1).getSanitationType());
+    System.out.println("First element santype: " + list.get(0).getSanitationType());
     System.out.println("testing delete");
     derby.deleteSanitationServiceRequest("san123");
   }

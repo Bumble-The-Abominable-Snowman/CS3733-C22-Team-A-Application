@@ -77,7 +77,6 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
                 change,
                 ID);
       }
-
       update.execute(str);
     } catch (SQLException e) {
       System.out.println("Failed");
@@ -133,6 +132,7 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
               comments);
 
       insert.executeUpdate(str);
+
       String str2 =
           String.format(
               "INSERT INTO SanitationServiceRequest(requestID, sanitationType) "
@@ -154,6 +154,9 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
       Statement delete = connection.createStatement();
       String str = String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", id);
       delete.execute(str);
+
+      delete.execute(
+          String.format("DELETE FROM SanitationServiceRequest WHERE requestID = '%s'", id));
 
     } catch (SQLException e) {
       System.out.println("Failed");
