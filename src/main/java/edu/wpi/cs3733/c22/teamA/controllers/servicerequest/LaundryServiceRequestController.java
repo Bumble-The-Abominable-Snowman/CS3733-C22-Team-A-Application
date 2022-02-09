@@ -71,7 +71,7 @@ public class LaundryServiceRequestController extends GenericServiceRequestsContr
               new Timestamp((new Date()).getTime()).toString(),
               "NEW",
               "Laundry Service",
-              (commentsBox.getText().equals("") ? "N/A" : commentsBox.getText()),
+              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               washMode.getValue());
       LaundryServiceRequestDAO laundryServiceRequestDAO = new LaundryServiceRequestDerbyImpl();
       laundryServiceRequestDAO.enterLaundryServiceRequest(laundryServiceRequest);
