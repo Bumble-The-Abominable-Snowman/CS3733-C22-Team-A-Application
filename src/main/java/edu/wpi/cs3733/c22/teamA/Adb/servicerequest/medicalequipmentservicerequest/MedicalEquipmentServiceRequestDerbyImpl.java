@@ -48,8 +48,8 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
                 employeeAssigned,
                 requestTime,
                 requestStatus,
-                comments,
                 requestType,
+                comments,
                 equipmentID);
       }
       return mesr;
