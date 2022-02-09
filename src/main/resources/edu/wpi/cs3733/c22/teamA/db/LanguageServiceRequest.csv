@@ -1,0 +1,3 @@
+RequestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments, Language
+lan123,start,end,emp1,emp2,2020-01-01 12:45:00.0,In Progress,High Priority,no additional comments,Super Wash
+lan124,start,end,emp1,emp2,2020-01-01 12:45:00.0,In Progress,High Priority,no additional comments,Normal Wash
