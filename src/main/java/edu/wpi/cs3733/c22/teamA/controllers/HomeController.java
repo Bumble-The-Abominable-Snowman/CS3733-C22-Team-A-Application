@@ -28,19 +28,19 @@ public class HomeController {
   @FXML
   private void initialize() {
     settingsButton.setBackground(
-        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
     serviceRequestsButton.setBackground(
-        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(20), Insets.EMPTY)));
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(20), Insets.EMPTY)));
     viewServiceRequestsButton.setBackground(
-        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(20), Insets.EMPTY)));
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(20), Insets.EMPTY)));
     equipmentTrackerButton.setBackground(
-        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(20), Insets.EMPTY)));
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(20), Insets.EMPTY)));
     locationDataButton.setBackground(
-        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(20), Insets.EMPTY)));
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(20), Insets.EMPTY)));
     editLocationButton.setBackground(
-        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
     employeesButton.setBackground(
-        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(40), Insets.EMPTY)));
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
   }
 
   @FXML

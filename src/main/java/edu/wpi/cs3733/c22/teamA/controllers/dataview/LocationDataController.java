@@ -37,7 +37,7 @@ public class LocationDataController implements Initializable {
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     backButton.setBackground(
-        new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(0), Insets.EMPTY)));
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
 
     // Create all columns in the tracker table
     JFXTreeTableColumn<Location, String> id = new JFXTreeTableColumn<>("ID");

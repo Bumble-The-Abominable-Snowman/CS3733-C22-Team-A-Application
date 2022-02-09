@@ -6,7 +6,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.map.MapEditorController">
+<AnchorPane styleClass="snowmanBackground" stylesheets="@snowman/snowmanBackground.css" fx:id="anchorPane" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: LIGHTBLUE;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.map.MapEditorController">
    <children>
       <JFXCheckBox fx:id="dragToggleBox" alignment="CENTER" layoutX="49.0" layoutY="938.0" prefHeight="22.0" prefWidth="176.0" text="Toggle Drag/Drop Locations" wrapText="true" />
       <JFXCheckBox fx:id="textToggleBox" alignment="CENTER" layoutX="49.0" layoutY="960.0" prefHeight="22.0" prefWidth="82.0" text="Toggle Text" wrapText="true" />
@@ -14,7 +14,7 @@
       <JFXButton fx:id="viewTableButton" layoutX="49.0" layoutY="891.0" onAction="#goToLocationTable" prefHeight="25.0" prefWidth="176.0" text="View Table" />
       <JFXButton fx:id="newLocButton" layoutX="49.0" layoutY="824.0" onAction="#newLocPressed" prefHeight="25.0" prefWidth="176.0" text="New Location" />
       <JFXButton fx:id="returnHomeButton" layoutX="1846.0" layoutY="23.0" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" />
-      <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="26.0" prefWidth="55.0" text="Back">
+      <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="26.0" prefWidth="55.0" text="Back" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="OPEN_HAND" />
          </cursor></JFXButton>
@@ -34,7 +34,7 @@
          </children>
       </VBox>
       <Label fx:id="topTextLabel" alignment="CENTER" layoutX="851.0" layoutY="-3.0" prefHeight="34.0" prefWidth="221.0" text="MAP EDITOR" />
-      <JFXComboBox fx:id="floorSelectionComboBox" layoutX="131.0" layoutY="286.0" />
+      <JFXComboBox fx:id="floorSelectionComboBox" layoutX="131.0" layoutY="286.0" unFocusColor="WHITE" />
       <ImageView fx:id="mapDisplay" fitHeight="1025.0" fitWidth="1050.0" layoutX="436.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/3rd%20Floor.png" />

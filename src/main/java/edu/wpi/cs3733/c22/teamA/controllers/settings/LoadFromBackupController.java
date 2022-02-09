@@ -1,5 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.controllers.settings;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
@@ -19,17 +21,22 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.geometry.Insets;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class LoadFromBackupController {
-  public Button refreshButton;
-  @FXML private ChoiceBox<String> TypeCSV;
+  public JFXButton refreshButton;
+  @FXML private JFXButton returnHomeButton;
+  @FXML private JFXButton backButton;
+  @FXML private JFXButton loadFromBackupButton;
+  @FXML private JFXComboBox<String> TypeCSV;
   @FXML private Text selectedFileText;
   @FXML private ListView<String> fileList;
   private String lastSelectedFile;
@@ -39,6 +46,13 @@ public class LoadFromBackupController {
   @FXML
   public void initialize() {
     refreshFiles(null);
+
+    backButton.setBackground(
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
+    loadFromBackupButton.setBackground(
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(20), Insets.EMPTY)));
+    returnHomeButton.setBackground(
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
 
     fileList.setOnMouseClicked(
         new EventHandler<MouseEvent>() {

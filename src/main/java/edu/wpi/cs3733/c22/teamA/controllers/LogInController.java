@@ -1,12 +1,17 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
+import com.jfoenix.controls.JFXButton;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
@@ -14,8 +19,16 @@ public class LogInController {
   @FXML private Text welcomeBox;
   @FXML private TextField usernameBox;
   @FXML private PasswordField passwordBox;
+  @FXML private JFXButton logInButton;
+  @FXML private JFXButton exitButton;
 
   private final SceneController sceneController = Aapp.sceneController;
+
+  @FXML
+  private void initialize() {
+    logInButton.setBackground(
+        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
+  }
 
   @FXML
   private void logIn(ActionEvent actionEvent) throws IOException, TimeoutException {
