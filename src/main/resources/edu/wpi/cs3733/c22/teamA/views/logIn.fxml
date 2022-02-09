@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane styleClass="snowmanBackground" stylesheets="@../css/snowmanBackground.css" prefHeight="400" prefWidth="600" xmlns="http://javafx.com/javafx/16" style="-fx-background-color: LIGHTBLUE;" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.LogInController">
+<GridPane prefHeight="400" prefWidth="600" style="-fx-background-color: LIGHTBLUE;" styleClass="snowmanBackground" stylesheets="@../css/snowmanBackground.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.LogInController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -18,15 +18,15 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <JFXButton fx:id="exitButton" layoutX="525.0" layoutY="30.0" mnemonicParsing="false" onAction="#exitApp" text="Exit" textFill="WHITE" underline="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
-   <TextField fx:id="usernameBox" layoutX="225.0" layoutY="200.0" promptText="username" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-   <Text fx:id="welcomeBox" fill="WHITE" layoutX="5.0" layoutY="156.0" stroke="#05408d" strokeType="OUTSIDE" text="Welcome!" textAlignment="CENTER" wrappingWidth="225.83447265625" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+   <TextField fx:id="usernameBox" layoutX="225.0" layoutY="200.0" promptText="username" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+   <Text fx:id="welcomeBox" fill="WHITE" layoutX="5.0" layoutY="156.0" stroke="#05408d" strokeType="OUTSIDE" text="Welcome!" textAlignment="CENTER" wrappingWidth="225.83447265625" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
       <font>
          <Font name="Segoe UI Bold Italic" size="47.0" />
       </font>
    </Text>
-   <JFXButton fx:id="logInButton" layoutX="274.0" layoutY="287.0" mnemonicParsing="false" onAction="#logIn" text="Log In" textFill="WHITE" underline="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+   <JFXButton fx:id="logInButton" buttonType="RAISED" layoutX="274.0" layoutY="287.0" mnemonicParsing="false" onAction="#logIn" text="Log In" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
       <font>
          <Font name="Gadugi" size="12.0" />
       </font></JFXButton>
-   <PasswordField fx:id="passwordBox" layoutX="225.0" layoutY="236.0" promptText="password" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+   <PasswordField fx:id="passwordBox" layoutX="225.0" layoutY="236.0" promptText="password" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
 </GridPane>

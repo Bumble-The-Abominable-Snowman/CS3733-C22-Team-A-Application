@@ -62,7 +62,7 @@
    <JFXComboBox fx:id="dessertChoice" layoutX="20.0" layoutY="228.0" prefHeight="28.0" prefWidth="119.0" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
    <JFXComboBox fx:id="drinkChoice" layoutX="20.0" layoutY="144.0" prefHeight="28.0" prefWidth="119.0" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
    <JFXComboBox fx:id="toLocationChoice" layoutX="212.0" layoutY="159.0" prefWidth="150.0" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
-   <JFXComboBox fx:id="employeeChoice" layoutX="431.0" layoutY="87.0" prefWidth="150.0" unFocusColor="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+   <JFXComboBox fx:id="employeeChoice" layoutX="431.0" layoutY="87.0" prefHeight="28.0" prefWidth="112.0" unFocusColor="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
    <TextArea fx:id="commentsBox" maxHeight="-Infinity" maxWidth="180" prefHeight="97.0" prefWidth="180.0" promptText="Special Instructions/Allergies" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
       <font>
          <Font name="System Italic" size="12.0" />
