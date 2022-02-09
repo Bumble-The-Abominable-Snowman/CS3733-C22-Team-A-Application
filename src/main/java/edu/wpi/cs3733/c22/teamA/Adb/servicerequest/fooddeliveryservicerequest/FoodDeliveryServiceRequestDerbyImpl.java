@@ -1,9 +1,19 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest;
 
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.requests.FoodDeliveryServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.requests.LanguageServiceRequest;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceRequestDAO {
 
@@ -221,150 +231,157 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
     return reqList;
   }
 
-  //  // Read from Location CSV
-  //  public static List<FoodDeliveryServiceRequest> readFoodDeliveryServiceRequestCSV(
-  //      String csvFilePath) throws IOException, ParseException {
-  //    // System.out.println("beginning to read csv");
-  //
-  //    Scanner lineScanner =
-  //        new Scanner(
-  //            FoodDeliveryServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
-  //    Scanner dataScanner;
-  //    int dataIndex = 0;
-  //    int lineIndex = 0;
-  //    int intData = 0;
-  //    List<FoodDeliveryServiceRequest> list = new ArrayList<>();
-  //    lineScanner.nextLine();
-  //
-  //    while (lineScanner.hasNextLine()) { // Scan CSV line by line
-  //
-  //      dataScanner = new Scanner(lineScanner.nextLine());
-  //      dataScanner.useDelimiter(",");
-  //      LanguageServiceRequest thisLSR = new LanguageServiceRequest();
-  //
-  //      while (dataScanner.hasNext()) {
-  //
-  //        String data = dataScanner.next();
-  //        if (dataIndex == 0) thisLSR.setRequestID(data);
-  //        else if (dataIndex == 1) thisLSR.setStartLocation(data);
-  //        else if (dataIndex == 2) thisLSR.setEndLocation(data);
-  //        else if (dataIndex == 3) thisLSR.setEmployeeRequested(data);
-  //        else if (dataIndex == 4) thisLSR.setEmployeeAssigned(data);
-  //        else if (dataIndex == 5) thisLSR.setRequestTime(data);
-  //        else if (dataIndex == 6) thisLSR.setRequestStatus(data);
-  //        else if (dataIndex == 7) thisLSR.setRequestType(data);
-  //        else if (dataIndex == 8) thisLSR.setComments(data);
-  //        else if (dataIndex == 9) thisLSR.setLanguage(data);
-  //        else System.out.println("Invalid data, I broke::" + data);
-  //        dataIndex++;
-  //      }
-  //
-  //      dataIndex = 0;
-  //      list.add(thisLSR);
-  //      // System.out.println(thisLocation);
-  //
-  //    }
-  //
-  //    lineIndex++;
-  //    lineScanner.close();
-  //    return list;
-  //  }
-  //
-  //  // Write CSV for MedicalEquipmentServiceRequest table
-  //  public static void writeLanguageServiceRequestCSV(
-  //      List<LanguageServiceRequest> List, String csvFilePath) throws IOException {
-  //
-  //    // create a writer
-  //    BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
-  //
-  //    writer.write(
-  //        "RequestID, startLocation, endLocation, employeeRequested, employeeAssigned,
-  // requestTime, requestStatus, requestType, comments, Language");
-  //    writer.newLine();
-  //
-  //    // write location data
-  //    for (LanguageServiceRequest thisLSR : List) {
-  //
-  //      writer.write(
-  //          String.join(
-  //              ",",
-  //              thisLSR.getRequestID(),
-  //              thisLSR.getStartLocation(),
-  //              thisLSR.getEndLocation(),
-  //              thisLSR.getEmployeeRequested(),
-  //              thisLSR.getEmployeeAssigned(),
-  //              thisLSR.getRequestTime(),
-  //              thisLSR.getRequestStatus(),
-  //              thisLSR.getRequestType(),
-  //              thisLSR.getComments(),
-  //              thisLSR.getLanguage()));
-  //
-  //      writer.newLine();
-  //    }
-  //    writer.close(); // close the writer
-  //  }
-  //
-  //  // input from CSV
-  //  public static void inputFromCSV(String tableName, String csvFilePath) {
-  //
-  //    try {
-  //      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-  //      Statement dropTable = connection.createStatement();
-  //
-  //      dropTable.execute("DELETE FROM LanguageServiceRequest");
-  //    } catch (SQLException e) {
-  //      System.out.println("delete failed");
-  //    }
-  //
-  //    try {
-  //      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
-  //
-  //      List<LanguageServiceRequest> List =
-  //          LanguageServiceRequestDerbyImpl.readLanguageServiceRequestCSV(csvFilePath);
-  //      for (LanguageServiceRequest l : List) {
-  //        Statement addStatement = connection.createStatement();
-  //
-  //        // add sub table
-  //        addStatement.executeUpdate(
-  //            "INSERT INTO LanguageServiceRequest(requestID, language) VALUES('"
-  //                + l.getRequestID()
-  //                + "', '"
-  //                + l.getLanguage()
-  //                + "')");
-  //
-  //        // add to ServiceRequest table
-  //        addStatement.executeUpdate(
-  //            "INSERT INTO ServiceRequest(requestID, startLocation, endLocation,
-  // employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments)
-  // VALUES('"
-  //                + l.getRequestID()
-  //                + "', '"
-  //                + l.getStartLocation()
-  //                + "', '"
-  //                + l.getEndLocation()
-  //                + "', '"
-  //                + l.getEmployeeRequested()
-  //                + "', '"
-  //                + l.getEmployeeAssigned()
-  //                + "', '"
-  //                + l.getRequestTime()
-  //                + "', '"
-  //                + l.getRequestStatus()
-  //                + "', '"
-  //                + l.getRequestType()
-  //                + "', '"
-  //                + l.getComments()
-  //                + "')");
-  //      }
-  //    } catch (SQLException | IOException | ParseException e) {
-  //      System.out.println("Insertion failed!");
-  //    }
-  //  }
-  //
-  //  // Export to CSV
-  //  public static void exportToCSV(String tableName, String csvFilePath) throws IOException {
-  //    LanguageServiceRequestDAO mesr = new LanguageServiceRequestDerbyImpl();
-  //    LanguageServiceRequestDerbyImpl.writeLanguageServiceRequestCSV(
-  //        mesr.getLanguageServiceRequestList(), csvFilePath);
-  //  }
+  // Read from Location CSV
+  public static List<FoodDeliveryServiceRequest> readFoodDeliveryServiceRequestCSV(String csvFilePath)
+          throws IOException, ParseException {
+    // System.out.println("beginning to read csv");
+
+    Scanner lineScanner =
+            new Scanner(FoodDeliveryServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
+    Scanner dataScanner;
+    int dataIndex = 0;
+    int lineIndex = 0;
+    int intData = 0;
+    List<FoodDeliveryServiceRequest> list = new ArrayList<>();
+    lineScanner.nextLine();
+
+    while (lineScanner.hasNextLine()) { // Scan CSV line by line
+
+      dataScanner = new Scanner(lineScanner.nextLine());
+      dataScanner.useDelimiter(",");
+      FoodDeliveryServiceRequest thisLSR = new FoodDeliveryServiceRequest();
+
+      while (dataScanner.hasNext()) {
+
+        String data = dataScanner.next();
+        if (dataIndex == 0) thisLSR.setRequestID(data);
+        else if (dataIndex == 1) thisLSR.setStartLocation(data);
+        else if (dataIndex == 2) thisLSR.setEndLocation(data);
+        else if (dataIndex == 3) thisLSR.setEmployeeRequested(data);
+        else if (dataIndex == 4) thisLSR.setEmployeeAssigned(data);
+        else if (dataIndex == 5) thisLSR.setRequestTime(data);
+        else if (dataIndex == 6) thisLSR.setRequestStatus(data);
+        else if (dataIndex == 7) thisLSR.setRequestType(data);
+        else if (dataIndex == 8) thisLSR.setComments(data);
+        else if (dataIndex == 9) thisLSR.setMainDish(data);
+        else if (dataIndex == 10) thisLSR.setSideDish(data);
+        else if (dataIndex == 11) thisLSR.setBeverage(data);
+        else if (dataIndex == 12) thisLSR.setDessert(data);
+        else System.out.println("Invalid data, I broke::" + data);
+        dataIndex++;
+      }
+
+      dataIndex = 0;
+      list.add(thisLSR);
+      // System.out.println(thisLocation);
+    }
+
+    lineIndex++;
+    lineScanner.close();
+    return list;
+  }
+
+  // Write CSV for MedicalEquipmentServiceRequest table
+  public static void writeFoodDeliveryServiceRequestCSV(
+          List<FoodDeliveryServiceRequest> List, String csvFilePath) throws IOException {
+
+    // create a writer
+    BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
+
+    writer.write(
+            "RequestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments, mainDish, sideDish, beverage, dessert");
+    writer.newLine();
+
+    // write location data
+    for (FoodDeliveryServiceRequest thisLSR : List) {
+
+      writer.write(
+              String.join(
+                      ",",
+                      thisLSR.getRequestID(),
+                      thisLSR.getStartLocation(),
+                      thisLSR.getEndLocation(),
+                      thisLSR.getEmployeeRequested(),
+                      thisLSR.getEmployeeAssigned(),
+                      thisLSR.getRequestTime(),
+                      thisLSR.getRequestStatus(),
+                      thisLSR.getRequestType(),
+                      thisLSR.getComments(),
+                      thisLSR.getMainDish(),
+                      thisLSR.getSideDish(),
+                      thisLSR.getBeverage(),
+                      thisLSR.getDessert()));
+
+      writer.newLine();
+    }
+    writer.close(); // close the writer
+  }
+
+  // input from CSV
+  public static void inputFromCSV(String tableName, String csvFilePath) {
+
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Statement dropTable = connection.createStatement();
+
+      dropTable.execute("DELETE FROM FoodDeliveryServiceRequest");
+    } catch (SQLException e) {
+      System.out.println("delete failed");
+    }
+
+    try {
+      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+
+      List<FoodDeliveryServiceRequest> List =
+              FoodDeliveryServiceRequestDerbyImpl.readFoodDeliveryServiceRequestCSV(csvFilePath);
+      for (FoodDeliveryServiceRequest l : List) {
+        Statement addStatement = connection.createStatement();
+
+        // add sub table
+        addStatement.executeUpdate(
+                "INSERT INTO FoodDeliveryServiceRequest(requestID, mainDish, sideDish, beverage, dessert) VALUES('"
+                        + l.getRequestID()
+                        + "', '"
+                        + l.getMainDish()
+                        + "', '"
+                        + l.getSideDish()
+                        + "', '"
+                        + l.getBeverage()
+                        + "', '"
+                        + l.getDessert()
+                        + "')");
+
+        // add to ServiceRequest table
+        addStatement.executeUpdate(
+                "INSERT INTO ServiceRequest(requestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments) VALUES('"
+                        + l.getRequestID()
+                        + "', '"
+                        + l.getStartLocation()
+                        + "', '"
+                        + l.getEndLocation()
+                        + "', '"
+                        + l.getEmployeeRequested()
+                        + "', '"
+                        + l.getEmployeeAssigned()
+                        + "', '"
+                        + l.getRequestTime()
+                        + "', '"
+                        + l.getRequestStatus()
+                        + "', '"
+                        + l.getRequestType()
+                        + "', '"
+                        + l.getComments()
+                        + "')");
+      }
+    } catch (SQLException | IOException | ParseException e) {
+      System.out.println("Insertion failed!");
+    }
+  }
+
+  // Export to CSV
+  public static void exportToCSV(String tableName, String csvFilePath) throws IOException {
+    FoodDeliveryServiceRequestDAO mesr = new FoodDeliveryServiceRequestDerbyImpl();
+    FoodDeliveryServiceRequestDerbyImpl.writeFoodDeliveryServiceRequestCSV(
+            mesr.getFoodDeliveryRequestList(), csvFilePath);
+  }
 }
