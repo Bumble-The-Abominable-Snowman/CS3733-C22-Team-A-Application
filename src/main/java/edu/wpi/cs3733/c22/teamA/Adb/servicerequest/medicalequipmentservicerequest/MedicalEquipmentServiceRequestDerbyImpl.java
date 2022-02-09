@@ -200,8 +200,8 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
                 employeeAssigned,
                 requestTime,
                 requestStatus,
-                comments,
                 requestType,
+                comments,
                 equipmentID);
         reqList.add(mesr);
       }
