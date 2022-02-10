@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest;
 
+import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.entities.requests.FoodDeliveryServiceRequest;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,7 +19,8 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
 
   public FoodDeliveryServiceRequest getFoodDeliveryRequest(String ID) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement get = connection.createStatement();
       String str =
           String.format(
@@ -68,7 +70,8 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
 
   public void updateFoodDeliveryRequest(String ID, String field, Object change) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement update = connection.createStatement();
       List<String> foodColumns = new ArrayList<String>();
       foodColumns.add("mainDish");
@@ -131,7 +134,8 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
       String beverage,
       String dessert) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement insert = connection.createStatement();
       String strTime = "'" + requestTime.toString() + "'";
 
@@ -168,7 +172,8 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
 
   public void deleteFoodDeliveryRequest(String id) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement delete = connection.createStatement();
       String str = String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", id);
       delete.execute(str);
@@ -186,7 +191,8 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
   public List<FoodDeliveryServiceRequest> getFoodDeliveryRequestList() {
     List<FoodDeliveryServiceRequest> reqList = new ArrayList<>();
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement getNodeList = connection.createStatement();
       ResultSet rset =
           getNodeList.executeQuery(
@@ -324,7 +330,8 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
   public static void inputFromCSV(String tableName, String csvFilePath) {
 
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement dropTable = connection.createStatement();
 
       dropTable.execute("DELETE FROM FoodDeliveryServiceRequest");
@@ -333,7 +340,8 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
     }
 
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
 
       List<FoodDeliveryServiceRequest> List =
           FoodDeliveryServiceRequestDerbyImpl.readFoodDeliveryServiceRequestCSV(csvFilePath);

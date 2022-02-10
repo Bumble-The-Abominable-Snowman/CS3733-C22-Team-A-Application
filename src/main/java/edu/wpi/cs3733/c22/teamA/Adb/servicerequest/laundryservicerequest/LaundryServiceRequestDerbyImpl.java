@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest;
 
+import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.entities.requests.LaundryServiceRequest;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -17,7 +18,8 @@ public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO 
 
   public LaundryServiceRequest getLaundryServiceRequest(String id) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement get = connection.createStatement();
       String str =
           String.format(
@@ -61,7 +63,8 @@ public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO 
 
   public void updateLaundryServiceRequest(String ID, String field, String change) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement update = connection.createStatement();
       String str = "";
       if (field.equals("washMode")) {
@@ -113,7 +116,8 @@ public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO 
       String comments,
       String washMode) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement insert = connection.createStatement();
       String strTime = "'" + requestTime.toString() + "'";
 
@@ -149,7 +153,8 @@ public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO 
 
   public void deleteLaundryServiceRequest(String id) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement delete = connection.createStatement();
       String str = String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", id);
       delete.execute(str);
@@ -166,7 +171,8 @@ public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO 
   public List<LaundryServiceRequest> getLaundryServiceRequestList() {
     List<LaundryServiceRequest> reqList = new ArrayList<>();
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement getNodeList = connection.createStatement();
       ResultSet rset =
           getNodeList.executeQuery(
@@ -292,7 +298,8 @@ public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO 
   public static void inputFromCSV(String tableName, String csvFilePath) {
 
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement dropTable = connection.createStatement();
 
       dropTable.execute("DELETE FROM LaundryServiceRequest");
@@ -301,7 +308,8 @@ public class LaundryServiceRequestDerbyImpl implements LaundryServiceRequestDAO 
     }
 
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
 
       List<LaundryServiceRequest> List =
           LaundryServiceRequestDerbyImpl.readLaundryServiceRequestCSV(csvFilePath);

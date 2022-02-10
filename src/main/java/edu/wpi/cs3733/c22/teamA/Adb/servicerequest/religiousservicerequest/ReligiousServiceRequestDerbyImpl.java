@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest;
 
+import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.entities.requests.ReligiousServiceRequest;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,7 +19,8 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
 
   public ReligiousServiceRequest getReligiousServiceRequest(String id) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement get = connection.createStatement();
       String str =
           String.format(
@@ -62,7 +64,8 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
 
   public void updateReligiousServiceRequest(String ID, String field, String change) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement update = connection.createStatement();
       String str = "";
       if (field.equals("religion")) {
@@ -114,7 +117,8 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
       String comments,
       String religion) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement insert = connection.createStatement();
       String strTime = "'" + requestTime.toString() + "'";
 
@@ -150,7 +154,8 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
 
   public void deleteReligiousServiceRequest(String id) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement delete = connection.createStatement();
       String str = String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", id);
       delete.execute(str);
@@ -168,7 +173,8 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
   public List<ReligiousServiceRequest> getReligiousServiceRequestList() {
     List<ReligiousServiceRequest> reqList = new ArrayList<>();
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement getNodeList = connection.createStatement();
       ResultSet rset =
           getNodeList.executeQuery(
@@ -295,7 +301,8 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
   public static void inputFromCSV(String tableName, String csvFilePath) {
 
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement dropTable = connection.createStatement();
 
       dropTable.execute("DELETE FROM ReligiousServiceRequest");
@@ -304,7 +311,8 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
     }
 
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
 
       List<ReligiousServiceRequest> List =
           ReligiousServiceRequestDerbyImpl.readReligiousServiceRequestCSV(csvFilePath);

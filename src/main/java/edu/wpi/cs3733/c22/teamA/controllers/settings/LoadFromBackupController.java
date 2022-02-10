@@ -93,7 +93,7 @@ public class LoadFromBackupController {
 
   @FXML
   public void refreshFiles(ActionEvent actionEvent) {
-    File f = new File("src/main/resources/edu/wpi/cs3733/c22/teamA/db/");
+    File f = new File("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/");
 
     ObservableList<String> items = FXCollections.observableArrayList();
 
@@ -108,7 +108,7 @@ public class LoadFromBackupController {
   }
 
   public void loadFromBackup(ActionEvent actionEvent) throws IOException {
-    String filepath = "edu/wpi/cs3733/c22/teamA/db/" + lastSelectedFile;
+    String filepath = "edu/wpi/cs3733/c22/teamA/db/CSVs/" + lastSelectedFile;
 
     if (!TypeCSV.getValue().equals("CSV Type") && lastSelectedFile.length() > 4) {
       //      Adb.inputFromCSV(TypeCSV.getValue(), filepath);

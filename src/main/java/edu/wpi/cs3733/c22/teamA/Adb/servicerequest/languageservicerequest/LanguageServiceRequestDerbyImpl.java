@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest;
 
+import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.entities.requests.LanguageServiceRequest;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,7 +19,8 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
 
   public LanguageServiceRequest getLanguageServiceRequest(String ID) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement get = connection.createStatement();
       String str =
           String.format(
@@ -62,7 +64,8 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
 
   public void updateLanguageServiceRequest(String ID, String field, String change) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement update = connection.createStatement();
       String str = "";
       if (field.equals("language")) {
@@ -114,7 +117,8 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
       String comments,
       String language) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement insert = connection.createStatement();
       String strTime = "'" + requestTime.toString() + "'";
 
@@ -150,7 +154,8 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
 
   public void deleteLanguageServiceRequest(String id) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement delete = connection.createStatement();
       String str = String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", id);
       delete.execute(str);
@@ -168,7 +173,8 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
   public List<LanguageServiceRequest> getLanguageServiceRequestList() {
     List<LanguageServiceRequest> reqList = new ArrayList<>();
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement getNodeList = connection.createStatement();
       ResultSet rset =
           getNodeList.executeQuery(
@@ -294,7 +300,8 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
   public static void inputFromCSV(String tableName, String csvFilePath) {
 
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement dropTable = connection.createStatement();
 
       dropTable.execute("DELETE FROM LanguageServiceRequest");
@@ -303,7 +310,8 @@ public class LanguageServiceRequestDerbyImpl implements LanguageServiceRequestDA
     }
 
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
 
       List<LanguageServiceRequest> List =
           LanguageServiceRequestDerbyImpl.readLanguageServiceRequestCSV(csvFilePath);

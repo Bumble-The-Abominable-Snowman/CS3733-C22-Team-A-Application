@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest;
 
+import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.entities.requests.SanitationServiceRequest;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,7 +19,8 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
 
   public SanitationServiceRequest getSanitationServiceRequest(String id) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement get = connection.createStatement();
       String str =
           String.format(
@@ -62,7 +64,8 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
 
   public void updateSanitationServiceRequest(String ID, String field, String change) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement update = connection.createStatement();
       String str = "";
       if (field.equals("sanitationType")) {
@@ -113,7 +116,8 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
       String comments,
       String sanitationType) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement insert = connection.createStatement();
       String strTime = "'" + requestTime.toString() + "'";
 
@@ -151,7 +155,8 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
 
   public void deleteSanitationServiceRequest(String id) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement delete = connection.createStatement();
       String str = String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", id);
       delete.execute(str);
@@ -169,7 +174,8 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
   public List<SanitationServiceRequest> getSanitationServiceRequestList() {
     List<SanitationServiceRequest> reqList = new ArrayList<>();
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement getNodeList = connection.createStatement();
       ResultSet rset =
           getNodeList.executeQuery(
@@ -296,7 +302,8 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
   public static void inputFromCSV(String tableName, String csvFilePath) {
 
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement dropTable = connection.createStatement();
 
       dropTable.execute("DELETE FROM SanitationServiceRequest");
@@ -305,7 +312,8 @@ public class SanitationServiceRequestDerbyImpl implements SanitationServiceReque
     }
 
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
 
       List<SanitationServiceRequest> List =
           SanitationServiceRequestDerbyImpl.readSanitationServiceRequestCSV(csvFilePath);

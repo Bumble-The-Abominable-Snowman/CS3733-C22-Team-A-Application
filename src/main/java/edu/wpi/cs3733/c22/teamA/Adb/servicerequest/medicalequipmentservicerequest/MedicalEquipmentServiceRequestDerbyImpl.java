@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest;
 
+import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,7 +19,8 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
 
   public MedicalEquipmentServiceRequest getMedicalEquipmentServiceRequest(String ID) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement get = connection.createStatement();
       String str =
           String.format(
@@ -63,7 +65,8 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
 
   public void updateMedicalEquipmentServiceRequest(String ID, String field, String change) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement update = connection.createStatement();
       String str = "";
       if (field.equals("equipmentID")) {
@@ -116,7 +119,8 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
       String comments,
       String equipmentID) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement insert = connection.createStatement();
 
       String strTime = "'" + requestTime.toString() + "'";
@@ -155,7 +159,8 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
 
   public void deleteMedicalEquipment(String ID) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement delete = connection.createStatement();
       String str = String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", ID);
       delete.execute(str);
@@ -173,7 +178,8 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
   public List<MedicalEquipmentServiceRequest> getMedicalEquipmentServiceRequestList() {
     List<MedicalEquipmentServiceRequest> reqList = new ArrayList<>();
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement getNodeList = connection.createStatement();
       ResultSet rset =
           getNodeList.executeQuery(
@@ -300,7 +306,8 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
   public static void inputFromCSV(String tableName, String csvFilePath) {
     // Check MedicalEquipmentServiceRequest table
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement dropTable = connection.createStatement();
 
       dropTable.execute("DELETE FROM MedicalEquipmentServiceRequest");
@@ -309,7 +316,8 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
     }
 
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
 
       List<MedicalEquipmentServiceRequest> List =
           MedicalEquipmentServiceRequestDerbyImpl.readMedicalEquipmentServiceRequestCSV(

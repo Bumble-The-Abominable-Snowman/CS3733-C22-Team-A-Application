@@ -13,6 +13,8 @@ import java.sql.*;
 
 public class Adb {
 
+  public static String pathToDBA = "src/main/resources/edu/wpi/cs3733/c22/teamA/db/HospitalDBA";
+
   public static void initialConnection() {
 
     boolean isInitialized = false;
@@ -34,12 +36,15 @@ public class Adb {
       try {
         Connection connection =
             DriverManager.getConnection(
-                "jdbc:derby:HospitalDBA;"); // Modify the database name from TowerLocation to Adb
+                String.format(
+                    "jdbc:derby:%s;",
+                    pathToDBA)); // Modify the database name from TowerLocation to Adb
         isInitialized = true;
         // for better
         // recognition.
       } catch (SQLException e) {
-        Connection c = DriverManager.getConnection("jdbc:derby:HospitalDBA;create=true");
+        Connection c =
+            DriverManager.getConnection(String.format("jdbc:derby:%s;create=true", pathToDBA));
         isInitialized = false;
       }
 
@@ -63,7 +68,8 @@ public class Adb {
     // Check Locations table.
     try {
 
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", pathToDBA));
       Statement addTable = connection.createStatement();
 
       addTable.execute(
@@ -76,7 +82,8 @@ public class Adb {
     // Check Employee table.
     try {
 
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", pathToDBA));
       Statement addTable = connection.createStatement();
 
       addTable.execute(
@@ -89,7 +96,8 @@ public class Adb {
     // Check MedicalEquipment table.
     try {
 
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", pathToDBA));
       Statement addTable = connection.createStatement();
 
       addTable.execute(
@@ -101,7 +109,8 @@ public class Adb {
 
     // Check ServiceRequestDerbyImpl table.
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", pathToDBA));
       Statement addTable = connection.createStatement();
 
       addTable.execute(
@@ -113,7 +122,8 @@ public class Adb {
 
     // Check MedicalEquipmentServiceRequest table.
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", pathToDBA));
       Statement addTable = connection.createStatement();
 
       addTable.execute(
@@ -128,7 +138,8 @@ public class Adb {
 
     // Check Food Delivery Table
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", pathToDBA));
       Statement addTable = connection.createStatement();
 
       addTable.execute(
@@ -143,7 +154,8 @@ public class Adb {
 
     // Check Language  table.
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", pathToDBA));
       Statement addTable = connection.createStatement();
 
       addTable.execute(
@@ -158,7 +170,8 @@ public class Adb {
 
     //   Check Laundry  table.
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", pathToDBA));
       Statement addTable = connection.createStatement();
 
       addTable.execute(
@@ -174,7 +187,8 @@ public class Adb {
     //  Check Religious  table.
     try {
 
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", pathToDBA));
       Statement addTable = connection.createStatement();
 
       addTable.execute(
@@ -190,7 +204,8 @@ public class Adb {
     // Check Sanitation  table.
     try {
 
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", pathToDBA));
       Statement addTable = connection.createStatement();
 
       addTable.execute(
@@ -206,24 +221,26 @@ public class Adb {
     // Initialize the database and input data
     if (!isInitialized) {
       LocationDerbyImpl.inputFromCSV(
-          "TowerLocations", "edu/wpi/cs3733/c22/teamA/db/TowerLocations.csv");
-      EmployeeDerbyImpl.inputFromCSV("Employee", "edu/wpi/cs3733/c22/teamA/db/Employee.csv");
+          "TowerLocations", "edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
+      EmployeeDerbyImpl.inputFromCSV("Employee", "edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.csv");
       MedicalEquipmentDerbyImpl.inputFromCSV(
-          "MedicalEquipment", "edu/wpi/cs3733/c22/teamA/db/MedicalEquipment.csv");
+          "MedicalEquipment", "edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipment.csv");
       MedicalEquipmentServiceRequestDerbyImpl.inputFromCSV(
           "MedicalEquipmentServiceRequest",
-          "edu/wpi/cs3733/c22/teamA/db/MedicalEquipmentServiceRequest.csv");
+          "edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipmentServiceRequest.csv");
       ReligiousServiceRequestDerbyImpl.inputFromCSV(
-          "ReligiousServiceRequest", "edu/wpi/cs3733/c22/teamA/db/ReligiousServiceRequest.csv");
+          "ReligiousServiceRequest",
+          "edu/wpi/cs3733/c22/teamA/db/CSVs/ReligiousServiceRequest.csv");
       SanitationServiceRequestDerbyImpl.inputFromCSV(
-          "SanitationServiceRequest", "edu/wpi/cs3733/c22/teamA/db/SanitationServiceRequest.csv");
+          "SanitationServiceRequest",
+          "edu/wpi/cs3733/c22/teamA/db/CSVs/SanitationServiceRequest.csv");
       LaundryServiceRequestDerbyImpl.inputFromCSV(
-          "LaundryServiceRequest", "edu/wpi/cs3733/c22/teamA/db/LaundryServiceRequest.csv");
+          "LaundryServiceRequest", "edu/wpi/cs3733/c22/teamA/db/CSVs/LaundryServiceRequest.csv");
       LanguageServiceRequestDerbyImpl.inputFromCSV(
-          "LanguageServiceRequest", "edu/wpi/cs3733/c22/teamA/db/LanguageServiceRequest.csv");
+          "LanguageServiceRequest", "edu/wpi/cs3733/c22/teamA/db/CSVs/LanguageServiceRequest.csv");
       FoodDeliveryServiceRequestDerbyImpl.inputFromCSV(
           "FoodDeliveryServiceRequest",
-          "edu/wpi/cs3733/c22/teamA/db/FoodDeliveryServiceRequest.csv");
+          "edu/wpi/cs3733/c22/teamA/db/CSVs/FoodDeliveryServiceRequest.csv");
     }
   }
 }

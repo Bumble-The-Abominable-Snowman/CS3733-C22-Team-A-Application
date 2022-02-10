@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.Adb.medicalequipment;
 
+import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.entities.MedicalEquipment;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,7 +19,8 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
 
   public MedicalEquipment getMedicalEquipment(String ID) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement get = connection.createStatement();
       String str = String.format("SELECT * FROM MedicalEquipment WHERE equipmentID = '%s'", ID);
 
@@ -45,7 +47,8 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
 
   public void updateMedicalEquipment(String ID, String field, Object change) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement update = connection.createStatement();
 
       String str = "";
@@ -82,7 +85,8 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
       String currentLocation,
       boolean isAvailable) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement insert = connection.createStatement();
 
       String str =
@@ -101,7 +105,8 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
 
   public void deleteMedicalEquipment(String ID) {
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       System.out.println("Connection MAde");
       Statement delete = connection.createStatement();
       String str = String.format("DELETE FROM MedicalEquipment WHERE equipmentID = '%s'", ID);
@@ -117,7 +122,8 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
   public List<MedicalEquipment> getMedicalEquipmentList() {
     List<MedicalEquipment> equipList = new ArrayList<>();
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement getNodeList = connection.createStatement();
       ResultSet rset = getNodeList.executeQuery("SELECT * FROM MedicalEquipment");
 
@@ -223,7 +229,8 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
   public static void inputFromCSV(String tableName, String csvFilePath) {
     // Check MedicalEquipment table
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement dropTable = connection.createStatement();
 
       dropTable.execute("DELETE FROM MedicalEquipment");
@@ -232,7 +239,8 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
     }
 
     try {
-      Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
 
       List<MedicalEquipment> List = MedicalEquipmentDerbyImpl.readMedicalEquipmentCSV(csvFilePath);
       for (MedicalEquipment l : List) {

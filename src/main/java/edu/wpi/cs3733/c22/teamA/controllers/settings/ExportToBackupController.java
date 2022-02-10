@@ -78,9 +78,9 @@ public class ExportToBackupController {
 
       String filepath;
       if (input.endsWith(".csv")) {
-        filepath = "src/main/resources/edu/wpi/cs3733/c22/teamA/db/" + input;
+        filepath = "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/" + input;
       } else {
-        filepath = "src/main/resources/edu/wpi/cs3733/c22/teamA/db/" + input + ".csv";
+        filepath = "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/" + input + ".csv";
       }
 
       switch (TypeCSV.getSelectionModel().getSelectedItem().toString()) {

@@ -160,9 +160,9 @@ gradle-app.setting
 
 # End of https://www.gitignore.io/api/java,macos,gradle,intellij+all
 
-#src/main/resources/edu/wpi/teama/db
 .idea
-src/main/resources/edu/wpi/cs3733/c22/teamA/db
+src/main/resources/edu/wpi/cs3733/c22/teamA/db/HospitalDBA
+#src/main/resources/edu/wpi/cs3733/c22/teamA/db/
 
 # Ignore HospitalDBA folder which is the database folder
 HospitalDBA/

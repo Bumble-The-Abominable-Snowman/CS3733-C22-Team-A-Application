@@ -162,7 +162,7 @@ public class DefaultTest {
     Adb.initialConnection();
 
     ReligiousServiceRequestDerbyImpl.inputFromCSV(
-        "ReligiousServiceRequest", "edu/wpi/cs3733/c22/teamA/db/ReligiousServiceRequest.csv");
+        "ReligiousServiceRequest", "edu/wpi/cs3733/c22/teamA/db/CSVs/ReligiousServiceRequest.csv");
 
     ReligiousServiceRequestDAO derby = new ReligiousServiceRequestDerbyImpl();
     ReligiousServiceRequest rsr =
@@ -207,7 +207,7 @@ public class DefaultTest {
     derby.deleteReligiousServiceRequest("rel124");
     ReligiousServiceRequestDerbyImpl.writeReligiousServiceRequestCSV(
         derby.getReligiousServiceRequestList(),
-        "edu/wpi/cs3733/c22/teamA/db/ReligiousServiceRequest.csv");
+        "edu/wpi/cs3733/c22/teamA/db/CSVs/ReligiousServiceRequest.csv");
   }
 
   @Test
@@ -215,7 +215,8 @@ public class DefaultTest {
     Adb.initialConnection();
 
     SanitationServiceRequestDerbyImpl.inputFromCSV(
-        "SanitationServiceRequest", "edu/wpi/cs3733/c22/teamA/db/SanitationServiceRequest.csv");
+        "SanitationServiceRequest",
+        "edu/wpi/cs3733/c22/teamA/db/CSVs/SanitationServiceRequest.csv");
     SanitationServiceRequestDerbyImpl derby = new SanitationServiceRequestDerbyImpl();
     SanitationServiceRequest ssr =
         new SanitationServiceRequest(
@@ -245,7 +246,7 @@ public class DefaultTest {
     derby.deleteSanitationServiceRequest("san123");
     SanitationServiceRequestDerbyImpl.exportToCSV(
         "SanitationServiceRequest",
-        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/SanitationServiceRequest.csv");
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/SanitationServiceRequest.csv");
   }
 
   @Test
@@ -254,7 +255,7 @@ public class DefaultTest {
     LaundryServiceRequestDerbyImpl derby = new LaundryServiceRequestDerbyImpl();
 
     LaundryServiceRequestDerbyImpl.inputFromCSV(
-        "LaundryServiceRequest", "edu/wpi/cs3733/c22/teamA/db/LaundryServiceRequest.csv");
+        "LaundryServiceRequest", "edu/wpi/cs3733/c22/teamA/db/CSVs/LaundryServiceRequest.csv");
     LaundryServiceRequest lsr =
         new LaundryServiceRequest(
             "lan123",
@@ -283,7 +284,7 @@ public class DefaultTest {
     // derby.deleteLaundryServiceRequest("lan123");
     LaundryServiceRequestDerbyImpl.exportToCSV(
         "LaundryServiceRequest",
-        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/LaundryServiceRequest.csv");
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/LaundryServiceRequest.csv");
   }
 
   @Test
@@ -291,7 +292,7 @@ public class DefaultTest {
     Adb.initialConnection();
 
     LanguageServiceRequestDerbyImpl.inputFromCSV(
-        "LanguageServiceRequest", "edu/wpi/cs3733/c22/teamA/db/LanguageServiceRequest.csv");
+        "LanguageServiceRequest", "edu/wpi/cs3733/c22/teamA/db/CSVs/LanguageServiceRequest.csv");
 
     LanguageServiceRequestDerbyImpl derby = new LanguageServiceRequestDerbyImpl();
     LanguageServiceRequest lsr =
@@ -322,7 +323,7 @@ public class DefaultTest {
     derby.deleteLanguageServiceRequest("lan123");
     LanguageServiceRequestDerbyImpl.exportToCSV(
         "LanguageServiceRequest",
-        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/LanguageServiceRequest.csv");
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/LanguageServiceRequest.csv");
   }
 
   @Test
@@ -331,7 +332,8 @@ public class DefaultTest {
     Adb.initialConnection();
 
     FoodDeliveryServiceRequestDerbyImpl.inputFromCSV(
-        "FoodDeliveryServiceRequest", "edu/wpi/cs3733/c22/teamA/db/FoodDeliveryServiceRequest.csv");
+        "FoodDeliveryServiceRequest",
+        "edu/wpi/cs3733/c22/teamA/db/CSVs/FoodDeliveryServiceRequest.csv");
 
     FoodDeliveryServiceRequestDerbyImpl derby = new FoodDeliveryServiceRequestDerbyImpl();
     FoodDeliveryServiceRequest fdsr =
@@ -365,7 +367,7 @@ public class DefaultTest {
     derby.deleteFoodDeliveryRequest("fod123");
     FoodDeliveryServiceRequestDerbyImpl.exportToCSV(
         "FoodDeliveryServiceRequest",
-        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/FoodDeliveryServiceRequest.csv");
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/FoodDeliveryServiceRequest.csv");
   }
 
   @Test
