@@ -118,7 +118,7 @@ public class MapEditorController {
     floorSelectionComboBox.getItems().removeAll(floorSelectionComboBox.getItems());
     floorSelectionComboBox
         .getItems()
-        .addAll("Choose Floor:", "Floor 1", "Floor 2", "Floor 3", "L1", "L2", "Ground");
+        .addAll("Choose Floor:", "Floor 1", "Floor 2", "Floor 3", "L1", "L2");
 
     equipToggleBox
         .selectedProperty()
@@ -175,16 +175,10 @@ public class MapEditorController {
                   File map = new File("edu/wpi/cs3733/c22/teamA/images/LL1.png");
                   Image image = new Image(String.valueOf((map)));
                   mapDisplay.setImage(image);
-                } else if (newValue.equals("L2")) {
+                } else {
                   mapDisplay.setVisible(true);
                   floor = "L2";
                   File map = new File("edu/wpi/cs3733/c22/teamA/images/LL2.png");
-                  Image image = new Image(String.valueOf((map)));
-                  mapDisplay.setImage(image);
-                } else {
-                  mapDisplay.setVisible(true);
-                  floor = "Ground";
-                  File map = new File("edu/wpi/cs3733/c22/teamA/images/Ground Floor.png");
                   Image image = new Image(String.valueOf((map)));
                   mapDisplay.setImage(image);
                 }

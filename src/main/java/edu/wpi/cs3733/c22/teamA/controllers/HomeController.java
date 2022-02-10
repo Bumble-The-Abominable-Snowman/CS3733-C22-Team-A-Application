@@ -59,7 +59,7 @@ public class HomeController {
 
   @FXML
   private void goToLocationData() throws IOException {
-    sceneController.switchScene(SceneController.SCENES.MAP_EDITOR_SCENE);
+    sceneController.switchScene(SceneController.SCENES.VIEW_LOCATION_DATA_SCENE);
   }
 
   @FXML
