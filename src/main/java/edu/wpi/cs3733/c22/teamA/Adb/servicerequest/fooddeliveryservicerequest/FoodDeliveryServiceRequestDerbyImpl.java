@@ -242,9 +242,8 @@ public class FoodDeliveryServiceRequestDerbyImpl implements FoodDeliveryServiceR
       String csvFilePath) throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
-    Scanner lineScanner =
-        new Scanner(
-            FoodDeliveryServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
+    File file = new File(csvFilePath);
+    Scanner lineScanner = new Scanner(file);
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;

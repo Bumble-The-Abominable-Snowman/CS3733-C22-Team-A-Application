@@ -30,6 +30,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 
 public class LoadFromBackupController {
   public JFXButton refreshButton;
@@ -60,8 +61,9 @@ public class LoadFromBackupController {
           public void handle(MouseEvent event) {
             if (event.getButton() == MouseButton.PRIMARY) {
               String currentItemSelected = fileList.getSelectionModel().getSelectedItem();
-              lastSelectedFile = currentItemSelected;
-              selectedFileText.setText(currentItemSelected);
+              lastSelectedFile = "edu/wpi/cs3733/c22/teamA/db/CSVs/" + currentItemSelected;
+              String[] arrOfStr = lastSelectedFile.split("/");
+              selectedFileText.setText(arrOfStr[arrOfStr.length - 1]);
               selectedFileText.setFill(Color.BLACK);
             }
           }
@@ -80,6 +82,22 @@ public class LoadFromBackupController {
             "ReligiousServiceRequest",
             "SanitationServiceRequest");
     TypeCSV.setValue("CSV Type");
+
+    TypeCSV.setOnMouseClicked(
+        new EventHandler<MouseEvent>() {
+          @Override
+          public void handle(MouseEvent event) {
+            if (event.getButton() == MouseButton.PRIMARY) {
+              //                  String currentItemSelected =
+              // fileList.getSelectionModel().getSelectedItem();
+              //                  lastSelectedFile = "edu/wpi/cs3733/c22/teamA/db/CSVs/" +
+              // currentItemSelected;
+              String[] arrOfStr = lastSelectedFile.split("/");
+              selectedFileText.setText(arrOfStr[arrOfStr.length - 1]);
+              selectedFileText.setFill(Color.BLACK);
+            }
+          }
+        });
   }
 
   public void returnToSettingsScene(ActionEvent actionEvent) throws IOException {
@@ -108,38 +126,42 @@ public class LoadFromBackupController {
   }
 
   public void loadFromBackup(ActionEvent actionEvent) throws IOException {
-    String filepath = "edu/wpi/cs3733/c22/teamA/db/CSVs/" + lastSelectedFile;
+    //    String filepath = "edu/wpi/cs3733/c22/teamA/db/CSVs/" + lastSelectedFile;
 
     if (!TypeCSV.getValue().equals("CSV Type") && lastSelectedFile.length() > 4) {
       //      Adb.inputFromCSV(TypeCSV.getValue(), filepath);
 
       switch (TypeCSV.getSelectionModel().getSelectedItem().toString()) {
         case "TowerLocations":
-          LocationDerbyImpl.inputFromCSV("Location", filepath);
+          LocationDerbyImpl.inputFromCSV("Location", lastSelectedFile);
           break;
         case "Employee":
-          EmployeeDerbyImpl.inputFromCSV("Employee", filepath);
+          EmployeeDerbyImpl.inputFromCSV("Employee", lastSelectedFile);
           break;
         case "MedicalEquipment":
-          MedicalEquipmentDerbyImpl.inputFromCSV("MedicalEquipment", filepath);
+          MedicalEquipmentDerbyImpl.inputFromCSV("MedicalEquipment", lastSelectedFile);
           break;
         case "LanguageServiceRequest":
-          LanguageServiceRequestDerbyImpl.inputFromCSV("LanguageServiceRequest", filepath);
+          LanguageServiceRequestDerbyImpl.inputFromCSV("LanguageServiceRequest", lastSelectedFile);
           break;
         case "MedicalEquipmentServiceRequest":
-          LanguageServiceRequestDerbyImpl.inputFromCSV("MedicalEquipmentServiceRequest", filepath);
+          LanguageServiceRequestDerbyImpl.inputFromCSV(
+              "MedicalEquipmentServiceRequest", lastSelectedFile);
           break;
         case "FoodDeliveryServiceRequest":
-          FoodDeliveryServiceRequestDerbyImpl.inputFromCSV("FoodDeliveryServiceRequest", filepath);
+          FoodDeliveryServiceRequestDerbyImpl.inputFromCSV(
+              "FoodDeliveryServiceRequest", lastSelectedFile);
           break;
         case "LaundryServiceRequest":
-          LaundryServiceRequestDerbyImpl.inputFromCSV("LaundryServiceRequest", filepath);
+          LaundryServiceRequestDerbyImpl.inputFromCSV("LaundryServiceRequest", lastSelectedFile);
           break;
         case "ReligiousServiceRequest":
-          ReligiousServiceRequestDerbyImpl.inputFromCSV("ReligiousServiceRequest", filepath);
+          ReligiousServiceRequestDerbyImpl.inputFromCSV(
+              "ReligiousServiceRequest", lastSelectedFile);
           break;
         case "SanitationServiceRequest":
-          SanitationServiceRequestDerbyImpl.inputFromCSV("SanitationServiceRequest", filepath);
+          SanitationServiceRequestDerbyImpl.inputFromCSV(
+              "SanitationServiceRequest", lastSelectedFile);
           break;
       }
 
@@ -149,5 +171,25 @@ public class LoadFromBackupController {
       selectedFileText.setText("Failed!");
       selectedFileText.setFill(Color.RED);
     }
+  }
+
+  @FXML
+  public void loadFromSystem(ActionEvent actionEvent) throws IOException {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Select the CSV file");
+    fileChooser
+        .getExtensionFilters()
+        .addAll(new FileChooser.ExtensionFilter("CSV Backup Files", "*.csv", "*.CSV"));
+    File selectedFile = fileChooser.showOpenDialog(Aapp.getStage());
+    System.out.println(selectedFile.getAbsolutePath());
+
+    lastSelectedFile = selectedFile.getAbsolutePath();
+
+    String[] arrOfStr = lastSelectedFile.split("/");
+    selectedFileText.setText(arrOfStr[arrOfStr.length - 1]);
+    selectedFileText.setFill(Color.BLACK);
+
+    //    this.loadFromBackup(actionEvent);
+
   }
 }

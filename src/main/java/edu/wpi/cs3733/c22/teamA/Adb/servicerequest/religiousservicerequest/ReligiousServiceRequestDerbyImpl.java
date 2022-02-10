@@ -218,9 +218,8 @@ public class ReligiousServiceRequestDerbyImpl implements ReligiousServiceRequest
       throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
-    Scanner lineScanner =
-        new Scanner(
-            ReligiousServiceRequest.class.getClassLoader().getResourceAsStream(csvFilePath));
+    File file = new File(csvFilePath);
+    Scanner lineScanner = new Scanner(file);
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;

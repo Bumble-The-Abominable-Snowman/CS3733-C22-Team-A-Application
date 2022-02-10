@@ -199,8 +199,8 @@ public class LocationDerbyImpl implements LocationDAO {
   public static List<Location> readLocationCSV(String csvFilePath) throws IOException {
     // System.out.println("beginning to read csv");
 
-    Scanner lineScanner =
-        new Scanner(Location.class.getClassLoader().getResourceAsStream(csvFilePath));
+    File file = new File(csvFilePath);
+    Scanner lineScanner = new Scanner(file);
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
