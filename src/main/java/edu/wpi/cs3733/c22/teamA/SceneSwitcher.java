@@ -35,6 +35,7 @@ public class SceneSwitcher {
   }
 
   private final HashMap<SCENES, String> screenMap = new HashMap<>();
+  private Scene currentScene;
 
   public SceneSwitcher() {
 
@@ -74,7 +75,10 @@ public class SceneSwitcher {
     loader.setLocation(xmlUrl);
 
     Parent root = loader.load();
-    App.getStage().setScene(new Scene(root));
+    if (currentScene == null) currentScene = new Scene(root);
+    else currentScene.setRoot(root);
+    App.getStage().setScene(currentScene);
+    App.getStage().setMaximized(true);
     App.getStage().show();
   }
 }
