@@ -20,7 +20,7 @@ public class LanguageSR extends SR {
       String employeeRequested,
       String employeeAssigned,
       String requestTime,
-      String requestStatus,
+      Status requestStatus,
       String requestType,
       String comments,
       String language) {
