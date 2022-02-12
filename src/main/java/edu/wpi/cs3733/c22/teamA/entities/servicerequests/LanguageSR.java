@@ -35,5 +35,7 @@ public class LanguageSR extends SR {
     this.requestType = requestType;
     this.comments = comments;
     this.language = language;
+
+    this.srType = SRType.LANGUAGE;
   }
 }

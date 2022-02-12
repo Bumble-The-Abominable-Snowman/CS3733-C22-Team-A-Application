@@ -36,5 +36,7 @@ public class EquipmentSR extends SR {
     this.requestType = requestType;
     this.comments = comments;
     this.equipmentID = equipmentID;
+
+    this.srType = SRType.EQUIPMENT;
   }
 }

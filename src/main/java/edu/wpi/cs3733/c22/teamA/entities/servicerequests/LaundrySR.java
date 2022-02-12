@@ -36,5 +36,7 @@ public class LaundrySR extends SR {
     this.requestType = requestType;
     this.comments = comments;
     this.washMode = washMode;
+
+    this.srType = SRType.LAUNDRY;
   }
 }

@@ -18,6 +18,22 @@ public abstract class SR extends RecursiveTreeObject<SR> {
   protected String requestType;
   protected String comments;
 
+  public SRType srType;
+
+  public enum SRType {
+    EQUIPMENT,
+    FLORAL_DELIVERY,
+    FOOD_DELIVERY,
+    GIFT,
+    LANGUAGE,
+    LAUNDRY,
+    MAINTENANCE,
+    MEDICINE_DELIVERY,
+    RELIGIOUS,
+    SANITATION,
+    SECURITY,
+  }
+
   public enum Status {
     BLANK,
     WAITING,

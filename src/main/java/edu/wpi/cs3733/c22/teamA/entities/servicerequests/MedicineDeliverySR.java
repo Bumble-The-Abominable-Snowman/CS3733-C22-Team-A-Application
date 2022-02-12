@@ -22,5 +22,7 @@ public class MedicineDeliverySR extends SR {
     this.toLocation = toLocation;
     this.requestedEmployee = requestedEmployee;
     this.comments = comments;
+
+    this.srType = SRType.MEDICINE_DELIVERY;
   }
 }

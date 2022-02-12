@@ -35,5 +35,7 @@ public class SanitationSR extends SR {
     this.requestType = requestType;
     this.comments = comments;
     this.sanitationType = sanitationType;
+
+    this.srType = SRType.SANITATION;
   }
 }

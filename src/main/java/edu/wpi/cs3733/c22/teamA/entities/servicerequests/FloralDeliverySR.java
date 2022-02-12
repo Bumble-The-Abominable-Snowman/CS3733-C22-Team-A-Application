@@ -29,5 +29,7 @@ public class FloralDeliverySR extends SR {
     this.toLocation = toLocation;
     this.requestedEmployee = requestedEmployee;
     this.comments = comments;
+
+    this.srType = SRType.FLORAL_DELIVERY;
   }
 }

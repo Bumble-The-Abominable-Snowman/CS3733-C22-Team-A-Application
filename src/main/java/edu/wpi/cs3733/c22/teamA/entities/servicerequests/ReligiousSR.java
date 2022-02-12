@@ -36,5 +36,7 @@ public class ReligiousSR extends SR {
     this.requestType = requestType;
     this.comments = comments;
     this.religion = religion;
+
+    this.srType = SRType.RELIGIOUS;
   }
 }

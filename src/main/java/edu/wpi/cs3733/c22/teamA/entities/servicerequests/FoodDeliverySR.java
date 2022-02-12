@@ -44,5 +44,7 @@ public class FoodDeliverySR extends SR {
     this.sideDish = sideDish;
     this.beverage = beverage;
     this.dessert = dessert;
+
+    this.srType = SRType.FOOD_DELIVERY;
   }
 }
