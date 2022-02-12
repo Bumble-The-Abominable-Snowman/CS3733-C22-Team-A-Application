@@ -36,11 +36,11 @@
     <Label text="Religion:" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
     <Label text="Denomination:" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
     <Label layoutX="83.0" layoutY="152.0" text="Employee:" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-    <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="26.0" prefWidth="55.0" text="Back" textFill="WHITE" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+    <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToSelectServiceScene" prefHeight="26.0" prefWidth="55.0" text="Back" textFill="WHITE" GridPane.halignment="LEFT" GridPane.valignment="TOP">
       <cursor>
          <Cursor fx:constant="HAND" />
       </cursor></JFXButton>
-    <JFXButton fx:id="returnHomeButton" buttonType="RAISED" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+    <JFXButton fx:id="goToHomeButton" buttonType="RAISED" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
       <cursor>
          <Cursor fx:constant="HAND" />
       </cursor></JFXButton>
