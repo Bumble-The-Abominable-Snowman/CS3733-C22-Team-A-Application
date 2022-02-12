@@ -43,7 +43,7 @@ public class HomeCtrl {
 
   @FXML
   private void goToCreateNewServiceRequest() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SELECT_SERVICE_REQUEST_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SELECT_SERVICE_REQUEST);
   }
 
   @FXML
@@ -78,6 +78,6 @@ public class HomeCtrl {
 
   @FXML
   private void exitHome() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOG_IN_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOGIN);
   }
 }

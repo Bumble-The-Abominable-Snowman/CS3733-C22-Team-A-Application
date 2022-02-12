@@ -35,11 +35,11 @@ public class LoginCtrl {
     try {
       App.connection = App.factory.newConnection("app:audit component:event-consumer");
 
-      sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME_SCENE);
+      sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
     } catch (Exception e) {
       welcomeBox.setText("Unsuccessful login!");
       welcomeBox.setFill(Color.RED);
-      //      sceneController.switchScene(SceneController.SCENES.HOME_SCENE);
+      //      sceneController.switchScene(SceneController.SCENES.HOME);
 
       usernameBox.setText("");
       passwordBox.setText("");

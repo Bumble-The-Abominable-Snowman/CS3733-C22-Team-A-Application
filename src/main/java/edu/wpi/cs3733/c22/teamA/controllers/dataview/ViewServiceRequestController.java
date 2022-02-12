@@ -121,7 +121,7 @@ public class ViewServiceRequestController implements Initializable {
   }
 
   @FXML
-  private void returnToHomeScene() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME_SCENE);
+  private void goToHomeScene() throws IOException {
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
   }
 }
