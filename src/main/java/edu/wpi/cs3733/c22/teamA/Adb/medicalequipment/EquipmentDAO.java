@@ -1,10 +1,10 @@
 package edu.wpi.cs3733.c22.teamA.Adb.medicalequipment;
 
-import edu.wpi.cs3733.c22.teamA.entities.MedicalEquipment;
+import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import java.util.List;
 
-public interface MedicalEquipmentDAO {
-  public MedicalEquipment getMedicalEquipment(String ID);
+public interface EquipmentDAO {
+  public Equipment getMedicalEquipment(String ID);
 
   public void updateMedicalEquipment(String ID, String field, Object change);
 
@@ -17,5 +17,5 @@ public interface MedicalEquipmentDAO {
 
   public void deleteMedicalEquipment(String ID);
 
-  public List<MedicalEquipment> getMedicalEquipmentList();
+  public List<Equipment> getMedicalEquipmentList();
 }

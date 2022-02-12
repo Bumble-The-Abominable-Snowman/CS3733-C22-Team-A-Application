@@ -6,8 +6,8 @@ import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.cs3733.c22.teamA.Aapp;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.EquipmentServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.EquipmentServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
 import edu.wpi.cs3733.c22.teamA.entities.requests.ServiceRequest;
@@ -98,8 +98,7 @@ public class ViewServiceRequestController implements Initializable {
     reqType.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<ServiceRequest, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getRequestType()));
-    MedicalEquipmentServiceRequestDAO serviceRequestBase =
-        new MedicalEquipmentServiceRequestDerbyImpl();
+    EquipmentServiceRequestDAO serviceRequestBase = new EquipmentServiceRequestDerbyImpl();
     List<MedicalEquipmentServiceRequest> employeeFromDatabase =
         serviceRequestBase.getMedicalEquipmentServiceRequestList();
     ObservableList<ServiceRequest> requests = FXCollections.observableArrayList();

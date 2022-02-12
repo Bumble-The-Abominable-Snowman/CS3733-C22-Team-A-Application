@@ -1,6 +1,5 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
@@ -25,16 +24,10 @@ import javafx.scene.paint.Color;
 
 public class MedicineDeliveryController extends SRController {
 
-  @FXML private JFXButton backButton;
-  @FXML private JFXButton returnHomeButton;
-  @FXML private JFXButton clearButton;
-  @FXML private JFXButton submitButton;
   @FXML private JFXComboBox<String> medicineChoice;
   @FXML private JFXComboBox<String> toLocationChoice;
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
-
-  private FXMLLoader loader = new FXMLLoader();
 
   @FXML
   public void initialize() throws ParseException {
@@ -42,7 +35,7 @@ public class MedicineDeliveryController extends SRController {
 
     backButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    returnHomeButton.setBackground(
+    homeButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
     clearButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
@@ -117,7 +110,7 @@ public class MedicineDeliveryController extends SRController {
         && toLocationChoice.getSelectionModel().getSelectedItem() != null
         && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
       this.createMedicineRequest(medicineRequest);
-      this.returnToHomeScene();
+      this.goToHomeScene();
     }
   }
 }

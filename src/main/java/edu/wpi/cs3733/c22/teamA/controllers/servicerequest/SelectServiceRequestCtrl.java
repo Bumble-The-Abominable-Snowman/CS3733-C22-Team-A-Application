@@ -11,7 +11,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
-public class SelectServiceRequestController {
+public class SelectServiceRequestCtrl {
 
   @FXML private JFXButton medicalEquipmentDeliveryButton;
   @FXML private JFXButton religiousRequestsButton;

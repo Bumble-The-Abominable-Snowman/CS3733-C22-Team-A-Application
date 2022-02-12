@@ -5,7 +5,7 @@ import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest.FoodDeliveryServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDerbyImpl;
@@ -91,7 +91,7 @@ public class ExportToBackupController {
           EmployeeDerbyImpl.exportToCSV("Employee", filepath);
           break;
         case "MedicalEquipment":
-          MedicalEquipmentDerbyImpl.exportToCSV("MedicalEquipment", filepath);
+          EquipmentDerbyImpl.exportToCSV("MedicalEquipment", filepath);
           break;
         case "LanguageServiceRequest":
           LanguageServiceRequestDerbyImpl.exportToCSV("LanguageServiceRequest", filepath);

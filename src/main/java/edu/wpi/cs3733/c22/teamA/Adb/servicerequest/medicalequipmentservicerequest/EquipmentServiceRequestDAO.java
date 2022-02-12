@@ -4,7 +4,7 @@ import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest
 import java.sql.Timestamp;
 import java.util.List;
 
-public interface MedicalEquipmentServiceRequestDAO {
+public interface EquipmentServiceRequestDAO {
   MedicalEquipmentServiceRequest getMedicalEquipmentServiceRequest(String ID);
 
   void updateMedicalEquipmentServiceRequest(String ID, String field, String change);

@@ -1,6 +1,5 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;

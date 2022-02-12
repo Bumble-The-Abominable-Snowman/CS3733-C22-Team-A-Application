@@ -6,10 +6,10 @@ import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.cs3733.c22.teamA.Aapp;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
-import edu.wpi.cs3733.c22.teamA.entities.MedicalEquipment;
+import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -29,7 +29,7 @@ import javafx.scene.paint.Color;
 
 public class MedicalEquipmentDataController implements Initializable {
   @FXML JFXButton backButton;
-  @FXML JFXTreeTableView<MedicalEquipment> equipmentTable;
+  @FXML JFXTreeTableView<Equipment> equipmentTable;
 
   private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
 
@@ -39,12 +39,11 @@ public class MedicalEquipmentDataController implements Initializable {
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
 
     // Create all columns in the tracker table
-    JFXTreeTableColumn<MedicalEquipment, String> id = new JFXTreeTableColumn<>("ID");
-    JFXTreeTableColumn<MedicalEquipment, String> type = new JFXTreeTableColumn<>("Type");
-    JFXTreeTableColumn<MedicalEquipment, String> clean = new JFXTreeTableColumn<>("Is Clean?");
-    JFXTreeTableColumn<MedicalEquipment, String> location = new JFXTreeTableColumn<>("Location");
-    JFXTreeTableColumn<MedicalEquipment, String> available =
-        new JFXTreeTableColumn<>("Is Available?");
+    JFXTreeTableColumn<Equipment, String> id = new JFXTreeTableColumn<>("ID");
+    JFXTreeTableColumn<Equipment, String> type = new JFXTreeTableColumn<>("Type");
+    JFXTreeTableColumn<Equipment, String> clean = new JFXTreeTableColumn<>("Is Clean?");
+    JFXTreeTableColumn<Equipment, String> location = new JFXTreeTableColumn<>("Location");
+    JFXTreeTableColumn<Equipment, String> available = new JFXTreeTableColumn<>("Is Available?");
     id.setPrefWidth(112);
     type.setPrefWidth(110);
     clean.setPrefWidth(110);
@@ -56,31 +55,31 @@ public class MedicalEquipmentDataController implements Initializable {
     location.setStyle("-fx-alignment: center ;");
     available.setStyle("-fx-alignment: center ;");
     id.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<MedicalEquipment, String> param) ->
+        (TreeTableColumn.CellDataFeatures<Equipment, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getEquipmentID()));
     type.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<MedicalEquipment, String> param) ->
+        (TreeTableColumn.CellDataFeatures<Equipment, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getEquipmentType()));
     clean.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<MedicalEquipment, String> param) ->
+        (TreeTableColumn.CellDataFeatures<Equipment, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getIsClean() ? "Yes" : "No"));
     location.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<MedicalEquipment, String> param) ->
+        (TreeTableColumn.CellDataFeatures<Equipment, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getCurrentLocation()));
     available.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<MedicalEquipment, String> param) ->
+        (TreeTableColumn.CellDataFeatures<Equipment, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().getIsAvailable() ? "Yes" : "No"));
 
     // Grab equipment from database
-    MedicalEquipmentDAO database = new MedicalEquipmentDerbyImpl();
-    List<MedicalEquipment> equipFromDatabase = database.getMedicalEquipmentList();
-    ObservableList<MedicalEquipment> equipment = FXCollections.observableArrayList();
-    for (MedicalEquipment item : equipFromDatabase) {
+    EquipmentDAO database = new EquipmentDerbyImpl();
+    List<Equipment> equipFromDatabase = database.getMedicalEquipmentList();
+    ObservableList<Equipment> equipment = FXCollections.observableArrayList();
+    for (Equipment item : equipFromDatabase) {
       equipment.add(item);
     }
 
     // Sets up the table and puts the equipment data under the columns
-    final TreeItem<MedicalEquipment> root =
+    final TreeItem<Equipment> root =
         new RecursiveTreeItem<>(equipment, RecursiveTreeObject::getChildren);
     equipmentTable.getColumns().setAll(id, type, clean, location, available);
     equipmentTable.setRoot(root);

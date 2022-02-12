@@ -42,23 +42,23 @@ public class SceneSwitcher {
     addScene(SCENES.EXPORT_TO_BACKUP_SCENE, "views/Settings/exportToBackup.fxml");
 
     // Service Requests
-    addScene(SCENES.SELECT_SERVICE_REQUEST_SCENE, "views/servicerequest/selectServiceRequest.fxml");
-    addScene(SCENES.LAUNDRY_SERVICE_REQUEST_SCENE, "views/servicerequest/laundryServices.fxml");
-    addScene(SCENES.FOOD_DELIVERY_SERVICE_REQUEST_SCENE, "views/servicerequest/foodDelivery.fxml");
+    addScene(SCENES.SELECT_SERVICE_REQUEST_SCENE, "views/servicerequest/SelectServiceRequest.fxml");
+    addScene(SCENES.LAUNDRY_SERVICE_REQUEST_SCENE, "views/servicerequest/LaundryServices.fxml");
+    addScene(SCENES.FOOD_DELIVERY_SERVICE_REQUEST_SCENE, "views/servicerequest/FoodDelivery.fxml");
     addScene(
         SCENES.LANGUAGE_INTERPRETER_SERVICE_REQUEST_SCENE,
-        "views/servicerequest/languageInterpreter.fxml");
+        "views/servicerequest/LanguageInterpreter.fxml");
     addScene(
         SCENES.MEDICAL_EQUIPMENT_DELIVERY_SERVICE_REQUEST_SCENE,
-        "views/servicerequest/medicalEquipmentDelivery.fxml");
-    addScene(SCENES.RELIGIOUS_SERVICE_REQUEST_SCENE, "views/servicerequest/religiousServices.fxml");
+        "views/servicerequest/EquipmentDelivery.fxml");
+    addScene(SCENES.RELIGIOUS_SERVICE_REQUEST_SCENE, "views/servicerequest/ReligiousServices.fxml");
     addScene(
-        SCENES.SANITATION_SERVICE_REQUEST_SCENE, "views/servicerequest/sanitationServices.fxml");
+        SCENES.SANITATION_SERVICE_REQUEST_SCENE, "views/servicerequest/SanitationServices.fxml");
     addScene(
-        SCENES.FLORAL_DELIVERY_SERVICE_REQUEST_SCENE, "views/servicerequest/floralDelivery.fxml");
+        SCENES.FLORAL_DELIVERY_SERVICE_REQUEST_SCENE, "views/servicerequest/FloralDelivery.fxml");
     addScene(
         SCENES.MEDICINE_DELIVERY_SERVICE_REQUEST_SCENE,
-        "views/servicerequest/medicineDelivery.fxml");
+        "views/servicerequest/MedicineDelivery.fxml");
 
     // Data View + Map Editor
     addScene(SCENES.VIEW_MEDICAL_EQUIPMENT_SCENE, "views/dataview/medicalEquipmentData.fxml");

@@ -7,7 +7,7 @@ import java.util.concurrent.TimeoutException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public abstract class SRController {
+public abstract class SRCtrl {
   @FXML Button homeButton;
   @FXML Button submitButton;
   @FXML Button backButton;

@@ -5,7 +5,7 @@ import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest.FoodDeliveryServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDerbyImpl;
@@ -33,7 +33,6 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 public class LoadFromBackupController {
-  public JFXButton refreshButton;
   @FXML private JFXButton returnHomeButton;
   @FXML private JFXButton backButton;
   @FXML private JFXButton loadFromBackupButton;
@@ -46,7 +45,7 @@ public class LoadFromBackupController {
 
   @FXML
   public void initialize() {
-    refreshFiles(null);
+    this.refreshFiles();
 
     backButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
@@ -110,7 +109,7 @@ public class LoadFromBackupController {
   }
 
   @FXML
-  public void refreshFiles(ActionEvent actionEvent) {
+  public void refreshFiles() {
     File f = new File("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/");
 
     ObservableList<String> items = FXCollections.observableArrayList();
@@ -125,7 +124,7 @@ public class LoadFromBackupController {
     fileList.setItems(items);
   }
 
-  public void loadFromBackup(ActionEvent actionEvent) throws IOException {
+  public void loadFromBackup() {
     //    String filepath = "edu/wpi/cs3733/c22/teamA/db/CSVs/" + lastSelectedFile;
 
     if (!TypeCSV.getValue().equals("CSV Type") && lastSelectedFile.length() > 4) {
@@ -139,7 +138,7 @@ public class LoadFromBackupController {
           EmployeeDerbyImpl.inputFromCSV("Employee", lastSelectedFile);
           break;
         case "MedicalEquipment":
-          MedicalEquipmentDerbyImpl.inputFromCSV("MedicalEquipment", lastSelectedFile);
+          EquipmentDerbyImpl.inputFromCSV("MedicalEquipment", lastSelectedFile);
           break;
         case "LanguageServiceRequest":
           LanguageServiceRequestDerbyImpl.inputFromCSV("LanguageServiceRequest", lastSelectedFile);
@@ -174,7 +173,7 @@ public class LoadFromBackupController {
   }
 
   @FXML
-  public void loadFromSystem(ActionEvent actionEvent) throws IOException {
+  public void loadFromSystem() {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Select the CSV file");
     fileChooser

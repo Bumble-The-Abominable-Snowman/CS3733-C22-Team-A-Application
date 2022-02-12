@@ -1,6 +1,5 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
@@ -21,7 +20,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.Background;
@@ -29,11 +27,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
-public class ReligiousServicesController extends SRController {
-  @FXML private JFXButton backButton;
-  @FXML private JFXButton returnHomeButton;
-  @FXML private JFXButton clearButton;
-  @FXML private JFXButton submitButton;
+public class ReligiousSRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> religionChoice;
   @FXML private JFXComboBox<String> denominationChoice;
   @FXML private JFXComboBox<String> toLocationChoice;
@@ -45,9 +39,7 @@ public class ReligiousServicesController extends SRController {
   private List<String> otherDenom = new ArrayList<>();
   private List<String> initChoices = new ArrayList<>();
 
-  private FXMLLoader loader = new FXMLLoader();
-
-  public ReligiousServicesController() {
+  public ReligiousSRCtrl() {
     super();
 
     initChoices.add("Christian");
@@ -79,7 +71,7 @@ public class ReligiousServicesController extends SRController {
 
     backButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    returnHomeButton.setBackground(
+    homeButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
     clearButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));

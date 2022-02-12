@@ -2,11 +2,11 @@ package edu.wpi.cs3733.c22.teamA.Adb;
 
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest.FoodDeliveryServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.EquipmentServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
 import java.sql.*;
@@ -223,9 +223,9 @@ public class Adb {
       LocationDerbyImpl.inputFromCSV(
           "TowerLocations", "edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
       EmployeeDerbyImpl.inputFromCSV("Employee", "edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.csv");
-      MedicalEquipmentDerbyImpl.inputFromCSV(
+      EquipmentDerbyImpl.inputFromCSV(
           "MedicalEquipment", "edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipment.csv");
-      MedicalEquipmentServiceRequestDerbyImpl.inputFromCSV(
+      EquipmentServiceRequestDerbyImpl.inputFromCSV(
           "MedicalEquipmentServiceRequest",
           "edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipmentServiceRequest.csv");
       ReligiousServiceRequestDerbyImpl.inputFromCSV(

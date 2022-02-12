@@ -5,8 +5,8 @@ import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.EquipmentServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.EquipmentServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
@@ -28,7 +28,7 @@ import javafx.scene.paint.Color;
 
 // TODO fix naming
 // TODO make dependent on database for medical equipment
-public class MedicalEquipmentDeliveryController extends SRController {
+public class EquipmentDeliverySRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> typeChoice;
   @FXML private JFXComboBox<String> fromChoice;
   @FXML private JFXComboBox<String> statusChoice;
@@ -42,7 +42,7 @@ public class MedicalEquipmentDeliveryController extends SRController {
   private List<String> reclinerLocations = new ArrayList<>();
   private List<String> status = new ArrayList<>();
 
-  public MedicalEquipmentDeliveryController() {
+  public EquipmentDeliverySRCtrl() {
     super();
 
     bedLocations.add("Nearest Location");
@@ -143,8 +143,8 @@ public class MedicalEquipmentDeliveryController extends SRController {
         && employeeChoice.getSelectionModel().getSelectedItem() != null) {
 
       // pass medical service request object
-      MedicalEquipmentServiceRequestDAO medicalEquipmentServiceRequestDAO =
-          new MedicalEquipmentServiceRequestDerbyImpl();
+      EquipmentServiceRequestDAO equipmentServiceRequestDAO =
+          new EquipmentServiceRequestDerbyImpl();
       MedicalEquipmentServiceRequest medicalEquipmentServiceRequest =
           new MedicalEquipmentServiceRequest(
               "PlaceHolderID",
@@ -158,10 +158,10 @@ public class MedicalEquipmentDeliveryController extends SRController {
               commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               typeChoice.getSelectionModel().getSelectedItem().toString());
 
-      medicalEquipmentServiceRequestDAO.enterMedicalEquipmentServiceRequest(
+      equipmentServiceRequestDAO.enterMedicalEquipmentServiceRequest(
           medicalEquipmentServiceRequest);
 
-      this.returnToHomeScene();
+      this.goToHomeScene();
     }
   }
 }

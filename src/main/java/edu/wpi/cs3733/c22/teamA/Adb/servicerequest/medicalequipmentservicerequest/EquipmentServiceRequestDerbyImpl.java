@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipmentServiceRequestDAO {
+public class EquipmentServiceRequestDerbyImpl implements EquipmentServiceRequestDAO {
 
-  public MedicalEquipmentServiceRequestDerbyImpl() {}
+  public EquipmentServiceRequestDerbyImpl() {}
 
   public MedicalEquipmentServiceRequest getMedicalEquipmentServiceRequest(String ID) {
     try {
@@ -319,8 +319,7 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
           DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
 
       List<MedicalEquipmentServiceRequest> List =
-          MedicalEquipmentServiceRequestDerbyImpl.readMedicalEquipmentServiceRequestCSV(
-              csvFilePath);
+          EquipmentServiceRequestDerbyImpl.readMedicalEquipmentServiceRequestCSV(csvFilePath);
       for (MedicalEquipmentServiceRequest l : List) {
         Statement addStatement = connection.createStatement();
         // add to sub table
@@ -360,8 +359,8 @@ public class MedicalEquipmentServiceRequestDerbyImpl implements MedicalEquipment
 
   // Export to CSV
   public static void exportToCSV(String tableName, String csvFilePath) throws IOException {
-    MedicalEquipmentServiceRequestDAO mesr = new MedicalEquipmentServiceRequestDerbyImpl();
-    MedicalEquipmentServiceRequestDerbyImpl.writeMedicalEquipmentServiceRequestCSV(
+    EquipmentServiceRequestDAO mesr = new EquipmentServiceRequestDerbyImpl();
+    EquipmentServiceRequestDerbyImpl.writeMedicalEquipmentServiceRequestCSV(
         mesr.getMedicalEquipmentServiceRequestList(), csvFilePath);
   }
 }

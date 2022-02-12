@@ -2,16 +2,16 @@ package edu.wpi.cs3733.c22.teamA.entities;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
-public class MedicalEquipment extends RecursiveTreeObject<MedicalEquipment> {
+public class Equipment extends RecursiveTreeObject<Equipment> {
   private String equipmentID;
   private String equipmentType;
   private boolean isClean;
   private String currentLocation;
   private boolean isAvailable;
 
-  public MedicalEquipment() {}
+  public Equipment() {}
 
-  public MedicalEquipment(
+  public Equipment(
       String equipmentID,
       String equipmentType,
       boolean isClean,

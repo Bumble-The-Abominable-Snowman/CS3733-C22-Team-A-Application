@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane styleClass="snowmanBackground" stylesheets="@snowman/snowmanBackground.css" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: LIGHTBLUE;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.servicerequest.FloralDeliveryController">
+<GridPane styleClass="snowmanBackground" stylesheets="@snowman/snowmanBackground.css" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: LIGHTBLUE;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.servicerequest.ReligiousSRCtrl">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -18,12 +18,7 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
-    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" prefHeight="30.0" prefWidth="200.0" text="Floral Delivery" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-        <font>
-            <Font name="System Bold" size="19.0" />
-        </font>
-    </Label>
-    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="210.0" layoutY="45.0" prefHeight="52.0" prefWidth="200.0" text="Requests" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" prefHeight="78.0" prefWidth="261.0" text="Religious Requests" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
         <font>
             <Font name="System Bold" size="19.0" />
         </font>
@@ -38,8 +33,8 @@
             <Font size="17.0" />
         </font>
     </Label>
-    <Label text="Flower:" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-    <Label text="Bouquet Type:" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+    <Label text="Religion:" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+    <Label text="Denomination:" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
     <Label layoutX="83.0" layoutY="152.0" text="Employee:" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
     <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#returnToSelectServiceScene" prefHeight="26.0" prefWidth="55.0" text="Back" textFill="WHITE" GridPane.halignment="LEFT" GridPane.valignment="TOP">
       <cursor>
@@ -57,8 +52,8 @@
       <cursor>
          <Cursor fx:constant="HAND" />
       </cursor></JFXButton>
-    <JFXComboBox fx:id="flowerChoice" layoutX="36.0" layoutY="100.0" prefHeight="28.0" prefWidth="112.0" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-    <JFXComboBox fx:id="bouquetTypeChoice" layoutX="34.0" layoutY="250.0" prefHeight="28.0" prefWidth="112.0" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+    <JFXComboBox fx:id="religionChoice" layoutX="36.0" layoutY="100.0" prefHeight="28.0" prefWidth="112.0" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+    <JFXComboBox fx:id="denominationChoice" layoutX="34.0" layoutY="250.0" prefHeight="28.0" prefWidth="112.0" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
     <JFXComboBox fx:id="toLocationChoice" layoutX="225.0" layoutY="180.0" prefHeight="28.0" prefWidth="150.0" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
     <JFXComboBox fx:id="employeeChoice" layoutX="443.0" layoutY="93.0" prefHeight="28.0" prefWidth="112.0" unFocusColor="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
     <TextArea fx:id="commentsBox" layoutX="411.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="180" prefHeight="100.0" prefWidth="148.0" promptText="Special Instructions/Notes" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">

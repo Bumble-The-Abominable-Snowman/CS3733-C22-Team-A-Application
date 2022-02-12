@@ -8,7 +8,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest.FoodDeliveryServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.EquipmentServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
@@ -373,7 +373,7 @@ public class DefaultTest {
   @Test
   public void testMedicalEquipment() {
     Adb.initialConnection();
-    MedicalEquipmentServiceRequestDerbyImpl derby = new MedicalEquipmentServiceRequestDerbyImpl();
+    EquipmentServiceRequestDerbyImpl derby = new EquipmentServiceRequestDerbyImpl();
     MedicalEquipmentServiceRequest mesr =
         new MedicalEquipmentServiceRequest(
             "meq123",

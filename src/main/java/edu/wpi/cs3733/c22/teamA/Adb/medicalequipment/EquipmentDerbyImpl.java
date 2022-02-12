@@ -1,7 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.Adb.medicalequipment;
 
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
-import edu.wpi.cs3733.c22.teamA.entities.MedicalEquipment;
+import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
+public class EquipmentDerbyImpl implements EquipmentDAO {
 
-  public MedicalEquipmentDerbyImpl() {}
+  public EquipmentDerbyImpl() {}
 
-  public MedicalEquipment getMedicalEquipment(String ID) {
+  public Equipment getMedicalEquipment(String ID) {
     try {
       Connection connection =
           DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
@@ -25,7 +25,7 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
       String str = String.format("SELECT * FROM MedicalEquipment WHERE equipmentID = '%s'", ID);
 
       ResultSet rset = get.executeQuery(str);
-      MedicalEquipment me = new MedicalEquipment();
+      Equipment me = new Equipment();
       if (rset.next()) {
         String equipmentID = rset.getString("equipmentID");
         String equipmentType = rset.getString("equipmentType");
@@ -33,8 +33,7 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
         String currentLocation = rset.getString("currentLocation");
         boolean isAvailable = rset.getBoolean("isAvailable");
 
-        me =
-            new MedicalEquipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable);
+        me = new Equipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable);
       }
       return me;
 
@@ -119,8 +118,8 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
     }
   }
 
-  public List<MedicalEquipment> getMedicalEquipmentList() {
-    List<MedicalEquipment> equipList = new ArrayList<>();
+  public List<Equipment> getMedicalEquipmentList() {
+    List<Equipment> equipList = new ArrayList<>();
     try {
       Connection connection =
           DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
@@ -134,8 +133,8 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
         String currentLocation = rset.getString("currentLocation");
         boolean isAvailable = rset.getBoolean("isAvailable");
 
-        MedicalEquipment e =
-            new MedicalEquipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable);
+        Equipment e =
+            new Equipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable);
         equipList.add(e);
       }
     } catch (SQLException e) {
@@ -147,7 +146,7 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
   }
 
   // Read From MedicalEquipment CSV
-  public static List<MedicalEquipment> readMedicalEquipmentCSV(String csvFilePath)
+  public static List<Equipment> readMedicalEquipmentCSV(String csvFilePath)
       throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
@@ -157,14 +156,14 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
     int dataIndex = 0;
     int lineIndex = 0;
     int intData = 0;
-    List<MedicalEquipment> list = new ArrayList<>();
+    List<Equipment> list = new ArrayList<>();
     lineScanner.nextLine();
 
     while (lineScanner.hasNextLine()) { // Scan CSV line by line
 
       dataScanner = new Scanner(lineScanner.nextLine());
       dataScanner.useDelimiter(",");
-      MedicalEquipment thisME = new MedicalEquipment();
+      Equipment thisME = new Equipment();
 
       while (dataScanner.hasNext()) {
 
@@ -195,7 +194,7 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
   }
 
   // Write CSV for MedicalEquipment table
-  public static void writeMedicalEquipmentCSV(List<MedicalEquipment> List, String csvFilePath)
+  public static void writeMedicalEquipmentCSV(List<Equipment> List, String csvFilePath)
       throws IOException {
 
     // create a writer
@@ -207,7 +206,7 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
     writer.newLine();
 
     // write location data
-    for (MedicalEquipment thisME : List) {
+    for (Equipment thisME : List) {
 
       String isClean = String.valueOf(thisME.getIsClean());
       String isAvailable = String.valueOf(thisME.getIsAvailable());
@@ -242,8 +241,8 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
       Connection connection =
           DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
 
-      List<MedicalEquipment> List = MedicalEquipmentDerbyImpl.readMedicalEquipmentCSV(csvFilePath);
-      for (MedicalEquipment l : List) {
+      List<Equipment> List = EquipmentDerbyImpl.readMedicalEquipmentCSV(csvFilePath);
+      for (Equipment l : List) {
         Statement addStatement = connection.createStatement();
         addStatement.executeUpdate(
             "INSERT INTO MedicalEquipment( equipmentID, equipmentType, isClean, currentLocation, isAvailable) VALUES('"
@@ -265,8 +264,7 @@ public class MedicalEquipmentDerbyImpl implements MedicalEquipmentDAO {
 
   // Export to CSV
   public static void exportToCSV(String tableName, String csvFilePath) throws IOException {
-    MedicalEquipmentDAO equipment = new MedicalEquipmentDerbyImpl();
-    MedicalEquipmentDerbyImpl.writeMedicalEquipmentCSV(
-        equipment.getMedicalEquipmentList(), csvFilePath);
+    EquipmentDAO equipment = new EquipmentDerbyImpl();
+    EquipmentDerbyImpl.writeMedicalEquipmentCSV(equipment.getMedicalEquipmentList(), csvFilePath);
   }
 }

@@ -6,11 +6,11 @@ import com.jfoenix.controls.JFXTextArea;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
+import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.MedicalEquipment;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class MapEditorController {
   @FXML private AnchorPane anchorPane;
   private List<Button> locationMarkers;
   private List<Location> locations;
-  private List<MedicalEquipment> medicalEquipments;
+  private List<Equipment> equipment;
   private Polygon locationMarkerShape = new Polygon();
   private Polygon equipmentMarkerShape = new Polygon();
   private Button selectedButton;
@@ -68,11 +68,11 @@ public class MapEditorController {
   @FXML ImageView mapDisplay = new ImageView();
 
   LocationDAO locationBase = new LocationDerbyImpl();
-  MedicalEquipmentDAO medicalEquipmentDao = new MedicalEquipmentDerbyImpl();
+  EquipmentDAO equipmentDao = new EquipmentDerbyImpl();
   Location selectedLocation;
   HashMap<Button, Location> buttonLocation = new HashMap<>();
   HashMap<Button, Label> buttonLabel = new HashMap<>();
-  HashMap<Button, MedicalEquipment> buttonEquipment = new HashMap<>();
+  HashMap<Button, Equipment> buttonEquipment = new HashMap<>();
   ArrayList<Label> labels = new ArrayList<>();
   ArrayList<Button> medicalButtons = new ArrayList<>();
   String currentID = "";
@@ -82,7 +82,7 @@ public class MapEditorController {
   public MapEditorController() {
     locationMarkers = new ArrayList<>();
     locations = new ArrayList<>();
-    medicalEquipments = new ArrayList<>();
+    equipment = new ArrayList<>();
     // locationMarkerShape.getPoints().addAll(new Double[] {2.0, 8.0, 0.0, 4.0, 2.0, 0.0, 4.0,
     // 4.0});
     locationMarkerShape.getPoints().addAll(new Double[] {1.0, 4.0, 0.0, 2.0, 1.0, 0.0, 2.0, 2.0});
@@ -104,9 +104,8 @@ public class MapEditorController {
     polygon.getPoints().addAll(new Double[] {1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 2.0, 1.0, 1.0, 1.0});
     inputVBox.setDisable(true);
     locations.addAll(new ArrayList<>(new LocationDerbyImpl().getNodeList()));
-    medicalEquipments.addAll(
-        new ArrayList<>(new MedicalEquipmentDerbyImpl().getMedicalEquipmentList()));
-    for (MedicalEquipment m : medicalEquipments) {
+    equipment.addAll(new ArrayList<>(new EquipmentDerbyImpl().getMedicalEquipmentList()));
+    for (Equipment m : equipment) {
       System.out.println(m.getCurrentLocation());
     }
 
@@ -261,49 +260,48 @@ public class MapEditorController {
                     draw(button, label);
                   }
                 }
-                for (MedicalEquipment medicalEquipment : medicalEquipments) {
-                  System.out.println(medicalEquipment.getCurrentLocation());
-                  System.out.println(roomNames.containsKey(medicalEquipment.getCurrentLocation()));
-                  if (roomNames.containsKey(medicalEquipment.getCurrentLocation())) {
+                for (Equipment equipment : this.equipment) {
+                  System.out.println(equipment.getCurrentLocation());
+                  System.out.println(roomNames.containsKey(equipment.getCurrentLocation()));
+                  if (roomNames.containsKey(equipment.getCurrentLocation())) {
 
                     Button button = new Button();
                     Label label = new Label();
                     labels.add(label);
-                    label.setText(medicalEquipment.getEquipmentType());
+                    label.setText(equipment.getEquipmentType());
                     label.setFont(new Font(15));
                     final Delta dragDelta = new Delta();
                     button.setMinWidth(4.0);
                     button.setMinHeight(2.0);
                     button.setShape(equipmentMarkerShape);
                     button.setLayoutX(
-                        roomNames.get(medicalEquipment.getCurrentLocation()).getXCoord()
+                        roomNames.get(equipment.getCurrentLocation()).getXCoord()
                             + mapDisplay.getLayoutX()
                             - 8
                             + 10);
                     button.setLayoutY(
-                        roomNames.get(medicalEquipment.getCurrentLocation()).getYCoord()
+                        roomNames.get(equipment.getCurrentLocation()).getYCoord()
                             + mapDisplay.getLayoutY()
                             - 24
                             + 10);
 
                     label.setLayoutX(
-                        roomNames.get(medicalEquipment.getCurrentLocation()).getXCoord()
+                        roomNames.get(equipment.getCurrentLocation()).getXCoord()
                             + mapDisplay.getLayoutX()
                             - 8
                             + 7.5
                             + 10);
                     label.setLayoutY(
-                        roomNames.get(medicalEquipment.getCurrentLocation()).getYCoord()
+                        roomNames.get(equipment.getCurrentLocation()).getYCoord()
                             + mapDisplay.getLayoutY()
                             - 24
                             - 15
                             + 10);
 
-                    buttonEquipment.put(button, medicalEquipment);
+                    buttonEquipment.put(button, equipment);
                     medicalButtons.add(button);
                     buttonLabel.put(button, label);
-                    buttonLocation.put(
-                        button, roomNames.get(medicalEquipment.getCurrentLocation()));
+                    buttonLocation.put(button, roomNames.get(equipment.getCurrentLocation()));
                     button.setPickOnBounds(false);
                     button.setStyle("-fx-background-color: RED");
 
@@ -487,7 +485,7 @@ public class MapEditorController {
     shortnameText.setText(selectedLocation.getShortName());
   }
 
-  public void existingEquipmentSelected(MedicalEquipment medicalEquipment) {
+  public void existingEquipmentSelected(Equipment equipment) {
     inputVBox.setDisable(false);
 
     nodeIDText.setEditable(false);
@@ -499,12 +497,12 @@ public class MapEditorController {
     longnameText.setEditable(false);
     shortnameText.setEditable(false);
 
-    nodeIDText.setText(medicalEquipment.getEquipmentID());
+    nodeIDText.setText(equipment.getEquipmentID());
     floorText.setText("");
     buildingText.setText("");
-    typeText.setText(medicalEquipment.getEquipmentType());
+    typeText.setText(equipment.getEquipmentType());
     longnameText.setText("N/A");
-    shortnameText.setText(medicalEquipment.getCurrentLocation());
+    shortnameText.setText(equipment.getCurrentLocation());
   }
 
   public void saveChanges() {

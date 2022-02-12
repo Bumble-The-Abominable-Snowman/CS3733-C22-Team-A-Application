@@ -1,6 +1,5 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDAO;
@@ -12,7 +11,6 @@ import java.sql.Timestamp;
 import java.util.Date;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -21,19 +19,16 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
-public class LaundryServiceRequestController extends SRController {
-
+public class LaundrySRCtrl extends SRCtrl {
   @FXML private Label locationLabel;
-  @FXML private JFXButton backButton;
-  @FXML private JFXButton returnHomeButton;
-  @FXML private JFXButton clearButton;
-  @FXML private JFXButton submitButton;
   @FXML private JFXComboBox<String> washMode;
   @FXML private JFXComboBox<String> toLocationChoice;
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
 
-  private FXMLLoader loader = new FXMLLoader();
+  LaundrySRCtrl() {
+    super();
+  }
 
   @FXML
   public void initialize() {
@@ -41,7 +36,7 @@ public class LaundryServiceRequestController extends SRController {
 
     backButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    returnHomeButton.setBackground(
+    homeButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
     clearButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
@@ -75,7 +70,7 @@ public class LaundryServiceRequestController extends SRController {
               washMode.getValue());
       LaundryServiceRequestDAO laundryServiceRequestDAO = new LaundryServiceRequestDerbyImpl();
       laundryServiceRequestDAO.enterLaundryServiceRequest(laundryServiceRequest);
-      this.returnToHomeScene();
+      this.goToHomeScene();
       // send request to database
     }
   }
