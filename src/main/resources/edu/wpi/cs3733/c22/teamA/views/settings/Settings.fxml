@@ -23,7 +23,7 @@
          <Font name="System Bold" size="32.0" />
       </font>
    </Label>
-   <JFXButton fx:id="backButton" buttonType="RAISED" layoutX="43.0" layoutY="342.0" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="26.0" prefWidth="55.0" text="Back" textFill="WHITE" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+   <JFXButton fx:id="backButton" buttonType="RAISED" layoutX="43.0" layoutY="342.0" mnemonicParsing="false" onAction="#goToHomeScene" prefHeight="26.0" prefWidth="55.0" text="Back" textFill="WHITE" GridPane.halignment="LEFT" GridPane.valignment="TOP">
       <cursor>
          <Cursor fx:constant="HAND" />
       </cursor></JFXButton>

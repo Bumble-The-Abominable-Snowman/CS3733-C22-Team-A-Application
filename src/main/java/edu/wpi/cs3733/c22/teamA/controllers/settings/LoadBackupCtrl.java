@@ -32,8 +32,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
-public class LoadFromBackupController {
-  @FXML private JFXButton returnHomeButton;
+public class LoadBackupCtrl {
+  @FXML private JFXButton homeButton;
   @FXML private JFXButton backButton;
   @FXML private JFXButton loadFromBackupButton;
   @FXML private JFXComboBox<String> TypeCSV;
@@ -51,7 +51,7 @@ public class LoadFromBackupController {
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
     loadFromBackupButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(20), Insets.EMPTY)));
-    returnHomeButton.setBackground(
+    homeButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
 
     fileList.setOnMouseClicked(
