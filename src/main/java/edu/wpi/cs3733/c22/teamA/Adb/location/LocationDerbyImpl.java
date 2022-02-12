@@ -136,7 +136,7 @@ public class LocationDerbyImpl implements LocationDAO {
       if (change instanceof String) {
         str =
             String.format(
-                "update " + tableName + " set " + field + " = %s where nodeID = '%s'", change, ID);
+                "update " + tableName + " set " + field + " = '%s' where nodeID = '%s'", change, ID);
       } else {
         str =
             String.format(
