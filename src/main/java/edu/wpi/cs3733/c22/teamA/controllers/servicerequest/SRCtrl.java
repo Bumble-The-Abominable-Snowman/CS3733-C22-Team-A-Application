@@ -25,7 +25,7 @@ public abstract class SRCtrl {
   }
 
   @FXML
-  private void goToSelectServicerequestScene() throws IOException {
+  private void goToSelectServiceScene() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.SELECT_SERVICE_REQUEST_SCENE);
   }
 
