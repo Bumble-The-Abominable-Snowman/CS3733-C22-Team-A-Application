@@ -8,6 +8,6 @@ public class Main {
 
     Adb.initialConnection();
 
-    Aapp.launch(Aapp.class, args);
+    App.launch(App.class, args);
   }
 }

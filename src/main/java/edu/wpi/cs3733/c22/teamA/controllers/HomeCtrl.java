@@ -1,7 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
 import com.jfoenix.controls.JFXButton;
-import edu.wpi.cs3733.c22.teamA.Aapp;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
 import javafx.fxml.FXML;
@@ -12,7 +12,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
 // TODO Add exit button to quit
-public class HomeController {
+public class HomeCtrl {
   @FXML private JFXButton settingsButton;
   @FXML private JFXButton serviceRequestsButton;
   @FXML private JFXButton viewServiceRequestsButton;
@@ -21,7 +21,7 @@ public class HomeController {
   @FXML private JFXButton mapEditorButton;
   @FXML private JFXButton employeesButton;
 
-  private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
+  private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   @FXML
   private void initialize() {
@@ -53,27 +53,27 @@ public class HomeController {
 
   @FXML
   private void goToEquipmentTracker() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_MEDICAL_EQUIPMENT_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_EQUIPMENT);
   }
 
   @FXML
   private void goToLocationData() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_LOCATION_DATA_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_LOCATIONS);
   }
 
   @FXML
   private void goToEditLocationData() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.MAP_EDITOR_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.MAP);
   }
 
   @FXML
   private void goToViewServiceRequest() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_SERVICE_REQUEST_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_SERVICE_REQUESTS);
   }
 
   @FXML
   public void goToViewEmployees() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_EMPLOYEES_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_EMPLOYEES);
   }
 
   @FXML

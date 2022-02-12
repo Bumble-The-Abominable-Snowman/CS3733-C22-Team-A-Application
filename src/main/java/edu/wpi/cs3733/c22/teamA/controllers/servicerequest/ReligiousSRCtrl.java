@@ -1,16 +1,17 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
-import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.requests.ReligiousServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.ReligiousSR;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -67,7 +68,7 @@ public class ReligiousSRCtrl extends SRCtrl {
 
   @FXML
   private void initialize() throws ParseException {
-    sceneID = SceneSwitcher.SCENES.RELIGIOUS_SERVICE_REQUEST_SCENE;
+    sceneID = SceneSwitcher.SCENES.RELIGIOUS_SR;
 
     backButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
@@ -138,21 +139,21 @@ public class ReligiousSRCtrl extends SRCtrl {
     if (!religionChoice.getSelectionModel().getSelectedItem().equals("Type")
         && toLocationChoice.getSelectionModel().getSelectedItem() != null
         && employeeChoice.getSelectionModel().getSelectedItem() != null) {
-      ReligiousServiceRequest religiousServiceRequest =
-          new ReligiousServiceRequest(
+      ReligiousSR religiousSR =
+          new ReligiousSR(
               "PlaceHolderID",
               "N/A",
               toLocationChoice.getSelectionModel().getSelectedItem(),
-              Aapp.factory.getUsername(),
+              App.factory.getUsername(),
               employeeChoice.getSelectionModel().getSelectedItem(),
               new Timestamp((new Date()).getTime()).toString(),
-              "NEW",
+              SR.Status.BLANK,
               "Religious Services",
               commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               religionChoice.getValue());
       ReligiousServiceRequestDAO religiousServiceRequestDAO =
           new ReligiousServiceRequestDerbyImpl();
-      religiousServiceRequestDAO.enterReligiousServiceRequest(religiousServiceRequest);
+      religiousServiceRequestDAO.enterReligiousServiceRequest(religiousSR);
       this.goToHomeScene();
     }
   }

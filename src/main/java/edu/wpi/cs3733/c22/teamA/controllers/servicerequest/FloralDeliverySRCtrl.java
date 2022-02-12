@@ -7,7 +7,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.requests.FloralDeliveryRequest;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.FloralDeliverySR;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,7 +30,7 @@ public class FloralDeliverySRCtrl extends SRCtrl {
 
   @FXML
   public void initialize() throws ParseException {
-    sceneID = SceneSwitcher.SCENES.FLORAL_DELIVERY_SERVICE_REQUEST_SCENE;
+    sceneID = SceneSwitcher.SCENES.FLORAL_DELIVERY_SR;
 
     backButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
@@ -88,7 +88,7 @@ public class FloralDeliverySRCtrl extends SRCtrl {
   }
 
   @FXML
-  private void createFloralRequest(FloralDeliveryRequest floralRequest) {
+  private void createFloralRequest(FloralDeliverySR floralRequest) {
     floralRequest.setFlower(flowerChoice.getValue());
     floralRequest.setBouquetType(bouquetTypeChoice.getValue());
     floralRequest.setToLocation(toLocationChoice.getValue());
@@ -98,7 +98,7 @@ public class FloralDeliverySRCtrl extends SRCtrl {
 
   @FXML
   void submitRequest() throws IOException {
-    FloralDeliveryRequest floralRequest = new FloralDeliveryRequest();
+    FloralDeliverySR floralRequest = new FloralDeliverySR();
     if (!flowerChoice.getSelectionModel().getSelectedItem().equals("Flower")
         && !bouquetTypeChoice.getSelectionModel().getSelectedItem().equals("Bouquet Type")
         && toLocationChoice.getSelectionModel().getSelectedItem() != null

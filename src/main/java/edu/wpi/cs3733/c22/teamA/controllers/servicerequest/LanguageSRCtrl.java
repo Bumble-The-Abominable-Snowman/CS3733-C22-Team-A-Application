@@ -1,16 +1,17 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
-import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.requests.LanguageServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.LanguageSR;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -33,7 +34,7 @@ public class LanguageSRCtrl extends SRCtrl {
 
   @FXML
   public void initialize() throws ParseException {
-    sceneID = SceneSwitcher.SCENES.LANGUAGE_INTERPRETER_SERVICE_REQUEST_SCENE;
+    sceneID = SceneSwitcher.SCENES.LANGUAGE_SR;
 
     backButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
@@ -100,21 +101,21 @@ public class LanguageSRCtrl extends SRCtrl {
     if (!languageChoice.getSelectionModel().getSelectedItem().equals("Language")
         && toLocationChoice.getSelectionModel().getSelectedItem() != null
         && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
-      LanguageServiceRequest languageServiceRequest =
-          new LanguageServiceRequest(
+      LanguageSR languageSR =
+          new LanguageSR(
               "PlaceHolderID",
               "N/A",
               toLocationChoice.getSelectionModel().getSelectedItem(),
-              Aapp.factory.getUsername(),
+              App.factory.getUsername(),
               employeeChoice.getSelectionModel().getSelectedItem(),
               new Timestamp((new Date()).getTime()).toString(),
-              "NEW",
+              SR.Status.BLANK,
               "Language Interpreter",
               commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               languageChoice.getValue());
 
       LanguageServiceRequestDAO languageServiceRequestDAO = new LanguageServiceRequestDerbyImpl();
-      languageServiceRequestDAO.enterLanguageServiceRequest(languageServiceRequest);
+      languageServiceRequestDAO.enterLanguageServiceRequest(languageSR);
       this.goToHomeScene();
     }
   }

@@ -14,13 +14,13 @@ import java.util.Date;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
-public class SanitationSRCtrl extends SRCtrl {
+public class GiftSRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> typeChoice;
   @FXML private JFXComboBox<String> toLocationChoice;
   @FXML private JFXComboBox<String> employeeChoice;
@@ -83,7 +83,6 @@ public class SanitationSRCtrl extends SRCtrl {
             "Sanitation Services",
             commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
             typeChoice.getValue());
-
     SanitationServiceRequestDAO sanitationServiceRequestDAO =
         new SanitationServiceRequestDerbyImpl();
     sanitationServiceRequestDAO.enterSanitationServiceRequest(sanitationSR);

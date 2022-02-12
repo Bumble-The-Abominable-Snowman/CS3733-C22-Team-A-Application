@@ -3,11 +3,11 @@ package edu.wpi.cs3733.c22.teamA.controllers.map;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextArea;
-import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
@@ -77,7 +77,7 @@ public class MapEditorController {
   ArrayList<Button> medicalButtons = new ArrayList<>();
   String currentID = "";
 
-  private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
+  private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   public MapEditorController() {
     locationMarkers = new ArrayList<>();
@@ -565,17 +565,17 @@ public class MapEditorController {
 
   @FXML
   public void goToLocationTable() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_LOCATION_DATA_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_LOCATIONS);
   }
 
   @FXML
   public void returnToHomeScene() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
   }
 
   @FXML
   public void returnToSelectServiceScene() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
     locations.addAll(new ArrayList<>(new LocationDerbyImpl().getNodeList()));
   }
 

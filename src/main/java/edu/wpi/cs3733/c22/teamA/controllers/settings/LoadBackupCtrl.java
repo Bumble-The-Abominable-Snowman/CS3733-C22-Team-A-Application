@@ -2,7 +2,6 @@ package edu.wpi.cs3733.c22.teamA.controllers.settings;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
@@ -11,6 +10,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.Langua
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +41,7 @@ public class LoadFromBackupController {
   @FXML private ListView<String> fileList;
   private String lastSelectedFile;
 
-  private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
+  private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   @FXML
   public void initialize() {
@@ -104,8 +104,8 @@ public class LoadFromBackupController {
   }
 
   @FXML
-  private void returnToHomeScene() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME_SCENE);
+  private void goToHomeScene() throws IOException {
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
   }
 
   @FXML
@@ -179,7 +179,7 @@ public class LoadFromBackupController {
     fileChooser
         .getExtensionFilters()
         .addAll(new FileChooser.ExtensionFilter("CSV Backup Files", "*.csv", "*.CSV"));
-    File selectedFile = fileChooser.showOpenDialog(Aapp.getStage());
+    File selectedFile = fileChooser.showOpenDialog(App.getStage());
     System.out.println(selectedFile.getAbsolutePath());
 
     lastSelectedFile = selectedFile.getAbsolutePath();

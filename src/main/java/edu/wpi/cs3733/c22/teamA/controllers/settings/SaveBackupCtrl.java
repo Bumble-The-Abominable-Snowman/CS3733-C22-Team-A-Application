@@ -2,7 +2,6 @@ package edu.wpi.cs3733.c22.teamA.controllers.settings;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
@@ -11,6 +10,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.Langua
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
 import javafx.fxml.FXML;
@@ -22,15 +22,15 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-public class ExportToBackupController {
+public class SaveBackupCtrl {
   @FXML private JFXButton backButton;
-  @FXML private JFXButton returnHomeButton;
+  @FXML private JFXButton homeButton;
   @FXML private JFXButton exportToBackupButton;
   @FXML public TextField filename;
   @FXML public Text exportFileText;
   @FXML private JFXComboBox<String> TypeCSV;
 
-  private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
+  private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   @FXML
   public void initialize() {
@@ -38,7 +38,7 @@ public class ExportToBackupController {
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
     exportToBackupButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(20), Insets.EMPTY)));
-    returnHomeButton.setBackground(
+    homeButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
 
     TypeCSV.getItems().removeAll(TypeCSV.getItems());
@@ -61,8 +61,8 @@ public class ExportToBackupController {
   }
 
   @FXML
-  private void returnToHomeScene() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME_SCENE);
+  private void goToHomeScene() throws IOException {
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
   }
 
   public void exportToBackup() throws IOException {

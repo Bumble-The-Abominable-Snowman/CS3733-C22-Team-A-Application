@@ -1,7 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
 import com.jfoenix.controls.JFXButton;
-import edu.wpi.cs3733.c22.teamA.Aapp;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -13,13 +13,13 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-public class LogInController {
+public class LoginCtrl {
   @FXML private Text welcomeBox;
   @FXML private TextField usernameBox;
   @FXML private PasswordField passwordBox;
   @FXML private JFXButton logInButton;
 
-  private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
+  private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   @FXML
   private void initialize() {
@@ -29,11 +29,11 @@ public class LogInController {
 
   @FXML
   private void logIn() {
-    Aapp.factory.setUsername(usernameBox.getText());
-    Aapp.factory.setPassword(passwordBox.getText());
+    App.factory.setUsername(usernameBox.getText());
+    App.factory.setPassword(passwordBox.getText());
 
     try {
-      Aapp.connection = Aapp.factory.newConnection("app:audit component:event-consumer");
+      App.connection = App.factory.newConnection("app:audit component:event-consumer");
 
       sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME_SCENE);
     } catch (Exception e) {

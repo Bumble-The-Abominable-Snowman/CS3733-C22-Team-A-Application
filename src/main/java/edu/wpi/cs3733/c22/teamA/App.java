@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class Aapp extends Application {
+public class App extends Application {
 
   private static Stage guiStage;
   public static SceneSwitcher sceneSwitcher;
@@ -32,7 +32,7 @@ public class Aapp extends Application {
   public void start(Stage primaryStage) throws IOException {
     guiStage = primaryStage;
     sceneSwitcher = new SceneSwitcher();
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOG_IN_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOGIN);
   }
 
   @Override

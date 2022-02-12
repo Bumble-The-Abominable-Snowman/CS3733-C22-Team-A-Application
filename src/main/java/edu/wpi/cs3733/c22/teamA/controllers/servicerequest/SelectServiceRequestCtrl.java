@@ -1,7 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXButton;
-import edu.wpi.cs3733.c22.teamA.Aapp;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
 import javafx.fxml.FXML;
@@ -23,7 +23,7 @@ public class SelectServiceRequestCtrl {
   @FXML private JFXButton medicineDeliveryButton;
   @FXML private JFXButton backButton;
 
-  private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
+  private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   @FXML
   private void initialize() {
@@ -49,43 +49,42 @@ public class SelectServiceRequestCtrl {
 
   @FXML
   private void goToMedicalEquipmentDeliveryScene() throws IOException {
-    sceneSwitcher.switchScene(
-        SceneSwitcher.SCENES.MEDICAL_EQUIPMENT_DELIVERY_SERVICE_REQUEST_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.EQUIPMENT_DELIVERY_SR);
   }
 
   @FXML
   private void goToReligiousRequests() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.RELIGIOUS_SERVICE_REQUEST_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.RELIGIOUS_SR);
   }
 
   @FXML
   private void goToSanitationServices() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SANITATION_SERVICE_REQUEST_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SANITATION_SR);
   }
 
   @FXML
   private void goToLaundryServices() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.LAUNDRY_SERVICE_REQUEST_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.LAUNDRY_SR);
   }
 
   @FXML
   private void goToFoodDelivery() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.FOOD_DELIVERY_SERVICE_REQUEST_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.FOOD_DELIVERY_SR);
   }
 
   @FXML
   private void goToLanguageServices() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.LANGUAGE_INTERPRETER_SERVICE_REQUEST_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.LANGUAGE_SR);
   }
 
   @FXML
   private void goToFloralDelivery() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.FLORAL_DELIVERY_SERVICE_REQUEST_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.FLORAL_DELIVERY_SR);
   }
 
   @FXML
   private void goToMedicineDelivery() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.MEDICINE_DELIVERY_SERVICE_REQUEST_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.MEDICINE_DELIVERY_SR);
   }
 
   @FXML

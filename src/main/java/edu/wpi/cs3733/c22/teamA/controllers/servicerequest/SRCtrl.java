@@ -1,6 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
-import edu.wpi.cs3733.c22.teamA.Aapp;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -17,7 +17,7 @@ public abstract class SRCtrl {
 
   SceneSwitcher.SCENES sceneID;
 
-  private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
+  private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   @FXML
   void goToHomeScene() throws IOException {

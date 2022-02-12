@@ -1,16 +1,17 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
-import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest.FoodDeliveryServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest.FoodDeliveryServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.requests.FoodDeliveryServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.FoodDeliverySR;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -35,7 +36,7 @@ public class FoodDeliverySRCtrl extends SRCtrl {
 
   @FXML
   public void initialize() throws ParseException {
-    sceneID = SceneSwitcher.SCENES.FOOD_DELIVERY_SERVICE_REQUEST_SCENE;
+    sceneID = SceneSwitcher.SCENES.FOOD_DELIVERY_SR;
 
     backButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
@@ -83,15 +84,15 @@ public class FoodDeliverySRCtrl extends SRCtrl {
   }
 
   @FXML
-  private FoodDeliveryServiceRequest createFoodRequest() throws IOException {
-    return new FoodDeliveryServiceRequest(
+  private FoodDeliverySR createFoodRequest() throws IOException {
+    return new FoodDeliverySR(
         "PlaceHolderID",
         "N/A",
         toLocationChoice.getSelectionModel().getSelectedItem().toString(),
-        Aapp.factory.getUsername(),
+        App.factory.getUsername(),
         employeeChoice.getSelectionModel().getSelectedItem().toString(),
         new Timestamp((new Date()).getTime()).toString(),
-        "NEW",
+        SR.Status.BLANK,
         "Food Delivery",
         commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
         mainChoice.getValue(),
@@ -102,7 +103,7 @@ public class FoodDeliverySRCtrl extends SRCtrl {
 
   @FXML
   void submitRequest() throws IOException {
-    FoodDeliveryServiceRequest foodDeliveryServiceRequest = createFoodRequest();
+    FoodDeliverySR foodDeliverySR = createFoodRequest();
     FoodDeliveryServiceRequestDAO foodDeliveryServiceRequestDAO =
         new FoodDeliveryServiceRequestDerbyImpl();
     // foodDeliveryServiceRequestDAO.enterRequest(foodDeliveryServiceRequest);
