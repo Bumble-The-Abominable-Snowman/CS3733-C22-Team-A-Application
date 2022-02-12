@@ -5,7 +5,7 @@ import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
+import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.requests.LaundryServiceRequest;
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -37,7 +37,7 @@ public class LaundryServiceRequestController extends GenericServiceRequestsContr
 
   @FXML
   public void initialize() {
-    sceneID = SceneController.SCENES.LAUNDRY_SERVICE_REQUEST_SCENE;
+    sceneID = SceneSwitcher.SCENES.LAUNDRY_SERVICE_REQUEST_SCENE;
 
     backButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));

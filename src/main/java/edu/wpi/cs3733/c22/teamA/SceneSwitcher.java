@@ -1,6 +1,5 @@
-package edu.wpi.cs3733.c22.teamA.controllers;
+package edu.wpi.cs3733.c22.teamA;
 
-import edu.wpi.cs3733.c22.teamA.Aapp;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -8,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-public class SceneController {
+public class SceneSwitcher {
   public enum SCENES {
     LOG_IN_SCENE,
     HOME_SCENE,
@@ -23,7 +22,6 @@ public class SceneController {
     MEDICINE_DELIVERY_SERVICE_REQUEST_SCENE,
     VIEW_MEDICAL_EQUIPMENT_SCENE,
     VIEW_LOCATION_DATA_SCENE,
-    VIEW_EDIT_LOCATION_DATA,
     VIEW_SERVICE_REQUEST_SCENE,
     VIEW_EMPLOYEES_SCENE,
     SETTINGS_SCENE,
@@ -34,12 +32,16 @@ public class SceneController {
 
   private final HashMap<SCENES, String> screenMap = new HashMap<>();
 
-  public SceneController() {
+  public SceneSwitcher() {
 
-    addScene(SceneController.SCENES.LOG_IN_SCENE, "views/logIn.fxml");
+    // Home + Settings
+    addScene(SceneSwitcher.SCENES.LOG_IN_SCENE, "views/logIn.fxml");
+    addScene(SceneSwitcher.SCENES.HOME_SCENE, "views/home.fxml");
+    addScene(SCENES.SETTINGS_SCENE, "views/settings/settings.fxml");
+    addScene(SCENES.LOAD_FROM_BACKUP_SCENE, "views/Settings/loadFromBackup.fxml");
+    addScene(SCENES.EXPORT_TO_BACKUP_SCENE, "views/Settings/exportToBackup.fxml");
 
-    addScene(SceneController.SCENES.HOME_SCENE, "views/home.fxml");
-
+    // Service Requests
     addScene(SCENES.SELECT_SERVICE_REQUEST_SCENE, "views/servicerequest/selectServiceRequest.fxml");
     addScene(SCENES.LAUNDRY_SERVICE_REQUEST_SCENE, "views/servicerequest/laundryServices.fxml");
     addScene(SCENES.FOOD_DELIVERY_SERVICE_REQUEST_SCENE, "views/servicerequest/foodDelivery.fxml");
@@ -58,25 +60,16 @@ public class SceneController {
         SCENES.MEDICINE_DELIVERY_SERVICE_REQUEST_SCENE,
         "views/servicerequest/medicineDelivery.fxml");
 
+    // Data View + Map Editor
     addScene(SCENES.VIEW_MEDICAL_EQUIPMENT_SCENE, "views/dataview/medicalEquipmentData.fxml");
     addScene(SCENES.VIEW_LOCATION_DATA_SCENE, "views/dataview/locationData.fxml");
-    addScene(SCENES.VIEW_EDIT_LOCATION_DATA, "views/map/mapEditor.fxml");
     addScene(SCENES.VIEW_SERVICE_REQUEST_SCENE, "views/dataview/viewServiceRequest.fxml");
     addScene(SCENES.VIEW_EMPLOYEES_SCENE, "views/dataview/employeeData.fxml");
-
-    addScene(SCENES.SETTINGS_SCENE, "views/settings/settings.fxml");
-    addScene(SCENES.LOAD_FROM_BACKUP_SCENE, "views/Settings/loadFromBackup.fxml");
-    addScene(SCENES.EXPORT_TO_BACKUP_SCENE, "views/Settings/exportToBackup.fxml");
-
     addScene(SCENES.MAP_EDITOR_SCENE, "views/map/mapEditor.fxml");
   }
 
   public void addScene(SCENES name, String pathToFXML) {
     screenMap.put(name, pathToFXML);
-  }
-
-  public void removeScreen(String name) {
-    screenMap.remove(name);
   }
 
   public void switchScene(SCENES name) throws IOException {

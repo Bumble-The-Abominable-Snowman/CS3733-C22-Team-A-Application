@@ -2,28 +2,26 @@ package edu.wpi.cs3733.c22.teamA.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import edu.wpi.cs3733.c22.teamA.Aapp;
+import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
+// TODO Add exit button to quit
 public class HomeController {
   @FXML private JFXButton settingsButton;
   @FXML private JFXButton serviceRequestsButton;
   @FXML private JFXButton viewServiceRequestsButton;
   @FXML private JFXButton equipmentTrackerButton;
   @FXML private JFXButton locationDataButton;
-  @FXML private JFXButton editLocationButton;
+  @FXML private JFXButton mapEditorButton;
   @FXML private JFXButton employeesButton;
-  @FXML private JFXButton exitButton;
-  private FXMLLoader loader = new FXMLLoader();
 
-  private final SceneController sceneController = Aapp.sceneController;
+  private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
 
   @FXML
   private void initialize() {
@@ -37,7 +35,7 @@ public class HomeController {
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(20), Insets.EMPTY)));
     locationDataButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(20), Insets.EMPTY)));
-    editLocationButton.setBackground(
+    mapEditorButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
     employeesButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
@@ -45,42 +43,41 @@ public class HomeController {
 
   @FXML
   private void goToCreateNewServiceRequest() throws IOException {
-    sceneController.switchScene(SceneController.SCENES.SELECT_SERVICE_REQUEST_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SELECT_SERVICE_REQUEST_SCENE);
   }
 
-  public void goToSettings(ActionEvent actionEvent) throws IOException {
-    sceneController.switchScene(SceneController.SCENES.SETTINGS_SCENE);
+  @FXML
+  private void goToSettings() throws IOException {
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SETTINGS_SCENE);
   }
 
   @FXML
   private void goToEquipmentTracker() throws IOException {
-    sceneController.switchScene(SceneController.SCENES.VIEW_MEDICAL_EQUIPMENT_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_MEDICAL_EQUIPMENT_SCENE);
   }
 
   @FXML
   private void goToLocationData() throws IOException {
-    sceneController.switchScene(SceneController.SCENES.VIEW_LOCATION_DATA_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_LOCATION_DATA_SCENE);
   }
 
   @FXML
   private void goToEditLocationData() throws IOException {
-    sceneController.switchScene(SceneController.SCENES.VIEW_EDIT_LOCATION_DATA);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.MAP_EDITOR_SCENE);
   }
 
   @FXML
   private void goToViewServiceRequest() throws IOException {
-    sceneController.switchScene(SceneController.SCENES.VIEW_SERVICE_REQUEST_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_SERVICE_REQUEST_SCENE);
   }
 
   @FXML
-  public void goToViewEmployees(ActionEvent actionEvent) throws IOException {
-    sceneController.switchScene(SceneController.SCENES.VIEW_EMPLOYEES_SCENE);
+  public void goToViewEmployees() throws IOException {
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_EMPLOYEES_SCENE);
   }
 
   @FXML
   private void exitHome() throws IOException {
-    sceneController.switchScene(SceneController.SCENES.LOG_IN_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOG_IN_SCENE);
   }
-
-  public void exitApp(ActionEvent actionEvent) {}
 }

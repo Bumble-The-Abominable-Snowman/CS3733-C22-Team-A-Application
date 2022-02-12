@@ -7,7 +7,7 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
+import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import java.io.IOException;
 import java.net.URL;
@@ -28,10 +28,10 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
 public class EmployeeDataController implements Initializable {
-  @FXML Button backButton;
-  @FXML JFXTreeTableView<Employee> employeeTable;
+  @FXML private Button backButton;
+  @FXML private JFXTreeTableView<Employee> employeeTable;
 
-  private final SceneController sceneController = Aapp.sceneController;
+  private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
@@ -46,7 +46,7 @@ public class EmployeeDataController implements Initializable {
     JFXTreeTableColumn<Employee, String> email = new JFXTreeTableColumn<>("Email");
     JFXTreeTableColumn<Employee, String> phoneNum = new JFXTreeTableColumn<>("Phone Number");
     JFXTreeTableColumn<Employee, String> address = new JFXTreeTableColumn<>("Address");
-    JFXTreeTableColumn<Employee, String> startDate = new JFXTreeTableColumn<>("Star Date");
+    JFXTreeTableColumn<Employee, String> startDate = new JFXTreeTableColumn<>("Start Date");
 
     employeeID.setPrefWidth(80);
     employeeType.setPrefWidth(80);
@@ -57,6 +57,7 @@ public class EmployeeDataController implements Initializable {
     address.setPrefWidth(80);
     startDate.setPrefWidth(80);
 
+    // TODO CSS Sheet
     employeeID.setStyle("-fx-alignment: center ;");
     employeeType.setStyle("-fx-alignment: center ;");
     firstName.setStyle("-fx-alignment: center ;");
@@ -102,9 +103,7 @@ public class EmployeeDataController implements Initializable {
     EmployeeDAO employeeBase = new EmployeeDerbyImpl();
     List<Employee> employeeFromDatabase = employeeBase.getEmployeeList();
     ObservableList<Employee> employees = FXCollections.observableArrayList();
-    for (Employee currLoc : employeeFromDatabase) {
-      employees.add(currLoc);
-    }
+    employees.addAll(employeeFromDatabase);
 
     // Sets up the table and puts the location data under the columns
     final TreeItem<Employee> root =
@@ -117,6 +116,6 @@ public class EmployeeDataController implements Initializable {
 
   @FXML
   private void returnToHomeScene() throws IOException {
-    sceneController.switchScene(SceneController.SCENES.HOME_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME_SCENE);
   }
 }

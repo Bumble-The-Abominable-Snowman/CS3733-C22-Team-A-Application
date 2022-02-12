@@ -1,35 +1,35 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import edu.wpi.cs3733.c22.teamA.Aapp;
-import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
+import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 public abstract class GenericServiceRequestsController {
-  @FXML private Button homeButton = new Button();
-  @FXML private Button submitButton;
-  @FXML private Button backButton;
-  @FXML private Button clearButton;
+  @FXML Button homeButton;
+  @FXML Button submitButton;
+  @FXML Button backButton;
+  @FXML Button clearButton;
 
-  SceneController.SCENES sceneID;
+  SceneSwitcher.SCENES sceneID;
 
-  private final SceneController sceneController = Aapp.sceneController;
+  private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
 
   @FXML
   void returnToHomeScene() throws IOException {
-    sceneController.switchScene(SceneController.SCENES.HOME_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME_SCENE);
   }
 
   @FXML
   private void returnToSelectServiceScene() throws IOException {
-    sceneController.switchScene(SceneController.SCENES.SELECT_SERVICE_REQUEST_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SELECT_SERVICE_REQUEST_SCENE);
   }
 
   @FXML
   private void clearSubmission() throws IOException {
-    sceneController.switchScene(sceneID);
+    sceneSwitcher.switchScene(sceneID);
   }
 
   @FXML

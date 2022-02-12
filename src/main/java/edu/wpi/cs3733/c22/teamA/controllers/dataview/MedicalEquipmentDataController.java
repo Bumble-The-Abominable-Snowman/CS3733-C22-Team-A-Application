@@ -8,7 +8,7 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
+import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.MedicalEquipment;
 import java.io.IOException;
 import java.net.URL;
@@ -31,7 +31,7 @@ public class MedicalEquipmentDataController implements Initializable {
   @FXML JFXButton backButton;
   @FXML JFXTreeTableView<MedicalEquipment> equipmentTable;
 
-  private final SceneController sceneController = Aapp.sceneController;
+  private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
@@ -88,6 +88,6 @@ public class MedicalEquipmentDataController implements Initializable {
 
   @FXML
   private void returnToHomeScene() throws IOException {
-    sceneController.switchScene(SceneController.SCENES.HOME_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME_SCENE);
   }
 }

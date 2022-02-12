@@ -11,7 +11,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.Langua
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
+import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,7 +35,7 @@ public class ExportToBackupController {
   @FXML private JFXComboBox<String> TypeCSV;
   @FXML private ListView<String> fileList;
 
-  private final SceneController sceneController = Aapp.sceneController;
+  private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
 
   @FXML
   public void initialize() {
@@ -62,12 +62,12 @@ public class ExportToBackupController {
   }
 
   public void returnToSettingsScene(ActionEvent actionEvent) throws IOException {
-    sceneController.switchScene(SceneController.SCENES.SETTINGS_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SETTINGS_SCENE);
   }
 
   @FXML
   private void returnToHomeScene() throws IOException {
-    sceneController.switchScene(SceneController.SCENES.HOME_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME_SCENE);
   }
 
   public void exportToBackup(ActionEvent actionEvent) throws IOException {

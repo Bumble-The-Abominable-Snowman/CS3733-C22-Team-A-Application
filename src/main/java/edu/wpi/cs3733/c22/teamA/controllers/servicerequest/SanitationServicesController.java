@@ -6,7 +6,7 @@ import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
+import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.requests.SanitationServiceRequest;
 import java.sql.Timestamp;
@@ -33,7 +33,7 @@ public class SanitationServicesController extends GenericServiceRequestsControll
 
   @FXML
   private void initialize() {
-    sceneID = SceneController.SCENES.SANITATION_SERVICE_REQUEST_SCENE;
+    sceneID = SceneSwitcher.SCENES.SANITATION_SERVICE_REQUEST_SCENE;
 
     backButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));

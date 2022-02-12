@@ -1,6 +1,5 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
@@ -8,7 +7,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
+import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
@@ -18,10 +17,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.Background;
@@ -29,11 +26,9 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
+// TODO fix naming
+// TODO make dependent on database for medical equipment
 public class MedicalEquipmentDeliveryController extends GenericServiceRequestsController {
-  @FXML private JFXButton backButton;
-  @FXML private JFXButton returnHomeButton;
-  @FXML private JFXButton clearButton;
-  @FXML private JFXButton submitButton;
   @FXML private JFXComboBox<String> typeChoice;
   @FXML private JFXComboBox<String> fromChoice;
   @FXML private JFXComboBox<String> statusChoice;
@@ -41,13 +36,11 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
 
-  private FXMLLoader loader = new FXMLLoader();
   private List<String> bedLocations = new ArrayList<>();
   private List<String> xrayLocations = new ArrayList<>();
   private List<String> infusionPumpLocations = new ArrayList<>();
   private List<String> reclinerLocations = new ArrayList<>();
   private List<String> status = new ArrayList<>();
-  private Random rand = new Random();
 
   public MedicalEquipmentDeliveryController() {
     super();
@@ -73,11 +66,11 @@ public class MedicalEquipmentDeliveryController extends GenericServiceRequestsCo
 
   @FXML
   private void initialize() throws ParseException {
-    sceneID = SceneController.SCENES.MEDICAL_EQUIPMENT_DELIVERY_SERVICE_REQUEST_SCENE;
+    sceneID = SceneSwitcher.SCENES.MEDICAL_EQUIPMENT_DELIVERY_SERVICE_REQUEST_SCENE;
 
     backButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    returnHomeButton.setBackground(
+    homeButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
     clearButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));

@@ -2,7 +2,7 @@ package edu.wpi.cs3733.c22.teamA.controllers.settings;
 
 import com.jfoenix.controls.JFXButton;
 import edu.wpi.cs3733.c22.teamA.Aapp;
-import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
+import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,7 +18,7 @@ public class SettingsController {
   @FXML private JFXButton loadFromBackupButton;
   @FXML private JFXButton exportToBackupButton;
   private FXMLLoader loader = new FXMLLoader();
-  private final SceneController sceneController = Aapp.sceneController;
+  private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
 
   @FXML
   public void initialize() {
@@ -31,14 +31,14 @@ public class SettingsController {
   }
 
   public void returnToHomeScene(ActionEvent actionEvent) throws IOException {
-    sceneController.switchScene(SceneController.SCENES.HOME_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME_SCENE);
   }
 
   public void loadFromBackup(ActionEvent actionEvent) throws IOException {
-    sceneController.switchScene(SceneController.SCENES.LOAD_FROM_BACKUP_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOAD_FROM_BACKUP_SCENE);
   }
 
   public void exportToBackup(ActionEvent actionEvent) throws IOException {
-    sceneController.switchScene(SceneController.SCENES.EXPORT_TO_BACKUP_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.EXPORT_TO_BACKUP_SCENE);
   }
 }

@@ -1,0 +1,32 @@
+Employee
+Location
+MedicalEquipment -> Equipment
+Service Requests (SR)
+- Food SR
+- Language SR
+- Laundry SR
+- Equipment SR
+- Religious SR
+- Sanitation SR
+- Floral SR
+- Medicine SR
+- Security SR
+- Maintenance SR
+- Gift SR
+
+Derby Implementation - Derby Impl
+
+Data Access Object - DAO
+
+Data View
+
+Map Editor
+
+Controller - ctrl
+
+ExportToBackUp
+
+LoadFromBackup
+
+
+

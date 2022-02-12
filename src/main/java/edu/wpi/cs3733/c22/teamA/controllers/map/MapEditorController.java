@@ -8,7 +8,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.MedicalEquipmentDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
+import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.MedicalEquipment;
 import java.io.File;
@@ -77,7 +77,7 @@ public class MapEditorController {
   ArrayList<Button> medicalButtons = new ArrayList<>();
   String currentID = "";
 
-  private final SceneController sceneController = Aapp.sceneController;
+  private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
 
   public MapEditorController() {
     locationMarkers = new ArrayList<>();
@@ -567,17 +567,17 @@ public class MapEditorController {
 
   @FXML
   public void goToLocationTable() throws IOException {
-    sceneController.switchScene(SceneController.SCENES.VIEW_LOCATION_DATA_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_LOCATION_DATA_SCENE);
   }
 
   @FXML
   public void returnToHomeScene() throws IOException {
-    sceneController.switchScene(SceneController.SCENES.HOME_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME_SCENE);
   }
 
   @FXML
   public void returnToSelectServiceScene() throws IOException {
-    sceneController.switchScene(SceneController.SCENES.HOME_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME_SCENE);
     locations.addAll(new ArrayList<>(new LocationDerbyImpl().getNodeList()));
   }
 

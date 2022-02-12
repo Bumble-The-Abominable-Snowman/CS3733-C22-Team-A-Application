@@ -8,7 +8,7 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.MedicalEquipmentServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.controllers.SceneController;
+import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
 import edu.wpi.cs3733.c22.teamA.entities.requests.ServiceRequest;
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class ViewServiceRequestController implements Initializable {
   @FXML JFXButton backButton;
   @FXML JFXTreeTableView<ServiceRequest> requestsTable;
 
-  private final SceneController sceneController = Aapp.sceneController;
+  private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
@@ -127,6 +127,6 @@ public class ViewServiceRequestController implements Initializable {
 
   @FXML
   private void returnToHomeScene() throws IOException {
-    sceneController.switchScene(SceneController.SCENES.HOME_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME_SCENE);
   }
 }

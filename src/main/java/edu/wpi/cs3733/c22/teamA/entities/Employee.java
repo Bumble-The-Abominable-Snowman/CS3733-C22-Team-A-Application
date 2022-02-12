@@ -2,8 +2,14 @@ package edu.wpi.cs3733.c22.teamA.entities;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import java.util.Date;
+import java.util.List;
 
 public class Employee extends RecursiveTreeObject<Employee> {
+
+  // TODO implement getting column names and add as static List to all
+  // SEE DOCUMENT FOR SPECIFICS
+  public static List<String> columnNames = null;
+
   private String employeeID;
   private String employeeType;
   private String firstName;
