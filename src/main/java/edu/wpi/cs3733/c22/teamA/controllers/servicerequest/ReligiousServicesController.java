@@ -29,7 +29,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
-public class ReligiousServicesController extends GenericServiceRequestsController {
+public class ReligiousServicesController extends SRController {
   @FXML private JFXButton backButton;
   @FXML private JFXButton returnHomeButton;
   @FXML private JFXButton clearButton;

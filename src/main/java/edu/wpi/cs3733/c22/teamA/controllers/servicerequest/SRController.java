@@ -7,11 +7,13 @@ import java.util.concurrent.TimeoutException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public abstract class GenericServiceRequestsController {
+public abstract class SRController {
   @FXML Button homeButton;
   @FXML Button submitButton;
   @FXML Button backButton;
   @FXML Button clearButton;
+
+  // TODO: request employee, comments, location, start end location, priority, etc.
 
   SceneSwitcher.SCENES sceneID;
 

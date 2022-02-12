@@ -28,7 +28,7 @@ import javafx.scene.paint.Color;
 
 // TODO fix naming
 // TODO make dependent on database for medical equipment
-public class MedicalEquipmentDeliveryController extends GenericServiceRequestsController {
+public class MedicalEquipmentDeliveryController extends SRController {
   @FXML private JFXComboBox<String> typeChoice;
   @FXML private JFXComboBox<String> fromChoice;
   @FXML private JFXComboBox<String> statusChoice;

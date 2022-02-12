@@ -20,7 +20,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
-public class SanitationServicesController extends GenericServiceRequestsController {
+public class SanitationServicesController extends SRController {
   @FXML private JFXButton backButton;
   @FXML private JFXButton returnHomeButton;
   @FXML private JFXButton clearButton;

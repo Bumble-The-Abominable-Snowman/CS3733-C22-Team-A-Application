@@ -21,7 +21,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
-public class LaundryServiceRequestController extends GenericServiceRequestsController {
+public class LaundryServiceRequestController extends SRController {
 
   @FXML private Label locationLabel;
   @FXML private JFXButton backButton;
