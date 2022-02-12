@@ -60,7 +60,8 @@ public class LoadFromBackupController {
           public void handle(MouseEvent event) {
             if (event.getButton() == MouseButton.PRIMARY) {
               String currentItemSelected = fileList.getSelectionModel().getSelectedItem();
-              lastSelectedFile = "edu/wpi/cs3733/c22/teamA/db/CSVs/" + currentItemSelected;
+              lastSelectedFile =
+                  "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/" + currentItemSelected;
               String[] arrOfStr = lastSelectedFile.split("/");
               selectedFileText.setText(arrOfStr[arrOfStr.length - 1]);
               selectedFileText.setFill(Color.BLACK);

@@ -1,0 +1,18 @@
+- Medical Equipment has to be anchored to a location (Alex)
+- Fix Labels of Locations to be less cluttered (Search Location/Sticky Note)
+- Populate medical equipment CSV (All)
+- Right clicks on screen for new location/new equipment (Brendan)
+- Snaps equipment to location (Alex)
+- Zoom pan.... that stuff (Alex)
+- SERVICE REQUESTS GRAPHICALLY (Brendan)
+	- Support To/From
+	- Colors per service
+	- Highlighting to denote the presence/which type of service request
+	- to and from location get highlighted upon selection
+- Side View Map (Summary) (Alex)
+	- Make a separate page that upon click brings you to the right floor
+	- Replace the Combo box with a scaled down version
+- Search (Robbie)
+	- toggles view of locations based on search
+
+- Add location type dropdown somewhere
