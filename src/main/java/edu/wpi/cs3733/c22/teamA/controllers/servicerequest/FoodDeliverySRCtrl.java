@@ -17,7 +17,6 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Background;
@@ -33,7 +32,6 @@ public class FoodDeliverySRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> toLocationChoice;
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
-  private FXMLLoader loader = new FXMLLoader();
 
   @FXML
   public void initialize() throws ParseException {
