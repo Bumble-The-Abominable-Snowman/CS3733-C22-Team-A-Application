@@ -21,11 +21,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
-public class FloralDeliveryController extends SRController {
-  @FXML private JFXButton backButton;
-  @FXML private JFXButton returnHomeButton;
-  @FXML private JFXButton clearButton;
-  @FXML private JFXButton submitButton;
+public class FloralDeliverySRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> flowerChoice;
   @FXML private JFXComboBox<String> bouquetTypeChoice;
   @FXML private JFXComboBox<String> toLocationChoice;

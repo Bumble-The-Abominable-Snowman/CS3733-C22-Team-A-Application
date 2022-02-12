@@ -89,7 +89,7 @@ public class SelectServiceRequestCtrl {
   }
 
   @FXML
-  void returnToHomeScene() throws IOException {
+  void goToHomeScene() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME_SCENE);
   }
 }

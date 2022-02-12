@@ -22,7 +22,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
-public class MedicineDeliveryController extends SRController {
+public class MedicineDeliverySRCtrl extends SRCtrl {
 
   @FXML private JFXComboBox<String> medicineChoice;
   @FXML private JFXComboBox<String> toLocationChoice;

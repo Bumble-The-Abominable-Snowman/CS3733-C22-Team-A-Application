@@ -19,11 +19,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
-public class SanitationServicesController extends SRController {
-  @FXML private JFXButton backButton;
-  @FXML private JFXButton returnHomeButton;
-  @FXML private JFXButton clearButton;
-  @FXML private JFXButton submitButton;
+public class SanitationSRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> typeChoice;
   @FXML private JFXComboBox<String> toLocationChoice;
   @FXML private JFXComboBox<String> employeeChoice;
@@ -36,7 +32,7 @@ public class SanitationServicesController extends SRController {
 
     backButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    returnHomeButton.setBackground(
+    homeButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
     clearButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));

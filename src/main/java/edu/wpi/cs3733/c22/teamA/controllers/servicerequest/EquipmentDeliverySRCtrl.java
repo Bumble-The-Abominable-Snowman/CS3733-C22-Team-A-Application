@@ -65,7 +65,7 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
   }
 
   @FXML
-  private void initialize() throws ParseException {
+  private void initialize() {
     sceneID = SceneSwitcher.SCENES.MEDICAL_EQUIPMENT_DELIVERY_SERVICE_REQUEST_SCENE;
 
     backButton.setBackground(

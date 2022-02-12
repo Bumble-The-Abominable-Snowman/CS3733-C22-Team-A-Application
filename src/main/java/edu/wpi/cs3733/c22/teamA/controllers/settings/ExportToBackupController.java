@@ -13,11 +13,8 @@ import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.Relig
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -26,14 +23,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class ExportToBackupController {
-  @FXML public Button refreshButton;
   @FXML private JFXButton backButton;
   @FXML private JFXButton returnHomeButton;
   @FXML private JFXButton exportToBackupButton;
   @FXML public TextField filename;
   @FXML public Text exportFileText;
   @FXML private JFXComboBox<String> TypeCSV;
-  @FXML private ListView<String> fileList;
 
   private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
 
@@ -61,7 +56,7 @@ public class ExportToBackupController {
     TypeCSV.setValue("CSV Type");
   }
 
-  public void returnToSettingsScene(ActionEvent actionEvent) throws IOException {
+  public void returnToSettingsScene() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.SETTINGS_SCENE);
   }
 
@@ -70,7 +65,7 @@ public class ExportToBackupController {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME_SCENE);
   }
 
-  public void exportToBackup(ActionEvent actionEvent) throws IOException {
+  public void exportToBackup() throws IOException {
     String input = filename.getCharacters().toString();
     System.out.println(input.length());
     if (!TypeCSV.getSelectionModel().getSelectedItem().equals("CSV Type") && input.length() > 0) {

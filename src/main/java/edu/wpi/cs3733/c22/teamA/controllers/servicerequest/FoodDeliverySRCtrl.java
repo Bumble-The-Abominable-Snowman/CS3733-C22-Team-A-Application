@@ -25,11 +25,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
-public class FoodDeliveryController extends SRController {
-  @FXML private JFXButton backButton;
-  @FXML private JFXButton returnHomeButton;
-  @FXML private JFXButton clearButton;
-  @FXML private JFXButton submitButton;
+public class FoodDeliverySRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> mainChoice;
   @FXML private JFXComboBox<String> sideChoice;
   @FXML private JFXComboBox<String> dessertChoice;
