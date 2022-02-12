@@ -26,6 +26,11 @@ public class LocationMarker {
     anchorPane.getChildren().add(label);
   }
 
+  public void clear(AnchorPane anchorPane) {
+    anchorPane.getChildren().remove(button);
+    anchorPane.getChildren().remove(label);
+  }
+
   public void setLabelVisibility(boolean val) {
     label.setVisible(val);
   }

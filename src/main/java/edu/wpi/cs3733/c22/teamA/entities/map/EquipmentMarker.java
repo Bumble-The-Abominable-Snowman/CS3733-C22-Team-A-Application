@@ -32,6 +32,11 @@ public class EquipmentMarker {
     anchorPane.getChildren().add(label);
   }
 
+  public void clear(AnchorPane anchorPane) {
+    anchorPane.getChildren().remove(button);
+    anchorPane.getChildren().remove(label);
+  }
+
   public Equipment getEquipment() {
     return equipment;
   }

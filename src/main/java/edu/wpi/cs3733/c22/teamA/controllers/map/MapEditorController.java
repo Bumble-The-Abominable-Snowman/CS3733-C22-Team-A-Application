@@ -70,11 +70,8 @@ public class MapEditorController {
   EquipmentDAO equipmentDAO = new EquipmentDerbyImpl();
 
   Location selectedLocation;
-  HashMap<Button, Location> buttonLocation;
   HashMap<Button, LocationMarker> buttonLocationMarker;
   HashMap<Button, EquipmentMarker> buttonEquipmentMarker;
-  ArrayList<Label> labels;
-  ArrayList<Button> medicalButtons;
   String currentID;
 
   private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
@@ -85,12 +82,9 @@ public class MapEditorController {
     locationMarkerShape.getPoints().addAll(new Double[] {1.0, 4.0, 0.0, 2.0, 1.0, 0.0, 2.0, 2.0});
     equipmentMarkerShape.getPoints().addAll(new Double[] {0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0});
 
-    buttonLocation = new HashMap<>();
     buttonLocationMarker = new HashMap<>();
     buttonEquipmentMarker = new HashMap<>();
 
-    labels = new ArrayList<>();
-    medicalButtons = new ArrayList<>();
     locations = new ArrayList<>();
     equipments = new ArrayList<>();
 
@@ -118,7 +112,7 @@ public class MapEditorController {
         .addListener(
             (obs, oldValue, newValue) -> {
               setupFloor(newValue.toString());
-
+              clearAll();
               HashMap<String, LocationMarker> locationIDs = new HashMap<>();
 
               for (Location location : locations) {
@@ -145,21 +139,21 @@ public class MapEditorController {
         .selectedProperty()
         .addListener(
             (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
-              showMedicalButtons(new_val);
+              showEquipment(new_val);
             });
 
     locationToggle
         .selectedProperty()
         .addListener(
             (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
-              showButtons(new_val);
+              showLocations(new_val);
             });
 
     textToggleBox
         .selectedProperty()
         .addListener(
             (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
-              drawLabels(new_val);
+              showLabels(new_val);
             });
   }
 
@@ -251,7 +245,7 @@ public class MapEditorController {
         locationMarker.getLocation().getXCoord() + mapDisplay.getLayoutX() - 8 + 7.5 + 10;
     double labelY =
         locationMarker.getLocation().getYCoord() + mapDisplay.getLayoutY() - 24 - 15 + 10;
-    Label label = newDraggableLabel(labelX, labelY, locationMarker.getLocation().getShortName());
+    Label label = newDraggableLabel(labelX, labelY, equipment.getEquipmentID() + equipment.getEquipmentType());
 
     button.setPickOnBounds(false);
     button.setStyle("-fx-background-color: RED");
@@ -290,8 +284,8 @@ public class MapEditorController {
         event -> {
           // highlight(button, selectedButton);
           // selectedButton = button;
-          existingLocSelected(buttonLocation.get(button));
-          currentID = buttonLocation.get(button).getNodeID();
+          existingLocSelected(buttonLocationMarker.get(button).getLocation());
+          currentID = buttonLocationMarker.get(button).getLocation().getNodeID();
         });
     button.setOnMousePressed(
         mouseEvent -> {
@@ -330,38 +324,51 @@ public class MapEditorController {
     button.setOnMouseEntered(mouseEvent -> button.setCursor(Cursor.HAND));
   }
 
-  public void clearButtonsLabel() {
-    for (Button b : buttonLocation.keySet()) {
-      anchorPane.getChildren().remove(b);
+  public void clearAll() {
+    for (LocationMarker locationMarker : buttonLocationMarker.values()) {
+      locationMarker.clear(anchorPane);
     }
-    for (Label l : labels) {
-      anchorPane.getChildren().remove(l);
-    }
-    labels.clear();
-  }
-
-  public void drawLabels(boolean value) {
-    for (Label l : labels) {
-      l.setVisible(value);
+    for (EquipmentMarker equipmentMarker : buttonEquipmentMarker.values()) {
+      equipmentMarker.clear(anchorPane);
     }
   }
 
-  public void showButtons(boolean value) {
-    for (Button b : buttonLocation.keySet()) {
-      b.setVisible(value);
+  public void showLabels(boolean value) {
+    if (locationToggle.isSelected()) {
+      for (LocationMarker locationMarker : buttonLocationMarker.values()) {
+        locationMarker.setLabelVisibility(value);
+      }
+    }
+    if (equipToggleBox.isSelected()) {
+      for (EquipmentMarker equipmentMarker : buttonEquipmentMarker.values()) {
+        equipmentMarker.setLabelVisibility(value);
+      }
     }
   }
 
-  public void showMedicalButtons(boolean value) {
-    for (Button b : medicalButtons) {
-      b.setVisible(value);
+  public void showLocations(boolean value) {
+    for (LocationMarker locationMarker : buttonLocationMarker.values()) {
+      locationMarker.setButtonVisibility(value);
+      if (textToggleBox.isSelected()) {
+        locationMarker.setLabelVisibility(value);
+      }
+    }
+  }
+
+  public void showEquipment(boolean value) {
+    for (EquipmentMarker equipmentMarker : buttonEquipmentMarker.values()) {
+      equipmentMarker.setButtonVisibility(value);
+      if (textToggleBox.isSelected()) {
+        equipmentMarker.setLabelVisibility(value);
+      }
     }
   }
 
   @FXML
   public void newLocPressed() {
     Location newLocation =
-        new Location("NEWLOCATION", 0, 0, floor, "Tower", "NODE TYPE TODO", "", "");
+        new Location(
+            "NEWLOCATION", 0, 0, floor, "Tower", "NODE TYPE TODO", "New Location", "New Location");
     LocationMarker newLocationMarker = newDraggableLocation(newLocation);
     newLocationMarker.draw(this.anchorPane);
   }
@@ -372,9 +379,6 @@ public class MapEditorController {
     this.initialize();
   }
 
-  // as long as each diamond on the map is assigned a whole
-  // location object, this function works fine. if each diamond is assigned a location
-  // NodeID to save space or smth, can easily be refactored
   public void existingLocSelected(Location currLocation) {
     inputVBox.setDisable(false);
     selectedLocation = currLocation;
