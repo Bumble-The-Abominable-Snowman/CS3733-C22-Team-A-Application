@@ -1,32 +1,38 @@
-Employee
-Location
+Employee(s)
+Location(s)
 MedicalEquipment -> Equipment
 Service Requests (SR)
-- Food SR
-- Language SR
-- Laundry SR
-- Equipment SR
-- Religious SR
-- Sanitation SR
-- Floral SR
-- Medicine SR
-- Security SR
-- Maintenance SR
-- Gift SR
+- FoodSR
+- LanguageSR
+- LaundrySR
+- EquipmentSR
+- ReligiousSR
+- SanitationSR
+- FloralSR
+- MedicineSR
+- SecuritySR
+- MaintenanceSR
+- GiftSR
+- ServiceRequest (Abstract entity), or SRController, no need for generic/abstract SR in database.
 
-Derby Implementation - Derby Impl
+Append Ctrl, DerbyImpl or DAO if not an entity
 
 Data Access Object - DAO
 
-Data View
-
-Map Editor
-
-Controller - ctrl
+Data View can become a single class that creates 1 of 4 different pages, take to root controller package
+Map Editor take to route controller
+Prevent extending recursive tree object, make the data view page better so that it doesn’t need a recursive tree object.
 
 ExportToBackUp
-
 LoadFromBackup
+
+Method names for JFoenix Buttons:  GoTo(exact page name here)
+Object names for JFoenix Buttons:  (exact page name)Button
+
+Generally write out full names when you can, exceptions for Impl, Ctrl and SR.
+
+Rename Scene Enum:
+
 
 
 

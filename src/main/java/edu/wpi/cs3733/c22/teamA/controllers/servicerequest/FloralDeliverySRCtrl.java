@@ -104,7 +104,7 @@ public class FloralDeliverySRCtrl extends SRCtrl {
         && toLocationChoice.getSelectionModel().getSelectedItem() != null
         && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
       this.createFloralRequest(floralRequest);
-      this.returnToHomeScene();
+      this.goToHomeScene();
     }
   }
 }

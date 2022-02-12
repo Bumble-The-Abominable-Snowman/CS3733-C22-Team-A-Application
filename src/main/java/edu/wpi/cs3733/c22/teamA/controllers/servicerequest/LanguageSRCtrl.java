@@ -18,7 +18,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.Background;
@@ -31,8 +30,6 @@ public class LanguageSRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> toLocationChoice;
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
-
-  private FXMLLoader loader = new FXMLLoader();
 
   @FXML
   public void initialize() throws ParseException {

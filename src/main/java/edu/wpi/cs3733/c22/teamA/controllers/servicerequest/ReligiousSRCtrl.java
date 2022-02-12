@@ -153,7 +153,7 @@ public class ReligiousSRCtrl extends SRCtrl {
       ReligiousServiceRequestDAO religiousServiceRequestDAO =
           new ReligiousServiceRequestDerbyImpl();
       religiousServiceRequestDAO.enterReligiousServiceRequest(religiousServiceRequest);
-      this.returnToHomeScene();
+      this.goToHomeScene();
     }
   }
 }

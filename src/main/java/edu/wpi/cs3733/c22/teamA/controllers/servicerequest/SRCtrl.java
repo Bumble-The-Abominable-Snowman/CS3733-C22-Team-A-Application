@@ -20,12 +20,12 @@ public abstract class SRCtrl {
   private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
 
   @FXML
-  void returnToHomeScene() throws IOException {
+  void goToHomeScene() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME_SCENE);
   }
 
   @FXML
-  private void returnToSelectServiceScene() throws IOException {
+  private void goToSelectServicerequestScene() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.SELECT_SERVICE_REQUEST_SCENE);
   }
 
