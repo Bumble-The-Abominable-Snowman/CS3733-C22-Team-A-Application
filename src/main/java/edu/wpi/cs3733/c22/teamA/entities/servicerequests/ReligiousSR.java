@@ -1,17 +1,20 @@
 package edu.wpi.cs3733.c22.teamA.entities.servicerequests;
 
 import java.sql.Timestamp;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class ReligiousSR extends SR {
 
   private String religion;
 
   public ReligiousSR() {
     super();
+    this.srType = SRType.RELIGIOUS;
   }
 
   public ReligiousSR(

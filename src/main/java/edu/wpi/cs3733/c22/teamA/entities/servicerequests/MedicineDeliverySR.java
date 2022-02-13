@@ -1,10 +1,12 @@
 package edu.wpi.cs3733.c22.teamA.entities.servicerequests;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class MedicineDeliverySR extends SR {
   private String medicineChoice;
   private String toLocation;
@@ -13,6 +15,7 @@ public class MedicineDeliverySR extends SR {
 
   public MedicineDeliverySR() {
     super();
+    this.srType = SRType.MEDICINE_DELIVERY;
   }
 
   public MedicineDeliverySR(

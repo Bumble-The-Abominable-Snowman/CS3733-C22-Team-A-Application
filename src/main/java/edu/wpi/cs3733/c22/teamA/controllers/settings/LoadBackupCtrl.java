@@ -2,14 +2,6 @@ package edu.wpi.cs3733.c22.teamA.controllers.settings;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest.FoodDeliveryServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.File;
@@ -131,39 +123,41 @@ public class LoadBackupCtrl {
     if (!TypeCSV.getValue().equals("CSV Type") && lastSelectedFile.length() > 4) {
       //      Adb.inputFromCSV(TypeCSV.getValue(), filepath);
 
-      switch (TypeCSV.getSelectionModel().getSelectedItem().toString()) {
-        case "TowerLocations":
-          LocationDerbyImpl.inputFromCSV("Location", lastSelectedFile);
-          break;
-        case "Employee":
-          EmployeeDerbyImpl.inputFromCSV("Employee", lastSelectedFile);
-          break;
-        case "MedicalEquipment":
-          EquipmentDerbyImpl.inputFromCSV("MedicalEquipment", lastSelectedFile);
-          break;
-        case "LanguageServiceRequest":
-          LanguageServiceRequestDerbyImpl.inputFromCSV("LanguageServiceRequest", lastSelectedFile);
-          break;
-        case "MedicalEquipmentServiceRequest":
-          LanguageServiceRequestDerbyImpl.inputFromCSV(
-              "MedicalEquipmentServiceRequest", lastSelectedFile);
-          break;
-        case "FoodDeliveryServiceRequest":
-          FoodDeliveryServiceRequestDerbyImpl.inputFromCSV(
-              "FoodDeliveryServiceRequest", lastSelectedFile);
-          break;
-        case "LaundryServiceRequest":
-          LaundryServiceRequestDerbyImpl.inputFromCSV("LaundryServiceRequest", lastSelectedFile);
-          break;
-        case "ReligiousServiceRequest":
-          ReligiousServiceRequestDerbyImpl.inputFromCSV(
-              "ReligiousServiceRequest", lastSelectedFile);
-          break;
-        case "SanitationServiceRequest":
-          SanitationServiceRequestDerbyImpl.inputFromCSV(
-              "SanitationServiceRequest", lastSelectedFile);
-          break;
-      }
+      //      switch (TypeCSV.getSelectionModel().getSelectedItem().toString()) {
+      //        case "TowerLocations":
+      //          LocationDerbyImpl.inputFromCSV("Location", lastSelectedFile);
+      //          break;
+      //        case "Employee":
+      //          EmployeeDerbyImpl.inputFromCSV("Employee", lastSelectedFile);
+      //          break;
+      //        case "MedicalEquipment":
+      //          EquipmentDerbyImpl.inputFromCSV("MedicalEquipment", lastSelectedFile);
+      //          break;
+      //        case "LanguageServiceRequest":
+      //          LanguageServiceRequestDerbyImpl.inputFromCSV("LanguageServiceRequest",
+      // lastSelectedFile);
+      //          break;
+      //        case "MedicalEquipmentServiceRequest":
+      //          LanguageServiceRequestDerbyImpl.inputFromCSV(
+      //              "MedicalEquipmentServiceRequest", lastSelectedFile);
+      //          break;
+      //        case "FoodDeliveryServiceRequest":
+      //          FoodDeliveryServiceRequestDerbyImpl.inputFromCSV(
+      //              "FoodDeliveryServiceRequest", lastSelectedFile);
+      //          break;
+      //        case "LaundryServiceRequest":
+      //          LaundryServiceRequestDerbyImpl.inputFromCSV("LaundryServiceRequest",
+      // lastSelectedFile);
+      //          break;
+      //        case "ReligiousServiceRequest":
+      //          ReligiousServiceRequestDerbyImpl.inputFromCSV(
+      //              "ReligiousServiceRequest", lastSelectedFile);
+      //          break;
+      //        case "SanitationServiceRequest":
+      //          SanitationServiceRequestDerbyImpl.inputFromCSV(
+      //              "SanitationServiceRequest", lastSelectedFile);
+      //          break;
+      //      }
 
       selectedFileText.setText("Success!");
       selectedFileText.setFill(Color.GREEN);

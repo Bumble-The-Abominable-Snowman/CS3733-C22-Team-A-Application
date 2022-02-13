@@ -4,8 +4,7 @@ import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest.FoodDeliveryServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest.FoodDeliveryServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
@@ -104,8 +103,8 @@ public class FoodDeliverySRCtrl extends SRCtrl {
   @FXML
   void submitRequest() throws IOException {
     FoodDeliverySR foodDeliverySR = createFoodRequest();
-    FoodDeliveryServiceRequestDAO foodDeliveryServiceRequestDAO =
-        new FoodDeliveryServiceRequestDerbyImpl();
-    // foodDeliveryServiceRequestDAO.enterRequest(foodDeliveryServiceRequest);
+    ServiceRequestDerbyImpl<FoodDeliverySR> serviceRequestDAO =
+        new ServiceRequestDerbyImpl<>(new FoodDeliverySR());
+    serviceRequestDAO.enterServiceRequest(foodDeliverySR);
   }
 }

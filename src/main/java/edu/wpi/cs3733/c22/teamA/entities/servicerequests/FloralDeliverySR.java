@@ -1,10 +1,12 @@
 package edu.wpi.cs3733.c22.teamA.entities.servicerequests;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class FloralDeliverySR extends SR {
 
   private String flower;
@@ -15,6 +17,7 @@ public class FloralDeliverySR extends SR {
 
   public FloralDeliverySR() {
     super();
+    this.srType = SRType.FLORAL_DELIVERY;
   }
 
   public FloralDeliverySR(

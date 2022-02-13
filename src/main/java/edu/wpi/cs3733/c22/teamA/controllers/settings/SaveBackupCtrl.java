@@ -2,14 +2,6 @@ package edu.wpi.cs3733.c22.teamA.controllers.settings;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest.FoodDeliveryServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
@@ -78,35 +70,38 @@ public class SaveBackupCtrl {
         filepath = "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/" + input + ".csv";
       }
 
-      switch (TypeCSV.getSelectionModel().getSelectedItem().toString()) {
-        case "TowerLocations":
-          LocationDerbyImpl.exportToCSV("Location", filepath);
-          break;
-        case "Employee":
-          EmployeeDerbyImpl.exportToCSV("Employee", filepath);
-          break;
-        case "MedicalEquipment":
-          EquipmentDerbyImpl.exportToCSV("MedicalEquipment", filepath);
-          break;
-        case "LanguageServiceRequest":
-          LanguageServiceRequestDerbyImpl.exportToCSV("LanguageServiceRequest", filepath);
-          break;
-        case "MedicalEquipmentServiceRequest":
-          LanguageServiceRequestDerbyImpl.exportToCSV("MedicalEquipmentServiceRequest", filepath);
-          break;
-        case "FoodDeliveryServiceRequest":
-          FoodDeliveryServiceRequestDerbyImpl.exportToCSV("FoodDeliveryServiceRequest", filepath);
-          break;
-        case "LaundryServiceRequest":
-          LaundryServiceRequestDerbyImpl.exportToCSV("LaundryServiceRequest", filepath);
-          break;
-        case "ReligiousServiceRequest":
-          ReligiousServiceRequestDerbyImpl.exportToCSV("ReligiousServiceRequest", filepath);
-          break;
-        case "SanitationServiceRequest":
-          SanitationServiceRequestDerbyImpl.exportToCSV("SanitationServiceRequest", filepath);
-          break;
-      }
+      //      switch (TypeCSV.getSelectionModel().getSelectedItem().toString()) {
+      //        case "TowerLocations":
+      //          LocationDerbyImpl.exportToCSV("Location", filepath);
+      //          break;
+      //        case "Employee":
+      //          EmployeeDerbyImpl.exportToCSV("Employee", filepath);
+      //          break;
+      //        case "MedicalEquipment":
+      //          EquipmentDerbyImpl.exportToCSV("MedicalEquipment", filepath);
+      //          break;
+      //        case "LanguageServiceRequest":
+      //          LanguageServiceRequestDerbyImpl.exportToCSV("LanguageServiceRequest", filepath);
+      //          break;
+      //        case "MedicalEquipmentServiceRequest":
+      //          LanguageServiceRequestDerbyImpl.exportToCSV("MedicalEquipmentServiceRequest",
+      // filepath);
+      //          break;
+      //        case "FoodDeliveryServiceRequest":
+      //          FoodDeliveryServiceRequestDerbyImpl.exportToCSV("FoodDeliveryServiceRequest",
+      // filepath);
+      //          break;
+      //        case "LaundryServiceRequest":
+      //          LaundryServiceRequestDerbyImpl.exportToCSV("LaundryServiceRequest", filepath);
+      //          break;
+      //        case "ReligiousServiceRequest":
+      //          ReligiousServiceRequestDerbyImpl.exportToCSV("ReligiousServiceRequest", filepath);
+      //          break;
+      //        case "SanitationServiceRequest":
+      //          SanitationServiceRequestDerbyImpl.exportToCSV("SanitationServiceRequest",
+      // filepath);
+      //          break;
+      //      }
       //      Adb.exportToCSV(TypeCSV.getValue(), filepath);
 
       exportFileText.setText(filepath);

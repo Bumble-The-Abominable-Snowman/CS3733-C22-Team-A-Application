@@ -1,13 +1,12 @@
 package edu.wpi.cs3733.c22.teamA.entities.servicerequests;
 
-import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import java.lang.reflect.Field;
 import java.sql.Timestamp;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.Locale;
+import lombok.Data;
 
-@Getter
-@Setter
-public abstract class SR extends RecursiveTreeObject<SR> {
+@Data
+public class SR {
   protected String requestID;
   protected String startLocation;
   protected String endLocation;
@@ -39,5 +38,24 @@ public abstract class SR extends RecursiveTreeObject<SR> {
     WAITING,
     CANCELED,
     DONE
+  }
+
+  public void setRequestStatus(String s) throws IllegalAccessException {
+
+    // Hack job to convert "BLANK" to Status.BLANK enum
+    Field[] fields = Status.class.getFields();
+    for (Field field : fields) {
+      if (field.toString().toLowerCase(Locale.ROOT).contains(s.toLowerCase(Locale.ROOT))) {
+        this.requestStatus = (Status) field.get(this.requestStatus);
+      }
+    }
+  }
+
+  public void setRequestTime(String s) {
+    this.requestTime = Timestamp.valueOf(s);
+  }
+
+  public String getRequestTime() {
+    return this.requestTime.toString();
   }
 }

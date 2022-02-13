@@ -4,8 +4,7 @@ import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
@@ -114,8 +113,9 @@ public class LanguageSRCtrl extends SRCtrl {
               commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               languageChoice.getValue());
 
-      LanguageServiceRequestDAO languageServiceRequestDAO = new LanguageServiceRequestDerbyImpl();
-      languageServiceRequestDAO.enterLanguageServiceRequest(languageSR);
+      ServiceRequestDerbyImpl<LanguageSR> serviceRequestDAO =
+          new ServiceRequestDerbyImpl<>(new LanguageSR());
+      serviceRequestDAO.enterServiceRequest(languageSR);
       this.goToHomeScene();
     }
   }

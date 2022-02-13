@@ -2,11 +2,11 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.GiftSR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SanitationSR;
 import java.sql.Timestamp;
@@ -71,7 +71,7 @@ public class GiftSRCtrl extends SRCtrl {
   @FXML
   void submitRequest() {
     // Create request object
-    SanitationSR sanitationSR =
+    SanitationSR giftSR =
         new SanitationSR(
             "PlaceHolderID",
             "N/A",
@@ -83,9 +83,8 @@ public class GiftSRCtrl extends SRCtrl {
             "Sanitation Services",
             commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
             typeChoice.getValue());
-    SanitationServiceRequestDAO sanitationServiceRequestDAO =
-        new SanitationServiceRequestDerbyImpl();
-    sanitationServiceRequestDAO.enterSanitationServiceRequest(sanitationSR);
+    ServiceRequestDerbyImpl<GiftSR> serviceRequestDAO = new ServiceRequestDerbyImpl<>(new GiftSR());
+    serviceRequestDAO.enterServiceRequest(giftSR);
 
     // Submit to database
   }

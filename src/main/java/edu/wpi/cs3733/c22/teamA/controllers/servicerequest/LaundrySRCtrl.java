@@ -1,8 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.LaundrySR;
@@ -69,8 +68,9 @@ public class LaundrySRCtrl extends SRCtrl {
               "Laundry Service",
               commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               washMode.getValue());
-      LaundryServiceRequestDAO laundryServiceRequestDAO = new LaundryServiceRequestDerbyImpl();
-      laundryServiceRequestDAO.enterLaundryServiceRequest(laundrySR);
+      ServiceRequestDerbyImpl<LaundrySR> serviceRequestDAO =
+          new ServiceRequestDerbyImpl<>(new LaundrySR());
+      serviceRequestDAO.enterServiceRequest(laundrySR);
       this.goToHomeScene();
       // send request to database
     }

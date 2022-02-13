@@ -1,14 +1,5 @@
 package edu.wpi.cs3733.c22.teamA.Adb;
 
-import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest.FoodDeliveryServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.laundryservicerequest.LaundryServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.EquipmentServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
 import java.sql.*;
 
 public class Adb {
@@ -219,28 +210,31 @@ public class Adb {
     }
 
     // Initialize the database and input data
-    if (!isInitialized) {
-      LocationDerbyImpl.inputFromCSV(
-          "TowerLocations", "edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
-      EmployeeDerbyImpl.inputFromCSV("Employee", "edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.csv");
-      EquipmentDerbyImpl.inputFromCSV(
-          "MedicalEquipment", "edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipment.csv");
-      EquipmentServiceRequestDerbyImpl.inputFromCSV(
-          "MedicalEquipmentServiceRequest",
-          "edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipmentServiceRequest.csv");
-      ReligiousServiceRequestDerbyImpl.inputFromCSV(
-          "ReligiousServiceRequest",
-          "edu/wpi/cs3733/c22/teamA/db/CSVs/ReligiousServiceRequest.csv");
-      SanitationServiceRequestDerbyImpl.inputFromCSV(
-          "SanitationServiceRequest",
-          "edu/wpi/cs3733/c22/teamA/db/CSVs/SanitationServiceRequest.csv");
-      LaundryServiceRequestDerbyImpl.inputFromCSV(
-          "LaundryServiceRequest", "edu/wpi/cs3733/c22/teamA/db/CSVs/LaundryServiceRequest.csv");
-      LanguageServiceRequestDerbyImpl.inputFromCSV(
-          "LanguageServiceRequest", "edu/wpi/cs3733/c22/teamA/db/CSVs/LanguageServiceRequest.csv");
-      FoodDeliveryServiceRequestDerbyImpl.inputFromCSV(
-          "FoodDeliveryServiceRequest",
-          "edu/wpi/cs3733/c22/teamA/db/CSVs/FoodDeliveryServiceRequest.csv");
-    }
+    //    if (!isInitialized) {
+    //      LocationDerbyImpl.inputFromCSV(
+    //          "TowerLocations", "edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
+    //      EmployeeDerbyImpl.inputFromCSV("Employee",
+    // "edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.csv");
+    //      EquipmentDerbyImpl.inputFromCSV(
+    //          "MedicalEquipment", "edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipment.csv");
+    //      EquipmentServiceRequestDerbyImpl.inputFromCSV(
+    //          "MedicalEquipmentServiceRequest",
+    //          "edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipmentServiceRequest.csv");
+    //      ReligiousServiceRequestDerbyImpl.inputFromCSV(
+    //          "ReligiousServiceRequest",
+    //          "edu/wpi/cs3733/c22/teamA/db/CSVs/ReligiousServiceRequest.csv");
+    //      SanitationServiceRequestDerbyImpl.inputFromCSV(
+    //          "SanitationServiceRequest",
+    //          "edu/wpi/cs3733/c22/teamA/db/CSVs/SanitationServiceRequest.csv");
+    //      LaundryServiceRequestDerbyImpl.inputFromCSV(
+    //          "LaundryServiceRequest",
+    // "edu/wpi/cs3733/c22/teamA/db/CSVs/LaundryServiceRequest.csv");
+    //      LanguageServiceRequestDerbyImpl.inputFromCSV(
+    //          "LanguageServiceRequest",
+    // "edu/wpi/cs3733/c22/teamA/db/CSVs/LanguageServiceRequest.csv");
+    //      FoodDeliveryServiceRequestDerbyImpl.inputFromCSV(
+    //          "FoodDeliveryServiceRequest",
+    //          "edu/wpi/cs3733/c22/teamA/db/CSVs/FoodDeliveryServiceRequest.csv");
+    //    }
   }
 }

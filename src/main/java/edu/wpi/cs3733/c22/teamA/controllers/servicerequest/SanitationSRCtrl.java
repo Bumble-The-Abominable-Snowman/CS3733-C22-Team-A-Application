@@ -2,8 +2,7 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.sanitationservicerequest.SanitationServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
@@ -84,9 +83,9 @@ public class SanitationSRCtrl extends SRCtrl {
             commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
             typeChoice.getValue());
 
-    SanitationServiceRequestDAO sanitationServiceRequestDAO =
-        new SanitationServiceRequestDerbyImpl();
-    sanitationServiceRequestDAO.enterSanitationServiceRequest(sanitationSR);
+    ServiceRequestDerbyImpl<SanitationSR> serviceRequestDAO =
+        new ServiceRequestDerbyImpl<>(new SanitationSR());
+    serviceRequestDAO.enterServiceRequest(sanitationSR);
 
     // Submit to database
   }

@@ -34,6 +34,8 @@ dependencies {
             'com.rabbitmq:amqp-client:5.14.1',
 
             'org.apache.commons:commons-lang3:3.0',
+
+            'commons-dbutils:commons-dbutils:1.7',
     )
 
     testCompile(
