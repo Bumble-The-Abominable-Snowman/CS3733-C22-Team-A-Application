@@ -37,7 +37,6 @@ public class Adb {
       } catch (SQLException e) {
         Connection c =
             DriverManager.getConnection(String.format("jdbc:derby:%s;create=true", pathToDBA));
-
         turnOnBuiltInUsers(c);
         c.close();
         System.out.println("Closed connection");
