@@ -42,6 +42,7 @@ public class DefaultTest {
     sr.setComments("new employee2!");
     sr.setEmployeeAssigned("EMP3");
     sr.setRequestStatus("CANCELED");
+    sr.setEquipmentID("EQ787898");
     serviceRequestDAO.enterServiceRequest(sr);
 
     // print out the list
