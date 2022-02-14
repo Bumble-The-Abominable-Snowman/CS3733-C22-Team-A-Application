@@ -48,9 +48,7 @@ public class LoginCtrl {
     } catch (Exception e) {
       welcomeBox.setText("Unsuccessful login!");
       welcomeBox.setFill(Color.RED);
-      //      sceneController.switchScene(SceneController.SCENES.HOME);
 
-      usernameBox.setText("");
       passwordBox.setText("");
     }
   }
