@@ -20,7 +20,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Filter;
+
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -43,6 +49,8 @@ public class MapEditorController {
   @FXML private JFXButton deleteButton;
   @FXML private ComboBox floorSelectionComboBox;
   @FXML private AnchorPane anchorPane;
+
+  @FXML private JFXTextArea searchText = new JFXTextArea();
 
   @FXML private JFXTextArea nodeIDText = new JFXTextArea();
   @FXML private JFXTextArea xPosText = new JFXTextArea();
@@ -209,6 +217,50 @@ public class MapEditorController {
     locations.addAll(new ArrayList<>(new LocationDerbyImpl().getNodeList()));
     equipments.addAll(new ArrayList<>(new EquipmentDerbyImpl().getMedicalEquipmentList()));
     // serviceRequests.addAll(new ArrayList<>(new )); TODO Can only add once database refactoring is complete
+  }
+
+  // Set up searchbar for LOCATIONS ONLY
+  // TODO IMPLEMENT CHOICE OF LOCATION, EQUIPMENT, SR SEARCH (another button?)
+  public void setupSearchListener(){
+    // set up list of locations to be wrapped
+    ObservableList<Location> searchLocationList = FXCollections.observableArrayList();
+    searchLocationList.addAll(locations);
+    // create filtered list, can be filtered (duh)
+    FilteredList<Location> filteredLocations = new FilteredList<>(searchLocationList, p -> true);
+    // add listener that checks whenever changes are made to JFXText searchText
+    searchText.textProperty().addListener((observable, oldValue, newValue) -> {
+      filteredLocations.setPredicate(location -> {
+        // if field is empty display all locations
+        if (newValue == null || newValue.isEmpty()) {
+          return true;
+        }
+        // make sure case is factored out
+        String lowerCaseFilter = newValue.toLowerCase();
+        // if search matches either name or ID, display it
+        // if not, this returns false and doesnt display
+        return location.getLongName().toLowerCase().contains(lowerCaseFilter) ||
+                location.getShortName().toLowerCase().contains(lowerCaseFilter) ||
+                location.getNodeID().toLowerCase().contains(lowerCaseFilter);
+      });
+    });
+    SortedList<Location> sortedLocations = new SortedList<>(filteredLocations);
+
+    // searchText.dropdown.addAll(sortedLocations)
+
+
+    // TODO clean this up. it's gross
+    clearAll();
+    // Maps Location IDs to their markers
+    HashMap<String, LocationMarker> locationIDs = new HashMap<>();
+    // Loops through every location & draws them if present on the floor
+    for (Location location : locations) {
+      if (sortedLocations.contains(location)) {
+        LocationMarker locationMarker = newDraggableLocation(location);
+        locationMarker.draw(anchorPane);
+        locationIDs.put(location.getNodeID(), locationMarker);
+      }
+    }
+
   }
 
   // Sets up the floor
