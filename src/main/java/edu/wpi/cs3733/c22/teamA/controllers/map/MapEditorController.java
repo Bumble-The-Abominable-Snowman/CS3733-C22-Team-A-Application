@@ -13,6 +13,8 @@ import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.map.EquipmentMarker;
 import edu.wpi.cs3733.c22.teamA.entities.map.LocationMarker;
+import edu.wpi.cs3733.c22.teamA.entities.map.SRMarker;
+import edu.wpi.cs3733.c22.teamA.entities.requests.ServiceRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 
+//TODO Add Service Request marker to all necessary places
 public class MapEditorController {
   @FXML private JFXCheckBox locationCheckBox;
   @FXML private JFXCheckBox dragCheckBox;
@@ -61,8 +64,10 @@ public class MapEditorController {
 
   private List<Location> locations;
   private List<Equipment> equipments;
+  private List<ServiceRequest> serviceRequests;
   private Polygon locationMarkerShape;
   private Polygon equipmentMarkerShape;
+  private Polygon serviceRequestMarkerShape;
 
   String floor;
   String currentID;
@@ -73,20 +78,25 @@ public class MapEditorController {
 
   HashMap<Button, LocationMarker> buttonLocationMarker;
   HashMap<Button, EquipmentMarker> buttonEquipmentMarker;
+  HashMap<Button, SRMarker> buttonServiceRequestMarker;
 
   private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
 
   public MapEditorController() {
     locationMarkerShape = new Polygon();
     equipmentMarkerShape = new Polygon();
+    serviceRequestMarkerShape = new Polygon();
     locationMarkerShape.getPoints().addAll(new Double[] {1.0, 4.0, 0.0, 2.0, 1.0, 0.0, 2.0, 2.0});
     equipmentMarkerShape.getPoints().addAll(new Double[] {0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0});
+    serviceRequestMarkerShape.getPoints().addAll(new Double[] {0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0}); //TODO Modify shape to be different
 
     buttonLocationMarker = new HashMap<>();
     buttonEquipmentMarker = new HashMap<>();
+    buttonServiceRequestMarker = new HashMap<>();
 
     locations = new ArrayList<>();
     equipments = new ArrayList<>();
+    serviceRequests = new ArrayList<>();
 
     currentID = "";
     floor = "";
@@ -140,6 +150,16 @@ public class MapEditorController {
                   equipmentMarker.draw(anchorPane);
                 }
               }
+
+              // Loops through every service request & draws them if they're on this floor
+              for (ServiceRequest serviceRequest : serviceRequests) {
+                if (locationIDs.containsKey(serviceRequest.getEndLocation())) {
+                  SRMarker serviceRequestMarker =
+                      newDraggableServiceRequest(
+                          serviceRequest, locationIDs.get(serviceRequest.getEndLocation()));
+                  serviceRequestMarker.draw(anchorPane);
+                }
+              }
             });
   }
 
@@ -188,6 +208,7 @@ public class MapEditorController {
   public void fillFromDB() {
     locations.addAll(new ArrayList<>(new LocationDerbyImpl().getNodeList()));
     equipments.addAll(new ArrayList<>(new EquipmentDerbyImpl().getMedicalEquipmentList()));
+    // serviceRequests.addAll(new ArrayList<>(new )); TODO Can only add once database refactoring is complete
   }
 
   // Sets up the floor
@@ -260,7 +281,9 @@ public class MapEditorController {
         locationMarker.getLocation().getXCoord() + mapImageView.getLayoutX() - 8 + 7.5 + 10;
     double labelY =
         locationMarker.getLocation().getYCoord() + mapImageView.getLayoutY() - 24 - 15 + 10;
-    Label label = newDraggableLabel(labelX, labelY, equipment.getEquipmentID() + equipment.getEquipmentType());
+    Label label =
+        newDraggableLabel(
+            labelX, labelY, equipment.getEquipmentID() + equipment.getEquipmentType());
 
     button.setPickOnBounds(false);
     button.setStyle("-fx-background-color: RED");
@@ -269,6 +292,36 @@ public class MapEditorController {
     EquipmentMarker equipmentMarker = new EquipmentMarker(equipment, button, label, locationMarker);
     buttonEquipmentMarker.put(button, equipmentMarker);
     return equipmentMarker;
+  }
+
+  // Makes a new Draggable Service Request button and Label
+  public SRMarker newDraggableServiceRequest(
+      ServiceRequest serviceRequest, LocationMarker locationMarker) {
+
+    double buttonX = locationMarker.getLocation().getXCoord() + mapImageView.getLayoutX() - 8 + 10;
+    double buttonY = locationMarker.getLocation().getYCoord() + mapImageView.getLayoutY() - 24 + 10;
+    Button button = newDraggableButton(buttonX, buttonY, false);
+
+    double labelX =
+        locationMarker.getLocation().getXCoord() + mapImageView.getLayoutX() - 8 + 7.5 + 10;
+    double labelY =
+        locationMarker.getLocation().getYCoord() + mapImageView.getLayoutY() - 24 - 15 + 10;
+    Label label =
+        newDraggableLabel(
+            labelX, labelY, serviceRequest.getRequestID() + serviceRequest.getRequestType());
+
+    button.setPickOnBounds(false);
+    //TODO Wait for refactoring of database before implementing
+    switch (serviceRequest.getRequestType()) {
+      default:
+        button.setStyle("-fx-background-color: RED");
+        break;
+    }
+    button.setShape(serviceRequestMarkerShape);
+
+    SRMarker serviceRequestMarker = new SRMarker(serviceRequest, button, label, locationMarker);
+    buttonServiceRequestMarker.put(button, serviceRequestMarker);
+    return serviceRequestMarker;
   }
 
   // Makes a new Draggable Label
