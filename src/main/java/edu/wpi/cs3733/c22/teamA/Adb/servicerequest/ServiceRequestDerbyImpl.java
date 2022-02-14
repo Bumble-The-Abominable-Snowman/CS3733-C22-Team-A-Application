@@ -2,27 +2,68 @@ package edu.wpi.cs3733.c22.teamA.Adb.servicerequest;
 
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
-
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.*;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
 
   T t;
+  ArrayList<Method> sr_set_data_methods = new ArrayList<>();
+  ArrayList<Method> sr_get_data_methods = new ArrayList<>();
+  ArrayList<Method> super_sr_set_data_methods = new ArrayList<>();
+  ArrayList<Method> super_sr_get_data_methods = new ArrayList<>();
+  ArrayList<Method> all_sr_set_data_methods = new ArrayList<>();
+  ArrayList<Method> all_sr_get_data_methods = new ArrayList<>();
 
   public ServiceRequestDerbyImpl(T t) {
     this.t = t;
+
+    String get_regex = "^get";
+    String set_regex = "^set";
+
+    Method[] sr_methods = t.getClass().getMethods();
+
+    for (Method sr_method : sr_methods) {
+
+      boolean is_the_method_of_super = sr_method.getDeclaringClass().equals(SR.class);
+      boolean is_the_method_exclusive = sr_method.getDeclaringClass().equals(this.t.getClass());
+
+      boolean starts_with_get = sr_method.getName().split(get_regex)[0].equals("");
+      boolean starts_with_set = sr_method.getName().split(set_regex)[0].equals("");
+      if (starts_with_get && is_the_method_of_super) {
+        this.super_sr_get_data_methods.add(sr_method);
+        this.all_sr_get_data_methods.add(sr_method);
+      }
+      if (starts_with_get && is_the_method_exclusive) {
+        this.sr_get_data_methods.add(sr_method);
+        this.all_sr_get_data_methods.add(sr_method);
+      }
+      if (starts_with_set && is_the_method_of_super) {
+        this.super_sr_set_data_methods.add(sr_method);
+        this.all_sr_set_data_methods.add(sr_method);
+      }
+      if (starts_with_set && is_the_method_exclusive) {
+        this.sr_set_data_methods.add(sr_method);
+        this.all_sr_set_data_methods.add(sr_method);
+      }
+    }
+
+    //    for (int i = 0; i < this.sr_set_data_methods.size(); i++) {
+    //      System.out.println("EXCLS GET FUNCTION: " + this.sr_get_data_methods.get(i));
+    //      System.out.println("EXCLS SET FUNCTION: " + this.sr_set_data_methods.get(i));
+    //    }
+    //
+    //    for (int i = 0; i < this.super_sr_set_data_methods.size(); i++) {
+    //      System.out.println("SUPER GET FUNCTION: " + this.super_sr_get_data_methods.get(i));
+    //      System.out.println("SUPER SET FUNCTION: " + this.super_sr_set_data_methods.get(i));
+    //    }
+
+    refreshVariables();
   }
 
   private String refreshVariables() {
@@ -89,15 +130,12 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
       ResultSet resultSet = get.executeQuery(str);
       ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
 
-      Method[] methods = this.t.getClass().getMethods();
       if (resultSet.next()) {
         for (int i = 1; i < resultSetMetaData.getColumnCount() + 1; i++) {
-          for (Method method : methods) {
-            String methodName = method.toString().toLowerCase(Locale.ROOT);
+          for (Method method : this.all_sr_set_data_methods) {
+            String methodName = method.getName().toLowerCase(Locale.ROOT);
             String columnName = resultSetMetaData.getColumnName(i).toLowerCase(Locale.ROOT);
-            if (methodName.contains("set")
-                && methodName.contains("string")
-                && methodName.contains(columnName)) {
+            if (methodName.contains(columnName)) {
               method.invoke(this.t, resultSet.getString(i));
             }
           }
@@ -137,46 +175,40 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
       Method[] super_methods = SR.class.getMethods();
       if (resultSet.next()) {
         for (int i = 1; i < resultSetMetaData.getColumnCount() + 1; i++) {
-          for (Method method : methods) {
+          String returnValOld = resultSet.getString(i);
+          String columnName = resultSetMetaData.getColumnName(i).toLowerCase(Locale.ROOT);
+
+          Statement update = connection.createStatement();
+
+          for (Method method : this.sr_get_data_methods) {
             String methodName = method.toString().toLowerCase(Locale.ROOT);
-            String columnName = resultSetMetaData.getColumnName(i).toLowerCase(Locale.ROOT);
-            if (methodName.contains("get")
-                && methodName.contains("string")
-                && methodName.contains(columnName)) {
-              String returnValOld = resultSet.getString(i);
+            if (methodName.contains(columnName)) {
               String returnValNew = (String) method.invoke(sr);
-
               if (!returnValOld.equals(returnValNew)) {
-                System.out.printf("%s is changed\n", columnName);
+                str =
+                    String.format(
+                        "UPDATE %s SET " + columnName + " = '%s' WHERE requestID = '%s'",
+                        tableName,
+                        returnValNew,
+                        sr.getRequestID());
+                update.execute(str);
+              }
+            }
+          }
 
-                Statement update = connection.createStatement();
-
-                boolean val_exists_in_super = false;
-                for (Method super_method : super_methods) {
-                  String sr_methodName = super_method.toString().toLowerCase(Locale.ROOT);
-
-                  if (sr_methodName.contains(methodName)) {
-                    str =
-                        String.format(
-                            "UPDATE ServiceRequest SET "
-                                + columnName
-                                + " = '%s' WHERE requestID = '%s'",
-                            returnValNew,
-                            sr.getRequestID());
-                    update.execute(str);
-                    val_exists_in_super = true;
-                  }
-                }
-
-                if (!val_exists_in_super) {
-                  str =
-                      String.format(
-                          "UPDATE %s SET " + columnName + " = '%s' WHERE requestID = '%s'",
-                          tableName,
-                          returnValNew,
-                          sr.getRequestID());
-                  update.execute(str);
-                }
+          for (Method method : this.super_sr_get_data_methods) {
+            String methodName = method.toString().toLowerCase(Locale.ROOT);
+            if (methodName.contains(columnName)) {
+              //              String returnValNew = (String) method.invoke(sr);
+              if (!returnValOld.equals(method.invoke(sr))) {
+                str =
+                    String.format(
+                        "UPDATE ServiceRequest SET "
+                            + columnName
+                            + " = '%s' WHERE requestID = '%s'",
+                        method.invoke(sr),
+                        sr.getRequestID());
+                update.execute(str);
               }
             }
           }
@@ -215,24 +247,13 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
               sr.getComments());
       insert.execute(str);
 
-      Method[] methods = sr.getClass().getMethods();
-      Method[] super_methods = SR.class.getMethods();
-      for (Method method : methods) {
-        String methodName = method.toString().toLowerCase(Locale.ROOT);
-        StringBuilder sr_methodName = new StringBuilder();
-        for (Method super_method : super_methods) {
-          sr_methodName.append(super_method.toString().toLowerCase(Locale.ROOT));
-        }
-        if (!sr_methodName.toString().contains(methodName)
-            && methodName.contains("get")
-            && methodName.contains("string")) {
-          String str2 =
-              String.format(
-                  "INSERT INTO %s(requestID, equipmentID)" + " VALUES('%s', '%s')",
-                  tableName, sr.getRequestID(), (String) method.invoke(sr));
+      for (Method method : this.sr_get_data_methods) {
+        String str2 =
+            String.format(
+                "INSERT INTO %s(requestID, %s)" + " VALUES('%s', '%s')",
+                tableName, method.getName().substring(3), sr.getRequestID(), method.invoke(sr));
 
-          insert.execute(str2);
-        }
+        insert.execute(str2);
       }
 
       connection.close();
@@ -284,15 +305,12 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
       ResultSet resultSet = getNodeList.executeQuery(str);
       ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
 
-      Method[] methods = this.t.getClass().getMethods();
       while (resultSet.next()) {
         for (int i = 1; i < resultSetMetaData.getColumnCount() + 1; i++) {
-          for (Method method : methods) {
-            String methodName = method.toString().toLowerCase(Locale.ROOT);
+          for (Method method : this.all_sr_set_data_methods) {
+            String methodName = method.getName().toLowerCase(Locale.ROOT);
             String columnName = resultSetMetaData.getColumnName(i).toLowerCase(Locale.ROOT);
-            if (methodName.contains("set")
-                && methodName.contains("string")
-                && methodName.contains(columnName)) {
+            if (methodName.contains(columnName)) {
               method.invoke(this.t, resultSet.getString(i));
             }
           }
@@ -312,18 +330,27 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
   }
 
   // Read from CSV
-  public List<T> readCSV(String csvFilePath)
+  public void populateFromCSV(String csvFilePath)
       throws IOException, ParseException, InvocationTargetException, IllegalAccessException {
-    String tableName = refreshVariables();
+    refreshVariables();
+
+    // delete all before populating
+    List<T> serviceRequestList = this.getServiceRequestList();
+    for (T value : serviceRequestList) {
+      this.deleteServiceRequest((SR) value);
+    }
 
     File file = new File(csvFilePath);
     Scanner lineScanner = new Scanner(file);
     Scanner dataScanner;
     int dataIndex = 0;
-    int lineIndex = 0;
-    int intData = 0;
-    List<T> list = new ArrayList<>();
-    lineScanner.nextLine();
+    List<String> field_list = new ArrayList<>();
+
+    dataScanner = new Scanner(lineScanner.nextLine());
+    dataScanner.useDelimiter(",");
+    while (dataScanner.hasNext()) {
+      field_list.add(dataScanner.next().toLowerCase(Locale.ROOT).replaceAll("\\s+", ""));
+    }
 
     while (lineScanner.hasNextLine()) { // Scan CSV line by line
 
@@ -333,73 +360,54 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
       while (dataScanner.hasNext()) {
         String data = dataScanner.next();
 
-        Method[] methods = this.t.getClass().getMethods();
-        for (Method method : methods) {
-          String methodName = method.toString().toLowerCase(Locale.ROOT);
-          if (methodName.contains("set") && methodName.contains("string")) {
-            if (dataIndex == 0 && methodName.contains("requestid")) method.invoke(this.t, data);
-            else if (dataIndex == 1 && methodName.contains("startlocation"))
-              method.invoke(this.t, data);
-            else if (dataIndex == 2 && methodName.contains("endlocation"))
-              method.invoke(this.t, data);
-            else if (dataIndex == 3 && methodName.contains("employeerequested"))
-              method.invoke(this.t, data);
-            else if (dataIndex == 4 && methodName.contains("employeeassigned"))
-              method.invoke(this.t, data);
-            else if (dataIndex == 5 && methodName.contains("requesttime"))
-              method.invoke(this.t, data);
-            else if (dataIndex == 6 && methodName.contains("requeststatus"))
-              method.invoke(this.t, data);
-            else if (dataIndex == 7 && methodName.contains("requesttype"))
-              method.invoke(this.t, data);
-            else if (dataIndex == 8 && methodName.contains("comments")) method.invoke(this.t, data);
-            else if (dataIndex == 9 && methodName.contains("equipmentid"))
-              method.invoke(this.t, data);
+        String columnName = field_list.get(dataIndex);
+        for (Method method : this.all_sr_set_data_methods) {
+          String methodName = method.getName().toLowerCase(Locale.ROOT);
+          if (methodName.contains(columnName)) {
+            method.invoke(this.t, data);
           }
         }
         dataIndex++;
       }
       this.enterServiceRequest((SR) this.t);
-      list.add(this.t);
       refreshVariables();
       dataIndex = 0;
     }
     lineScanner.close();
-    return list;
   }
 
   // Write CSV for table
   public static void writeMedicalEquipmentServiceRequestCSV(String csvFilePath) throws IOException {
 
-//    // create a writer
-//    File file = new File(csvFilePath);
-//    file.createNewFile();
-//    BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
-//
-//    writer.write(
-//            "RequestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments, equipmentID");
-//    writer.newLine();
-//
-//    // write data
-//    for (MedicalEquipmentServiceRequest thisMESR : List) {
-//
-//      writer.write(
-//              String.join(
-//                      ",",
-//                      thisMESR.getRequestID(),
-//                      thisMESR.getStartLocation(),
-//                      thisMESR.getEndLocation(),
-//                      thisMESR.getEmployeeRequested(),
-//                      thisMESR.getEmployeeAssigned(),
-//                      thisMESR.getRequestTime(),
-//                      thisMESR.getRequestStatus(),
-//                      thisMESR.getRequestType(),
-//                      thisMESR.getComments(),
-//                      thisMESR.getEquipmentID()));
-//
-//      writer.newLine();
-//    }
-//    writer.close(); // close the writer
+    //    // create a writer
+    //    File file = new File(csvFilePath);
+    //    file.createNewFile();
+    //    BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
+    //
+    //    writer.write(
+    //            "RequestID, startLocation, endLocation, employeeRequested, employeeAssigned,
+    // requestTime, requestStatus, requestType, comments, equipmentID");
+    //    writer.newLine();
+    //
+    //    // write data
+    //    for (MedicalEquipmentServiceRequest thisMESR : List) {
+    //
+    //      writer.write(
+    //              String.join(
+    //                      ",",
+    //                      thisMESR.getRequestID(),
+    //                      thisMESR.getStartLocation(),
+    //                      thisMESR.getEndLocation(),
+    //                      thisMESR.getEmployeeRequested(),
+    //                      thisMESR.getEmployeeAssigned(),
+    //                      thisMESR.getRequestTime(),
+    //                      thisMESR.getRequestStatus(),
+    //                      thisMESR.getRequestType(),
+    //                      thisMESR.getComments(),
+    //                      thisMESR.getEquipmentID()));
+    //
+    //      writer.newLine();
+    //    }
+    //    writer.close(); // close the writer
   }
-
 }

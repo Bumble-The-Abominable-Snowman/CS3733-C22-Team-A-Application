@@ -56,6 +56,9 @@ public class SR {
   }
 
   public String getRequestTime() {
+    if (this.requestTime == null) {
+      return "";
+    }
     return this.requestTime.toString();
   }
 }
