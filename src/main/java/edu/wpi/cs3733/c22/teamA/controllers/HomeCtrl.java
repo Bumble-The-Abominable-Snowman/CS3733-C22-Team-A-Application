@@ -5,11 +5,6 @@ import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 
 // TODO Add exit button to quit
 public class HomeCtrl {
@@ -22,24 +17,6 @@ public class HomeCtrl {
   @FXML private JFXButton employeesButton;
 
   private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
-
-  @FXML
-  private void initialize() {
-    settingsButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
-    serviceRequestsButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(20), Insets.EMPTY)));
-    viewServiceRequestsButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(20), Insets.EMPTY)));
-    equipmentTrackerButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(20), Insets.EMPTY)));
-    locationDataButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(20), Insets.EMPTY)));
-    mapEditorButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
-    employeesButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
-  }
 
   @FXML
   private void goToCreateNewServiceRequest() throws IOException {

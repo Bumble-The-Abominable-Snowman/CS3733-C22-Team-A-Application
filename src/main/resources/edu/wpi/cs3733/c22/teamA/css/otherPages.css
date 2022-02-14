@@ -1,0 +1,10 @@
+.GridPane {
+    -fx-background-image: url('../images/AllBackground.jpg');
+    -fx-background-size: 100% 100%;
+}
+
+.button{
+    -fx-background-color: #B55243;
+    -fx-text-fill: WHITE;
+    -fx-background-size: 100% 100%;
+}
