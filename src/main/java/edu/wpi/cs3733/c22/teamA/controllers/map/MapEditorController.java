@@ -247,6 +247,9 @@ public class MapEditorController {
 
     // searchText.dropdown.addAll(sortedLocations)
 
+
+    // TODO clean this up. it's gross
+    clearAll();
     // Maps Location IDs to their markers
     HashMap<String, LocationMarker> locationIDs = new HashMap<>();
     // Loops through every location & draws them if present on the floor
