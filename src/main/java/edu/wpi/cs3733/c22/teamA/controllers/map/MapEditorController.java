@@ -7,6 +7,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
@@ -14,14 +15,13 @@ import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.map.EquipmentMarker;
 import edu.wpi.cs3733.c22.teamA.entities.map.LocationMarker;
 import edu.wpi.cs3733.c22.teamA.entities.map.SRMarker;
-import edu.wpi.cs3733.c22.teamA.entities.requests.ServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.EquipmentSR;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Filter;
-
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,7 +40,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 
-//TODO Add Service Request marker to all necessary places
+// TODO Add Service Request marker to all necessary places
 public class MapEditorController {
   @FXML private JFXCheckBox locationCheckBox;
   @FXML private JFXCheckBox dragCheckBox;
@@ -72,7 +72,7 @@ public class MapEditorController {
 
   private List<Location> locations;
   private List<Equipment> equipments;
-  private List<ServiceRequest> serviceRequests;
+  private List<SR> serviceRequests;
   private Polygon locationMarkerShape;
   private Polygon equipmentMarkerShape;
   private Polygon serviceRequestMarkerShape;
@@ -96,7 +96,12 @@ public class MapEditorController {
     serviceRequestMarkerShape = new Polygon();
     locationMarkerShape.getPoints().addAll(new Double[] {1.0, 4.0, 0.0, 2.0, 1.0, 0.0, 2.0, 2.0});
     equipmentMarkerShape.getPoints().addAll(new Double[] {0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0});
-    serviceRequestMarkerShape.getPoints().addAll(new Double[] {0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0}); //TODO Modify shape to be different
+    serviceRequestMarkerShape
+        .getPoints()
+        .addAll(
+            new Double[] {
+              0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0
+            }); // TODO Modify shape to be different
 
     buttonLocationMarker = new HashMap<>();
     buttonEquipmentMarker = new HashMap<>();
@@ -160,7 +165,7 @@ public class MapEditorController {
               }
 
               // Loops through every service request & draws them if they're on this floor
-              for (ServiceRequest serviceRequest : serviceRequests) {
+              for (SR serviceRequest : serviceRequests) {
                 if (locationIDs.containsKey(serviceRequest.getEndLocation())) {
                   SRMarker serviceRequestMarker =
                       newDraggableServiceRequest(
@@ -216,37 +221,42 @@ public class MapEditorController {
   public void fillFromDB() {
     locations.addAll(new ArrayList<>(new LocationDerbyImpl().getNodeList()));
     equipments.addAll(new ArrayList<>(new EquipmentDerbyImpl().getMedicalEquipmentList()));
-    // serviceRequests.addAll(new ArrayList<>(new )); TODO Can only add once database refactoring is complete
+    // TODO add other types, currently just medical equipment requests
+    serviceRequests.addAll(
+        new ArrayList<>(new ServiceRequestDerbyImpl<>(new EquipmentSR()).getServiceRequestList()));
   }
 
   // Set up searchbar for LOCATIONS ONLY
   // TODO IMPLEMENT CHOICE OF LOCATION, EQUIPMENT, SR SEARCH (another button?)
-  public void setupSearchListener(){
+  public void setupSearchListener() {
     // set up list of locations to be wrapped
     ObservableList<Location> searchLocationList = FXCollections.observableArrayList();
     searchLocationList.addAll(locations);
     // create filtered list, can be filtered (duh)
     FilteredList<Location> filteredLocations = new FilteredList<>(searchLocationList, p -> true);
     // add listener that checks whenever changes are made to JFXText searchText
-    searchText.textProperty().addListener((observable, oldValue, newValue) -> {
-      filteredLocations.setPredicate(location -> {
-        // if field is empty display all locations
-        if (newValue == null || newValue.isEmpty()) {
-          return true;
-        }
-        // make sure case is factored out
-        String lowerCaseFilter = newValue.toLowerCase();
-        // if search matches either name or ID, display it
-        // if not, this returns false and doesnt display
-        return location.getLongName().toLowerCase().contains(lowerCaseFilter) ||
-                location.getShortName().toLowerCase().contains(lowerCaseFilter) ||
-                location.getNodeID().toLowerCase().contains(lowerCaseFilter);
-      });
-    });
+    searchText
+        .textProperty()
+        .addListener(
+            (observable, oldValue, newValue) -> {
+              filteredLocations.setPredicate(
+                  location -> {
+                    // if field is empty display all locations
+                    if (newValue == null || newValue.isEmpty()) {
+                      return true;
+                    }
+                    // make sure case is factored out
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    // if search matches either name or ID, display it
+                    // if not, this returns false and doesnt display
+                    return location.getLongName().toLowerCase().contains(lowerCaseFilter)
+                        || location.getShortName().toLowerCase().contains(lowerCaseFilter)
+                        || location.getNodeID().toLowerCase().contains(lowerCaseFilter);
+                  });
+            });
     SortedList<Location> sortedLocations = new SortedList<>(filteredLocations);
 
     // searchText.dropdown.addAll(sortedLocations)
-
 
     // TODO clean this up. it's gross
     clearAll();
@@ -260,7 +270,6 @@ public class MapEditorController {
         locationIDs.put(location.getNodeID(), locationMarker);
       }
     }
-
   }
 
   // Sets up the floor
@@ -347,8 +356,7 @@ public class MapEditorController {
   }
 
   // Makes a new Draggable Service Request button and Label
-  public SRMarker newDraggableServiceRequest(
-      ServiceRequest serviceRequest, LocationMarker locationMarker) {
+  public SRMarker newDraggableServiceRequest(SR serviceRequest, LocationMarker locationMarker) {
 
     double buttonX = locationMarker.getLocation().getXCoord() + mapImageView.getLayoutX() - 8 + 10;
     double buttonY = locationMarker.getLocation().getYCoord() + mapImageView.getLayoutY() - 24 + 10;
@@ -363,7 +371,7 @@ public class MapEditorController {
             labelX, labelY, serviceRequest.getRequestID() + serviceRequest.getRequestType());
 
     button.setPickOnBounds(false);
-    //TODO Wait for refactoring of database before implementing
+    // TODO Wait for refactoring of database before implementing
     switch (serviceRequest.getRequestType()) {
       default:
         button.setStyle("-fx-background-color: RED");
