@@ -11,6 +11,10 @@ import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
+import edu.wpi.cs3733.c22.teamA.entities.map.EquipmentMarker;
+import edu.wpi.cs3733.c22.teamA.entities.map.LocationMarker;
+import edu.wpi.cs3733.c22.teamA.entities.map.SRMarker;
+import edu.wpi.cs3733.c22.teamA.entities.requests.ServiceRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,397 +34,329 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 
+//TODO Add Service Request marker to all necessary places
 public class MapEditorController {
-  @FXML private JFXCheckBox locationToggle;
-  @FXML private JFXCheckBox dragToggleBox;
-  @FXML private JFXCheckBox equipToggleBox;
-  @FXML private JFXCheckBox textToggleBox;
+  @FXML private JFXCheckBox locationCheckBox;
+  @FXML private JFXCheckBox dragCheckBox;
+  @FXML private JFXCheckBox equipmentCheckBox;
+  @FXML private JFXCheckBox showTextCheckBox;
   @FXML private JFXButton deleteButton;
   @FXML private ComboBox floorSelectionComboBox;
   @FXML private AnchorPane anchorPane;
-  private List<Button> locationMarkers;
+
+  @FXML private JFXTextArea nodeIDText = new JFXTextArea();
+  @FXML private JFXTextArea xPosText = new JFXTextArea();
+  @FXML private JFXTextArea yPosText = new JFXTextArea();
+  @FXML private JFXTextArea floorText = new JFXTextArea();
+  @FXML private JFXTextArea buildingText = new JFXTextArea();
+  @FXML private JFXTextArea typeText = new JFXTextArea();
+  @FXML private JFXTextArea longnameText = new JFXTextArea();
+  @FXML private JFXTextArea shortnameText = new JFXTextArea();
+
+  @FXML private JFXButton saveButton = new JFXButton();
+  @FXML private JFXButton editButton = new JFXButton();
+  @FXML private JFXButton clearButton = new JFXButton();
+
+  @FXML private JFXButton backButton = new JFXButton();
+
+  @FXML private VBox inputVBox = new VBox();
+  @FXML private ImageView mapImageView = new ImageView();
+
   private List<Location> locations;
-  private List<Equipment> equipment;
-  private Polygon locationMarkerShape = new Polygon();
-  private Polygon equipmentMarkerShape = new Polygon();
-  private Button selectedButton;
+  private List<Equipment> equipments;
+  private List<ServiceRequest> serviceRequests;
+  private Polygon locationMarkerShape;
+  private Polygon equipmentMarkerShape;
+  private Polygon serviceRequestMarkerShape;
 
-  @FXML JFXTextArea nodeIDText = new JFXTextArea();
-  @FXML JFXTextArea xPosText = new JFXTextArea();
-  @FXML JFXTextArea yPosText = new JFXTextArea();
-  @FXML JFXTextArea floorText = new JFXTextArea();
-  @FXML JFXTextArea buildingText = new JFXTextArea();
-  @FXML JFXTextArea typeText = new JFXTextArea();
-  @FXML JFXTextArea longnameText = new JFXTextArea();
-  @FXML JFXTextArea shortnameText = new JFXTextArea();
-
-  @FXML JFXButton newLocButton = new JFXButton();
-  @FXML JFXButton viewTableButton = new JFXButton();
-
-  @FXML JFXButton saveButton = new JFXButton();
-  @FXML JFXButton editButton = new JFXButton();
-  @FXML JFXButton clearButton = new JFXButton();
-
-  @FXML JFXButton backButton = new JFXButton();
-  @FXML JFXButton returnHomeButton = new JFXButton();
-
-  @FXML VBox inputVBox = new VBox();
-  @FXML ImageView mapDisplay = new ImageView();
-
-  LocationDAO locationBase = new LocationDerbyImpl();
-  EquipmentDAO equipmentDao = new EquipmentDerbyImpl();
+  String floor;
+  String currentID;
   Location selectedLocation;
-  HashMap<Button, Location> buttonLocation = new HashMap<>();
-  HashMap<Button, Label> buttonLabel = new HashMap<>();
-  HashMap<Button, Equipment> buttonEquipment = new HashMap<>();
-  ArrayList<Label> labels = new ArrayList<>();
-  ArrayList<Button> medicalButtons = new ArrayList<>();
-  String currentID = "";
+
+  LocationDAO locationDAO = new LocationDerbyImpl();
+  EquipmentDAO equipmentDAO = new EquipmentDerbyImpl();
+
+  HashMap<Button, LocationMarker> buttonLocationMarker;
+  HashMap<Button, EquipmentMarker> buttonEquipmentMarker;
+  HashMap<Button, SRMarker> buttonServiceRequestMarker;
 
   private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   public MapEditorController() {
-    locationMarkers = new ArrayList<>();
-    locations = new ArrayList<>();
-    equipment = new ArrayList<>();
-    // locationMarkerShape.getPoints().addAll(new Double[] {2.0, 8.0, 0.0, 4.0, 2.0, 0.0, 4.0,
-    // 4.0});
+    locationMarkerShape = new Polygon();
+    equipmentMarkerShape = new Polygon();
+    serviceRequestMarkerShape = new Polygon();
     locationMarkerShape.getPoints().addAll(new Double[] {1.0, 4.0, 0.0, 2.0, 1.0, 0.0, 2.0, 2.0});
     equipmentMarkerShape.getPoints().addAll(new Double[] {0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0});
+    serviceRequestMarkerShape.getPoints().addAll(new Double[] {0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0}); //TODO Modify shape to be different
+
+    buttonLocationMarker = new HashMap<>();
+    buttonEquipmentMarker = new HashMap<>();
+    buttonServiceRequestMarker = new HashMap<>();
+
+    locations = new ArrayList<>();
+    equipments = new ArrayList<>();
+    serviceRequests = new ArrayList<>();
+
+    currentID = "";
+    floor = "";
   }
 
   @FXML
   public void initialize() {
-    mapDisplay.setVisible(false);
+
+    // Setup Functions
+    setupCheckboxListeners();
+    setInitialUIStates();
+    fillFromDB();
+
     backButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-
-    editButton.setDisable(true);
-    saveButton.setDisable(true);
-    clearButton.setDisable(true);
-    deleteButton.setDisable(true);
-
-    Polygon polygon = new Polygon();
-    polygon.getPoints().addAll(new Double[] {1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 2.0, 1.0, 1.0, 1.0});
-    inputVBox.setDisable(true);
-    locations.addAll(new ArrayList<>(new LocationDerbyImpl().getNodeList()));
-    equipment.addAll(new ArrayList<>(new EquipmentDerbyImpl().getMedicalEquipmentList()));
-    for (Equipment m : equipment) {
-      System.out.println(m.getCurrentLocation());
-    }
-
-    dragToggleBox.setSelected(true);
-    textToggleBox.setSelected(true);
-    equipToggleBox.setSelected(true);
-    locationToggle.setSelected(true);
 
     floorSelectionComboBox.getItems().removeAll(floorSelectionComboBox.getItems());
     floorSelectionComboBox
         .getItems()
         .addAll("Choose Floor:", "Floor 1", "Floor 2", "Floor 3", "L1", "L2");
 
-    equipToggleBox
-        .selectedProperty()
-        .addListener(
-            (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
-              showMedicalButtons(new_val);
-            });
-
-    locationToggle
-        .selectedProperty()
-        .addListener(
-            (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
-              showButtons(new_val);
-            });
-
-    textToggleBox
-        .selectedProperty()
-        .addListener(
-            (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
-              drawLabels(new_val);
-            });
     floorSelectionComboBox.getSelectionModel().select("Choose Floor:");
     floorSelectionComboBox
         .getSelectionModel()
         .selectedItemProperty()
         .addListener(
             (obs, oldValue, newValue) -> {
-              clearButtonsLabel();
-              if (newValue.equals("Choose Floor:")) {
-                mapDisplay.setVisible(false);
-              } else {
-                String floor;
-                if (newValue.equals("Floor 1")) {
-                  mapDisplay.setVisible(true);
-                  floor = "1";
-                  File map = new File("edu/wpi/cs3733/c22/teamA/images/1st Floor.png");
-                  Image image = new Image(String.valueOf((map)));
-                  mapDisplay.setImage(image);
-                } else if (newValue.equals("Floor 2")) {
-                  mapDisplay.setVisible(true);
-                  floor = "2";
-                  File map = new File("edu/wpi/cs3733/c22/teamA/images/2nd Floor.png");
-                  Image image = new Image(String.valueOf((map)));
-                  mapDisplay.setImage(image);
-                } else if (newValue.equals("Floor 3")) {
-                  mapDisplay.setVisible(true);
-                  floor = "3";
-                  File map = new File("edu/wpi/cs3733/c22/teamA/images/3rd Floor.png");
-                  Image image = new Image(String.valueOf((map)));
-                  mapDisplay.setImage(image);
-                } else if (newValue.equals("L1")) {
-                  mapDisplay.setVisible(true);
-                  floor = "L1";
-                  File map = new File("edu/wpi/cs3733/c22/teamA/images/LL1.png");
-                  Image image = new Image(String.valueOf((map)));
-                  mapDisplay.setImage(image);
-                } else {
-                  mapDisplay.setVisible(true);
-                  floor = "L2";
-                  File map = new File("edu/wpi/cs3733/c22/teamA/images/LL2.png");
-                  Image image = new Image(String.valueOf((map)));
-                  mapDisplay.setImage(image);
+
+              // Sets up floor on Map
+              setupFloor(newValue.toString());
+              clearAll();
+
+              // Maps Location IDs to their markers
+              HashMap<String, LocationMarker> locationIDs = new HashMap<>();
+
+              // Loops through every location & draws them if present on the floor
+              for (Location location : locations) {
+                if (location.getFloor().equals(floor)) {
+                  LocationMarker locationMarker = newDraggableLocation(location);
+                  locationMarker.draw(anchorPane);
+                  locationIDs.put(location.getNodeID(), locationMarker);
                 }
+              }
 
-                // anchorPane.getChildren().clear();
-                // anchorPane.getChildren().add(floorSelectionComboBox);
-                HashMap<String, Location> roomNames = new HashMap<>();
-
-                for (Location location : locations) {
-                  roomNames.put(location.getNodeID(), location);
-                  int count = 0;
-                  if (location.getFloor().equals(floor)) {
-                    Button button = new Button();
-                    Label label = new Label();
-                    labels.add(label);
-                    label.setText(location.getShortName());
-                    label.setFont(new Font(15));
-                    final Delta dragDelta = new Delta();
-                    button.setMinWidth(4.0);
-                    button.setMinHeight(2.0);
-                    button.setShape(locationMarkerShape);
-                    button.setLayoutX(location.getXCoord() + mapDisplay.getLayoutX() - 8);
-                    button.setLayoutY(location.getYCoord() + mapDisplay.getLayoutY() - 24);
-                    if (count % 2 == 0) {
-                      label.setLayoutX(location.getXCoord() + mapDisplay.getLayoutX() - 8 + 7.5);
-                      label.setLayoutY(location.getYCoord() + mapDisplay.getLayoutY() - 24 - 15);
-                    } else {
-                      label.setLayoutX(location.getXCoord() + mapDisplay.getLayoutX() - 8 - 20);
-                      label.setLayoutY(location.getYCoord() + mapDisplay.getLayoutY() - 24 - 15);
-                    }
-                    count++;
-
-                    buttonLabel.put(button, label);
-                    buttonLocation.put(button, location);
-                    button.setPickOnBounds(false);
-                    button.setStyle("-fx-background-color: #78aaf0");
-
-                    button.setOnAction(
-                        event -> {
-                          // highlight(button, selectedButton);
-                          // selectedButton = button;
-                          existingLocSelected(buttonLocation.get(button));
-                          currentID = buttonLocation.get(button).getNodeID();
-                        });
-                    button.setOnMousePressed(
-                        mouseEvent -> {
-                          // record a delta distance for the drag and drop operation.
-                          dragDelta.x = button.getLayoutX() - mouseEvent.getSceneX();
-                          dragDelta.y = button.getLayoutY() - mouseEvent.getSceneY();
-                          button.setCursor(Cursor.MOVE);
-                          existingLocSelected(buttonLocation.get(button));
-                          editButton.setDisable(false);
-                          deleteButton.setDisable(false);
-                          saveButton.setDisable(true);
-                          clearButton.setDisable(true);
-                        });
-                    button.setOnMouseReleased(mouseEvent -> button.setCursor(Cursor.HAND));
-                    button.setOnMouseDragged(
-                        mouseEvent -> {
-                          if (dragToggleBox.isSelected()) {
-                            button.setLayoutX(mouseEvent.getSceneX() + dragDelta.x);
-                            button.setLayoutY(mouseEvent.getSceneY() + dragDelta.y);
-                            xPosText.setText(
-                                String.valueOf(button.getLayoutX() - mapDisplay.getLayoutX() + 8));
-                            yPosText.setText(
-                                String.valueOf(button.getLayoutY() - mapDisplay.getLayoutY() + 24));
-                            //
-                            // xPosText.setText(String.valueOf(mouseEvent.getSceneX() +
-                            // dragDelta.x));
-                            //
-                            // yPosText.setText(String.valueOf(mouseEvent.getSceneY() +
-                            // dragDelta.y));
-                            Label correspondingLabel = buttonLabel.get(button);
-                            correspondingLabel.setLayoutX(mouseEvent.getSceneX() + dragDelta.x + 8);
-                            correspondingLabel.setLayoutY(
-                                mouseEvent.getSceneY() + dragDelta.y - 24);
-                          }
-                        });
-                    button.setOnMouseEntered(mouseEvent -> button.setCursor(Cursor.HAND));
-                    draw(button, label);
-                  }
+              // Loops through every medical equipment & draws them if they're on this floor
+              for (Equipment equipment : equipments) {
+                if (locationIDs.containsKey(equipment.getCurrentLocation())) {
+                  EquipmentMarker equipmentMarker =
+                      newDraggableEquipment(
+                          equipment, locationIDs.get(equipment.getCurrentLocation()));
+                  equipmentMarker.draw(anchorPane);
                 }
-                for (Equipment equipment : this.equipment) {
-                  System.out.println(equipment.getCurrentLocation());
-                  System.out.println(roomNames.containsKey(equipment.getCurrentLocation()));
-                  if (roomNames.containsKey(equipment.getCurrentLocation())) {
+              }
 
-                    Button button = new Button();
-                    Label label = new Label();
-                    labels.add(label);
-                    label.setText(equipment.getEquipmentType());
-                    label.setFont(new Font(15));
-                    final Delta dragDelta = new Delta();
-                    button.setMinWidth(4.0);
-                    button.setMinHeight(2.0);
-                    button.setShape(equipmentMarkerShape);
-                    button.setLayoutX(
-                        roomNames.get(equipment.getCurrentLocation()).getXCoord()
-                            + mapDisplay.getLayoutX()
-                            - 8
-                            + 10);
-                    button.setLayoutY(
-                        roomNames.get(equipment.getCurrentLocation()).getYCoord()
-                            + mapDisplay.getLayoutY()
-                            - 24
-                            + 10);
-
-                    label.setLayoutX(
-                        roomNames.get(equipment.getCurrentLocation()).getXCoord()
-                            + mapDisplay.getLayoutX()
-                            - 8
-                            + 7.5
-                            + 10);
-                    label.setLayoutY(
-                        roomNames.get(equipment.getCurrentLocation()).getYCoord()
-                            + mapDisplay.getLayoutY()
-                            - 24
-                            - 15
-                            + 10);
-
-                    buttonEquipment.put(button, equipment);
-                    medicalButtons.add(button);
-                    buttonLabel.put(button, label);
-                    buttonLocation.put(button, roomNames.get(equipment.getCurrentLocation()));
-                    button.setPickOnBounds(false);
-                    button.setStyle("-fx-background-color: RED");
-
-                    button.setOnAction(
-                        event -> {
-                          // highlight(button, selectedButton);
-                          // selectedButton = button;
-                          existingLocSelected(buttonLocation.get(button));
-                          currentID = buttonLocation.get(button).getNodeID();
-                        });
-                    button.setOnMousePressed(
-                        mouseEvent -> {
-                          // record a delta distance for the drag and drop operation.
-                          dragDelta.x = button.getLayoutX() - mouseEvent.getSceneX();
-                          dragDelta.y = button.getLayoutY() - mouseEvent.getSceneY();
-                          button.setCursor(Cursor.MOVE);
-                          existingEquipmentSelected(buttonEquipment.get(button));
-                          editButton.setDisable(false);
-                          deleteButton.setDisable(false);
-                          saveButton.setDisable(true);
-                          clearButton.setDisable(true);
-                        });
-                    button.setOnMouseReleased(mouseEvent -> button.setCursor(Cursor.HAND));
-                    //                    button.setOnMouseDragged(
-                    //                            mouseEvent -> {
-                    //                              if (dragToggleBox.isSelected()) {
-                    //                                button.setLayoutX(mouseEvent.getSceneX() +
-                    // dragDelta.x);
-                    //                                button.setLayoutY(mouseEvent.getSceneY() +
-                    // dragDelta.y);
-                    //                                xPosText.setText(
-                    //                                        String.valueOf(button.getLayoutX() -
-                    // mapDisplay.getLayoutX() + 8));
-                    //                                yPosText.setText(
-                    //                                        String.valueOf(button.getLayoutY() -
-                    // mapDisplay.getLayoutY() + 24));
-                    //                                //
-                    //                                //
-                    // xPosText.setText(String.valueOf(mouseEvent.getSceneX() +
-                    //                                // dragDelta.x));
-                    //                                //
-                    //                                //
-                    // yPosText.setText(String.valueOf(mouseEvent.getSceneY() +
-                    //                                // dragDelta.y));
-                    //                                Label correspondingLabel =
-                    // buttonLabel.get(button);
-                    //
-                    // correspondingLabel.setLayoutX(mouseEvent.getSceneX() + dragDelta.x + 8);
-                    //                                correspondingLabel.setLayoutY(
-                    //                                        mouseEvent.getSceneY() + dragDelta.y -
-                    // 24);
-                    //                              }
-                    //                            });
-                    button.setOnMouseEntered(mouseEvent -> button.setCursor(Cursor.HAND));
-                    draw(button, label);
-                  }
+              // Loops through every service request & draws them if they're on this floor
+              for (ServiceRequest serviceRequest : serviceRequests) {
+                if (locationIDs.containsKey(serviceRequest.getEndLocation())) {
+                  SRMarker serviceRequestMarker =
+                      newDraggableServiceRequest(
+                          serviceRequest, locationIDs.get(serviceRequest.getEndLocation()));
+                  serviceRequestMarker.draw(anchorPane);
                 }
               }
             });
   }
 
-  public void clearButtonsLabel() {
-    for (Button b : buttonLocation.keySet()) {
-      anchorPane.getChildren().remove(b);
-    }
-    for (Label l : labels) {
-      anchorPane.getChildren().remove(l);
-    }
-    labels.clear();
+  // Sets up CheckBoxes
+  public void setupCheckboxListeners() {
+    equipmentCheckBox
+        .selectedProperty()
+        .addListener(
+            (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
+              showEquipment(new_val);
+            });
+
+    locationCheckBox
+        .selectedProperty()
+        .addListener(
+            (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
+              showLocations(new_val);
+            });
+
+    showTextCheckBox
+        .selectedProperty()
+        .addListener(
+            (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
+              showLabels(new_val);
+            });
   }
 
-  public void drawLabels(boolean value) {
-    for (Label l : labels) {
-      l.setVisible(value);
+  // Sets up UI states of text areas, and buttons
+  public void setInitialUIStates() {
+    mapImageView.setVisible(false);
+
+    editButton.setDisable(true);
+    saveButton.setDisable(true);
+    clearButton.setDisable(true);
+    deleteButton.setDisable(true);
+
+    dragCheckBox.setSelected(true);
+    showTextCheckBox.setSelected(true);
+    equipmentCheckBox.setSelected(true);
+    locationCheckBox.setSelected(true);
+
+    inputVBox.setDisable(true);
+  }
+
+  // Fills info from DB
+  public void fillFromDB() {
+    locations.addAll(new ArrayList<>(new LocationDerbyImpl().getNodeList()));
+    equipments.addAll(new ArrayList<>(new EquipmentDerbyImpl().getMedicalEquipmentList()));
+    // serviceRequests.addAll(new ArrayList<>(new )); TODO Can only add once database refactoring is complete
+  }
+
+  // Sets up the floor
+  public void setupFloor(String newValue) {
+    if (newValue.equals("Choose Floor:")) {
+      floor = "";
+      mapImageView.setVisible(false);
+    } else {
+      if (newValue.equals("Floor 1")) {
+        mapImageView.setVisible(true);
+        floor = "1";
+        File map = new File("edu/wpi/cs3733/c22/teamA/images/1st Floor.png");
+        Image image = new Image(String.valueOf((map)));
+        mapImageView.setImage(image);
+      } else if (newValue.equals("Floor 2")) {
+        mapImageView.setVisible(true);
+        floor = "2";
+        File map = new File("edu/wpi/cs3733/c22/teamA/images/2nd Floor.png");
+        Image image = new Image(String.valueOf((map)));
+        mapImageView.setImage(image);
+      } else if (newValue.equals("Floor 3")) {
+        mapImageView.setVisible(true);
+        floor = "3";
+        File map = new File("edu/wpi/cs3733/c22/teamA/images/3rd Floor.png");
+        Image image = new Image(String.valueOf((map)));
+        mapImageView.setImage(image);
+      } else if (newValue.equals("L1")) {
+        mapImageView.setVisible(true);
+        floor = "L1";
+        File map = new File("edu/wpi/cs3733/c22/teamA/images/LL1.png");
+        Image image = new Image(String.valueOf((map)));
+        mapImageView.setImage(image);
+      } else {
+        mapImageView.setVisible(true);
+        floor = "L2";
+        File map = new File("edu/wpi/cs3733/c22/teamA/images/LL2.png");
+        Image image = new Image(String.valueOf((map)));
+        mapImageView.setImage(image);
+      }
     }
   }
 
-  public void showButtons(boolean value) {
-    for (Button b : buttonLocation.keySet()) {
-      b.setVisible(value);
-    }
-  }
-
-  public void showMedicalButtons(boolean value) {
-    for (Button b : medicalButtons) {
-      b.setVisible(value);
-    }
-  }
-
-  @FXML
-  public void newLocPressed() {
-    Button button = new Button();
-    Label label = new Label();
-    labels.add(label);
-    label.setText("New Location");
-    label.setFont(new Font(15));
-    final Delta dragDelta = new Delta();
-    button.setMinWidth(4.0);
-    button.setMinHeight(2.0);
-    button.setShape(locationMarkerShape);
-    button.setLayoutX(mapDisplay.getLayoutX() - 8);
-    button.setLayoutY(mapDisplay.getLayoutY() - 24);
-
-    label.setLayoutX(mapDisplay.getLayoutX() - 8 + 7.5);
-    label.setLayoutY(mapDisplay.getLayoutY() - 24 - 15);
-
-    buttonLabel.put(button, label);
-    buttonLocation.put(button, new Location());
-    labels.add(label);
+  // Makes a new Draggable Location Button and Label
+  public LocationMarker newDraggableLocation(Location location) {
+    double buttonX = location.getXCoord() + mapImageView.getLayoutX() - 8;
+    double buttonY = location.getYCoord() + mapImageView.getLayoutY() - 24;
+    Button button = newDraggableButton(buttonX, buttonY, true);
 
     button.setPickOnBounds(false);
     button.setStyle("-fx-background-color: #78aaf0");
+    button.setShape(locationMarkerShape);
 
+    double labelX = location.getXCoord() + mapImageView.getLayoutX() - 8 + 7.5;
+    double labelY = location.getYCoord() + mapImageView.getLayoutY() - 24 - 15;
+    Label label = newDraggableLabel(labelX, labelY, location.getShortName());
+
+    LocationMarker locationMarker = new LocationMarker(button, label, location);
+    buttonLocationMarker.put(button, locationMarker);
+    return locationMarker;
+  }
+
+  // Makes a new Draggable Equipment button and Label
+  public EquipmentMarker newDraggableEquipment(Equipment equipment, LocationMarker locationMarker) {
+
+    double buttonX = locationMarker.getLocation().getXCoord() + mapImageView.getLayoutX() - 8 + 10;
+    double buttonY = locationMarker.getLocation().getYCoord() + mapImageView.getLayoutY() - 24 + 10;
+    Button button = newDraggableButton(buttonX, buttonY, false);
+
+    double labelX =
+        locationMarker.getLocation().getXCoord() + mapImageView.getLayoutX() - 8 + 7.5 + 10;
+    double labelY =
+        locationMarker.getLocation().getYCoord() + mapImageView.getLayoutY() - 24 - 15 + 10;
+    Label label =
+        newDraggableLabel(
+            labelX, labelY, equipment.getEquipmentID() + equipment.getEquipmentType());
+
+    button.setPickOnBounds(false);
+    button.setStyle("-fx-background-color: RED");
+    button.setShape(equipmentMarkerShape);
+
+    EquipmentMarker equipmentMarker = new EquipmentMarker(equipment, button, label, locationMarker);
+    buttonEquipmentMarker.put(button, equipmentMarker);
+    return equipmentMarker;
+  }
+
+  // Makes a new Draggable Service Request button and Label
+  public SRMarker newDraggableServiceRequest(
+      ServiceRequest serviceRequest, LocationMarker locationMarker) {
+
+    double buttonX = locationMarker.getLocation().getXCoord() + mapImageView.getLayoutX() - 8 + 10;
+    double buttonY = locationMarker.getLocation().getYCoord() + mapImageView.getLayoutY() - 24 + 10;
+    Button button = newDraggableButton(buttonX, buttonY, false);
+
+    double labelX =
+        locationMarker.getLocation().getXCoord() + mapImageView.getLayoutX() - 8 + 7.5 + 10;
+    double labelY =
+        locationMarker.getLocation().getYCoord() + mapImageView.getLayoutY() - 24 - 15 + 10;
+    Label label =
+        newDraggableLabel(
+            labelX, labelY, serviceRequest.getRequestID() + serviceRequest.getRequestType());
+
+    button.setPickOnBounds(false);
+    //TODO Wait for refactoring of database before implementing
+    switch (serviceRequest.getRequestType()) {
+      default:
+        button.setStyle("-fx-background-color: RED");
+        break;
+    }
+    button.setShape(serviceRequestMarkerShape);
+
+    SRMarker serviceRequestMarker = new SRMarker(serviceRequest, button, label, locationMarker);
+    buttonServiceRequestMarker.put(button, serviceRequestMarker);
+    return serviceRequestMarker;
+  }
+
+  // Makes a new Draggable Label
+  public Label newDraggableLabel(double posX, double posY, String text) {
+    Label label = new Label();
+    label.setText(text);
+    label.setFont(new Font(15));
+
+    label.setLayoutX(posX);
+    label.setLayoutY(posY);
+
+    return label;
+  }
+
+  // Makes a new Draggable Button
+  public Button newDraggableButton(double posX, double posY, boolean isLocationMarker) {
+    Button button = new Button();
+    button.setMinWidth(4.0);
+    button.setMinHeight(2.0);
+    button.setLayoutX(posX);
+    button.setLayoutY(posY);
+    button.setPickOnBounds(false);
+    setDragFunctions(button, isLocationMarker);
+    return button;
+  }
+
+  // Sets drag functions
+  public void setDragFunctions(Button button, boolean isLocationMarker) {
+    final Delta dragDelta = new Delta();
     button.setOnAction(
         event -> {
           // highlight(button, selectedButton);
           // selectedButton = button;
-          existingLocSelected(buttonLocation.get(button));
-          currentID = buttonLocation.get(button).getNodeID();
+          existingLocationSelected(buttonLocationMarker.get(button).getLocation());
+          currentID = buttonLocationMarker.get(button).getLocation().getNodeID();
         });
     button.setOnMousePressed(
         mouseEvent -> {
@@ -428,7 +364,11 @@ public class MapEditorController {
           dragDelta.x = button.getLayoutX() - mouseEvent.getSceneX();
           dragDelta.y = button.getLayoutY() - mouseEvent.getSceneY();
           button.setCursor(Cursor.MOVE);
-          existingLocSelected(buttonLocation.get(button));
+          if (isLocationMarker) {
+            existingLocationSelected(buttonLocationMarker.get(button).getLocation());
+          } else {
+            existingEquipmentSelected(buttonEquipmentMarker.get(button).getEquipment());
+          }
           editButton.setDisable(false);
           deleteButton.setDisable(false);
           saveButton.setDisable(true);
@@ -437,31 +377,87 @@ public class MapEditorController {
     button.setOnMouseReleased(mouseEvent -> button.setCursor(Cursor.HAND));
     button.setOnMouseDragged(
         mouseEvent -> {
-          if (dragToggleBox.isSelected()) {
+          if (dragCheckBox.isSelected()) {
             button.setLayoutX(mouseEvent.getSceneX() + dragDelta.x);
             button.setLayoutY(mouseEvent.getSceneY() + dragDelta.y);
-            xPosText.setText(String.valueOf(button.getLayoutX() - mapDisplay.getLayoutX() + 8));
-            yPosText.setText(String.valueOf(button.getLayoutY() - mapDisplay.getLayoutY() + 24));
-
-            Label correspondingLabel = buttonLabel.get(button);
+            xPosText.setText(String.valueOf(button.getLayoutX() - mapImageView.getLayoutX() + 8));
+            yPosText.setText(String.valueOf(button.getLayoutY() - mapImageView.getLayoutY() + 24));
+            Label correspondingLabel;
+            if (isLocationMarker) {
+              correspondingLabel = buttonLocationMarker.get(button).getLabel();
+            } else {
+              correspondingLabel = buttonEquipmentMarker.get(button).getLabel();
+            }
             correspondingLabel.setLayoutX(mouseEvent.getSceneX() + dragDelta.x + 8);
             correspondingLabel.setLayoutY(mouseEvent.getSceneY() + dragDelta.y - 24);
           }
         });
     button.setOnMouseEntered(mouseEvent -> button.setCursor(Cursor.HAND));
-    draw(button, label);
   }
 
+  // Clears all Buttons and Labels from screen
+  public void clearAll() {
+    for (LocationMarker locationMarker : buttonLocationMarker.values()) {
+      locationMarker.clear(anchorPane);
+    }
+    for (EquipmentMarker equipmentMarker : buttonEquipmentMarker.values()) {
+      equipmentMarker.clear(anchorPane);
+    }
+  }
+
+  // Toggle Labels
+  public void showLabels(boolean value) {
+    if (locationCheckBox.isSelected()) {
+      for (LocationMarker locationMarker : buttonLocationMarker.values()) {
+        locationMarker.setLabelVisibility(value);
+      }
+    }
+    if (equipmentCheckBox.isSelected()) {
+      for (EquipmentMarker equipmentMarker : buttonEquipmentMarker.values()) {
+        equipmentMarker.setLabelVisibility(value);
+      }
+    }
+  }
+
+  // Toggles Locations
+  public void showLocations(boolean value) {
+    for (LocationMarker locationMarker : buttonLocationMarker.values()) {
+      locationMarker.setButtonVisibility(value);
+      if (showTextCheckBox.isSelected()) {
+        locationMarker.setLabelVisibility(value);
+      }
+    }
+  }
+
+  // Toggles Equipment
+  public void showEquipment(boolean value) {
+    for (EquipmentMarker equipmentMarker : buttonEquipmentMarker.values()) {
+      equipmentMarker.setButtonVisibility(value);
+      if (showTextCheckBox.isSelected()) {
+        equipmentMarker.setLabelVisibility(value);
+      }
+    }
+  }
+
+  // New Location
+  @FXML
+  public void newLocationPressed() {
+    Location newLocation =
+        new Location(
+            "NEWLOCATION", 0, 0, floor, "Tower", "NODE TYPE TODO", "New Location", "New Location");
+    LocationMarker newLocationMarker = newDraggableLocation(newLocation);
+    newLocationMarker.draw(this.anchorPane);
+  }
+
+  // Delete Location
   @FXML
   public void deleteLocation() {
-    locationBase.deleteLocationNode(nodeIDText.getText());
+    locationDAO.deleteLocationNode(nodeIDText.getText());
     this.initialize();
   }
 
-  // as long as each diamond on the map is assigned a whole
-  // location object, this function works fine. if each diamond is assigned a location
-  // NodeID to save space or smth, can easily be refactored
-  public void existingLocSelected(Location currLocation) {
+  // Selected Location
+  public void existingLocationSelected(Location currLocation) {
     inputVBox.setDisable(false);
     selectedLocation = currLocation;
     nodeIDText.setEditable(false);
@@ -485,6 +481,7 @@ public class MapEditorController {
     shortnameText.setText(selectedLocation.getShortName());
   }
 
+  // Existing Equipment Selected
   public void existingEquipmentSelected(Equipment equipment) {
     inputVBox.setDisable(false);
 
@@ -505,9 +502,10 @@ public class MapEditorController {
     shortnameText.setText(equipment.getCurrentLocation());
   }
 
+  // Save Changes
   public void saveChanges() {
 
-    locationBase.deleteLocationNode(currentID);
+    locationDAO.deleteLocationNode(currentID);
     Location l =
         new Location(
             nodeIDText.getText(),
@@ -518,7 +516,7 @@ public class MapEditorController {
             typeText.getText(),
             longnameText.getText(),
             shortnameText.getText());
-    locationBase.enterLocationNode(
+    locationDAO.enterLocationNode(
         l.getNodeID(),
         l.getXCoord(),
         l.getYCoord(),
@@ -529,14 +527,8 @@ public class MapEditorController {
         l.getShortName());
   }
 
+  // Edit Location
   public void editLocation() {
-    // next line may need to be refactored when Alex / Ethan's implementation comes through.
-    // basically, right now it takes the ID of the location selected in the
-    // existingLocSelected function above. Depending on implementation, this may change.
-
-    // also, right now it makes a new, nearly-identical object to the previous one instead of
-    // directly editing, as directly editing resulted in several errors.
-
     editButton.setDisable(true);
     saveButton.setDisable(false);
     clearButton.setDisable(false);
@@ -552,6 +544,7 @@ public class MapEditorController {
     shortnameText.setEditable(true);
   }
 
+  // Clear Submission
   public void clearSubmission() {
     nodeIDText.setText("");
     xPosText.setText("");
@@ -563,11 +556,13 @@ public class MapEditorController {
     shortnameText.setText("");
   }
 
+  // Go to Location Table
   @FXML
   public void goToLocationTable() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_LOCATIONS);
   }
 
+  // Return to Home Screen
   @FXML
   public void returnToHomeScene() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
@@ -584,21 +579,10 @@ public class MapEditorController {
     double x, y;
   }
 
-  private void draw(Button button, Label label) {
-    anchorPane.getChildren().add(button);
-    anchorPane.getChildren().add(label);
-  }
-
   private void highlight(Button button, Button oldButton) {
     button.setStyle("-fx-background-color: RED");
     oldButton.getStyleClass().clear();
     oldButton.setStyle(null);
     oldButton.setStyle("-fx-background-color: #78aaf0");
-  }
-
-  private static class LocationMarker {
-    Button button;
-    Location location;
-    Label label;
   }
 }
