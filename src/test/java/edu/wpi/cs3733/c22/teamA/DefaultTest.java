@@ -53,6 +53,11 @@ public class DefaultTest {
     }
   }
 
+  @Test
+  public void testOnAdb() {
+    Adb.initialConnection();
+  }
+
   // Test on Location table (Fixed)
   //    LocationDAO Location = new LocationDerbyImpl();
 
