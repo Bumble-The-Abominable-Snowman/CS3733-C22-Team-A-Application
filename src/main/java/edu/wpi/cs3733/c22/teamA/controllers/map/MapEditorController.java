@@ -226,8 +226,7 @@ public class MapEditorController {
     MenuItem newLocation = new MenuItem("New Location");
     newLocation.setOnAction(
         (event) -> {
-          newLocationPressedMouse(
-              mouseX, mouseY); // TODO Use coords of current mouse position to create location
+          newLocationPressedMouse(mouseX, mouseY);
         });
     rightClickMenu.getItems().addAll(newLocation);
     mapImageView.setOnContextMenuRequested(
@@ -260,9 +259,14 @@ public class MapEditorController {
   public void fillFromDB() {
     locations.addAll(new ArrayList<>(new LocationDerbyImpl().getNodeList()));
     equipments.addAll(new ArrayList<>(new EquipmentDerbyImpl().getMedicalEquipmentList()));
-    List<?> requestList = ServiceRequestDerbyImpl.getAllServiceRequestList();
-    for (Object sr : requestList) {
-      serviceRequests.add((SR) sr);
+    // TODO when implementation done
+    try {
+      List<?> requestList = ServiceRequestDerbyImpl.getAllServiceRequestList();
+      for (Object sr : requestList) {
+        serviceRequests.add((SR) sr);
+      }
+    } catch (Exception e) {
+      System.out.println(e);
     }
   }
 
@@ -656,7 +660,8 @@ public class MapEditorController {
   }
 
   public void newLocationPressedMouse(double x, double y) {
-    newLocationPressed((int) ((int) x - gesturePane.getLayoutX()), (int) ((int) y - gesturePane.getLayoutY()));
+    newLocationPressed(
+        (int) ((int) x - gesturePane.getLayoutX()), (int) ((int) y - gesturePane.getLayoutY()));
   }
 
   // New location through right click
