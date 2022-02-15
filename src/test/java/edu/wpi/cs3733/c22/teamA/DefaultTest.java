@@ -22,7 +22,7 @@ public class DefaultTest {
   public void test()
       throws ParseException, IOException, InvocationTargetException, IllegalAccessException {
     Connection connection = null;
-    Adb.initialConnection();
+    Adb.initialConnection("EmbeddedDriver");
 
     LocationDerbyImpl.inputFromCSV(
         "Location", "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
@@ -80,7 +80,11 @@ public class DefaultTest {
 
   @Test
   public void testOnAdb() {
-    Adb.initialConnection();
+
+    // test switch between EmbeddedDriver and ClientDriver
+    // Client server setup
+    // java -jar %DERBY_HOME%\lib\derbyrun.jar server start
+    Adb.initialConnection("EmbeddedDriver");
   }
 
   // Test on Location table (Fixed)
