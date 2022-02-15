@@ -1,3 +1,3 @@
-RequestID, getStartLocation, getEndLocation, getEmployeeRequested, getEmployeeAssigned, requestTime, getRequestStatus, getEquipmentID, getRequestType
-REQ1256,FDEPT00101,FDEPT00201,EMP1,EMP2,2018-09-01 09:01:15.0,In Progress,EQ1234,Low Priority
-REQ12325,FDEPT00101,FDEPT00201,EMP1,EMP2,2018-09-01 09:01:15.0,In Progress,EQ1234,Low Priority
+requestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments, equipmentID
+REQ1256,FDEPT00101,FDEPT00201,001,002,2018-09-01 09:01:15.0,WAITING, BLANK,Low Priority,EQ1234
+REQ12325,FDEPT00101,FDEPT00201,001,002,2018-09-01 09:01:15.0,BLANK, BLANK,Low Priority,EQ1234

@@ -1,37 +1,153 @@
-Employee(s)
-Location(s)
-MedicalEquipment -> Equipment
-Service Requests (SR)
-- FoodSR
-- LanguageSR
-- LaundrySR
-- EquipmentSR
-- ReligiousSR
-- SanitationSR
-- FloralSR
-- MedicineSR
-- SecuritySR
-- MaintenanceSR
-- GiftSR
-- ServiceRequest (Abstract entity), or SRController, no need for generic/abstract SR in database.
-
-Append Ctrl, DerbyImpl or DAO if not an entity
-
-Data Access Object - DAO
+Append Ctrl, Impl or DAO if not an entity, entities maintain only the identifier.
 
 Data View can become a single class that creates 1 of 4 different pages, take to root controller package
 Map Editor take to route controller
 Prevent extending recursive tree object, make the data view page better so that it doesn’t need a recursive tree object.
 
-ExportToBackUp
-LoadFromBackup
-
 Method names for JFoenix Buttons:  GoTo(exact page name here)
 Object names for JFoenix Buttons:  (exact page name)Button
 
-Generally write out full names when you can, exceptions for Impl, Ctrl and SR.
+Generally write out full names when you can, exceptions for Impl, DAO Ctrl and SR.
+Data Access Object = DAO
 
-Rename Scene Enum:
+Full File Structure Names:
+
+Main
+App
+Database
+SceneSwitcher ---> (enum names):
+                                   LOGIN,
+                                   HOME,
+                                   SELECT_SERVICE_REQUEST,
+                                   MAP,
+
+                                   SETTINGS,
+                                   LOAD_BACKUP,
+                                   SAVE_BACKUP,
+
+                                   LAUNDRY_SR,
+                                   FOOD_DELIVERY_SR,
+                                   LANGUAGE_SR,
+                                   EQUIPMENT_DELIVERY_SR,
+                                   RELIGIOUS_SR,
+                                   SANITATION_SR
+                                   FLORAL_DELIVERY_SR,
+                                   MEDICINE_DELIVERY_SR,
+                                   MAINTENANCE_SR,
+                                   GIFT_SR,
+                                   SECURITY_SR,
+
+                                   VIEW_EQUIPMENT,
+                                   VIEW_LOCATIONS,
+                                   VIEW_SERVICE_REQUESTS,
+                                   VIEW_EMPLOYEES,
+                                   VIEW_MEDICINE
+
+
+
+<controllers>
+
+    HomeCtrl
+    LoginCtrl
+    MapCtrl
+    DataviewCtrl
+    
+    <servicerequests>
+
+        EquipmentDeliverySRCtrl
+        FloralDeliverySRCtrl
+        FoodDeliverySRCtrl
+        LanguageDeliverySRCtrl
+        LaundryDeliverySRCtrl
+        MedicineDeliverySRCtrl
+        ReligiousSRCtrl
+        SanitationSRCtrl
+        SecuritySRCtrl
+        MaintenanceSRCtrl
+        GiftSRCtrl
+        SelectServiceRequestCtrl
+        SRCtrl
+   
+<settings>
+
+    LoadBackupCtrl
+    SaveBackupCtrl
+    SettingsCtrl
+    
+<entities>
+    
+    Employee
+    Equipment
+    Location
+    Medicine
+    
+    <servicerequests>
+
+        EquipmentDeliverySR
+        FloralDeliverySR
+        FoodDeliverySR
+        LanguageDeliverySR
+        LaundryDeliverySR
+        MedicineDeliverySR
+        ReligiousSR
+        SanitationSR
+        SecuritySR
+        MaintenanceSR
+        GiftSR
+        SR
+
+<database>
+
+<resources>
+
+    <css>
+        stuff
+
+    <csv>
+        stuff
+
+    <HospitalDBA>
+        stuff
+
+    <images>
+        stuff
+
+    <views>
+        Home
+        Login
+        Map
+
+        <dataviews>
+
+        ViewLocations
+        ViewEmployees
+        ViewServiceRequests
+        ViewEquipment
+        ViewMedicine
+
+
+        <servicerequests>
+        EquipmentDeliverySR
+        FloralDeliverySR
+        FoodDeliverySR
+        LanguageDeliverySR
+        LaundryDeliverySR
+        MedicineDeliverySR
+        ReligiousSR
+        SanitationSR
+        SecuritySR
+        MaintenanceSR
+        GiftSR
+        SR
+        SelectServiceRequest
+
+    <settings>
+        LoadBackup
+        SaveBackup
+        Settings
+    
+    
+
 
 
 

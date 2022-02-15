@@ -1,16 +1,16 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
-import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.languageservicerequest.LanguageServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.requests.LanguageServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.LanguageSR;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -18,12 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 
 public class LanguageSRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> languageChoice;
@@ -33,16 +28,7 @@ public class LanguageSRCtrl extends SRCtrl {
 
   @FXML
   public void initialize() throws ParseException {
-    sceneID = SceneSwitcher.SCENES.LANGUAGE_INTERPRETER_SERVICE_REQUEST_SCENE;
-
-    backButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    homeButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    clearButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    submitButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
+    sceneID = SceneSwitcher.SCENES.LANGUAGE_SR;
 
     commentsBox.setWrapText(true);
 
@@ -100,21 +86,22 @@ public class LanguageSRCtrl extends SRCtrl {
     if (!languageChoice.getSelectionModel().getSelectedItem().equals("Language")
         && toLocationChoice.getSelectionModel().getSelectedItem() != null
         && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
-      LanguageServiceRequest languageServiceRequest =
-          new LanguageServiceRequest(
+      LanguageSR languageSR =
+          new LanguageSR(
               "PlaceHolderID",
               "N/A",
               toLocationChoice.getSelectionModel().getSelectedItem(),
-              Aapp.factory.getUsername(),
+              App.factory.getUsername(),
               employeeChoice.getSelectionModel().getSelectedItem(),
               new Timestamp((new Date()).getTime()).toString(),
-              "NEW",
+              SR.Status.BLANK,
               "Language Interpreter",
               commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               languageChoice.getValue());
 
-      LanguageServiceRequestDAO languageServiceRequestDAO = new LanguageServiceRequestDerbyImpl();
-      languageServiceRequestDAO.enterLanguageServiceRequest(languageServiceRequest);
+      ServiceRequestDerbyImpl<LanguageSR> serviceRequestDAO =
+          new ServiceRequestDerbyImpl<>(new LanguageSR());
+      serviceRequestDAO.enterServiceRequest(languageSR);
       this.goToHomeScene();
     }
   }

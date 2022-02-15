@@ -1,7 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.entities.map;
 
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.requests.ServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -11,7 +11,7 @@ public class LocationMarker {
   private Location location;
   private Label label;
   private EquipmentMarker equipmentMarker;
-  private ServiceRequest serviceRequest;
+  private SR serviceRequest;
 
   public LocationMarker(Button button, Label label, Location location) {
     this.button = button;
@@ -71,11 +71,11 @@ public class LocationMarker {
     this.equipmentMarker = equipmentMarker;
   }
 
-  public ServiceRequest getServiceRequest() {
+  public SR getServiceRequest() {
     return serviceRequest;
   }
 
-  public void setServiceRequest(ServiceRequest serviceRequest) {
+  public void setServiceRequest(SR serviceRequest) {
     this.serviceRequest = serviceRequest;
   }
 }

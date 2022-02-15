@@ -2,19 +2,22 @@ package edu.wpi.cs3733.c22.teamA.controllers.map;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
-import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.map.EquipmentMarker;
 import edu.wpi.cs3733.c22.teamA.entities.map.LocationMarker;
 import edu.wpi.cs3733.c22.teamA.entities.map.SRMarker;
-import edu.wpi.cs3733.c22.teamA.entities.requests.ServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.EquipmentSR;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +27,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Insets;
@@ -46,12 +48,13 @@ public class MapEditorController {
   @FXML private JFXCheckBox locationCheckBox;
   @FXML private JFXCheckBox dragCheckBox;
   @FXML private JFXCheckBox equipmentCheckBox;
+  @FXML private JFXCheckBox serviceRequestCheckBox;
   @FXML private JFXCheckBox showTextCheckBox;
   @FXML private JFXButton deleteButton;
   @FXML private ComboBox floorSelectionComboBox;
   @FXML private AnchorPane anchorPane;
 
-  @FXML private JFXTextArea searchText = new JFXTextArea();
+  @FXML private JFXComboBox searchComboBox = new JFXComboBox();
 
   @FXML private JFXTextArea nodeIDText = new JFXTextArea();
   @FXML private JFXTextArea xPosText = new JFXTextArea();
@@ -77,10 +80,9 @@ public class MapEditorController {
 
   private List<Location> locations;
   private List<Equipment> equipments;
-  private List<ServiceRequest> serviceRequests;
+  private List<SR> serviceRequests;
   private Polygon locationMarkerShape;
   private Polygon equipmentMarkerShape;
-  private Polygon serviceRequestMarkerShape;
 
   String floor;
   String currentID;
@@ -93,12 +95,11 @@ public class MapEditorController {
   HashMap<Button, EquipmentMarker> buttonEquipmentMarker;
   HashMap<Button, SRMarker> buttonServiceRequestMarker;
 
-  private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
+  private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   public MapEditorController() {
     locationMarkerShape = new Polygon();
     equipmentMarkerShape = new Polygon();
-    serviceRequestMarkerShape = new Polygon();
     locationMarkerShape.getPoints().addAll(new Double[] {1.0, 4.0, 0.0, 2.0, 1.0, 0.0, 2.0, 2.0});
     equipmentMarkerShape.getPoints().addAll(new Double[] {0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0});
     serviceRequestMarkerShape
@@ -127,6 +128,7 @@ public class MapEditorController {
     setupCheckboxListeners();
     setInitialUIStates();
     fillFromDB();
+    setupSearchListener();
 
     backButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
@@ -149,6 +151,8 @@ public class MapEditorController {
 
               // Maps Location IDs to their markers
               HashMap<String, LocationMarker> locationIDs = new HashMap<>();
+              // Maps Location names to their markers
+              HashMap<String, LocationMarker> locationNames = new HashMap<>();
 
               // Loops through every location & draws them if present on the floor
               for (Location location : locations) {
@@ -156,6 +160,7 @@ public class MapEditorController {
                   LocationMarker locationMarker = newDraggableLocation(location);
                   locationMarker.draw(miniAnchorPane);
                   locationIDs.put(location.getNodeID(), locationMarker);
+                  locationNames.put(location.getShortName(), locationMarker);
                 }
               }
 
@@ -170,11 +175,11 @@ public class MapEditorController {
               }
 
               // Loops through every service request & draws them if they're on this floor
-              for (ServiceRequest serviceRequest : serviceRequests) {
-                if (locationIDs.containsKey(serviceRequest.getEndLocation())) {
+              for (SR serviceRequest : serviceRequests) {
+                if (locationNames.containsKey(serviceRequest.getEndLocation())) {
                   SRMarker serviceRequestMarker =
                       newDraggableServiceRequest(
-                          serviceRequest, locationIDs.get(serviceRequest.getEndLocation()));
+                          serviceRequest, locationNames.get(serviceRequest.getEndLocation()));
                   serviceRequestMarker.draw(anchorPane);
                 }
               }
@@ -197,6 +202,13 @@ public class MapEditorController {
               showLocations(new_val);
             });
 
+    serviceRequestCheckBox
+        .selectedProperty()
+        .addListener(
+            (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
+              showServiceRequests(new_val);
+            });
+
     showTextCheckBox
         .selectedProperty()
         .addListener(
@@ -217,6 +229,7 @@ public class MapEditorController {
     dragCheckBox.setSelected(true);
     showTextCheckBox.setSelected(true);
     equipmentCheckBox.setSelected(true);
+    serviceRequestCheckBox.setSelected(true);
     locationCheckBox.setSelected(true);
 
     inputVBox.setDisable(true);
@@ -226,54 +239,64 @@ public class MapEditorController {
   public void fillFromDB() {
     locations.addAll(new ArrayList<>(new LocationDerbyImpl().getNodeList()));
     equipments.addAll(new ArrayList<>(new EquipmentDerbyImpl().getMedicalEquipmentList()));
-    // serviceRequests.addAll(new ArrayList<>(new )); TODO Can only add once database refactoring is
-    // complete
+    // TODO add other types, currently just medical equipment requests
+    serviceRequests.addAll(
+        new ArrayList<>(new ServiceRequestDerbyImpl<>(new EquipmentSR()).getServiceRequestList()));
   }
 
   // Set up searchbar for LOCATIONS ONLY
   // TODO IMPLEMENT CHOICE OF LOCATION, EQUIPMENT, SR SEARCH (another button?)
+  // TODO MAKE IT LIVE UPDATE ON KEYSTROKE
   public void setupSearchListener() {
+    searchComboBox.setEditable(true);
+    searchComboBox.setVisibleRowCount(5);
     // set up list of locations to be wrapped
     ObservableList<Location> searchLocationList = FXCollections.observableArrayList();
     searchLocationList.addAll(locations);
+
     // create filtered list, can be filtered (duh)
     FilteredList<Location> filteredLocations = new FilteredList<>(searchLocationList, p -> true);
     // add listener that checks whenever changes are made to JFXText searchText
-    searchText
-        .textProperty()
+    searchComboBox
+        .getSelectionModel()
+        .selectedItemProperty()
         .addListener(
             (observable, oldValue, newValue) -> {
               filteredLocations.setPredicate(
                   location -> {
                     // if field is empty display all locations
-                    if (newValue == null || newValue.isEmpty()) {
+                    if ((newValue == null
+                            || searchComboBox.getSelectionModel().toString().isEmpty())
+                        && location.getFloor().equals(floor)) {
                       return true;
                     }
                     // make sure case is factored out
-                    String lowerCaseFilter = newValue.toLowerCase();
+                    String lowerCaseFilter = newValue.toString().toLowerCase();
                     // if search matches either name or ID, display it
                     // if not, this returns false and doesnt display
-                    return location.getLongName().toLowerCase().contains(lowerCaseFilter)
-                        || location.getShortName().toLowerCase().contains(lowerCaseFilter)
-                        || location.getNodeID().toLowerCase().contains(lowerCaseFilter);
+                    return (location.getLongName().toLowerCase().contains(lowerCaseFilter)
+                            || location.getShortName().toLowerCase().contains(lowerCaseFilter)
+                            || location.getNodeID().toLowerCase().contains(lowerCaseFilter))
+                        && location.getFloor().equals(floor);
                   });
+              ArrayList<String> locationNames = new ArrayList<>();
+              for (Location l : filteredLocations) {
+                locationNames.add(l.getLongName());
+              }
+              searchComboBox.getItems().clear();
+              searchComboBox.getItems().addAll(locationNames);
+              clearAll();
+
+              HashMap<String, LocationMarker> locationIDs = new HashMap<>();
+              // Loops through every location filtered & draws them if present on the floor
+              for (Location location : locations) {
+                if (filteredLocations.contains(location)) {
+                  LocationMarker locationMarker = newDraggableLocation(location);
+                  locationMarker.draw(anchorPane);
+                  locationIDs.put(location.getNodeID(), locationMarker);
+                }
+              }
             });
-    SortedList<Location> sortedLocations = new SortedList<>(filteredLocations);
-
-    // searchText.dropdown.addAll(sortedLocations)
-
-    // TODO clean this up. it's gross
-    clearAll();
-    // Maps Location IDs to their markers
-    HashMap<String, LocationMarker> locationIDs = new HashMap<>();
-    // Loops through every location & draws them if present on the floor
-    for (Location location : locations) {
-      if (sortedLocations.contains(location)) {
-        LocationMarker locationMarker = newDraggableLocation(location);
-        locationMarker.draw(anchorPane);
-        locationIDs.put(location.getNodeID(), locationMarker);
-      }
-    }
   }
 
   // Sets up the floor
@@ -328,7 +351,7 @@ public class MapEditorController {
   public LocationMarker newDraggableLocation(Location location) {
     double buttonX = location.getXCoord() + mapImageView.getLayoutX() - 8;
     double buttonY = location.getYCoord() + mapImageView.getLayoutY() - 24;
-    Button button = newDraggableButton(buttonX, buttonY, true);
+    Button button = newDraggableButton(buttonX, buttonY, 0);
 
     button.setPickOnBounds(false);
     button.setStyle("-fx-background-color: #78aaf0");
@@ -348,7 +371,7 @@ public class MapEditorController {
 
     double buttonX = locationMarker.getLocation().getXCoord() + mapImageView.getLayoutX() - 8 + 10;
     double buttonY = locationMarker.getLocation().getYCoord() + mapImageView.getLayoutY() - 24 + 10;
-    Button button = newDraggableButton(buttonX, buttonY, false);
+    Button button = newDraggableButton(buttonX, buttonY, 1);
 
     double labelX =
         locationMarker.getLocation().getXCoord() + mapImageView.getLayoutX() - 8 + 7.5 + 10;
@@ -368,29 +391,24 @@ public class MapEditorController {
   }
 
   // Makes a new Draggable Service Request button and Label
-  public SRMarker newDraggableServiceRequest(
-      ServiceRequest serviceRequest, LocationMarker locationMarker) {
+  public SRMarker newDraggableServiceRequest(SR serviceRequest, LocationMarker locationMarker) {
 
-    double buttonX = locationMarker.getLocation().getXCoord() + mapImageView.getLayoutX() - 8 + 10;
-    double buttonY = locationMarker.getLocation().getYCoord() + mapImageView.getLayoutY() - 24 + 10;
-    Button button = newDraggableButton(buttonX, buttonY, false);
+    double buttonX = locationMarker.getLocation().getXCoord() + mapImageView.getLayoutX() - 8;
+    double buttonY = locationMarker.getLocation().getYCoord() + mapImageView.getLayoutY() - 24;
+    Button button = newDraggableButton(buttonX, buttonY, 2);
 
-    double labelX =
-        locationMarker.getLocation().getXCoord() + mapImageView.getLayoutX() - 8 + 7.5 + 10;
-    double labelY =
-        locationMarker.getLocation().getYCoord() + mapImageView.getLayoutY() - 24 - 15 + 10;
-    Label label =
-        newDraggableLabel(
-            labelX, labelY, serviceRequest.getRequestID() + serviceRequest.getRequestType());
+    double labelX = locationMarker.getLocation().getXCoord() + mapImageView.getLayoutX() - 8 + 7.5;
+    double labelY = locationMarker.getLocation().getYCoord() + mapImageView.getLayoutY() - 24 - 15;
+    Label label = newDraggableLabel(labelX, labelY, "");
 
     button.setPickOnBounds(false);
     // TODO Wait for refactoring of database before implementing
-    switch (serviceRequest.getRequestType()) {
-      default:
-        button.setStyle("-fx-background-color: RED");
+    switch (serviceRequest.getSrType()) {
+      case EQUIPMENT:
+        button.setStyle("-fx-background-color: YELLOW");
         break;
     }
-    button.setShape(serviceRequestMarkerShape);
+    button.setShape(locationMarkerShape);
 
     SRMarker serviceRequestMarker = new SRMarker(serviceRequest, button, label, locationMarker);
     buttonServiceRequestMarker.put(button, serviceRequestMarker);
@@ -410,19 +428,19 @@ public class MapEditorController {
   }
 
   // Makes a new Draggable Button
-  public Button newDraggableButton(double posX, double posY, boolean isLocationMarker) {
+  public Button newDraggableButton(double posX, double posY, int markerType) {
     Button button = new Button();
     button.setMinWidth(4.0);
     button.setMinHeight(2.0);
     button.setLayoutX(posX);
     button.setLayoutY(posY);
     button.setPickOnBounds(false);
-    setDragFunctions(button, isLocationMarker);
+    setDragFunctions(button, markerType);
     return button;
   }
 
   // Sets drag functions
-  public void setDragFunctions(Button button, boolean isLocationMarker) {
+  public void setDragFunctions(Button button, int markerType) {
     final Delta dragDelta = new Delta();
     button.setOnAction(
         event -> {
@@ -439,10 +457,13 @@ public class MapEditorController {
           dragDelta.mouseX = mouseEvent.getSceneX();
           dragDelta.mouseY = mouseEvent.getSceneY();
           button.setCursor(Cursor.MOVE);
-          if (isLocationMarker) {
+          if (markerType == 0) {
             existingLocationSelected(buttonLocationMarker.get(button).getLocation());
-          } else {
+          } else if (markerType == 1) {
             existingEquipmentSelected(buttonEquipmentMarker.get(button).getEquipment());
+          } else {
+            existingServiceRequestSelected(
+                buttonServiceRequestMarker.get(button).getServiceRequest());
           }
           editButton.setDisable(false);
           deleteButton.setDisable(false);
@@ -458,10 +479,12 @@ public class MapEditorController {
             xPosText.setText(String.valueOf(button.getLayoutX() - mapImageView.getLayoutX() + 8));
             yPosText.setText(String.valueOf(button.getLayoutY() - mapImageView.getLayoutY() + 24));
             Label correspondingLabel;
-            if (isLocationMarker) {
+            if (markerType == 0) {
               correspondingLabel = buttonLocationMarker.get(button).getLabel();
-            } else {
+            } else if (markerType == 1) {
               correspondingLabel = buttonEquipmentMarker.get(button).getLabel();
+            } else {
+              correspondingLabel = buttonServiceRequestMarker.get(button).getLabel();
             }
             correspondingLabel.setLayoutX((dragDelta.mouseX-mouseEvent.getSceneX()) / (transformed.getHeight() / miniAnchorPane.getHeight() ) + + 8);
             correspondingLabel.setLayoutY((dragDelta.mouseY-mouseEvent.getSceneY()) / (transformed.getHeight() / miniAnchorPane.getHeight() )- 24);
@@ -478,6 +501,9 @@ public class MapEditorController {
     for (EquipmentMarker equipmentMarker : buttonEquipmentMarker.values()) {
       equipmentMarker.clear(miniAnchorPane);
     }
+    for (SRMarker serviceRequestMarker : buttonServiceRequestMarker.values()) {
+      serviceRequestMarker.clear(anchorPane);
+    }
   }
 
   // Toggle Labels
@@ -490,6 +516,11 @@ public class MapEditorController {
     if (equipmentCheckBox.isSelected()) {
       for (EquipmentMarker equipmentMarker : buttonEquipmentMarker.values()) {
         equipmentMarker.setLabelVisibility(value);
+      }
+    }
+    if (serviceRequestCheckBox.isSelected()) {
+      for (SRMarker serviceRequestMarker : buttonServiceRequestMarker.values()) {
+        serviceRequestMarker.setLabelVisibility(value);
       }
     }
   }
@@ -510,6 +541,16 @@ public class MapEditorController {
       equipmentMarker.setButtonVisibility(value);
       if (showTextCheckBox.isSelected()) {
         equipmentMarker.setLabelVisibility(value);
+      }
+    }
+  }
+
+  // Toggles Equipment
+  public void showServiceRequests(boolean value) {
+    for (SRMarker serviceRequestMarker : buttonServiceRequestMarker.values()) {
+      serviceRequestMarker.setButtonVisibility(value);
+      if (showTextCheckBox.isSelected()) {
+        serviceRequestMarker.setLabelVisibility(value);
       }
     }
   }
@@ -577,6 +618,27 @@ public class MapEditorController {
     shortnameText.setText(equipment.getCurrentLocation());
   }
 
+  // Existing Service Request Selected
+  public void existingServiceRequestSelected(SR serviceRequest) {
+    inputVBox.setDisable(false);
+
+    nodeIDText.setEditable(false);
+    xPosText.setEditable(false);
+    yPosText.setEditable(false);
+    floorText.setEditable(false);
+    buildingText.setEditable(false);
+    typeText.setEditable(false);
+    longnameText.setEditable(false);
+    shortnameText.setEditable(false);
+
+    nodeIDText.setText(serviceRequest.getRequestID());
+    floorText.setText("");
+    buildingText.setText("");
+    typeText.setText(serviceRequest.getRequestType());
+    longnameText.setText("N/A");
+    shortnameText.setText(serviceRequest.getEndLocation());
+  }
+
   // Save Changes
   public void saveChanges() {
 
@@ -634,13 +696,19 @@ public class MapEditorController {
   // Go to Location Table
   @FXML
   public void goToLocationTable() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_LOCATION_DATA_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_LOCATIONS);
   }
 
   // Return to Home Screen
   @FXML
   public void returnToHomeScene() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
+  }
+
+  @FXML
+  public void returnToSelectServiceScene() throws IOException {
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
+    locations.addAll(new ArrayList<>(new LocationDerbyImpl().getNodeList()));
   }
 
   // records relative x and y co-ordinates.

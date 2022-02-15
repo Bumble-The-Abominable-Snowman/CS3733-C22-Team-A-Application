@@ -1,16 +1,16 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
-import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.EquipmentServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.medicalequipmentservicerequest.EquipmentServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.requests.MedicalEquipmentServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.EquipmentSR;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -18,12 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 
 // TODO fix naming
 // TODO make dependent on database for medical equipment
@@ -65,16 +60,7 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
 
   @FXML
   private void initialize() {
-    sceneID = SceneSwitcher.SCENES.MEDICAL_EQUIPMENT_DELIVERY_SERVICE_REQUEST_SCENE;
-
-    backButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    homeButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    clearButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    submitButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
+    sceneID = SceneSwitcher.SCENES.EQUIPMENT_DELIVERY_SR;
 
     commentsBox.setWrapText(true);
 
@@ -142,23 +128,22 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
         && employeeChoice.getSelectionModel().getSelectedItem() != null) {
 
       // pass medical service request object
-      EquipmentServiceRequestDAO equipmentServiceRequestDAO =
-          new EquipmentServiceRequestDerbyImpl();
-      MedicalEquipmentServiceRequest medicalEquipmentServiceRequest =
-          new MedicalEquipmentServiceRequest(
+      EquipmentSR equipmentSR =
+          new EquipmentSR(
               "PlaceHolderID",
               fromChoice.getSelectionModel().getSelectedItem().toString(),
               toLocationChoice.getSelectionModel().getSelectedItem().toString(),
-              Aapp.factory.getUsername(),
+              App.factory.getUsername(),
               employeeChoice.getSelectionModel().getSelectedItem().toString(),
               new Timestamp((new Date()).getTime()).toString(),
-              "NEW",
+              SR.Status.BLANK,
               "Medical Equipment",
               commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               typeChoice.getSelectionModel().getSelectedItem().toString());
 
-      equipmentServiceRequestDAO.enterMedicalEquipmentServiceRequest(
-          medicalEquipmentServiceRequest);
+      ServiceRequestDerbyImpl<EquipmentSR> serviceRequestDAO =
+          new ServiceRequestDerbyImpl<>(new EquipmentSR());
+      serviceRequestDAO.enterServiceRequest(equipmentSR);
 
       this.goToHomeScene();
     }

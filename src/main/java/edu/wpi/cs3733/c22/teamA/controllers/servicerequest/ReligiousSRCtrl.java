@@ -1,16 +1,16 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
-import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.religiousservicerequest.ReligiousServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.requests.ReligiousServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.ReligiousSR;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -20,12 +20,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 
 public class ReligiousSRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> religionChoice;
@@ -67,16 +62,7 @@ public class ReligiousSRCtrl extends SRCtrl {
 
   @FXML
   private void initialize() throws ParseException {
-    sceneID = SceneSwitcher.SCENES.RELIGIOUS_SERVICE_REQUEST_SCENE;
-
-    backButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    homeButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    clearButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    submitButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
+    sceneID = SceneSwitcher.SCENES.RELIGIOUS_SR;
 
     commentsBox.setWrapText(true);
 
@@ -138,21 +124,21 @@ public class ReligiousSRCtrl extends SRCtrl {
     if (!religionChoice.getSelectionModel().getSelectedItem().equals("Type")
         && toLocationChoice.getSelectionModel().getSelectedItem() != null
         && employeeChoice.getSelectionModel().getSelectedItem() != null) {
-      ReligiousServiceRequest religiousServiceRequest =
-          new ReligiousServiceRequest(
+      ReligiousSR religiousSR =
+          new ReligiousSR(
               "PlaceHolderID",
               "N/A",
               toLocationChoice.getSelectionModel().getSelectedItem(),
-              Aapp.factory.getUsername(),
+              App.factory.getUsername(),
               employeeChoice.getSelectionModel().getSelectedItem(),
               new Timestamp((new Date()).getTime()).toString(),
-              "NEW",
+              SR.Status.BLANK,
               "Religious Services",
               commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               religionChoice.getValue());
-      ReligiousServiceRequestDAO religiousServiceRequestDAO =
-          new ReligiousServiceRequestDerbyImpl();
-      religiousServiceRequestDAO.enterReligiousServiceRequest(religiousServiceRequest);
+      ServiceRequestDerbyImpl<ReligiousSR> serviceRequestDAO =
+          new ServiceRequestDerbyImpl<>(new ReligiousSR());
+      serviceRequestDAO.enterServiceRequest(religiousSR);
       this.goToHomeScene();
     }
   }

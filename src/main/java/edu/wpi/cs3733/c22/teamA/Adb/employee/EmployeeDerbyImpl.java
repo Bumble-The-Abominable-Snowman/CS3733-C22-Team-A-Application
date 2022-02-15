@@ -22,7 +22,8 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
   public Employee getEmployee(String ID) {
     try {
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
       Statement get = connection.createStatement();
       String str = String.format("SELECT * FROM Employee WHERE employeeID = '%s'", ID);
       ResultSet rset = get.executeQuery(str);
@@ -54,7 +55,8 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
   public void updateEmployee(String ID, String field, Object change) {
     try {
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
       Statement update = connection.createStatement();
 
       String str = "";
@@ -95,7 +97,8 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
       Date startDate) {
     try {
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
       Statement insert = connection.createStatement();
 
       SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -127,7 +130,8 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
   public void deleteEmployee(String ID) {
     try {
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
       Statement delete = connection.createStatement();
       String str = String.format("DELETE FROM Employee WHERE employeeID = '%s'", ID);
       delete.execute(str);
@@ -143,7 +147,8 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     List<Employee> empList = new ArrayList<>();
     try {
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
       Statement getNodeList = connection.createStatement();
       ResultSet rset = getNodeList.executeQuery("SELECT * FROM Employee");
 
@@ -255,17 +260,19 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
   public static void inputFromCSV(String tableName, String csvFilePath) { // Check employee table
     try {
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
       Statement dropTable = connection.createStatement();
 
       dropTable.execute("DELETE FROM Employee");
     } catch (SQLException e) {
-      System.out.println("Delete failed");
+      System.out.println("Delete on Employee failed");
     }
 
     try {
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
 
       List<Employee> List = EmployeeDerbyImpl.readEmployeeCSV(csvFilePath);
       for (Employee l : List) {
@@ -294,7 +301,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
                 + "')");
       }
     } catch (SQLException | IOException | ParseException e) {
-      System.out.println("Insertion failed!");
+      System.out.println("Insertion on Employee failed!");
     }
   }
 

@@ -6,14 +6,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane styleClass="snowmanBackground" stylesheets="@snowman/snowmanBackground.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: LIGHTBLUE;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.dataview.LocationDataController">
+<AnchorPane styleClass="snowmanBackground" stylesheets="@../../css/otherPages.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: LIGHTBLUE;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.dataview.LocationDataController">
       <Label layoutX="195.0" layoutY="10.0" text="Location Data" textFill="WHITE">
          <font>
             <Font name="System Bold" size="32.0" />
          </font>
       </Label>
       <JFXTreeTableView fx:id="locationTable" layoutX="20.0" layoutY="67.0" prefHeight="318.0" prefWidth="559.0" showRoot="false" />
-      <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="26.0" prefWidth="55.0" text="Back" textFill="WHITE">
+      <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToHomeScene" prefHeight="26.0" prefWidth="55.0" text="Back" textFill="WHITE">
       <cursor>
          <Cursor fx:constant="HAND" />
       </cursor></JFXButton>

@@ -1,0 +1,35 @@
+.GridPane {
+    -fx-background-image: url('../images/AllBackground.jpg');
+    -fx-background-size: 100% 100%;
+}
+
+.button{
+    -fx-background-color: #B55243;
+    -fx-text-fill: WHITE;
+    -fx-background-size: 100% 100%;
+    -fx-border-color: BLACK;
+    -fx-cursor: HAND;
+    -fx-border-radius: 40;
+    -fx-background-radius: 40;
+    transition-duration: 0.04s;
+    -fx-font-weight: BOLD;
+}
+
+.button:hover{
+    -fx-background-color: #0048BA;
+}
+
+.label{
+    -fx-text-fill: BLACK;
+    -fx-font-weight: BOLD;
+}
+
+.combo-box{
+    -fx-background-color: #B55243;
+    -fx-text-fill: #FFFFFF;
+}
+
+.combo-box:focused{
+    -fx-background-color: #0048BA;
+    -fx-text-fill: #FFFFFF;
+}

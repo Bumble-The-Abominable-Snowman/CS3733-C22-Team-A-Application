@@ -1,28 +1,23 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
-import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest.FoodDeliveryServiceRequestDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.fooddeliveryservicerequest.FoodDeliveryServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.requests.FoodDeliveryServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.FoodDeliverySR;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 
 public class FoodDeliverySRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> mainChoice;
@@ -35,16 +30,7 @@ public class FoodDeliverySRCtrl extends SRCtrl {
 
   @FXML
   public void initialize() throws ParseException {
-    sceneID = SceneSwitcher.SCENES.FOOD_DELIVERY_SERVICE_REQUEST_SCENE;
-
-    backButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    homeButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    clearButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    submitButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
+    sceneID = SceneSwitcher.SCENES.FOOD_DELIVERY_SR;
 
     commentsBox.setWrapText(true);
 
@@ -83,15 +69,15 @@ public class FoodDeliverySRCtrl extends SRCtrl {
   }
 
   @FXML
-  private FoodDeliveryServiceRequest createFoodRequest() throws IOException {
-    return new FoodDeliveryServiceRequest(
+  private FoodDeliverySR createFoodRequest() throws IOException {
+    return new FoodDeliverySR(
         "PlaceHolderID",
         "N/A",
         toLocationChoice.getSelectionModel().getSelectedItem().toString(),
-        Aapp.factory.getUsername(),
+        App.factory.getUsername(),
         employeeChoice.getSelectionModel().getSelectedItem().toString(),
         new Timestamp((new Date()).getTime()).toString(),
-        "NEW",
+        SR.Status.BLANK,
         "Food Delivery",
         commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
         mainChoice.getValue(),
@@ -102,9 +88,9 @@ public class FoodDeliverySRCtrl extends SRCtrl {
 
   @FXML
   void submitRequest() throws IOException {
-    FoodDeliveryServiceRequest foodDeliveryServiceRequest = createFoodRequest();
-    FoodDeliveryServiceRequestDAO foodDeliveryServiceRequestDAO =
-        new FoodDeliveryServiceRequestDerbyImpl();
-    // foodDeliveryServiceRequestDAO.enterRequest(foodDeliveryServiceRequest);
+    FoodDeliverySR foodDeliverySR = createFoodRequest();
+    ServiceRequestDerbyImpl<FoodDeliverySR> serviceRequestDAO =
+        new ServiceRequestDerbyImpl<>(new FoodDeliverySR());
+    serviceRequestDAO.enterServiceRequest(foodDeliverySR);
   }
 }

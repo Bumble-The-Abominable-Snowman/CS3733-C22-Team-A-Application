@@ -5,9 +5,9 @@ import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import edu.wpi.cs3733.c22.teamA.Aapp;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class LocationDataController implements Initializable {
   @FXML JFXTreeTableView<Location> locationTable;
   boolean fillerYes = true;
 
-  private final SceneSwitcher sceneSwitcher = Aapp.sceneSwitcher;
+  private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
@@ -112,7 +112,7 @@ public class LocationDataController implements Initializable {
   }
 
   @FXML
-  private void returnToHomeScene() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME_SCENE);
+  private void goToHomeScene() throws IOException {
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
   }
 }

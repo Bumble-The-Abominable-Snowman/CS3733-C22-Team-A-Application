@@ -7,19 +7,14 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.requests.FloralDeliveryRequest;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.FloralDeliverySR;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 
 public class FloralDeliverySRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> flowerChoice;
@@ -30,16 +25,7 @@ public class FloralDeliverySRCtrl extends SRCtrl {
 
   @FXML
   public void initialize() throws ParseException {
-    sceneID = SceneSwitcher.SCENES.FLORAL_DELIVERY_SERVICE_REQUEST_SCENE;
-
-    backButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    homeButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    clearButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    submitButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
+    sceneID = SceneSwitcher.SCENES.FLORAL_DELIVERY_SR;
 
     commentsBox.setWrapText(true);
 
@@ -88,7 +74,7 @@ public class FloralDeliverySRCtrl extends SRCtrl {
   }
 
   @FXML
-  private void createFloralRequest(FloralDeliveryRequest floralRequest) {
+  private void createFloralRequest(FloralDeliverySR floralRequest) {
     floralRequest.setFlower(flowerChoice.getValue());
     floralRequest.setBouquetType(bouquetTypeChoice.getValue());
     floralRequest.setToLocation(toLocationChoice.getValue());
@@ -98,7 +84,7 @@ public class FloralDeliverySRCtrl extends SRCtrl {
 
   @FXML
   void submitRequest() throws IOException {
-    FloralDeliveryRequest floralRequest = new FloralDeliveryRequest();
+    FloralDeliverySR floralRequest = new FloralDeliverySR();
     if (!flowerChoice.getSelectionModel().getSelectedItem().equals("Flower")
         && !bouquetTypeChoice.getSelectionModel().getSelectedItem().equals("Bouquet Type")
         && toLocationChoice.getSelectionModel().getSelectedItem() != null

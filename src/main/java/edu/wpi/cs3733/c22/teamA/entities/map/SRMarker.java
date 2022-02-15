@@ -1,24 +1,23 @@
 package edu.wpi.cs3733.c22.teamA.entities.map;
 
-import edu.wpi.cs3733.c22.teamA.entities.requests.ServiceRequest;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class SRMarker extends Marker {
-  private ServiceRequest serviceRequest;
+  private SR serviceRequest;
 
-  public SRMarker(
-      ServiceRequest serviceRequest, Button button, Label label, LocationMarker locationMarker) {
+  public SRMarker(SR serviceRequest, Button button, Label label, LocationMarker locationMarker) {
     super(button, label, locationMarker);
 
     this.serviceRequest = serviceRequest;
   }
 
-  public ServiceRequest getServiceRequest() {
+  public SR getServiceRequest() {
     return serviceRequest;
   }
 
-  public void setServiceRequest(ServiceRequest equipment) {
+  public void setServiceRequest(SR serviceRequest) {
     this.serviceRequest = serviceRequest;
   }
 }

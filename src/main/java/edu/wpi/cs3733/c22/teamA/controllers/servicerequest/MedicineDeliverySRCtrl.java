@@ -7,19 +7,14 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.requests.MedicineDeliveryRequest;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.MedicineDeliverySR;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 
 public class MedicineDeliverySRCtrl extends SRCtrl {
 
@@ -30,16 +25,7 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
 
   @FXML
   public void initialize() throws ParseException {
-    sceneID = SceneSwitcher.SCENES.MEDICINE_DELIVERY_SERVICE_REQUEST_SCENE;
-
-    backButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    homeButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    clearButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    submitButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
+    sceneID = SceneSwitcher.SCENES.MEDICINE_DELIVERY_SR;
 
     commentsBox.setWrapText(true);
 
@@ -95,16 +81,16 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
   }
 
   @FXML
-  private void createMedicineRequest(MedicineDeliveryRequest medicineRequest) {
+  private void createMedicineRequest(MedicineDeliverySR medicineRequest) {
     medicineRequest.setMedicineChoice(medicineChoice.getValue());
-    medicineRequest.setToLocation(toLocationChoice.getValue());
-    medicineRequest.setRequestedEmployee(employeeChoice.getValue());
-    medicineRequest.setToLocation(commentsBox.getText());
+    //    medicineRequest.setToLocation(toLocationChoice.getValue());
+    //    medicineRequest.setRequestedEmployee(employeeChoice.getValue());
+    //    medicineRequest.setToLocation(commentsBox.getText());
   }
 
   @FXML
   void submitRequest() throws IOException {
-    MedicineDeliveryRequest medicineRequest = new MedicineDeliveryRequest();
+    MedicineDeliverySR medicineRequest = new MedicineDeliverySR();
     if (!medicineChoice.getSelectionModel().getSelectedItem().equals("Medicine")
         && toLocationChoice.getSelectionModel().getSelectedItem() != null
         && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {

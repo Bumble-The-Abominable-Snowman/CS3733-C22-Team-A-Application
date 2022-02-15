@@ -6,8 +6,8 @@ public class Main {
 
   public static void main(String[] args) {
 
-    Adb.initialConnection();
+    Adb.initialConnection("EmbeddedDriver");
 
-    Aapp.launch(Aapp.class, args);
+    App.launch(App.class, args);
   }
 }
