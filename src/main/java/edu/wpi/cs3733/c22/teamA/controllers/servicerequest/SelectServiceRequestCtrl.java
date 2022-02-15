@@ -5,11 +5,6 @@ import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 
 public class SelectServiceRequestCtrl {
 
@@ -24,28 +19,6 @@ public class SelectServiceRequestCtrl {
   @FXML private JFXButton backButton;
 
   private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
-
-  @FXML
-  private void initialize() {
-    medicalEquipmentDeliveryButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
-    religiousRequestsButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
-    sanitationServicesButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
-    laundryServicesButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
-    languageServicesButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
-    floralServicesButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
-    medicineDeliveryButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
-    foodDeliveryButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
-    backButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-  }
 
   @FXML
   private void goToMedicalEquipmentDeliveryScene() throws IOException {

@@ -294,7 +294,7 @@ public class LocationDerbyImpl implements LocationDAO {
 
       deleteTable.execute("DELETE FROM TowerLocations");
     } catch (SQLException e) {
-      System.out.println("Delete failed");
+      System.out.println("Delete on TowerLocations failed");
     }
 
     try {
@@ -325,7 +325,7 @@ public class LocationDerbyImpl implements LocationDAO {
                 + "')");
       }
     } catch (SQLException | IOException e) {
-      System.out.println("Insertion failed!");
+      System.out.println("Insertion on TowerLocations failed!");
       return;
     }
     return;

@@ -1,5 +1,5 @@
-.hospitalBackground {
-    -fx-background-image: url('../images/FrontBackground.JPG');
+.GridPane {
+    -fx-background-image: url('../images/AllBackground.jpg');
     -fx-background-size: 100% 100%;
 }
 
@@ -22,4 +22,14 @@
 .label{
     -fx-text-fill: BLACK;
     -fx-font-weight: BOLD;
+}
+
+.combo-box{
+    -fx-background-color: #B55243;
+    -fx-text-fill: #FFFFFF;
+}
+
+.combo-box:focused{
+    -fx-background-color: #0048BA;
+    -fx-text-fill: #FFFFFF;
 }

@@ -14,12 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 
 public class MedicineDeliverySRCtrl extends SRCtrl {
 
@@ -31,15 +26,6 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
   @FXML
   public void initialize() throws ParseException {
     sceneID = SceneSwitcher.SCENES.MEDICINE_DELIVERY_SR;
-
-    backButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    homeButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    clearButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    submitButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
 
     commentsBox.setWrapText(true);
 
@@ -97,9 +83,9 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
   @FXML
   private void createMedicineRequest(MedicineDeliverySR medicineRequest) {
     medicineRequest.setMedicineChoice(medicineChoice.getValue());
-    medicineRequest.setToLocation(toLocationChoice.getValue());
-    medicineRequest.setRequestedEmployee(employeeChoice.getValue());
-    medicineRequest.setToLocation(commentsBox.getText());
+    //    medicineRequest.setToLocation(toLocationChoice.getValue());
+    //    medicineRequest.setRequestedEmployee(employeeChoice.getValue());
+    //    medicineRequest.setToLocation(commentsBox.getText());
   }
 
   @FXML

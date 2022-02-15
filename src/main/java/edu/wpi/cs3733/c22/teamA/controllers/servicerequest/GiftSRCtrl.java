@@ -6,19 +6,14 @@ import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.GiftSR;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.GiftDeliverySR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SanitationSR;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 
 public class GiftSRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> typeChoice;
@@ -30,15 +25,6 @@ public class GiftSRCtrl extends SRCtrl {
   @FXML
   private void initialize() {
     sceneID = SceneSwitcher.SCENES.SANITATION_SR;
-
-    backButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    homeButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    clearButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
-    submitButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
 
     commentsBox.setWrapText(true);
     typeOtherBox.setWrapText(true);
@@ -83,7 +69,8 @@ public class GiftSRCtrl extends SRCtrl {
             "Sanitation Services",
             commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
             typeChoice.getValue());
-    ServiceRequestDerbyImpl<GiftSR> serviceRequestDAO = new ServiceRequestDerbyImpl<>(new GiftSR());
+    ServiceRequestDerbyImpl<GiftDeliverySR> serviceRequestDAO =
+        new ServiceRequestDerbyImpl<>(new GiftDeliverySR());
     serviceRequestDAO.enterServiceRequest(giftSR);
 
     // Submit to database

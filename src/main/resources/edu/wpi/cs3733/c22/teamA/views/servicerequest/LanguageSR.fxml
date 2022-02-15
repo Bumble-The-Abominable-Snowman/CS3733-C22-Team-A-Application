@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: LIGHTBLUE;" styleClass="snowmanBackground" stylesheets="@../../css/snowmanBackground.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.servicerequest.LanguageSRCtrl">
+<GridPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: LIGHTBLUE;" styleClass="GridPane" stylesheets="@../../css/otherPages.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.servicerequest.LanguageSRCtrl">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -28,7 +28,7 @@
             <Font name="System Bold" size="19.0" />
         </font>
     </Label>
-    <Label alignment="CENTER" layoutX="232.0" layoutY="89.0" prefHeight="34.0" prefWidth="137.0" text="Map (To Be Added)" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+    <Label alignment="CENTER" layoutX="232.0" layoutY="89.0" prefHeight="34.0" prefWidth="170.0" text="Map (To Be Added)" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
         <font>
             <Font size="16.0" />
         </font>
@@ -44,7 +44,7 @@
       <cursor>
          <Cursor fx:constant="HAND" />
       </cursor></JFXButton>
-    <JFXButton fx:id="homeButton" buttonType="RAISED" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#goToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+    <JFXButton fx:id="homeButton" buttonType="RAISED" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#goToHomeScene" prefHeight="34.0" prefWidth="61.0" text="Home" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
       <cursor>
          <Cursor fx:constant="HAND" />
       </cursor></JFXButton>

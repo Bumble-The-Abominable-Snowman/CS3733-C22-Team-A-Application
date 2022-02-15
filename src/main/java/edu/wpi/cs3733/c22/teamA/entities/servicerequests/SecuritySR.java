@@ -10,8 +10,6 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class SecuritySR extends SR {
 
-  private String equipmentID;
-
   public SecuritySR() {
     super();
     this.srType = SRType.SECURITY;
@@ -26,8 +24,7 @@ public class SecuritySR extends SR {
       String requestTime,
       Status requestStatus,
       String requestType,
-      String comments,
-      String equipmentID) {
+      String comments) {
     super();
     this.requestID = requestID;
     this.startLocation = startLocation;
@@ -38,7 +35,6 @@ public class SecuritySR extends SR {
     this.requestStatus = requestStatus;
     this.requestType = requestType;
     this.comments = comments;
-    this.equipmentID = equipmentID;
 
     this.srType = SRType.SECURITY;
   }

@@ -4,13 +4,9 @@ import com.jfoenix.controls.JFXButton;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
@@ -24,8 +20,6 @@ public class LoginCtrl {
 
   @FXML
   private void initialize() {
-    logInButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(40), Insets.EMPTY)));
 
     usernameBox.setOnKeyPressed(
         event -> {
@@ -40,6 +34,33 @@ public class LoginCtrl {
             this.logIn();
           }
         });
+
+    double welcomeTextSize = welcomeBox.getFont().getSize();
+    double usernameTextSize = usernameBox.getFont().getSize();
+    double passwordTextSize = passwordBox.getFont().getSize();
+    double logInButtonTextSize = logInButton.getFont().getSize();
+
+    App.getStage()
+        .widthProperty()
+        .addListener(
+            (obs, oldVal, newVal) -> {
+              welcomeBox.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * welcomeTextSize)
+                      + "pt;");
+              usernameBox.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * usernameTextSize)
+                      + "pt;");
+              passwordBox.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * passwordTextSize)
+                      + "pt;");
+              logInButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * logInButtonTextSize)
+                      + "pt;");
+            });
   }
 
   @FXML

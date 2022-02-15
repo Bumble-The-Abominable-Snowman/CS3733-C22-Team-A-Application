@@ -78,7 +78,6 @@ public class SceneSwitcher {
     if (currentScene == null) currentScene = new Scene(root);
     else currentScene.setRoot(root);
     App.getStage().setScene(currentScene);
-    App.getStage().setMaximized(true);
     App.getStage().show();
   }
 }
