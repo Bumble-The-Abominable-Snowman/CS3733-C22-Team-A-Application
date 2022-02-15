@@ -249,7 +249,8 @@ public class MapEditorController {
               filteredLocations.setPredicate(
                   location -> {
                     // if field is empty display all locations
-                    if (newValue == null || newValue.toString().isEmpty()) {
+                    if (newValue == null
+                        || searchComboBox.getSelectionModel().toString().isEmpty()) {
                       return true;
                     }
                     // make sure case is factored out
