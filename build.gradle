@@ -36,7 +36,7 @@ dependencies {
             'com.rabbitmq:amqp-client:5.14.1',
 
             'org.apache.commons:commons-lang3:3.0',
-
+            'net.kurobako:gesturefx:0.7.1',
             'commons-dbutils:commons-dbutils:1.7',
     )
 

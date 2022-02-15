@@ -15,6 +15,7 @@ public class LoginCtrl {
   @FXML private TextField usernameBox;
   @FXML private PasswordField passwordBox;
   @FXML private JFXButton logInButton;
+  @FXML private JFXButton exitButton;
 
   private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
@@ -39,6 +40,7 @@ public class LoginCtrl {
     double usernameTextSize = usernameBox.getFont().getSize();
     double passwordTextSize = passwordBox.getFont().getSize();
     double logInButtonTextSize = logInButton.getFont().getSize();
+    double exitButtonTextSize = exitButton.getFont().getSize();
 
     App.getStage()
         .widthProperty()
@@ -59,6 +61,10 @@ public class LoginCtrl {
               logInButton.setStyle(
                   "-fx-font-size: "
                       + ((App.getStage().getWidth() / 1000) * logInButtonTextSize)
+                      + "pt;");
+              exitButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * exitButtonTextSize)
                       + "pt;");
             });
   }
