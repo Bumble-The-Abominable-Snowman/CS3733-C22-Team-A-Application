@@ -262,14 +262,16 @@ public class MapEditorController {
                         && location.getFloor().equals(floor);
                   });
               SortedList<Location> sortedLocations = new SortedList<>(filteredLocations);
+              ArrayList<String> locationNames = new ArrayList<>();
               for (Location l : sortedLocations) {
-                System.out.println(l.getNodeID() + " " + l.getLongName() + "\n");
+                locationNames.add(l.getLongName());
               }
-              // searchText.dropdown.addAll(sortedLocations)
+              searchComboBox.getItems().clear();
+              searchComboBox.getItems().addAll(locationNames);
               clearAll();
-              // Maps Location IDs to their markers
+
               HashMap<String, LocationMarker> locationIDs = new HashMap<>();
-              // Loops through every location & draws them if present on the floor
+              // Loops through every location filtered & draws them if present on the floor
               for (Location location : locations) {
                 if (sortedLocations.contains(location)) {
                   LocationMarker locationMarker = newDraggableLocation(location);
