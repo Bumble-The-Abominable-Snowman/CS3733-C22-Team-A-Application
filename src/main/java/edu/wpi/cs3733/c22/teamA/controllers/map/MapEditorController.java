@@ -565,6 +565,25 @@ public class MapEditorController {
                 (mouseEvent.getSceneY() - dragDelta.mouseY)
                         / (transformed.getHeight() / miniAnchorPane.getHeight())
                     + dragDelta.buttonY);
+
+            // TODO check new x and new y. (may have to check cursor x/y not equipment)
+            // compare to every locations x and y.
+            // if the locations are within certain bound (30?)
+            // snap medical equipment layout to location.
+            if (markerType == 1) {
+              double radius = Math.sqrt(2 * Math.pow(30, 2));
+              for (Location l : locations) {
+                double radiusCheck =
+                    Math.sqrt(
+                        Math.pow(l.getXCoord() - button.getLayoutX(), 2)
+                            + (Math.pow(l.getYCoord() - button.getLayoutY(), 2)));
+                if (l.getFloor().equals(floor) && (radius > radiusCheck)) {
+                  button.setLayoutX(l.getXCoord());
+                  button.setLayoutY(l.getYCoord());
+                }
+              }
+            }
+
             System.out.println(transformed.getHeight() + " " + miniAnchorPane.getHeight());
 
             xPosText.setText(String.valueOf(button.getLayoutX() - mapImageView.getLayoutX() + 8));
