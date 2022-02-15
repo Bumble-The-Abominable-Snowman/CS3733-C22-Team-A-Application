@@ -5,10 +5,15 @@ import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Collections;
 import java.util.Objects;
 import javafx.collections.FXCollections;
@@ -58,13 +63,17 @@ public class LoadBackupCtrl {
         .addAll(
             "TowerLocations",
             "Employee",
-            "MedicalEquipment",
-            "LanguageServiceRequest",
             "MedicalEquipmentServiceRequest",
+            "FloralDeliveryServiceRequest",
             "FoodDeliveryServiceRequest",
+            "GiftDeliveryServiceRequest",
+            "LanguageServiceRequest",
             "LaundryServiceRequest",
+            "MaintenanceServiceRequest",
+            "MedicineDeliveryServiceRequest",
             "ReligiousServiceRequest",
-            "SanitationServiceRequest");
+            "SanitationServiceRequest",
+            "SecurityServiceRequest");
     TypeCSV.setValue("CSV Type");
 
     TypeCSV.setOnMouseClicked(
@@ -85,7 +94,7 @@ public class LoadBackupCtrl {
   }
 
   public void returnToSettingsScene(ActionEvent actionEvent) throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SETTINGS_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SETTINGS);
   }
 
   @FXML
@@ -109,51 +118,86 @@ public class LoadBackupCtrl {
     fileList.setItems(items);
   }
 
-  public void loadFromBackup() {
+  public void loadFromBackup()
+      throws IOException, ParseException, InvocationTargetException, IllegalAccessException,
+          SQLException {
     //    String filepath = "edu/wpi/cs3733/c22/teamA/db/CSVs/" + lastSelectedFile;
 
-    if (!TypeCSV.getValue().equals("CSV Type") && lastSelectedFile.length() > 4) {
-      //      Adb.inputFromCSV(TypeCSV.getValue(), filepath);
+    try {
+      if (!TypeCSV.getValue().equals("CSV Type") && lastSelectedFile.length() > 4) {
 
-      switch (TypeCSV.getSelectionModel().getSelectedItem().toString()) {
-        case "TowerLocations":
-          LocationDerbyImpl.inputFromCSV("Location", lastSelectedFile);
-          break;
-        case "Employee":
-          EmployeeDerbyImpl.inputFromCSV("Employee", lastSelectedFile);
-          break;
-        case "MedicalEquipment":
-          EquipmentDerbyImpl.inputFromCSV("MedicalEquipment", lastSelectedFile);
-          break;
-          //        case "LanguageServiceRequest":
-          //          LanguageServiceRequestDerbyImpl.inputFromCSV("LanguageServiceRequest",
-          // lastSelectedFile);
-          //          break;
-          //        case "MedicalEquipmentServiceRequest":
-          //          LanguageServiceRequestDerbyImpl.inputFromCSV(
-          //              "MedicalEquipmentServiceRequest", lastSelectedFile);
-          //          break;
-          //        case "FoodDeliveryServiceRequest":
-          //          FoodDeliveryServiceRequestDerbyImpl.inputFromCSV(
-          //              "FoodDeliveryServiceRequest", lastSelectedFile);
-          //          break;
-          //        case "LaundryServiceRequest":
-          //          LaundryServiceRequestDerbyImpl.inputFromCSV("LaundryServiceRequest",
-          // lastSelectedFile);
-          //          break;
-          //        case "ReligiousServiceRequest":
-          //          ReligiousServiceRequestDerbyImpl.inputFromCSV(
-          //              "ReligiousServiceRequest", lastSelectedFile);
-          //          break;
-          //        case "SanitationServiceRequest":
-          //          SanitationServiceRequestDerbyImpl.inputFromCSV(
-          //              "SanitationServiceRequest", lastSelectedFile);
-          //          break;
+        switch (TypeCSV.getSelectionModel().getSelectedItem().toString()) {
+          case "TowerLocations":
+            LocationDerbyImpl.inputFromCSV("Location", lastSelectedFile);
+            break;
+          case "Employee":
+            EmployeeDerbyImpl.inputFromCSV("Employee", lastSelectedFile);
+            break;
+          case "MedicalEquipment":
+            EquipmentDerbyImpl.inputFromCSV("MedicalEquipment", lastSelectedFile);
+            break;
+          case "MedicalEquipmentServiceRequest":
+            ServiceRequestDerbyImpl<EquipmentSR> equipmentSRServiceRequestDerby =
+                new ServiceRequestDerbyImpl<>(new EquipmentSR());
+            equipmentSRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            break;
+          case "FloralDeliveryServiceRequest":
+            ServiceRequestDerbyImpl<FloralDeliverySR> floralDeliverySRServiceRequestDerby =
+                new ServiceRequestDerbyImpl<>(new FloralDeliverySR());
+            floralDeliverySRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            break;
+          case "FoodDeliveryServiceRequest":
+            ServiceRequestDerbyImpl<FoodDeliverySR> foodDeliverySRServiceRequestDerby =
+                new ServiceRequestDerbyImpl<>(new FoodDeliverySR());
+            foodDeliverySRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            break;
+          case "GiftDeliveryServiceRequest":
+            ServiceRequestDerbyImpl<GiftDeliverySR> giftDeliverySRServiceRequestDerby =
+                new ServiceRequestDerbyImpl<>(new GiftDeliverySR());
+            giftDeliverySRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            break;
+          case "LanguageServiceRequest":
+            ServiceRequestDerbyImpl<LanguageSR> languageSRServiceRequestDerby =
+                new ServiceRequestDerbyImpl<>(new LanguageSR());
+            languageSRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            break;
+          case "LaundryServiceRequest":
+            ServiceRequestDerbyImpl<LaundrySR> laundrySRServiceRequestDerby =
+                new ServiceRequestDerbyImpl<>(new LaundrySR());
+            laundrySRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            break;
+          case "MaintenanceServiceRequest":
+            ServiceRequestDerbyImpl<MaintenanceSR> maintenanceSRServiceRequestDerby =
+                new ServiceRequestDerbyImpl<>(new MaintenanceSR());
+            maintenanceSRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            break;
+          case "MedicineDeliveryServiceRequest":
+            ServiceRequestDerbyImpl<MedicineDeliverySR> medicineDeliverySRServiceRequestDerby =
+                new ServiceRequestDerbyImpl<>(new MedicineDeliverySR());
+            medicineDeliverySRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            break;
+          case "ReligiousServiceRequest":
+            ServiceRequestDerbyImpl<ReligiousSR> religiousSRServiceRequestDerby =
+                new ServiceRequestDerbyImpl<>(new ReligiousSR());
+            religiousSRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            break;
+          case "SanitationServiceRequest":
+            ServiceRequestDerbyImpl<SanitationSR> sanitationSRServiceRequestDerby =
+                new ServiceRequestDerbyImpl<>(new SanitationSR());
+            sanitationSRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            break;
+          case "SecurityServiceRequest":
+            ServiceRequestDerbyImpl<SecuritySR> securitySRServiceRequestDerby =
+                new ServiceRequestDerbyImpl<>(new SecuritySR());
+            securitySRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            break;
+        }
+        selectedFileText.setText("Success!");
+        selectedFileText.setFill(Color.GREEN);
+      } else {
+        throw new Exception("No csv file is selected!");
       }
-
-      selectedFileText.setText("Success!");
-      selectedFileText.setFill(Color.GREEN);
-    } else {
+    } catch (Exception e) {
       selectedFileText.setText("Failed!");
       selectedFileText.setFill(Color.RED);
     }

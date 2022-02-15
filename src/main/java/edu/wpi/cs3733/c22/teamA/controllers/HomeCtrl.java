@@ -26,6 +26,8 @@ public class HomeCtrl {
   @FXML public JFXButton backButton;
   @FXML public VBox menuBox;
 
+  public static int sceneFlag = 0;
+
   private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   @FXML
@@ -96,17 +98,19 @@ public class HomeCtrl {
 
   @FXML
   private void goToSettings() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SETTINGS_SCENE);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SETTINGS);
   }
 
   @FXML
   private void goToEquipmentTracker() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_EQUIPMENT);
+    sceneFlag = 3;
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
   @FXML
   private void goToLocationData() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_LOCATIONS);
+    sceneFlag = 2;
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
   @FXML
@@ -116,12 +120,14 @@ public class HomeCtrl {
 
   @FXML
   private void goToViewServiceRequest() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_SERVICE_REQUESTS);
+    sceneFlag = 1;
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
   @FXML
   public void goToViewEmployees() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_EMPLOYEES);
+    sceneFlag = 4;
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
   @FXML

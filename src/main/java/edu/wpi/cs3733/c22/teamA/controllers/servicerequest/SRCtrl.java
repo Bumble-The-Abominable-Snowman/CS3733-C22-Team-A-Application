@@ -3,6 +3,8 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import java.util.concurrent.TimeoutException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -35,5 +37,7 @@ public abstract class SRCtrl {
   }
 
   @FXML
-  abstract void submitRequest() throws IOException, TimeoutException;
+  abstract void submitRequest()
+      throws IOException, TimeoutException, SQLException, InvocationTargetException,
+          IllegalAccessException;
 }

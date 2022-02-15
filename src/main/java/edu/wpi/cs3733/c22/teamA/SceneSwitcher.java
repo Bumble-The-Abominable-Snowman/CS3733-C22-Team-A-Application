@@ -23,12 +23,8 @@ public class SceneSwitcher {
     MAINTENANCE_SR,
     GIFT_SR,
     SECURITY_SR,
-    VIEW_EQUIPMENT,
-    VIEW_LOCATIONS,
-    VIEW_SERVICE_REQUESTS,
-    VIEW_EMPLOYEES,
-    VIEW_MEDICINE,
-    SETTINGS_SCENE,
+    DATA_VIEW,
+    SETTINGS,
     LOAD_BACKUP,
     SAVE_BACKUP,
     MAP
@@ -42,7 +38,7 @@ public class SceneSwitcher {
     // Home + Settings
     addScene(SceneSwitcher.SCENES.LOGIN, "views/Login.fxml");
     addScene(SceneSwitcher.SCENES.HOME, "views/Home.fxml");
-    addScene(SCENES.SETTINGS_SCENE, "views/settings/Settings.fxml");
+    addScene(SCENES.SETTINGS, "views/settings/Settings.fxml");
     addScene(SCENES.LOAD_BACKUP, "views/Settings/LoadBackup.fxml");
     addScene(SCENES.SAVE_BACKUP, "views/Settings/SaveBackup.fxml");
 
@@ -58,10 +54,7 @@ public class SceneSwitcher {
     addScene(SCENES.MEDICINE_DELIVERY_SR, "views/servicerequest/MedicineDeliverySR.fxml");
 
     // Data View + Map Editor
-    addScene(SCENES.VIEW_EQUIPMENT, "views/dataview/medicalEquipmentData.fxml");
-    addScene(SCENES.VIEW_LOCATIONS, "views/dataview/locationData.fxml");
-    addScene(SCENES.VIEW_SERVICE_REQUESTS, "views/dataview/viewServiceRequest.fxml");
-    addScene(SCENES.VIEW_EMPLOYEES, "views/dataview/employeeData.fxml");
+    addScene(SCENES.DATA_VIEW, "views/dataview/dataView.fxml");
     addScene(SCENES.MAP, "views/map/mapEditor.fxml");
   }
 

@@ -11,6 +11,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
+import edu.wpi.cs3733.c22.teamA.controllers.HomeCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.map.EquipmentMarker;
@@ -811,7 +812,8 @@ public class MapEditorController {
   // Go to Location Table
   @FXML
   public void goToLocationTable() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_LOCATIONS);
+    HomeCtrl.sceneFlag = 2;
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
   // Return to Home Screen
