@@ -1,5 +1,6 @@
-.GridPane {
-    -fx-background-image: url('../images/AllBackground.jpg');
+.background {
+    -fx-image: url('../images/Logo.png');
+    -fx-background-color: #61A5B0;
     -fx-background-size: 100% 100%;
 }
 
@@ -32,4 +33,14 @@
 .combo-box:focused{
     -fx-background-color: #0048BA;
     -fx-text-fill: #FFFFFF;
+}
+
+.titleFormat {
+    -fx-font-size: 18pt;
+    -fx-font-family: "Helvetica Neue";
+}
+
+.bodyFormat {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Helvetica Neue";
 }
