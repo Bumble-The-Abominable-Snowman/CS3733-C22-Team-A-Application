@@ -60,9 +60,7 @@ public class LoginCtrl {
                   "-fx-font-size: "
                       + ((App.getStage().getWidth() / 1000) * logInButtonTextSize)
                       + "pt;");
-
             });
-
   }
 
   @FXML
