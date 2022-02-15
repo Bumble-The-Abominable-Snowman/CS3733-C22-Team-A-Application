@@ -27,7 +27,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -233,6 +232,7 @@ public class MapEditorController {
 
   // Set up searchbar for LOCATIONS ONLY
   // TODO IMPLEMENT CHOICE OF LOCATION, EQUIPMENT, SR SEARCH (another button?)
+  // TODO MAKE IT LIVE UPDATE ON KEYSTROKE
   public void setupSearchListener() {
     // set up list of locations to be wrapped
     ObservableList<Location> searchLocationList = FXCollections.observableArrayList();
@@ -261,9 +261,8 @@ public class MapEditorController {
                             || location.getNodeID().toLowerCase().contains(lowerCaseFilter))
                         && location.getFloor().equals(floor);
                   });
-              SortedList<Location> sortedLocations = new SortedList<>(filteredLocations);
               ArrayList<String> locationNames = new ArrayList<>();
-              for (Location l : sortedLocations) {
+              for (Location l : filteredLocations) {
                 locationNames.add(l.getLongName());
               }
               searchComboBox.getItems().clear();
@@ -273,7 +272,7 @@ public class MapEditorController {
               HashMap<String, LocationMarker> locationIDs = new HashMap<>();
               // Loops through every location filtered & draws them if present on the floor
               for (Location location : locations) {
-                if (sortedLocations.contains(location)) {
+                if (filteredLocations.contains(location)) {
                   LocationMarker locationMarker = newDraggableLocation(location);
                   locationMarker.draw(anchorPane);
                   locationIDs.put(location.getNodeID(), locationMarker);
