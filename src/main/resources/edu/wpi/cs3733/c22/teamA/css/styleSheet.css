@@ -7,6 +7,8 @@
 }
 
 .button{
+    -fx-font-size: 12pt;
+    -fx-font-family: "Helvetica Neue";
     -fx-background-color: #B55243;
     -fx-text-fill: WHITE;
     -fx-background-size: 100% 100%;
@@ -14,8 +16,22 @@
     -fx-cursor: HAND;
     -fx-border-radius: 40;
     -fx-background-radius: 40;
-    transition-duration: 0.04s;
     -fx-font-weight: BOLD;
+}
+
+.menuButton{
+    -fx-font-size: 12pt;
+    -fx-font-family: "Helvetica Neue";
+    -fx-background-color: #B55243;
+    -fx-text-fill: WHITE;
+    -fx-background-size: 100% 100%;
+    -fx-border-color: #B55243;
+    -fx-border-width: 0;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-cursor: HAND;
+    -fx-font-weight: BOLD;
+
 }
 
 .button:hover{
@@ -39,10 +55,5 @@
 
 .titleFormat {
     -fx-font-size: 18pt;
-    -fx-font-family: "Helvetica Neue";
-}
-
-.bodyFormat {
-    -fx-font-size: 12pt;
     -fx-font-family: "Helvetica Neue";
 }

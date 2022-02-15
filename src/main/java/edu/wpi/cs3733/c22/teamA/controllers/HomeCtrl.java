@@ -12,14 +12,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 public class HomeCtrl {
-  @FXML private JFXButton settingsButton;
-  @FXML private JFXButton serviceRequestsButton;
-  @FXML private JFXButton viewServiceRequestsButton;
-  @FXML private JFXButton equipmentTrackerButton;
-  @FXML private JFXButton locationDataButton;
-  @FXML private JFXButton mapEditorButton;
-  @FXML private JFXButton employeesButton;
-  @FXML private JFXButton exitButton;
+
+  @FXML public JFXButton newSRButton;
+  @FXML public JFXButton mapButton;
+  @FXML public JFXButton viewSRButton;
+  @FXML public JFXButton viewEmployeesButton;
+  @FXML public JFXButton viewLocationsButton;
+  @FXML public JFXButton viewEquipmentButton;
+  @FXML public JFXButton settingsButton;
+  @FXML public JFXButton exitButton;
+  @FXML public JFXButton logOutButton;
 
   @FXML public JFXHamburger hamburger;
   @FXML public JFXDrawer drawer;
@@ -45,49 +47,56 @@ public class HomeCtrl {
           else drawer.open();
         });
 
-    double settingsTextSize = settingsButton.getFont().getSize();
-    double serviceRequestTextSize = serviceRequestsButton.getFont().getSize();
-    double viewServiceRequestsTextSize = viewServiceRequestsButton.getFont().getSize();
-    double equipmentTrackerTextSize = equipmentTrackerButton.getFont().getSize();
-    double locationDataTextSize = locationDataButton.getFont().getSize();
-    double mapEditorTextSize = mapEditorButton.getFont().getSize();
-    double employeesTextSize = employeesButton.getFont().getSize();
-    double exitTextSize = exitButton.getFont().getSize();
+    double newSRButtonTextSize = newSRButton.getFont().getSize();
+    double mapButtonTextSize = mapButton.getFont().getSize();
+    double viewSRButtonTextSize = viewSRButton.getFont().getSize();
+    double viewEmployeesButtonTextSize = viewEmployeesButton.getFont().getSize();
+    double viewLocationsButtonTextSize = viewLocationsButton.getFont().getSize();
+    double viewEquipmentButtonTextSize = viewEquipmentButton.getFont().getSize();
+    double settingsButtonTextSize = settingsButton.getFont().getSize();
+    double exitButtonTextSize = exitButton.getFont().getSize();
+    double logOutButtonTextSize = logOutButton.getFont().getSize();
 
     App.getStage()
         .widthProperty()
         .addListener(
             (obs, oldVal, newVal) -> {
+              newSRButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * newSRButtonTextSize)
+                      + "pt;");
+              mapButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * mapButtonTextSize)
+                      + "pt;");
+              viewSRButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * viewSRButtonTextSize)
+                      + "pt;");
+              viewEmployeesButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * viewEmployeesButtonTextSize)
+                      + "pt;");
+              viewEquipmentButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * viewEquipmentButtonTextSize)
+                      + "pt;");
               settingsButton.setStyle(
                   "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * settingsTextSize)
+                      + ((App.getStage().getWidth() / 1000) * settingsButtonTextSize)
                       + "pt;");
-              serviceRequestsButton.setStyle(
+              viewLocationsButton.setStyle(
                   "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * serviceRequestTextSize)
-                      + "pt;");
-              viewServiceRequestsButton.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * viewServiceRequestsTextSize)
-                      + "pt;");
-              equipmentTrackerButton.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * equipmentTrackerTextSize)
-                      + "pt;");
-              locationDataButton.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * locationDataTextSize)
-                      + "pt;");
-              mapEditorButton.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * mapEditorTextSize)
-                      + "pt;");
-              employeesButton.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * employeesTextSize)
+                      + ((App.getStage().getWidth() / 1000) * viewLocationsButtonTextSize)
                       + "pt;");
               exitButton.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * exitTextSize) + "pt;");
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * exitButtonTextSize)
+                      + "pt;");
+              logOutButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * logOutButtonTextSize)
+                      + "pt;");
             });
   }
 
