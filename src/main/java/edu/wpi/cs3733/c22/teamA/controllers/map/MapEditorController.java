@@ -102,12 +102,6 @@ public class MapEditorController {
     equipmentMarkerShape = new Polygon();
     locationMarkerShape.getPoints().addAll(new Double[] {1.0, 4.0, 0.0, 2.0, 1.0, 0.0, 2.0, 2.0});
     equipmentMarkerShape.getPoints().addAll(new Double[] {0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0});
-    serviceRequestMarkerShape
-        .getPoints()
-        .addAll(
-            new Double[] {
-              0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0
-            }); // TODO Modify shape to be different
 
     buttonLocationMarker = new HashMap<>();
     buttonEquipmentMarker = new HashMap<>();
@@ -314,10 +308,12 @@ public class MapEditorController {
         miniAnchorPane.getChildren().add(mapImageView);
         miniAnchorPane.setLayoutX(0);
         gesturePane.setContent(miniAnchorPane);
-        gesturePane.addEventFilter(AffineEvent.CHANGED, event -> {
-          System.out.println(event.getTransformedDimension());
-          transformed = event.getTransformedDimension();
-        });
+        gesturePane.addEventFilter(
+            AffineEvent.CHANGED,
+            event -> {
+              System.out.println(event.getTransformedDimension());
+              transformed = event.getTransformedDimension();
+            });
 
       } else if (newValue.equals("Floor 2")) {
         mapImageView.setVisible(true);
@@ -474,8 +470,14 @@ public class MapEditorController {
     button.setOnMouseDragged(
         mouseEvent -> {
           if (dragCheckBox.isSelected()) {
-            button.setLayoutX((dragDelta.mouseX-mouseEvent.getSceneX()) / (transformed.getHeight() / miniAnchorPane.getHeight() ) + dragDelta.buttonX);
-            button.setLayoutY((dragDelta.mouseY-mouseEvent.getSceneY()) / (transformed.getHeight() / miniAnchorPane.getHeight() ) + dragDelta.buttonY);
+            button.setLayoutX(
+                (dragDelta.mouseX - mouseEvent.getSceneX())
+                        / (transformed.getHeight() / miniAnchorPane.getHeight())
+                    + dragDelta.buttonX);
+            button.setLayoutY(
+                (dragDelta.mouseY - mouseEvent.getSceneY())
+                        / (transformed.getHeight() / miniAnchorPane.getHeight())
+                    + dragDelta.buttonY);
             xPosText.setText(String.valueOf(button.getLayoutX() - mapImageView.getLayoutX() + 8));
             yPosText.setText(String.valueOf(button.getLayoutY() - mapImageView.getLayoutY() + 24));
             Label correspondingLabel;
@@ -486,8 +488,14 @@ public class MapEditorController {
             } else {
               correspondingLabel = buttonServiceRequestMarker.get(button).getLabel();
             }
-            correspondingLabel.setLayoutX((dragDelta.mouseX-mouseEvent.getSceneX()) / (transformed.getHeight() / miniAnchorPane.getHeight() ) + + 8);
-            correspondingLabel.setLayoutY((dragDelta.mouseY-mouseEvent.getSceneY()) / (transformed.getHeight() / miniAnchorPane.getHeight() )- 24);
+            correspondingLabel.setLayoutX(
+                (dragDelta.mouseX - mouseEvent.getSceneX())
+                        / (transformed.getHeight() / miniAnchorPane.getHeight())
+                    + +8);
+            correspondingLabel.setLayoutY(
+                (dragDelta.mouseY - mouseEvent.getSceneY())
+                        / (transformed.getHeight() / miniAnchorPane.getHeight())
+                    - 24);
           }
         });
     button.setOnMouseEntered(mouseEvent -> button.setCursor(Cursor.HAND));

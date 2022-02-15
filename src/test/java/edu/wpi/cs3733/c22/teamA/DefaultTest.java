@@ -85,7 +85,6 @@ public class DefaultTest {
     // Client server setup CMD line:
     // java -jar %DERBY_HOME%\lib\derbyrun.jar server start
     Adb.initialConnection("EmbeddedDriver");
-
   }
 
   // Test on Location table (Fixed)
