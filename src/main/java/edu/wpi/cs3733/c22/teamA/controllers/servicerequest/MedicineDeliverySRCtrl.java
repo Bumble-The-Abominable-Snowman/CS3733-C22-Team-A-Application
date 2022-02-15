@@ -97,9 +97,9 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
   @FXML
   private void createMedicineRequest(MedicineDeliverySR medicineRequest) {
     medicineRequest.setMedicineChoice(medicineChoice.getValue());
-    medicineRequest.setToLocation(toLocationChoice.getValue());
-    medicineRequest.setRequestedEmployee(employeeChoice.getValue());
-    medicineRequest.setToLocation(commentsBox.getText());
+    //    medicineRequest.setToLocation(toLocationChoice.getValue());
+    //    medicineRequest.setRequestedEmployee(employeeChoice.getValue());
+    //    medicineRequest.setToLocation(commentsBox.getText());
   }
 
   @FXML

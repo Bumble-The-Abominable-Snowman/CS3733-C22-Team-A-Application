@@ -20,17 +20,10 @@ public class FloralDeliverySR extends SR {
     this.srType = SRType.FLORAL_DELIVERY;
   }
 
-  public FloralDeliverySR(
-      String flower,
-      String bouquetType,
-      String toLocation,
-      String requestedEmployee,
-      String comments) {
+  public FloralDeliverySR(String flower, String bouquetType) {
     super();
     this.flower = flower;
     this.bouquetType = bouquetType;
-    this.toLocation = toLocation;
-    this.requestedEmployee = requestedEmployee;
     this.comments = comments;
 
     this.srType = SRType.FLORAL_DELIVERY;

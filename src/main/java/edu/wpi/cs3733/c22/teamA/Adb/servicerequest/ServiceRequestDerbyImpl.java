@@ -13,6 +13,7 @@ import java.util.*;
 public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
 
   T t;
+  String tableName = "-";
   ArrayList<Method> sr_set_data_methods = new ArrayList<>();
   ArrayList<Method> sr_get_data_methods = new ArrayList<>();
   ArrayList<Method> super_sr_set_data_methods = new ArrayList<>();
@@ -53,64 +54,45 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
       }
     }
 
-    //    for (int i = 0; i < this.sr_set_data_methods.size(); i++) {
-    //      System.out.println("EXCLS GET FUNCTION: " + this.sr_get_data_methods.get(i));
-    //      System.out.println("EXCLS SET FUNCTION: " + this.sr_set_data_methods.get(i));
-    //    }
-    //
-    //    for (int i = 0; i < this.super_sr_set_data_methods.size(); i++) {
-    //      System.out.println("SUPER GET FUNCTION: " + this.super_sr_get_data_methods.get(i));
-    //      System.out.println("SUPER SET FUNCTION: " + this.super_sr_set_data_methods.get(i));
-    //    }
-
     refreshVariables();
+    System.out.println(this.tableName);
   }
 
-  private String refreshVariables() {
-    String tableName = "-";
+  private void refreshVariables() {
 
     if (this.t instanceof EquipmentSR) {
-      tableName = "MedicalEquipmentServiceRequest";
+      this.tableName = "MedicalEquipmentServiceRequest";
       this.t = (T) new EquipmentSR();
-    }
-    if (this.t instanceof FloralDeliverySR) {
-      tableName = "FloralDeliveryServiceRequest";
+    } else if (this.t instanceof FloralDeliverySR) {
+      this.tableName = "FloralDeliveryServiceRequest";
       this.t = (T) new FloralDeliverySR();
-    }
-    if (this.t instanceof GiftSR) {
-      tableName = "GiftDeliveryServiceRequest";
-      this.t = (T) new GiftSR();
-    }
-    if (this.t instanceof LanguageSR) {
-      tableName = "LanguageServiceRequest";
+    } else if (this.t instanceof GiftDeliverySR) {
+      this.tableName = "GiftDeliveryServiceRequest";
+      this.t = (T) new GiftDeliverySR();
+    } else if (this.t instanceof LanguageSR) {
+      this.tableName = "LanguageServiceRequest";
       this.t = (T) new LanguageSR();
-    }
-    if (this.t instanceof LaundrySR) {
-      tableName = "LaundryServiceRequest";
+    } else if (this.t instanceof LaundrySR) {
+      this.tableName = "LaundryServiceRequest";
       this.t = (T) new LaundrySR();
-    }
-    if (this.t instanceof MaintenanceSR) {
-      tableName = "MaintenanceServiceRequest";
+    } else if (this.t instanceof MaintenanceSR) {
+      this.tableName = "MaintenanceServiceRequest";
       this.t = (T) new MaintenanceSR();
-    }
-    if (this.t instanceof MedicineDeliverySR) {
-      tableName = "MedicineDeliveryServiceRequest";
+    } else if (this.t instanceof MedicineDeliverySR) {
+      this.tableName = "MedicineDeliveryServiceRequest";
       this.t = (T) new MedicineDeliverySR();
-    }
-    if (this.t instanceof ReligiousSR) {
-      tableName = "ReligiousServiceRequest";
+    } else if (this.t instanceof ReligiousSR) {
+      this.tableName = "ReligiousServiceRequest";
       this.t = (T) new ReligiousSR();
-    }
-    if (this.t instanceof SanitationSR) {
-      tableName = "SanitationServiceRequest";
+    } else if (this.t instanceof SanitationSR) {
+      this.tableName = "SanitationServiceRequest";
       this.t = (T) new SanitationSR();
-    }
-    if (this.t instanceof SecuritySR) {
-      tableName = "SecurityServiceRequest";
+    } else if (this.t instanceof SecuritySR) {
+      this.tableName = "SecurityServiceRequest";
       this.t = (T) new SecuritySR();
+    } else {
+      this.t = (T) new SR();
     }
-
-    return tableName;
   }
 
   @Override
@@ -120,12 +102,12 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
           DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement get = connection.createStatement();
 
-      String tableName = refreshVariables();
+      refreshVariables();
 
       String str =
           String.format(
               "SELECT * FROM ServiceRequest s, %s r WHERE (s.requestID = r.requestID) AND r.requestID = '%s'",
-              tableName, ID);
+              this.tableName, ID);
 
       ResultSet resultSet = get.executeQuery(str);
       ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
@@ -156,7 +138,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
 
   @Override
   public void updateServiceRequest(SR sr) {
-    String tableName = refreshVariables();
+    refreshVariables();
 
     try {
       Connection connection =
@@ -166,13 +148,11 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
       String str =
           String.format(
               "SELECT * FROM ServiceRequest s, %s r WHERE (s.requestID = r.requestID) AND r.requestID = '%s'",
-              tableName, sr.getRequestID());
+              this.tableName, sr.getRequestID());
 
       ResultSet resultSet = get.executeQuery(str);
       ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
 
-      Method[] methods = sr.getClass().getMethods();
-      Method[] super_methods = SR.class.getMethods();
       if (resultSet.next()) {
         for (int i = 1; i < resultSetMetaData.getColumnCount() + 1; i++) {
           String returnValOld = resultSet.getString(i);
@@ -188,7 +168,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
                 str =
                     String.format(
                         "UPDATE %s SET " + columnName + " = '%s' WHERE requestID = '%s'",
-                        tableName,
+                        this.tableName,
                         returnValNew,
                         sr.getRequestID());
                 update.execute(str);
@@ -224,8 +204,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
 
   @Override
   public void enterServiceRequest(SR sr) {
-    //    this.t = (T) sr;
-    String tableName = refreshVariables();
+    refreshVariables();
 
     try {
       Connection connection =
@@ -251,7 +230,10 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
         String str2 =
             String.format(
                 "INSERT INTO %s(requestID, %s)" + " VALUES('%s', '%s')",
-                tableName, method.getName().substring(3), sr.getRequestID(), method.invoke(sr));
+                this.tableName,
+                method.getName().substring(3),
+                sr.getRequestID(),
+                method.invoke(sr));
 
         insert.execute(str2);
       }
@@ -270,17 +252,20 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
 
   @Override
   public void deleteServiceRequest(SR sr) {
-    String tableName = refreshVariables();
+    refreshVariables();
 
     try {
       Connection connection =
           DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
       Statement delete = connection.createStatement();
+
+      delete.execute(
+          String.format(
+              "DELETE FROM %s WHERE requestID = '%s'", this.tableName, sr.getRequestID()));
+
       delete.execute(
           String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", sr.getRequestID()));
 
-      delete.execute(
-          String.format("DELETE FROM %s WHERE requestID = '%s'", tableName, sr.getRequestID()));
       connection.close();
     } catch (SQLException e) {
       System.out.println("Failed");
@@ -296,11 +281,10 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
       Statement getNodeList = connection.createStatement();
 
       ArrayList<T> reqList = new ArrayList<>();
-      String tableName = refreshVariables();
 
       String str =
           String.format(
-              "SELECT * FROM ServiceRequest s, %s m WHERE s.requestID=m.requestID", tableName);
+              "SELECT * FROM ServiceRequest s, %s m WHERE s.requestID=m.requestID", this.tableName);
 
       ResultSet resultSet = getNodeList.executeQuery(str);
       ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
@@ -327,6 +311,61 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
       e.printStackTrace();
     }
     return null;
+  }
+
+  public static List<Object> getAllServiceRequestList() {
+    ArrayList<Object> allReqList = new ArrayList<>();
+
+    String[] tableNameList = {
+      "MedicalEquipmentServiceRequest",
+      "FloralDeliveryServiceRequest",
+      "GiftDeliveryServiceRequest",
+      "LanguageServiceRequest",
+      "LaundryServiceRequest",
+      "MaintenanceServiceRequest",
+      "MedicineDeliveryServiceRequest",
+      "ReligiousServiceRequest",
+      "SanitationServiceRequest",
+      "SecurityServiceRequest"
+    };
+
+    ServiceRequestDerbyImpl<EquipmentSR> equipmentSRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new EquipmentSR());
+    allReqList.addAll(equipmentSRServiceRequestDerby.getServiceRequestList());
+
+    ServiceRequestDerbyImpl<FloralDeliverySR> floralDeliverySRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new FloralDeliverySR());
+    allReqList.addAll(floralDeliverySRServiceRequestDerby.getServiceRequestList());
+
+    ServiceRequestDerbyImpl<GiftDeliverySR> giftDeliverySRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new GiftDeliverySR());
+    allReqList.addAll(giftDeliverySRServiceRequestDerby.getServiceRequestList());
+
+    ServiceRequestDerbyImpl<LanguageSR> languageSRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new LanguageSR());
+    allReqList.addAll(languageSRServiceRequestDerby.getServiceRequestList());
+
+    ServiceRequestDerbyImpl<MaintenanceSR> maintenanceSRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new MaintenanceSR());
+    allReqList.addAll(maintenanceSRServiceRequestDerby.getServiceRequestList());
+
+    ServiceRequestDerbyImpl<MedicineDeliverySR> medicineDeliverySRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new MedicineDeliverySR());
+    allReqList.addAll(medicineDeliverySRServiceRequestDerby.getServiceRequestList());
+
+    ServiceRequestDerbyImpl<ReligiousSR> religiousSRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new ReligiousSR());
+    allReqList.addAll(religiousSRServiceRequestDerby.getServiceRequestList());
+
+    ServiceRequestDerbyImpl<SanitationSR> sanitationSRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new SanitationSR());
+    allReqList.addAll(sanitationSRServiceRequestDerby.getServiceRequestList());
+
+    ServiceRequestDerbyImpl<SecuritySR> securitySRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new SecuritySR());
+    allReqList.addAll(securitySRServiceRequestDerby.getServiceRequestList());
+
+    return allReqList;
   }
 
   // Read from CSV
