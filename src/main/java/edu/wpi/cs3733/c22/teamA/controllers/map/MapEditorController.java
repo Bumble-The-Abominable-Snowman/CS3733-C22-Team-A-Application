@@ -18,6 +18,7 @@ import edu.wpi.cs3733.c22.teamA.entities.map.LocationMarker;
 import edu.wpi.cs3733.c22.teamA.entities.map.SRMarker;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.EquipmentSR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,15 +31,18 @@ import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
+
+import javax.swing.*;
 
 // TODO Add Service Request marker to all necessary places
 public class MapEditorController {
@@ -113,6 +117,7 @@ public class MapEditorController {
 
     // Setup Functions
     setupCheckboxListeners();
+    setupContextMenu();
     setInitialUIStates();
     fillFromDB();
     setupSearchListener();
@@ -202,6 +207,19 @@ public class MapEditorController {
             (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
               showLabels(new_val);
             });
+  }
+
+  // Sets up the map context menu for right clicks
+  public void setupContextMenu() {
+    ContextMenu rightClickMenu = new ContextMenu();
+    MenuItem newLocation = new MenuItem("New Location");
+    newLocation.setOnAction(
+        (event) -> {
+          newLocationPressed(); //TODO Use coords of current mouse position to create location
+        });
+    rightClickMenu.getItems().addAll(newLocation);
+    mapImageView.setOnContextMenuRequested(
+        event -> rightClickMenu.show(mapImageView, event.getScreenX(), event.getScreenY()));
   }
 
   // Sets up UI states of text areas, and buttons
@@ -532,12 +550,28 @@ public class MapEditorController {
     }
   }
 
-  // New Location
+  // New location through button
   @FXML
   public void newLocationPressed() {
     Location newLocation =
         new Location(
             "NEWLOCATION", 0, 0, floor, "Tower", "NODE TYPE TODO", "New Location", "New Location");
+    LocationMarker newLocationMarker = newDraggableLocation(newLocation);
+    newLocationMarker.draw(this.anchorPane);
+  }
+
+  // New location through right click
+  public void newLocationPressed(int xCoord, int yCoord) {
+    Location newLocation =
+        new Location(
+            "NEWLOCATION",
+            xCoord,
+            yCoord,
+            floor,
+            "Tower",
+            "NODE TYPE TODO",
+            "New Location",
+            "New Location");
     LocationMarker newLocationMarker = newDraggableLocation(newLocation);
     newLocationMarker.draw(this.anchorPane);
   }
