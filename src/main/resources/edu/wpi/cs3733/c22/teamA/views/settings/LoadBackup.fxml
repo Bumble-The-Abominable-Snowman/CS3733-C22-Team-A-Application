@@ -8,7 +8,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="GridPane" stylesheets="@../../css/otherPages.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.settings.LoadBackupCtrl">
    <children>
-      <JFXButton fx:id="homeButton" buttonType="RAISED" layoutX="550.0" mnemonicParsing="false" onAction="#goToHomeScene" prefHeight="34.0" prefWidth="50.0" text="Home" textFill="WHITE" >
+      <JFXButton fx:id="homeButton" buttonType="RAISED" layoutX="542.0" mnemonicParsing="false" onAction="#goToHomeScene" prefHeight="34.0" prefWidth="61.0" text="Home" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></JFXButton>
