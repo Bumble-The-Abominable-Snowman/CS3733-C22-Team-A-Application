@@ -16,7 +16,6 @@ import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.map.EquipmentMarker;
 import edu.wpi.cs3733.c22.teamA.entities.map.LocationMarker;
 import edu.wpi.cs3733.c22.teamA.entities.map.SRMarker;
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.EquipmentSR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.net.URL;
@@ -238,7 +237,7 @@ public class MapEditorController {
     locations.addAll(new ArrayList<>(new LocationDerbyImpl().getNodeList()));
     equipments.addAll(new ArrayList<>(new EquipmentDerbyImpl().getMedicalEquipmentList()));
     List<?> requestList = ServiceRequestDerbyImpl.getAllServiceRequestList();
-    for (Object sr : requestList){
+    for (Object sr : requestList) {
       serviceRequests.add((SR) sr);
     }
   }
