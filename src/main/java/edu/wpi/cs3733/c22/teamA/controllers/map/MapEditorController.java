@@ -18,11 +18,6 @@ import edu.wpi.cs3733.c22.teamA.entities.map.LocationMarker;
 import edu.wpi.cs3733.c22.teamA.entities.map.SRMarker;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.EquipmentSR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
-<<<<<<< HEAD
-import java.awt.*;
-import java.io.File;
-=======
->>>>>>> a8fd40625e9e84a71ce3d9d4630103f1c66e490a
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -632,7 +627,7 @@ public class MapEditorController {
   }
 
   public void newLocationPressedMouse(double x, double y) {
-    newLocationPressed((int) x , (int) y);
+    newLocationPressed((int) ((int) x - gesturePane.getLayoutX()), (int) ((int) y - gesturePane.getLayoutY()));
   }
 
   // New location through right click
