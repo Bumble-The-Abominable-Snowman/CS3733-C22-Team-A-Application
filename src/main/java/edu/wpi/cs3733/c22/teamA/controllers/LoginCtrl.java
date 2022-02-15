@@ -40,6 +40,35 @@ public class LoginCtrl {
             this.logIn();
           }
         });
+
+    double welcomeTextSize = welcomeBox.getFont().getSize();
+    double usernameTextSize = usernameBox.getFont().getSize();
+    double passwordTextSize = passwordBox.getFont().getSize();
+    double logInButtonTextSize = logInButton.getFont().getSize();
+
+    App.getStage()
+        .widthProperty()
+        .addListener(
+            (obs, oldVal, newVal) -> {
+              welcomeBox.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * welcomeTextSize)
+                      + "pt;");
+              usernameBox.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * usernameTextSize)
+                      + "pt;");
+              passwordBox.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * passwordTextSize)
+                      + "pt;");
+              logInButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * logInButtonTextSize)
+                      + "pt;");
+
+            });
+
   }
 
   @FXML
