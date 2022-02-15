@@ -41,7 +41,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
-
 import javax.swing.*;
 
 // TODO Add Service Request marker to all necessary places
@@ -210,16 +209,25 @@ public class MapEditorController {
   }
 
   // Sets up the map context menu for right clicks
+
+  double mouseX = 0;
+  double mouseY = 0;
+
   public void setupContextMenu() {
     ContextMenu rightClickMenu = new ContextMenu();
     MenuItem newLocation = new MenuItem("New Location");
     newLocation.setOnAction(
         (event) -> {
-          newLocationPressed(); //TODO Use coords of current mouse position to create location
+          newLocationPressedMouse(
+              mouseX, mouseY); // TODO Use coords of current mouse position to create location
         });
     rightClickMenu.getItems().addAll(newLocation);
     mapImageView.setOnContextMenuRequested(
-        event -> rightClickMenu.show(mapImageView, event.getScreenX(), event.getScreenY()));
+        (event) -> {
+          rightClickMenu.show(mapImageView, event.getScreenX(), event.getScreenY());
+          mouseX = event.getScreenX();
+          mouseY = event.getScreenY();
+        });
   }
 
   // Sets up UI states of text areas, and buttons
@@ -553,11 +561,11 @@ public class MapEditorController {
   // New location through button
   @FXML
   public void newLocationPressed() {
-    Location newLocation =
-        new Location(
-            "NEWLOCATION", 0, 0, floor, "Tower", "NODE TYPE TODO", "New Location", "New Location");
-    LocationMarker newLocationMarker = newDraggableLocation(newLocation);
-    newLocationMarker.draw(this.anchorPane);
+    newLocationPressed(0, 0);
+  }
+
+  public void newLocationPressedMouse(double x, double y) {
+    newLocationPressed((int) x , (int) y);
   }
 
   // New location through right click
