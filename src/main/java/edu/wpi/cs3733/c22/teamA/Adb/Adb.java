@@ -87,7 +87,15 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-          "CREATE TABLE TowerLocations(nodeID varchar(25), xcoord int, ycoord int, floor varchar(25), building varchar(25), nodeType varchar(25), longName varchar(100), shortName varchar(50), PRIMARY KEY (nodeID))");
+          "CREATE TABLE TowerLocations(nodeID varchar(25), "
+              + "xcoord int, "
+              + "ycoord int, "
+              + "floor varchar(25), "
+              + "building varchar(25), "
+              + "nodeType varchar(25), "
+              + "longName varchar(100), "
+              + "shortName varchar(50), "
+              + "PRIMARY KEY (nodeID))");
 
     } catch (SQLException e) {
       System.out.println("Table TowerLocations already exist");
@@ -102,7 +110,15 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-          "CREATE TABLE Employee(employeeID varchar(25), employeeType varchar(25), firstName varchar(25), lastName varchar(25), email varchar(25), phoneNum varchar(25), address varchar(25), startDate date, PRIMARY KEY (employeeID))");
+          "CREATE TABLE Employee(employeeID varchar(25), "
+              + "employeeType varchar(25), "
+              + "firstName varchar(25), "
+              + "lastName varchar(25), "
+              + "email varchar(25), "
+              + "phoneNum varchar(25), "
+              + "address varchar(25), "
+              + "startDate date, "
+              + "PRIMARY KEY (employeeID))");
 
     } catch (SQLException e) {
       System.out.println("Table Employee already exist");
@@ -117,7 +133,13 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-          "CREATE TABLE MedicalEquipment(equipmentID varchar(25), equipmentType varchar(25), isClean varchar(25), currentLocation varchar(25), isAvailable varchar(25), PRIMARY KEY (equipmentID))");
+          "CREATE TABLE MedicalEquipment(equipmentID varchar(25), "
+              + "equipmentType varchar(25), "
+              + "isClean varchar(25), "
+              + "currentLocation varchar(25), "
+              + "isAvailable varchar(25), "
+              + "PRIMARY KEY (equipmentID),"
+              + "FOREIGN KEY (currentLocation) REFERENCES TowerLocations(nodeID))");
 
     } catch (SQLException e) {
       System.out.println("Table MedicalEquipment already exist");
@@ -131,7 +153,20 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-          "CREATE TABLE ServiceRequest(requestID varchar(25), startLocation varchar(25), endLocation varchar(25), employeeRequested varchar(25), employeeAssigned varchar(25), requestTime timestamp, requestStatus varchar(25), requestType varchar(25), comments varchar(255), PRIMARY KEY (requestID))");
+          "CREATE TABLE ServiceRequest(requestID varchar(25), "
+              + "startLocation varchar(25), "
+              + "endLocation varchar(25), "
+              + "employeeRequested varchar(25), "
+              + "employeeAssigned varchar(25), "
+              + "requestTime timestamp, "
+              + "requestStatus varchar(25), "
+              + "requestType varchar(25), "
+              + "comments varchar(255), "
+              + "PRIMARY KEY (requestID),"
+              + "FOREIGN KEY (startLocation) REFERENCES TowerLocations(nodeID),"
+              + "FOREIGN KEY (endLocation) REFERENCES TowerLocations(nodeID),"
+              + "FOREIGN KEY (employeeRequested) REFERENCES Employee(employeeID),"
+              + "FOREIGN KEY (employeeAssigned) REFERENCES Employee(employeeID))");
 
     } catch (SQLException e) {
       System.out.println("Table ServiceRequestDerbyImpl already exist");
@@ -145,7 +180,10 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-          "CREATE TABLE MedicalEquipmentServiceRequest(requestID varchar(25), equipmentID varchar(25), PRIMARY KEY (requestID), FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+          "CREATE TABLE MedicalEquipmentServiceRequest(requestID varchar(25), "
+              + "equipmentID varchar(25), "
+              + "PRIMARY KEY (requestID), "
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
 
     } catch (SQLException e) {
       System.out.println("Table MedicalEquipmentServiceRequest already exist");
@@ -159,7 +197,13 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-          "CREATE TABLE FoodDeliveryServiceRequest(requestID varchar(25), mainDish varchar(50), sideDish varchar(50), beverage varchar(50), dessert varchar(50), PRIMARY KEY (requestID), FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+          "CREATE TABLE FoodDeliveryServiceRequest(requestID varchar(25), "
+              + "mainDish varchar(50), "
+              + "sideDish varchar(50), "
+              + "beverage varchar(50), "
+              + "dessert varchar(50), "
+              + "PRIMARY KEY (requestID), "
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
 
     } catch (SQLException e) {
       System.out.println("Table FoodDeliveryServiceRequest already exist");
@@ -173,7 +217,10 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-          "CREATE TABLE LanguageServiceRequest(requestID varchar(25), language varchar(25), PRIMARY KEY (requestID), FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+          "CREATE TABLE LanguageServiceRequest(requestID varchar(25), "
+              + "language varchar(25), "
+              + "PRIMARY KEY (requestID), "
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
 
     } catch (SQLException e) {
       System.out.println("Table languageservicerequest already exist");
@@ -187,7 +234,10 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-          "CREATE TABLE LaundryServiceRequest(requestID varchar(25), washMode varchar(25), PRIMARY KEY (requestID), FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+          "CREATE TABLE LaundryServiceRequest(requestID varchar(25), "
+              + "washMode varchar(25), "
+              + "PRIMARY KEY (requestID), "
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
 
     } catch (SQLException e) {
       System.out.println("Table laundryservicerequest already exist");
@@ -202,7 +252,10 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-          "CREATE TABLE ReligiousServiceRequest(requestID varchar(25), religion varchar(25), PRIMARY KEY (requestID), FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+          "CREATE TABLE ReligiousServiceRequest(requestID varchar(25), "
+              + "religion varchar(25), "
+              + "PRIMARY KEY (requestID), "
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
 
     } catch (SQLException e) {
       System.out.println("Table ReligiousServiceRequest already exist");
@@ -217,10 +270,90 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-          "CREATE TABLE SanitationServiceRequest(requestID varchar(25), sanitationType varchar(25), PRIMARY KEY (requestID), FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+          "CREATE TABLE SanitationServiceRequest(requestID varchar(25), "
+              + "sanitationType varchar(25), "
+              + "PRIMARY KEY (requestID), "
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
 
     } catch (SQLException e) {
       System.out.println("Table SanitationServiceRequest already exist");
+    }
+
+    // check FloralDeliveryServiceRequest
+    try {
+
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", pathToDBA));
+      Statement addTable = connection.createStatement();
+
+      addTable.execute(
+          "CREATE TABLE FloralDeliveryServiceRequest(requestID varchar(25), "
+              + "flower varchar(25), "
+              + "bouquetType varchar(25), "
+              + "PRIMARY KEY (requestID), "
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+
+    } catch (SQLException e) {
+      System.out.println("Table Floral Delivery Service already exist");
+    }
+
+    // check GiftDeliveryServiceRequest
+    try {
+
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", pathToDBA));
+      Statement addTable = connection.createStatement();
+
+      addTable.execute(
+          "CREATE TABLE GiftDeliveryServiceRequest(requestID varchar(25), "
+              + "giftDescription varchar(25), "
+              + "PRIMARY KEY (requestID), "
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+
+    } catch (SQLException e) {
+      System.out.println("Table GiftDeliveryServiceRequest already exist");
+    }
+
+    // check MaintenanceServiceRequest
+    try {
+
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", pathToDBA));
+      Statement addTable = connection.createStatement();
+
+      addTable.execute(
+          "CREATE TABLE MaintenanceServiceRequest(requestID varchar(25), PRIMARY KEY (requestID), FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+
+    } catch (SQLException e) {
+      System.out.println("Table MaintenanceServiceRequest already exist");
+    }
+
+    // check MedicineDeliveryServiceRequest
+    try {
+
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", pathToDBA));
+      Statement addTable = connection.createStatement();
+
+      addTable.execute(
+          "CREATE TABLE MedicineDeliveryServiceRequest(requestID varchar(25), medicineChoice varchar(25), PRIMARY KEY (requestID), FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+
+    } catch (SQLException e) {
+      System.out.println("Table MedicineDeliveryServiceRequest already exist");
+    }
+
+    // check SecurityServiceRequest
+    try {
+
+      Connection connection =
+          DriverManager.getConnection(String.format("jdbc:derby:%s;", pathToDBA));
+      Statement addTable = connection.createStatement();
+
+      addTable.execute(
+          "CREATE TABLE SecurityServiceRequest(requestID varchar(25), PRIMARY KEY (requestID), FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+
+    } catch (SQLException e) {
+      System.out.println("Table SecurityServiceRequest already exist");
     }
 
     // Initialize the database and input data
