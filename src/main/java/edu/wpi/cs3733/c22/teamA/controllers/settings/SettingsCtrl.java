@@ -12,6 +12,29 @@ public class SettingsCtrl {
   @FXML private JFXButton exportToBackupButton;
   private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
+  @FXML
+  private void initialize() {
+    double backTextSize = backButton.getFont().getSize();
+    double loadFromBackupTextSize = loadFromBackupButton.getFont().getSize();
+    double exportToBackupTextSize = exportToBackupButton.getFont().getSize();
+
+    App.getStage()
+        .widthProperty()
+        .addListener(
+            (obs, oldVal, newVal) -> {
+              backButton.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * backTextSize) + "pt;");
+              loadFromBackupButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * loadFromBackupTextSize)
+                      + "pt;");
+              exportToBackupButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * exportToBackupTextSize)
+                      + "pt;");
+            });
+  }
+
   public void goToHomeScene() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
   }

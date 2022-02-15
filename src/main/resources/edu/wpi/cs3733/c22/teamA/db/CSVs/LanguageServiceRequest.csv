@@ -1,3 +1,3 @@
-RequestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments, Language
-lan123,start,end,emp1,emp2,2020-01-01 12:45:00.0,In Progress,High Priority,no additional comments,Super Wash
-lan124,start,end,emp1,emp2,2020-01-01 12:45:00.0,In Progress,High Priority,no additional comments,Normal Wash
+requestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments, Language
+LAN1256,FDEPT00101,FDEPT00201,001,002,2018-09-01 09:01:15.0,WAITING, BLANK,Low Priority,French
+LAN123,FDEPT00101,FDEPT00201,001,002,2018-09-01 09:01:15.0,WAITING, BLANK,Low Priority,German

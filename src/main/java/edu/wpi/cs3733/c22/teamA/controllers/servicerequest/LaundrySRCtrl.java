@@ -7,6 +7,8 @@ import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.LaundrySR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 import javafx.event.ActionEvent;
@@ -37,7 +39,8 @@ public class LaundrySRCtrl extends SRCtrl {
   }
 
   @FXML
-  void submitRequest() throws IOException {
+  void submitRequest()
+      throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
     System.out.print("\nNew request, got some work to do bud!\n");
     System.out.printf("Selected wash mode is : %s\n", washMode.getValue());
     System.out.printf("Added this note : \n[NOTE START]\n%s\n[NOTE END]\n", commentsBox.getText());

@@ -6,25 +6,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="GridPane" stylesheets="@../../css/otherPages.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.settings.LoadBackupCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@../../css/styleSheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.settings.LoadBackupCtrl">
    <children>
-      <JFXButton fx:id="homeButton" buttonType="RAISED" layoutX="542.0" mnemonicParsing="false" onAction="#goToHomeScene" prefHeight="34.0" prefWidth="61.0" text="Home" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></JFXButton>
-      <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#returnToSettingsScene" prefHeight="26.0" prefWidth="55.0" text="Back" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></JFXButton>
-      <JFXButton fx:id="loadFromBackupButton" buttonType="RAISED" layoutX="247.0" layoutY="349.0" mnemonicParsing="false" onAction="#loadFromBackup" text="Load from backup" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></JFXButton>
-      <JFXButton fx:id="refreshButton" buttonType="RAISED" layoutX="274.0" layoutY="38.0" mnemonicParsing="false" onAction="#refreshFiles" text="refresh" textFill="WHITE" />
-      <ListView fx:id="fileList" layoutX="85.0" layoutY="86.0" prefHeight="200.0" prefWidth="430.0" />
-      <Text fill="WHITE" layoutX="257.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected CSV file:" />
-      <Text fx:id="selectedFileText" fill="WHITE" layoutX="102.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="None" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="396.49755859375" />
-      <JFXComboBox fx:id="TypeCSV" layoutX="102.0" layoutY="38.0" prefHeight="26.0" prefWidth="116.0" unFocusColor="WHITE" />
-      <JFXButton fx:id="loadFromSystemButton" buttonType="RAISED" layoutX="391.0" layoutY="38.0" onAction="#loadFromSystem" text="Load from system" textFill="WHITE" />
+      <JFXButton fx:id="homeButton" buttonType="RAISED" layoutX="542.0" mnemonicParsing="false" onAction="#goToHomeScene" prefHeight="34.0" prefWidth="61.0" text="Home" textFill="WHITE" styleClass="bodyFormat"/>
+      <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#returnToSettingsScene" prefHeight="26.0" prefWidth="55.0" text="Back" textFill="WHITE" styleClass="bodyFormat"/>
+      <JFXButton fx:id="loadFromBackupButton" buttonType="RAISED" layoutX="247.0" layoutY="349.0" mnemonicParsing="false" onAction="#loadFromBackup" text="Load from backup" textFill="WHITE" styleClass="bodyFormat"/>
+      <JFXButton fx:id="refreshButton" buttonType="RAISED" layoutX="274.0" layoutY="38.0" mnemonicParsing="false" onAction="#refreshFiles" text="Refresh" textFill="WHITE" styleClass="bodyFormat" />
+      <ListView fx:id="fileList" layoutX="85.0" layoutY="86.0" prefHeight="200.0" prefWidth="430.0" styleClass="bodyFormat"/>
+      <Text fill="WHITE" layoutX="257.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected CSV file:" styleClass="bodyFormat" />
+      <Text fx:id="selectedFileText" fill="WHITE" layoutX="102.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="None" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="396.49755859375" styleClass="bodyFormat"/>
+      <JFXComboBox fx:id="TypeCSV" layoutX="102.0" layoutY="38.0" prefHeight="26.0" prefWidth="116.0" unFocusColor="WHITE" styleClass="bodyFormat" />
+      <JFXButton fx:id="loadFromSystemButton" buttonType="RAISED" layoutX="391.0" layoutY="38.0" onAction="#loadFromSystem" text="Load from system" textFill="WHITE" styleClass="bodyFormat" />
    </children>
 </AnchorPane>

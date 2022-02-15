@@ -8,6 +8,8 @@ import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SanitationSR;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -54,7 +56,7 @@ public class SanitationSRCtrl extends SRCtrl {
   }
 
   @FXML
-  void submitRequest() {
+  void submitRequest() throws SQLException, InvocationTargetException, IllegalAccessException {
     // Create request object
     SanitationSR sanitationSR =
         new SanitationSR(

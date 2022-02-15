@@ -286,7 +286,8 @@ public class Adb {
     try {
 
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
       Statement addTable = connection.createStatement();
 
       addTable.execute(
@@ -304,7 +305,8 @@ public class Adb {
     try {
 
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
       Statement addTable = connection.createStatement();
 
       addTable.execute(
@@ -321,7 +323,8 @@ public class Adb {
     try {
 
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
       Statement addTable = connection.createStatement();
 
       addTable.execute(
@@ -335,7 +338,8 @@ public class Adb {
     try {
 
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
       Statement addTable = connection.createStatement();
 
       addTable.execute(
@@ -349,7 +353,8 @@ public class Adb {
     try {
 
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
       Statement addTable = connection.createStatement();
 
       addTable.execute(

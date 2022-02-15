@@ -11,34 +11,42 @@ import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
+import edu.wpi.cs3733.c22.teamA.controllers.HomeCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.map.EquipmentMarker;
 import edu.wpi.cs3733.c22.teamA.entities.map.LocationMarker;
 import edu.wpi.cs3733.c22.teamA.entities.map.SRMarker;
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.EquipmentSR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javafx.animation.Interpolator;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.geometry.Dimension2D;
 import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
+import net.kurobako.gesturefx.AffineEvent;
+import net.kurobako.gesturefx.GesturePane;
 
 // TODO Add Service Request marker to all necessary places
 public class MapEditorController {
@@ -49,7 +57,6 @@ public class MapEditorController {
   @FXML private JFXCheckBox showTextCheckBox;
   @FXML private JFXButton deleteButton;
   @FXML private ComboBox floorSelectionComboBox;
-  // @FXML private JFXComboBox testComboBox;
   @FXML private AnchorPane anchorPane;
 
   @FXML private JFXComboBox searchComboBox = new JFXComboBox();
@@ -71,6 +78,10 @@ public class MapEditorController {
 
   @FXML private VBox inputVBox = new VBox();
   @FXML private ImageView mapImageView = new ImageView();
+
+  @FXML private GesturePane gesturePane;
+  Dimension2D transformed = new Dimension2D(967, 1050);
+  private AnchorPane miniAnchorPane = new AnchorPane();
 
   private List<Location> locations;
   private List<Equipment> equipments;
@@ -97,8 +108,6 @@ public class MapEditorController {
     locationMarkerShape.getPoints().addAll(new Double[] {1.0, 4.0, 0.0, 2.0, 1.0, 0.0, 2.0, 2.0});
     equipmentMarkerShape.getPoints().addAll(new Double[] {0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0});
 
-    // testComboBox.setEditable(true);
-    // String test = testComboBox.get
     buttonLocationMarker = new HashMap<>();
     buttonEquipmentMarker = new HashMap<>();
     buttonServiceRequestMarker = new HashMap<>();
@@ -116,6 +125,7 @@ public class MapEditorController {
 
     // Setup Functions
     setupCheckboxListeners();
+    setupContextMenu();
     setInitialUIStates();
     fillFromDB();
     setupSearchListener();
@@ -148,7 +158,7 @@ public class MapEditorController {
               for (Location location : locations) {
                 if (location.getFloor().equals(floor)) {
                   LocationMarker locationMarker = newDraggableLocation(location);
-                  locationMarker.draw(anchorPane);
+                  locationMarker.draw(miniAnchorPane);
                   locationIDs.put(location.getNodeID(), locationMarker);
                   locationNames.put(location.getShortName(), locationMarker);
                 }
@@ -160,13 +170,12 @@ public class MapEditorController {
                   EquipmentMarker equipmentMarker =
                       newDraggableEquipment(
                           equipment, locationIDs.get(equipment.getCurrentLocation()));
-                  equipmentMarker.draw(anchorPane);
+                  equipmentMarker.draw(miniAnchorPane);
                 }
               }
 
               // Loops through every service request & draws them if they're on this floor
               for (SR serviceRequest : serviceRequests) {
-                System.out.println(serviceRequest.getEndLocation());
                 if (locationNames.containsKey(serviceRequest.getEndLocation())) {
                   SRMarker serviceRequestMarker =
                       newDraggableServiceRequest(
@@ -208,6 +217,27 @@ public class MapEditorController {
             });
   }
 
+  // Sets up the map context menu for right clicks
+
+  double mouseX = 0;
+  double mouseY = 0;
+
+  public void setupContextMenu() {
+    ContextMenu rightClickMenu = new ContextMenu();
+    MenuItem newLocation = new MenuItem("New Location");
+    newLocation.setOnAction(
+        (event) -> {
+          newLocationPressedMouse(mouseX, mouseY);
+        });
+    rightClickMenu.getItems().addAll(newLocation);
+    mapImageView.setOnContextMenuRequested(
+        (event) -> {
+          rightClickMenu.show(mapImageView, event.getScreenX(), event.getScreenY());
+          mouseX = event.getScreenX();
+          mouseY = event.getScreenY();
+        });
+  }
+
   // Sets up UI states of text areas, and buttons
   public void setInitialUIStates() {
     mapImageView.setVisible(false);
@@ -230,19 +260,27 @@ public class MapEditorController {
   public void fillFromDB() {
     locations.addAll(new ArrayList<>(new LocationDerbyImpl().getNodeList()));
     equipments.addAll(new ArrayList<>(new EquipmentDerbyImpl().getMedicalEquipmentList()));
-    // TODO add other types, currently just medical equipment requests
-    serviceRequests.addAll(
-        new ArrayList<>(new ServiceRequestDerbyImpl<>(new EquipmentSR()).getServiceRequestList()));
+    // TODO when implementation done
+    try {
+      List<?> requestList = ServiceRequestDerbyImpl.getAllServiceRequestList();
+      for (Object sr : requestList) {
+        serviceRequests.add((SR) sr);
+      }
+    } catch (Exception e) {
+      System.out.println(e);
+    }
   }
 
   // Set up searchbar for LOCATIONS ONLY
   // TODO IMPLEMENT CHOICE OF LOCATION, EQUIPMENT, SR SEARCH (another button?)
   // TODO MAKE IT LIVE UPDATE ON KEYSTROKE
   public void setupSearchListener() {
+    searchComboBox.setEditable(true);
+    searchComboBox.setVisibleRowCount(5);
     // set up list of locations to be wrapped
     ObservableList<Location> searchLocationList = FXCollections.observableArrayList();
     searchLocationList.addAll(locations);
-    searchComboBox.setEditable(true);
+
     // create filtered list, can be filtered (duh)
     FilteredList<Location> filteredLocations = new FilteredList<>(searchLocationList, p -> true);
     // add listener that checks whenever changes are made to JFXText searchText
@@ -254,8 +292,9 @@ public class MapEditorController {
               filteredLocations.setPredicate(
                   location -> {
                     // if field is empty display all locations
-                    if (newValue == null
-                        || searchComboBox.getSelectionModel().toString().isEmpty()) {
+                    if ((newValue == null
+                            || searchComboBox.getSelectionModel().toString().isEmpty())
+                        && location.getFloor().equals(floor)) {
                       return true;
                     }
                     // make sure case is factored out
@@ -296,35 +335,70 @@ public class MapEditorController {
       if (newValue.equals("Floor 1")) {
         mapImageView.setVisible(true);
         floor = "1";
-        File map = new File("edu/wpi/cs3733/c22/teamA/images/1st Floor.png");
-        Image image = new Image(String.valueOf((map)));
+        // File map = new File("src/main/resources/edu/wpi/cs3733/c22/teamA/images/1st Floor.png");
+
+        URL url = App.class.getResource("images/1st Floor.png");
+        Image image = new Image(String.valueOf(url));
         mapImageView.setImage(image);
+        setupGesture();
       } else if (newValue.equals("Floor 2")) {
         mapImageView.setVisible(true);
         floor = "2";
-        File map = new File("edu/wpi/cs3733/c22/teamA/images/2nd Floor.png");
-        Image image = new Image(String.valueOf((map)));
+        URL url = App.class.getResource("images/2nd Floor.png");
+        Image image = new Image(String.valueOf(url));
         mapImageView.setImage(image);
+        setupGesture();
       } else if (newValue.equals("Floor 3")) {
         mapImageView.setVisible(true);
         floor = "3";
-        File map = new File("edu/wpi/cs3733/c22/teamA/images/3rd Floor.png");
-        Image image = new Image(String.valueOf((map)));
+        URL url = App.class.getResource("images/3rd Floor.png");
+        Image image = new Image(String.valueOf(url));
         mapImageView.setImage(image);
+        setupGesture();
       } else if (newValue.equals("L1")) {
         mapImageView.setVisible(true);
         floor = "L1";
-        File map = new File("edu/wpi/cs3733/c22/teamA/images/LL1.png");
-        Image image = new Image(String.valueOf((map)));
+        URL url = App.class.getResource("images/LL1.png");
+        Image image = new Image(String.valueOf(url));
         mapImageView.setImage(image);
+        setupGesture();
       } else {
         mapImageView.setVisible(true);
         floor = "L2";
-        File map = new File("edu/wpi/cs3733/c22/teamA/images/LL2.png");
-        Image image = new Image(String.valueOf((map)));
+        URL url = App.class.getResource("images/LL2.png");
+        Image image = new Image(String.valueOf(url));
         mapImageView.setImage(image);
+        setupGesture();
       }
     }
+  }
+
+  public void setupGesture() {
+    miniAnchorPane.getChildren().remove(mapImageView);
+    miniAnchorPane.getChildren().add(mapImageView);
+    miniAnchorPane.setLayoutX(0);
+    mapImageView.setLayoutX(0);
+    gesturePane.setContent(miniAnchorPane);
+    gesturePane.addEventFilter(
+        AffineEvent.CHANGED,
+        event -> {
+          System.out.println(event.getTransformedDimension());
+          transformed = event.getTransformedDimension();
+        });
+    gesturePane.setOnMouseClicked(
+        e -> {
+          if (e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 2) {
+            Point2D pivotOnTarget =
+                gesturePane
+                    .targetPointAt(new Point2D(e.getX(), e.getY()))
+                    .orElse(gesturePane.targetPointAtViewportCentre());
+            // increment of scale makes more sense exponentially instead of linearly
+            gesturePane
+                .animate(Duration.millis(200))
+                .interpolateWith(Interpolator.EASE_BOTH)
+                .zoomBy(gesturePane.getCurrentScale(), pivotOnTarget);
+          }
+        });
   }
 
   // Makes a new Draggable Location Button and Label
@@ -382,10 +456,39 @@ public class MapEditorController {
     Label label = newDraggableLabel(labelX, labelY, "");
 
     button.setPickOnBounds(false);
-    // TODO Wait for refactoring of database before implementing
     switch (serviceRequest.getSrType()) {
       case EQUIPMENT:
         button.setStyle("-fx-background-color: YELLOW");
+        break;
+      case FLORAL_DELIVERY:
+        button.setStyle("-fx-background-color: GREEN");
+        break;
+      case FOOD_DELIVERY:
+        button.setStyle("-fx-background-color: ORANGE");
+        break;
+      case GIFT:
+        button.setStyle("-fx-background-color: ORCHID");
+        break;
+      case LANGUAGE:
+        button.setStyle("-fx-background-color: WHEAT");
+        break;
+      case LAUNDRY:
+        button.setStyle("-fx-background-color: MEDIUMBLUE");
+        break;
+      case MAINTENANCE:
+        button.setStyle("-fx-background-color: MINTCREAM");
+        break;
+      case MEDICINE_DELIVERY:
+        button.setStyle("-fx-background-color: SADDLEBROWN");
+        break;
+      case RELIGIOUS:
+        button.setStyle("-fx-background-color: TOMATO");
+        break;
+      case SANITATION:
+        button.setStyle("-fx-background-color: DIMGREY");
+        break;
+      case SECURITY:
+        button.setStyle("-fx-background-color: MAROON");
         break;
     }
     button.setShape(locationMarkerShape);
@@ -432,8 +535,10 @@ public class MapEditorController {
     button.setOnMousePressed(
         mouseEvent -> {
           // record a delta distance for the drag and drop operation.
-          dragDelta.x = button.getLayoutX() - mouseEvent.getSceneX();
-          dragDelta.y = button.getLayoutY() - mouseEvent.getSceneY();
+          dragDelta.buttonX = button.getLayoutX();
+          dragDelta.buttonY = button.getLayoutY();
+          dragDelta.mouseX = mouseEvent.getSceneX();
+          dragDelta.mouseY = mouseEvent.getSceneY();
           button.setCursor(Cursor.MOVE);
           if (markerType == 0) {
             existingLocationSelected(buttonLocationMarker.get(button).getLocation());
@@ -452,8 +557,16 @@ public class MapEditorController {
     button.setOnMouseDragged(
         mouseEvent -> {
           if (dragCheckBox.isSelected()) {
-            button.setLayoutX(mouseEvent.getSceneX() + dragDelta.x);
-            button.setLayoutY(mouseEvent.getSceneY() + dragDelta.y);
+            button.setLayoutX(
+                (mouseEvent.getSceneX() - dragDelta.mouseX)
+                        / (transformed.getHeight() / miniAnchorPane.getHeight())
+                    + dragDelta.buttonX);
+            button.setLayoutY(
+                (mouseEvent.getSceneY() - dragDelta.mouseY)
+                        / (transformed.getHeight() / miniAnchorPane.getHeight())
+                    + dragDelta.buttonY);
+            System.out.println(transformed.getHeight() + " " + miniAnchorPane.getHeight());
+
             xPosText.setText(String.valueOf(button.getLayoutX() - mapImageView.getLayoutX() + 8));
             yPosText.setText(String.valueOf(button.getLayoutY() - mapImageView.getLayoutY() + 24));
             Label correspondingLabel;
@@ -464,8 +577,16 @@ public class MapEditorController {
             } else {
               correspondingLabel = buttonServiceRequestMarker.get(button).getLabel();
             }
-            correspondingLabel.setLayoutX(mouseEvent.getSceneX() + dragDelta.x + 8);
-            correspondingLabel.setLayoutY(mouseEvent.getSceneY() + dragDelta.y - 24);
+            correspondingLabel.setLayoutX(
+                (mouseEvent.getSceneX() - dragDelta.mouseX)
+                        / (transformed.getHeight() / miniAnchorPane.getHeight())
+                    + dragDelta.buttonX
+                    + 8);
+            correspondingLabel.setLayoutY(
+                (mouseEvent.getSceneY() - dragDelta.mouseY)
+                        / (transformed.getHeight() / miniAnchorPane.getHeight())
+                    + dragDelta.buttonY
+                    - 24);
           }
         });
     button.setOnMouseEntered(mouseEvent -> button.setCursor(Cursor.HAND));
@@ -474,10 +595,10 @@ public class MapEditorController {
   // Clears all Buttons and Labels from screen
   public void clearAll() {
     for (LocationMarker locationMarker : buttonLocationMarker.values()) {
-      locationMarker.clear(anchorPane);
+      locationMarker.clear(miniAnchorPane);
     }
     for (EquipmentMarker equipmentMarker : buttonEquipmentMarker.values()) {
-      equipmentMarker.clear(anchorPane);
+      equipmentMarker.clear(miniAnchorPane);
     }
     for (SRMarker serviceRequestMarker : buttonServiceRequestMarker.values()) {
       serviceRequestMarker.clear(anchorPane);
@@ -533,14 +654,31 @@ public class MapEditorController {
     }
   }
 
-  // New Location
+  // New location through button
   @FXML
   public void newLocationPressed() {
+    newLocationPressed(0, 0);
+  }
+
+  public void newLocationPressedMouse(double x, double y) {
+    newLocationPressed(
+        (int) ((int) x - gesturePane.getLayoutX()), (int) ((int) y - gesturePane.getLayoutY()));
+  }
+
+  // New location through right click
+  public void newLocationPressed(int xCoord, int yCoord) {
     Location newLocation =
         new Location(
-            "NEWLOCATION", 0, 0, floor, "Tower", "NODE TYPE TODO", "New Location", "New Location");
+            "NEWLOCATION",
+            xCoord,
+            yCoord,
+            floor,
+            "Tower",
+            "NODE TYPE TODO",
+            "New Location",
+            "New Location");
     LocationMarker newLocationMarker = newDraggableLocation(newLocation);
-    newLocationMarker.draw(this.anchorPane);
+    newLocationMarker.draw(miniAnchorPane);
   }
 
   // Delete Location
@@ -674,7 +812,8 @@ public class MapEditorController {
   // Go to Location Table
   @FXML
   public void goToLocationTable() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.VIEW_LOCATIONS);
+    HomeCtrl.sceneFlag = 2;
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
   // Return to Home Screen
@@ -691,7 +830,7 @@ public class MapEditorController {
 
   // records relative x and y co-ordinates.
   private class Delta {
-    double x, y;
+    double mouseX, mouseY, buttonX, buttonY;
   }
 
   private void highlight(Button button, Button oldButton) {

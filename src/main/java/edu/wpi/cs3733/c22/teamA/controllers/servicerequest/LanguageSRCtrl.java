@@ -12,6 +12,8 @@ import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.LanguageSR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -82,7 +84,8 @@ public class LanguageSRCtrl extends SRCtrl {
   }
 
   @FXML
-  void submitRequest() throws IOException {
+  void submitRequest()
+      throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
     if (!languageChoice.getSelectionModel().getSelectedItem().equals("Language")
         && toLocationChoice.getSelectionModel().getSelectedItem() != null
         && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {

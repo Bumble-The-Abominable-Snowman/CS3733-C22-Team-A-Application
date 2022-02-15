@@ -1,0 +1,59 @@
+.background{
+    -fx-background-image: url('../images/Logo.png');
+    -fx-background-color: #61A5B0;
+    -fx-background-size: 50%,50%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 120%;
+}
+
+.button{
+    -fx-font-size: 12pt;
+    -fx-font-family: "Helvetica Neue";
+    -fx-background-color: #B55243;
+    -fx-text-fill: WHITE;
+    -fx-background-size: 100% 100%;
+    -fx-border-color: BLACK;
+    -fx-cursor: HAND;
+    -fx-border-radius: 40;
+    -fx-background-radius: 40;
+    -fx-font-weight: BOLD;
+}
+
+.menuButton{
+    -fx-font-size: 12pt;
+    -fx-font-family: "Helvetica Neue";
+    -fx-background-color: #B55243;
+    -fx-text-fill: WHITE;
+    -fx-background-size: 100% 100%;
+    -fx-border-color: #B55243;
+    -fx-border-width: 0;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-cursor: HAND;
+    -fx-font-weight: BOLD;
+
+}
+
+.button:hover{
+    -fx-background-color: #0048BA;
+}
+
+.label{
+    -fx-text-fill: BLACK;
+    -fx-font-weight: BOLD;
+}
+
+.combo-box{
+    -fx-background-color: #B55243;
+    -fx-text-fill: #FFFFFF;
+}
+
+.combo-box:focused{
+    -fx-background-color: #0048BA;
+    -fx-text-fill: #FFFFFF;
+}
+
+.titleFormat {
+    -fx-font-size: 18pt;
+    -fx-font-family: "Helvetica Neue";
+}
