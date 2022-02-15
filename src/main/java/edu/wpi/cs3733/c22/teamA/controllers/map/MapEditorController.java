@@ -18,11 +18,12 @@ import edu.wpi.cs3733.c22.teamA.entities.map.LocationMarker;
 import edu.wpi.cs3733.c22.teamA.entities.map.SRMarker;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.EquipmentSR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javafx.animation.Interpolator;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,16 +31,19 @@ import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 import net.kurobako.gesturefx.AffineEvent;
 import net.kurobako.gesturefx.GesturePane;
 
@@ -75,7 +79,7 @@ public class MapEditorController {
   @FXML private ImageView mapImageView = new ImageView();
 
   @FXML private GesturePane gesturePane;
-  Dimension2D transformed = new Dimension2D(50, 50);
+  Dimension2D transformed = new Dimension2D(967, 1050);
   private AnchorPane miniAnchorPane = new AnchorPane();
 
   private List<Location> locations;
@@ -302,45 +306,70 @@ public class MapEditorController {
       if (newValue.equals("Floor 1")) {
         mapImageView.setVisible(true);
         floor = "1";
-        File map = new File("edu/wpi/cs3733/c22/teamA/images/1st Floor.png");
-        Image image = new Image(String.valueOf((map)));
-        mapImageView.setImage(image);
-        miniAnchorPane.getChildren().add(mapImageView);
-        miniAnchorPane.setLayoutX(0);
-        gesturePane.setContent(miniAnchorPane);
-        gesturePane.addEventFilter(
-            AffineEvent.CHANGED,
-            event -> {
-              System.out.println(event.getTransformedDimension());
-              transformed = event.getTransformedDimension();
-            });
+        // File map = new File("src/main/resources/edu/wpi/cs3733/c22/teamA/images/1st Floor.png");
 
+        URL url = App.class.getResource("images/1st Floor.png");
+        Image image = new Image(String.valueOf(url));
+        mapImageView.setImage(image);
+        setupGesture();
       } else if (newValue.equals("Floor 2")) {
         mapImageView.setVisible(true);
         floor = "2";
-        File map = new File("edu/wpi/cs3733/c22/teamA/images/2nd Floor.png");
-        Image image = new Image(String.valueOf((map)));
+        URL url = App.class.getResource("images/2nd Floor.png");
+        Image image = new Image(String.valueOf(url));
         mapImageView.setImage(image);
+        setupGesture();
       } else if (newValue.equals("Floor 3")) {
         mapImageView.setVisible(true);
         floor = "3";
-        File map = new File("edu/wpi/cs3733/c22/teamA/images/3rd Floor.png");
-        Image image = new Image(String.valueOf((map)));
+        URL url = App.class.getResource("images/3rd Floor.png");
+        Image image = new Image(String.valueOf(url));
         mapImageView.setImage(image);
+        setupGesture();
       } else if (newValue.equals("L1")) {
         mapImageView.setVisible(true);
         floor = "L1";
-        File map = new File("edu/wpi/cs3733/c22/teamA/images/LL1.png");
-        Image image = new Image(String.valueOf((map)));
+        URL url = App.class.getResource("images/LL1.png");
+        Image image = new Image(String.valueOf(url));
         mapImageView.setImage(image);
+        setupGesture();
       } else {
         mapImageView.setVisible(true);
         floor = "L2";
-        File map = new File("edu/wpi/cs3733/c22/teamA/images/LL2.png");
-        Image image = new Image(String.valueOf((map)));
+        URL url = App.class.getResource("images/LL2.png");
+        Image image = new Image(String.valueOf(url));
         mapImageView.setImage(image);
+        setupGesture();
       }
     }
+  }
+
+  public void setupGesture() {
+    miniAnchorPane.getChildren().remove(mapImageView);
+    miniAnchorPane.getChildren().add(mapImageView);
+    miniAnchorPane.setLayoutX(0);
+    mapImageView.setLayoutX(0);
+    gesturePane.setContent(miniAnchorPane);
+    gesturePane.addEventFilter(
+        AffineEvent.CHANGED,
+        event -> {
+          System.out.println(event.getTransformedDimension());
+          transformed = event.getTransformedDimension();
+        });
+    gesturePane.setOnMouseClicked(
+        e -> {
+          if (e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 2) {
+            Point2D pivotOnTarget =
+                gesturePane
+                    .targetPointAt(new Point2D(e.getX(), e.getY()))
+                    .orElse(gesturePane.targetPointAtViewportCentre());
+            // increment of scale makes more sense exponentially instead of linearly
+            gesturePane
+                .animate(Duration.millis(200))
+                .interpolateWith(Interpolator.EASE_BOTH)
+                .zoomBy(gesturePane.getCurrentScale(), pivotOnTarget);
+          }
+        });
   }
 
   // Makes a new Draggable Location Button and Label
@@ -472,12 +501,14 @@ public class MapEditorController {
           if (dragCheckBox.isSelected()) {
             button.setLayoutX(
                 (mouseEvent.getSceneX() - dragDelta.mouseX)
-                        * (transformed.getHeight() / miniAnchorPane.getHeight())
+                        / (transformed.getHeight() / miniAnchorPane.getHeight())
                     + dragDelta.buttonX);
             button.setLayoutY(
-                ( mouseEvent.getSceneY() - dragDelta.mouseY)
-                        * (transformed.getHeight() / miniAnchorPane.getHeight())
+                (mouseEvent.getSceneY() - dragDelta.mouseY)
+                        / (transformed.getHeight() / miniAnchorPane.getHeight())
                     + dragDelta.buttonY);
+            System.out.println(transformed.getHeight() + " " + miniAnchorPane.getHeight());
+
             xPosText.setText(String.valueOf(button.getLayoutX() - mapImageView.getLayoutX() + 8));
             yPosText.setText(String.valueOf(button.getLayoutY() - mapImageView.getLayoutY() + 24));
             Label correspondingLabel;
@@ -489,12 +520,14 @@ public class MapEditorController {
               correspondingLabel = buttonServiceRequestMarker.get(button).getLabel();
             }
             correspondingLabel.setLayoutX(
-                (dragDelta.mouseX - mouseEvent.getSceneX())
+                (mouseEvent.getSceneX() - dragDelta.mouseX)
                         / (transformed.getHeight() / miniAnchorPane.getHeight())
-                    + +8);
+                    + dragDelta.buttonX
+                    + 8);
             correspondingLabel.setLayoutY(
-                (dragDelta.mouseY - mouseEvent.getSceneY())
+                (mouseEvent.getSceneY() - dragDelta.mouseY)
                         / (transformed.getHeight() / miniAnchorPane.getHeight())
+                    + dragDelta.buttonY
                     - 24);
           }
         });
