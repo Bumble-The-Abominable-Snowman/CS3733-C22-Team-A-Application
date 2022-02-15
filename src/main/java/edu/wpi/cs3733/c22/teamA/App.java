@@ -4,6 +4,7 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import java.io.IOException;
 import javafx.application.Application;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +34,16 @@ public class App extends Application {
     guiStage = primaryStage;
     sceneSwitcher = new SceneSwitcher();
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOGIN);
+    guiStage.setMaximized(true);
+    guiStage.setMinHeight(600);
+    guiStage.setMinWidth(960);
+    double screenWidth = Screen.getPrimary().getBounds().getWidth();
+    double screenHeight = Screen.getPrimary().getBounds().getHeight();
+    double aspectRatio = (screenWidth / screenHeight);
+    guiStage.setMaxWidth(screenWidth);
+    guiStage.setMaxHeight(screenHeight);
+    guiStage.minHeightProperty().bind(guiStage.widthProperty().divide(aspectRatio));
+    guiStage.maxHeightProperty().bind(guiStage.widthProperty().divide(aspectRatio));
   }
 
   @Override

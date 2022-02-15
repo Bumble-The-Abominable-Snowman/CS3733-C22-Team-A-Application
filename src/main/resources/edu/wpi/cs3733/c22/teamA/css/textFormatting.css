@@ -1,0 +1,13 @@
+.titleFormat {
+
+    -fx-font-size: 18pt;
+    -fx-font-family: "Helvetica Neue";
+
+}
+
+.bodyFormat {
+
+    -fx-font-size: 12pt;
+    -fx-font-family: "Helvetica Neue";
+
+}
