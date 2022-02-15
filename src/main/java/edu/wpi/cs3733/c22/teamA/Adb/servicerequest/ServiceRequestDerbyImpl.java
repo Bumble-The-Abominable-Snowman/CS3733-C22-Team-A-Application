@@ -40,21 +40,29 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
 
       boolean starts_with_get = sr_method.getName().split(get_regex)[0].equals("");
       boolean starts_with_set = sr_method.getName().split(set_regex)[0].equals("");
-      if (starts_with_get && is_the_method_of_super) {
-        this.super_sr_get_data_methods.add(sr_method);
-        this.all_sr_get_data_methods.add(sr_method);
-      }
-      if (starts_with_get && is_the_method_exclusive) {
-        this.sr_get_data_methods.add(sr_method);
-        this.all_sr_get_data_methods.add(sr_method);
-      }
-      if (starts_with_set && is_the_method_of_super) {
-        this.super_sr_set_data_methods.add(sr_method);
-        this.all_sr_set_data_methods.add(sr_method);
-      }
-      if (starts_with_set && is_the_method_exclusive) {
-        this.sr_set_data_methods.add(sr_method);
-        this.all_sr_set_data_methods.add(sr_method);
+
+      //      sr_method.getGenericParameterTypes()
+      if (true) {
+        if (starts_with_get
+            && is_the_method_of_super
+            && sr_method.getReturnType().isInstance(String.class)) {
+          this.super_sr_get_data_methods.add(sr_method);
+          this.all_sr_get_data_methods.add(sr_method);
+        }
+        if (starts_with_get
+            && is_the_method_exclusive
+            && sr_method.getReturnType().isInstance(String.class)) {
+          this.sr_get_data_methods.add(sr_method);
+          this.all_sr_get_data_methods.add(sr_method);
+        }
+        if (starts_with_set && is_the_method_of_super) {
+          this.super_sr_set_data_methods.add(sr_method);
+          this.all_sr_set_data_methods.add(sr_method);
+        }
+        if (starts_with_set && is_the_method_exclusive) {
+          this.sr_set_data_methods.add(sr_method);
+          this.all_sr_set_data_methods.add(sr_method);
+        }
       }
     }
 
@@ -215,9 +223,10 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
             sr.getEmployeeRequested(),
             sr.getEmployeeAssigned(),
             sr.getRequestTime(),
-            sr.getRequestStatus().toString(),
+            sr.getRequestStatus(),
             sr.getRequestType(),
             sr.getComments());
+    System.out.println("getRequestTime: " + sr.getRequestTime());
     insert.execute(str);
 
     StringBuilder str2_2 = new StringBuilder();
@@ -380,6 +389,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
         }
         dataIndex++;
       }
+      System.out.println(this.t);
       this.enterServiceRequest((SR) this.t);
       refreshVariables();
       dataIndex = 0;
@@ -390,13 +400,10 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
   public void exportToCSV(String csvFilePath)
       throws IOException, ParseException, InvocationTargetException, IllegalAccessException,
           SQLException {
-    System.out.println("EXPORT TO CSV TO BE IMPLEMENTED!");
-  }
+    // System.out.println("EXPORT TO CSV TO BE IMPLEMENTED!");
 
-  // Write CSV for table
-  public void writeServiceRequestCSV(ArrayList<Object> list, String csvFilePath)
-      throws IOException, InvocationTargetException, IllegalAccessException {
-    refreshVariables();
+    // Get list of this type of service Requests
+    List<T> list = getServiceRequestList();
 
     // create a writer
     File file = new File(csvFilePath);
@@ -417,29 +424,20 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
 
     // write data
     for (Object thisSR : list) {
-
       String str = "";
       for (int x = 0; x < this.all_sr_get_data_methods.size(); x++) {
         str = String.join(",", str, (String) all_sr_get_data_methods.get(x).invoke(thisSR));
       }
 
-      //          String str2 = String.join(
-      //                  ",",
-      //                  thisSR.getRequestID(),
-      //                  thisMESR.getStartLocation(),
-      //                  thisMESR.getEndLocation(),
-      //                  thisMESR.getEmployeeRequested(),
-      //                  thisMESR.getEmployeeAssigned(),
-      //                  thisMESR.getRequestTime(),
-      //                  thisMESR.getRequestStatus(),
-      //                  thisMESR.getRequestType(),
-      //                  thisMESR.getComments(),
-      //                  thisMESR.getEquipmentID());
-
       writer.write(str);
-
       writer.newLine();
     }
     writer.close(); // close the writer
+  }
+
+  // Write CSV for table currently unused
+  public void writeServiceRequestCSV(ArrayList<Object> list, String csvFilePath)
+      throws IOException, InvocationTargetException, IllegalAccessException {
+    refreshVariables();
   }
 }

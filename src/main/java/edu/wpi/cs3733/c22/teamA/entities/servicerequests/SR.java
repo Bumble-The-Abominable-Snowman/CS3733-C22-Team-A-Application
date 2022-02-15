@@ -51,6 +51,10 @@ public class SR {
     }
   }
 
+  public String getRequestStatus() {
+    return this.requestType;
+  }
+
   public void setRequestTime(String s) {
     this.requestTime = Timestamp.valueOf(s);
   }

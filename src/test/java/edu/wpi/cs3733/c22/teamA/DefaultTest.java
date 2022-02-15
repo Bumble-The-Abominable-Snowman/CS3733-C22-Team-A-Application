@@ -77,6 +77,10 @@ public class DefaultTest {
     for (Object srItem : srList) {
       System.out.println(srItem);
     }
+
+    // Test ServiceRequest.exportToCSV
+    String filepath = "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/testCSV.csv";
+    equipmentSRServiceRequestDerby.exportToCSV(filepath);
   }
 
   @Test
