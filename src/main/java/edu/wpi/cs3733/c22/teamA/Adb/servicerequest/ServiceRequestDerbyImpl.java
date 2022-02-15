@@ -117,7 +117,8 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
   public T getRequest(String ID) {
     try {
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
       Statement get = connection.createStatement();
 
       String tableName = refreshVariables();
@@ -160,7 +161,8 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
 
     try {
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
       Statement get = connection.createStatement();
 
       String str =
@@ -229,7 +231,8 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
 
     try {
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
       Statement insert = connection.createStatement();
 
       String str =
@@ -274,7 +277,8 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
 
     try {
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
       Statement delete = connection.createStatement();
       delete.execute(
           String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", sr.getRequestID()));
@@ -292,7 +296,8 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
   public List<T> getServiceRequestList() {
     try {
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
       Statement getNodeList = connection.createStatement();
 
       ArrayList<T> reqList = new ArrayList<>();

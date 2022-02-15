@@ -20,7 +20,8 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
   public Equipment getMedicalEquipment(String ID) {
     try {
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
       Statement get = connection.createStatement();
       String str = String.format("SELECT * FROM MedicalEquipment WHERE equipmentID = '%s'", ID);
 
@@ -47,7 +48,8 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
   public void updateMedicalEquipment(String ID, String field, Object change) {
     try {
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
       Statement update = connection.createStatement();
 
       String str = "";
@@ -85,7 +87,8 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
       boolean isAvailable) {
     try {
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
       Statement insert = connection.createStatement();
 
       String str =
@@ -105,7 +108,8 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
   public void deleteMedicalEquipment(String ID) {
     try {
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
       System.out.println("Connection MAde");
       Statement delete = connection.createStatement();
       String str = String.format("DELETE FROM MedicalEquipment WHERE equipmentID = '%s'", ID);
@@ -122,7 +126,8 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
     List<Equipment> equipList = new ArrayList<>();
     try {
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
       Statement getNodeList = connection.createStatement();
       ResultSet rset = getNodeList.executeQuery("SELECT * FROM MedicalEquipment");
 
@@ -229,7 +234,8 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
     // Check MedicalEquipment table
     try {
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
       Statement dropTable = connection.createStatement();
 
       dropTable.execute("DELETE FROM MedicalEquipment");
@@ -239,7 +245,8 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
 
     try {
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
+          DriverManager.getConnection(
+              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
 
       List<Equipment> List = EquipmentDerbyImpl.readMedicalEquipmentCSV(csvFilePath);
       for (Equipment l : List) {
