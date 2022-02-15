@@ -36,12 +36,8 @@ dependencies {
             'com.rabbitmq:amqp-client:5.14.1',
 
             'org.apache.commons:commons-lang3:3.0',
-<<<<<<< HEAD
             'net.kurobako:gesturefx:0.7.1',
-=======
-
             'commons-dbutils:commons-dbutils:1.7',
->>>>>>> bd7a791e7bf1cc2beb2f12cdc23cf3eaa4402bed
     )
 
     testCompile(
