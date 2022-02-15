@@ -260,7 +260,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
 
       dropTable.execute("DELETE FROM Employee");
     } catch (SQLException e) {
-      System.out.println("Delete failed");
+      System.out.println("Delete on Employee failed");
     }
 
     try {
@@ -294,7 +294,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
                 + "')");
       }
     } catch (SQLException | IOException | ParseException e) {
-      System.out.println("Insertion failed!");
+      System.out.println("Insertion on Employee failed!");
     }
   }
 

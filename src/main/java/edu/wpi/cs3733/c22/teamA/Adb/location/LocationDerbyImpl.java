@@ -283,12 +283,12 @@ public class LocationDerbyImpl implements LocationDAO {
   public static void inputFromCSV(String tableName, String csvFilePath) {
     try {
       Connection connection =
-          DriverManager.getConnection(String.format("jdbc:derby:%s;", Adb.pathToDBA));
+          DriverManager.getConnection(String.format("jdbc:derby:%s;user:", Adb.pathToDBA));
       Statement deleteTable = connection.createStatement();
 
       deleteTable.execute("DELETE FROM TowerLocations");
     } catch (SQLException e) {
-      System.out.println("Delete failed");
+      System.out.println("Delete on TowerLocations failed");
     }
 
     try {
@@ -318,7 +318,7 @@ public class LocationDerbyImpl implements LocationDAO {
                 + "')");
       }
     } catch (SQLException | IOException e) {
-      System.out.println("Insertion failed!");
+      System.out.println("Insertion on TowerLocations failed!");
       return;
     }
     return;
