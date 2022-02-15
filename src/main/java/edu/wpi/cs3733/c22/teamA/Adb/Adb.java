@@ -4,23 +4,40 @@ import java.sql.*;
 
 public class Adb {
 
-  public static String pathToDBA = "src/main/resources/edu/wpi/cs3733/c22/teamA/db/HospitalDBA";
+  public static String pathToDBA = "";
 
-  public static void initialConnection() {
+  public static void initialConnection(String arg) {
 
     boolean isInitialized = false;
     // Connection to database driver
     System.out.println("----- Apache Derby Connection Testing -----");
-    try {
-      Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-    } catch (ClassNotFoundException e) {
-      System.out.println("Apache Derby Not Found");
-      e.printStackTrace();
-      return;
+    switch (arg){
+      case "EmbeddedDriver":
+
+      String pathToDBA = "//localhost:1527/HospitalDBA";
+
+      try {
+        Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+      } catch (ClassNotFoundException e) {
+        System.out.println("Apache Derby Not Found");
+        e.printStackTrace();
+        return;
+      }
+
+      case "ClientDriver":
+
+        pathToDBA = "//localhost:1527/HospitalDBA";
+
+        try {
+          Class.forName("org.apache.derby.jdbc.ClientDriver");
+        } catch (ClassNotFoundException e) {
+          System.out.println("Apache Derby Not Found");
+          e.printStackTrace();
+          return;
+        }
+
+      System.out.println("Apache Derby driver registered!");
     }
-
-    System.out.println("Apache Derby driver registered!");
-
     try {
 
       // Check if database exist. If not then create one.
