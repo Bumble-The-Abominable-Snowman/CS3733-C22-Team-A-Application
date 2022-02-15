@@ -1,8 +1,12 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.EquipmentSR;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import javafx.fxml.FXML;
 
@@ -56,5 +60,12 @@ public class HomeCtrl {
   @FXML
   private void exitHome() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOGIN);
+  }
+
+  @FXML
+  private void deleteAll() {
+    ServiceRequestDAO test = new ServiceRequestDerbyImpl(new EquipmentSR());
+    for (int i = 0; i < test.getServiceRequestList().size(); i++)
+      test.deleteServiceRequest((SR) test.getServiceRequestList().get(i));
   }
 }

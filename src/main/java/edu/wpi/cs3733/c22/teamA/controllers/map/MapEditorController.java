@@ -49,7 +49,6 @@ public class MapEditorController {
   @FXML private JFXCheckBox showTextCheckBox;
   @FXML private JFXButton deleteButton;
   @FXML private ComboBox floorSelectionComboBox;
-  // @FXML private JFXComboBox testComboBox;
   @FXML private AnchorPane anchorPane;
 
   @FXML private JFXComboBox searchComboBox = new JFXComboBox();
@@ -97,8 +96,6 @@ public class MapEditorController {
     locationMarkerShape.getPoints().addAll(new Double[] {1.0, 4.0, 0.0, 2.0, 1.0, 0.0, 2.0, 2.0});
     equipmentMarkerShape.getPoints().addAll(new Double[] {0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0});
 
-    // testComboBox.setEditable(true);
-    // String test = testComboBox.get
     buttonLocationMarker = new HashMap<>();
     buttonEquipmentMarker = new HashMap<>();
     buttonServiceRequestMarker = new HashMap<>();
@@ -166,7 +163,6 @@ public class MapEditorController {
 
               // Loops through every service request & draws them if they're on this floor
               for (SR serviceRequest : serviceRequests) {
-                System.out.println(serviceRequest.getEndLocation());
                 if (locationNames.containsKey(serviceRequest.getEndLocation())) {
                   SRMarker serviceRequestMarker =
                       newDraggableServiceRequest(
