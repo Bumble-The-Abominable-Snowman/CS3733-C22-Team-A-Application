@@ -4,7 +4,10 @@ import com.jfoenix.controls.JFXButton;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
+import java.util.Objects;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.GridPane;
 
 // TODO Add exit button to quit
 public class HomeCtrl {
@@ -15,8 +18,83 @@ public class HomeCtrl {
   @FXML private JFXButton locationDataButton;
   @FXML private JFXButton mapEditorButton;
   @FXML private JFXButton employeesButton;
+  @FXML private JFXButton exitButton;
 
   private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
+
+  @FXML public JFXHamburger hamburger;
+
+  @FXML public JFXDrawer drawer;
+
+  @FXML public JFXButton backButton;
+
+  @FXML
+  private void initialize() {
+
+    var transition = new HamburgerSlideCloseTransition(hamburger);
+
+    GridPane menuBox = null;
+    try {
+      menuBox = FXMLLoader.load(getClass().getResource("Menu.fxml"));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    drawer.setSidePane(menuBox);
+    hamburger.setOnMouseClicked(
+        mouseEvent -> {
+          transition.setRate(transition.getRate() * -1);
+          transition.play();
+
+          if (drawer.isOpened()) drawer.close();
+          else drawer.open();
+        });
+
+    double settingsTextSize = settingsButton.getFont().getSize();
+    double serviceRequestTextSize = serviceRequestsButton.getFont().getSize();
+    double viewServiceRequestsTextSize = viewServiceRequestsButton.getFont().getSize();
+    double equipmentTrackerTextSize = equipmentTrackerButton.getFont().getSize();
+    double locationDataTextSize = locationDataButton.getFont().getSize();
+    double mapEditorTextSize = mapEditorButton.getFont().getSize();
+    double employeesTextSize = employeesButton.getFont().getSize();
+    double exitTextSize = exitButton.getFont().getSize();
+
+    App.getStage()
+        .widthProperty()
+        .addListener(
+            (obs, oldVal, newVal) -> {
+              settingsButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * settingsTextSize)
+                      + "pt;");
+              serviceRequestsButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * serviceRequestTextSize)
+                      + "pt;");
+              viewServiceRequestsButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * viewServiceRequestsTextSize)
+                      + "pt;");
+              equipmentTrackerButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * equipmentTrackerTextSize)
+                      + "pt;");
+              locationDataButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * locationDataTextSize)
+                      + "pt;");
+              mapEditorButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * mapEditorTextSize)
+                      + "pt;");
+              employeesButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * employeesTextSize)
+                      + "pt;");
+              exitButton.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * exitTextSize) + "pt;");
+            });
+  }
 
   @FXML
   private void goToCreateNewServiceRequest() throws IOException {
@@ -56,5 +134,10 @@ public class HomeCtrl {
   @FXML
   private void exitHome() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOGIN);
+  }
+
+  @FXML
+  private void exitApp() {
+    System.exit(0);
   }
 }

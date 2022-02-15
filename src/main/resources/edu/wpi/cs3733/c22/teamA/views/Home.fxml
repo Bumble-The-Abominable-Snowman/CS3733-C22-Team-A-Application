@@ -1,43 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<GridPane prefHeight="400" prefWidth="600" styleClass="background" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.HomeCtrl">
+<GridPane prefHeight="400" prefWidth="600" styleClass="background" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.HomeCtrl">
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="489.0" minWidth="10.0" prefWidth="485.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.0" minWidth="10.0" prefWidth="115.0" />
+        <ColumnConstraints />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="489.0" minWidth="10.0" prefWidth="423.0" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="33.0" minHeight="25.0" prefHeight="33.0" />
+        <RowConstraints maxHeight="375.0" minHeight="10.0" prefHeight="367.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <Label prefHeight="25.0" prefWidth="314.0" styleClass="bodyFormat" text="Absolute-Zero Abominable Snowmen" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-        <JFXButton fx:id="exitButton" mnemonicParsing="false" onAction="#exitHome" snapToPixel="false" styleClass="bodyFormat" text="Log Out" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
-        <JFXButton fx:id="settingsButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToSettings" styleClass="bodyFormat" text="Settings" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
-            <GridPane.margin>
-                <Insets right="5.0" top="5.0" />
-            </GridPane.margin>
-        </JFXButton>
-        <VBox alignment="CENTER" prefHeight="222.0" prefWidth="332.0" GridPane.rowIndex="1">
-            <children>
-                <JFXButton fx:id="serviceRequestsButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToCreateNewServiceRequest" prefHeight="27.0" prefWidth="186.0" styleClass="bodyFormat" text="Make New Service Requests" textFill="WHITE" />
-                <JFXButton fx:id="employeesButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToViewEmployees" prefHeight="27.0" prefWidth="186.0" styleClass="bodyFormat" text="Employees" textFill="WHITE">
-                    <opaqueInsets>
-                        <Insets />
-                    </opaqueInsets>
-                </JFXButton>
-                <JFXButton fx:id="viewServiceRequestsButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToViewServiceRequest" prefHeight="27.0" prefWidth="186.0" styleClass="bodyFormat" text="View Existing Requests" textFill="WHITE" />
-                <JFXButton fx:id="equipmentTrackerButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToEquipmentTracker" prefHeight="27.0" prefWidth="186.0" styleClass="bodyFormat" text="View Equipment Tracker" textFill="WHITE" />
-                <JFXButton fx:id="locationDataButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToLocationData" prefHeight="27.0" prefWidth="186.0" styleClass="bodyFormat" text="View Locations (Table)" textFill="WHITE" />
-                <JFXButton fx:id="mapEditorButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToEditLocationData" prefHeight="27.0" prefWidth="186.0" styleClass="bodyFormat" text="Edit Locations (Map)" textFill="WHITE" />
-            </children>
-        </VBox>
+      <JFXHamburger fx:id="hamburger" prefHeight="33.0" prefWidth="74.0" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
+      <JFXDrawer fx:id="drawer" prefHeight="400.0" prefWidth="112.0" GridPane.rowIndex="1" />
+      <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+              <VBox alignment="CENTER" prefHeight="222.0" prefWidth="332.0" GridPane.rowIndex="1">
+                  <children>
+                      <JFXButton fx:id="serviceRequestsButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToCreateNewServiceRequest" prefHeight="27.0" prefWidth="186.0" styleClass="bodyFormat" text="Make New Service Requests" textFill="WHITE" />
+                      <JFXButton fx:id="employeesButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToViewEmployees" prefHeight="27.0" prefWidth="186.0" styleClass="bodyFormat" text="Employees" textFill="WHITE">
+                          <opaqueInsets>
+                              <Insets />
+                          </opaqueInsets>
+                      </JFXButton>
+                      <JFXButton fx:id="viewServiceRequestsButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToViewServiceRequest" prefHeight="27.0" prefWidth="186.0" styleClass="bodyFormat" text="View Existing Requests" textFill="WHITE" />
+                      <JFXButton fx:id="equipmentTrackerButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToEquipmentTracker" prefHeight="27.0" prefWidth="186.0" styleClass="bodyFormat" text="View Equipment Tracker" textFill="WHITE" />
+                      <JFXButton fx:id="locationDataButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToLocationData" prefHeight="27.0" prefWidth="186.0" styleClass="bodyFormat" text="View Locations (Table)" textFill="WHITE" />
+                      <JFXButton fx:id="mapEditorButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToEditLocationData" prefHeight="27.0" prefWidth="186.0" styleClass="bodyFormat" text="Edit Locations (Map)" textFill="WHITE" />
+                  </children>
+              </VBox>
+              <JFXButton fx:id="settingsButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToSettings" styleClass="bodyFormat" text="Settings" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
+              <JFXButton fx:id="exitButton" mnemonicParsing="false" onAction="#exitHome" snapToPixel="false" styleClass="bodyFormat" text="Log Out" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+         </children>
+      </GridPane>
     </children>
 </GridPane>
