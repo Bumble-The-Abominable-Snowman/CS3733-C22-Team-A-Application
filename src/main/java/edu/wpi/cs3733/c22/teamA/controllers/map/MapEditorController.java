@@ -471,12 +471,12 @@ public class MapEditorController {
         mouseEvent -> {
           if (dragCheckBox.isSelected()) {
             button.setLayoutX(
-                (dragDelta.mouseX - mouseEvent.getSceneX())
-                        / (transformed.getHeight() / miniAnchorPane.getHeight())
+                (mouseEvent.getSceneX() - dragDelta.mouseX)
+                        * (transformed.getHeight() / miniAnchorPane.getHeight())
                     + dragDelta.buttonX);
             button.setLayoutY(
-                (dragDelta.mouseY - mouseEvent.getSceneY())
-                        / (transformed.getHeight() / miniAnchorPane.getHeight())
+                ( mouseEvent.getSceneY() - dragDelta.mouseY)
+                        * (transformed.getHeight() / miniAnchorPane.getHeight())
                     + dragDelta.buttonY);
             xPosText.setText(String.valueOf(button.getLayoutX() - mapImageView.getLayoutX() + 8));
             yPosText.setText(String.valueOf(button.getLayoutY() - mapImageView.getLayoutY() + 24));
