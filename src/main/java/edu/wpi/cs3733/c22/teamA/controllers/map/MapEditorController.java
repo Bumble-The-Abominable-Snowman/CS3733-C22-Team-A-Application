@@ -234,10 +234,12 @@ public class MapEditorController {
   // TODO IMPLEMENT CHOICE OF LOCATION, EQUIPMENT, SR SEARCH (another button?)
   // TODO MAKE IT LIVE UPDATE ON KEYSTROKE
   public void setupSearchListener() {
+    searchComboBox.setEditable(true);
+    searchComboBox.setVisibleRowCount(5);
     // set up list of locations to be wrapped
     ObservableList<Location> searchLocationList = FXCollections.observableArrayList();
     searchLocationList.addAll(locations);
-    searchComboBox.setEditable(true);
+
     // create filtered list, can be filtered (duh)
     FilteredList<Location> filteredLocations = new FilteredList<>(searchLocationList, p -> true);
     // add listener that checks whenever changes are made to JFXText searchText
@@ -249,8 +251,9 @@ public class MapEditorController {
               filteredLocations.setPredicate(
                   location -> {
                     // if field is empty display all locations
-                    if (newValue == null
-                        || searchComboBox.getSelectionModel().toString().isEmpty()) {
+                    if ((newValue == null
+                            || searchComboBox.getSelectionModel().toString().isEmpty())
+                        && location.getFloor().equals(floor)) {
                       return true;
                     }
                     // make sure case is factored out
