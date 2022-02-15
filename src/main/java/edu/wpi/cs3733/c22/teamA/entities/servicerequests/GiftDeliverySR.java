@@ -8,16 +8,16 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class GiftSR extends SR {
+public class GiftDeliverySR extends SR {
 
-  private String equipmentID;
+  private String giftDescription;
 
-  public GiftSR() {
+  public GiftDeliverySR() {
     super();
     this.srType = SRType.GIFT;
   }
 
-  public GiftSR(
+  public GiftDeliverySR(
       String requestID,
       String startLocation,
       String endLocation,
@@ -27,7 +27,7 @@ public class GiftSR extends SR {
       Status requestStatus,
       String requestType,
       String comments,
-      String equipmentID) {
+      String giftDescription) {
     super();
     this.requestID = requestID;
     this.startLocation = startLocation;
@@ -38,7 +38,7 @@ public class GiftSR extends SR {
     this.requestStatus = requestStatus;
     this.requestType = requestType;
     this.comments = comments;
-    this.equipmentID = equipmentID;
+    this.giftDescription = giftDescription;
 
     this.srType = SRType.GIFT;
   }

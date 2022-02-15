@@ -5,6 +5,8 @@
 package edu.wpi.cs3733.c22.teamA;
 
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
 import java.io.IOException;
@@ -20,42 +22,70 @@ public class DefaultTest {
   public void test()
       throws ParseException, IOException, InvocationTargetException, IllegalAccessException {
     Connection connection = null;
-    Adb.initialConnection();
+    Adb.initialConnection("EmbeddedDriver");
+
+    LocationDerbyImpl.inputFromCSV(
+        "Location", "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
+    EmployeeDerbyImpl.inputFromCSV(
+        "Employee", "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.CSV");
 
     System.out.println("---------------");
-    ServiceRequestDerbyImpl<EquipmentSR> serviceRequestDAO =
+    ServiceRequestDerbyImpl<EquipmentSR> equipmentSRServiceRequestDerby =
         new ServiceRequestDerbyImpl<>(new EquipmentSR());
 
-    serviceRequestDAO.populateFromCSV(
+    equipmentSRServiceRequestDerby.populateFromCSV(
         "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipmentServiceRequest.CSV");
 
     // get sr request by id
-    EquipmentSR sr = serviceRequestDAO.getRequest("REQ1256");
+    EquipmentSR sr = equipmentSRServiceRequestDerby.getRequest("REQ1256");
 
     // update the existing sr
     sr.setComments("new employee!");
-    sr.setEmployeeAssigned("EMP4");
-    serviceRequestDAO.updateServiceRequest(sr);
+    sr.setEmployeeAssigned("004");
+    equipmentSRServiceRequestDerby.updateServiceRequest(sr);
 
     // create a new sr from the previous sr
     sr.setRequestID("REQ123456789");
     sr.setComments("new employee2!");
-    sr.setEmployeeAssigned("EMP3");
+    sr.setEmployeeAssigned("003");
     sr.setRequestStatus("CANCELED");
     sr.setEquipmentID("EQ787898");
-    serviceRequestDAO.enterServiceRequest(sr);
+    equipmentSRServiceRequestDerby.enterServiceRequest(sr);
 
     // print out the list
     System.out.println("EquipmentSR List:");
-    List<EquipmentSR> srList = serviceRequestDAO.getServiceRequestList();
-    for (EquipmentSR srItem : srList) {
+    List<EquipmentSR> equipmentSRS = equipmentSRServiceRequestDerby.getServiceRequestList();
+    for (EquipmentSR srItem : equipmentSRS) {
+      System.out.println(srItem);
+    }
+
+    System.out.println("---------------");
+    ServiceRequestDerbyImpl<ReligiousSR> religiousSRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new ReligiousSR());
+
+    religiousSRServiceRequestDerby.populateFromCSV(
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/ReligiousServiceRequest.csv");
+
+    // get all the SRs
+    System.out.println("---------------");
+    ServiceRequestDerbyImpl<SR> serviceRequestDAO = new ServiceRequestDerbyImpl<>(new SR());
+
+    // print out the list
+    System.out.println("SR List:");
+    List<?> srList = serviceRequestDAO.getAllServiceRequestList();
+    for (Object srItem : srList) {
       System.out.println(srItem);
     }
   }
 
   @Test
-  public void testOnAdb() {
-    Adb.initialConnection();
+  public void testOnAdbConnection() {
+
+    // test switch between EmbeddedDriver and ClientDriver
+    // Client server setup CMD line:
+    // java -jar %DERBY_HOME%\lib\derbyrun.jar server start
+    Adb.initialConnection("EmbeddedDriver");
+
   }
 
   // Test on Location table (Fixed)
