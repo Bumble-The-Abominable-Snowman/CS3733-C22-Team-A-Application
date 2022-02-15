@@ -2,10 +2,15 @@ package edu.wpi.cs3733.c22.teamA.Adb.servicerequest;
 
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
+
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.text.ParseException;
 import java.util.*;
@@ -421,37 +426,54 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
   }
 
   // Write CSV for table
-  public static void writeMedicalEquipmentServiceRequestCSV(String csvFilePath) throws IOException {
+  public void writeServiceRequestCSV(ArrayList<Object> list, String csvFilePath) throws IOException, InvocationTargetException, IllegalAccessException {
+        refreshVariables();
 
-    //    // create a writer
-    //    File file = new File(csvFilePath);
-    //    file.createNewFile();
-    //    BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
-    //
-    //    writer.write(
-    //            "RequestID, startLocation, endLocation, employeeRequested, employeeAssigned,
-    // requestTime, requestStatus, requestType, comments, equipmentID");
-    //    writer.newLine();
-    //
-    //    // write data
-    //    for (MedicalEquipmentServiceRequest thisMESR : List) {
-    //
-    //      writer.write(
-    //              String.join(
-    //                      ",",
-    //                      thisMESR.getRequestID(),
-    //                      thisMESR.getStartLocation(),
-    //                      thisMESR.getEndLocation(),
-    //                      thisMESR.getEmployeeRequested(),
-    //                      thisMESR.getEmployeeAssigned(),
-    //                      thisMESR.getRequestTime(),
-    //                      thisMESR.getRequestStatus(),
-    //                      thisMESR.getRequestType(),
-    //                      thisMESR.getComments(),
-    //                      thisMESR.getEquipmentID()));
-    //
-    //      writer.newLine();
-    //    }
-    //    writer.close(); // close the writer
+        // create a writer
+        File file = new File(csvFilePath);
+        file.createNewFile();
+        BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
+
+        //Generate title String (first line)
+        String tleString = "";
+        Field[] flds = list.get(0).getClass().getDeclaredFields();
+        for(int x = 0; x < flds.length; x++){
+          tleString = tleString + flds[x].getName();
+          if(!(x== flds.length-1)){
+            tleString = tleString +", ";
+          }
+        }
+        writer.write(tleString);
+        writer.newLine();
+
+        // write data
+        for (Object thisSR : list) {
+
+          String str = "";
+          for(int x = 0; x < this.all_sr_get_data_methods.size(); x++){
+            str = String.join(",", str,
+                    (String) all_sr_get_data_methods.get(x).invoke(thisSR));
+
+          }
+
+//          String str2 = String.join(
+//                  ",",
+//                  thisSR.getRequestID(),
+//                  thisMESR.getStartLocation(),
+//                  thisMESR.getEndLocation(),
+//                  thisMESR.getEmployeeRequested(),
+//                  thisMESR.getEmployeeAssigned(),
+//                  thisMESR.getRequestTime(),
+//                  thisMESR.getRequestStatus(),
+//                  thisMESR.getRequestType(),
+//                  thisMESR.getComments(),
+//                  thisMESR.getEquipmentID());
+
+          writer.write(str
+                  );
+
+          writer.newLine();
+        }
+        writer.close(); // close the writer
   }
 }
