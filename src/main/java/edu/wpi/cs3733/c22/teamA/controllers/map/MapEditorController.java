@@ -16,7 +16,6 @@ import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.map.EquipmentMarker;
 import edu.wpi.cs3733.c22.teamA.entities.map.LocationMarker;
 import edu.wpi.cs3733.c22.teamA.entities.map.SRMarker;
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.EquipmentSR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.net.URL;
@@ -261,9 +260,10 @@ public class MapEditorController {
   public void fillFromDB() {
     locations.addAll(new ArrayList<>(new LocationDerbyImpl().getNodeList()));
     equipments.addAll(new ArrayList<>(new EquipmentDerbyImpl().getMedicalEquipmentList()));
-    // TODO add other types, currently just medical equipment requests
-    serviceRequests.addAll(
-        new ArrayList<>(new ServiceRequestDerbyImpl<>(new EquipmentSR()).getServiceRequestList()));
+    List<?> requestList = ServiceRequestDerbyImpl.getAllServiceRequestList();
+    for (Object sr : requestList) {
+      serviceRequests.add((SR) sr);
+    }
   }
 
   // Set up searchbar for LOCATIONS ONLY
@@ -451,10 +451,39 @@ public class MapEditorController {
     Label label = newDraggableLabel(labelX, labelY, "");
 
     button.setPickOnBounds(false);
-    // TODO Wait for refactoring of database before implementing
     switch (serviceRequest.getSrType()) {
       case EQUIPMENT:
         button.setStyle("-fx-background-color: YELLOW");
+        break;
+      case FLORAL_DELIVERY:
+        button.setStyle("-fx-background-color: GREEN");
+        break;
+      case FOOD_DELIVERY:
+        button.setStyle("-fx-background-color: ORANGE");
+        break;
+      case GIFT:
+        button.setStyle("-fx-background-color: ORCHID");
+        break;
+      case LANGUAGE:
+        button.setStyle("-fx-background-color: WHEAT");
+        break;
+      case LAUNDRY:
+        button.setStyle("-fx-background-color: MEDIUMBLUE");
+        break;
+      case MAINTENANCE:
+        button.setStyle("-fx-background-color: MINTCREAM");
+        break;
+      case MEDICINE_DELIVERY:
+        button.setStyle("-fx-background-color: SADDLEBROWN");
+        break;
+      case RELIGIOUS:
+        button.setStyle("-fx-background-color: TOMATO");
+        break;
+      case SANITATION:
+        button.setStyle("-fx-background-color: DIMGREY");
+        break;
+      case SECURITY:
+        button.setStyle("-fx-background-color: MAROON");
         break;
     }
     button.setShape(locationMarkerShape);

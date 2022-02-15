@@ -8,10 +8,9 @@ import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.GridPane;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 
-// TODO Add exit button to quit
 public class HomeCtrl {
   @FXML private JFXButton settingsButton;
   @FXML private JFXButton serviceRequestsButton;
@@ -22,32 +21,24 @@ public class HomeCtrl {
   @FXML private JFXButton employeesButton;
   @FXML private JFXButton exitButton;
 
-  private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
-
   @FXML public JFXHamburger hamburger;
-
   @FXML public JFXDrawer drawer;
-
   @FXML public JFXButton backButton;
+  @FXML public VBox menuBox;
+
+  private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   @FXML
   private void initialize() {
 
-    var transition = new HamburgerSlideCloseTransition(hamburger);
-
-    GridPane menuBox = null;
-    try {
-      menuBox = FXMLLoader.load(getClass().getResource("Menu.fxml"));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
     drawer.setSidePane(menuBox);
-    hamburger.setOnMouseClicked(
-        mouseEvent -> {
-          transition.setRate(transition.getRate() * -1);
-          transition.play();
-
+    HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(hamburger);
+    burgerTask.setRate(-1);
+    hamburger.addEventHandler(
+        MouseEvent.MOUSE_PRESSED,
+        (e) -> {
+          burgerTask.setRate(burgerTask.getRate() * -1);
+          burgerTask.play();
           if (drawer.isOpened()) drawer.close();
           else drawer.open();
         });
