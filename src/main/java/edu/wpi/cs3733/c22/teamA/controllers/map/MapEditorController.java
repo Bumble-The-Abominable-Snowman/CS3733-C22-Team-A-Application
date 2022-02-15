@@ -2,6 +2,7 @@ package edu.wpi.cs3733.c22.teamA.controllers.map;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
@@ -26,7 +27,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -48,9 +48,10 @@ public class MapEditorController {
   @FXML private JFXCheckBox showTextCheckBox;
   @FXML private JFXButton deleteButton;
   @FXML private ComboBox floorSelectionComboBox;
+  // @FXML private JFXComboBox testComboBox;
   @FXML private AnchorPane anchorPane;
 
-  @FXML private JFXTextArea searchText = new JFXTextArea();
+  @FXML private JFXComboBox searchComboBox = new JFXComboBox();
 
   @FXML private JFXTextArea nodeIDText = new JFXTextArea();
   @FXML private JFXTextArea xPosText = new JFXTextArea();
@@ -103,6 +104,8 @@ public class MapEditorController {
               0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0
             }); // TODO Modify shape to be different
 
+    // testComboBox.setEditable(true);
+    // String test = testComboBox.get
     buttonLocationMarker = new HashMap<>();
     buttonEquipmentMarker = new HashMap<>();
     buttonServiceRequestMarker = new HashMap<>();
@@ -122,6 +125,7 @@ public class MapEditorController {
     setupCheckboxListeners();
     setInitialUIStates();
     fillFromDB();
+    setupSearchListener();
 
     backButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
@@ -228,48 +232,53 @@ public class MapEditorController {
 
   // Set up searchbar for LOCATIONS ONLY
   // TODO IMPLEMENT CHOICE OF LOCATION, EQUIPMENT, SR SEARCH (another button?)
+  // TODO MAKE IT LIVE UPDATE ON KEYSTROKE
   public void setupSearchListener() {
     // set up list of locations to be wrapped
     ObservableList<Location> searchLocationList = FXCollections.observableArrayList();
     searchLocationList.addAll(locations);
+    searchComboBox.setEditable(true);
     // create filtered list, can be filtered (duh)
     FilteredList<Location> filteredLocations = new FilteredList<>(searchLocationList, p -> true);
     // add listener that checks whenever changes are made to JFXText searchText
-    searchText
-        .textProperty()
+    searchComboBox
+        .getSelectionModel()
+        .selectedItemProperty()
         .addListener(
             (observable, oldValue, newValue) -> {
               filteredLocations.setPredicate(
                   location -> {
                     // if field is empty display all locations
-                    if (newValue == null || newValue.isEmpty()) {
+                    if (newValue == null || newValue.toString().isEmpty()) {
                       return true;
                     }
                     // make sure case is factored out
-                    String lowerCaseFilter = newValue.toLowerCase();
+                    String lowerCaseFilter = newValue.toString().toLowerCase();
                     // if search matches either name or ID, display it
                     // if not, this returns false and doesnt display
-                    return location.getLongName().toLowerCase().contains(lowerCaseFilter)
-                        || location.getShortName().toLowerCase().contains(lowerCaseFilter)
-                        || location.getNodeID().toLowerCase().contains(lowerCaseFilter);
+                    return (location.getLongName().toLowerCase().contains(lowerCaseFilter)
+                            || location.getShortName().toLowerCase().contains(lowerCaseFilter)
+                            || location.getNodeID().toLowerCase().contains(lowerCaseFilter))
+                        && location.getFloor().equals(floor);
                   });
+              ArrayList<String> locationNames = new ArrayList<>();
+              for (Location l : filteredLocations) {
+                locationNames.add(l.getLongName());
+              }
+              searchComboBox.getItems().clear();
+              searchComboBox.getItems().addAll(locationNames);
+              clearAll();
+
+              HashMap<String, LocationMarker> locationIDs = new HashMap<>();
+              // Loops through every location filtered & draws them if present on the floor
+              for (Location location : locations) {
+                if (filteredLocations.contains(location)) {
+                  LocationMarker locationMarker = newDraggableLocation(location);
+                  locationMarker.draw(anchorPane);
+                  locationIDs.put(location.getNodeID(), locationMarker);
+                }
+              }
             });
-    SortedList<Location> sortedLocations = new SortedList<>(filteredLocations);
-
-    // searchText.dropdown.addAll(sortedLocations)
-
-    // TODO clean this up. it's gross
-    clearAll();
-    // Maps Location IDs to their markers
-    HashMap<String, LocationMarker> locationIDs = new HashMap<>();
-    // Loops through every location & draws them if present on the floor
-    for (Location location : locations) {
-      if (sortedLocations.contains(location)) {
-        LocationMarker locationMarker = newDraggableLocation(location);
-        locationMarker.draw(anchorPane);
-        locationIDs.put(location.getNodeID(), locationMarker);
-      }
-    }
   }
 
   // Sets up the floor
