@@ -6,7 +6,7 @@ public class Main {
 
   public static void main(String[] args) {
 
-    Adb.initialConnection();
+    Adb.initialConnection("EmbeddedDriver");
 
     App.launch(App.class, args);
   }
