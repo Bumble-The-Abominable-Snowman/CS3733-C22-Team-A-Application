@@ -79,12 +79,13 @@ public class DefaultTest {
   }
 
   @Test
-  public void testOnAdb() {
+  public void testOnAdbConnection() {
 
     // test switch between EmbeddedDriver and ClientDriver
-    // Client server setup
+    // Client server setup CMD line:
     // java -jar %DERBY_HOME%\lib\derbyrun.jar server start
     Adb.initialConnection("EmbeddedDriver");
+
   }
 
   // Test on Location table (Fixed)
