@@ -9,8 +9,10 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 
 public class SettingsCtrl extends MasterCtrl {
-  @FXML private JFXButton loadFromBackupButton;
-  @FXML private JFXButton exportToBackupButton;
+
+  @FXML private JFXToggleButton toggleClientServerButton;
+  @FXML private JFXButton loadBackupButton;
+  @FXML private JFXButton saveBackupButton;
 
   @FXML
   private void initialize() {
@@ -28,22 +30,22 @@ public class SettingsCtrl extends MasterCtrl {
                   "-fx-font-size: "
                       + ((App.getStage().getWidth() / 1000) * loadBackupTextSize)
                       + "pt;");
-              exportToBackupButton.setStyle(
+              saveBackupButton.setStyle(
                   "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * exportToBackupTextSize)
+                      + ((App.getStage().getWidth() / 1000) * saveBackupTextSize)
                       + "pt;");
             });
   }
 
-  public void goToHomeScene() throws IOException {
+  public void goToHome() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
   }
 
-  public void loadFromBackup() throws IOException {
+  public void loadBackup() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOAD_BACKUP);
   }
 
-  public void exportToBackup() throws IOException {
+  public void saveBackup() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.SAVE_BACKUP);
   }
 

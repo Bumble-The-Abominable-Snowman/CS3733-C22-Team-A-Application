@@ -46,7 +46,7 @@
               </rowConstraints>
                <children>
                   <JFXHamburger fx:id="hamburger" prefHeight="76.0" prefWidth="139.0" stylesheets="@../css/styleSheet.css" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
-                  <JFXButton fx:id="backButton" onAction="#back" stylesheets="@../css/styleSheet.css" text="Back" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <JFXButton fx:id="backButton" onAction="#goToHome" stylesheets="@../css/styleSheet.css" text="Back" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
             <JFXDrawer fx:id="drawer" defaultDrawerSize="500.0" prefHeight="560.0" prefWidth="223.0" stylesheets="@../css/styleSheet.css" GridPane.rowIndex="1">

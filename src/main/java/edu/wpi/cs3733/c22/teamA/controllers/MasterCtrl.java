@@ -154,8 +154,8 @@ public abstract class MasterCtrl {
   }
 
   @FXML
-  private void back() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
+  private void goToSelectService() throws IOException {
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SELECT_SERVICE_REQUEST);
   }
 
   @FXML
