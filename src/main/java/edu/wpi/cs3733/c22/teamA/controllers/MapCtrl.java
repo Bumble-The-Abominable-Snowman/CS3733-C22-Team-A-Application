@@ -21,6 +21,7 @@ import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -769,7 +770,11 @@ public class MapCtrl extends MasterCtrl {
             correspondingLabel.setLayoutY(button.getLayoutY() - 20);
 
             // TODO this function should update database but getting errors
-            updateOnRelease(button);
+            try {
+              updateOnRelease(button);
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
           }
         });
   }
@@ -994,16 +999,16 @@ public class MapCtrl extends MasterCtrl {
   }
 
   // Update Medical Equipment / Service Request on Drag Release
-  public void updateOnRelease(Button button) {
+  public void updateOnRelease(Button button) throws SQLException {
     System.out.println("update on release is going rn");
     equipmentDAO.updateMedicalEquipment(
         buttonEquipmentMarker.get(button).getEquipment().getEquipmentID(),
         "xCoord",
-        button.getLayoutX());
+        button.getLayoutX() + " ");
     equipmentDAO.updateMedicalEquipment(
         buttonEquipmentMarker.get(button).getEquipment().getEquipmentID(),
         "yCoord",
-        button.getLayoutY());
+        button.getLayoutY() + " ");
     /*
     else if (buttonServiceRequestMarker.containsKey(button)){
       serDAO.updateMedicalEquipment(
