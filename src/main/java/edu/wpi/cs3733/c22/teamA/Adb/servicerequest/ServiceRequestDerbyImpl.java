@@ -349,7 +349,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
       throws IOException, ParseException, InvocationTargetException, IllegalAccessException,
           SQLException {
     refreshVariables();
-    System.out.println("STARTING SERVICEREQUEST.POPULATEFROMCSV");
+    // System.out.println("STARTING SERVICEREQUEST.POPULATEFROMCSV");
 
     // delete all before populating
     List<T> serviceRequestList = this.getServiceRequestList();
@@ -381,13 +381,13 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
         for (Method method : this.all_sr_set_data_methods) {
           String methodName = method.getName().toLowerCase(Locale.ROOT);
           if (methodName.contains(columnName)) {
-            System.out.println("name: " + method.getName());
+            // System.out.println("name: " + method.getName());
             method.invoke(this.t, data);
           }
         }
         dataIndex++;
       }
-      System.out.println(this.t);
+      // System.out.println(this.t);
       this.enterServiceRequest((SR) this.t);
       refreshVariables();
       dataIndex = 0;
@@ -402,7 +402,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
 
     // Get list of this type of service Requests
     List<T> list = getServiceRequestList();
-    System.out.println("list: " + list);
+    // System.out.println("list: " + list);
     // create a writer
     File file = new File(csvFilePath);
     file.createNewFile();
@@ -444,20 +444,20 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
 
     String firstLine = tleString.toString().substring(0, tleString.toString().length() - 2);
 
-    System.out.println("Final tleSting: " + firstLine);
+    // System.out.println("Final tleSting: " + firstLine);
     writer.write(firstLine);
     writer.newLine();
     // System.out.println("allSrGetDataMethods.size: " + this.all_sr_get_data_methods.size());
     // write data
     for (Object thisSR : list) {
-      System.out.println("-----------------starting for loop----------------");
+      // System.out.println("-----------------starting for loop----------------");
       String str = "";
 
       for (int x = 0; x < this.all_sr_get_data_methods.size(); x++) {
         if (!(this.all_sr_get_data_methods.get(x).getName().contains("SrType"))) {
 
           String data = all_sr_get_data_methods.get(x).invoke(thisSR).toString();
-          System.out.println("data: " + data);
+          // System.out.println("data: " + data);
           if (x == 0) {
             str = data;
           } else {
@@ -466,7 +466,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
         }
       }
 
-      System.out.println("str: " + str);
+      // System.out.println("str: " + str);
       writer.write(str);
       writer.newLine();
     }

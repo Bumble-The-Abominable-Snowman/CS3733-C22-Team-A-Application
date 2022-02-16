@@ -151,7 +151,7 @@ public class Adb {
               + "currentLocation varchar(25), "
               + "isAvailable varchar(25), "
               + "PRIMARY KEY (equipmentID),"
-              + "FOREIGN KEY (currentLocation) REFERENCES TowerLocations(nodeID))");
+              + "FOREIGN KEY (currentLocation) REFERENCES TowerLocations(nodeID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table MedicalEquipment already exist");
@@ -175,10 +175,10 @@ public class Adb {
               + "requestPriority varchar(25), "
               + "comments varchar(255), "
               + "PRIMARY KEY (requestID),"
-              + "FOREIGN KEY (startLocation) REFERENCES TowerLocations(nodeID),"
-              + "FOREIGN KEY (endLocation) REFERENCES TowerLocations(nodeID),"
-              + "FOREIGN KEY (employeeRequested) REFERENCES Employee(employeeID),"
-              + "FOREIGN KEY (employeeAssigned) REFERENCES Employee(employeeID))");
+              + "FOREIGN KEY (startLocation) REFERENCES TowerLocations(nodeID) ON DELETE CASCADE,"
+              + "FOREIGN KEY (endLocation) REFERENCES TowerLocations(nodeID) ON DELETE CASCADE,"
+              + "FOREIGN KEY (employeeRequested) REFERENCES Employee(employeeID) ON DELETE CASCADE,"
+              + "FOREIGN KEY (employeeAssigned) REFERENCES Employee(employeeID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table ServiceRequestDerbyImpl already exist");
@@ -195,7 +195,7 @@ public class Adb {
           "CREATE TABLE MedicalEquipmentServiceRequest(requestID varchar(25), "
               + "equipmentID varchar(25), "
               + "PRIMARY KEY (requestID), "
-              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table MedicalEquipmentServiceRequest already exist");
@@ -215,7 +215,7 @@ public class Adb {
               + "beverage varchar(50), "
               + "dessert varchar(50), "
               + "PRIMARY KEY (requestID), "
-              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table FoodDeliveryServiceRequest already exist");
@@ -232,7 +232,7 @@ public class Adb {
           "CREATE TABLE LanguageServiceRequest(requestID varchar(25), "
               + "language varchar(25), "
               + "PRIMARY KEY (requestID), "
-              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table languageservicerequest already exist");
@@ -249,7 +249,7 @@ public class Adb {
           "CREATE TABLE LaundryServiceRequest(requestID varchar(25), "
               + "washMode varchar(25), "
               + "PRIMARY KEY (requestID), "
-              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table laundryservicerequest already exist");
@@ -267,7 +267,7 @@ public class Adb {
           "CREATE TABLE ReligiousServiceRequest(requestID varchar(25), "
               + "religion varchar(25), "
               + "PRIMARY KEY (requestID), "
-              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table ReligiousServiceRequest already exist");
@@ -285,7 +285,7 @@ public class Adb {
           "CREATE TABLE SanitationServiceRequest(requestID varchar(25), "
               + "sanitationType varchar(25), "
               + "PRIMARY KEY (requestID), "
-              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table SanitationServiceRequest already exist");
@@ -304,7 +304,7 @@ public class Adb {
               + "flower varchar(25), "
               + "bouquetType varchar(25), "
               + "PRIMARY KEY (requestID), "
-              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table Floral Delivery Service already exist");
@@ -322,7 +322,7 @@ public class Adb {
           "CREATE TABLE GiftDeliveryServiceRequest(requestID varchar(25), "
               + "giftDescription varchar(25), "
               + "PRIMARY KEY (requestID), "
-              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table GiftDeliveryServiceRequest already exist");
@@ -337,7 +337,9 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-          "CREATE TABLE MaintenanceServiceRequest(requestID varchar(25), PRIMARY KEY (requestID), FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+          "CREATE TABLE MaintenanceServiceRequest(requestID varchar(25), "
+              + "PRIMARY KEY (requestID), "
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table MaintenanceServiceRequest already exist");
@@ -352,7 +354,10 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-          "CREATE TABLE MedicineDeliveryServiceRequest(requestID varchar(25), medicineChoice varchar(25), PRIMARY KEY (requestID), FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+          "CREATE TABLE MedicineDeliveryServiceRequest(requestID varchar(25), "
+              + "medicineChoice varchar(25), "
+              + "PRIMARY KEY (requestID), "
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table MedicineDeliveryServiceRequest already exist");
@@ -367,7 +372,9 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-          "CREATE TABLE SecurityServiceRequest(requestID varchar(25), PRIMARY KEY (requestID), FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+          "CREATE TABLE SecurityServiceRequest(requestID varchar(25), "
+              + "PRIMARY KEY (requestID), "
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table SecurityServiceRequest already exist");
@@ -480,7 +487,7 @@ public class Adb {
 
     LocationDerbyImpl.exportToCSV("", dirPath + "/TowerLocations.csv");
 
-    EquipmentDerbyImpl.exportToCSV("", dirPath + "/Equipment.csv");
+    EquipmentDerbyImpl.exportToCSV("", dirPath + "/MedicalEquipment.csv");
 
     // Service Requests
     ServiceRequestDerbyImpl<EquipmentSR> equipmentSRServiceRequestDerby =
