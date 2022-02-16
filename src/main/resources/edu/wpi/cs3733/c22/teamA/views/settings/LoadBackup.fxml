@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-
 <GridPane prefHeight="600.0" prefWidth="960.0" styleClass="background" stylesheets="@../../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.settings.LoadBackupCtrl">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="322.78594970703125" minWidth="10.0" prefWidth="320.3752136230469" />
@@ -36,7 +35,7 @@
       <Text fx:id="selectedFileText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bodyFormat" text="None" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="396.49755859375" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
       <JFXComboBox fx:id="TypeCSV" prefHeight="26.0" prefWidth="116.0" styleClass="bodyFormat" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
       <JFXButton fx:id="loadFromSystemButton" buttonType="RAISED" onAction="#loadFromSystem" styleClass="bodyFormat" text="Load from system" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-      <GridPane GridPane.rowSpan="5">
+      <GridPane fx:id="menuGrid" GridPane.rowSpan="5">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
          </columnConstraints>

@@ -27,7 +27,7 @@
    <Label layoutX="180.0" layoutY="10.0" styleClass="titleFormat" text="Settings" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
    <JFXButton fx:id="loadBackupButton" buttonType="RAISED" layoutX="236.0" layoutY="43.0" mnemonicParsing="false" onAction="#loadBackup" styleClass="bodyFormat" text="Load Backup" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
    <JFXButton fx:id="saveBackupButton" buttonType="RAISED" layoutX="240.0" layoutY="81.0" mnemonicParsing="false" onAction="#saveBackup" styleClass="bodyFormat" text="Save Backup" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-   <GridPane GridPane.rowSpan="3">
+   <GridPane fx:id="menuGrid" GridPane.rowSpan="3">
       <columnConstraints>
          <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
       </columnConstraints>

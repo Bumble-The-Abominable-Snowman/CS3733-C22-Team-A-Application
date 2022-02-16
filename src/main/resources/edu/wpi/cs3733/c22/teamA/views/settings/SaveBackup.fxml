@@ -35,7 +35,7 @@
       <Text fx:id="exportFileText" fill="WHITE" layoutX="102.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bodyFormat" text="None" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="420.49755859375" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
       <JFXComboBox fx:id="TypeCSV" layoutX="93.0" layoutY="208.0" prefHeight="26.0" prefWidth="116.0" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
       <TextField fx:id="fileName" layoutX="194.0" layoutY="263.0" prefHeight="26.0" prefWidth="215.0" styleClass="bodyFormat" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <GridPane GridPane.rowSpan="3">
+      <GridPane fx:id="menuGrid" GridPane.rowSpan="3">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
          </columnConstraints>

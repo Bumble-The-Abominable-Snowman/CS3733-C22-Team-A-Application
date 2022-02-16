@@ -9,6 +9,7 @@ import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 public abstract class MasterCtrl {
@@ -17,6 +18,7 @@ public abstract class MasterCtrl {
   @FXML public JFXDrawer drawer;
   @FXML public JFXButton backButton;
   @FXML public VBox menuBox;
+  @FXML public GridPane menuGrid;
 
   @FXML public JFXButton selectSRButton;
   @FXML public JFXButton mapButton;
@@ -64,13 +66,27 @@ public abstract class MasterCtrl {
     drawer.setSidePane(menuBox);
     HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(hamburger);
     burgerTask.setRate(-1);
+
+    menuGrid.toBack();
+    drawer.toBack();
+    menuBox.toBack();
+
     hamburger.addEventHandler(
         MouseEvent.MOUSE_PRESSED,
         (e) -> {
           burgerTask.setRate(burgerTask.getRate() * -1);
           burgerTask.play();
-          if (drawer.isOpened()) drawer.close();
-          else drawer.open();
+          if (drawer.isOpened()) {
+            drawer.close();
+            menuGrid.toBack();
+            drawer.toBack();
+            menuBox.toBack();
+          } else {
+            drawer.open();
+            menuGrid.toFront();
+            drawer.toFront();
+            menuBox.toFront();
+          }
         });
 
     stageWidth = App.getStage().getWidth();
