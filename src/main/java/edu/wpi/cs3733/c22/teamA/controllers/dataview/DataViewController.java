@@ -195,6 +195,7 @@ public class DataViewController implements Initializable {
       throws SQLException, InvocationTargetException, IllegalAccessException {
 
     // Create all columns in the tracker table
+    JFXTreeTableColumn<RecursiveObj, String> reqType = new JFXTreeTableColumn<>("Type");
     JFXTreeTableColumn<RecursiveObj, String> reqID = new JFXTreeTableColumn<>("ID");
     JFXTreeTableColumn<RecursiveObj, String> startLoc = new JFXTreeTableColumn<>("Start Location");
     JFXTreeTableColumn<RecursiveObj, String> endLoc = new JFXTreeTableColumn<>("End Location");
@@ -203,8 +204,10 @@ public class DataViewController implements Initializable {
         new JFXTreeTableColumn<>("Employee Assigned");
     JFXTreeTableColumn<RecursiveObj, String> reqTime = new JFXTreeTableColumn<>("Request Time");
     JFXTreeTableColumn<RecursiveObj, String> reqStatus = new JFXTreeTableColumn<>("Status");
-    JFXTreeTableColumn<RecursiveObj, String> reqType = new JFXTreeTableColumn<>("Type");
+    JFXTreeTableColumn<RecursiveObj, String> reqPriority = new JFXTreeTableColumn<>("Priority");
     JFXTreeTableColumn<RecursiveObj, String> comments = new JFXTreeTableColumn<>("Comments");
+
+    reqType.setPrefWidth(80);
     reqID.setPrefWidth(80);
     startLoc.setPrefWidth(80);
     endLoc.setPrefWidth(80);
@@ -213,8 +216,9 @@ public class DataViewController implements Initializable {
     reqTime.setPrefWidth(80);
     reqStatus.setPrefWidth(80);
     comments.setPrefWidth(80);
-    reqType.setPrefWidth(80);
+    reqPriority.setPrefWidth(80);
 
+    reqType.setStyle("-fx-alignment: center ;");
     reqID.setStyle("-fx-alignment: center ;");
     startLoc.setStyle("-fx-alignment: center ;");
     endLoc.setStyle("-fx-alignment: center ;");
@@ -223,8 +227,11 @@ public class DataViewController implements Initializable {
     reqTime.setStyle("-fx-alignment: center ;");
     reqStatus.setStyle("-fx-alignment: center ;");
     comments.setStyle("-fx-alignment: center ;");
-    reqType.setStyle("-fx-alignment: center ;");
+    reqPriority.setStyle("-fx-alignment: center ;");
 
+    reqType.setCellValueFactory(
+        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+            new SimpleStringProperty(param.getValue().getValue().sr.getSrType().toString()));
     reqID.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().sr.getRequestID()));
@@ -245,13 +252,13 @@ public class DataViewController implements Initializable {
             new SimpleStringProperty(param.getValue().getValue().sr.getRequestTime()));
     reqStatus.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().sr.getRequestStatus().toString()));
+            new SimpleStringProperty(param.getValue().getValue().sr.getRequestStatus()));
     comments.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().sr.getComments()));
-    reqType.setCellValueFactory(
+    reqPriority.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().sr.getRequestType()));
+            new SimpleStringProperty(param.getValue().getValue().sr.getRequestPriority()));
     //    ServiceRequestDAO serviceRequestBase = new ServiceRequestDerbyImpl(new FoodDeliverySR());
 
     List<?> srList = ServiceRequestDerbyImpl.getAllServiceRequestList();
@@ -269,6 +276,7 @@ public class DataViewController implements Initializable {
     table
         .getColumns()
         .setAll(
+            reqType,
             reqID,
             startLoc,
             endLoc,
@@ -276,7 +284,7 @@ public class DataViewController implements Initializable {
             employeeAss,
             reqTime,
             reqStatus,
-            reqType,
+            reqPriority,
             comments);
     table.setRoot(root);
   }

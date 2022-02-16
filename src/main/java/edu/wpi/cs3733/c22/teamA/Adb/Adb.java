@@ -163,7 +163,7 @@ public class Adb {
               + "employeeAssigned varchar(25), "
               + "requestTime timestamp, "
               + "requestStatus varchar(25), "
-              + "requestType varchar(25), "
+              + "requestPriority varchar(25), "
               + "comments varchar(255), "
               + "PRIMARY KEY (requestID),"
               + "FOREIGN KEY (startLocation) REFERENCES TowerLocations(nodeID),"

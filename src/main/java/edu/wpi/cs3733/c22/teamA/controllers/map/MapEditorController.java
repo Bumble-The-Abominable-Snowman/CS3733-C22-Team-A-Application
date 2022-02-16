@@ -466,7 +466,7 @@ public class MapEditorController {
       case FOOD_DELIVERY:
         button.setStyle("-fx-background-color: ORANGE");
         break;
-      case GIFT:
+      case GIFT_DELIVERY:
         button.setStyle("-fx-background-color: ORCHID");
         break;
       case LANGUAGE:
@@ -798,7 +798,7 @@ public class MapEditorController {
     nodeIDText.setText(serviceRequest.getRequestID());
     floorText.setText("");
     buildingText.setText("");
-    typeText.setText(serviceRequest.getRequestType());
+    typeText.setText(serviceRequest.getRequestPriority());
     longnameText.setText("N/A");
     shortnameText.setText(serviceRequest.getEndLocation());
   }

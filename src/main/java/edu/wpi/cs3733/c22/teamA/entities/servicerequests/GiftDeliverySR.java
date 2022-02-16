@@ -14,7 +14,7 @@ public class GiftDeliverySR extends SR {
 
   public GiftDeliverySR() {
     super();
-    this.srType = SRType.GIFT;
+    this.srType = SRType.GIFT_DELIVERY;
   }
 
   public GiftDeliverySR(
@@ -23,23 +23,20 @@ public class GiftDeliverySR extends SR {
       String endLocation,
       String employeeRequested,
       String employeeAssigned,
-      String requestTime,
+      Timestamp requestTime,
       Status requestStatus,
-      String requestType,
-      String comments,
-      String giftDescription) {
-    super();
-    this.requestID = requestID;
-    this.startLocation = startLocation;
-    this.endLocation = endLocation;
-    this.employeeRequested = employeeRequested;
-    this.employeeAssigned = employeeAssigned;
-    this.requestTime = Timestamp.valueOf(requestTime);
-    this.requestStatus = requestStatus;
-    this.requestType = requestType;
-    this.comments = comments;
-    this.giftDescription = giftDescription;
-
-    this.srType = SRType.GIFT;
+      Priority requestPriority,
+      String comments) {
+    super(
+        requestID,
+        startLocation,
+        endLocation,
+        employeeRequested,
+        employeeAssigned,
+        requestTime,
+        requestStatus,
+        requestPriority,
+        comments);
+    this.srType = SRType.GIFT_DELIVERY;
   }
 }
