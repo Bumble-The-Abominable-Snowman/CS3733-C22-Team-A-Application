@@ -39,8 +39,8 @@ public class SceneSwitcher {
     addScene(SceneSwitcher.SCENES.LOGIN, "views/Login.fxml");
     addScene(SceneSwitcher.SCENES.HOME, "views/Home.fxml");
     addScene(SCENES.SETTINGS, "views/settings/Settings.fxml");
-    addScene(SCENES.LOAD_BACKUP, "views/Settings/LoadBackup.fxml");
-    addScene(SCENES.SAVE_BACKUP, "views/Settings/SaveBackup.fxml");
+    addScene(SCENES.LOAD_BACKUP, "views/settings/LoadBackup.fxml");
+    addScene(SCENES.SAVE_BACKUP, "views/settings/SaveBackup.fxml");
 
     // Service Requests
     addScene(SCENES.SELECT_SERVICE_REQUEST, "views/servicerequest/SelectServiceRequest.fxml");
