@@ -107,8 +107,6 @@ public class MapCtrl extends MasterCtrl {
   private HashMap<Button, EquipmentMarker> buttonEquipmentMarker;
   private HashMap<Button, SRMarker> buttonServiceRequestMarker;
 
-  private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
-
   public MapCtrl() {
     locationMarkerShape = new Polygon();
     equipmentMarkerShape = new Polygon();
@@ -131,6 +129,9 @@ public class MapCtrl extends MasterCtrl {
 
   @FXML
   public void initialize() {
+
+    configure();
+
     // Pathfinding Setup
     // Setup Functions
     fillFromDB();
@@ -363,7 +364,7 @@ public class MapCtrl extends MasterCtrl {
               clearAll();
               HashMap<String, LocationMarker> locationIDs = new HashMap<>();
               // Loops through every location filtered & draws them if present on the floor
-              //TODO clean this up somehow, need a new .contains type method
+              // TODO clean this up somehow, need a new .contains type method
               for (Location l : locations) {
                 System.out.println(l.getLongName());
                 for (Location ls : filteredLocations) {

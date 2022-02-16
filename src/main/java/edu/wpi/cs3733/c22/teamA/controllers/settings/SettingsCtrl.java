@@ -1,6 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.controllers.settings;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXToggleButton;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
@@ -16,19 +17,16 @@ public class SettingsCtrl extends MasterCtrl {
 
     configure();
 
-    double backTextSize = backButton.getFont().getSize();
-    double loadFromBackupTextSize = loadFromBackupButton.getFont().getSize();
-    double exportToBackupTextSize = exportToBackupButton.getFont().getSize();
+    double loadBackupTextSize = loadBackupButton.getFont().getSize();
+    double saveBackupTextSize = saveBackupButton.getFont().getSize();
 
     App.getStage()
         .widthProperty()
         .addListener(
             (obs, oldVal, newVal) -> {
-              backButton.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * backTextSize) + "pt;");
-              loadFromBackupButton.setStyle(
+              loadBackupButton.setStyle(
                   "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * loadFromBackupTextSize)
+                      + ((App.getStage().getWidth() / 1000) * loadBackupTextSize)
                       + "pt;");
               exportToBackupButton.setStyle(
                   "-fx-font-size: "
@@ -47,5 +45,11 @@ public class SettingsCtrl extends MasterCtrl {
 
   public void exportToBackup() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.SAVE_BACKUP);
+  }
+
+  public void toggleClientServer() {
+
+    // add client server toggle code here
+
   }
 }

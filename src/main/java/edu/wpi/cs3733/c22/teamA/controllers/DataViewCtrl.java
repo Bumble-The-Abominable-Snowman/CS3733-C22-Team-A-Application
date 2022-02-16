@@ -32,7 +32,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
@@ -49,7 +48,7 @@ import javafx.stage.Popup;
 public class DataViewCtrl extends MasterCtrl {
 
   @FXML
-  public void deleteSelected(ActionEvent actionEvent)
+  public void deleteSelected()
       throws SQLException, InvocationTargetException, IllegalAccessException {
     System.out.println(table.getSelectionModel().getSelectedItem().getValue().sr);
 
@@ -103,8 +102,6 @@ public class DataViewCtrl extends MasterCtrl {
   private StringBuilder detailLabel = new StringBuilder("No further details  ");
   private List<Object> srList = new ArrayList<>();
   public static AtomicReference<Popup> popup = new AtomicReference<>(new Popup());
-
-  private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   public void initialize() throws SQLException, InvocationTargetException, IllegalAccessException {
     double backTextSize = backButton.getFont().getSize();
