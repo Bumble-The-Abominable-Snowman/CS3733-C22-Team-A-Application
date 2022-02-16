@@ -90,7 +90,9 @@ public class SelectServiceRequestCtrl {
 
   @FXML
   private void goToLaundryServices() throws IOException {
+    System.out.println("Before");
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.LAUNDRY_SR);
+    System.out.println("After");
   }
 
   @FXML
