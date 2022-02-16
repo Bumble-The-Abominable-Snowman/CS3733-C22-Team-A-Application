@@ -32,7 +32,7 @@ public class LaundrySRCtrl extends SRCtrl {
     // double washModeTextSize = washMode.getFont().getSize();
     // double toLocationTextSize = toLocationChoice.getFont().getSize();
     // double employeeChoiceTextSize = employeeChoice.getFont().getSize();
-    double locationLabelTextSize = locationLabel.getFont().getSize();
+    // double locationLabelTextSize = locationLabel.getFont().getSize();
     double commentsTextSize = commentsBox.getFont().getSize();
 
     App.getStage()
@@ -43,10 +43,10 @@ public class LaundrySRCtrl extends SRCtrl {
                   "-fx-font-size: "
                       + ((App.getStage().getWidth() / 1000) * commentsTextSize)
                       + "pt;");
-              locationLabel.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * locationLabelTextSize)
-                      + "pt;");
+              /*locationLabel.setStyle(
+              "-fx-font-size: "
+                  + ((App.getStage().getWidth() / 1000) * locationLabelTextSize)
+                  + "pt;");*/
             });
 
     commentsBox.setWrapText(true);
