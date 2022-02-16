@@ -120,47 +120,57 @@ public abstract class MasterCtrl {
     homeButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * homeButtonSize) + "pt;");
   }
 
+  protected void onSceneSwitch() {}
+
   @FXML
   private void goToSelectServiceRequest() throws IOException {
+    this.onSceneSwitch();
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.SELECT_SERVICE_REQUEST);
   }
 
   @FXML
   private void goToSettings() throws IOException {
+    this.onSceneSwitch();
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.SETTINGS);
   }
 
   @FXML
   private void goToServiceRequestData() throws IOException {
+    this.onSceneSwitch();
     sceneFlag = 1;
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
   @FXML
   private void goToLocationData() throws IOException {
+    this.onSceneSwitch();
     sceneFlag = 2;
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
   @FXML
   private void goToEquipmentData() throws IOException {
+    this.onSceneSwitch();
     sceneFlag = 3;
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
   @FXML
   public void goToEmployeeData() throws IOException {
+    this.onSceneSwitch();
     sceneFlag = 4;
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
   @FXML
   private void goToMap() throws IOException {
+    this.onSceneSwitch();
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.MAP);
   }
 
   @FXML
   private void goToLogin() throws IOException {
+    this.onSceneSwitch();
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOGIN);
   }
 
@@ -171,11 +181,13 @@ public abstract class MasterCtrl {
 
   @FXML
   private void goToSelectService() throws IOException {
+    this.onSceneSwitch();
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.SELECT_SERVICE_REQUEST);
   }
 
   @FXML
   private void goToHome() throws IOException {
+    this.onSceneSwitch();
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
   }
 }

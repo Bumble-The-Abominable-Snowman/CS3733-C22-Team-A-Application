@@ -17,17 +17,13 @@ import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
@@ -462,7 +458,7 @@ public class DataViewCtrl extends MasterCtrl {
   }
 
   private void createDetailsPopup() throws InvocationTargetException, IllegalAccessException {
-    DataViewController.detailsPopup.get().hide();
+    DataViewCtrl.detailsPopup.get().hide();
 
     this.detailLabel = new StringBuilder("Nothing selected  ");
 
@@ -506,11 +502,11 @@ public class DataViewCtrl extends MasterCtrl {
     var p = new Popup();
     p.getContent().add(content);
 
-    DataViewController.detailsPopup.set(p);
+    DataViewCtrl.detailsPopup.set(p);
   }
 
   private void createModifyPopup() throws InvocationTargetException, IllegalAccessException {
-    DataViewController.modifyPopup.get().hide();
+    DataViewCtrl.modifyPopup.get().hide();
 
     // cancel button
     JFXButton cancelUpdateButton = new JFXButton();
@@ -518,7 +514,7 @@ public class DataViewCtrl extends MasterCtrl {
 
     cancelUpdateButton.setOnAction(
         event -> {
-          DataViewController.modifyPopup.get().hide();
+          DataViewCtrl.modifyPopup.get().hide();
         });
 
     // combobox field
@@ -830,7 +826,7 @@ public class DataViewCtrl extends MasterCtrl {
     var p = new Popup();
     p.getContent().add(content);
 
-    DataViewController.modifyPopup.set(p);
+    DataViewCtrl.modifyPopup.set(p);
   }
 
   private void setupViewDetailsAndModify() {
@@ -846,7 +842,7 @@ public class DataViewCtrl extends MasterCtrl {
           } catch (InvocationTargetException | IllegalAccessException ex) {
             ex.printStackTrace();
           }
-          DataViewController.detailsPopup
+          DataViewCtrl.detailsPopup
               .get()
               .show(App.getStage(), this.point.get().getX(), this.point.get().getY());
         });
@@ -858,7 +854,7 @@ public class DataViewCtrl extends MasterCtrl {
           } catch (InvocationTargetException | IllegalAccessException ex) {
             ex.printStackTrace();
           }
-          DataViewController.modifyPopup
+          DataViewCtrl.modifyPopup
               .get()
               .show(App.getStage(), this.point.get().getX(), this.point.get().getY());
         });
@@ -866,7 +862,7 @@ public class DataViewCtrl extends MasterCtrl {
     this.table.setOnMouseClicked(
         e -> {
           if (e.getButton() == MouseButton.PRIMARY) {
-            DataViewController.detailsPopup.get().hide();
+            DataViewCtrl.detailsPopup.get().hide();
           }
           if (e.getButton() == MouseButton.SECONDARY) {
             this.point.set(new Point2D(e.getScreenX(), e.getScreenY()));
@@ -875,10 +871,8 @@ public class DataViewCtrl extends MasterCtrl {
         });
   }
 
-  @FXML
-  private void returnToHomeScene() throws IOException {
-    DataViewController.detailsPopup.get().hide();
-    DataViewController.modifyPopup.get().hide();
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
+  protected void onSceneSwitch(){
+    DataViewCtrl.detailsPopup.get().hide();
+    DataViewCtrl.modifyPopup.get().hide();
   }
 }
