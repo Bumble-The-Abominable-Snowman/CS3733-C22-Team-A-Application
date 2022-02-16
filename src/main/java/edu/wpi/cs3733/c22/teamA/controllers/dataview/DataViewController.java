@@ -1,9 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.controllers.dataview;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTreeTableColumn;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
@@ -26,15 +23,13 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,6 +40,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -107,7 +103,8 @@ public class DataViewController implements Initializable {
 
   private StringBuilder detailLabel = new StringBuilder("No further details  ");
   private List<Object> srList = new ArrayList<>();
-  public static AtomicReference<Popup> popup = new AtomicReference<>(new Popup());
+  public static AtomicReference<Popup> detailsPopup = new AtomicReference<>(new Popup());
+  public static AtomicReference<Popup> modifyPopup = new AtomicReference<>(new Popup());
 
   private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
@@ -342,31 +339,31 @@ public class DataViewController implements Initializable {
     //
 
     AtomicBoolean showPopUp = new AtomicBoolean(false);
-    Task task =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            final int[] waitTime = {100};
-            while (true) {
-              Platform.runLater(
-                  new Runnable() {
-                    @Override
-                    public void run() {
-                      if (showPopUp.get()) {
-                        DataViewController.popup
-                            .get()
-                            .show(App.getStage(), point.get().getX(), point.get().getY());
-                      } else {
-                        DataViewController.popup.get().hide();
-                      }
-                    }
-                  });
-
-              TimeUnit.MILLISECONDS.sleep(waitTime[0]);
-            }
-          }
-        };
-    new Thread(task).start();
+    //    Task task =
+    //        new Task<Void>() {
+    //          @Override
+    //          protected Void call() throws Exception {
+    //            final int[] waitTime = {100};
+    //            while (true) {
+    //              Platform.runLater(
+    //                  new Runnable() {
+    //                    @Override
+    //                    public void run() {
+    //                      if (showPopUp.get()) {
+    //                        DataViewController.detailsPopup
+    //                            .get()
+    //                            .show(App.getStage(), point.get().getX(), point.get().getY());
+    //                      } else {
+    //                        DataViewController.detailsPopup.get().hide();
+    //                      }
+    //                    }
+    //                  });
+    //
+    //              TimeUnit.MILLISECONDS.sleep(waitTime[0]);
+    //            }
+    //          }
+    //        };
+    //    new Thread(task).start();
 
     ContextMenu rightClickMenu = new ContextMenu();
     MenuItem viewDetails = new MenuItem("View Details");
@@ -378,33 +375,45 @@ public class DataViewController implements Initializable {
         e -> {
           rightClickMenu.hide();
           try {
-            this.createNewPopup();
+            this.createDetailsPopup();
           } catch (InvocationTargetException | IllegalAccessException ex) {
             ex.printStackTrace();
           }
-          showPopUp.set(true);
+          DataViewController.detailsPopup
+              .get()
+              .show(App.getStage(), point.get().getX(), point.get().getY());
+
+          //          showPopUp.set(true);
         });
     modify.setOnAction(
         e -> {
-          System.out.println("Modify baby");
           rightClickMenu.hide();
+          try {
+            this.createModifyPopup();
+          } catch (InvocationTargetException | IllegalAccessException ex) {
+            ex.printStackTrace();
+          }
+          DataViewController.modifyPopup
+              .get()
+              .show(App.getStage(), point.get().getX(), point.get().getY());
         });
 
     table.setOnMouseClicked(
         e -> {
           if (e.getButton() == MouseButton.PRIMARY) {
-            showPopUp.set(false);
+            //            showPopUp.set(false);
+            DataViewController.detailsPopup.get().hide();
           }
           if (e.getButton() == MouseButton.SECONDARY) {
             point.set(new Point2D(e.getScreenX(), e.getScreenY()));
             rightClickMenu.show(table, e.getScreenX(), e.getScreenY());
-            showPopUp.set(false);
+            //            showPopUp.set(false);
           }
         });
   }
 
-  private void createNewPopup() throws InvocationTargetException, IllegalAccessException {
-    DataViewController.popup.get().hide();
+  private void createDetailsPopup() throws InvocationTargetException, IllegalAccessException {
+    DataViewController.detailsPopup.get().hide();
 
     this.detailLabel = new StringBuilder("Nothing selected  ");
 
@@ -444,7 +453,127 @@ public class DataViewController implements Initializable {
     var p = new Popup();
     p.getContent().add(content);
 
-    DataViewController.popup.set(p);
+    DataViewController.detailsPopup.set(p);
+  }
+
+  private void createModifyPopup() throws InvocationTargetException, IllegalAccessException {
+    DataViewController.modifyPopup.get().hide();
+
+    JFXButton cancelUpdateButton = new JFXButton();
+    cancelUpdateButton.setText("X");
+
+    cancelUpdateButton.setOnAction(
+        event -> {
+          DataViewController.modifyPopup.get().hide();
+        });
+
+    JFXComboBox<String> field = new JFXComboBox<>();
+    field.setValue("Select Field");
+    field.setMinSize(50, 30);
+    field.setMaxSize(150, 30);
+
+    Object sr = this.srList.get(table.getSelectionModel().getSelectedIndex());
+    Method[] methods = sr.getClass().getMethods();
+    for (Method method : methods) {
+      boolean is_the_method_of_super = method.getDeclaringClass().equals(SR.class);
+      boolean is_the_method_exclusive = method.getDeclaringClass().equals(sr.getClass());
+      boolean starts_with_get = method.getName().split("^get")[0].equals("");
+      boolean is_not_sr_type = !method.getName().toLowerCase(Locale.ROOT).contains("srtype");
+
+      if (is_not_sr_type
+          && starts_with_get
+          && (is_the_method_of_super || is_the_method_exclusive)) {
+        field.getItems().addAll(method.getName().substring(3));
+      }
+    }
+
+    TextArea value = new TextArea();
+    value.setPromptText("Enter value:");
+    value.setMinSize(50, 30);
+    value.setMaxSize(150, 30);
+    //    field.setWrapText(true);
+
+    JFXButton updateButton = new JFXButton();
+    updateButton.setText("Update");
+
+    value.setOnKeyPressed(
+        event -> {
+          if (event.getCode() == KeyCode.ENTER) {
+            System.out.println(field);
+            System.out.println(value);
+          }
+        });
+
+    field.setOnAction(
+        e -> {
+          if (field.getSelectionModel().getSelectedIndex() > -1) {
+            for (Method method : methods) {
+              boolean starts_with_get = method.getName().split("^get")[0].equals("");
+              boolean contains_name =
+                  method
+                      .getName()
+                      .toLowerCase(Locale.ROOT)
+                      .contains(
+                          field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
+              if (starts_with_get && contains_name) {
+                try {
+                  value.setText((String) method.invoke(sr));
+                } catch (IllegalAccessException | InvocationTargetException ex) {
+                  ex.printStackTrace();
+                }
+              }
+            }
+          }
+        });
+
+    updateButton.setOnAction(
+        e -> {
+          if (field.getSelectionModel().getSelectedIndex() > -1 && value.getText().length() > 0) {
+            for (Method method : methods) {
+              boolean starts_with_set = method.getName().split("^set")[0].equals("");
+              boolean contains_name =
+                  method
+                      .getName()
+                      .toLowerCase(Locale.ROOT)
+                      .contains(
+                          field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
+              if (starts_with_set && contains_name) {
+
+                ServiceRequestDerbyImpl<Object> objectServiceRequestDerby =
+                    new ServiceRequestDerbyImpl<>(sr);
+                try {
+                  method.invoke(sr, value.getText());
+                  objectServiceRequestDerby.updateServiceRequest((SR) sr);
+                  updateButton.setTextFill(Color.GREEN);
+                } catch (SQLException | InvocationTargetException | IllegalAccessException ex) {
+                  ex.printStackTrace();
+                  updateButton.setTextFill(Color.RED);
+                }
+              }
+            }
+          }
+        });
+
+    var content = new GridPane();
+    content.setRowIndex(cancelUpdateButton, 0);
+    content.setColumnIndex(cancelUpdateButton, 0);
+    content.setRowIndex(field, 0);
+    content.setColumnIndex(field, 1);
+    content.setRowIndex(value, 0);
+    content.setColumnIndex(value, 2);
+    content.setRowIndex(updateButton, 0);
+    content.setColumnIndex(updateButton, 3);
+    content.getChildren().addAll(cancelUpdateButton, field, value, updateButton);
+
+    content.setPadding(new Insets(10, 5, 10, 5));
+    content.setBackground(
+        new Background(new BackgroundFill(Color.WHITE, new CornerRadii(10), null)));
+    content.setEffect(new DropShadow());
+
+    var p = new Popup();
+    p.getContent().add(content);
+
+    DataViewController.modifyPopup.set(p);
   }
 
   public void initializeEquipmentTable() {
@@ -497,10 +626,6 @@ public class DataViewController implements Initializable {
         new RecursiveTreeItem<RecursiveObj>(equipment, RecursiveTreeObject::getChildren);
     table.getColumns().setAll(id, type, clean, location, available);
     table.setRoot(root);
-  }
-
-  boolean isSelected() {
-    return false;
   }
 
   public void initializeEmployeeTable() {
@@ -587,6 +712,8 @@ public class DataViewController implements Initializable {
 
   @FXML
   private void returnToHomeScene() throws IOException {
+    DataViewController.detailsPopup.get().hide();
+    DataViewController.modifyPopup.get().hide();
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
   }
 }
