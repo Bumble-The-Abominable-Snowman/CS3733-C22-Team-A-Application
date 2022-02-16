@@ -5,3 +5,4 @@ getEmployeeID, getEmployeeType, getFirstName, getLastName, getEmail, getPhoneNum
 004,Admin,The,Rock,rock@wpi.edu,0000000002,Ethans Discord,2022-02-03 00:00:00
 005, Admin, Brendon, King, bking2@wpi.edu, 0000000003, Smart World 420,2022-02-04 00:00:00
 006,Admin,Ethan,Schrim,jeschrim@wpi.edu,0000000002,Faraday Hall,2022-02-03 00:00:00
+006,Admin,Admin,admin,admin@wpi.edu,0000000002,Galaxy,2022-02-03 00:00:00
