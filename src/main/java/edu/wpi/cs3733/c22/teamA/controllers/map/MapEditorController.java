@@ -349,7 +349,6 @@ public class MapEditorController {
               ArrayList<String> locationNames = new ArrayList<>();
               for (Location l : filteredLocations) {
                 locationNames.add(l.getLongName());
-                // System.out.println(l.getLongName());
               }
               searchComboBox.getItems().clear();
               searchComboBox.getItems().addAll(locationNames);
@@ -366,7 +365,7 @@ public class MapEditorController {
               clearAll();
               HashMap<String, LocationMarker> locationIDs = new HashMap<>();
               // Loops through every location filtered & draws them if present on the floor
-              System.out.println(filteredLocations.size());
+              //TODO clean this up somehow, need a new .contains type method
               for (Location l : locations) {
                 System.out.println(l.getLongName());
                 for (Location ls : filteredLocations) {
@@ -375,7 +374,6 @@ public class MapEditorController {
                     locationMarker.draw(miniAnchorPane);
                     locationMarker.setButtonVisibility(true);
                     locationIDs.put(l.getNodeID(), locationMarker);
-                    System.out.println(l.getLongName());
                     break;
                   }
                 }
