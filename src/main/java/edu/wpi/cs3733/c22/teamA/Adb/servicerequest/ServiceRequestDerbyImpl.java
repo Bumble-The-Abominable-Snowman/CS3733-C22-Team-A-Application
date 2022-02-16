@@ -2,10 +2,13 @@ package edu.wpi.cs3733.c22.teamA.Adb.servicerequest;
 
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.text.ParseException;
 import java.util.*;
@@ -36,21 +39,26 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
 
       boolean starts_with_get = sr_method.getName().split(get_regex)[0].equals("");
       boolean starts_with_set = sr_method.getName().split(set_regex)[0].equals("");
-      if (starts_with_get && is_the_method_of_super) {
-        this.super_sr_get_data_methods.add(sr_method);
-        this.all_sr_get_data_methods.add(sr_method);
-      }
-      if (starts_with_get && is_the_method_exclusive) {
-        this.sr_get_data_methods.add(sr_method);
-        this.all_sr_get_data_methods.add(sr_method);
-      }
-      if (starts_with_set && is_the_method_of_super) {
-        this.super_sr_set_data_methods.add(sr_method);
-        this.all_sr_set_data_methods.add(sr_method);
-      }
-      if (starts_with_set && is_the_method_exclusive) {
-        this.sr_set_data_methods.add(sr_method);
-        this.all_sr_set_data_methods.add(sr_method);
+
+      //      sr_method.getGenericParameterTypes() &&
+      // sr_method.getReturnType().isInstance(String.class)
+      if (true) {
+        if (starts_with_get && is_the_method_of_super) {
+          this.super_sr_get_data_methods.add(sr_method);
+          this.all_sr_get_data_methods.add(sr_method);
+        }
+        if (starts_with_get && is_the_method_exclusive) {
+          this.sr_get_data_methods.add(sr_method);
+          this.all_sr_get_data_methods.add(sr_method);
+        }
+        if (starts_with_set && is_the_method_of_super) {
+          this.super_sr_set_data_methods.add(sr_method);
+          this.all_sr_set_data_methods.add(sr_method);
+        }
+        if (starts_with_set && is_the_method_exclusive) {
+          this.sr_set_data_methods.add(sr_method);
+          this.all_sr_set_data_methods.add(sr_method);
+        }
       }
     }
 
@@ -214,6 +222,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
             sr.getRequestStatus(),
             sr.getRequestPriority(),
             sr.getComments());
+    System.out.println("getRequestTime: " + sr.getRequestTime());
     insert.execute(str);
 
     StringBuilder str2_2 = new StringBuilder();
@@ -371,11 +380,13 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
         for (Method method : this.all_sr_set_data_methods) {
           String methodName = method.getName().toLowerCase(Locale.ROOT);
           if (methodName.contains(columnName)) {
+            System.out.println("name: " + method.getName());
             method.invoke(this.t, data);
           }
         }
         dataIndex++;
       }
+      System.out.println(this.t);
       this.enterServiceRequest((SR) this.t);
       refreshVariables();
       dataIndex = 0;
@@ -386,41 +397,84 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
   public void exportToCSV(String csvFilePath)
       throws IOException, ParseException, InvocationTargetException, IllegalAccessException,
           SQLException {
-    System.out.println("EXPORT TO CSV TO BE IMPLEMENTED!");
+    // System.out.println("EXPORT TO CSV TO BE IMPLEMENTED!");
+
+    // Get list of this type of service Requests
+    List<T> list = getServiceRequestList();
+    System.out.println("list: " + list);
+    // create a writer
+    File file = new File(csvFilePath);
+    file.createNewFile();
+    BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
+
+    // Generate title String (first line)
+    //    String tleString = "";
+    //    Field[] flds = t.getClass().getSuperclass().getDeclaredFields();
+    //    Field[] fldsSub = t.getClass().getDeclaredFields();
+    //    for (int x = 0; x < flds.length - 1; x++) {
+    //      tleString = tleString + flds[x].getName() + ", ";
+    //    }
+    //    for (int x = 0; x < fldsSub.length; x++) {
+    //      tleString = tleString + fldsSub[x].getName();
+    //      if (!(x == fldsSub.length - 1)) {
+    //        tleString = tleString + ", ";
+    //      }
+    //    }
+
+    StringBuilder tleString = new StringBuilder();
+    //    Field[] flds = t.getClass().getSuperclass().getDeclaredFields();
+    //    Field[] fldsSub = t.getClass().getDeclaredFields();
+    //    for (int x = 0; x < this.all_sr_get_data_methods.size(); x++) {
+    //      tleString.append(flds[x].getName()).append(", ");
+    //    }
+    //    for (int x = 0; x < fldsSub.length; x++) {
+    //      tleString.append(fldsSub[x].getName());
+    //      if (!(x == fldsSub.length - 1)) {
+    //        tleString.append(", ");
+    //      }
+    //    }
+
+    for (Method method : this.all_sr_get_data_methods) {
+      String data = method.getName().substring(3) + ", ";
+      if (!(data.equals("SrType, "))) {
+        tleString.append(data);
+      }
+    }
+
+    String firstLine = tleString.toString().substring(0, tleString.toString().length() - 2);
+
+    System.out.println("Final tleSting: " + firstLine);
+    writer.write(firstLine);
+    writer.newLine();
+    // System.out.println("allSrGetDataMethods.size: " + this.all_sr_get_data_methods.size());
+    // write data
+    for (Object thisSR : list) {
+      System.out.println("-----------------starting for loop----------------");
+      String str = "";
+
+      for (int x = 0; x < this.all_sr_get_data_methods.size(); x++) {
+        if (!(this.all_sr_get_data_methods.get(x).getName().contains("SrType"))) {
+
+          String data = all_sr_get_data_methods.get(x).invoke(thisSR).toString();
+          System.out.println("data: " + data);
+          if (x == 0) {
+            str = data;
+          } else {
+            str = String.join(",", str, data);
+          }
+        }
+      }
+
+      System.out.println("str: " + str);
+      writer.write(str);
+      writer.newLine();
+    }
+    writer.close(); // close the writer
   }
 
-  // Write CSV for table
-  public static void writeMedicalEquipmentServiceRequestCSV(String csvFilePath) throws IOException {
-
-    //    // create a writer
-    //    File file = new File(csvFilePath);
-    //    file.createNewFile();
-    //    BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
-    //
-    //    writer.write(
-    //            "RequestID, startLocation, endLocation, employeeRequested, employeeAssigned,
-    // requestTime, requestStatus, requestPriority, comments, equipmentID");
-    //    writer.newLine();
-    //
-    //    // write data
-    //    for (MedicalEquipmentServiceRequest thisMESR : List) {
-    //
-    //      writer.write(
-    //              String.join(
-    //                      ",",
-    //                      thisMESR.getRequestID(),
-    //                      thisMESR.getStartLocation(),
-    //                      thisMESR.getEndLocation(),
-    //                      thisMESR.getEmployeeRequested(),
-    //                      thisMESR.getEmployeeAssigned(),
-    //                      thisMESR.getRequestTime(),
-    //                      thisMESR.getRequestStatus(),
-    //                      thisMESR.getRequestPriority(),
-    //                      thisMESR.getComments(),
-    //                      thisMESR.getEquipmentID()));
-    //
-    //      writer.newLine();
-    //    }
-    //    writer.close(); // close the writer
+  // Write CSV for table currently unused
+  public void writeServiceRequestCSV(ArrayList<Object> list, String csvFilePath)
+      throws IOException, InvocationTargetException, IllegalAccessException {
+    refreshVariables();
   }
 }

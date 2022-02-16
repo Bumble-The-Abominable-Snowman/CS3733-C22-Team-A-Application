@@ -14,34 +14,35 @@ import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.controllers.HomeCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
+import edu.wpi.cs3733.c22.teamA.entities.map.Edge;
 import edu.wpi.cs3733.c22.teamA.entities.map.EquipmentMarker;
 import edu.wpi.cs3733.c22.teamA.entities.map.LocationMarker;
 import edu.wpi.cs3733.c22.teamA.entities.map.SRMarker;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.text.ParseException;
+import java.util.*;
+import java.util.stream.Collectors;
 import javafx.animation.Interpolator;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
@@ -50,6 +51,8 @@ import net.kurobako.gesturefx.GesturePane;
 
 // TODO Add Service Request marker to all necessary places
 public class MapEditorController {
+  @FXML private JFXComboBox pfFromComboBox;
+  @FXML private JFXComboBox pfToComboBox;
   @FXML private JFXCheckBox locationCheckBox;
   @FXML private JFXCheckBox dragCheckBox;
   @FXML private JFXCheckBox equipmentCheckBox;
@@ -82,6 +85,7 @@ public class MapEditorController {
   @FXML private GesturePane gesturePane;
   Dimension2D transformed = new Dimension2D(967, 1050);
   private AnchorPane miniAnchorPane = new AnchorPane();
+  private List<Line> pfLine = new ArrayList<>();
 
   private List<Location> locations;
   private List<Equipment> equipments;
@@ -120,9 +124,11 @@ public class MapEditorController {
     floor = "";
   }
 
+  private HashMap<Location, HashSet<Edge>> neighborMap;
+
   @FXML
   public void initialize() {
-
+    // Pathfinding Setup
     // Setup Functions
     setupCheckboxListeners();
     setupContextMenu();
@@ -155,6 +161,8 @@ public class MapEditorController {
               // Maps Location names to their markers
               HashMap<String, LocationMarker> locationNames = new HashMap<>();
 
+              List<Location> thisFloorLocations = new ArrayList<>();
+
               // Loops through every location & draws them if present on the floor
               for (Location location : locations) {
                 if (location.getFloor().equals(floor)) {
@@ -162,8 +170,29 @@ public class MapEditorController {
                   locationMarker.draw(miniAnchorPane);
                   locationIDs.put(location.getNodeID(), locationMarker);
                   locationNames.put(location.getShortName(), locationMarker);
+                  thisFloorLocations.add(location);
                 }
               }
+
+              try {
+                neighborMap = getEdges();
+              } catch (IOException e) {
+                e.printStackTrace();
+              } catch (ParseException e) {
+                e.printStackTrace();
+              }
+              pfToComboBox
+                  .getItems()
+                  .addAll(
+                      thisFloorLocations.stream()
+                          .map(Location::getShortName)
+                          .collect(Collectors.toList()));
+              pfFromComboBox
+                  .getItems()
+                  .addAll(
+                      thisFloorLocations.stream()
+                          .map(Location::getShortName)
+                          .collect(Collectors.toList()));
 
               // Loops through every medical equipment & draws them if they're on this floor
               for (Equipment equipment : equipments) {
@@ -274,10 +303,8 @@ public class MapEditorController {
 
   // Set up searchbar for LOCATIONS ONLY
   // TODO IMPLEMENT CHOICE OF LOCATION, EQUIPMENT, SR SEARCH (another button?)
-  // TODO MAKE IT LIVE UPDATE ON KEYSTROKE
   public void setupSearchListener() {
     searchComboBox.setEditable(true);
-    searchComboBox.setVisibleRowCount(5);
     // set up list of locations to be wrapped
     ObservableList<Location> searchLocationList = FXCollections.observableArrayList();
     searchLocationList.addAll(locations);
@@ -286,8 +313,8 @@ public class MapEditorController {
     FilteredList<Location> filteredLocations = new FilteredList<>(searchLocationList, p -> true);
     // add listener that checks whenever changes are made to JFXText searchText
     searchComboBox
-        .getSelectionModel()
-        .selectedItemProperty()
+        .getEditor()
+        .textProperty()
         .addListener(
             (observable, oldValue, newValue) -> {
               filteredLocations.setPredicate(
@@ -307,12 +334,22 @@ public class MapEditorController {
                             || location.getNodeID().toLowerCase().contains(lowerCaseFilter))
                         && location.getFloor().equals(floor);
                   });
+              // add items to comboBox dropdown
               ArrayList<String> locationNames = new ArrayList<>();
               for (Location l : filteredLocations) {
                 locationNames.add(l.getLongName());
               }
               searchComboBox.getItems().clear();
               searchComboBox.getItems().addAll(locationNames);
+              if (searchComboBox.getItems().size() < 5) {
+                searchComboBox.setVisibleRowCount(searchComboBox.getItems().size());
+              } else {
+                searchComboBox.setVisibleRowCount(5);
+              }
+              // select location if search complete
+              if (searchComboBox.getItems().size() == 1) {
+                existingLocationSelected(filteredLocations.get(0));
+              }
               clearAll();
 
               HashMap<String, LocationMarker> locationIDs = new HashMap<>();
@@ -320,8 +357,17 @@ public class MapEditorController {
               for (Location location : locations) {
                 if (filteredLocations.contains(location)) {
                   LocationMarker locationMarker = newDraggableLocation(location);
-                  locationMarker.draw(anchorPane);
+                  locationMarker.draw(miniAnchorPane);
                   locationIDs.put(location.getNodeID(), locationMarker);
+                }
+              }
+              // Loops through every medical equipment & draws them if they're on this floor
+              for (Equipment equipment : equipments) {
+                if (locationIDs.containsKey(equipment.getCurrentLocation())) {
+                  EquipmentMarker equipmentMarker =
+                      newDraggableEquipment(
+                          equipment, locationIDs.get(equipment.getCurrentLocation()));
+                  equipmentMarker.draw(miniAnchorPane);
                 }
               }
             });
@@ -554,8 +600,12 @@ public class MapEditorController {
         event -> {
           // highlight(button, selectedButton);
           // selectedButton = button;
-          existingLocationSelected(buttonLocationMarker.get(button).getLocation());
-          currentID = buttonLocationMarker.get(button).getLocation().getNodeID();
+          try {
+            existingLocationSelected(buttonLocationMarker.get(button).getLocation());
+            currentID = buttonLocationMarker.get(button).getLocation().getNodeID();
+          } catch (Exception e) {
+            System.out.println("This isn't a location :)");
+          }
         });
     button.setOnMousePressed(
         mouseEvent -> {
@@ -578,7 +628,6 @@ public class MapEditorController {
           saveButton.setDisable(true);
           clearButton.setDisable(true);
         });
-    button.setOnMouseReleased(mouseEvent -> button.setCursor(Cursor.HAND));
     button.setOnMouseDragged(
         mouseEvent -> {
           if (dragCheckBox.isSelected()) {
@@ -590,7 +639,23 @@ public class MapEditorController {
                 (mouseEvent.getSceneY() - dragDelta.mouseY)
                         / (transformed.getHeight() / miniAnchorPane.getHeight())
                     + dragDelta.buttonY);
-            System.out.println(transformed.getHeight() + " " + miniAnchorPane.getHeight());
+
+            // TODO make sure math on this is right
+            if (markerType == 1) {
+              // standard circle radius around medical equipment markers, 30 is placeholder
+              double radius = Math.sqrt(2 * Math.pow(10, 2));
+              for (Location l : locations) {
+                // check hypotenuse between this equipment and every location on floor
+                double radiusCheck =
+                    Math.sqrt(
+                        Math.pow(l.getXCoord() - button.getLayoutX(), 2)
+                            + (Math.pow(l.getYCoord() - button.getLayoutY(), 2)));
+                if (l.getFloor().equals(floor) && (radius > radiusCheck)) {
+                  button.setLayoutX(l.getXCoord());
+                  button.setLayoutY(l.getYCoord());
+                }
+              }
+            }
 
             xPosText.setText(String.valueOf(button.getLayoutX() - mapImageView.getLayoutX() + 8));
             yPosText.setText(String.valueOf(button.getLayoutY() - mapImageView.getLayoutY() + 24));
@@ -615,6 +680,38 @@ public class MapEditorController {
           }
         });
     button.setOnMouseEntered(mouseEvent -> button.setCursor(Cursor.HAND));
+    button.setOnMouseReleased(
+        mouseEvent -> {
+          button.setCursor(Cursor.HAND);
+          if (markerType == 1) {
+            boolean isSnapped = false;
+            Location nearestLocation = locations.get(0);
+            double radiusOfNearest = Integer.MAX_VALUE;
+            for (Location l : locations) {
+              if (l.getFloor().equals(floor)) {
+                double radiusCheck =
+                    Math.sqrt(
+                        Math.pow(l.getXCoord() - button.getLayoutX(), 2)
+                            + (Math.pow(l.getYCoord() - button.getLayoutY(), 2)));
+                // update nearest location
+                if (radiusCheck < radiusOfNearest) {
+                  radiusOfNearest = radiusCheck;
+                  nearestLocation = l;
+                }
+                // when it finds the location already snapped to, do this
+                if (button.getLayoutX() == l.getXCoord() && button.getLayoutY() == l.getYCoord()) {
+                  nearestLocation = l;
+                  isSnapped = true;
+                  break;
+                }
+              }
+            }
+            if (!isSnapped) {
+              button.setLayoutX(nearestLocation.getXCoord());
+              button.setLayoutY(nearestLocation.getYCoord());
+            }
+          }
+        });
   }
 
   // Clears all Buttons and Labels from screen
@@ -863,5 +960,167 @@ public class MapEditorController {
     oldButton.getStyleClass().clear();
     oldButton.setStyle(null);
     oldButton.setStyle("-fx-background-color: #78aaf0");
+  }
+
+  public HashMap<Location, HashSet<Edge>> getEdges() throws IOException, ParseException {
+    HashMap<String, Location> map = new HashMap<>();
+    HashMap<Location, HashSet<Edge>> resultMap = new HashMap<>();
+
+    for (Location l : locations) {
+      map.put(l.getNodeID(), l);
+      resultMap.put(l, new HashSet<>());
+    }
+
+    InputStream path = App.class.getResourceAsStream("db/CSVs/AllEdgesHand.csv");
+    // File file = new File(path);
+    //    File file = new
+    // File("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/AllEdgesHand.csv");
+    Scanner lineScanner = new Scanner(path);
+    Scanner dataScanner;
+    int dataIndex = 0;
+    int lineIndex = 0;
+    int intData = 0;
+
+    lineScanner.nextLine();
+
+    while (lineScanner.hasNextLine()) { // Scan CSV line by line
+
+      dataScanner = new Scanner(lineScanner.nextLine());
+      dataScanner.useDelimiter(",");
+      String edge1 = "";
+      String edge2 = "";
+      boolean isTaxiCab = false;
+      boolean isTop = false;
+
+      while (dataScanner.hasNext()) {
+
+        String data = dataScanner.next();
+        if (dataIndex == 0) edge1 = data;
+        else if (dataIndex == 1) edge2 = data;
+        else if (dataIndex == 2) isTaxiCab = data.equals("TRUE") ? true : false;
+        else if (dataIndex == 3) isTop = (isTaxiCab && data.equals("TRUE")) ? true : false;
+        else System.out.println("Invalid data, I broke::" + data);
+        dataIndex++;
+      }
+
+      dataIndex = 0;
+      if (map.get(edge1) == null || map.get(edge2) == null) {
+        continue;
+      }
+
+      resultMap.get(map.get(edge1)).add(new Edge(map.get(edge1), map.get(edge2), isTaxiCab, isTop));
+      resultMap.get(map.get(edge2)).add(new Edge(map.get(edge2), map.get(edge1), isTaxiCab, isTop));
+    }
+
+    lineIndex++;
+    lineScanner.close();
+    return resultMap;
+  }
+
+  public HashMap<Location, Integer> dijkstra(
+      List<Location> allLocations, Location here, HashMap<Location, HashSet<Edge>> neighborMap) {
+    HashMap<Location, Integer> minDistances = new HashMap<>();
+    for (Location l : allLocations) {
+      minDistances.put(l, Integer.MAX_VALUE);
+    }
+
+    Comparator<Location> c =
+        (Location a, Location b) -> (int) (minDistances.get(a) - minDistances.get(b));
+    PriorityQueue<Location> priorityQueue = new PriorityQueue<>(c);
+    priorityQueue.add(here);
+    minDistances.put(here, 0);
+
+    while (!priorityQueue.isEmpty()) {
+      Location current = priorityQueue.poll();
+      for (Edge e : neighborMap.get(current)) {
+        if (minDistances.get(current) + e.getWeight() < minDistances.get(e.getEnd())) {
+          minDistances.put(e.getEnd(), (int) (minDistances.get(current) + e.getWeight()));
+          priorityQueue.remove(e.getEnd());
+          priorityQueue.add(e.getEnd());
+        }
+      }
+    }
+    return minDistances;
+  }
+
+  public List<Location> getPath(
+      Location end,
+      HashMap<Location, HashSet<Edge>> neighborMap,
+      Map<Location, Integer> minDistances) {
+    List<Location> path = new ArrayList<>();
+    int lowestDist = Integer.MAX_VALUE;
+    Location current = end;
+    while (lowestDist > 0) {
+      path.add(current);
+      //      if (neighborMap.get(current) == null) {
+      //        continue;
+      //      }
+      for (Edge e : neighborMap.get(current)) {
+        if (lowestDist > minDistances.get(e.getEnd())) {
+          current = e.getEnd();
+          lowestDist = minDistances.get(e.getEnd());
+        }
+      }
+    }
+    return path;
+  }
+
+  @FXML
+  public void findPath() throws IOException, ParseException {
+    String shortNameFrom = pfFromComboBox.getSelectionModel().getSelectedItem().toString();
+    String shortNameTo = pfToComboBox.getSelectionModel().getSelectedItem().toString();
+
+    Location start = null;
+    Location end = null;
+    for (Location l : locations) {
+      if (l.getShortName().equals(shortNameFrom)) {
+        start = l;
+      }
+      if (l.getShortName().equals(shortNameTo)) {
+        end = l;
+      }
+      if (start != null && end != null) {
+        break;
+      }
+    }
+
+    Map<Location, Integer> minDistances = dijkstra(locations, start, neighborMap);
+    List<Location> path = getPath(end, neighborMap, minDistances);
+    Location prev = path.get(0);
+
+    int offsetX = 4;
+    int offsetY = 22;
+    for (int i = 1; i < path.size(); i++) {
+      Line line =
+          new Line(
+              prev.getXCoord() + offsetX,
+              prev.getYCoord() + offsetY,
+              path.get(i).getXCoord() + offsetX,
+              path.get(i).getYCoord() + offsetY);
+      line.setStroke(Color.RED);
+      line.setVisible(true);
+      line.setStrokeWidth(4);
+      miniAnchorPane.getChildren().add(line);
+      prev = path.get(i);
+      pfLine.add(line);
+    }
+
+    Line line =
+        new Line(
+            prev.getXCoord() + offsetX,
+            prev.getYCoord() + offsetY,
+            start.getXCoord() + offsetX,
+            start.getYCoord() + offsetY);
+    line.setStroke(Color.RED);
+    line.setStrokeWidth(4);
+    miniAnchorPane.getChildren().add(line);
+    pfLine.add(line);
+  }
+
+  public void clearPath(ActionEvent actionEvent) {
+    for (Line line : pfLine) {
+      miniAnchorPane.getChildren().remove(line);
+    }
+    pfLine.clear();
   }
 }

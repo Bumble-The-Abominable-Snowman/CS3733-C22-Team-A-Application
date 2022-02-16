@@ -3,6 +3,7 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.GiftDeliverySR;
@@ -25,6 +26,26 @@ public class GiftDeliverySRCtrl extends SRCtrl {
   @FXML
   private void initialize() {
     sceneID = SceneSwitcher.SCENES.SANITATION_SR;
+
+    // double typeChoiceTextSize = typeChoice.getFont().getSize();
+    // double toLocationTextSize = toLocationChoice.getFont().getSize();
+    // double employeeChoiceTextSize = employeeChoice.getFont().getSize();
+    double commentsTextSize = commentsBox.getFont().getSize();
+    double typeOtherTextSize = typeOtherBox.getFont().getSize();
+
+    App.getStage()
+        .widthProperty()
+        .addListener(
+            (obs, oldVal, newVal) -> {
+              commentsBox.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * commentsTextSize)
+                      + "pt;");
+              typeOtherBox.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * typeOtherTextSize)
+                      + "pt;");
+            });
 
     commentsBox.setWrapText(true);
     typeOtherBox.setWrapText(true);
