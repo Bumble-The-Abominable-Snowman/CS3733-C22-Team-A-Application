@@ -2,6 +2,7 @@ package edu.wpi.cs3733.c22.teamA.controllers.settings;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXToggleButton;
+import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
@@ -18,6 +19,12 @@ public class SettingsCtrl extends MasterCtrl {
   private void initialize() {
 
     configure();
+
+    if (Adb.usingEmbedded) {
+      toggleClientServerButton.setSelected(false);
+    } else {
+      toggleClientServerButton.setSelected(true);
+    }
 
     double loadBackupTextSize = loadBackupButton.getFont().getSize();
     double saveBackupTextSize = saveBackupButton.getFont().getSize();
@@ -50,8 +57,13 @@ public class SettingsCtrl extends MasterCtrl {
   }
 
   public void toggleClientServer() {
-
+    if (toggleClientServerButton.isSelected()) {
+      Adb.initialConnection("ClientDriver");
+      System.out.println("Client Driver");
+    } else {
+      Adb.initialConnection("EmbeddedDriver");
+      System.out.println("Embedded Driver");
+    }
     // add client server toggle code here
-
   }
 }

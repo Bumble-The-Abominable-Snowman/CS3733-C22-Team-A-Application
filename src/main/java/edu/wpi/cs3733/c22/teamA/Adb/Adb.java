@@ -15,6 +15,8 @@ public class Adb {
 
   public static String pathToDBA = "";
 
+  public static boolean usingEmbedded = true;
+
   public static void initialConnection(String arg) {
 
     boolean isInitialized = false;
@@ -22,6 +24,8 @@ public class Adb {
     System.out.println("----- Apache Derby Connection Testing -----");
     switch (arg) {
       case "EmbeddedDriver":
+        usingEmbedded = true;
+
         pathToDBA = "src/main/resources/edu/wpi/cs3733/c22/teamA/db/HospitalDBA";
 
         try {
@@ -36,7 +40,8 @@ public class Adb {
         }
 
       case "ClientDriver":
-        pathToDBA = "//192.168.50.89:1527/HospitalDBA";
+        usingEmbedded = false;
+        pathToDBA = "//localhost:1527/HospitalDBA";
 
         try {
           Class.forName("org.apache.derby.jdbc." + arg);
