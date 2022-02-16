@@ -495,7 +495,7 @@ public class MapCtrl extends MasterCtrl {
     gesturePane.addEventFilter(
         AffineEvent.CHANGED,
         event -> {
-          System.out.println(event.getTransformedDimension());
+          //System.out.println(event.getTransformedDimension());
           transformed = event.getTransformedDimension();
         });
     gesturePane.setOnMouseClicked(
