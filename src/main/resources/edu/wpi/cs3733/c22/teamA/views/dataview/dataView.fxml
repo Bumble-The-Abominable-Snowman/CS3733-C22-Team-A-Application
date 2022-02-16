@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: LIGHTBLUE;" styleClass="snowmanBackground" stylesheets="@../../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.dataview.DataViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: LIGHTBLUE;" styleClass="snowmanBackground" stylesheets="@../../css/styleSheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.dataview.DataViewController">
     <Label fx:id="titleLabel" layoutX="180.0" layoutY="14.0" text="Data View" textFill="WHITE">
         <font>
             <Font name="System Bold" size="32.0" />
         </font>
     </Label>
     <JFXTreeTableView fx:id="table" layoutX="20.0" layoutY="67.0" prefHeight="318.0" prefWidth="559.0" showRoot="false" />
-    <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="26.0" prefWidth="55.0" text="Back" textFill="WHITE">
+    <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="37.0" prefWidth="74.0" text="Back" textFill="WHITE">
         <cursor>
             <Cursor fx:constant="HAND" />
         </cursor></JFXButton>
-    <JFXButton layoutX="473.0" layoutY="20.0" text="Delete Selected" onAction="#deleteSelected" />
+    <JFXButton alignment="CENTER" layoutX="459.0" onAction="#deleteSelected" text="Delete Selected" />
 </AnchorPane>

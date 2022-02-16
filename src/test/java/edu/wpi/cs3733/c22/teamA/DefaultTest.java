@@ -20,7 +20,7 @@ public class DefaultTest {
 
   @Test
   public void test()
-      throws ParseException, IOException, InvocationTargetException, IllegalAccessException {
+          throws ParseException, IOException, InvocationTargetException, IllegalAccessException, SQLException {
     Connection connection = null;
     Adb.initialConnection("EmbeddedDriver");
 

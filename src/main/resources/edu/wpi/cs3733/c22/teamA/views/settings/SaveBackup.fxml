@@ -1,20 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@../../css/styleSheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.settings.SaveBackupCtrl">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@../../css/styleSheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.settings.SaveBackupCtrl">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+   </rowConstraints>
    <children>
-      <JFXButton fx:id="homeButton" buttonType="RAISED" layoutX="539.0" mnemonicParsing="false" onAction="#goToHomeScene" prefHeight="34.0" prefWidth="61.0" text="Home" textFill="WHITE" styleClass="bodyFormat" />
-      <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#returnToSettingsScene" prefHeight="26.0" prefWidth="55.0" text="Back" textFill="WHITE" styleClass="bodyFormat" />
-      <JFXButton fx:id="exportToBackupButton" buttonType="RAISED" layoutX="247.0" layoutY="349.0" mnemonicParsing="false" onAction="#exportToBackup" text="Export to Backup" textFill="WHITE" styleClass="bodyFormat" />
-      <Text fill="WHITE" layoutX="257.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Export CSV file:" styleClass="bodyFormat" />
-      <Text fx:id="exportFileText" fill="WHITE" layoutX="102.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="None" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="396.49755859375" styleClass="bodyFormat" />
-      <JFXComboBox fx:id="TypeCSV" layoutX="93.0" layoutY="208.0" prefHeight="26.0" prefWidth="116.0" unFocusColor="WHITE" />
-      <TextField fx:id="filename" layoutX="194.0" layoutY="263.0" prefHeight="26.0" prefWidth="215.0" styleClass="bodyFormat" />
-<!--      <TextField fx:id="filename" alignment="TOP_CENTER" layoutX="45.0" layoutY="145.0" prefHeight="58.0" prefWidth="119.0" visible="false" />-->
+      <JFXButton fx:id="homeButton" buttonType="RAISED" layoutX="526.0" mnemonicParsing="false" onAction="#goToHomeScene" prefHeight="37.0" prefWidth="74.0" styleClass="bodyFormat" text="Home" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
+      <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#returnToSettingsScene" prefHeight="37.0" prefWidth="74.0" styleClass="bodyFormat" text="Back" textFill="WHITE" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
+      <JFXButton fx:id="exportToBackupButton" buttonType="RAISED" layoutX="247.0" layoutY="349.0" mnemonicParsing="false" onAction="#exportToBackup" styleClass="bodyFormat" text="Export to Backup" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+      <Text fill="WHITE" layoutX="257.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bodyFormat" text="Export CSV file:" wrappingWidth="80.1796875" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets bottom="5.0" />
+         </GridPane.margin></Text>
+      <Text fx:id="exportFileText" fill="WHITE" layoutX="102.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bodyFormat" text="None" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="420.49755859375" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+      <JFXComboBox fx:id="TypeCSV" layoutX="93.0" layoutY="208.0" prefHeight="26.0" prefWidth="116.0" unFocusColor="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+      <TextField fx:id="fileName" layoutX="194.0" layoutY="263.0" prefHeight="26.0" prefWidth="215.0" styleClass="bodyFormat" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+<!--      <TextField fx:id="fileName" alignment="TOP_CENTER" layoutX="45.0" layoutY="145.0" prefHeight="58.0" prefWidth="119.0" visible="false" />-->
    </children>
-</AnchorPane>
+</GridPane>
