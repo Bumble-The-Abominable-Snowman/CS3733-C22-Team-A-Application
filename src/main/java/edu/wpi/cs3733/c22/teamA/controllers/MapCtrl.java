@@ -48,7 +48,8 @@ import javafx.util.Duration;
 import net.kurobako.gesturefx.AffineEvent;
 import net.kurobako.gesturefx.GesturePane;
 
-// TODO Add Service Request marker to all necessary places
+// TODO Change all instances of looping through locations to find related short names & node ids
+// with method in backend once implemented
 public class MapCtrl extends MasterCtrl {
   @FXML private JFXComboBox pfFromComboBox;
   @FXML private JFXComboBox pfToComboBox;
@@ -137,6 +138,7 @@ public class MapCtrl extends MasterCtrl {
     setupContextMenu();
     setInitialUIStates();
     setupSearchListener();
+    setupFloor("Choose Floor:");
 
     backButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
@@ -159,8 +161,6 @@ public class MapCtrl extends MasterCtrl {
 
               // Maps Location IDs to their markers
               HashMap<String, LocationMarker> locationIDs = new HashMap<>();
-              // Maps Location names to their markers
-              HashMap<String, LocationMarker> locationNames = new HashMap<>();
 
               List<Location> thisFloorLocations = new ArrayList<>();
 
@@ -170,7 +170,6 @@ public class MapCtrl extends MasterCtrl {
                   LocationMarker locationMarker = newDraggableLocation(location);
                   locationMarker.draw(miniAnchorPane);
                   locationIDs.put(location.getNodeID(), locationMarker);
-                  locationNames.put(location.getShortName(), locationMarker);
                   thisFloorLocations.add(location);
                 }
               }
@@ -207,10 +206,10 @@ public class MapCtrl extends MasterCtrl {
 
               // Loops through every service request & draws them if they're on this floor
               for (SR serviceRequest : serviceRequests) {
-                if (locationNames.containsKey(serviceRequest.getEndLocation())) {
+                if (locationIDs.containsKey(serviceRequest.getEndLocation())) {
                   SRMarker serviceRequestMarker =
                       newDraggableServiceRequest(
-                          serviceRequest, locationNames.get(serviceRequest.getEndLocation()));
+                          serviceRequest, locationIDs.get(serviceRequest.getEndLocation()));
                   serviceRequestMarker.draw(miniAnchorPane);
                 }
               }
@@ -263,16 +262,16 @@ public class MapCtrl extends MasterCtrl {
     rightClickMenu.getItems().addAll(newLocation);
     mapImageView.setOnContextMenuRequested(
         (event) -> {
-          rightClickMenu.show(mapImageView, event.getScreenX(), event.getScreenY());
-          mouseX = event.getScreenX();
-          mouseY = event.getScreenY();
+          if (floor != "") {
+            rightClickMenu.show(mapImageView, event.getScreenX(), event.getScreenY());
+            mouseX = event.getScreenX();
+            mouseY = event.getScreenY();
+          }
         });
   }
 
   // Sets up UI states of text areas, and buttons
   public void setInitialUIStates() {
-    mapImageView.setVisible(false);
-
     editButton.setDisable(true);
     saveButton.setDisable(true);
     clearButton.setDisable(true);
@@ -338,7 +337,7 @@ public class MapCtrl extends MasterCtrl {
                     // make sure case is factored out
                     String lowerCaseFilter = newValue.toLowerCase();
                     // if search matches either name or ID, display it
-                    // if not, this returns false and doesnt display
+                    // if not, this returns false and doesn't display
                     return (location.getLongName().toLowerCase().contains(lowerCaseFilter)
                             || location.getShortName().toLowerCase().contains(lowerCaseFilter)
                             || location.getNodeID().toLowerCase().contains(lowerCaseFilter))
@@ -389,56 +388,86 @@ public class MapCtrl extends MasterCtrl {
             });
   }
 
+  // Sets up the side view
+  public void showSideView() {
+    String[] floorNames = {"Floor 3", "Floor 2", "Floor 1", "L1", "L2"};
+    int initialY = 782;
+    for (int i = 0; i < 5; i++) {
+      double buttonX = 93 + mapImageView.getLayoutX();
+      double buttonY = initialY + i * 39 + mapImageView.getLayoutY();
+      Button button = newButton(buttonX, buttonY, 315, 5);
+      button.setShape(equipmentMarkerShape);
+      String floor = floorNames[i];
+      int srCount = 0;
+      int dEquipCount = 0;
+      int cEquipCount = 0;
+      for (Location location : locations) {
+        if (location.getFloor().equals(floor.replace("Floor ", ""))) {
+          for (int j = 0; j < serviceRequests.size(); j++) {
+            if (serviceRequests.get(j).getEndLocation().equals(location.getNodeID())) {
+              srCount++;
+            }
+          }
+          for (int j = 0; j < equipments.size(); j++) {
+            if (equipments.get(j).getCurrentLocation().equals(location.getNodeID())) {
+              if (!equipments.get(j).getIsClean()) dEquipCount++;
+              else cEquipCount++;
+            }
+          }
+        }
+      }
+      button.setText(
+          "Reqs: " + srCount + " | Clean Equip: " + cEquipCount + " | Dirty Equip: " + dEquipCount);
+      button.setOnMousePressed(mouseEvent -> floorSelectionComboBox.setValue(floor));
+      miniAnchorPane.getChildren().add(button);
+    }
+  }
+
   // Sets up the floor
   public void setupFloor(String newValue) {
     if (newValue.equals("Choose Floor:")) {
       floor = "";
       floorName = "";
-      mapImageView.setVisible(false);
+      URL url = App.class.getResource("images/Side View.png");
+      Image image = new Image(String.valueOf(url));
+      mapImageView.setImage(image);
+      setupGesture();
+      showSideView();
+    } else if (newValue.equals("Floor 1")) {
+      floor = "1";
+      floorName = "Floor 1";
+      URL url = App.class.getResource("images/1st Floor.png");
+      Image image = new Image(String.valueOf(url));
+      mapImageView.setImage(image);
+      setupGesture();
+    } else if (newValue.equals("Floor 2")) {
+      floor = "2";
+      floorName = "Floor 2";
+      URL url = App.class.getResource("images/2nd Floor.png");
+      Image image = new Image(String.valueOf(url));
+      mapImageView.setImage(image);
+      setupGesture();
+    } else if (newValue.equals("Floor 3")) {
+      floor = "3";
+      floorName = "Floor 3";
+      URL url = App.class.getResource("images/3rd Floor.png");
+      Image image = new Image(String.valueOf(url));
+      mapImageView.setImage(image);
+      setupGesture();
+    } else if (newValue.equals("L1")) {
+      floor = "L1";
+      floorName = "L1";
+      URL url = App.class.getResource("images/LL1.png");
+      Image image = new Image(String.valueOf(url));
+      mapImageView.setImage(image);
+      setupGesture();
     } else {
-      if (newValue.equals("Floor 1")) {
-        mapImageView.setVisible(true);
-        floor = "1";
-        floorName = "Floor 1";
-        // File map = new File("src/main/resources/edu/wpi/cs3733/c22/teamA/images/1st Floor.png");
-
-        URL url = App.class.getResource("images/1st Floor.png");
-        Image image = new Image(String.valueOf(url));
-        mapImageView.setImage(image);
-        setupGesture();
-      } else if (newValue.equals("Floor 2")) {
-        mapImageView.setVisible(true);
-        floor = "2";
-        floorName = "Floor 2";
-        URL url = App.class.getResource("images/2nd Floor.png");
-        Image image = new Image(String.valueOf(url));
-        mapImageView.setImage(image);
-        setupGesture();
-      } else if (newValue.equals("Floor 3")) {
-        floorName = "Floor 3";
-        mapImageView.setVisible(true);
-        floor = "3";
-        URL url = App.class.getResource("images/3rd Floor.png");
-        Image image = new Image(String.valueOf(url));
-        mapImageView.setImage(image);
-        setupGesture();
-      } else if (newValue.equals("L1")) {
-        floorName = "L1";
-        mapImageView.setVisible(true);
-        floor = "L1";
-        URL url = App.class.getResource("images/LL1.png");
-        Image image = new Image(String.valueOf(url));
-        mapImageView.setImage(image);
-        setupGesture();
-      } else {
-        mapImageView.setVisible(true);
-        floorName = "L2";
-        floor = "L2";
-        URL url = App.class.getResource("images/LL2.png");
-        Image image = new Image(String.valueOf(url));
-        mapImageView.setImage(image);
-        setupGesture();
-      }
+      floor = "L2";
+      floorName = "L2";
+      URL url = App.class.getResource("images/LL2.png");
+      Image image = new Image(String.valueOf(url));
+      mapImageView.setImage(image);
+      setupGesture();
     }
   }
 
@@ -447,6 +476,7 @@ public class MapCtrl extends MasterCtrl {
     miniAnchorPane.getChildren().add(mapImageView);
     miniAnchorPane.setLayoutX(0);
     mapImageView.setLayoutX(0);
+    gesturePane.reset();
     gesturePane.setContent(miniAnchorPane);
     gesturePane.addEventFilter(
         AffineEvent.CHANGED,
@@ -476,7 +506,6 @@ public class MapCtrl extends MasterCtrl {
     double buttonY = location.getYCoord() + mapImageView.getLayoutY() - 24;
     Button button = newDraggableButton(buttonX, buttonY, 0);
 
-    button.setPickOnBounds(false);
     button.setStyle("-fx-background-color: #78aaf0");
     button.setShape(locationMarkerShape);
 
@@ -504,7 +533,6 @@ public class MapCtrl extends MasterCtrl {
         newDraggableLabel(
             labelX, labelY, equipment.getEquipmentID() + equipment.getEquipmentType());
 
-    button.setPickOnBounds(false);
     button.setStyle("-fx-background-color: RED");
     button.setShape(equipmentMarkerShape);
 
@@ -524,7 +552,6 @@ public class MapCtrl extends MasterCtrl {
     double labelY = locationMarker.getLocation().getYCoord() + mapImageView.getLayoutY() - 24 - 15;
     Label label = newDraggableLabel(labelX, labelY, "");
 
-    button.setPickOnBounds(false);
     switch (serviceRequest.getSrType()) {
       case EQUIPMENT:
         button.setStyle("-fx-background-color: YELLOW");
@@ -581,13 +608,19 @@ public class MapCtrl extends MasterCtrl {
 
   // Makes a new Draggable Button
   public Button newDraggableButton(double posX, double posY, int markerType) {
+    Button button = newButton(posX, posY, 2.0, 4.0);
+    setDragFunctions(button, markerType);
+    return button;
+  }
+
+  // Makes a new Button
+  public Button newButton(double posX, double posY, double minW, double minH) {
     Button button = new Button();
-    button.setMinWidth(4.0);
-    button.setMinHeight(2.0);
+    button.setMinWidth(minW);
+    button.setMinHeight(minH);
     button.setLayoutX(posX);
     button.setLayoutY(posY);
     button.setPickOnBounds(false);
-    setDragFunctions(button, markerType);
     return button;
   }
 
@@ -777,7 +810,7 @@ public class MapCtrl extends MasterCtrl {
   // New location through button
   @FXML
   public void newLocationPressed() {
-    newLocationPressed(0, 0);
+    if (floor != "") newLocationPressed(0, 0);
   }
 
   public void newLocationPressedMouse(double x, double y) {
@@ -854,11 +887,16 @@ public class MapCtrl extends MasterCtrl {
     shortnameText.setEditable(false);
 
     nodeIDText.setText(equipment.getEquipmentID());
-    floorText.setText("");
-    buildingText.setText("");
     typeText.setText(equipment.getEquipmentType());
     longnameText.setText("N/A");
-    shortnameText.setText(equipment.getCurrentLocation());
+    for (Location l : locations) {
+      if (l.getNodeID().equals(equipment.getCurrentLocation())) {
+        shortnameText.setText(l.getShortName());
+        floorText.setText(l.getFloor());
+        buildingText.setText(l.getBuilding());
+        break;
+      }
+    }
   }
 
   // Existing Service Request Selected
@@ -875,11 +913,17 @@ public class MapCtrl extends MasterCtrl {
     shortnameText.setEditable(false);
 
     nodeIDText.setText(serviceRequest.getRequestID());
-    floorText.setText("");
-    buildingText.setText("");
     typeText.setText(serviceRequest.getRequestPriority());
     longnameText.setText("N/A");
-    shortnameText.setText(serviceRequest.getEndLocation());
+
+    for (Location l : locations) {
+      if (l.getNodeID().equals(serviceRequest.getEndLocation())) {
+        shortnameText.setText(l.getShortName());
+        floorText.setText(l.getFloor());
+        buildingText.setText(l.getBuilding());
+        break;
+      }
+    }
   }
 
   // Save Changes
