@@ -347,11 +347,11 @@ public class DataViewCtrl extends MasterCtrl {
                     @Override
                     public void run() {
                       if (showPopUp.get()) {
-                        DataViewController.popup
+                        DataViewCtrl.popup
                             .get()
                             .show(App.getStage(), point.get().getX(), point.get().getY());
                       } else {
-                        DataViewController.popup.get().hide();
+                        DataViewCtrl.popup.get().hide();
                       }
                     }
                   });
@@ -398,7 +398,7 @@ public class DataViewCtrl extends MasterCtrl {
   }
 
   private void createNewPopup() throws InvocationTargetException, IllegalAccessException {
-    DataViewController.popup.get().hide();
+    DataViewCtrl.popup.get().hide();
 
     this.detailLabel = new StringBuilder("Nothing selected  ");
 
@@ -438,7 +438,7 @@ public class DataViewCtrl extends MasterCtrl {
     var p = new Popup();
     p.getContent().add(content);
 
-    DataViewController.popup.set(p);
+    DataViewCtrl.popup.set(p);
   }
 
   public void initializeEquipmentTable() {
