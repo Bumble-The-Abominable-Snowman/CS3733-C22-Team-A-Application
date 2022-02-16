@@ -269,6 +269,12 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
       System.out.println("Delete on Employee failed");
     }
 
+    EmployeeDerbyImpl empDerby = new EmployeeDerbyImpl();
+    List<Employee> employeeList = empDerby.getEmployeeList();
+    for (Employee emp : employeeList) {
+      empDerby.deleteEmployee(emp.getEmployeeID());
+    }
+
     try {
       Connection connection =
           DriverManager.getConnection(
@@ -279,6 +285,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
         Statement addStatement = connection.createStatement();
 
         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println(l.getStartDate() == null);
         String date = originalFormat.format(l.getStartDate());
 
         addStatement.executeUpdate(
