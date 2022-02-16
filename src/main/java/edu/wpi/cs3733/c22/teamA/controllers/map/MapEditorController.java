@@ -273,7 +273,6 @@ public class MapEditorController {
 
   // Set up searchbar for LOCATIONS ONLY
   // TODO IMPLEMENT CHOICE OF LOCATION, EQUIPMENT, SR SEARCH (another button?)
-  // TODO MAKE IT LIVE UPDATE ON KEYSTROKE
   public void setupSearchListener() {
     searchComboBox.setEditable(true);
     // set up list of locations to be wrapped
@@ -283,7 +282,6 @@ public class MapEditorController {
     // create filtered list, can be filtered (duh)
     FilteredList<Location> filteredLocations = new FilteredList<>(searchLocationList, p -> true);
     // add listener that checks whenever changes are made to JFXText searchText
-
     searchComboBox
         .getEditor()
         .textProperty()
@@ -318,7 +316,7 @@ public class MapEditorController {
               } else {
                 searchComboBox.setVisibleRowCount(5);
               }
-              // select location based on filtration
+              // select location if search complete
               if (searchComboBox.getItems().size() == 1) {
                 existingLocationSelected(filteredLocations.get(0));
               }
