@@ -54,8 +54,8 @@ public class SceneSwitcher {
     addScene(SCENES.MEDICINE_DELIVERY_SR, "views/servicerequest/MedicineDeliverySR.fxml");
 
     // Data View + Map Editor
-    addScene(SCENES.DATA_VIEW, "views/dataview/dataView.fxml");
-    addScene(SCENES.MAP, "views/map/mapEditor.fxml");
+    addScene(SCENES.DATA_VIEW, "views/DataView.fxml");
+    addScene(SCENES.MAP, "views/Map.fxml");
   }
 
   public void addScene(SCENES name, String pathToFXML) {

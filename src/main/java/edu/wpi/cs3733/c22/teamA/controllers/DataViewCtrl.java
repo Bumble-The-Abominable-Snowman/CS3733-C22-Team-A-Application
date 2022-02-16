@@ -1,4 +1,4 @@
-package edu.wpi.cs3733.c22.teamA.controllers.dataview;
+package edu.wpi.cs3733.c22.teamA.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTreeTableColumn;
@@ -14,7 +14,6 @@ import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
-import edu.wpi.cs3733.c22.teamA.controllers.HomeCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
@@ -36,7 +35,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import lombok.SneakyThrows;
 
-public class DataViewController implements Initializable {
+public class DataViewCtrl extends MasterCtrl {
 
   @FXML
   public void deleteSelected(ActionEvent actionEvent)
@@ -88,12 +87,11 @@ public class DataViewController implements Initializable {
 
   private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
-  @SneakyThrows
-  @Override
-  public void initialize(URL url, ResourceBundle rb) {
+  public void initialize() throws SQLException, InvocationTargetException, IllegalAccessException {
     double backTextSize = backButton.getFont().getSize();
     double titleTextSize = titleLabel.getFont().getSize();
-    // double tableTextSize = table.getFont().getSize();
+
+    configure();
 
     App.getStage()
         .widthProperty()

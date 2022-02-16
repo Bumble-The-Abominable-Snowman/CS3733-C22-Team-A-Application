@@ -8,6 +8,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
+import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +19,6 @@ import java.util.Collections;
 import java.util.Objects;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -28,23 +28,21 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
-public class LoadBackupCtrl {
-  @FXML private JFXButton homeButton;
-  @FXML private JFXButton backButton;
+public class LoadBackupCtrl extends MasterCtrl {
+
   @FXML private JFXButton loadFromBackupButton;
   @FXML private JFXComboBox<String> TypeCSV;
   @FXML private Text selectedFileText;
   @FXML private ListView<String> fileList;
   @FXML private String lastSelectedFile;
 
-  private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
-
   @FXML
   public void initialize() {
+
+    configure();
+
     this.refreshFiles();
 
-    double homeTextSize = homeButton.getFont().getSize();
-    double backTextSize = backButton.getFont().getSize();
     double loadFromBackupTextSize = loadFromBackupButton.getFont().getSize();
     // double TypeCSVTextSize = TypeCSV.getFont().getSize();
     double selectedFileTextSize = selectedFileText.getFont().getSize();
@@ -55,10 +53,6 @@ public class LoadBackupCtrl {
         .widthProperty()
         .addListener(
             (obs, oldVal, newVal) -> {
-              homeButton.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * homeTextSize) + "pt;");
-              backButton.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * backTextSize) + "pt;");
               loadFromBackupButton.setStyle(
                   "-fx-font-size: "
                       + ((App.getStage().getWidth() / 1000) * loadFromBackupTextSize)
@@ -118,15 +112,6 @@ public class LoadBackupCtrl {
             }
           }
         });
-  }
-
-  public void returnToSettingsScene(ActionEvent actionEvent) throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SETTINGS);
-  }
-
-  @FXML
-  private void goToHomeScene() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
   }
 
   @FXML

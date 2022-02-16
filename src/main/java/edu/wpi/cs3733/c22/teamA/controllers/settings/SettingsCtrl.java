@@ -3,17 +3,19 @@ package edu.wpi.cs3733.c22.teamA.controllers.settings;
 import com.jfoenix.controls.JFXButton;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
+import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
 import java.io.IOException;
 import javafx.fxml.FXML;
 
-public class SettingsCtrl {
-  @FXML private JFXButton backButton;
+public class SettingsCtrl extends MasterCtrl {
   @FXML private JFXButton loadFromBackupButton;
   @FXML private JFXButton exportToBackupButton;
-  private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   @FXML
   private void initialize() {
+
+    configure();
+
     double backTextSize = backButton.getFont().getSize();
     double loadFromBackupTextSize = loadFromBackupButton.getFont().getSize();
     double exportToBackupTextSize = exportToBackupButton.getFont().getSize();
