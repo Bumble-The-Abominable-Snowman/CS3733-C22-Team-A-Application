@@ -3,12 +3,13 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 import com.jfoenix.controls.JFXButton;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
+import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
 import java.io.IOException;
 import javafx.fxml.FXML;
 
-public class SelectServiceRequestCtrl {
+public class SelectServiceRequestCtrl extends MasterCtrl {
 
-  @FXML private JFXButton medicalEquipmentDeliveryButton;
+  @FXML private JFXButton equipmentDeliveryButton;
   @FXML private JFXButton religiousRequestsButton;
   @FXML private JFXButton sanitationServicesButton;
   @FXML private JFXButton laundryServicesButton;
@@ -16,13 +17,13 @@ public class SelectServiceRequestCtrl {
   @FXML private JFXButton languageServicesButton;
   @FXML private JFXButton floralServicesButton;
   @FXML private JFXButton medicineDeliveryButton;
-  @FXML private JFXButton backButton;
-
-  private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   @FXML
   private void initialize() {
-    double medicalEquipmentDeliveryTextSize = medicalEquipmentDeliveryButton.getFont().getSize();
+
+    configure();
+
+    double equipmentDeliveryTextSize = equipmentDeliveryButton.getFont().getSize();
     double religiousRequestTextSize = religiousRequestsButton.getFont().getSize();
     double sanitationServicesTextSize = sanitationServicesButton.getFont().getSize();
     double laundryServicesTextSize = laundryServicesButton.getFont().getSize();
@@ -30,15 +31,14 @@ public class SelectServiceRequestCtrl {
     double languageServicesTextSize = languageServicesButton.getFont().getSize();
     double floralServicesTextSize = floralServicesButton.getFont().getSize();
     double medicineDeliveryTextSize = medicineDeliveryButton.getFont().getSize();
-    double backTextSize = backButton.getFont().getSize();
 
     App.getStage()
         .widthProperty()
         .addListener(
             (obs, oldVal, newVal) -> {
-              medicalEquipmentDeliveryButton.setStyle(
+              equipmentDeliveryButton.setStyle(
                   "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * medicalEquipmentDeliveryTextSize)
+                      + ((App.getStage().getWidth() / 1000) * equipmentDeliveryTextSize)
                       + "pt;");
               religiousRequestsButton.setStyle(
                   "-fx-font-size: "
@@ -68,13 +68,11 @@ public class SelectServiceRequestCtrl {
                   "-fx-font-size: "
                       + ((App.getStage().getWidth() / 1000) * medicineDeliveryTextSize)
                       + "pt;");
-              backButton.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * backTextSize) + "pt;");
             });
   }
 
   @FXML
-  private void goToMedicalEquipmentDeliveryScene() throws IOException {
+  private void goToEquipmentDeliveryScene() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.EQUIPMENT_DELIVERY_SR);
   }
 
@@ -111,10 +109,5 @@ public class SelectServiceRequestCtrl {
   @FXML
   private void goToMedicineDelivery() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.MEDICINE_DELIVERY_SR);
-  }
-
-  @FXML
-  void goToHomeScene() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
   }
 }

@@ -16,8 +16,9 @@
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="960.0" styleClass="background" stylesheets="@../../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.settings.SaveBackupCtrl">
    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="306.5559997558594" minWidth="10.0" prefWidth="306.5559997558594" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.0" minWidth="0.0" prefWidth="27.444000244140625" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="480.0" minWidth="10.0" prefWidth="480.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
    </columnConstraints>
    <rowConstraints>
@@ -27,14 +28,14 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <JFXButton fx:id="saveBackupButton" buttonType="RAISED" layoutX="247.0" layoutY="349.0" mnemonicParsing="false" onAction="#saveBackup" styleClass="bodyFormat" text="Save Backup" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-      <Text fill="WHITE" layoutX="257.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bodyFormat" text="Export CSV file:" wrappingWidth="80.1796875" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+      <JFXButton fx:id="saveBackupButton" buttonType="RAISED" layoutX="247.0" layoutY="349.0" mnemonicParsing="false" onAction="#saveBackup" styleClass="bodyFormat" text="Save Backup" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+      <Text fill="WHITE" layoutX="257.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bodyFormat" text="Export CSV file:" wrappingWidth="80.1796875" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets bottom="5.0" />
          </GridPane.margin></Text>
-      <Text fx:id="exportFileText" fill="WHITE" layoutX="102.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bodyFormat" text="None" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="420.49755859375" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
-      <JFXComboBox fx:id="TypeCSV" layoutX="93.0" layoutY="208.0" prefHeight="26.0" prefWidth="116.0" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-      <TextField fx:id="fileName" layoutX="194.0" layoutY="263.0" prefHeight="26.0" prefWidth="215.0" styleClass="bodyFormat" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Text fx:id="exportFileText" fill="WHITE" layoutX="102.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bodyFormat" text="None" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="420.49755859375" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+      <JFXComboBox fx:id="TypeCSV" layoutX="93.0" layoutY="208.0" prefHeight="26.0" prefWidth="116.0" unFocusColor="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+      <TextField fx:id="fileName" layoutX="194.0" layoutY="263.0" prefHeight="26.0" prefWidth="215.0" styleClass="bodyFormat" GridPane.columnIndex="2" GridPane.rowIndex="1" />
       <GridPane fx:id="menuGrid" GridPane.rowSpan="3">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
@@ -97,7 +98,7 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <JFXButton fx:id="viewLocationsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToLocationData" prefHeight="60.0" prefWidth="320.0" styleClass="menuButton" stylesheets="@../../css/styleSheet.css" text="View Locations" textAlignment="CENTER" textFill="WHITE">
+                        <JFXButton fx:id="viewLocationsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToLocationData" prefHeight="60.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../../css/styleSheet.css" text="View Locations" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
