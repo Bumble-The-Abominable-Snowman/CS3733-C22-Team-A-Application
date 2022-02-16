@@ -31,6 +31,13 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> toLocationChoice;
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
+  @FXML private Label equipmentLabel;
+  @FXML private Label fromLabel;
+  @FXML private Label employeeLabel;
+  @FXML private Label statusLabel;
+  @FXML private Label titleLabel;
+  @FXML private Label mapLabel;
+  @FXML private Label locationLabel;
 
   private List<String> bedLocations = new ArrayList<>();
   private List<String> xrayLocations = new ArrayList<>();
@@ -70,14 +77,45 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
     // double toLocationChoiceTextSize = toLocationChoice.getFont().getSize();
     // double employeeChoiceTextSize = employeeChoice.getFont().getSize();
     double commentsTextSize = commentsBox.getFont().getSize();
+    double equipmentTextSize = equipmentLabel.getFont().getSize();
+    double fromTextSize = fromLabel.getFont().getSize();
+    double employeeTextSize = employeeLabel.getFont().getSize();
+    double statusTextSize = statusLabel.getFont().getSize();
+    double titleTextSize = titleLabel.getFont().getSize();
+    double mapTextSize = mapLabel.getFont().getSize();
+    double locationTextSize = locationLabel.getFont().getSize();
 
     App.getStage()
-            .widthProperty()
-            .addListener(
-                    (obs, oldVal, newVal) -> {
-                      commentsBox.setStyle(
-                              "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * commentsTextSize) + "pt;");
-                    });
+        .widthProperty()
+        .addListener(
+            (obs, oldVal, newVal) -> {
+              commentsBox.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * commentsTextSize)
+                      + "pt;");
+              equipmentLabel.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * equipmentTextSize)
+                      + "pt;");
+              fromLabel.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * fromTextSize) + "pt;");
+              employeeLabel.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * employeeTextSize)
+                      + "pt;");
+              statusLabel.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * statusTextSize)
+                      + "pt;");
+              titleLabel.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * titleTextSize) + "pt;");
+              mapLabel.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * mapTextSize) + "pt;");
+              locationLabel.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * locationTextSize)
+                      + "pt;");
+            });
 
     commentsBox.setWrapText(true);
 

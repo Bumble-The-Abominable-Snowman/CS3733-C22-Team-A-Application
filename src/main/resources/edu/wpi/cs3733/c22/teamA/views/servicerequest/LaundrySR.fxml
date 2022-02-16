@@ -16,9 +16,9 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
-   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" prefHeight="38.0" prefWidth="200.0" styleClass="titleFormat" text="Laundry" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" prefHeight="38.0" prefWidth="200.0" styleClass="titleFormat" text="Laundry" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
    <Label alignment="CENTER" layoutX="232.0" layoutY="89.0" prefHeight="34.0" prefWidth="170.0" styleClass="bodyFormat" text="Map (To Be Added)" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-   <Label layoutX="232.0" layoutY="251.0" prefHeight="57.0" prefWidth="137.0" styleClass="bodyFormat" text="Selected Location" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+   <Label layoutX="232.0" layoutY="251.0" prefHeight="57.0" prefWidth="102.0" styleClass="bodyFormat" text="Selected Location" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
    <Label layoutX="83.0" layoutY="152.0" text="Wash Mode:" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
    <Label layoutX="83.0" layoutY="152.0" text="Employee:" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
    <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToSelectServiceScene" prefHeight="37.0" prefWidth="74.0" styleClass="bodyFormat" text="Back" textFill="WHITE" GridPane.halignment="LEFT" GridPane.valignment="TOP" />

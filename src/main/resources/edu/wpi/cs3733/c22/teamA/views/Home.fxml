@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXDrawer?>
-<?import com.jfoenix.controls.JFXHamburger?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<GridPane alignment="CENTER" prefHeight="600.0" prefWidth="960.0" styleClass="backgroundAlt" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.HomeCtrl">
+<GridPane alignment="CENTER" prefHeight="600.0" prefWidth="960.0" styleClass="backgroundAlt" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.HomeCtrl">
     <columnConstraints>
         <ColumnConstraints maxWidth="482.2386474609375" minWidth="-Infinity" prefWidth="409.8677062988281" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="960.0" minWidth="10.0" prefWidth="550.1322937011719" />
@@ -18,6 +15,10 @@
         <RowConstraints maxHeight="555.4452514648438" minHeight="0.0" prefHeight="540.9187278747559" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
+      <Label fx:id="homeTitle" alignment="CENTER" prefHeight="29.0" prefWidth="550.0" styleClass="titleFormat" text="Hospital Service Application" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
       <JFXHamburger fx:id="hamburger" prefHeight="60.0" prefWidth="0.0" stylesheets="@../css/styleSheet.css" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
       <GridPane GridPane.rowIndex="1">
         <columnConstraints>
@@ -42,7 +43,7 @@
                   <JFXButton fx:id="viewEquipmentButton" mnemonicParsing="false" onAction="#goToEquipmentTracker" prefHeight="60.0" prefWidth="493.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Equipment" textAlignment="CENTER" textFill="WHITE" />
                   <JFXButton fx:id="settingsButton" mnemonicParsing="false" onAction="#goToSettings" prefHeight="60.0" prefWidth="448.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Settings" textAlignment="CENTER" textFill="WHITE" />
                   <JFXButton fx:id="exitButton" mnemonicParsing="false" onAction="#exitApp" prefHeight="60.0" prefWidth="505.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Exit" textAlignment="CENTER" textFill="WHITE" />
-                    <JFXButton fx:id="logOutButton" mnemonicParsing="false" onAction="#exitHome" prefHeight="60.0" prefWidth="462.0" snapToPixel="false" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Log Out" textAlignment="CENTER" textFill="WHITE" />
+                  <JFXButton fx:id="logOutButton" mnemonicParsing="false" onAction="#exitHome" prefHeight="60.0" prefWidth="462.0" snapToPixel="false" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Log Out" textAlignment="CENTER" textFill="WHITE" />
                </children>
             </VBox>
          </children></JFXDrawer>

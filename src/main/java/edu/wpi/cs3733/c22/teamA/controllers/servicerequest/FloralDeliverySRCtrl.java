@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
 public class FloralDeliverySRCtrl extends SRCtrl {
@@ -28,6 +29,12 @@ public class FloralDeliverySRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> toLocationChoice;
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
+  @FXML private Label titleLabel;
+  @FXML private Label mapLabel;
+  @FXML private Label locationLabel;
+  @FXML private Label flowerLabel;
+  @FXML private Label bouquetLabel;
+  @FXML private Label employeeLabel;
 
   @FXML
   public void initialize() throws ParseException {
@@ -38,14 +45,44 @@ public class FloralDeliverySRCtrl extends SRCtrl {
     // double toLocationChoiceTextSize = toLocationChoice.getFont().getSize();
     // double employeeChoiceTextSize = employeeChoice.getFont().getSize();
     double commentsTextSize = commentsBox.getFont().getSize();
+    double titleTextSize = titleLabel.getFont().getSize();
+    double mapTextSize = mapLabel.getFont().getSize();
+    double locationTextSize = locationLabel.getFont().getSize();
+    double flowerTextSize = flowerLabel.getFont().getSize();
+    double bouquetTextSize = bouquetLabel.getFont().getSize();
+    double employeeTextSize = employeeLabel.getFont().getSize();
 
     App.getStage()
-            .widthProperty()
-            .addListener(
-                    (obs, oldVal, newVal) -> {
-                      commentsBox.setStyle(
-                              "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * commentsTextSize) + "pt;");
-                    });
+        .widthProperty()
+        .addListener(
+            (obs, oldVal, newVal) -> {
+              commentsBox.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * commentsTextSize)
+                      + "pt;");
+              titleLabel.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * titleTextSize) + "pt;");
+              mapLabel.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * mapTextSize) + "pt;");
+              locationLabel.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * locationTextSize)
+                      + "pt;");
+              flowerLabel.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * flowerTextSize)
+                      + "pt;");
+              bouquetLabel.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * bouquetTextSize)
+                      + "pt;");
+              mapLabel.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * mapTextSize) + "pt;");
+              employeeLabel.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * employeeTextSize)
+                      + "pt;");
+            });
 
     commentsBox.setWrapText(true);
 

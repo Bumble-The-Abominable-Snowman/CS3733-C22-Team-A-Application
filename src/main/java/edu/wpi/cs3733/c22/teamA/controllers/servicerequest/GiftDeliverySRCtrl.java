@@ -34,14 +34,18 @@ public class GiftDeliverySRCtrl extends SRCtrl {
     double typeOtherTextSize = typeOtherBox.getFont().getSize();
 
     App.getStage()
-            .widthProperty()
-            .addListener(
-                    (obs, oldVal, newVal) -> {
-                      commentsBox.setStyle(
-                              "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * commentsTextSize) + "pt;");
-                      typeOtherBox.setStyle(
-                              "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * typeOtherTextSize) + "pt;");
-                    });
+        .widthProperty()
+        .addListener(
+            (obs, oldVal, newVal) -> {
+              commentsBox.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * commentsTextSize)
+                      + "pt;");
+              typeOtherBox.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * typeOtherTextSize)
+                      + "pt;");
+            });
 
     commentsBox.setWrapText(true);
     typeOtherBox.setWrapText(true);

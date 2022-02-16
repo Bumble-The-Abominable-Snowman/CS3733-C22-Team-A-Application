@@ -38,14 +38,18 @@ public class LaundrySRCtrl extends SRCtrl {
     double commentsTextSize = commentsBox.getFont().getSize();
 
     App.getStage()
-            .widthProperty()
-            .addListener(
-                    (obs, oldVal, newVal) -> {
-                      commentsBox.setStyle(
-                              "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * commentsTextSize) + "pt;");
-                      locationLabel.setStyle(
-                              "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * locationLabelTextSize) + "pt;");
-                    });
+        .widthProperty()
+        .addListener(
+            (obs, oldVal, newVal) -> {
+              commentsBox.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * commentsTextSize)
+                      + "pt;");
+              locationLabel.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * locationLabelTextSize)
+                      + "pt;");
+            });
 
     commentsBox.setWrapText(true);
 

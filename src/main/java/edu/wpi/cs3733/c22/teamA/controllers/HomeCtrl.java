@@ -8,6 +8,7 @@ import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
@@ -22,6 +23,7 @@ public class HomeCtrl {
   @FXML public JFXButton settingsButton;
   @FXML public JFXButton exitButton;
   @FXML public JFXButton logOutButton;
+  @FXML public Label homeTitle;
 
   @FXML public JFXHamburger hamburger;
   @FXML public JFXDrawer drawer;
@@ -56,6 +58,7 @@ public class HomeCtrl {
     double settingsButtonTextSize = settingsButton.getFont().getSize();
     double exitButtonTextSize = exitButton.getFont().getSize();
     double logOutButtonTextSize = logOutButton.getFont().getSize();
+    double homeTitleTextSize = homeTitle.getFont().getSize();
 
     App.getStage()
         .widthProperty()
@@ -96,6 +99,10 @@ public class HomeCtrl {
               logOutButton.setStyle(
                   "-fx-font-size: "
                       + ((App.getStage().getWidth() / 1000) * logOutButtonTextSize)
+                      + "pt;");
+              homeTitle.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * homeTitleTextSize)
                       + "pt;");
             });
   }

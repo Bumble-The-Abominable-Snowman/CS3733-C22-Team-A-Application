@@ -18,7 +18,7 @@
     </rowConstraints>
     <Label alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" prefHeight="78.0" prefWidth="261.0" styleClass="titleFormat" text="Religious" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
     <Label alignment="CENTER" layoutX="232.0" layoutY="89.0" prefHeight="34.0" prefWidth="170.0" styleClass="bodyFormat" text="Map (To Be Added)" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-    <Label layoutX="232.0" layoutY="251.0" prefHeight="57.0" prefWidth="137.0" styleClass="bodyFormat" text="Selected Location" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+    <Label layoutX="232.0" layoutY="251.0" prefHeight="57.0" prefWidth="102.0" styleClass="bodyFormat" text="Selected Location" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
     <Label styleClass="bodyFormat" text="Religion:" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
     <Label styleClass="bodyFormat" text="Denomination:" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
     <Label layoutX="83.0" layoutY="152.0" styleClass="bodyFormat" text="Employee:" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
