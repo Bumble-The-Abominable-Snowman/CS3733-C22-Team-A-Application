@@ -615,16 +615,19 @@ public class MapEditorController {
           if (markerType == 1) {
             boolean isSnapped = false;
             Location nearestLocation = locations.get(0);
+            double radiusOfNearest = Integer.MAX_VALUE;
             for (Location l : locations) {
               if (l.getFloor().equals(floor)) {
+                double radiusCheck =
+                    Math.sqrt(
+                        Math.pow(l.getXCoord() - button.getLayoutX(), 2)
+                            + (Math.pow(l.getYCoord() - button.getLayoutY(), 2)));
                 // update nearest location
-                if (Math.abs(l.getXCoord() - button.getLayoutX())
-                        < Math.abs(nearestLocation.getXCoord() - button.getLayoutX())
-                    && Math.abs(l.getYCoord() - button.getLayoutY())
-                        < Math.abs(nearestLocation.getYCoord() - button.getLayoutY())) {
+                if (radiusCheck < radiusOfNearest) {
+                  radiusOfNearest = radiusCheck;
                   nearestLocation = l;
                 }
-                // if already snapped, do this
+                // when it finds the location already snapped to, do this
                 if (button.getLayoutX() == l.getXCoord() && button.getLayoutY() == l.getYCoord()) {
                   nearestLocation = l;
                   isSnapped = true;
