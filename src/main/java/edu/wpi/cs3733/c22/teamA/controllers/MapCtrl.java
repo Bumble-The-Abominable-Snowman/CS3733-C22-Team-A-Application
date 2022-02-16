@@ -358,6 +358,7 @@ public class MapCtrl extends MasterCtrl {
               // select location if search complete
               if (searchComboBox.getItems().size() == 1) {
                 existingLocationSelected(filteredLocations.get(0));
+                editButton.setDisable(false);
               }
 
               clearAll();
@@ -755,7 +756,7 @@ public class MapCtrl extends MasterCtrl {
               button.setLayoutX(nearestLocation.getXCoord());
               button.setLayoutY(nearestLocation.getYCoord());
             }
-            //update label to new location
+            // update label to new location
             xPosText.setText(String.valueOf(button.getLayoutX() - mapImageView.getLayoutX() + 8));
             yPosText.setText(String.valueOf(button.getLayoutY() - mapImageView.getLayoutY() + 24));
             Label correspondingLabel;
