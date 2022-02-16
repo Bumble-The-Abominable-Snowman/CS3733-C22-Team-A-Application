@@ -54,13 +54,13 @@ public class DefaultTest {
     equipmentSRServiceRequestDerby.enterServiceRequest(sr);
 
     // print out the list
-    System.out.println("EquipmentSR List:");
+    // System.out.println("EquipmentSR List:");
     List<EquipmentSR> equipmentSRS = equipmentSRServiceRequestDerby.getServiceRequestList();
     for (EquipmentSR srItem : equipmentSRS) {
-      System.out.println(srItem);
+      // System.out.println(srItem);
     }
 
-    System.out.println("---------------");
+    // System.out.println("---------------");
     ServiceRequestDerbyImpl<ReligiousSR> religiousSRServiceRequestDerby =
         new ServiceRequestDerbyImpl<>(new ReligiousSR());
 
@@ -68,14 +68,14 @@ public class DefaultTest {
         "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/ReligiousServiceRequest.csv");
 
     // get all the SRs
-    System.out.println("---------------");
+    // System.out.println("---------------");
     ServiceRequestDerbyImpl<SR> serviceRequestDAO = new ServiceRequestDerbyImpl<>(new SR());
 
     // print out the list
-    System.out.println("SR List:");
+    // System.out.println("SR List:");
     List<?> srList = serviceRequestDAO.getAllServiceRequestList();
     for (Object srItem : srList) {
-      System.out.println(srItem);
+      // System.out.println(srItem);
     }
 
     // Test ServiceRequest.exportToCSV

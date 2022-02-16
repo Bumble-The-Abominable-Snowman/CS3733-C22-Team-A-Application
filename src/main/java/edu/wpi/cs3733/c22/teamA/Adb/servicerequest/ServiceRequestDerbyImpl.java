@@ -41,17 +41,14 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
       boolean starts_with_get = sr_method.getName().split(get_regex)[0].equals("");
       boolean starts_with_set = sr_method.getName().split(set_regex)[0].equals("");
 
-      //      sr_method.getGenericParameterTypes()
+      //      sr_method.getGenericParameterTypes() &&
+      // sr_method.getReturnType().isInstance(String.class)
       if (true) {
-        if (starts_with_get
-            && is_the_method_of_super
-            && sr_method.getReturnType().isInstance(String.class)) {
+        if (starts_with_get && is_the_method_of_super) {
           this.super_sr_get_data_methods.add(sr_method);
           this.all_sr_get_data_methods.add(sr_method);
         }
-        if (starts_with_get
-            && is_the_method_exclusive
-            && sr_method.getReturnType().isInstance(String.class)) {
+        if (starts_with_get && is_the_method_exclusive) {
           this.sr_get_data_methods.add(sr_method);
           this.all_sr_get_data_methods.add(sr_method);
         }
@@ -404,7 +401,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
 
     // Get list of this type of service Requests
     List<T> list = getServiceRequestList();
-
+    System.out.println("list: " + list);
     // create a writer
     File file = new File(csvFilePath);
     file.createNewFile();
@@ -412,23 +409,37 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
 
     // Generate title String (first line)
     String tleString = "";
-    Field[] flds = list.get(0).getClass().getDeclaredFields();
-    for (int x = 0; x < flds.length; x++) {
-      tleString = tleString + flds[x].getName();
-      if (!(x == flds.length - 1)) {
+    Field[] flds = t.getClass().getSuperclass().getDeclaredFields();
+    Field[] fldsSub = t.getClass().getDeclaredFields();
+    for (int x = 0; x < flds.length - 1; x++) {
+      tleString = tleString + flds[x].getName() + ", ";
+    }
+    for (int x = 0; x < fldsSub.length; x++) {
+      tleString = tleString + fldsSub[x].getName();
+      if (!(x == fldsSub.length - 1)) {
         tleString = tleString + ", ";
       }
     }
+    System.out.println("Final tleSting: " + tleString);
     writer.write(tleString);
     writer.newLine();
-
+    System.out.println("allSrGetDataMethods.size: " + this.all_sr_get_data_methods.size());
     // write data
     for (Object thisSR : list) {
+      System.out.println("-----------------starting for loop----------------");
       String str = "";
+
       for (int x = 0; x < this.all_sr_get_data_methods.size(); x++) {
-        str = String.join(",", str, (String) all_sr_get_data_methods.get(x).invoke(thisSR));
+        String data = all_sr_get_data_methods.get(x).invoke(thisSR).toString();
+        System.out.println("data: " + data);
+        if (x == 0) {
+          str = data;
+        } else {
+          str = String.join(",", str, data);
+        }
       }
 
+      System.out.println("str: " + str);
       writer.write(str);
       writer.newLine();
     }
