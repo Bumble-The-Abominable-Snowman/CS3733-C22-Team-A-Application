@@ -36,7 +36,7 @@ public class Adb {
         }
 
       case "ClientDriver":
-        pathToDBA = "//localhost:1527/HospitalDBA";
+        pathToDBA = "//192.168.50.89:1527/HospitalDBA";
 
         try {
           Class.forName("org.apache.derby.jdbc." + arg);
@@ -62,12 +62,14 @@ public class Adb {
         // for better
         // recognition.
         isInitialized = true;
+        System.out.println("DB already exist");
 
       } catch (SQLException e) {
         Connection c =
             DriverManager.getConnection(String.format("jdbc:derby:%s;create=true", pathToDBA));
         turnOnBuiltInUsers(c);
         c.close();
+        System.out.println("DB initialized");
         System.out.println("Closed connection");
 
         isInitialized = false;

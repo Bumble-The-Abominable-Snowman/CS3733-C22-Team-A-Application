@@ -1,4 +1,4 @@
-package edu.wpi.cs3733.c22.teamA.controllers.map;
+package edu.wpi.cs3733.c22.teamA.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
@@ -11,7 +11,6 @@ import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
-import edu.wpi.cs3733.c22.teamA.controllers.HomeCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.map.Edge;
@@ -50,7 +49,7 @@ import net.kurobako.gesturefx.AffineEvent;
 import net.kurobako.gesturefx.GesturePane;
 
 // TODO Add Service Request marker to all necessary places
-public class MapEditorController {
+public class MapCtrl extends MasterCtrl {
   @FXML private JFXComboBox pfFromComboBox;
   @FXML private JFXComboBox pfToComboBox;
   @FXML private JFXCheckBox locationCheckBox;
@@ -109,7 +108,7 @@ public class MapEditorController {
 
   private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
-  public MapEditorController() {
+  public MapCtrl() {
     locationMarkerShape = new Polygon();
     equipmentMarkerShape = new Polygon();
     locationMarkerShape.getPoints().addAll(new Double[] {1.0, 4.0, 0.0, 2.0, 1.0, 0.0, 2.0, 2.0});
