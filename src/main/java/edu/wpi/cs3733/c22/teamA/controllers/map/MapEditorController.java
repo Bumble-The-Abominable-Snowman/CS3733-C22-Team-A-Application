@@ -83,7 +83,9 @@ public class MapEditorController {
   @FXML private ImageView mapImageView = new ImageView();
 
   @FXML private GesturePane gesturePane;
-  Dimension2D transformed = new Dimension2D(967, 1050);
+
+  private LocationMarker newLocationMarker = null;
+  private Dimension2D transformed = new Dimension2D(967, 1050);
   private AnchorPane miniAnchorPane = new AnchorPane();
   private List<Line> pfLine = new ArrayList<>();
 
@@ -93,17 +95,17 @@ public class MapEditorController {
   private Polygon locationMarkerShape;
   private Polygon equipmentMarkerShape;
 
-  String floor;
-  String floorName;
-  String currentID;
-  Location selectedLocation;
+  private String floor;
+  private String floorName;
+  private String currentID;
+  private Location selectedLocation;
 
-  LocationDAO locationDAO = new LocationDerbyImpl();
-  EquipmentDAO equipmentDAO = new EquipmentDerbyImpl();
+  private LocationDAO locationDAO = new LocationDerbyImpl();
+  private EquipmentDAO equipmentDAO = new EquipmentDerbyImpl();
 
-  HashMap<Button, LocationMarker> buttonLocationMarker;
-  HashMap<Button, EquipmentMarker> buttonEquipmentMarker;
-  HashMap<Button, SRMarker> buttonServiceRequestMarker;
+  private HashMap<Button, LocationMarker> buttonLocationMarker;
+  private HashMap<Button, EquipmentMarker> buttonEquipmentMarker;
+  private HashMap<Button, SRMarker> buttonServiceRequestMarker;
 
   private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
@@ -780,6 +782,10 @@ public class MapEditorController {
 
   // New location through right click
   public void newLocationPressed(int xCoord, int yCoord) {
+    if (newLocationMarker != null) {
+      System.out.println("SAVE THIS ONE FIRST");
+      return;
+    }
     Location newLocation =
         new Location(
             "NEWLOCATION",
@@ -791,6 +797,7 @@ public class MapEditorController {
             "New Location",
             "New Location");
     LocationMarker newLocationMarker = newDraggableLocation(newLocation);
+    this.newLocationMarker = newLocationMarker;
     newLocationMarker.draw(miniAnchorPane);
   }
 
@@ -872,6 +879,25 @@ public class MapEditorController {
 
   // Save Changes
   public void saveChanges() {
+    if (newLocationMarker != null && newLocationMarker.getLocation().equals(selectedLocation)) {
+      newLocationMarker.getLocation().setNodeID(nodeIDText.getText());
+      newLocationMarker.getLocation().setXCoord((int) Double.parseDouble(xPosText.getText()));
+      newLocationMarker.getLocation().setYCoord((int) Double.parseDouble(yPosText.getText()));
+      newLocationMarker.getLocation().setFloor(floorText.getText());
+      newLocationMarker.getLocation().setBuilding(buildingText.getText());
+      newLocationMarker.getLocation().setNodeType(typeText.getText());
+      newLocationMarker.getLocation().setLongName(longnameText.getText());
+      newLocationMarker.getLocation().setShortName(shortnameText.getText());
+
+      locationDAO.enterLocationNode(newLocationMarker.getLocation());
+      newLocationMarker = null;
+      clearSubmission();
+      String originalFloorName = floorName;
+      floorSelectionComboBox.setValue("Choose Floor");
+      floorSelectionComboBox.setValue(originalFloorName);
+      System.out.println("here");
+      return;
+    }
 
     locationDAO.updateLocation(
         nodeIDText.getText(), "xCoord", (int) Double.parseDouble(xPosText.getText()));
@@ -882,6 +908,8 @@ public class MapEditorController {
     locationDAO.updateLocation(nodeIDText.getText(), "nodeType", typeText.getText());
     locationDAO.updateLocation(nodeIDText.getText(), "longName", longnameText.getText());
     locationDAO.updateLocation(nodeIDText.getText(), "ShortName", shortnameText.getText());
+
+    clearSubmission();
     String originalFloorName = floorName;
     floorSelectionComboBox.setValue("Choose Floor");
     floorSelectionComboBox.setValue(originalFloorName);
