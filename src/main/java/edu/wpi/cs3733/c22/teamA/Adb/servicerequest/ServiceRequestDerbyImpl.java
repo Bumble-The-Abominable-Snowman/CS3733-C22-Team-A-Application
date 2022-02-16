@@ -5,7 +5,6 @@ import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
@@ -408,22 +407,43 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     // Generate title String (first line)
-    String tleString = "";
-    Field[] flds = t.getClass().getSuperclass().getDeclaredFields();
-    Field[] fldsSub = t.getClass().getDeclaredFields();
-    for (int x = 0; x < flds.length - 1; x++) {
-      tleString = tleString + flds[x].getName() + ", ";
+    //    String tleString = "";
+    //    Field[] flds = t.getClass().getSuperclass().getDeclaredFields();
+    //    Field[] fldsSub = t.getClass().getDeclaredFields();
+    //    for (int x = 0; x < flds.length - 1; x++) {
+    //      tleString = tleString + flds[x].getName() + ", ";
+    //    }
+    //    for (int x = 0; x < fldsSub.length; x++) {
+    //      tleString = tleString + fldsSub[x].getName();
+    //      if (!(x == fldsSub.length - 1)) {
+    //        tleString = tleString + ", ";
+    //      }
+    //    }
+
+    StringBuilder tleString = new StringBuilder();
+    //    Field[] flds = t.getClass().getSuperclass().getDeclaredFields();
+    //    Field[] fldsSub = t.getClass().getDeclaredFields();
+    //    for (int x = 0; x < this.all_sr_get_data_methods.size(); x++) {
+    //      tleString.append(flds[x].getName()).append(", ");
+    //    }
+    //    for (int x = 0; x < fldsSub.length; x++) {
+    //      tleString.append(fldsSub[x].getName());
+    //      if (!(x == fldsSub.length - 1)) {
+    //        tleString.append(", ");
+    //      }
+    //    }
+
+    for (Method method : this.all_sr_get_data_methods) {
+      String data = method.getName().substring(3) + ", ";
+      tleString.append(data);
     }
-    for (int x = 0; x < fldsSub.length; x++) {
-      tleString = tleString + fldsSub[x].getName();
-      if (!(x == fldsSub.length - 1)) {
-        tleString = tleString + ", ";
-      }
-    }
-    System.out.println("Final tleSting: " + tleString);
-    writer.write(tleString);
+
+    String firstLine = tleString.toString().substring(0, tleString.toString().length() - 2);
+
+    System.out.println("Final tleSting: " + firstLine);
+    writer.write(firstLine);
     writer.newLine();
-    System.out.println("allSrGetDataMethods.size: " + this.all_sr_get_data_methods.size());
+    // System.out.println("allSrGetDataMethods.size: " + this.all_sr_get_data_methods.size());
     // write data
     for (Object thisSR : list) {
       System.out.println("-----------------starting for loop----------------");
