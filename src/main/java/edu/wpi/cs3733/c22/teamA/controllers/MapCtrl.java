@@ -495,7 +495,7 @@ public class MapCtrl extends MasterCtrl {
     gesturePane.addEventFilter(
         AffineEvent.CHANGED,
         event -> {
-          //System.out.println(event.getTransformedDimension());
+          // System.out.println(event.getTransformedDimension());
           transformed = event.getTransformedDimension();
         });
     gesturePane.setOnMouseClicked(
@@ -755,6 +755,19 @@ public class MapCtrl extends MasterCtrl {
               button.setLayoutX(nearestLocation.getXCoord());
               button.setLayoutY(nearestLocation.getYCoord());
             }
+            //update label to new location
+            xPosText.setText(String.valueOf(button.getLayoutX() - mapImageView.getLayoutX() + 8));
+            yPosText.setText(String.valueOf(button.getLayoutY() - mapImageView.getLayoutY() + 24));
+            Label correspondingLabel;
+            if (markerType == 1) {
+              correspondingLabel = buttonEquipmentMarker.get(button).getLabel();
+            } else {
+              correspondingLabel = buttonServiceRequestMarker.get(button).getLabel();
+            }
+            correspondingLabel.setLayoutX(button.getLayoutX());
+            correspondingLabel.setLayoutY(button.getLayoutY() - 20);
+
+            // TODO this function should update database but getting errors
             updateOnRelease(button);
           }
         });
