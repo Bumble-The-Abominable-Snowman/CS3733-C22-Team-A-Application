@@ -1,21 +1,29 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
+import com.jfoenix.controls.JFXComboBox;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
+import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
+import edu.wpi.cs3733.c22.teamA.entities.Employee;
+import edu.wpi.cs3733.c22.teamA.entities.Location;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public abstract class SRCtrl {
-  @FXML Button homeButton;
+public abstract class SRCtrl extends MasterCtrl {
   @FXML Button submitButton;
-  @FXML Button backButton;
   @FXML Button clearButton;
 
-  // TODO: request employee, comments, location, start end location, priority, etc.
+  List<Employee> employeeList = new ArrayList<>();
+  List<Location> locationList = new ArrayList<>();
 
   SceneSwitcher.SCENES sceneID;
 
@@ -23,36 +31,20 @@ public abstract class SRCtrl {
 
   @FXML
   private void initialize() {
-    double homeTextSize = homeButton.getFont().getSize();
     double submitTextSize = submitButton.getFont().getSize();
-    double backTextSize = backButton.getFont().getSize();
     double clearTextSize = clearButton.getFont().getSize();
 
     App.getStage()
         .widthProperty()
         .addListener(
             (obs, oldVal, newVal) -> {
-              homeButton.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * homeTextSize) + "pt;");
               submitButton.setStyle(
                   "-fx-font-size: "
                       + ((App.getStage().getWidth() / 1000) * submitTextSize)
                       + "pt;");
-              backButton.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * backTextSize) + "pt;");
               clearButton.setStyle(
                   "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * clearTextSize) + "pt;");
             });
-  }
-
-  @FXML
-  void goToHomeScene() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
-  }
-
-  @FXML
-  private void goToSelectServiceScene() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SELECT_SERVICE_REQUEST);
   }
 
   @FXML
@@ -64,4 +56,29 @@ public abstract class SRCtrl {
   abstract void submitRequest()
       throws IOException, TimeoutException, SQLException, InvocationTargetException,
           IllegalAccessException;
+
+  @FXML
+  protected void populateEmployeeAndLocationList() {
+    this.employeeList = new EmployeeDerbyImpl().getEmployeeList();
+    this.locationList = new LocationDerbyImpl().getNodeList();
+  }
+
+  @FXML
+  protected void populateEmployeeComboBox(JFXComboBox<String> employeeChoice) {
+    employeeChoice.getItems().removeAll(employeeChoice.getItems());
+    employeeChoice
+        .getItems()
+        .addAll(this.employeeList.stream().map(Employee::getFullName).collect(Collectors.toList()));
+    employeeChoice.setVisibleRowCount(5);
+  }
+
+  @FXML
+  protected void populateLocationComboBox(JFXComboBox<String> locationChoice) {
+    locationChoice.getItems().removeAll(locationChoice.getItems());
+    locationChoice
+        .getItems()
+        .addAll(
+            this.locationList.stream().map(Location::getShortName).collect(Collectors.toList()));
+    locationChoice.setVisibleRowCount(5);
+  }
 }
