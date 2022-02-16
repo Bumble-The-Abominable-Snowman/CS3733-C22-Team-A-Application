@@ -878,7 +878,10 @@ public class MapEditorController {
       resultMap.put(l, new HashSet<>());
     }
 
-    File file = new File("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/AllEdgesHand.csv");
+    URL path = App.class.getResource("db/CSVs/AllEdgesHand.csv");
+    File file = new File(String.valueOf(path));
+    //    File file = new
+    // File("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/AllEdgesHand.csv");
     Scanner lineScanner = new Scanner(file);
     Scanner dataScanner;
     int dataIndex = 0;
