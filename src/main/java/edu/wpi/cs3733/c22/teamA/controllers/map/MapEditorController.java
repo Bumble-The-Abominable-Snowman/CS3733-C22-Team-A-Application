@@ -276,7 +276,6 @@ public class MapEditorController {
   // TODO MAKE IT LIVE UPDATE ON KEYSTROKE
   public void setupSearchListener() {
     searchComboBox.setEditable(true);
-    searchComboBox.setVisibleRowCount(5);
     // set up list of locations to be wrapped
     ObservableList<Location> searchLocationList = FXCollections.observableArrayList();
     searchLocationList.addAll(locations);
@@ -287,9 +286,9 @@ public class MapEditorController {
 
     searchComboBox
         .getEditor()
-        .setOnKeyPressed(
-            event -> {
-              Object newValue = searchComboBox.getValue();
+        .textProperty()
+        .addListener(
+            (observable, oldValue, newValue) -> {
               filteredLocations.setPredicate(
                   location -> {
                     // if field is empty display all locations
@@ -307,12 +306,22 @@ public class MapEditorController {
                             || location.getNodeID().toLowerCase().contains(lowerCaseFilter))
                         && location.getFloor().equals(floor);
                   });
+              // add items to comboBox dropdown
               ArrayList<String> locationNames = new ArrayList<>();
               for (Location l : filteredLocations) {
                 locationNames.add(l.getLongName());
               }
               searchComboBox.getItems().clear();
               searchComboBox.getItems().addAll(locationNames);
+              if (searchComboBox.getItems().size() < 5) {
+                searchComboBox.setVisibleRowCount(searchComboBox.getItems().size());
+              } else {
+                searchComboBox.setVisibleRowCount(5);
+              }
+              // select location based on filtration
+              if (searchComboBox.getItems().size() == 1) {
+                existingLocationSelected(filteredLocations.get(0));
+              }
               clearAll();
 
               HashMap<String, LocationMarker> locationIDs = new HashMap<>();
@@ -334,59 +343,6 @@ public class MapEditorController {
                 }
               }
             });
-
-    /*
-       searchComboBox
-           .getSelectionModel()
-           .selectedItemProperty()
-           .addListener(
-               (observable, oldValue, newValue) -> {
-                 filteredLocations.setPredicate(
-                     location -> {
-                       // if field is empty display all locations
-                       if ((newValue == null
-                               || searchComboBox.getSelectionModel().toString().isEmpty())
-                           && location.getFloor().equals(floor)) {
-                         return true;
-                       }
-                       // make sure case is factored out
-                       String lowerCaseFilter = newValue.toString().toLowerCase();
-                       // if search matches either name or ID, display it
-                       // if not, this returns false and doesnt display
-                       return (location.getLongName().toLowerCase().contains(lowerCaseFilter)
-                               || location.getShortName().toLowerCase().contains(lowerCaseFilter)
-                               || location.getNodeID().toLowerCase().contains(lowerCaseFilter))
-                           && location.getFloor().equals(floor);
-                     });
-                 ArrayList<String> locationNames = new ArrayList<>();
-                 for (Location l : filteredLocations) {
-                   locationNames.add(l.getLongName());
-                 }
-                 searchComboBox.getItems().clear();
-                 searchComboBox.getItems().addAll(locationNames);
-                 clearAll();
-
-                 HashMap<String, LocationMarker> locationIDs = new HashMap<>();
-                 // Loops through every location filtered & draws them if present on the floor
-                 for (Location location : locations) {
-                   if (filteredLocations.contains(location)) {
-                     LocationMarker locationMarker = newDraggableLocation(location);
-                     locationMarker.draw(miniAnchorPane);
-                     locationIDs.put(location.getNodeID(), locationMarker);
-                   }
-                 }
-                 // Loops through every medical equipment & draws them if they're on this floor
-                 for (Equipment equipment : equipments) {
-                   if (locationIDs.containsKey(equipment.getCurrentLocation())) {
-                     EquipmentMarker equipmentMarker =
-                             newDraggableEquipment(
-                                     equipment, locationIDs.get(equipment.getCurrentLocation()));
-                     equipmentMarker.draw(miniAnchorPane);
-                   }
-                 }
-               });
-
-    */
   }
 
   // Sets up the floor
