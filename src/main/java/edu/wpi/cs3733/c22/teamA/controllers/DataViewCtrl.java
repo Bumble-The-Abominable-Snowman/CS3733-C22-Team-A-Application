@@ -27,6 +27,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
@@ -75,7 +76,132 @@ public class DataViewCtrl extends MasterCtrl {
   }
 
   @FXML
-  public void addData() {}
+  public void addData() {
+
+    if (HomeCtrl.sceneFlag == 3) {
+
+      DataViewCtrl.addPopup.get().hide();
+
+      // cancel button
+      JFXButton cancelUpdateButton = new JFXButton();
+      cancelUpdateButton.setText("X");
+
+      cancelUpdateButton.setOnAction(
+          event -> {
+            DataViewCtrl.addPopup.get().hide();
+          });
+
+      Label equipmentIDLabel = new Label("equipmentID");
+      Label equipmentTypeLabel = new Label("equipmentType");
+      Label isCleanLabel = new Label("isClean");
+      Label currentLocationLabel = new Label("currentLocation");
+      Label isAvailableLabel = new Label("isAvailable");
+
+      equipmentIDLabel.setPadding(new Insets(10, 10, 10, 5));
+      equipmentTypeLabel.setPadding(new Insets(10, 10, 10, 5));
+      isCleanLabel.setPadding(new Insets(10, 10, 10, 5));
+      currentLocationLabel.setPadding(new Insets(10, 10, 10, 5));
+      isAvailableLabel.setPadding(new Insets(10, 10, 10, 5));
+      cancelUpdateButton.setStyle("-fx-alignment: center ;");
+      cancelUpdateButton.setAlignment(Pos.CENTER);
+
+      // value text area
+      TextArea equipmentIDText = new TextArea();
+      equipmentIDText.setPromptText("Enter equipmentID:");
+      equipmentIDText.setMinSize(50, 30);
+      equipmentIDText.setMaxSize(150, 30);
+
+      TextArea equipmentTypeText = new TextArea();
+      equipmentTypeText.setPromptText("Enter equipmentType:");
+      equipmentTypeText.setMinSize(50, 30);
+      equipmentTypeText.setMaxSize(150, 30);
+
+      JFXCheckBox isCleanCheckBox = new JFXCheckBox();
+
+      TextArea currentLocationText = new TextArea();
+      currentLocationText.setPromptText("Enter currentLocation:");
+      currentLocationText.setMinSize(50, 30);
+      currentLocationText.setMaxSize(150, 30);
+
+      JFXCheckBox isAvailableCheckBox = new JFXCheckBox();
+
+      JFXButton updateButton = new JFXButton();
+      updateButton.setText("Update");
+
+      updateButton.setOnAction(
+          e -> {
+            if (equipmentIDText.getText().length() > 2
+                && equipmentTypeText.getText().length() > 2
+                && currentLocationText.getText().length() > 2) {
+              EquipmentDerbyImpl equipmentDerby = new EquipmentDerbyImpl();
+              equipmentDerby.enterMedicalEquipment(
+                  equipmentIDText.getText(),
+                  equipmentTypeText.getText(),
+                  isCleanCheckBox.isSelected(),
+                  currentLocationText.getText(),
+                  isAvailableCheckBox.isSelected());
+              updateButton.setTextFill(Color.GREEN);
+            } else {
+              updateButton.setTextFill(Color.RED);
+            }
+          });
+
+      // add it to the scene
+      var content = new GridPane();
+      content.setRowIndex(equipmentIDLabel, 0);
+      content.setColumnIndex(equipmentIDLabel, 0);
+      content.setRowIndex(equipmentTypeLabel, 1);
+      content.setColumnIndex(equipmentTypeLabel, 0);
+      content.setRowIndex(isCleanLabel, 2);
+      content.setColumnIndex(isCleanLabel, 0);
+      content.setRowIndex(currentLocationLabel, 3);
+      content.setColumnIndex(currentLocationLabel, 0);
+      content.setRowIndex(isAvailableLabel, 4);
+      content.setColumnIndex(isAvailableLabel, 0);
+      content.setRowIndex(cancelUpdateButton, 5);
+      content.setColumnIndex(cancelUpdateButton, 0);
+
+      content.setRowIndex(equipmentIDText, 0);
+      content.setColumnIndex(equipmentIDText, 1);
+      content.setRowIndex(equipmentTypeText, 1);
+      content.setColumnIndex(equipmentTypeText, 1);
+      content.setRowIndex(isCleanCheckBox, 2);
+      content.setColumnIndex(isCleanCheckBox, 1);
+      content.setRowIndex(currentLocationText, 3);
+      content.setColumnIndex(currentLocationText, 1);
+      content.setRowIndex(isAvailableCheckBox, 4);
+      content.setColumnIndex(isAvailableCheckBox, 1);
+      content.setRowIndex(updateButton, 5);
+      content.setColumnIndex(updateButton, 1);
+
+      content
+          .getChildren()
+          .addAll(
+              equipmentIDLabel,
+              equipmentTypeLabel,
+              isCleanLabel,
+              currentLocationLabel,
+              isAvailableLabel,
+              cancelUpdateButton,
+              equipmentIDText,
+              equipmentTypeText,
+              isCleanCheckBox,
+              currentLocationText,
+              isAvailableCheckBox,
+              updateButton);
+
+      content.setPadding(new Insets(10, 5, 10, 5));
+      content.setBackground(
+          new Background(new BackgroundFill(Color.WHITE, new CornerRadii(10), null)));
+      content.setEffect(new DropShadow());
+
+      var p = new Popup();
+      p.getContent().add(content);
+
+      DataViewCtrl.addPopup.set(p);
+      DataViewCtrl.addPopup.get().show(App.getStage());
+    }
+  }
 
   static class RecursiveObj extends RecursiveTreeObject<RecursiveObj> {
     public SR sr;
@@ -103,6 +229,7 @@ public class DataViewCtrl extends MasterCtrl {
   private List<Employee> empList = new ArrayList<>();
   public static AtomicReference<Popup> detailsPopup = new AtomicReference<>(new Popup());
   public static AtomicReference<Popup> modifyPopup = new AtomicReference<>(new Popup());
+  public static AtomicReference<Popup> addPopup = new AtomicReference<>(new Popup());
 
   String[] locationColumnNames = {
     "ID",
@@ -871,7 +998,7 @@ public class DataViewCtrl extends MasterCtrl {
         });
   }
 
-  protected void onSceneSwitch(){
+  protected void onSceneSwitch() {
     DataViewCtrl.detailsPopup.get().hide();
     DataViewCtrl.modifyPopup.get().hide();
   }
