@@ -49,7 +49,8 @@ import javafx.util.Duration;
 import net.kurobako.gesturefx.AffineEvent;
 import net.kurobako.gesturefx.GesturePane;
 
-// TODO Add Service Request marker to all necessary places
+// TODO Change all instances of looping through locations to find related short names & node ids
+// with method in backend once implemented
 public class MapEditorController {
   @FXML private JFXComboBox pfFromComboBox;
   @FXML private JFXComboBox pfToComboBox;
@@ -158,8 +159,6 @@ public class MapEditorController {
 
               // Maps Location IDs to their markers
               HashMap<String, LocationMarker> locationIDs = new HashMap<>();
-              // Maps Location names to their markers
-              HashMap<String, LocationMarker> locationNames = new HashMap<>();
 
               List<Location> thisFloorLocations = new ArrayList<>();
 
@@ -169,7 +168,6 @@ public class MapEditorController {
                   LocationMarker locationMarker = newDraggableLocation(location);
                   locationMarker.draw(miniAnchorPane);
                   locationIDs.put(location.getNodeID(), locationMarker);
-                  locationNames.put(location.getShortName(), locationMarker);
                   thisFloorLocations.add(location);
                 }
               }
@@ -206,10 +204,10 @@ public class MapEditorController {
 
               // Loops through every service request & draws them if they're on this floor
               for (SR serviceRequest : serviceRequests) {
-                if (locationNames.containsKey(serviceRequest.getEndLocation())) {
+                if (locationIDs.containsKey(serviceRequest.getEndLocation())) {
                   SRMarker serviceRequestMarker =
                       newDraggableServiceRequest(
-                          serviceRequest, locationNames.get(serviceRequest.getEndLocation()));
+                          serviceRequest, locationIDs.get(serviceRequest.getEndLocation()));
                   serviceRequestMarker.draw(miniAnchorPane);
                 }
               }
@@ -384,16 +382,25 @@ public class MapEditorController {
       button.setShape(equipmentMarkerShape);
       String floor = floorNames[i];
       int srCount = 0;
+      int dEquipCount = 0;
+      int cEquipCount = 0;
       for (Location location : locations) {
-        if (location.getFloor().equals(floor)) {
+        if (location.getFloor().equals(floor.replace("Floor ", ""))) {
           for (int j = 0; j < serviceRequests.size(); j++) {
-            if (serviceRequests.get(j).getEndLocation().equals(location.getShortName())) {
+            if (serviceRequests.get(j).getEndLocation().equals(location.getNodeID())) {
               srCount++;
+            }
+          }
+          for (int j = 0; j < equipments.size(); j++) {
+            if (equipments.get(j).getCurrentLocation().equals(location.getNodeID())) {
+              if (!equipments.get(j).getIsClean()) dEquipCount++;
+              else cEquipCount++;
             }
           }
         }
       }
-      button.setText("Requests: " + srCount);
+      button.setText(
+          "Reqs: " + srCount + " | Clean Equip: " + cEquipCount + " | Dirty Equip: " + dEquipCount);
       button.setOnMousePressed(mouseEvent -> floorSelectionComboBox.setValue(floor));
       miniAnchorPane.getChildren().add(button);
     }
@@ -446,6 +453,7 @@ public class MapEditorController {
     miniAnchorPane.getChildren().add(mapImageView);
     miniAnchorPane.setLayoutX(0);
     mapImageView.setLayoutX(0);
+    gesturePane.reset();
     gesturePane.setContent(miniAnchorPane);
     gesturePane.addEventFilter(
         AffineEvent.CHANGED,
@@ -849,11 +857,16 @@ public class MapEditorController {
     shortnameText.setEditable(false);
 
     nodeIDText.setText(equipment.getEquipmentID());
-    floorText.setText("");
-    buildingText.setText("");
     typeText.setText(equipment.getEquipmentType());
     longnameText.setText("N/A");
-    shortnameText.setText(equipment.getCurrentLocation());
+    for (Location l : locations) {
+      if (l.getNodeID().equals(equipment.getCurrentLocation())) {
+        shortnameText.setText(l.getShortName());
+        floorText.setText(l.getFloor());
+        buildingText.setText(l.getBuilding());
+        break;
+      }
+    }
   }
 
   // Existing Service Request Selected
@@ -870,11 +883,17 @@ public class MapEditorController {
     shortnameText.setEditable(false);
 
     nodeIDText.setText(serviceRequest.getRequestID());
-    floorText.setText("");
-    buildingText.setText("");
     typeText.setText(serviceRequest.getRequestPriority());
     longnameText.setText("N/A");
-    shortnameText.setText(serviceRequest.getEndLocation());
+
+    for (Location l : locations) {
+      if (l.getNodeID().equals(serviceRequest.getEndLocation())) {
+        shortnameText.setText(l.getShortName());
+        floorText.setText(l.getFloor());
+        buildingText.setText(l.getBuilding());
+        break;
+      }
+    }
   }
 
   // Save Changes

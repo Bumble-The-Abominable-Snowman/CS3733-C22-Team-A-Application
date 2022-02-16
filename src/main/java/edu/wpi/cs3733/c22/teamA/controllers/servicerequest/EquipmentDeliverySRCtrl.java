@@ -183,12 +183,22 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
         && toLocationChoice.getSelectionModel().getSelectedItem() != null
         && employeeChoice.getSelectionModel().getSelectedItem() != null) {
 
+      List<Location> locations = new ArrayList<>(new LocationDerbyImpl().getNodeList());
+      String chosenLocation = toLocationChoice.getSelectionModel().getSelectedItem().toString();
+      String nodeID = "";
+      for (Location l : locations) {
+        if (l.getShortName().equals(chosenLocation)) {
+          nodeID = l.getNodeID();
+          break;
+        }
+      }
+
       // pass medical service request object
       EquipmentSR equipmentSR =
           new EquipmentSR(
               "EquipmentSRID",
               "N/A",
-              "N/A",
+              nodeID,
               "001",
               "002",
               new Timestamp((new Date()).getTime()),
