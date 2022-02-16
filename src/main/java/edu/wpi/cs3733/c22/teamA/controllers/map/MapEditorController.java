@@ -131,10 +131,10 @@ public class MapEditorController {
   public void initialize() {
     // Pathfinding Setup
     // Setup Functions
+    fillFromDB();
     setupCheckboxListeners();
     setupContextMenu();
     setInitialUIStates();
-
     setupSearchListener();
 
     backButton.setBackground(
@@ -335,7 +335,7 @@ public class MapEditorController {
                       return true;
                     }
                     // make sure case is factored out
-                    String lowerCaseFilter = newValue.toString().toLowerCase();
+                    String lowerCaseFilter = newValue.toLowerCase();
                     // if search matches either name or ID, display it
                     // if not, this returns false and doesnt display
                     return (location.getLongName().toLowerCase().contains(lowerCaseFilter)
@@ -347,6 +347,7 @@ public class MapEditorController {
               ArrayList<String> locationNames = new ArrayList<>();
               for (Location l : filteredLocations) {
                 locationNames.add(l.getLongName());
+                // System.out.println(l.getLongName());
               }
               searchComboBox.getItems().clear();
               searchComboBox.getItems().addAll(locationNames);
@@ -359,15 +360,22 @@ public class MapEditorController {
               if (searchComboBox.getItems().size() == 1) {
                 existingLocationSelected(filteredLocations.get(0));
               }
-              clearAll();
 
+              clearAll();
               HashMap<String, LocationMarker> locationIDs = new HashMap<>();
               // Loops through every location filtered & draws them if present on the floor
-              for (Location location : locations) {
-                if (filteredLocations.contains(location)) {
-                  LocationMarker locationMarker = newDraggableLocation(location);
-                  locationMarker.draw(miniAnchorPane);
-                  locationIDs.put(location.getNodeID(), locationMarker);
+              System.out.println(filteredLocations.size());
+              for (Location l : locations) {
+                System.out.println(l.getLongName());
+                for (Location ls : filteredLocations) {
+                  if (ls.getNodeID().equals(l.getNodeID())) {
+                    LocationMarker locationMarker = newDraggableLocation(l);
+                    locationMarker.draw(miniAnchorPane);
+                    locationMarker.setButtonVisibility(true);
+                    locationIDs.put(l.getNodeID(), locationMarker);
+                    System.out.println(l.getLongName());
+                    break;
+                  }
                 }
               }
               // Loops through every medical equipment & draws them if they're on this floor
@@ -674,7 +682,7 @@ public class MapEditorController {
     button.setOnMouseReleased(
         mouseEvent -> {
           button.setCursor(Cursor.HAND);
-          if (markerType == 1 || markerType== 2) {
+          if (markerType == 1 || markerType == 2) {
             boolean isSnapped = false;
             Location nearestLocation = locations.get(0);
             double radiusOfNearest = Integer.MAX_VALUE;
@@ -714,7 +722,7 @@ public class MapEditorController {
       equipmentMarker.clear(miniAnchorPane);
     }
     for (SRMarker serviceRequestMarker : buttonServiceRequestMarker.values()) {
-      serviceRequestMarker.clear(anchorPane);
+      serviceRequestMarker.clear(miniAnchorPane);
     }
   }
 
