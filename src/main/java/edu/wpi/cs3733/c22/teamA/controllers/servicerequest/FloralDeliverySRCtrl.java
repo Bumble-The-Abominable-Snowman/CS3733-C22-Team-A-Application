@@ -5,6 +5,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
@@ -31,6 +32,20 @@ public class FloralDeliverySRCtrl extends SRCtrl {
   @FXML
   public void initialize() throws ParseException {
     sceneID = SceneSwitcher.SCENES.FLORAL_DELIVERY_SR;
+
+    // double flowerChoiceTextSize = flowerChoice.getFont().getSize();
+    // double bouquetTypeChoiceTextSize = bouquetTypeChoice.getFont().getSize();
+    // double toLocationChoiceTextSize = toLocationChoice.getFont().getSize();
+    // double employeeChoiceTextSize = employeeChoice.getFont().getSize();
+    double commentsTextSize = commentsBox.getFont().getSize();
+
+    App.getStage()
+            .widthProperty()
+            .addListener(
+                    (obs, oldVal, newVal) -> {
+                      commentsBox.setStyle(
+                              "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * commentsTextSize) + "pt;");
+                    });
 
     commentsBox.setWrapText(true);
 

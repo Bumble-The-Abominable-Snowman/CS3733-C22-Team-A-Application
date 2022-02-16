@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: LIGHTBLUE;" styleClass="snowmanBackground" stylesheets="@../../css/styleSheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.dataview.DataViewController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: LIGHTBLUE;" styleClass="snowmanBackground" stylesheets="@../../css/styleSheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.dataview.DataViewController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="368.0" minHeight="40.0" prefHeight="337.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="95.0" minHeight="32.0" prefHeight="63.0" />
+    </rowConstraints>
     <Label fx:id="titleLabel" layoutX="180.0" layoutY="14.0" text="Data View" textFill="WHITE">
         <font>
             <Font name="System Bold" size="32.0" />
         </font>
     </Label>
-    <JFXTreeTableView fx:id="table" layoutX="20.0" layoutY="67.0" prefHeight="318.0" prefWidth="559.0" showRoot="false" />
-    <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="37.0" prefWidth="74.0" text="Back" textFill="WHITE">
+    <JFXTreeTableView fx:id="table" layoutX="20.0" layoutY="67.0" prefHeight="287.0" prefWidth="583.0" showRoot="false" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+      <GridPane.margin>
+         <Insets top="50.0" />
+      </GridPane.margin></JFXTreeTableView>
+    <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="37.0" prefWidth="74.0" text="Back" textFill="WHITE" GridPane.halignment="LEFT" GridPane.valignment="TOP">
         <cursor>
             <Cursor fx:constant="HAND" />
         </cursor></JFXButton>
-    <JFXButton alignment="CENTER" layoutX="459.0" onAction="#deleteSelected" text="Delete Selected" />
-</AnchorPane>
+    <JFXButton alignment="CENTER" layoutX="459.0" onAction="#deleteSelected" text="Delete Selected" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+</GridPane>

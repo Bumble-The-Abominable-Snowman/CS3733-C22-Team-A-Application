@@ -2,6 +2,7 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.LaundrySR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
@@ -29,6 +30,22 @@ public class LaundrySRCtrl extends SRCtrl {
   @FXML
   public void initialize() {
     sceneID = SceneSwitcher.SCENES.LAUNDRY_SR;
+
+    // double washModeTextSize = washMode.getFont().getSize();
+    // double toLocationTextSize = toLocationChoice.getFont().getSize();
+    // double employeeChoiceTextSize = employeeChoice.getFont().getSize();
+    double locationLabelTextSize = locationLabel.getFont().getSize();
+    double commentsTextSize = commentsBox.getFont().getSize();
+
+    App.getStage()
+            .widthProperty()
+            .addListener(
+                    (obs, oldVal, newVal) -> {
+                      commentsBox.setStyle(
+                              "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * commentsTextSize) + "pt;");
+                      locationLabel.setStyle(
+                              "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * locationLabelTextSize) + "pt;");
+                    });
 
     commentsBox.setWrapText(true);
 
