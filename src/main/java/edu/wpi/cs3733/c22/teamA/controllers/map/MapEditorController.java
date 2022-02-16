@@ -129,6 +129,7 @@ public class MapEditorController {
     setInitialUIStates();
     fillFromDB();
     setupSearchListener();
+    setupFloor("Choose Floor:");
 
     backButton.setBackground(
         new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
@@ -232,16 +233,16 @@ public class MapEditorController {
     rightClickMenu.getItems().addAll(newLocation);
     mapImageView.setOnContextMenuRequested(
         (event) -> {
-          rightClickMenu.show(mapImageView, event.getScreenX(), event.getScreenY());
-          mouseX = event.getScreenX();
-          mouseY = event.getScreenY();
+          if (floor != "") {
+            rightClickMenu.show(mapImageView, event.getScreenX(), event.getScreenY());
+            mouseX = event.getScreenX();
+            mouseY = event.getScreenY();
+          }
         });
   }
 
   // Sets up UI states of text areas, and buttons
   public void setInitialUIStates() {
-    mapImageView.setVisible(false);
-
     editButton.setDisable(true);
     saveButton.setDisable(true);
     clearButton.setDisable(true);
@@ -300,7 +301,7 @@ public class MapEditorController {
                     // make sure case is factored out
                     String lowerCaseFilter = newValue.toString().toLowerCase();
                     // if search matches either name or ID, display it
-                    // if not, this returns false and doesnt display
+                    // if not, this returns false and doesn't display
                     return (location.getLongName().toLowerCase().contains(lowerCaseFilter)
                             || location.getShortName().toLowerCase().contains(lowerCaseFilter)
                             || location.getNodeID().toLowerCase().contains(lowerCaseFilter))
@@ -326,50 +327,61 @@ public class MapEditorController {
             });
   }
 
+  // Sets up the side view
+  public void showSideView() {
+    String[] floorNames = {"Floor 3", "Floor 2", "Floor 1", "L1", "L2"};
+    int initialY = 782;
+    for (int i = 0; i < 5; i++) {
+      double buttonX = 93 + mapImageView.getLayoutX();
+      double buttonY = initialY + i * 39 + mapImageView.getLayoutY();
+      Button button = newButton(buttonX, buttonY, 315, 5);
+      button.setShape(equipmentMarkerShape);
+      String floor = floorNames[i];
+      button.setText(floor);
+      button.setOnMousePressed(mouseEvent -> floorSelectionComboBox.setValue(floor));
+      miniAnchorPane.getChildren().add(button);
+    }
+  }
+
   // Sets up the floor
   public void setupFloor(String newValue) {
     if (newValue.equals("Choose Floor:")) {
       floor = "";
-      mapImageView.setVisible(false);
+      URL url = App.class.getResource("images/Side View.png");
+      Image image = new Image(String.valueOf(url));
+      mapImageView.setImage(image);
+      setupGesture();
+      showSideView();
+    } else if (newValue.equals("Floor 1")) {
+      floor = "1";
+      URL url = App.class.getResource("images/1st Floor.png");
+      Image image = new Image(String.valueOf(url));
+      mapImageView.setImage(image);
+      setupGesture();
+    } else if (newValue.equals("Floor 2")) {
+      floor = "2";
+      URL url = App.class.getResource("images/2nd Floor.png");
+      Image image = new Image(String.valueOf(url));
+      mapImageView.setImage(image);
+      setupGesture();
+    } else if (newValue.equals("Floor 3")) {
+      floor = "3";
+      URL url = App.class.getResource("images/3rd Floor.png");
+      Image image = new Image(String.valueOf(url));
+      mapImageView.setImage(image);
+      setupGesture();
+    } else if (newValue.equals("L1")) {
+      floor = "L1";
+      URL url = App.class.getResource("images/LL1.png");
+      Image image = new Image(String.valueOf(url));
+      mapImageView.setImage(image);
+      setupGesture();
     } else {
-      if (newValue.equals("Floor 1")) {
-        mapImageView.setVisible(true);
-        floor = "1";
-        // File map = new File("src/main/resources/edu/wpi/cs3733/c22/teamA/images/1st Floor.png");
-
-        URL url = App.class.getResource("images/1st Floor.png");
-        Image image = new Image(String.valueOf(url));
-        mapImageView.setImage(image);
-        setupGesture();
-      } else if (newValue.equals("Floor 2")) {
-        mapImageView.setVisible(true);
-        floor = "2";
-        URL url = App.class.getResource("images/2nd Floor.png");
-        Image image = new Image(String.valueOf(url));
-        mapImageView.setImage(image);
-        setupGesture();
-      } else if (newValue.equals("Floor 3")) {
-        mapImageView.setVisible(true);
-        floor = "3";
-        URL url = App.class.getResource("images/3rd Floor.png");
-        Image image = new Image(String.valueOf(url));
-        mapImageView.setImage(image);
-        setupGesture();
-      } else if (newValue.equals("L1")) {
-        mapImageView.setVisible(true);
-        floor = "L1";
-        URL url = App.class.getResource("images/LL1.png");
-        Image image = new Image(String.valueOf(url));
-        mapImageView.setImage(image);
-        setupGesture();
-      } else {
-        mapImageView.setVisible(true);
-        floor = "L2";
-        URL url = App.class.getResource("images/LL2.png");
-        Image image = new Image(String.valueOf(url));
-        mapImageView.setImage(image);
-        setupGesture();
-      }
+      floor = "L2";
+      URL url = App.class.getResource("images/LL2.png");
+      Image image = new Image(String.valueOf(url));
+      mapImageView.setImage(image);
+      setupGesture();
     }
   }
 
@@ -407,7 +419,6 @@ public class MapEditorController {
     double buttonY = location.getYCoord() + mapImageView.getLayoutY() - 24;
     Button button = newDraggableButton(buttonX, buttonY, 0);
 
-    button.setPickOnBounds(false);
     button.setStyle("-fx-background-color: #78aaf0");
     button.setShape(locationMarkerShape);
 
@@ -435,7 +446,6 @@ public class MapEditorController {
         newDraggableLabel(
             labelX, labelY, equipment.getEquipmentID() + equipment.getEquipmentType());
 
-    button.setPickOnBounds(false);
     button.setStyle("-fx-background-color: RED");
     button.setShape(equipmentMarkerShape);
 
@@ -455,7 +465,6 @@ public class MapEditorController {
     double labelY = locationMarker.getLocation().getYCoord() + mapImageView.getLayoutY() - 24 - 15;
     Label label = newDraggableLabel(labelX, labelY, "");
 
-    button.setPickOnBounds(false);
     switch (serviceRequest.getSrType()) {
       case EQUIPMENT:
         button.setStyle("-fx-background-color: YELLOW");
@@ -512,13 +521,19 @@ public class MapEditorController {
 
   // Makes a new Draggable Button
   public Button newDraggableButton(double posX, double posY, int markerType) {
+    Button button = newButton(posX, posY, 2.0, 4.0);
+    setDragFunctions(button, markerType);
+    return button;
+  }
+
+  // Makes a new Button
+  public Button newButton(double posX, double posY, double minW, double minH) {
     Button button = new Button();
-    button.setMinWidth(4.0);
-    button.setMinHeight(2.0);
+    button.setMinWidth(minW);
+    button.setMinHeight(minH);
     button.setLayoutX(posX);
     button.setLayoutY(posY);
     button.setPickOnBounds(false);
-    setDragFunctions(button, markerType);
     return button;
   }
 
@@ -601,7 +616,7 @@ public class MapEditorController {
       equipmentMarker.clear(miniAnchorPane);
     }
     for (SRMarker serviceRequestMarker : buttonServiceRequestMarker.values()) {
-      serviceRequestMarker.clear(anchorPane);
+      serviceRequestMarker.clear(miniAnchorPane);
     }
   }
 
@@ -657,7 +672,7 @@ public class MapEditorController {
   // New location through button
   @FXML
   public void newLocationPressed() {
-    newLocationPressed(0, 0);
+    if (floor != "") newLocationPressed(0, 0);
   }
 
   public void newLocationPressedMouse(double x, double y) {
