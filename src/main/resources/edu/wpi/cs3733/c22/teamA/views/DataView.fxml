@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -12,22 +13,30 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="CENTER" prefHeight="600.0" prefWidth="960.0" styleClass="backgroundAlt" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.HomeCtrl">
-    <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="482.2386474609375" minWidth="-Infinity" prefWidth="274.068115234375" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="960.0" minWidth="10.0" prefWidth="685.931884765625" />
-    </columnConstraints>
-    <rowConstraints>
-        <RowConstraints maxHeight="600.0" minHeight="-Infinity" prefHeight="65.5340576171875" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="532.5" minHeight="83.66827392578125" prefHeight="500.793212890625" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="374.78729248046875" minHeight="0.0" prefHeight="31.706787109375" vgrow="SOMETIMES" />
-    </rowConstraints>
-    <children>
-      <Label fx:id="homeTitle" alignment="CENTER" prefHeight="29.0" prefWidth="550.0" styleClass="titleFormat" text="Hospital Service Application" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
-         <font>
-            <Font size="18.0" />
-         </font></Label>
-      <GridPane fx:id="menuGrid" GridPane.rowSpan="2">
+<GridPane prefHeight="600.0" prefWidth="960.0" styleClass="background" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.DataViewCtrl">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="378.40391540527344" minWidth="10.0" prefWidth="283.6412048339844" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="778.1488342285156" minWidth="1.85113525390625" prefWidth="18.858795166015625" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="778.1488342285156" minWidth="10.0" prefWidth="310.53057861328125" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="778.1488342285156" minWidth="10.0" prefWidth="340.133544921875" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="778.1488342285156" minWidth="10.0" prefWidth="23.866455078125" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="580.319091796875" minHeight="10.0" prefHeight="122.05036926269531" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="580.319091796875" minHeight="10.0" prefHeight="88.04071044921875" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="580.319091796875" minHeight="10.0" prefHeight="386.95928955078125" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="290.0052185058594" minHeight="10.0" prefHeight="47.380126953125" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+       <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="524.0" text="Data View" textFill="WHITE" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+           <font>
+               <Font name="System Bold" size="32.0" />
+           </font>
+       </Label>
+       <JFXTreeTableView fx:id="table" prefHeight="146.0" prefWidth="709.0" showRoot="false" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+       <JFXButton fx:id="addDataButton" alignment="CENTER" contentDisplay="CENTER" onAction="#addData" text="Add Data" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+      <JFXButton fx:id="deleteSelectedButton" alignment="CENTER" contentDisplay="CENTER" onAction="#deleteSelected" text="Delete Selected" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+      <GridPane fx:id="menuGrid" GridPane.rowSpan="4">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
          </columnConstraints>
@@ -37,13 +46,13 @@
          </rowConstraints>
          <children>
             <GridPane>
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
                <children>
                   <JFXHamburger fx:id="hamburger" prefHeight="76.0" prefWidth="139.0" stylesheets="@../css/styleSheet.css" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
                   <JFXButton fx:id="backButton" onAction="#goToHome" stylesheets="@../css/styleSheet.css" text="Back" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
@@ -89,7 +98,7 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <JFXButton fx:id="viewLocationsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToLocationData" prefHeight="60.0" prefWidth="1000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Locations" textAlignment="CENTER" textFill="WHITE">
+                        <JFXButton fx:id="viewLocationsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToLocationData" prefHeight="60.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Locations" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -149,5 +158,5 @@
             </JFXDrawer>
          </children>
       </GridPane>
-    </children>
+   </children>
 </GridPane>

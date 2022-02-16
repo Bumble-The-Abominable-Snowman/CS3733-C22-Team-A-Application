@@ -1,10 +1,21 @@
 package edu.wpi.cs3733.c22.teamA.Adb;
 
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
+import java.text.ParseException;
 
 public class Adb {
 
   public static String pathToDBA = "";
+
+  public static boolean usingEmbedded = true;
 
   public static void initialConnection(String arg) {
 
@@ -13,6 +24,8 @@ public class Adb {
     System.out.println("----- Apache Derby Connection Testing -----");
     switch (arg) {
       case "EmbeddedDriver":
+        usingEmbedded = true;
+
         pathToDBA = "src/main/resources/edu/wpi/cs3733/c22/teamA/db/HospitalDBA";
 
         try {
@@ -27,6 +40,7 @@ public class Adb {
         }
 
       case "ClientDriver":
+        usingEmbedded = false;
         pathToDBA = "//localhost:1527/HospitalDBA";
 
         try {
@@ -53,12 +67,14 @@ public class Adb {
         // for better
         // recognition.
         isInitialized = true;
+        System.out.println("DB already exist");
 
       } catch (SQLException e) {
         Connection c =
             DriverManager.getConnection(String.format("jdbc:derby:%s;create=true", pathToDBA));
         turnOnBuiltInUsers(c);
         c.close();
+        System.out.println("DB initialized");
         System.out.println("Closed connection");
 
         isInitialized = false;
@@ -142,7 +158,7 @@ public class Adb {
               + "currentLocation varchar(25), "
               + "isAvailable varchar(25), "
               + "PRIMARY KEY (equipmentID),"
-              + "FOREIGN KEY (currentLocation) REFERENCES TowerLocations(nodeID))");
+              + "FOREIGN KEY (currentLocation) REFERENCES TowerLocations(nodeID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table MedicalEquipment already exist");
@@ -166,10 +182,10 @@ public class Adb {
               + "requestPriority varchar(25), "
               + "comments varchar(255), "
               + "PRIMARY KEY (requestID),"
-              + "FOREIGN KEY (startLocation) REFERENCES TowerLocations(nodeID),"
-              + "FOREIGN KEY (endLocation) REFERENCES TowerLocations(nodeID),"
-              + "FOREIGN KEY (employeeRequested) REFERENCES Employee(employeeID),"
-              + "FOREIGN KEY (employeeAssigned) REFERENCES Employee(employeeID))");
+              + "FOREIGN KEY (startLocation) REFERENCES TowerLocations(nodeID) ON DELETE CASCADE,"
+              + "FOREIGN KEY (endLocation) REFERENCES TowerLocations(nodeID) ON DELETE CASCADE,"
+              + "FOREIGN KEY (employeeRequested) REFERENCES Employee(employeeID) ON DELETE CASCADE,"
+              + "FOREIGN KEY (employeeAssigned) REFERENCES Employee(employeeID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table ServiceRequestDerbyImpl already exist");
@@ -186,7 +202,7 @@ public class Adb {
           "CREATE TABLE MedicalEquipmentServiceRequest(requestID varchar(25), "
               + "equipmentID varchar(25), "
               + "PRIMARY KEY (requestID), "
-              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table MedicalEquipmentServiceRequest already exist");
@@ -206,7 +222,7 @@ public class Adb {
               + "beverage varchar(50), "
               + "dessert varchar(50), "
               + "PRIMARY KEY (requestID), "
-              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table FoodDeliveryServiceRequest already exist");
@@ -223,7 +239,7 @@ public class Adb {
           "CREATE TABLE LanguageServiceRequest(requestID varchar(25), "
               + "language varchar(25), "
               + "PRIMARY KEY (requestID), "
-              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table languageservicerequest already exist");
@@ -240,7 +256,7 @@ public class Adb {
           "CREATE TABLE LaundryServiceRequest(requestID varchar(25), "
               + "washMode varchar(25), "
               + "PRIMARY KEY (requestID), "
-              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table laundryservicerequest already exist");
@@ -258,7 +274,7 @@ public class Adb {
           "CREATE TABLE ReligiousServiceRequest(requestID varchar(25), "
               + "religion varchar(25), "
               + "PRIMARY KEY (requestID), "
-              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table ReligiousServiceRequest already exist");
@@ -276,7 +292,7 @@ public class Adb {
           "CREATE TABLE SanitationServiceRequest(requestID varchar(25), "
               + "sanitationType varchar(25), "
               + "PRIMARY KEY (requestID), "
-              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table SanitationServiceRequest already exist");
@@ -295,7 +311,7 @@ public class Adb {
               + "flower varchar(25), "
               + "bouquetType varchar(25), "
               + "PRIMARY KEY (requestID), "
-              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table Floral Delivery Service already exist");
@@ -313,7 +329,7 @@ public class Adb {
           "CREATE TABLE GiftDeliveryServiceRequest(requestID varchar(25), "
               + "giftDescription varchar(25), "
               + "PRIMARY KEY (requestID), "
-              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table GiftDeliveryServiceRequest already exist");
@@ -328,7 +344,9 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-          "CREATE TABLE MaintenanceServiceRequest(requestID varchar(25), PRIMARY KEY (requestID), FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+          "CREATE TABLE MaintenanceServiceRequest(requestID varchar(25), "
+              + "PRIMARY KEY (requestID), "
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table MaintenanceServiceRequest already exist");
@@ -343,7 +361,10 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-          "CREATE TABLE MedicineDeliveryServiceRequest(requestID varchar(25), medicineChoice varchar(25), PRIMARY KEY (requestID), FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+          "CREATE TABLE MedicineDeliveryServiceRequest(requestID varchar(25), "
+              + "medicineChoice varchar(25), "
+              + "PRIMARY KEY (requestID), "
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table MedicineDeliveryServiceRequest already exist");
@@ -358,7 +379,9 @@ public class Adb {
       Statement addTable = connection.createStatement();
 
       addTable.execute(
-          "CREATE TABLE SecurityServiceRequest(requestID varchar(25), PRIMARY KEY (requestID), FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID))");
+          "CREATE TABLE SecurityServiceRequest(requestID varchar(25), "
+              + "PRIMARY KEY (requestID), "
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table SecurityServiceRequest already exist");
@@ -450,5 +473,73 @@ public class Adb {
     // ourselves into a corner.
     s.executeUpdate(setProperty + propertiesOnly + ", 'false')");
     s.close();
+  }
+
+  public static void exportAllToCSV(String folderName)
+      throws IOException, SQLException, ParseException, InvocationTargetException,
+          IllegalAccessException {
+    String csvBasePath = "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/";
+    String dirPath = csvBasePath + folderName;
+    File newFolder = new File(dirPath);
+
+    // Creating the directory
+    boolean b = newFolder.mkdirs();
+    if (b) {
+      System.out.println("Directory created successfully");
+    } else {
+      System.out.println("Sorry couldnt create specified directory");
+    }
+
+    EmployeeDerbyImpl.exportToCSV("", dirPath + "/Employee.csv");
+
+    LocationDerbyImpl.exportToCSV("", dirPath + "/TowerLocations.csv");
+
+    EquipmentDerbyImpl.exportToCSV("", dirPath + "/MedicalEquipment.csv");
+
+    // Service Requests
+    ServiceRequestDerbyImpl<EquipmentSR> equipmentSRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new EquipmentSR());
+    equipmentSRServiceRequestDerby.exportToCSV(dirPath + "/MedicalEquipmentServiceRequest.csv");
+
+    ServiceRequestDerbyImpl<FloralDeliverySR> floralDeliverySRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new FloralDeliverySR());
+    floralDeliverySRServiceRequestDerby.exportToCSV(dirPath + "/FloralDeliveryServiceRequest.csv");
+
+    ServiceRequestDerbyImpl<FoodDeliverySR> foodDeliverySRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new FoodDeliverySR());
+    foodDeliverySRServiceRequestDerby.exportToCSV(dirPath + "/FoodDeliveryServiceRequest.csv");
+
+    ServiceRequestDerbyImpl<GiftDeliverySR> giftDeliverySRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new GiftDeliverySR());
+    giftDeliverySRServiceRequestDerby.exportToCSV(dirPath + "/GiftDeliveryServiceRequest.csv");
+
+    ServiceRequestDerbyImpl<LanguageSR> languageSRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new LanguageSR());
+    languageSRServiceRequestDerby.exportToCSV(dirPath + "/LanguageServiceRequest.csv");
+
+    ServiceRequestDerbyImpl<LaundrySR> laundrySRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new LaundrySR());
+    laundrySRServiceRequestDerby.exportToCSV(dirPath + "/LaundryServiceRequest.csv");
+
+    ServiceRequestDerbyImpl<MaintenanceSR> maintenanceSRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new MaintenanceSR());
+    maintenanceSRServiceRequestDerby.exportToCSV(dirPath + "/MaintenanceServiceRequest.csv");
+
+    ServiceRequestDerbyImpl<MedicineDeliverySR> medicineDeliverySRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new MedicineDeliverySR());
+    medicineDeliverySRServiceRequestDerby.exportToCSV(
+        dirPath + "/MedicineDeliveryServiceRequest.csv");
+
+    ServiceRequestDerbyImpl<ReligiousSR> religiousSRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new ReligiousSR());
+    religiousSRServiceRequestDerby.exportToCSV(dirPath + "/ReligiousServiceRequest.csv");
+
+    ServiceRequestDerbyImpl<SanitationSR> sanitationSRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new SanitationSR());
+    sanitationSRServiceRequestDerby.exportToCSV(dirPath + "/SanitationServiceRequest.csv");
+
+    ServiceRequestDerbyImpl<SecuritySR> securitySRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new SecuritySR());
+    securitySRServiceRequestDerby.exportToCSV(dirPath + "/SecurityServiceRequest.csv");
   }
 }

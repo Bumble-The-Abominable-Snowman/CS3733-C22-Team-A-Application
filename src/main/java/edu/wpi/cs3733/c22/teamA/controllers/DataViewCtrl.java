@@ -1,4 +1,4 @@
-package edu.wpi.cs3733.c22.teamA.controllers.dataview;
+package edu.wpi.cs3733.c22.teamA.controllers;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
@@ -10,25 +10,25 @@ import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
-import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
-import edu.wpi.cs3733.c22.teamA.controllers.HomeCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.control.*;
@@ -40,12 +40,11 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Popup;
-import lombok.SneakyThrows;
 
-public class DataViewController implements Initializable {
+public class DataViewCtrl extends MasterCtrl {
 
   @FXML
-  public void deleteSelected(ActionEvent actionEvent)
+  public void deleteSelected()
       throws SQLException, InvocationTargetException, IllegalAccessException {
     System.out.println(table.getSelectionModel().getSelectedItem().getValue().sr);
 
@@ -79,6 +78,9 @@ public class DataViewController implements Initializable {
     }
   }
 
+  @FXML
+  public void addData() {}
+
   static class RecursiveObj extends RecursiveTreeObject<RecursiveObj> {
     public SR sr;
     public Location locStart;
@@ -90,9 +92,11 @@ public class DataViewController implements Initializable {
     public Employee employee;
   }
 
-  @FXML JFXButton backButton;
   @FXML Label titleLabel;
   @FXML JFXTreeTableView<RecursiveObj> table;
+
+  @FXML JFXButton addDataButton;
+  @FXML JFXButton deleteSelectedButton;
 
   boolean fillerYes = true;
 
@@ -139,21 +143,16 @@ public class DataViewController implements Initializable {
   MenuItem viewDetails = new MenuItem("View Details");
   MenuItem modify = new MenuItem("Modify");
 
-  private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
+  public void initialize() throws SQLException, InvocationTargetException, IllegalAccessException {
 
-  @SneakyThrows
-  @Override
-  public void initialize(URL url, ResourceBundle rb) {
-    double backTextSize = backButton.getFont().getSize();
     double titleTextSize = titleLabel.getFont().getSize();
-    // double tableTextSize = table.getFont().getSize();
+
+    configure();
 
     App.getStage()
         .widthProperty()
         .addListener(
             (obs, oldVal, newVal) -> {
-              backButton.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * backTextSize) + "pt;");
               titleLabel.setStyle(
                   "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * titleTextSize) + "pt;");
             });

@@ -7,7 +7,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
-import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
+import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
 import java.io.IOException;
 import javafx.fxml.FXML;
@@ -15,37 +15,28 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-public class SaveBackupCtrl {
-  @FXML private JFXButton backButton;
-  @FXML private JFXButton homeButton;
-  @FXML private JFXButton exportToBackupButton;
+public class SaveBackupCtrl extends MasterCtrl {
+  @FXML private JFXButton saveBackupButton;
   @FXML public TextField fileName;
   @FXML public Text exportFileText;
   @FXML private JFXComboBox<String> TypeCSV;
 
-  private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
-
   @FXML
   public void initialize() {
 
-    double backTextSize = backButton.getFont().getSize();
-    double homeTextSize = homeButton.getFont().getSize();
-    double exportToBackupTextSize = exportToBackupButton.getFont().getSize();
+    configure();
+
+    double saveBackupTextSize = saveBackupButton.getFont().getSize();
     double fileNameTextSize = fileName.getFont().getSize();
     double exportFileTextSize = exportFileText.getFont().getSize();
-    // double TypeCSVTextSize = TypeCSV.getFont().getSize();
 
     App.getStage()
         .widthProperty()
         .addListener(
             (obs, oldVal, newVal) -> {
-              backButton.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * backTextSize) + "pt;");
-              homeButton.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * homeTextSize) + "pt;");
-              exportToBackupButton.setStyle(
+              saveBackupButton.setStyle(
                   "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * exportToBackupTextSize)
+                      + ((App.getStage().getWidth() / 1000) * saveBackupTextSize)
                       + "pt;");
               fileName.setStyle(
                   "-fx-font-size: "
@@ -76,16 +67,7 @@ public class SaveBackupCtrl {
     TypeCSV.setValue("CSV Type");
   }
 
-  public void returnToSettingsScene() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SETTINGS);
-  }
-
-  @FXML
-  private void goToHomeScene() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
-  }
-
-  public void exportToBackup() throws IOException {
+  public void saveBackup() throws IOException {
     String input = fileName.getCharacters().toString();
     System.out.println(input.length());
     if (!TypeCSV.getSelectionModel().getSelectedItem().equals("CSV Type") && input.length() > 0) {

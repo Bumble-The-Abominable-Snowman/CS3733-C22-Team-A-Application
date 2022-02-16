@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -11,23 +14,110 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import net.kurobako.gesturefx.GesturePane?>
 
-<GridPane alignment="CENTER" prefHeight="600.0" prefWidth="960.0" styleClass="backgroundAlt" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.HomeCtrl">
-    <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="482.2386474609375" minWidth="-Infinity" prefWidth="274.068115234375" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="960.0" minWidth="10.0" prefWidth="685.931884765625" />
-    </columnConstraints>
-    <rowConstraints>
-        <RowConstraints maxHeight="600.0" minHeight="-Infinity" prefHeight="65.5340576171875" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="532.5" minHeight="83.66827392578125" prefHeight="500.793212890625" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="374.78729248046875" minHeight="0.0" prefHeight="31.706787109375" vgrow="SOMETIMES" />
-    </rowConstraints>
-    <children>
-      <Label fx:id="homeTitle" alignment="CENTER" prefHeight="29.0" prefWidth="550.0" styleClass="titleFormat" text="Hospital Service Application" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
-         <font>
-            <Font size="18.0" />
-         </font></Label>
-      <GridPane fx:id="menuGrid" GridPane.rowSpan="2">
+<GridPane prefHeight="600.0" prefWidth="960.0" styleClass="background" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.MapCtrl">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="113.90144348144531" minWidth="10.0" prefWidth="19.57808494567871" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="218.4219150543213" minWidth="10.0" prefWidth="218.4219150543213" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="210.0" minWidth="10.0" prefWidth="179.25302124023438" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="210.0" minWidth="10.0" prefWidth="99.40304565429688" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="144.02981567382812" minWidth="0.0" prefWidth="110.59695434570312" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.00665283203125" minWidth="10.0" prefWidth="96.00665283203125" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="244.47119140625" minWidth="10.0" prefWidth="167.49334716796875" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="157.3587646484375" minWidth="10.0" prefWidth="40.52880859375" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints maxHeight="1035.0" minHeight="23.112960815429688" prefHeight="47.39423942565918" />
+      <RowConstraints maxHeight="1035.0" minHeight="23.112960815429688" prefHeight="47.39423942565918" />
+      <RowConstraints maxHeight="1035.0" minHeight="0.0" prefHeight="148.60576057434082" />
+      <RowConstraints maxHeight="1035.0" minHeight="25.740341186523438" prefHeight="25.740341186523438" />
+      <RowConstraints maxHeight="1035.0" minHeight="67.63458251953125" prefHeight="140.01495361328125" />
+      <RowConstraints maxHeight="1035.0" minHeight="20.993896484375" prefHeight="48.451263427734375" />
+      <RowConstraints maxHeight="200.006103515625" minHeight="0.0" prefHeight="85.21871948242188" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="181.13287353515625" minHeight="10.0" prefHeight="38.908660888671875" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="181.13287353515625" minHeight="10.0" prefHeight="70.70428466796875" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="181.13287353515625" minHeight="10.0" prefHeight="48.29571533203125" vgrow="SOMETIMES" />
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <VBox fx:id="inputVBox" prefHeight="655.0" prefWidth="160.0" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="6" GridPane.valignment="TOP">
+         <children>
+            <Label text="NodeID" />
+            <JFXTextArea fx:id="nodeIDText" prefHeight="0.0" prefWidth="398.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextArea>
+            <Label text="XPOS" />
+            <JFXTextArea prefHeight="0.0" prefWidth="398.0" fx:id="xPosText">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextArea>
+            <Label text="YPOS" />
+            <JFXTextArea fx:id="yPosText" prefHeight="11.0" prefWidth="398.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextArea>
+            <Label text="FLOOR" />
+            <JFXTextArea fx:id="floorText" prefHeight="5.0" prefWidth="398.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextArea>
+            <Label text="BUILDING" />
+            <JFXTextArea fx:id="towerText" prefHeight="0.0" prefWidth="398.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextArea>
+            <Label text="TYPE" />
+            <JFXTextArea fx:id="typeText" prefHeight="0.0" prefWidth="398.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextArea>
+            <Label text="LONGNAME" />
+            <JFXTextArea fx:id="longnameText" prefHeight="4.0" prefWidth="398.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextArea>
+            <Label text="SHORTNAME" />
+            <JFXTextArea fx:id="shortnameText" prefHeight="1.0" prefWidth="398.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextArea>
+            <JFXButton fx:id="editButton" onAction="#editLocation" prefHeight="25.0" prefWidth="416.0" text="Edit" />
+            <JFXButton fx:id="clearButton" onAction="#clearSubmission" prefHeight="25.0" prefWidth="416.0" text="Clear" />
+            <JFXButton fx:id="saveButton" onAction="#saveChanges" prefHeight="25.0" prefWidth="416.0" text="Save" />
+            <JFXButton fx:id="deleteButton" onAction="#deleteLocation" prefHeight="25.0" prefWidth="399.0" text="Delete" />
+         </children>
+      </VBox>
+      <JFXButton fx:id="newLocButton" alignment="CENTER" contentDisplay="CENTER" onAction="#newLocationPressed" prefHeight="33.0" prefWidth="124.0" text="New Location" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+      <JFXComboBox fx:id="floorSelectionComboBox" prefHeight="26.0" prefWidth="106.0" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+      <JFXComboBox fx:id="searchComboBox" prefHeight="26.0" prefWidth="167.0" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <JFXComboBox fx:id="pfToComboBox" prefHeight="26.0" prefWidth="97.0" promptText="To:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="BOTTOM" />
+      <JFXComboBox fx:id="pfFromComboBox" prefHeight="26.0" prefWidth="95.0" promptText="From:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="TOP" />
+      <JFXButton onAction="#findPath" prefHeight="33.0" prefWidth="104.0" text=" Find Path" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="TOP" />
+      <JFXButton onAction="#clearPath" text="Clear Path" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
+      <VBox prefHeight="76.0" prefWidth="219.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <children>
+            <JFXCheckBox fx:id="dragCheckBox" alignment="CENTER" prefHeight="22.0" prefWidth="176.0" text="Toggle Drag/Drop Locations" wrapText="true" />
+            <JFXCheckBox fx:id="serviceRequestCheckBox" alignment="CENTER" prefHeight="22.0" prefWidth="75.0" text="Toggle Service Request View" wrapText="true" />
+            <JFXCheckBox fx:id="locationCheckBox" text="Toggle Location View" />
+            <JFXCheckBox fx:id="showTextCheckBox" alignment="CENTER" prefHeight="22.0" prefWidth="82.0" text="Toggle Text" wrapText="true" />
+            <JFXCheckBox fx:id="equipmentCheckBox" alignment="CENTER" prefHeight="22.0" prefWidth="75.0" text="Toggle Equipment View" wrapText="true" />
+         </children>
+      </VBox>
+      <GesturePane fx:id="gesturePane" fitMode="UNBOUNDED" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.rowSpan="5" GridPane.valignment="TOP" />
+      <JFXButton fx:id="viewTableButton" onAction="#goToLocationTable" prefHeight="33.0" prefWidth="127.0" text="View Table" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
+      <GridPane fx:id="menuGrid" GridPane.columnSpan="2" GridPane.rowSpan="10">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
          </columnConstraints>
@@ -37,13 +127,13 @@
          </rowConstraints>
          <children>
             <GridPane>
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
                <children>
                   <JFXHamburger fx:id="hamburger" prefHeight="76.0" prefWidth="139.0" stylesheets="@../css/styleSheet.css" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
                   <JFXButton fx:id="backButton" onAction="#goToHome" stylesheets="@../css/styleSheet.css" text="Back" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
@@ -149,5 +239,5 @@
             </JFXDrawer>
          </children>
       </GridPane>
-    </children>
+   </children>
 </GridPane>

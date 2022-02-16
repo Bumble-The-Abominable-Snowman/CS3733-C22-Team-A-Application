@@ -7,7 +7,11 @@ package edu.wpi.cs3733.c22.teamA;
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.entities.Employee;
+import edu.wpi.cs3733.c22.teamA.entities.Equipment;
+import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -29,6 +33,9 @@ public class DefaultTest {
         "Location", "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
     EmployeeDerbyImpl.inputFromCSV(
         "Employee", "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.CSV");
+    EquipmentDerbyImpl.inputFromCSV(
+        "MedicalEquipment",
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipment.csv");
 
     System.out.println("---------------");
     ServiceRequestDerbyImpl<EquipmentSR> equipmentSRServiceRequestDerby =
@@ -84,17 +91,82 @@ public class DefaultTest {
 
     // Testing if we can reload a file we wrote
     equipmentSRServiceRequestDerby.populateFromCSV(filepath);
+
+    // Testing export all
+    Adb.exportAllToCSV("test");
+
+    String testAllPath = "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/test/";
+
+    // Testing if we can populate from the exportAll files
+    EmployeeDerbyImpl.inputFromCSV("Employee", testAllPath + "Employee.csv");
+    System.out.println("Printing out all Employees");
+    EmployeeDerbyImpl employeeDerby = new EmployeeDerbyImpl();
+    for (Employee emp : employeeDerby.getEmployeeList()) {
+      System.out.println("EmpolyeeID: " + emp.getEmployeeID());
+    }
+
+    ServiceRequestDerbyImpl<EquipmentSR> equipSRDerby =
+        new ServiceRequestDerbyImpl<>(new EquipmentSR());
+    equipSRDerby.populateFromCSV(testAllPath + "MedicalEquipmentServiceRequest.csv");
+    System.out.println("Printing out all Equipment Service Requests");
+    for (EquipmentSR thisEquip : equipSRDerby.getServiceRequestList()) {
+      System.out.println("EquipmentID: " + thisEquip.getEquipmentID());
+    }
+
+    LocationDerbyImpl.inputFromCSV("", testAllPath + "TowerLocations.csv");
+    LocationDerbyImpl locationDerby = new LocationDerbyImpl();
+    List<Location> locList = locationDerby.getNodeList();
+    System.out.println("Printing Locations");
+    for (int x = 0; x < 5; x++) {
+      System.out.println("x: " + x + " nodeID: " + locList.get(x).getNodeID());
+    }
+
+    EquipmentDerbyImpl.inputFromCSV("MedicalEquipment", testAllPath + "MedicalEquipment.csv");
+    EquipmentDerbyImpl equipmentDerby = new EquipmentDerbyImpl();
+    List<Equipment> equipmentList = equipmentDerby.getMedicalEquipmentList();
+    System.out.println("printing equipments");
+    for (Equipment equip : equipmentList) {
+      System.out.println("EquipmentID: " + equip.getEquipmentID());
+    }
   }
 
   @Test
   public void testOnAdbConnection() {
+    Adb.initialConnection("EmbeddedDriver");
+  }
+
+  @Test
+  public void testOnImportCSV()
+      throws SQLException, IOException, ParseException, InvocationTargetException,
+          IllegalAccessException {
 
     // test switch between EmbeddedDriver and ClientDriver
     // Client server setup CMD line:
     // java -jar %DERBY_HOME%\lib\derbyrun.jar server start
-    Adb.initialConnection("EmbeddedDriver");
-  }
+    Adb.initialConnection("ClientDriver");
 
+    System.out.println("\nStarting importing from CSV\n");
+
+    LocationDerbyImpl.inputFromCSV(
+        "TowerLocations", "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
+    EmployeeDerbyImpl.inputFromCSV(
+        "Employee", "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.csv");
+    EquipmentDerbyImpl.inputFromCSV(
+        "MedicalEquipment",
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipment.csv");
+
+    System.out.println("\nLocation, Employee and MedicalEquipment inserted\n");
+
+    // "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/"
+    // MedicalEquipmentSR
+    ServiceRequestDerbyImpl<EquipmentSR> equipmentSRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new EquipmentSR());
+
+    System.out.println("\ninserting from csv");
+    equipmentSRServiceRequestDerby.populateFromCSV(
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipmentServiceRequest.csv");
+    System.out.println("\nMedicalEquipmentSR inserted");
+  }
   // Test on Location table (Fixed)
   //    LocationDAO Location = new LocationDerbyImpl();
 
