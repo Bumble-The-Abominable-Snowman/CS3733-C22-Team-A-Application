@@ -208,7 +208,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
         else if (dataIndex == 7) {
           SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
           Date date = originalFormat.parse(data);
-          thisEmployee.setStartDate(date);
+          thisEmployee.setStartDate(date.toString());
         } else System.out.println("Invalid data, I broke::" + data);
         dataIndex++;
       }
