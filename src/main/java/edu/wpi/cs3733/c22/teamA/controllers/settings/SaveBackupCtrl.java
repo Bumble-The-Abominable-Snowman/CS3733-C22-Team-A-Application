@@ -7,7 +7,6 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
-import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
 import java.io.IOException;
@@ -17,7 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class SaveBackupCtrl extends MasterCtrl {
-  @FXML private JFXButton exportToBackupButton;
+  @FXML private JFXButton saveBackupButton;
   @FXML public TextField fileName;
   @FXML public Text exportFileText;
   @FXML private JFXComboBox<String> TypeCSV;
@@ -27,18 +26,17 @@ public class SaveBackupCtrl extends MasterCtrl {
 
     configure();
 
-    double exportToBackupTextSize = exportToBackupButton.getFont().getSize();
+    double saveBackupTextSize = saveBackupButton.getFont().getSize();
     double fileNameTextSize = fileName.getFont().getSize();
     double exportFileTextSize = exportFileText.getFont().getSize();
-    // double TypeCSVTextSize = TypeCSV.getFont().getSize();
 
     App.getStage()
         .widthProperty()
         .addListener(
             (obs, oldVal, newVal) -> {
-              exportToBackupButton.setStyle(
+              saveBackupButton.setStyle(
                   "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * exportToBackupTextSize)
+                      + ((App.getStage().getWidth() / 1000) * saveBackupTextSize)
                       + "pt;");
               fileName.setStyle(
                   "-fx-font-size: "
@@ -69,16 +67,7 @@ public class SaveBackupCtrl extends MasterCtrl {
     TypeCSV.setValue("CSV Type");
   }
 
-  public void returnToSettingsScene() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SETTINGS);
-  }
-
-  @FXML
-  private void goToHomeScene() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
-  }
-
-  public void exportToBackup() throws IOException {
+  public void saveBackup() throws IOException {
     String input = fileName.getCharacters().toString();
     System.out.println(input.length());
     if (!TypeCSV.getSelectionModel().getSelectedItem().equals("CSV Type") && input.length() > 0) {

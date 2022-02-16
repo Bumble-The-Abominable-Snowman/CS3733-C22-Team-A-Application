@@ -1,6 +1,8 @@
 package edu.wpi.cs3733.c22.teamA.controllers.settings;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXToggleButton;
+import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
@@ -8,44 +10,60 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 
 public class SettingsCtrl extends MasterCtrl {
-  @FXML private JFXButton loadFromBackupButton;
-  @FXML private JFXButton exportToBackupButton;
+
+  @FXML private JFXToggleButton toggleClientServerButton;
+  @FXML private JFXButton loadBackupButton;
+  @FXML private JFXButton saveBackupButton;
 
   @FXML
   private void initialize() {
 
     configure();
 
-    double backTextSize = backButton.getFont().getSize();
-    double loadFromBackupTextSize = loadFromBackupButton.getFont().getSize();
-    double exportToBackupTextSize = exportToBackupButton.getFont().getSize();
+    if (Adb.usingEmbedded) {
+      toggleClientServerButton.setSelected(false);
+    } else {
+      toggleClientServerButton.setSelected(true);
+    }
+
+    double loadBackupTextSize = loadBackupButton.getFont().getSize();
+    double saveBackupTextSize = saveBackupButton.getFont().getSize();
 
     App.getStage()
         .widthProperty()
         .addListener(
             (obs, oldVal, newVal) -> {
-              backButton.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * backTextSize) + "pt;");
-              loadFromBackupButton.setStyle(
+              loadBackupButton.setStyle(
                   "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * loadFromBackupTextSize)
+                      + ((App.getStage().getWidth() / 1000) * loadBackupTextSize)
                       + "pt;");
-              exportToBackupButton.setStyle(
+              saveBackupButton.setStyle(
                   "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * exportToBackupTextSize)
+                      + ((App.getStage().getWidth() / 1000) * saveBackupTextSize)
                       + "pt;");
             });
   }
 
-  public void goToHomeScene() throws IOException {
+  public void goToHome() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
   }
 
-  public void loadFromBackup() throws IOException {
+  public void loadBackup() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOAD_BACKUP);
   }
 
-  public void exportToBackup() throws IOException {
+  public void saveBackup() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.SAVE_BACKUP);
+  }
+
+  public void toggleClientServer() {
+    if (toggleClientServerButton.isSelected()) {
+      Adb.initialConnection("ClientDriver");
+      System.out.println("Client Driver");
+    } else {
+      Adb.initialConnection("EmbeddedDriver");
+      System.out.println("Embedded Driver");
+    }
+    // add client server toggle code here
   }
 }

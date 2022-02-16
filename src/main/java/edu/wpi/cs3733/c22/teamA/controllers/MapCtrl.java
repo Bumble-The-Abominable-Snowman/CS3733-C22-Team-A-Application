@@ -32,7 +32,6 @@ import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Dimension2D;
-import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
@@ -51,16 +50,21 @@ import net.kurobako.gesturefx.GesturePane;
 // TODO Change all instances of looping through locations to find related short names & node ids
 // with method in backend once implemented
 public class MapCtrl extends MasterCtrl {
+
+  @FXML private JFXButton newLocButton;
+  @FXML private JFXButton viewTableButton;
+
   @FXML private JFXComboBox pfFromComboBox;
   @FXML private JFXComboBox pfToComboBox;
+
   @FXML private JFXCheckBox locationCheckBox;
   @FXML private JFXCheckBox dragCheckBox;
   @FXML private JFXCheckBox equipmentCheckBox;
   @FXML private JFXCheckBox serviceRequestCheckBox;
   @FXML private JFXCheckBox showTextCheckBox;
+
   @FXML private JFXButton deleteButton;
-  @FXML private ComboBox floorSelectionComboBox;
-  @FXML private AnchorPane anchorPane;
+  @FXML private JFXComboBox floorSelectionComboBox;
 
   @FXML private JFXComboBox searchComboBox = new JFXComboBox();
 
@@ -76,8 +80,6 @@ public class MapCtrl extends MasterCtrl {
   @FXML private JFXButton saveButton = new JFXButton();
   @FXML private JFXButton editButton = new JFXButton();
   @FXML private JFXButton clearButton = new JFXButton();
-
-  @FXML private JFXButton backButton = new JFXButton();
 
   @FXML private VBox inputVBox = new VBox();
   @FXML private ImageView mapImageView = new ImageView();
@@ -107,8 +109,6 @@ public class MapCtrl extends MasterCtrl {
   private HashMap<Button, EquipmentMarker> buttonEquipmentMarker;
   private HashMap<Button, SRMarker> buttonServiceRequestMarker;
 
-  private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
-
   public MapCtrl() {
     locationMarkerShape = new Polygon();
     equipmentMarkerShape = new Polygon();
@@ -131,6 +131,9 @@ public class MapCtrl extends MasterCtrl {
 
   @FXML
   public void initialize() {
+
+    configure();
+
     // Pathfinding Setup
     // Setup Functions
     fillFromDB();
@@ -139,9 +142,6 @@ public class MapCtrl extends MasterCtrl {
     setInitialUIStates();
     setupSearchListener();
     setupFloor("Choose Floor:");
-
-    backButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
 
     floorSelectionComboBox.getItems().removeAll(floorSelectionComboBox.getItems());
     floorSelectionComboBox
@@ -1013,12 +1013,6 @@ public class MapCtrl extends MasterCtrl {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
-  // Return to Home Screen
-  @FXML
-  public void returnToHomeScene() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
-  }
-
   @FXML
   public void returnToSelectServiceScene() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
@@ -1164,7 +1158,7 @@ public class MapCtrl extends MasterCtrl {
     Location prev = path.get(0);
 
     int offsetX = 4;
-    int offsetY = 22;
+    int offsetY = 6;
     for (int i = 1; i < path.size(); i++) {
       Line line =
           new Line(
