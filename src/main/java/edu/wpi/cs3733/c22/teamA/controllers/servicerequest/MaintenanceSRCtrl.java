@@ -1,18 +1,19 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
-import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
+import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.MaintenanceSR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.stream.Collectors;
+import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
@@ -22,6 +23,9 @@ public class MaintenanceSRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
   @FXML private TextArea typeOtherBox;
+
+  List<Employee> employeeList = new ArrayList<>();
+  List<Location> locationList = new ArrayList<>();
 
   @FXML
   private void initialize() {
@@ -66,25 +70,27 @@ public class MaintenanceSRCtrl extends SRCtrl {
             });
 
     // Put locations in temporary location menu
-    toLocationChoice.getSelectionModel().select("Select Location");
-    toLocationChoice
-        .getItems()
-        .addAll(
-            new LocationDerbyImpl()
-                .getNodeList().stream().map(Location::getShortName).collect(Collectors.toList()));
-    toLocationChoice.setVisibleRowCount(5);
+    this.populateEmployeeAndLocationList();
+    this.populateEmployeeComboBox(this.employeeChoice);
+    this.populateLocationComboBox(this.toLocationChoice);
   }
 
   @FXML
   void submitRequest() throws SQLException, InvocationTargetException, IllegalAccessException {
 
+    int employeeIndex = this.employeeChoice.getSelectionModel().getSelectedIndex();
+    Employee employeeSelected = this.employeeList.get(employeeIndex);
+
+    int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
+    Location toLocationSelected = this.locationList.get(locationIndex);
+
     MaintenanceSR maintenanceSR =
         new MaintenanceSR(
             "MaintenanceSRID",
             "N/A",
-            "N/A",
+            toLocationSelected.getNodeID(),
             "001",
-            "002",
+            employeeSelected.getEmployeeID(),
             new Timestamp((new Date()).getTime()),
             SR.Status.BLANK,
             SR.Priority.REGULAR,
