@@ -19,8 +19,8 @@ import edu.wpi.cs3733.c22.teamA.entities.map.EquipmentMarker;
 import edu.wpi.cs3733.c22.teamA.entities.map.LocationMarker;
 import edu.wpi.cs3733.c22.teamA.entities.map.SRMarker;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.*;
@@ -946,11 +946,11 @@ public class MapEditorController {
       resultMap.put(l, new HashSet<>());
     }
 
-    URL path = App.class.getResource("db/CSVs/AllEdgesHand.csv");
-    File file = new File(String.valueOf(path));
+    InputStream path = App.class.getResourceAsStream("db/CSVs/AllEdgesHand.csv");
+    // File file = new File(path);
     //    File file = new
     // File("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/AllEdgesHand.csv");
-    Scanner lineScanner = new Scanner(file);
+    Scanner lineScanner = new Scanner(path);
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
