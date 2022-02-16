@@ -5,7 +5,6 @@ import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
@@ -133,22 +132,19 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
       // pass medical service request object
       EquipmentSR equipmentSR =
           new EquipmentSR(
-              "PlaceHolderID",
-              fromChoice.getSelectionModel().getSelectedItem().toString(),
-              toLocationChoice.getSelectionModel().getSelectedItem().toString(),
-              App.factory.getUsername(),
-              employeeChoice.getSelectionModel().getSelectedItem().toString(),
-              new Timestamp((new Date()).getTime()).toString(),
+              "EquipmentSRID",
+              "N/A",
+              "N/A",
+              "001",
+              "002",
+              new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,
-              "Medical Equipment",
-              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
-              typeChoice.getSelectionModel().getSelectedItem().toString());
+              SR.Priority.REGULAR,
+              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText());
 
       ServiceRequestDerbyImpl<EquipmentSR> serviceRequestDAO =
           new ServiceRequestDerbyImpl<>(new EquipmentSR());
       serviceRequestDAO.enterServiceRequest(equipmentSR);
-
-      this.goToHomeScene();
     }
   }
 }

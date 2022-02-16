@@ -5,13 +5,11 @@ import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SanitationSR;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -70,26 +68,22 @@ public class SanitationSRCtrl extends SRCtrl {
   }
 
   @FXML
-  void submitRequest()
-      throws SQLException, InvocationTargetException, IllegalAccessException, IOException {
+  void submitRequest() throws SQLException, InvocationTargetException, IllegalAccessException {
     // Create request object
     SanitationSR sanitationSR =
         new SanitationSR(
-            "PlaceHolderID",
+            "SanitationSRID",
             "N/A",
-            toLocationChoice.getSelectionModel().getSelectedItem(),
-            App.factory.getUsername(),
-            employeeChoice.getSelectionModel().getSelectedItem().toString(),
-            new Timestamp((new Date()).getTime()).toString(),
+            "N/A",
+            "001",
+            "002",
+            new Timestamp((new Date()).getTime()),
             SR.Status.BLANK,
-            "Sanitation Services",
-            commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
-            typeChoice.getValue());
+            SR.Priority.REGULAR,
+            commentsBox.getText().equals("") ? "N/A" : commentsBox.getText());
 
     ServiceRequestDerbyImpl<SanitationSR> serviceRequestDAO =
         new ServiceRequestDerbyImpl<>(new SanitationSR());
     serviceRequestDAO.enterServiceRequest(sanitationSR);
-
-    this.goToHomeScene();
   }
 }

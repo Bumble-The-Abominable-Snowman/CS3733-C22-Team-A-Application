@@ -203,7 +203,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
 
     String str =
         String.format(
-            "INSERT INTO ServiceRequest(requestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestType, comments) "
+            "INSERT INTO ServiceRequest(requestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestPriority, comments) "
                 + " VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
             sr.getRequestID(),
             sr.getStartLocation(),
@@ -211,8 +211,8 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
             sr.getEmployeeRequested(),
             sr.getEmployeeAssigned(),
             sr.getRequestTime(),
-            sr.getRequestStatus().toString(),
-            sr.getRequestType(),
+            sr.getRequestStatus(),
+            sr.getRequestPriority(),
             sr.getComments());
     insert.execute(str);
 
@@ -356,7 +356,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
     dataScanner = new Scanner(lineScanner.nextLine());
     dataScanner.useDelimiter(",");
     while (dataScanner.hasNext()) {
-      field_list.add(dataScanner.next().toLowerCase(Locale.ROOT).replaceAll("\\s+", ""));
+      field_list.add(dataScanner.next().toLowerCase(Locale.ROOT).strip());
     }
 
     while (lineScanner.hasNextLine()) { // Scan CSV line by line
@@ -365,7 +365,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
       dataScanner.useDelimiter(",");
 
       while (dataScanner.hasNext()) {
-        String data = dataScanner.next();
+        String data = dataScanner.next().strip();
 
         String columnName = field_list.get(dataIndex);
         for (Method method : this.all_sr_set_data_methods) {
@@ -399,7 +399,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
     //
     //    writer.write(
     //            "RequestID, startLocation, endLocation, employeeRequested, employeeAssigned,
-    // requestTime, requestStatus, requestType, comments, equipmentID");
+    // requestTime, requestStatus, requestPriority, comments, equipmentID");
     //    writer.newLine();
     //
     //    // write data
@@ -415,7 +415,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
     //                      thisMESR.getEmployeeAssigned(),
     //                      thisMESR.getRequestTime(),
     //                      thisMESR.getRequestStatus(),
-    //                      thisMESR.getRequestType(),
+    //                      thisMESR.getRequestPriority(),
     //                      thisMESR.getComments(),
     //                      thisMESR.getEquipmentID()));
     //

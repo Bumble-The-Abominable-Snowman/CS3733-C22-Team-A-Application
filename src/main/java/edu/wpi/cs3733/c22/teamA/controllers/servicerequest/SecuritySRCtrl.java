@@ -2,9 +2,15 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.App;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SecuritySR;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -18,28 +24,7 @@ public class SecuritySRCtrl extends SRCtrl {
 
   @FXML
   private void initialize() {
-
     sceneID = SceneSwitcher.SCENES.SANITATION_SR;
-
-    // double typeChoiceTextSize = typeChoice.getFont().getSize();
-    // double toLocationChoiceTextSize = toLocationChoice.getFont().getSize();
-    // double employeeChoiceTextSize = employeeChoice.getFont().getSize();
-    double commentsTextSize = commentsBox.getFont().getSize();
-    double typeOtherTextSize = typeOtherBox.getFont().getSize();
-
-    App.getStage()
-        .widthProperty()
-        .addListener(
-            (obs, oldVal, newVal) -> {
-              commentsBox.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * commentsTextSize)
-                      + "pt;");
-              typeOtherBox.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * typeOtherTextSize)
-                      + "pt;");
-            });
 
     commentsBox.setWrapText(true);
     typeOtherBox.setWrapText(true);
@@ -70,24 +55,21 @@ public class SecuritySRCtrl extends SRCtrl {
   }
 
   @FXML
-  void submitRequest() {
-    // Create request object
-    //    SecuritySR securitySR =
-    //        new SecuritySR(
-    //            "PlaceHolderID",
-    //            "N/A",
-    //            toLocationChoice.getSelectionModel().getSelectedItem(),
-    //            App.factory.getUsername(),
-    //            "employee",
-    //            new Timestamp((new Date()).getTime()).toString(),
-    //            SR.Status.BLANK,
-    //            "Sanitation Services",
-    //            commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
-    //            typeChoice.getValue());
-    //    ServiceRequestDerbyImpl<SecuritySR> serviceRequestDAO =
-    //        new ServiceRequestDerbyImpl<>(new SecuritySR());
-    //    serviceRequestDAO.enterServiceRequest(securitySR);
+  void submitRequest() throws SQLException, InvocationTargetException, IllegalAccessException {
+    SecuritySR securitySR =
+        new SecuritySR(
+            "SecuritySRID",
+            "N/A",
+            "N/A",
+            "001",
+            "002",
+            new Timestamp((new Date()).getTime()),
+            SR.Status.BLANK,
+            SR.Priority.REGULAR,
+            commentsBox.getText().equals("") ? "N/A" : commentsBox.getText());
 
-    // Submit to database
+    ServiceRequestDerbyImpl<SecuritySR> serviceRequestDAO =
+        new ServiceRequestDerbyImpl<>(new SecuritySR());
+    serviceRequestDAO.enterServiceRequest(securitySR);
   }
 }
