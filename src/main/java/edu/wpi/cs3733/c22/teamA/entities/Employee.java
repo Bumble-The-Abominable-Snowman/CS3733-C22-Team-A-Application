@@ -1,6 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.entities;
 
-import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import lombok.Data;
@@ -54,7 +55,9 @@ public class Employee {
     return this.startDate.toString();
   }
 
-  public void setStartDate(String s) {
-    this.startDate = Timestamp.valueOf(s);
+  public void setStartDate(String s) throws ParseException {
+    SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Date date = originalFormat.parse(s);
+    this.startDate = date;
   }
 }
