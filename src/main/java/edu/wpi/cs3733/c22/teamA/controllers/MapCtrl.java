@@ -388,14 +388,23 @@ public class MapCtrl extends MasterCtrl {
             });
   }
 
+  private List<Button> sideView = new ArrayList<>();
+
+  public void hideSideView() {
+    for (Button b : sideView) {
+      b.setVisible(false);
+    }
+  }
+
   // Sets up the side view
   public void showSideView() {
     String[] floorNames = {"Floor 3", "Floor 2", "Floor 1", "L1", "L2"};
-    int initialY = 782;
+    int initialY = 1025;
     for (int i = 0; i < 5; i++) {
-      double buttonX = 93 + mapImageView.getLayoutX();
-      double buttonY = initialY + i * 39 + mapImageView.getLayoutY();
-      Button button = newButton(buttonX, buttonY, 315, 5);
+      double buttonX = 116 + mapImageView.getLayoutX();
+      double buttonY = initialY + i * 50 + mapImageView.getLayoutY();
+      Button button = newButton(buttonX, buttonY, 420, 45);
+      sideView.add(button);
       button.setShape(equipmentMarkerShape);
       String floor = floorNames[i];
       int srCount = 0;
@@ -440,6 +449,7 @@ public class MapCtrl extends MasterCtrl {
       Image image = new Image(String.valueOf(url));
       mapImageView.setImage(image);
       setupGesture();
+      hideSideView();
     } else if (newValue.equals("Floor 2")) {
       floor = "2";
       floorName = "Floor 2";
@@ -447,6 +457,7 @@ public class MapCtrl extends MasterCtrl {
       Image image = new Image(String.valueOf(url));
       mapImageView.setImage(image);
       setupGesture();
+      hideSideView();
     } else if (newValue.equals("Floor 3")) {
       floor = "3";
       floorName = "Floor 3";
@@ -454,6 +465,7 @@ public class MapCtrl extends MasterCtrl {
       Image image = new Image(String.valueOf(url));
       mapImageView.setImage(image);
       setupGesture();
+      hideSideView();
     } else if (newValue.equals("L1")) {
       floor = "L1";
       floorName = "L1";
@@ -461,6 +473,7 @@ public class MapCtrl extends MasterCtrl {
       Image image = new Image(String.valueOf(url));
       mapImageView.setImage(image);
       setupGesture();
+      hideSideView();
     } else {
       floor = "L2";
       floorName = "L2";
@@ -468,6 +481,7 @@ public class MapCtrl extends MasterCtrl {
       Image image = new Image(String.valueOf(url));
       mapImageView.setImage(image);
       setupGesture();
+      hideSideView();
     }
   }
 
@@ -481,7 +495,7 @@ public class MapCtrl extends MasterCtrl {
     gesturePane.addEventFilter(
         AffineEvent.CHANGED,
         event -> {
-          System.out.println(event.getTransformedDimension());
+          //System.out.println(event.getTransformedDimension());
           transformed = event.getTransformedDimension();
         });
     gesturePane.setOnMouseClicked(

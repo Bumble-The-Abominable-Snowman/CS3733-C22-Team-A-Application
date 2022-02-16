@@ -13,12 +13,10 @@ import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
-import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
@@ -82,6 +80,9 @@ public class DataViewCtrl extends MasterCtrl {
     }
   }
 
+  @FXML
+  public void addData() {}
+
   static class RecursiveObj extends RecursiveTreeObject<RecursiveObj> {
     public SR sr;
     public Location locStart;
@@ -93,9 +94,11 @@ public class DataViewCtrl extends MasterCtrl {
     public Employee employee;
   }
 
-  @FXML JFXButton backButton;
   @FXML Label titleLabel;
   @FXML JFXTreeTableView<RecursiveObj> table;
+
+  @FXML JFXButton addDataButton;
+  @FXML JFXButton deleteSelectedButton;
 
   boolean fillerYes = true;
 
@@ -104,7 +107,7 @@ public class DataViewCtrl extends MasterCtrl {
   public static AtomicReference<Popup> popup = new AtomicReference<>(new Popup());
 
   public void initialize() throws SQLException, InvocationTargetException, IllegalAccessException {
-    double backTextSize = backButton.getFont().getSize();
+
     double titleTextSize = titleLabel.getFont().getSize();
 
     configure();
@@ -113,8 +116,6 @@ public class DataViewCtrl extends MasterCtrl {
         .widthProperty()
         .addListener(
             (obs, oldVal, newVal) -> {
-              backButton.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * backTextSize) + "pt;");
               titleLabel.setStyle(
                   "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * titleTextSize) + "pt;");
             });
@@ -574,10 +575,5 @@ public class DataViewCtrl extends MasterCtrl {
         .getColumns()
         .setAll(employeeID, employeeType, firstName, lastName, email, phoneNum, address, startDate);
     table.setRoot(root);
-  }
-
-  @FXML
-  private void returnToHomeScene() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
   }
 }

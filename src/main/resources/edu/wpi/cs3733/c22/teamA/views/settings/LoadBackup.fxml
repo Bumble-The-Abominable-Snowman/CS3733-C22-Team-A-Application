@@ -97,7 +97,7 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <JFXButton fx:id="viewLocationsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToLocationData" prefHeight="60.0" prefWidth="320.0" styleClass="menuButton" stylesheets="@../../css/styleSheet.css" text="View Locations" textAlignment="CENTER" textFill="WHITE">
+                        <JFXButton fx:id="viewLocationsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToLocationData" prefHeight="60.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../../css/styleSheet.css" text="View Locations" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
