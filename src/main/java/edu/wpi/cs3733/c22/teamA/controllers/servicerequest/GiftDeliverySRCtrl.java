@@ -61,7 +61,7 @@ public class GiftDeliverySRCtrl extends SRCtrl {
         new GiftDeliverySR(
             "GiftDeliverySRID",
             "N/A",
-            toLocationChoice.getSelectionModel().getSelectedItem(),
+            "N/A",
             "001",
             "002",
             new Timestamp((new Date()).getTime()),

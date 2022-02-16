@@ -76,7 +76,7 @@ public class FoodDeliverySRCtrl extends SRCtrl {
         new FoodDeliverySR(
             "FoodDeliverySRID",
             "N/A",
-            toLocationChoice.getSelectionModel().getSelectedItem(),
+            "N/A",
             "001",
             "002",
             new Timestamp((new Date()).getTime()),

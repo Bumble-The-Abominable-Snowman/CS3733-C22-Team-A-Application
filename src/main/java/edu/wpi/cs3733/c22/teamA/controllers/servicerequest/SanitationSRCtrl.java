@@ -10,7 +10,6 @@ import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SanitationSR;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -75,7 +74,7 @@ public class SanitationSRCtrl extends SRCtrl {
         new SanitationSR(
             "SanitationSRID",
             "N/A",
-            toLocationChoice.getSelectionModel().getSelectedItem(),
+            "N/A",
             "001",
             "002",
             new Timestamp((new Date()).getTime()),

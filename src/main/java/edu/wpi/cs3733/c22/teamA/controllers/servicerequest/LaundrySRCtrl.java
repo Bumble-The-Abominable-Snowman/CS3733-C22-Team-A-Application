@@ -48,7 +48,7 @@ public class LaundrySRCtrl extends SRCtrl {
           new LaundrySR(
               "LaundrySRID",
               "N/A",
-              toLocationChoice.getSelectionModel().getSelectedItem(),
+              "N/A",
               "001",
               "002",
               new Timestamp((new Date()).getTime()),

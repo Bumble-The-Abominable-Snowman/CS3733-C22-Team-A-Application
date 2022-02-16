@@ -12,9 +12,6 @@ public class FloralDeliverySR extends SR {
 
   private String flower;
   private String bouquetType;
-  private String toLocation;
-  private String requestedEmployee;
-  private String comments;
 
   public FloralDeliverySR() {
     super();

@@ -130,7 +130,7 @@ public class ReligiousSRCtrl extends SRCtrl {
           new ReligiousSR(
               "ReligiousSRID",
               "N/A",
-              toLocationChoice.getSelectionModel().getSelectedItem(),
+              "N/A",
               "001",
               "002",
               new Timestamp((new Date()).getTime()),

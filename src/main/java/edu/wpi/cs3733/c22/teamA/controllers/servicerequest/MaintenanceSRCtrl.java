@@ -61,7 +61,7 @@ public class MaintenanceSRCtrl extends SRCtrl {
         new MaintenanceSR(
             "MaintenanceSRID",
             "N/A",
-            toLocationChoice.getSelectionModel().getSelectedItem(),
+            "N/A",
             "001",
             "002",
             new Timestamp((new Date()).getTime()),
