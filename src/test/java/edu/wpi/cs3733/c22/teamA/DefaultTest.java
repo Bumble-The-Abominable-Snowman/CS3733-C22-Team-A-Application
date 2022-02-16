@@ -132,13 +132,41 @@ public class DefaultTest {
 
   @Test
   public void testOnAdbConnection() {
+    Adb.initialConnection("EmbeddedDriver");
+  }
+
+  @Test
+  public void testOnImportCSV()
+      throws SQLException, IOException, ParseException, InvocationTargetException,
+          IllegalAccessException {
 
     // test switch between EmbeddedDriver and ClientDriver
     // Client server setup CMD line:
     // java -jar %DERBY_HOME%\lib\derbyrun.jar server start
-    Adb.initialConnection("EmbeddedDriver");
-  }
+    Adb.initialConnection("ClientDriver");
 
+    System.out.println("\nStarting importing from CSV\n");
+
+    LocationDerbyImpl.inputFromCSV(
+        "TowerLocations", "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
+    EmployeeDerbyImpl.inputFromCSV(
+        "Employee", "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.csv");
+    EquipmentDerbyImpl.inputFromCSV(
+        "MedicalEquipment",
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipment.csv");
+
+    System.out.println("\nLocation, Employee and MedicalEquipment inserted\n");
+
+    // "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/"
+    // MedicalEquipmentSR
+    ServiceRequestDerbyImpl<EquipmentSR> equipmentSRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new EquipmentSR());
+
+    System.out.println("\ninserting from csv");
+    equipmentSRServiceRequestDerby.populateFromCSV(
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipmentServiceRequest.csv");
+    System.out.println("\nMedicalEquipmentSR inserted");
+  }
   // Test on Location table (Fixed)
   //    LocationDAO Location = new LocationDerbyImpl();
 
