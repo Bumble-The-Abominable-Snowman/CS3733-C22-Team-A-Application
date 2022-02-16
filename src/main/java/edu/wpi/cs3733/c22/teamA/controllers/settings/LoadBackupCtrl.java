@@ -62,6 +62,7 @@ public class LoadBackupCtrl {
         .addAll(
             "TowerLocations",
             "Employee",
+            "MedicalEquipment",
             "MedicalEquipmentServiceRequest",
             "FloralDeliveryServiceRequest",
             "FoodDeliveryServiceRequest",

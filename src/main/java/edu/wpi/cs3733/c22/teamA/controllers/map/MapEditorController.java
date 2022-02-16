@@ -302,10 +302,8 @@ public class MapEditorController {
 
   // Set up searchbar for LOCATIONS ONLY
   // TODO IMPLEMENT CHOICE OF LOCATION, EQUIPMENT, SR SEARCH (another button?)
-  // TODO MAKE IT LIVE UPDATE ON KEYSTROKE
   public void setupSearchListener() {
     searchComboBox.setEditable(true);
-    searchComboBox.setVisibleRowCount(5);
     // set up list of locations to be wrapped
     ObservableList<Location> searchLocationList = FXCollections.observableArrayList();
     searchLocationList.addAll(locations);
@@ -314,8 +312,8 @@ public class MapEditorController {
     FilteredList<Location> filteredLocations = new FilteredList<>(searchLocationList, p -> true);
     // add listener that checks whenever changes are made to JFXText searchText
     searchComboBox
-        .getSelectionModel()
-        .selectedItemProperty()
+        .getEditor()
+        .textProperty()
         .addListener(
             (observable, oldValue, newValue) -> {
               filteredLocations.setPredicate(
@@ -335,12 +333,22 @@ public class MapEditorController {
                             || location.getNodeID().toLowerCase().contains(lowerCaseFilter))
                         && location.getFloor().equals(floor);
                   });
+              // add items to comboBox dropdown
               ArrayList<String> locationNames = new ArrayList<>();
               for (Location l : filteredLocations) {
                 locationNames.add(l.getLongName());
               }
               searchComboBox.getItems().clear();
               searchComboBox.getItems().addAll(locationNames);
+              if (searchComboBox.getItems().size() < 5) {
+                searchComboBox.setVisibleRowCount(searchComboBox.getItems().size());
+              } else {
+                searchComboBox.setVisibleRowCount(5);
+              }
+              // select location if search complete
+              if (searchComboBox.getItems().size() == 1) {
+                existingLocationSelected(filteredLocations.get(0));
+              }
               clearAll();
 
               HashMap<String, LocationMarker> locationIDs = new HashMap<>();
@@ -348,8 +356,17 @@ public class MapEditorController {
               for (Location location : locations) {
                 if (filteredLocations.contains(location)) {
                   LocationMarker locationMarker = newDraggableLocation(location);
-                  locationMarker.draw(anchorPane);
+                  locationMarker.draw(miniAnchorPane);
                   locationIDs.put(location.getNodeID(), locationMarker);
+                }
+              }
+              // Loops through every medical equipment & draws them if they're on this floor
+              for (Equipment equipment : equipments) {
+                if (locationIDs.containsKey(equipment.getCurrentLocation())) {
+                  EquipmentMarker equipmentMarker =
+                      newDraggableEquipment(
+                          equipment, locationIDs.get(equipment.getCurrentLocation()));
+                  equipmentMarker.draw(miniAnchorPane);
                 }
               }
             });
@@ -558,8 +575,12 @@ public class MapEditorController {
         event -> {
           // highlight(button, selectedButton);
           // selectedButton = button;
-          existingLocationSelected(buttonLocationMarker.get(button).getLocation());
-          currentID = buttonLocationMarker.get(button).getLocation().getNodeID();
+          try {
+            existingLocationSelected(buttonLocationMarker.get(button).getLocation());
+            currentID = buttonLocationMarker.get(button).getLocation().getNodeID();
+          } catch (Exception e) {
+            System.out.println("This isn't a location :)");
+          }
         });
     button.setOnMousePressed(
         mouseEvent -> {
@@ -582,7 +603,6 @@ public class MapEditorController {
           saveButton.setDisable(true);
           clearButton.setDisable(true);
         });
-    button.setOnMouseReleased(mouseEvent -> button.setCursor(Cursor.HAND));
     button.setOnMouseDragged(
         mouseEvent -> {
           if (dragCheckBox.isSelected()) {
@@ -594,7 +614,23 @@ public class MapEditorController {
                 (mouseEvent.getSceneY() - dragDelta.mouseY)
                         / (transformed.getHeight() / miniAnchorPane.getHeight())
                     + dragDelta.buttonY);
-            System.out.println(transformed.getHeight() + " " + miniAnchorPane.getHeight());
+
+            // TODO make sure math on this is right
+            if (markerType == 1) {
+              // standard circle radius around medical equipment markers, 30 is placeholder
+              double radius = Math.sqrt(2 * Math.pow(10, 2));
+              for (Location l : locations) {
+                // check hypotenuse between this equipment and every location on floor
+                double radiusCheck =
+                    Math.sqrt(
+                        Math.pow(l.getXCoord() - button.getLayoutX(), 2)
+                            + (Math.pow(l.getYCoord() - button.getLayoutY(), 2)));
+                if (l.getFloor().equals(floor) && (radius > radiusCheck)) {
+                  button.setLayoutX(l.getXCoord());
+                  button.setLayoutY(l.getYCoord());
+                }
+              }
+            }
 
             xPosText.setText(String.valueOf(button.getLayoutX() - mapImageView.getLayoutX() + 8));
             yPosText.setText(String.valueOf(button.getLayoutY() - mapImageView.getLayoutY() + 24));
@@ -619,6 +655,38 @@ public class MapEditorController {
           }
         });
     button.setOnMouseEntered(mouseEvent -> button.setCursor(Cursor.HAND));
+    button.setOnMouseReleased(
+        mouseEvent -> {
+          button.setCursor(Cursor.HAND);
+          if (markerType == 1) {
+            boolean isSnapped = false;
+            Location nearestLocation = locations.get(0);
+            double radiusOfNearest = Integer.MAX_VALUE;
+            for (Location l : locations) {
+              if (l.getFloor().equals(floor)) {
+                double radiusCheck =
+                    Math.sqrt(
+                        Math.pow(l.getXCoord() - button.getLayoutX(), 2)
+                            + (Math.pow(l.getYCoord() - button.getLayoutY(), 2)));
+                // update nearest location
+                if (radiusCheck < radiusOfNearest) {
+                  radiusOfNearest = radiusCheck;
+                  nearestLocation = l;
+                }
+                // when it finds the location already snapped to, do this
+                if (button.getLayoutX() == l.getXCoord() && button.getLayoutY() == l.getYCoord()) {
+                  nearestLocation = l;
+                  isSnapped = true;
+                  break;
+                }
+              }
+            }
+            if (!isSnapped) {
+              button.setLayoutX(nearestLocation.getXCoord());
+              button.setLayoutY(nearestLocation.getYCoord());
+            }
+          }
+        });
   }
 
   // Clears all Buttons and Labels from screen
@@ -878,7 +946,10 @@ public class MapEditorController {
       resultMap.put(l, new HashSet<>());
     }
 
-    File file = new File("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/AllEdgesHand.csv");
+    URL path = App.class.getResource("db/CSVs/AllEdgesHand.csv");
+    File file = new File(String.valueOf(path));
+    //    File file = new
+    // File("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/AllEdgesHand.csv");
     Scanner lineScanner = new Scanner(file);
     Scanner dataScanner;
     int dataIndex = 0;
