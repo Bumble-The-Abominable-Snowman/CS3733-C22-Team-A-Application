@@ -566,13 +566,12 @@ public class MapEditorController {
                         / (transformed.getHeight() / miniAnchorPane.getHeight())
                     + dragDelta.buttonY);
 
-            // TODO check new x and new y. (may have to check cursor x/y not equipment)
-            // compare to every locations x and y.
-            // if the locations are within certain bound (30?)
-            // snap medical equipment layout to location.
+            // TODO make sure math on this is right
             if (markerType == 1) {
+              // standard circle radius around medical equipment markers, 30 is placeholder
               double radius = Math.sqrt(2 * Math.pow(30, 2));
               for (Location l : locations) {
+                // check hypotenuse between this equipment and every location on floor
                 double radiusCheck =
                     Math.sqrt(
                         Math.pow(l.getXCoord() - button.getLayoutX(), 2)
