@@ -529,8 +529,12 @@ public class MapEditorController {
         event -> {
           // highlight(button, selectedButton);
           // selectedButton = button;
-          existingLocationSelected(buttonLocationMarker.get(button).getLocation());
-          currentID = buttonLocationMarker.get(button).getLocation().getNodeID();
+          try {
+            existingLocationSelected(buttonLocationMarker.get(button).getLocation());
+            currentID = buttonLocationMarker.get(button).getLocation().getNodeID();
+          } catch (Exception e) {
+            System.out.println("This isn't a location :)");
+          }
         });
     button.setOnMousePressed(
         mouseEvent -> {
@@ -553,7 +557,6 @@ public class MapEditorController {
           saveButton.setDisable(true);
           clearButton.setDisable(true);
         });
-    button.setOnMouseReleased(mouseEvent -> button.setCursor(Cursor.HAND));
     button.setOnMouseDragged(
         mouseEvent -> {
           if (dragCheckBox.isSelected()) {
@@ -569,7 +572,7 @@ public class MapEditorController {
             // TODO make sure math on this is right
             if (markerType == 1) {
               // standard circle radius around medical equipment markers, 30 is placeholder
-              double radius = Math.sqrt(2 * Math.pow(30, 2));
+              double radius = Math.sqrt(2 * Math.pow(10, 2));
               for (Location l : locations) {
                 // check hypotenuse between this equipment and every location on floor
                 double radiusCheck =
@@ -582,8 +585,6 @@ public class MapEditorController {
                 }
               }
             }
-
-            System.out.println(transformed.getHeight() + " " + miniAnchorPane.getHeight());
 
             xPosText.setText(String.valueOf(button.getLayoutX() - mapImageView.getLayoutX() + 8));
             yPosText.setText(String.valueOf(button.getLayoutY() - mapImageView.getLayoutY() + 24));
@@ -608,6 +609,35 @@ public class MapEditorController {
           }
         });
     button.setOnMouseEntered(mouseEvent -> button.setCursor(Cursor.HAND));
+    button.setOnMouseReleased(
+        mouseEvent -> {
+          button.setCursor(Cursor.HAND);
+          if (markerType == 1) {
+            boolean isSnapped = false;
+            Location nearestLocation = locations.get(0);
+            for (Location l : locations) {
+              if (l.getFloor().equals(floor)) {
+                // update nearest location
+                if (Math.abs(l.getXCoord() - button.getLayoutX())
+                        < Math.abs(nearestLocation.getXCoord() - button.getLayoutX())
+                    && Math.abs(l.getYCoord() - button.getLayoutY())
+                        < Math.abs(nearestLocation.getYCoord() - button.getLayoutY())) {
+                  nearestLocation = l;
+                }
+                // if already snapped, do this
+                if (button.getLayoutX() == l.getXCoord() && button.getLayoutY() == l.getYCoord()) {
+                  nearestLocation = l;
+                  isSnapped = true;
+                  break;
+                }
+              }
+            }
+            if (!isSnapped) {
+              button.setLayoutX(nearestLocation.getXCoord());
+              button.setLayoutY(nearestLocation.getYCoord());
+            }
+          }
+        });
   }
 
   // Clears all Buttons and Labels from screen
