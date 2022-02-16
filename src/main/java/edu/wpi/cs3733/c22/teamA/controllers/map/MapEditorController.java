@@ -337,7 +337,17 @@ public class MapEditorController {
       Button button = newButton(buttonX, buttonY, 315, 5);
       button.setShape(equipmentMarkerShape);
       String floor = floorNames[i];
-      button.setText(floor);
+      int srCount = 0;
+      for (Location location : locations) {
+        if (location.getFloor().equals(floor)) {
+          for (int j = 0; j < serviceRequests.size(); j++) {
+            if (serviceRequests.get(j).getEndLocation().equals(location.getShortName())) {
+              srCount++;
+            }
+          }
+        }
+      }
+      button.setText("Requests: " + srCount);
       button.setOnMousePressed(mouseEvent -> floorSelectionComboBox.setValue(floor));
       miniAnchorPane.getChildren().add(button);
     }
