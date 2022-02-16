@@ -21,21 +21,20 @@ public class SecuritySR extends SR {
       String endLocation,
       String employeeRequested,
       String employeeAssigned,
-      String requestTime,
+      Timestamp requestTime,
       Status requestStatus,
-      String requestType,
+      Priority requestPriority,
       String comments) {
-    super();
-    this.requestID = requestID;
-    this.startLocation = startLocation;
-    this.endLocation = endLocation;
-    this.employeeRequested = employeeRequested;
-    this.employeeAssigned = employeeAssigned;
-    this.requestTime = Timestamp.valueOf(requestTime);
-    this.requestStatus = requestStatus;
-    this.requestType = requestType;
-    this.comments = comments;
-
+    super(
+        requestID,
+        startLocation,
+        endLocation,
+        employeeRequested,
+        employeeAssigned,
+        requestTime,
+        requestStatus,
+        requestPriority,
+        comments);
     this.srType = SRType.SECURITY;
   }
 }

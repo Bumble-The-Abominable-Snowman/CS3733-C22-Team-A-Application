@@ -2,7 +2,6 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.LaundrySR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
@@ -23,9 +22,9 @@ public class LaundrySRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
 
-  LaundrySRCtrl() {
-    super();
-  }
+  //  LaundrySRCtrl() {
+  //    super();
+  //  }
 
   @FXML
   public void initialize() {
@@ -47,21 +46,19 @@ public class LaundrySRCtrl extends SRCtrl {
     if (!washMode.getValue().equals("Wash Mode")) {
       LaundrySR laundrySR =
           new LaundrySR(
-              "PlaceHolderID",
+              "LaundrySRID",
               "N/A",
               toLocationChoice.getSelectionModel().getSelectedItem(),
-              App.factory.getUsername(),
-              employeeChoice.getSelectionModel().getSelectedItem(),
-              new Timestamp((new Date()).getTime()).toString(),
+              "001",
+              "002",
+              new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,
-              "Laundry Service",
-              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
-              washMode.getValue());
+              SR.Priority.REGULAR,
+              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText());
+
       ServiceRequestDerbyImpl<LaundrySR> serviceRequestDAO =
           new ServiceRequestDerbyImpl<>(new LaundrySR());
       serviceRequestDAO.enterServiceRequest(laundrySR);
-      this.goToHomeScene();
-      // send request to database
     }
   }
 

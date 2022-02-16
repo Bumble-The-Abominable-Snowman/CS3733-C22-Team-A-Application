@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.entities.servicerequests;
 
+import java.sql.Timestamp;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -20,12 +21,26 @@ public class FloralDeliverySR extends SR {
     this.srType = SRType.FLORAL_DELIVERY;
   }
 
-  public FloralDeliverySR(String flower, String bouquetType) {
-    super();
-    this.flower = flower;
-    this.bouquetType = bouquetType;
-    this.comments = comments;
-
+  public FloralDeliverySR(
+      String requestID,
+      String startLocation,
+      String endLocation,
+      String employeeRequested,
+      String employeeAssigned,
+      Timestamp requestTime,
+      Status requestStatus,
+      Priority requestPriority,
+      String comments) {
+    super(
+        requestID,
+        startLocation,
+        endLocation,
+        employeeRequested,
+        employeeAssigned,
+        requestTime,
+        requestStatus,
+        requestPriority,
+        comments);
     this.srType = SRType.FLORAL_DELIVERY;
   }
 }

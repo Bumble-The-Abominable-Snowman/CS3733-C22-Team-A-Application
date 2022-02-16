@@ -4,11 +4,16 @@ import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.MedicineDeliverySR;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -81,21 +86,26 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
   }
 
   @FXML
-  private void createMedicineRequest(MedicineDeliverySR medicineRequest) {
-    medicineRequest.setMedicineChoice(medicineChoice.getValue());
-    //    medicineRequest.setToLocation(toLocationChoice.getValue());
-    //    medicineRequest.setRequestedEmployee(employeeChoice.getValue());
-    //    medicineRequest.setToLocation(commentsBox.getText());
-  }
-
-  @FXML
-  void submitRequest() throws IOException {
-    MedicineDeliverySR medicineRequest = new MedicineDeliverySR();
+  void submitRequest()
+      throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
     if (!medicineChoice.getSelectionModel().getSelectedItem().equals("Medicine")
         && toLocationChoice.getSelectionModel().getSelectedItem() != null
         && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
-      this.createMedicineRequest(medicineRequest);
-      this.goToHomeScene();
+
+      MedicineDeliverySR medicineDeliverySR =
+          new MedicineDeliverySR(
+              "MedicineDeliverySRID",
+              "N/A",
+              toLocationChoice.getSelectionModel().getSelectedItem(),
+              "001",
+              "002",
+              new Timestamp((new Date()).getTime()),
+              SR.Status.BLANK,
+              SR.Priority.REGULAR,
+              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText());
+      ServiceRequestDerbyImpl<MedicineDeliverySR> serviceRequestDAO =
+          new ServiceRequestDerbyImpl<>(new MedicineDeliverySR());
+      serviceRequestDAO.enterServiceRequest(medicineDeliverySR);
     }
   }
 }

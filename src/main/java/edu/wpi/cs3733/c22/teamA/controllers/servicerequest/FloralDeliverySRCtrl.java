@@ -4,11 +4,16 @@ import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.FloralDeliverySR;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -74,23 +79,28 @@ public class FloralDeliverySRCtrl extends SRCtrl {
   }
 
   @FXML
-  private void createFloralRequest(FloralDeliverySR floralRequest) {
-    floralRequest.setFlower(flowerChoice.getValue());
-    floralRequest.setBouquetType(bouquetTypeChoice.getValue());
-    floralRequest.setToLocation(toLocationChoice.getValue());
-    floralRequest.setRequestedEmployee(employeeChoice.getValue());
-    floralRequest.setToLocation(commentsBox.getText());
-  }
-
-  @FXML
-  void submitRequest() throws IOException {
-    FloralDeliverySR floralRequest = new FloralDeliverySR();
+  void submitRequest()
+      throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
     if (!flowerChoice.getSelectionModel().getSelectedItem().equals("Flower")
         && !bouquetTypeChoice.getSelectionModel().getSelectedItem().equals("Bouquet Type")
         && toLocationChoice.getSelectionModel().getSelectedItem() != null
         && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
-      this.createFloralRequest(floralRequest);
-      this.goToHomeScene();
+
+      FloralDeliverySR floralDeliverySR =
+          new FloralDeliverySR(
+              "FloralDeliverySRID",
+              "N/A",
+              toLocationChoice.getSelectionModel().getSelectedItem(),
+              "001",
+              "002",
+              new Timestamp((new Date()).getTime()),
+              SR.Status.BLANK,
+              SR.Priority.REGULAR,
+              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText());
+
+      ServiceRequestDerbyImpl<FloralDeliverySR> serviceRequestDAO =
+          new ServiceRequestDerbyImpl<>(new FloralDeliverySR());
+      serviceRequestDAO.enterServiceRequest(floralDeliverySR);
     }
   }
 }

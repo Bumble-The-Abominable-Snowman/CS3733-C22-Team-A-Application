@@ -3,7 +3,6 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
@@ -60,21 +59,18 @@ public class SanitationSRCtrl extends SRCtrl {
     // Create request object
     SanitationSR sanitationSR =
         new SanitationSR(
-            "PlaceHolderID",
+            "SanitationSRID",
             "N/A",
             toLocationChoice.getSelectionModel().getSelectedItem(),
-            App.factory.getUsername(),
-            "employee",
-            new Timestamp((new Date()).getTime()).toString(),
+            "001",
+            "002",
+            new Timestamp((new Date()).getTime()),
             SR.Status.BLANK,
-            "Sanitation Services",
-            commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
-            typeChoice.getValue());
+            SR.Priority.REGULAR,
+            commentsBox.getText().equals("") ? "N/A" : commentsBox.getText());
 
     ServiceRequestDerbyImpl<SanitationSR> serviceRequestDAO =
         new ServiceRequestDerbyImpl<>(new SanitationSR());
     serviceRequestDAO.enterServiceRequest(sanitationSR);
-
-    // Submit to database
   }
 }

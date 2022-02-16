@@ -198,6 +198,7 @@ public class LoadBackupCtrl {
         throw new Exception("No csv file is selected!");
       }
     } catch (Exception e) {
+      e.printStackTrace();
       selectedFileText.setText("Failed!");
       selectedFileText.setFill(Color.RED);
     }

@@ -5,7 +5,6 @@ import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
@@ -129,20 +128,19 @@ public class ReligiousSRCtrl extends SRCtrl {
         && employeeChoice.getSelectionModel().getSelectedItem() != null) {
       ReligiousSR religiousSR =
           new ReligiousSR(
-              "PlaceHolderID",
+              "ReligiousSRID",
               "N/A",
               toLocationChoice.getSelectionModel().getSelectedItem(),
-              App.factory.getUsername(),
-              employeeChoice.getSelectionModel().getSelectedItem(),
-              new Timestamp((new Date()).getTime()).toString(),
+              "001",
+              "002",
+              new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,
-              "Religious Services",
-              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
-              religionChoice.getValue());
+              SR.Priority.REGULAR,
+              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText());
+
       ServiceRequestDerbyImpl<ReligiousSR> serviceRequestDAO =
           new ServiceRequestDerbyImpl<>(new ReligiousSR());
       serviceRequestDAO.enterServiceRequest(religiousSR);
-      this.goToHomeScene();
     }
   }
 }

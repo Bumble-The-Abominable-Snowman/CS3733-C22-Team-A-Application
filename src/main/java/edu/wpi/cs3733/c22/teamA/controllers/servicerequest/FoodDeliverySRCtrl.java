@@ -5,7 +5,6 @@ import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
@@ -71,27 +70,20 @@ public class FoodDeliverySRCtrl extends SRCtrl {
   }
 
   @FXML
-  private FoodDeliverySR createFoodRequest() throws IOException {
-    return new FoodDeliverySR(
-        "PlaceHolderID",
-        "N/A",
-        toLocationChoice.getSelectionModel().getSelectedItem().toString(),
-        App.factory.getUsername(),
-        employeeChoice.getSelectionModel().getSelectedItem().toString(),
-        new Timestamp((new Date()).getTime()).toString(),
-        SR.Status.BLANK,
-        "Food Delivery",
-        commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
-        mainChoice.getValue(),
-        sideChoice.getValue(),
-        drinkChoice.getValue(),
-        dessertChoice.getValue());
-  }
-
-  @FXML
   void submitRequest()
       throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
-    FoodDeliverySR foodDeliverySR = createFoodRequest();
+    FoodDeliverySR foodDeliverySR =
+        new FoodDeliverySR(
+            "FoodDeliverySRID",
+            "N/A",
+            toLocationChoice.getSelectionModel().getSelectedItem(),
+            "001",
+            "002",
+            new Timestamp((new Date()).getTime()),
+            SR.Status.BLANK,
+            SR.Priority.REGULAR,
+            commentsBox.getText().equals("") ? "N/A" : commentsBox.getText());
+
     ServiceRequestDerbyImpl<FoodDeliverySR> serviceRequestDAO =
         new ServiceRequestDerbyImpl<>(new FoodDeliverySR());
     serviceRequestDAO.enterServiceRequest(foodDeliverySR);
