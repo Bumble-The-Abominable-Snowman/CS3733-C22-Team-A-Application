@@ -21,6 +21,59 @@ public class SelectServiceRequestCtrl {
   private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   @FXML
+  private void initialize() {
+    double medicalEquipmentDeliveryTextSize = medicalEquipmentDeliveryButton.getFont().getSize();
+    double religiousRequestTextSize = religiousRequestsButton.getFont().getSize();
+    double sanitationServicesTextSize = sanitationServicesButton.getFont().getSize();
+    double laundryServicesTextSize = laundryServicesButton.getFont().getSize();
+    double foodDeliveryTextSize = foodDeliveryButton.getFont().getSize();
+    double languageServicesTextSize = languageServicesButton.getFont().getSize();
+    double floralServicesTextSize = floralServicesButton.getFont().getSize();
+    double medicineDeliveryTextSize = medicineDeliveryButton.getFont().getSize();
+    double backTextSize = backButton.getFont().getSize();
+
+    App.getStage()
+        .widthProperty()
+        .addListener(
+            (obs, oldVal, newVal) -> {
+              medicalEquipmentDeliveryButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * medicalEquipmentDeliveryTextSize)
+                      + "pt;");
+              religiousRequestsButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * religiousRequestTextSize)
+                      + "pt;");
+              sanitationServicesButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * sanitationServicesTextSize)
+                      + "pt;");
+              laundryServicesButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * laundryServicesTextSize)
+                      + "pt;");
+              foodDeliveryButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * foodDeliveryTextSize)
+                      + "pt;");
+              languageServicesButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * languageServicesTextSize)
+                      + "pt;");
+              floralServicesButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * floralServicesTextSize)
+                      + "pt;");
+              medicineDeliveryButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * medicineDeliveryTextSize)
+                      + "pt;");
+              backButton.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * backTextSize) + "pt;");
+            });
+  }
+
+  @FXML
   private void goToMedicalEquipmentDeliveryScene() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.EQUIPMENT_DELIVERY_SR);
   }

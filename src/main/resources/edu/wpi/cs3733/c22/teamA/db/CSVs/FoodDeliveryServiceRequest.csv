@@ -1,2 +1,2 @@
 requestID, startLocation, endLocation, employeeRequested, employeeAssigned, requestTime, requestStatus, requestPriority, comments, mainDish, sideDish, beverage, dessert
-FOD100,FEXIT00201,FEXIT00301,001,002,2018-09-01 09:01:15.0,WAITING, REGULAR ,Low Priority,Steak,Fries,Soda,cookie
+FOD100,FEXIT00201,FEXIT00301,001,002,2018-09-01 09:01:15.0,WAITING, REGULAR,Low Priority,Steak,Fries,Soda,cookie

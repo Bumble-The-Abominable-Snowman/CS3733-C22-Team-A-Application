@@ -100,31 +100,31 @@ HHALL01503,592,413,3,Tower,HALL,Hallway Connector 15 Floor 3,Hallway H01503
 HLABS00103,92,293,3,Tower,LABS,Reproductive Endocrine Labs,Reproductive Endocrine Labs
 HSERV00103,605,292,3,Tower,SERV,Nursing Room,Nursing Room
 HSTAI00103,537,701,3,Tower,STAI,Stairwell 1 Floor 3,Stairwell
-WELEV00L03,1790,925,3,Tower,ELEV,Elevator L Floor 3,Elevator L3
-WELEV00M03,1815,1290,3,Tower,ELEV,Elevator M Floor 3,Elevator M3
-aSTOR00103,1776,957,3,Tower,STOR,In-Patient Unit Storage Pod B,IP Unit Storage B
-aSTOR00203,1485,1056,3,Tower,STOR,In-Patient Unit Storage Pod C,IP Unit Storage C
-aSTOR00303,1532,925,3,Tower,STOR,Dirty Pump Storage,Dirty Pumps
-aPATI00103,1642,737,3,Tower,PATI,Patient Room 1,PatiRoom1
-aPATI00203,1618,699,3,Tower,PATI,Patient Room 2,PatiRoom2
-aPATI00303,1559,659,3,Tower,PATI,Patient Room 3 ,PatiRoom3
-aPATI00403,1517,656,3,Tower,PATI,Patient Room 4,PatiRoom4
-aPATI00503,1456,680,3,Tower,PATI,Patient Room 5,PatiRoom5
-aPATI00603,1431,705,3,Tower,PATI,Patient Room 6,PatiRoom6
-aPATI00703,1409,766,3,Tower,PATI,Patient Room 7,PatiRoom7
-aPATI00803,1415,807,3,Tower,PATI,Patient Room 8,PatiRoom8
-aPATI00903,1453,869,3,Tower,PATI,Patient Room 9,PatiRoom9
-aPATI01003,1495,889,3,Tower,PATI,Patient Room 10,PatiRoom10
-aPATI01103,1499,965,3,Tower,PATI,Patient Room 11,PatiRoom11
-aPATI01203,1456,988,3,Tower,PATI,Patient Room 12,PatiRoom12
-aPATI01303,1417,1045,3,Tower,PATI,Patient Room 13,PatiRoom13
-aPATI01403,1414,1098,3,Tower,PATI,Patient Room 14,PatiRoom14
-aPATI01503,1429,1142,3,Tower,PATI,Patient Room 15,PatiRoom15
-aPATI01603,1464,1179,3,Tower,PATI,Patient Room 16,PatiRoom16
-aPATI01703,1519,1197,3,Tower,PATI,Patient Room 17,PatiRoom17
-aPATI01803,1562,1195,3,Tower,PATI,Patient Room 18,PatiRoom18
-aPATI01903,1621,1155,3,Tower,PATI,Patient Room 19,PatiRoom19
-aPATI02003,1643,1117,3,Tower,PATI,Patient Room 20,PatiRoom20
+WELEV00L03,645,352,3,Tower,ELEV,Elevator L Floor 3,Elevator L3
+WELEV00M03,671,714,3,Tower,ELEV,Elevator M Floor 3,Elevator M3
+aSTOR00103,418,210,3,Tower,STOR,In-Patient Unit Storage Pod B,IP Unit Storage B
+aSTOR00203,340,485,3,Tower,STOR,In-Patient Unit Storage Pod C,IP Unit Storage C
+aSTOR00303,388,351,3,Tower,STOR,Dirty Pump Storage,Dirty Pumps
+aPATI00103,498,164,3,Tower,PATI,Patient Room 1,PatiRoom1
+aPATI00203,474,126,3,Tower,PATI,Patient Room 2,PatiRoom2
+aPATI00303,414,86,3,Tower,PATI,Patient Room 3 ,PatiRoom3
+aPATI00403,373,84,3,Tower,PATI,Patient Room 4,PatiRoom4
+aPATI00503,313,106,3,Tower,PATI,Patient Room 5,PatiRoom5
+aPATI00603,288,132,3,Tower,PATI,Patient Room 6,PatiRoom6
+aPATI00703,266,191,3,Tower,PATI,Patient Room 7,PatiRoom7
+aPATI00803,271,233,3,Tower,PATI,Patient Room 8,PatiRoom8
+aPATI00903,310,294,3,Tower,PATI,Patient Room 9,PatiRoom9
+aPATI01003,351,315,3,Tower,PATI,Patient Room 10,PatiRoom10
+aPATI01103,355,393,3,Tower,PATI,Patient Room 11,PatiRoom11
+aPATI01203,312,416,3,Tower,PATI,Patient Room 12,PatiRoom12
+aPATI01303,274,471,3,Tower,PATI,Patient Room 13,PatiRoom13
+aPATI01403,272,525,3,Tower,PATI,Patient Room 14,PatiRoom14
+aPATI01503,285,567,3,Tower,PATI,Patient Room 15,PatiRoom15
+aPATI01603,321,604,3,Tower,PATI,Patient Room 16,PatiRoom16
+aPATI01703,374,621,3,Tower,PATI,Patient Room 17,PatiRoom17
+aPATI01803,419,619,3,Tower,PATI,Patient Room 18,PatiRoom18
+aPATI01903,475,580,3,Tower,PATI,Patient Room 19,PatiRoom19
+aPATI02003,498,542,3,Tower,PATI,Patient Room 20,PatiRoom20
 CREST001L1,592,453,L1,Tower,REST,Restroom L Elevator Floor L1,Restroom C001L1
 CREST002L1,929,714,L1,Tower,REST,Restroom M Elevator Floor L1,Restroom C002L1
 WELEV00LL1,647,354,L1,Tower,ELEV,Elevator L Floor L1,Elevator LL1

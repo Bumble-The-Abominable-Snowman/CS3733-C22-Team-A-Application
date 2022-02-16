@@ -16,8 +16,8 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
-   <Label layoutX="180.0" layoutY="10.0" text="Settings" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" styleClass="titleFormat" />
-   <JFXButton fx:id="backButton" buttonType="RAISED" layoutX="43.0" layoutY="342.0" mnemonicParsing="false" onAction="#goToHomeScene" prefHeight="26.0" prefWidth="55.0" text="Back" textFill="WHITE" GridPane.halignment="LEFT" GridPane.valignment="TOP" styleClass="bodyFormat" />
-   <JFXButton fx:id="loadFromBackupButton" buttonType="RAISED" layoutX="236.0" layoutY="43.0" mnemonicParsing="false" onAction="#loadFromBackup" text="Load from backup" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" styleClass="bodyFormat"/>
-   <JFXButton fx:id="exportToBackupButton" buttonType="RAISED" layoutX="240.0" layoutY="81.0" mnemonicParsing="false" onAction="#exportToBackup" text="Export to backup" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" styleClass="bodyFormat"/>
+   <Label layoutX="180.0" layoutY="10.0" styleClass="titleFormat" text="Settings" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+   <JFXButton fx:id="backButton" buttonType="RAISED" layoutX="43.0" layoutY="342.0" mnemonicParsing="false" onAction="#goToHomeScene" prefHeight="37.0" prefWidth="74.0" styleClass="bodyFormat" text="Back" textFill="WHITE" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
+   <JFXButton fx:id="loadFromBackupButton" buttonType="RAISED" layoutX="236.0" layoutY="43.0" mnemonicParsing="false" onAction="#loadFromBackup" styleClass="bodyFormat" text="Load from backup" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+   <JFXButton fx:id="exportToBackupButton" buttonType="RAISED" layoutX="240.0" layoutY="81.0" mnemonicParsing="false" onAction="#exportToBackup" styleClass="bodyFormat" text="Export to backup" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
 </GridPane>

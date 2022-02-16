@@ -2,6 +2,7 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
@@ -14,6 +15,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Date;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
 public class FoodDeliverySRCtrl extends SRCtrl {
@@ -24,10 +26,58 @@ public class FoodDeliverySRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> toLocationChoice;
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
+  @FXML private Label foodLabel;
+  @FXML private Label mapLabel;
+  @FXML private Label locationLabel;
+  @FXML private Label orderLabel;
+  @FXML private Label employeeLabel;
 
   @FXML
   public void initialize() throws ParseException {
     sceneID = SceneSwitcher.SCENES.FOOD_DELIVERY_SR;
+
+    // double mainChoiceTextSize = mainChoice.getFont().getSize();
+    // double sideChoiceTextSize = sideChoice.getFont().getSize();
+    // double dessertChoiceTextSize = dessertChoice.getFont().getSize();
+    // double drinkChoiceTextSize = drinkChoice.getFont().getSize();
+    // double toLocationChoiceTextSize = toLocationChoice.getFont().getSize();
+    // double employeeChoiceTextSize = employeeChoice.getFont().getSize();
+    double commentsTextSize = commentsBox.getFont().getSize();
+    double foodTextSize = foodLabel.getFont().getSize();
+    double mapTextSize = mapLabel.getFont().getSize();
+    double locationTextSize = locationLabel.getFont().getSize();
+    double orderTextSize = orderLabel.getFont().getSize();
+    double employeeTextSize = employeeLabel.getFont().getSize();
+
+    App.getStage()
+        .widthProperty()
+        .addListener(
+            (obs, oldVal, newVal) -> {
+              commentsBox.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * commentsTextSize)
+                      + "pt;");
+              foodLabel.setStyle(
+                      "-fx-font-size: "
+                              + ((App.getStage().getWidth() / 1000) * foodTextSize)
+                              + "pt;");
+              mapLabel.setStyle(
+                      "-fx-font-size: "
+                              + ((App.getStage().getWidth() / 1000) * mapTextSize)
+                              + "pt;");
+              locationLabel.setStyle(
+                      "-fx-font-size: "
+                              + ((App.getStage().getWidth() / 1000) * locationTextSize)
+                              + "pt;");
+              orderLabel.setStyle(
+                      "-fx-font-size: "
+                              + ((App.getStage().getWidth() / 1000) * orderTextSize)
+                              + "pt;");
+              employeeLabel.setStyle(
+                      "-fx-font-size: "
+                              + ((App.getStage().getWidth() / 1000) * employeeTextSize)
+                              + "pt;");
+            });
 
     commentsBox.setWrapText(true);
 

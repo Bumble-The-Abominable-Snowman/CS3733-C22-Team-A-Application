@@ -2,6 +2,7 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
@@ -59,6 +60,22 @@ public class ReligiousSRCtrl extends SRCtrl {
   @FXML
   private void initialize() throws ParseException {
     sceneID = SceneSwitcher.SCENES.RELIGIOUS_SR;
+
+    // double religionChoiceTextSize = religionChoice.getFont().getSize();
+    // double denominationChoiceTextSize = denominationChoice.getFont().getSize();
+    // double toLocationChoiceTextSize = toLocationChoice.getFont().getSize();
+    // double employeeChoiceTextSize = employeeChoice.getFont().getSize();
+    double commentsTextSize = commentsBox.getFont().getSize();
+
+    App.getStage()
+        .widthProperty()
+        .addListener(
+            (obs, oldVal, newVal) -> {
+              commentsBox.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * commentsTextSize)
+                      + "pt;");
+            });
 
     commentsBox.setWrapText(true);
 

@@ -38,6 +38,9 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.control.*;
@@ -111,8 +114,19 @@ public class DataViewController implements Initializable {
   @SneakyThrows
   @Override
   public void initialize(URL url, ResourceBundle rb) {
-    backButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
+    double backTextSize = backButton.getFont().getSize();
+    double titleTextSize = titleLabel.getFont().getSize();
+    // double tableTextSize = table.getFont().getSize();
+
+    App.getStage()
+        .widthProperty()
+        .addListener(
+            (obs, oldVal, newVal) -> {
+              backButton.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * backTextSize) + "pt;");
+              titleLabel.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * titleTextSize) + "pt;");
+            });
 
     if (HomeCtrl.sceneFlag == 1) {
       titleLabel.setText("Service Requests");
@@ -222,16 +236,16 @@ public class DataViewController implements Initializable {
     JFXTreeTableColumn<RecursiveObj, String> reqPriority = new JFXTreeTableColumn<>("Priority");
     JFXTreeTableColumn<RecursiveObj, String> comments = new JFXTreeTableColumn<>("Comments");
 
-    //    reqType.setPrefWidth(80);
-    //    reqID.setPrefWidth(80);
-    //    startLoc.setPrefWidth(80);
-    //    endLoc.setPrefWidth(80);
-    //    employeeReq.setPrefWidth(80);
-    //    employeeAss.setPrefWidth(80);
-    //    reqTime.setPrefWidth(80);
-    //    reqStatus.setPrefWidth(80);
-    //    comments.setPrefWidth(80);
-    //    reqPriority.setPrefWidth(80);
+    reqType.setPrefWidth(80);
+    reqID.setPrefWidth(80);
+    startLoc.setPrefWidth(80);
+    endLoc.setPrefWidth(80);
+    employeeReq.setPrefWidth(80);
+    employeeAss.setPrefWidth(80);
+    reqTime.setPrefWidth(80);
+    reqStatus.setPrefWidth(80);
+    comments.setPrefWidth(80);
+    reqPriority.setPrefWidth(80);
 
     reqType.setStyle("-fx-alignment: center ;");
     reqID.setStyle("-fx-alignment: center ;");
@@ -483,6 +497,10 @@ public class DataViewController implements Initializable {
         new RecursiveTreeItem<RecursiveObj>(equipment, RecursiveTreeObject::getChildren);
     table.getColumns().setAll(id, type, clean, location, available);
     table.setRoot(root);
+  }
+
+  boolean isSelected() {
+    return false;
   }
 
   public void initializeEmployeeTable() {

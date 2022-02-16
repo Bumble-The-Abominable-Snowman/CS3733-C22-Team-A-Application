@@ -31,6 +31,30 @@ public abstract class SRCtrl {
   private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   @FXML
+  private void initialize() {
+    double homeTextSize = homeButton.getFont().getSize();
+    double submitTextSize = submitButton.getFont().getSize();
+    double backTextSize = backButton.getFont().getSize();
+    double clearTextSize = clearButton.getFont().getSize();
+
+    App.getStage()
+        .widthProperty()
+        .addListener(
+            (obs, oldVal, newVal) -> {
+              homeButton.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * homeTextSize) + "pt;");
+              submitButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * submitTextSize)
+                      + "pt;");
+              backButton.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * backTextSize) + "pt;");
+              clearButton.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * clearTextSize) + "pt;");
+            });
+  }
+
+  @FXML
   void goToHomeScene() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
   }

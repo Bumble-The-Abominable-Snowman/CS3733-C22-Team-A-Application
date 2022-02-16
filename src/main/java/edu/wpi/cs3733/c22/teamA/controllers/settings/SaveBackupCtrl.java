@@ -19,7 +19,7 @@ public class SaveBackupCtrl {
   @FXML private JFXButton backButton;
   @FXML private JFXButton homeButton;
   @FXML private JFXButton exportToBackupButton;
-  @FXML public TextField filename;
+  @FXML public TextField fileName;
   @FXML public Text exportFileText;
   @FXML private JFXComboBox<String> TypeCSV;
 
@@ -27,6 +27,35 @@ public class SaveBackupCtrl {
 
   @FXML
   public void initialize() {
+
+    double backTextSize = backButton.getFont().getSize();
+    double homeTextSize = homeButton.getFont().getSize();
+    double exportToBackupTextSize = exportToBackupButton.getFont().getSize();
+    double fileNameTextSize = fileName.getFont().getSize();
+    double exportFileTextSize = exportFileText.getFont().getSize();
+    // double TypeCSVTextSize = TypeCSV.getFont().getSize();
+
+    App.getStage()
+        .widthProperty()
+        .addListener(
+            (obs, oldVal, newVal) -> {
+              backButton.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * backTextSize) + "pt;");
+              homeButton.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * homeTextSize) + "pt;");
+              exportToBackupButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * exportToBackupTextSize)
+                      + "pt;");
+              fileName.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * fileNameTextSize)
+                      + "pt;");
+              exportFileText.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * exportFileTextSize)
+                      + "pt;");
+            });
 
     TypeCSV.getItems().removeAll(TypeCSV.getItems());
     TypeCSV.getItems()
@@ -57,7 +86,7 @@ public class SaveBackupCtrl {
   }
 
   public void exportToBackup() throws IOException {
-    String input = filename.getCharacters().toString();
+    String input = fileName.getCharacters().toString();
     System.out.println(input.length());
     if (!TypeCSV.getSelectionModel().getSelectedItem().equals("CSV Type") && input.length() > 0) {
       System.out.println(input);
