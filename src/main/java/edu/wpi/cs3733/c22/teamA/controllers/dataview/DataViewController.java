@@ -31,14 +31,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 import lombok.SneakyThrows;
 
 public class DataViewController implements Initializable {
@@ -96,8 +91,19 @@ public class DataViewController implements Initializable {
   @SneakyThrows
   @Override
   public void initialize(URL url, ResourceBundle rb) {
-    backButton.setBackground(
-        new Background(new BackgroundFill(Color.DARKBLUE, new CornerRadii(0), Insets.EMPTY)));
+    double backTextSize = backButton.getFont().getSize();
+    double titleTextSize = titleLabel.getFont().getSize();
+    // double tableTextSize = table.getFont().getSize();
+
+    App.getStage()
+        .widthProperty()
+        .addListener(
+            (obs, oldVal, newVal) -> {
+              backButton.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * backTextSize) + "pt;");
+              titleLabel.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * titleTextSize) + "pt;");
+            });
 
     if (HomeCtrl.sceneFlag == 1) {
       titleLabel.setText("Service Requests");

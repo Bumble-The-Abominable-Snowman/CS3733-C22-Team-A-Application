@@ -35,13 +35,39 @@ public class LoadBackupCtrl {
   @FXML private JFXComboBox<String> TypeCSV;
   @FXML private Text selectedFileText;
   @FXML private ListView<String> fileList;
-  private String lastSelectedFile;
+  @FXML private String lastSelectedFile;
 
   private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   @FXML
   public void initialize() {
     this.refreshFiles();
+
+    double homeTextSize = homeButton.getFont().getSize();
+    double backTextSize = backButton.getFont().getSize();
+    double loadFromBackupTextSize = loadFromBackupButton.getFont().getSize();
+    // double TypeCSVTextSize = TypeCSV.getFont().getSize();
+    double selectedFileTextSize = selectedFileText.getFont().getSize();
+    // double fileListTextSize = fileList.getFont().getSize();
+    // double lastSelectedFileTextSize = lastSelectedFile.getFont().getSize();
+
+    App.getStage()
+        .widthProperty()
+        .addListener(
+            (obs, oldVal, newVal) -> {
+              homeButton.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * homeTextSize) + "pt;");
+              backButton.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * backTextSize) + "pt;");
+              loadFromBackupButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * loadFromBackupTextSize)
+                      + "pt;");
+              selectedFileText.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * selectedFileTextSize)
+                      + "pt;");
+            });
 
     fileList.setOnMouseClicked(
         new EventHandler<MouseEvent>() {

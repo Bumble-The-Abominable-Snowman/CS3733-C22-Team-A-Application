@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -17,13 +18,20 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
-   <JFXButton fx:id="exitButton" buttonType="RAISED" layoutX="525.0" layoutY="30.0" mnemonicParsing="false" onAction="#exitApp" text="Exit" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" styleClass="bodyFormat"/>
-   <TextField fx:id="usernameBox" layoutX="225.0" layoutY="200.0" promptText="username" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="CENTER" styleClass="bodyFormat"/>
-   <PasswordField fx:id="passwordBox" layoutX="225.0" layoutY="236.0" promptText="password" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" styleClass="bodyFormat"/>
+   <JFXButton fx:id="exitButton" buttonType="RAISED" layoutX="525.0" layoutY="30.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="37.0" prefWidth="80.0" styleClass="bodyFormat" text="Exit" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
+   <TextField fx:id="usernameBox" layoutX="225.0" layoutY="200.0" promptText="username" styleClass="bodyFormat" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+   <PasswordField fx:id="passwordBox" layoutX="225.0" layoutY="236.0" promptText="password" styleClass="bodyFormat" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
    <Text fx:id="welcomeBox" fill="WHITE" layoutX="5.0" layoutY="156.0" stroke="#05408d" strokeType="OUTSIDE" text="Welcome!" textAlignment="CENTER" wrappingWidth="606.83447265625" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
       <font>
          <Font name="Segoe UI Bold Italic" size="47.0" />
       </font>
    </Text>
-   <JFXButton fx:id="logInButton" buttonType="RAISED" layoutX="274.0" layoutY="287.0" mnemonicParsing="false" onAction="#logIn" text="Log In" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" styleClass="bodyFormat" />
+   <Text fx:id="warningText" fill="#61A5B0" layoutX="5.0" layoutY="156.0" stroke="#05408d" strokeType="OUTSIDE" strokeWidth="0.0" text="Login Unsuccessful" textAlignment="CENTER" wrappingWidth="606.83447265625" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" styleClass="bodyFormat">
+      <font>
+         <Font name="System Italic" size="12.0" />
+      </font>
+      <GridPane.margin>
+         <Insets top="5.0" />
+      </GridPane.margin></Text>
+   <JFXButton fx:id="logInButton" buttonType="RAISED" layoutX="274.0" layoutY="287.0" mnemonicParsing="false" onAction="#logIn" styleClass="bodyFormat" text="Log In" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
 </GridPane>
