@@ -281,7 +281,6 @@ public class Adb {
               String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
       Statement addTable = connection.createStatement();
 
-
       addTable.execute(
           "CREATE TABLE SanitationServiceRequest(requestID varchar(25), "
               + "sanitationType varchar(25), "
