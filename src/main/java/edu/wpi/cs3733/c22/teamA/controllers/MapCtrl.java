@@ -21,6 +21,7 @@ import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -358,6 +359,7 @@ public class MapCtrl extends MasterCtrl {
               // select location if search complete
               if (searchComboBox.getItems().size() == 1) {
                 existingLocationSelected(filteredLocations.get(0));
+                editButton.setDisable(false);
               }
 
               clearAll();
@@ -755,6 +757,24 @@ public class MapCtrl extends MasterCtrl {
               button.setLayoutX(nearestLocation.getXCoord());
               button.setLayoutY(nearestLocation.getYCoord());
             }
+            // update label to new location
+            xPosText.setText(String.valueOf(button.getLayoutX() - mapImageView.getLayoutX() + 8));
+            yPosText.setText(String.valueOf(button.getLayoutY() - mapImageView.getLayoutY() + 24));
+            Label correspondingLabel;
+            if (markerType == 1) {
+              correspondingLabel = buttonEquipmentMarker.get(button).getLabel();
+            } else {
+              correspondingLabel = buttonServiceRequestMarker.get(button).getLabel();
+            }
+            correspondingLabel.setLayoutX(button.getLayoutX());
+            correspondingLabel.setLayoutY(button.getLayoutY() - 20);
+
+            // TODO this function should update database but getting errors
+            try {
+              updateOnRelease(button);
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
           }
         });
   }
@@ -976,6 +996,31 @@ public class MapCtrl extends MasterCtrl {
     String originalFloorName = floorName;
     floorSelectionComboBox.setValue("Choose Floor");
     floorSelectionComboBox.setValue(originalFloorName);
+  }
+
+  // Update Medical Equipment / Service Request on Drag Release
+  public void updateOnRelease(Button button) throws SQLException {
+    System.out.println("update on release is going rn");
+    equipmentDAO.updateMedicalEquipment(
+        buttonEquipmentMarker.get(button).getEquipment().getEquipmentID(),
+        "xCoord",
+        button.getLayoutX() + " ");
+    equipmentDAO.updateMedicalEquipment(
+        buttonEquipmentMarker.get(button).getEquipment().getEquipmentID(),
+        "yCoord",
+        button.getLayoutY() + " ");
+    /*
+    else if (buttonServiceRequestMarker.containsKey(button)){
+      serDAO.updateMedicalEquipment(
+              buttonEquipmentMarker.get(button).getEquipment().getEquipmentID(),
+              "xCoord",
+              button.getLayoutX());
+      equipmentDAO.updateMedicalEquipment(
+              buttonEquipmentMarker.get(button).getEquipment().getEquipmentID(),
+              "yCoord",
+              button.getLayoutY());
+    }
+     */
   }
 
   // Edit Location
