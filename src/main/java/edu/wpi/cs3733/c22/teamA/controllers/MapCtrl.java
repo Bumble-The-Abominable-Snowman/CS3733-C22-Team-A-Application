@@ -967,6 +967,7 @@ public class MapCtrl extends MasterCtrl {
 
   // Update Medical Equipment / Service Request on Drag Release
   public void updateOnRelease(Button button) {
+    System.out.println("update on release is going rn");
     equipmentDAO.updateMedicalEquipment(
         buttonEquipmentMarker.get(button).getEquipment().getEquipmentID(),
         "xCoord",
@@ -975,6 +976,18 @@ public class MapCtrl extends MasterCtrl {
         buttonEquipmentMarker.get(button).getEquipment().getEquipmentID(),
         "yCoord",
         button.getLayoutY());
+    /*
+    else if (buttonServiceRequestMarker.containsKey(button)){
+      serDAO.updateMedicalEquipment(
+              buttonEquipmentMarker.get(button).getEquipment().getEquipmentID(),
+              "xCoord",
+              button.getLayoutX());
+      equipmentDAO.updateMedicalEquipment(
+              buttonEquipmentMarker.get(button).getEquipment().getEquipmentID(),
+              "yCoord",
+              button.getLayoutY());
+    }
+     */
   }
 
   // Edit Location
