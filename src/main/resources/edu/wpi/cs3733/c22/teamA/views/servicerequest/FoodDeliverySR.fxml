@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<GridPane prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@../../css/styleSheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.servicerequest.FoodDeliverySRCtrl">
+<GridPane prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@../../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.servicerequest.FoodDeliverySRCtrl">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -19,21 +21,21 @@
       <RowConstraints maxHeight="133.0" minHeight="10.0" prefHeight="133.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
-   <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="240.0" prefHeight="15.0" prefWidth="138.0" text="Food Delivery" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" styleClass="titleFormat"/>
-   <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="240.0" prefHeight="19.0" prefWidth="138.0" text="Requests" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" styleClass="titleFormat"/>
-   <Label alignment="BOTTOM_CENTER" layoutX="232.0" layoutY="89.0" prefHeight="34.0" prefWidth="170.0" text="Map (To Be Added)" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" styleClass="bodyFormat"/>
-   <Label layoutX="240.0" layoutY="297.0" text="Selected Location" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" styleClass="bodyFormat"/>
-   <Label layoutX="46.0" layoutY="55.0" prefHeight="30.0" prefWidth="67.0" text="Meal Order" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" styleClass="bodyFormat" />
-   <Label layoutX="83.0" layoutY="152.0" text="Employee:" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" styleClass="bodyFormat"/>
-   <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToSelectServiceScene" prefHeight="26.0" prefWidth="55.0" text="Back" textFill="WHITE" GridPane.halignment="LEFT" GridPane.valignment="TOP" styleClass="bodyFormat"/>
-   <JFXButton fx:id="homeButton" buttonType="RAISED" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#goToHomeScene" prefHeight="34.0" prefWidth="61.0" text="Home" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP"/>
-   <JFXButton fx:id="clearButton" buttonType="RAISED" layoutX="481.0" layoutY="360.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="34.0" prefWidth="112.0" text="Clear All Fields" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" styleClass="bodyFormat"/>
-   <JFXButton fx:id="submitButton" buttonType="RAISED" layoutX="251.0" layoutY="338.0" mnemonicParsing="false" onAction="#submitRequest" prefHeight="26.0" prefWidth="218.0" text="Submit" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP" styleClass="bodyFormat"/>
-   <JFXComboBox fx:id="mainChoice" layoutX="20.0" layoutY="100.0" prefHeight="28.0" prefWidth="119.0" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" styleClass="bodyFormat" />
-   <JFXComboBox fx:id="sideChoice" layoutX="20.0" layoutY="186.0" prefHeight="28.0" prefWidth="119.0" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" styleClass="bodyFormat" />
-   <JFXComboBox fx:id="dessertChoice" layoutX="20.0" layoutY="228.0" prefHeight="28.0" prefWidth="119.0" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" styleClass="bodyFormat" />
-   <JFXComboBox fx:id="drinkChoice" layoutX="20.0" layoutY="144.0" prefHeight="28.0" prefWidth="119.0" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" styleClass="bodyFormat" />
-   <JFXComboBox fx:id="toLocationChoice" layoutX="212.0" layoutY="159.0" prefWidth="150.0" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" styleClass="bodyFormat" />
-   <JFXComboBox fx:id="employeeChoice" layoutX="431.0" layoutY="87.0" prefHeight="28.0" prefWidth="112.0" unFocusColor="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" styleClass="bodyFormat" />
-   <TextArea fx:id="commentsBox" maxHeight="-Infinity" maxWidth="180" prefHeight="97.0" prefWidth="180.0" promptText="Special Instructions/Allergies" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" styleClass="bodyFormat"/>
+   <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="240.0" prefHeight="15.0" prefWidth="138.0" styleClass="titleFormat" text="Food Delivery" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+   <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="240.0" prefHeight="19.0" prefWidth="138.0" styleClass="titleFormat" text="Requests" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+   <Label alignment="BOTTOM_CENTER" layoutX="232.0" layoutY="89.0" prefHeight="34.0" prefWidth="170.0" styleClass="bodyFormat" text="Map (To Be Added)" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+   <Label layoutX="240.0" layoutY="297.0" styleClass="bodyFormat" text="Selected Location" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+   <Label layoutX="46.0" layoutY="55.0" prefHeight="30.0" prefWidth="67.0" styleClass="bodyFormat" text="Meal Order" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+   <Label layoutX="83.0" layoutY="152.0" styleClass="bodyFormat" text="Employee:" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+   <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#goToSelectServiceScene" prefHeight="38.0" prefWidth="60.0" styleClass="bodyFormat" text="Back" textFill="WHITE" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
+   <JFXButton fx:id="homeButton" buttonType="RAISED" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#goToHomeScene" prefHeight="38.0" prefWidth="70.0" text="Home" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
+   <JFXButton fx:id="clearButton" buttonType="RAISED" layoutX="481.0" layoutY="360.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="38.0" prefWidth="134.0" styleClass="bodyFormat" text="Clear All Fields" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
+   <JFXButton fx:id="submitButton" buttonType="RAISED" layoutX="251.0" layoutY="338.0" mnemonicParsing="false" onAction="#submitRequest" prefHeight="26.0" prefWidth="218.0" styleClass="bodyFormat" text="Submit" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+   <JFXComboBox fx:id="mainChoice" layoutX="20.0" layoutY="100.0" prefHeight="28.0" prefWidth="119.0" styleClass="bodyFormat" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+   <JFXComboBox fx:id="sideChoice" layoutX="20.0" layoutY="186.0" prefHeight="28.0" prefWidth="119.0" styleClass="bodyFormat" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+   <JFXComboBox fx:id="dessertChoice" layoutX="20.0" layoutY="228.0" prefHeight="28.0" prefWidth="119.0" styleClass="bodyFormat" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+   <JFXComboBox fx:id="drinkChoice" layoutX="20.0" layoutY="144.0" prefHeight="28.0" prefWidth="119.0" styleClass="bodyFormat" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
+   <JFXComboBox fx:id="toLocationChoice" layoutX="212.0" layoutY="159.0" prefWidth="150.0" styleClass="bodyFormat" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+   <JFXComboBox fx:id="employeeChoice" layoutX="431.0" layoutY="87.0" prefHeight="28.0" prefWidth="112.0" styleClass="bodyFormat" unFocusColor="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+   <TextArea fx:id="commentsBox" maxHeight="-Infinity" maxWidth="180" prefHeight="97.0" prefWidth="180.0" promptText="Special Instructions/Allergies" styleClass="bodyFormat" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
 </GridPane>

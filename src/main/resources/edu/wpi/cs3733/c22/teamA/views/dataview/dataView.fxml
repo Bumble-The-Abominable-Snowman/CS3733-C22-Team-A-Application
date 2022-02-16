@@ -14,9 +14,9 @@
         </font>
     </Label>
     <JFXTreeTableView fx:id="table" layoutX="20.0" layoutY="67.0" prefHeight="318.0" prefWidth="559.0" showRoot="false" />
-    <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="26.0" prefWidth="55.0" text="Back" textFill="WHITE">
+    <JFXButton fx:id="backButton" buttonType="RAISED" mnemonicParsing="false" onAction="#returnToHomeScene" prefHeight="38.0" prefWidth="62.0" text="Back" textFill="WHITE">
         <cursor>
             <Cursor fx:constant="HAND" />
         </cursor></JFXButton>
-    <JFXButton layoutX="473.0" layoutY="20.0" text="Delete Selected" onAction="#deleteSelected" />
+    <JFXButton layoutX="458.0" layoutY="1.0" onAction="#deleteSelected" text="Delete Selected" />
 </AnchorPane>

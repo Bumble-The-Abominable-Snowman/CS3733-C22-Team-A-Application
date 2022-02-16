@@ -57,7 +57,6 @@ public class LoadBackupCtrl {
             }
           }
         });
-
     TypeCSV.getItems().removeAll(TypeCSV.getItems());
     TypeCSV.getItems()
         .addAll(
