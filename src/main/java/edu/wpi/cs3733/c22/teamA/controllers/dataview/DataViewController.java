@@ -21,19 +21,34 @@ import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
+import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.input.MouseButton;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.stage.Popup;
 import lombok.SneakyThrows;
 
 public class DataViewController implements Initializable {
@@ -75,6 +90,10 @@ public class DataViewController implements Initializable {
 
   static class RecursiveObj extends RecursiveTreeObject<RecursiveObj> {
     public SR sr;
+    public Location locStart;
+    public Location locEnd;
+    public Employee employeeReq;
+    public Employee employeeAss;
     public Location loc;
     public Equipment equip;
     public Employee employee;
@@ -85,6 +104,10 @@ public class DataViewController implements Initializable {
   @FXML JFXTreeTableView<RecursiveObj> table;
 
   boolean fillerYes = true;
+
+  private StringBuilder detailLabel = new StringBuilder("No further details  ");
+  private List<Object> srList = new ArrayList<>();
+  public static AtomicReference<Popup> popup = new AtomicReference<>(new Popup());
 
   private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
@@ -243,16 +266,16 @@ public class DataViewController implements Initializable {
             new SimpleStringProperty(param.getValue().getValue().sr.getRequestID()));
     startLoc.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().sr.getStartLocation()));
+            new SimpleStringProperty(param.getValue().getValue().locStart.getShortName()));
     endLoc.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().sr.getEndLocation()));
+            new SimpleStringProperty(param.getValue().getValue().locEnd.getShortName()));
     employeeReq.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().sr.getEmployeeRequested()));
+            new SimpleStringProperty(param.getValue().getValue().employeeReq.getFullName()));
     employeeAss.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().sr.getEmployeeAssigned()));
+            new SimpleStringProperty(param.getValue().getValue().employeeAss.getFullName()));
     reqTime.setCellValueFactory(
         (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
             new SimpleStringProperty(param.getValue().getValue().sr.getRequestTime()));
@@ -267,11 +290,17 @@ public class DataViewController implements Initializable {
             new SimpleStringProperty(param.getValue().getValue().sr.getRequestPriority()));
     //    ServiceRequestDAO serviceRequestBase = new ServiceRequestDerbyImpl(new FoodDeliverySR());
 
-    List<?> srList = ServiceRequestDerbyImpl.getAllServiceRequestList();
+    this.srList = ServiceRequestDerbyImpl.getAllServiceRequestList();
     ObservableList<RecursiveObj> requests = FXCollections.observableArrayList();
-    for (Object sr : srList) {
+    for (Object sr : this.srList) {
       RecursiveObj recursiveSR = new RecursiveObj();
       recursiveSR.sr = (SR) sr;
+      recursiveSR.locStart = new LocationDerbyImpl().getLocationNode(((SR) sr).getStartLocation());
+      recursiveSR.locEnd = new LocationDerbyImpl().getLocationNode(((SR) sr).getEndLocation());
+      recursiveSR.employeeReq =
+          new EmployeeDerbyImpl().getEmployee(((SR) sr).getEmployeeRequested());
+      recursiveSR.employeeAss =
+          new EmployeeDerbyImpl().getEmployee(((SR) sr).getEmployeeAssigned());
       requests.add(recursiveSR);
     }
 
@@ -293,6 +322,129 @@ public class DataViewController implements Initializable {
             reqPriority,
             comments);
     table.setRoot(root);
+
+    //    AtomicLong sinceOnTable = new AtomicLong(Clock.systemDefaultZone().millis());
+    //    AtomicLong sinceNotOnTable = new AtomicLong(Clock.systemDefaultZone().millis());
+    //    AtomicBoolean mouseOnTable = new AtomicBoolean(false);
+    AtomicReference<Point2D> point = new AtomicReference<>(new Point2D(0., 0.));
+    //    sceneSwitcher.currentScene.setOnMouseMoved(
+    //        e -> {
+    //          sinceNotOnTable.set(Clock.systemDefaultZone().millis());
+    //        });
+    //
+    //    table.setOnMouseMoved(
+    //        e -> {
+    //          point.set(table.localToScreen(e.getX(), e.getY()));
+    //          sinceOnTable.set(Clock.systemDefaultZone().millis());
+    //        });
+    //
+    //    System.out.println(table.getBorder());
+    //
+
+    AtomicBoolean showPopUp = new AtomicBoolean(false);
+    Task task =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            final int[] waitTime = {100};
+            while (true) {
+              Platform.runLater(
+                  new Runnable() {
+                    @Override
+                    public void run() {
+                      if (showPopUp.get()) {
+                        DataViewController.popup
+                            .get()
+                            .show(App.getStage(), point.get().getX(), point.get().getY());
+                      } else {
+                        DataViewController.popup.get().hide();
+                      }
+                    }
+                  });
+
+              TimeUnit.MILLISECONDS.sleep(waitTime[0]);
+            }
+          }
+        };
+    new Thread(task).start();
+
+    ContextMenu rightClickMenu = new ContextMenu();
+    MenuItem viewDetails = new MenuItem("View Details");
+    MenuItem modify = new MenuItem("Modify");
+    rightClickMenu.getItems().addAll(viewDetails);
+    rightClickMenu.getItems().addAll(modify);
+
+    viewDetails.setOnAction(
+        e -> {
+          rightClickMenu.hide();
+          try {
+            this.createNewPopup();
+          } catch (InvocationTargetException | IllegalAccessException ex) {
+            ex.printStackTrace();
+          }
+          showPopUp.set(true);
+        });
+    modify.setOnAction(
+        e -> {
+          System.out.println("Modify baby");
+          rightClickMenu.hide();
+        });
+
+    table.setOnMouseClicked(
+        e -> {
+          if (e.getButton() == MouseButton.PRIMARY) {
+            showPopUp.set(false);
+          }
+          if (e.getButton() == MouseButton.SECONDARY) {
+            point.set(new Point2D(e.getScreenX(), e.getScreenY()));
+            rightClickMenu.show(table, e.getScreenX(), e.getScreenY());
+            showPopUp.set(false);
+          }
+        });
+  }
+
+  private void createNewPopup() throws InvocationTargetException, IllegalAccessException {
+    DataViewController.popup.get().hide();
+
+    this.detailLabel = new StringBuilder("Nothing selected  ");
+
+    if (table.getSelectionModel().getSelectedIndex() > -1) {
+      this.detailLabel = new StringBuilder("");
+
+      Object sr = this.srList.get(table.getSelectionModel().getSelectedIndex());
+      System.out.println(sr);
+      Method[] methods = sr.getClass().getMethods();
+      for (Method method : methods) {
+        boolean is_the_method_exclusive = method.getDeclaringClass().equals(sr.getClass());
+        boolean starts_with_get = method.getName().split("^get")[0].equals("");
+
+        if (starts_with_get && is_the_method_exclusive) {
+          try {
+            this.detailLabel.append(
+                String.format("%s: %s, ", method.getName().substring(3), method.invoke(sr)));
+          } catch (IllegalAccessException | InvocationTargetException ex) {
+            ex.printStackTrace();
+          }
+        }
+      }
+      if (this.detailLabel.length() > 1) {
+        this.detailLabel.delete(this.detailLabel.length() - 2, this.detailLabel.length());
+      }
+      if (this.detailLabel.length() == 0) {
+        this.detailLabel = new StringBuilder("No further details  ");
+      }
+    }
+
+    var content = new StackPane(new Label(this.detailLabel.toString()));
+    content.setPadding(new Insets(10, 5, 10, 5));
+    content.setBackground(
+        new Background(new BackgroundFill(Color.WHITE, new CornerRadii(10), null)));
+    content.setEffect(new DropShadow());
+
+    var p = new Popup();
+    p.getContent().add(content);
+
+    DataViewController.popup.set(p);
   }
 
   public void initializeEquipmentTable() {

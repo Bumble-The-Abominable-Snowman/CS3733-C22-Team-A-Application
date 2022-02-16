@@ -1,10 +1,11 @@
 package edu.wpi.cs3733.c22.teamA.entities;
 
-import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import java.util.Date;
 import java.util.List;
+import lombok.Data;
 
-public class Employee extends RecursiveTreeObject<Employee> {
+@Data
+public class Employee {
 
   // TODO implement getting column names and add as static List to all
   // SEE DOCUMENT FOR SPECIFICS
@@ -40,67 +41,7 @@ public class Employee extends RecursiveTreeObject<Employee> {
     this.startDate = startDate;
   }
 
-  public String getEmployeeID() {
-    return employeeID;
-  }
-
-  public String getEmployeeType() {
-    return employeeType;
-  }
-
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public String getPhoneNum() {
-    return phoneNum;
-  }
-
-  public String getAddress() {
-    return address;
-  }
-
-  public Date getStartDate() {
-    return startDate;
-  }
-
-  public void setEmployeeID(String employeeID) {
-    this.employeeID = employeeID;
-  }
-
-  public void setEmployeeType(String employeeType) {
-    this.employeeType = employeeType;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public void setPhoneNum(String phoneNum) {
-    this.phoneNum = phoneNum;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
-  }
-
-  public void setStartDate(Date startDate) {
-    this.startDate = startDate;
+  public String getFullName() {
+    return this.firstName + " " + this.lastName;
   }
 }

@@ -31,7 +31,7 @@ public class SceneSwitcher {
   }
 
   private final HashMap<SCENES, String> screenMap = new HashMap<>();
-  private Scene currentScene;
+  public Scene currentScene;
 
   public SceneSwitcher() {
 

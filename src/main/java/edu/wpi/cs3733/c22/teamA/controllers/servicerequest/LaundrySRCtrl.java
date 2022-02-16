@@ -4,6 +4,8 @@ import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
+import edu.wpi.cs3733.c22.teamA.entities.Employee;
+import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.LaundrySR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
@@ -22,10 +24,6 @@ public class LaundrySRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> toLocationChoice;
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
-
-  //  LaundrySRCtrl() {
-  //    super();
-  //  }
 
   @FXML
   public void initialize() {
@@ -56,6 +54,10 @@ public class LaundrySRCtrl extends SRCtrl {
     washMode.getItems().removeAll(washMode.getItems());
     washMode.getItems().addAll("Colors", "Whites", "Perm. press", "Save the trees!");
     washMode.setValue("Wash Mode");
+
+    this.populateEmployeeAndLocationList();
+    this.populateEmployeeComboBox(this.employeeChoice);
+    this.populateLocationComboBox(this.toLocationChoice);
   }
 
   @FXML
@@ -65,18 +67,26 @@ public class LaundrySRCtrl extends SRCtrl {
     System.out.printf("Selected wash mode is : %s\n", washMode.getValue());
     System.out.printf("Added this note : \n[NOTE START]\n%s\n[NOTE END]\n", commentsBox.getText());
     if (!washMode.getValue().equals("Wash Mode")) {
+
+      int employeeIndex = this.employeeChoice.getSelectionModel().getSelectedIndex();
+      Employee employeeSelected = this.employeeList.get(employeeIndex);
+
+      int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
+      Location toLocationSelected = this.locationList.get(locationIndex);
+
       LaundrySR laundrySR =
           new LaundrySR(
               "LaundrySRID",
               "N/A",
-              "N/A",
+              toLocationSelected.getNodeID(),
               "001",
-              "002",
+              employeeSelected.getEmployeeID(),
               new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,
               SR.Priority.REGULAR,
               commentsBox.getText().equals("") ? "N/A" : commentsBox.getText());
 
+      laundrySR.setWashMode(this.washMode.getValue());
       ServiceRequestDerbyImpl<LaundrySR> serviceRequestDAO =
           new ServiceRequestDerbyImpl<>(new LaundrySR());
       serviceRequestDAO.enterServiceRequest(laundrySR);
