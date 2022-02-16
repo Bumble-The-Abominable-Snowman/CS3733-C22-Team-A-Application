@@ -871,7 +871,7 @@ public class DataViewCtrl extends MasterCtrl {
         });
   }
 
-  protected void onSceneSwitch(){
+  protected void onSceneSwitch() {
     DataViewCtrl.detailsPopup.get().hide();
     DataViewCtrl.modifyPopup.get().hide();
   }
