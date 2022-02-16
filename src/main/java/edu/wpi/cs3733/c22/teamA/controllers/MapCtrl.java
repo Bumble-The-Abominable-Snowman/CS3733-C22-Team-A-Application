@@ -363,7 +363,7 @@ public class MapCtrl extends MasterCtrl {
               clearAll();
               HashMap<String, LocationMarker> locationIDs = new HashMap<>();
               // Loops through every location filtered & draws them if present on the floor
-              //TODO clean this up somehow, need a new .contains type method
+              // TODO clean this up somehow, need a new .contains type method
               for (Location l : locations) {
                 System.out.println(l.getLongName());
                 for (Location ls : filteredLocations) {
@@ -741,6 +741,7 @@ public class MapCtrl extends MasterCtrl {
               button.setLayoutX(nearestLocation.getXCoord());
               button.setLayoutY(nearestLocation.getYCoord());
             }
+            updateOnRelease(button);
           }
         });
   }
@@ -962,6 +963,18 @@ public class MapCtrl extends MasterCtrl {
     String originalFloorName = floorName;
     floorSelectionComboBox.setValue("Choose Floor");
     floorSelectionComboBox.setValue(originalFloorName);
+  }
+
+  // Update Medical Equipment / Service Request on Drag Release
+  public void updateOnRelease(Button button) {
+    equipmentDAO.updateMedicalEquipment(
+        buttonEquipmentMarker.get(button).getEquipment().getEquipmentID(),
+        "xCoord",
+        button.getLayoutX());
+    equipmentDAO.updateMedicalEquipment(
+        buttonEquipmentMarker.get(button).getEquipment().getEquipmentID(),
+        "yCoord",
+        button.getLayoutY());
   }
 
   // Edit Location
