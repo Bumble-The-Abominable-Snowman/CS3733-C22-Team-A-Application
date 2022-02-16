@@ -1,12 +1,16 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
+import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SanitationSR;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -52,6 +56,16 @@ public class SanitationSRCtrl extends SRCtrl {
             new LocationDerbyImpl()
                 .getNodeList().stream().map(Location::getShortName).collect(Collectors.toList()));
     toLocationChoice.setVisibleRowCount(5);
+    employeeChoice.setVisibleRowCount(5);
+
+    EmployeeDAO EmployeeDAO = new EmployeeDerbyImpl();
+
+    employeeChoice
+        .getItems()
+        .addAll(
+            EmployeeDAO.getEmployeeList().stream()
+                .map(Employee::getFirstName)
+                .collect(Collectors.toList()));
   }
 
   @FXML

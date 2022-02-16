@@ -180,7 +180,7 @@ public class MapEditorController {
                   SRMarker serviceRequestMarker =
                       newDraggableServiceRequest(
                           serviceRequest, locationNames.get(serviceRequest.getEndLocation()));
-                  serviceRequestMarker.draw(anchorPane);
+                  serviceRequestMarker.draw(miniAnchorPane);
                 }
               }
             });
