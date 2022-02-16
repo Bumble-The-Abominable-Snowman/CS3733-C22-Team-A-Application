@@ -1,4 +1,4 @@
-package edu.wpi.cs3733.c22.teamA.controllers.map;
+package edu.wpi.cs3733.c22.teamA.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
@@ -11,7 +11,6 @@ import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
-import edu.wpi.cs3733.c22.teamA.controllers.HomeCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.map.Edge;
@@ -51,7 +50,7 @@ import net.kurobako.gesturefx.GesturePane;
 
 // TODO Change all instances of looping through locations to find related short names & node ids
 // with method in backend once implemented
-public class MapEditorController {
+public class MapCtrl extends MasterCtrl {
   @FXML private JFXComboBox pfFromComboBox;
   @FXML private JFXComboBox pfToComboBox;
   @FXML private JFXCheckBox locationCheckBox;
@@ -84,7 +83,9 @@ public class MapEditorController {
   @FXML private ImageView mapImageView = new ImageView();
 
   @FXML private GesturePane gesturePane;
-  Dimension2D transformed = new Dimension2D(967, 1050);
+
+  private LocationMarker newLocationMarker = null;
+  private Dimension2D transformed = new Dimension2D(967, 1050);
   private AnchorPane miniAnchorPane = new AnchorPane();
   private List<Line> pfLine = new ArrayList<>();
 
@@ -94,20 +95,21 @@ public class MapEditorController {
   private Polygon locationMarkerShape;
   private Polygon equipmentMarkerShape;
 
-  String floor;
-  String currentID;
-  Location selectedLocation;
+  private String floor;
+  private String floorName;
+  private String currentID;
+  private Location selectedLocation;
 
-  LocationDAO locationDAO = new LocationDerbyImpl();
-  EquipmentDAO equipmentDAO = new EquipmentDerbyImpl();
+  private LocationDAO locationDAO = new LocationDerbyImpl();
+  private EquipmentDAO equipmentDAO = new EquipmentDerbyImpl();
 
-  HashMap<Button, LocationMarker> buttonLocationMarker;
-  HashMap<Button, EquipmentMarker> buttonEquipmentMarker;
-  HashMap<Button, SRMarker> buttonServiceRequestMarker;
+  private HashMap<Button, LocationMarker> buttonLocationMarker;
+  private HashMap<Button, EquipmentMarker> buttonEquipmentMarker;
+  private HashMap<Button, SRMarker> buttonServiceRequestMarker;
 
   private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
-  public MapEditorController() {
+  public MapCtrl() {
     locationMarkerShape = new Polygon();
     equipmentMarkerShape = new Polygon();
     locationMarkerShape.getPoints().addAll(new Double[] {1.0, 4.0, 0.0, 2.0, 1.0, 0.0, 2.0, 2.0});
@@ -134,7 +136,7 @@ public class MapEditorController {
     setupCheckboxListeners();
     setupContextMenu();
     setInitialUIStates();
-    fillFromDB();
+
     setupSearchListener();
     setupFloor("Choose Floor:");
 
@@ -152,7 +154,7 @@ public class MapEditorController {
         .selectedItemProperty()
         .addListener(
             (obs, oldValue, newValue) -> {
-
+              fillFromDB();
               // Sets up floor on Map
               setupFloor(newValue.toString());
               clearAll();
@@ -286,7 +288,16 @@ public class MapEditorController {
 
   // Fills info from DB
   public void fillFromDB() {
+    locations.clear();
+    equipments.clear();
+    serviceRequests.clear();
     locations.addAll(new ArrayList<>(new LocationDerbyImpl().getNodeList()));
+    for (Location l : locations) {
+      if (l.getNodeID().equals("N/A")) {
+        locations.remove(l);
+        break;
+      }
+    }
     equipments.addAll(new ArrayList<>(new EquipmentDerbyImpl().getMedicalEquipmentList()));
     // TODO when implementation done
     try {
@@ -410,6 +421,7 @@ public class MapEditorController {
   public void setupFloor(String newValue) {
     if (newValue.equals("Choose Floor:")) {
       floor = "";
+      floorName = "";
       URL url = App.class.getResource("images/Side View.png");
       Image image = new Image(String.valueOf(url));
       mapImageView.setImage(image);
@@ -417,30 +429,35 @@ public class MapEditorController {
       showSideView();
     } else if (newValue.equals("Floor 1")) {
       floor = "1";
+      floorName = "Floor 1";
       URL url = App.class.getResource("images/1st Floor.png");
       Image image = new Image(String.valueOf(url));
       mapImageView.setImage(image);
       setupGesture();
     } else if (newValue.equals("Floor 2")) {
       floor = "2";
+      floorName = "Floor 2";
       URL url = App.class.getResource("images/2nd Floor.png");
       Image image = new Image(String.valueOf(url));
       mapImageView.setImage(image);
       setupGesture();
     } else if (newValue.equals("Floor 3")) {
       floor = "3";
+      floorName = "Floor 3";
       URL url = App.class.getResource("images/3rd Floor.png");
       Image image = new Image(String.valueOf(url));
       mapImageView.setImage(image);
       setupGesture();
     } else if (newValue.equals("L1")) {
       floor = "L1";
+      floorName = "L1";
       URL url = App.class.getResource("images/LL1.png");
       Image image = new Image(String.valueOf(url));
       mapImageView.setImage(image);
       setupGesture();
     } else {
       floor = "L2";
+      floorName = "L2";
       URL url = App.class.getResource("images/LL2.png");
       Image image = new Image(String.valueOf(url));
       mapImageView.setImage(image);
@@ -797,6 +814,10 @@ public class MapEditorController {
 
   // New location through right click
   public void newLocationPressed(int xCoord, int yCoord) {
+    if (newLocationMarker != null) {
+      System.out.println("SAVE THIS ONE FIRST");
+      return;
+    }
     Location newLocation =
         new Location(
             "NEWLOCATION",
@@ -808,6 +829,7 @@ public class MapEditorController {
             "New Location",
             "New Location");
     LocationMarker newLocationMarker = newDraggableLocation(newLocation);
+    this.newLocationMarker = newLocationMarker;
     newLocationMarker.draw(miniAnchorPane);
   }
 
@@ -815,7 +837,9 @@ public class MapEditorController {
   @FXML
   public void deleteLocation() {
     locationDAO.deleteLocationNode(nodeIDText.getText());
-    this.initialize();
+    String originalFloorName = floorName;
+    floorSelectionComboBox.setValue("Choose Floor");
+    floorSelectionComboBox.setValue(originalFloorName);
   }
 
   // Selected Location
@@ -898,27 +922,40 @@ public class MapEditorController {
 
   // Save Changes
   public void saveChanges() {
+    if (newLocationMarker != null && newLocationMarker.getLocation().equals(selectedLocation)) {
+      newLocationMarker.getLocation().setNodeID(nodeIDText.getText());
+      newLocationMarker.getLocation().setXCoord((int) Double.parseDouble(xPosText.getText()));
+      newLocationMarker.getLocation().setYCoord((int) Double.parseDouble(yPosText.getText()));
+      newLocationMarker.getLocation().setFloor(floorText.getText());
+      newLocationMarker.getLocation().setBuilding(buildingText.getText());
+      newLocationMarker.getLocation().setNodeType(typeText.getText());
+      newLocationMarker.getLocation().setLongName(longnameText.getText());
+      newLocationMarker.getLocation().setShortName(shortnameText.getText());
 
-    locationDAO.deleteLocationNode(currentID);
-    Location l =
-        new Location(
-            nodeIDText.getText(),
-            Integer.parseInt(xPosText.getText()),
-            Integer.parseInt(yPosText.getText()),
-            buildingText.getText(),
-            floorText.getText(),
-            typeText.getText(),
-            longnameText.getText(),
-            shortnameText.getText());
-    locationDAO.enterLocationNode(
-        l.getNodeID(),
-        l.getXCoord(),
-        l.getYCoord(),
-        l.getFloor(),
-        l.getBuilding(),
-        l.getNodeType(),
-        l.getLongName(),
-        l.getShortName());
+      locationDAO.enterLocationNode(newLocationMarker.getLocation());
+      newLocationMarker = null;
+      clearSubmission();
+      String originalFloorName = floorName;
+      floorSelectionComboBox.setValue("Choose Floor");
+      floorSelectionComboBox.setValue(originalFloorName);
+      System.out.println("here");
+      return;
+    }
+
+    locationDAO.updateLocation(
+        nodeIDText.getText(), "xCoord", (int) Double.parseDouble(xPosText.getText()));
+    locationDAO.updateLocation(
+        nodeIDText.getText(), "yCoord", (int) Double.parseDouble(yPosText.getText()));
+    locationDAO.updateLocation(nodeIDText.getText(), "floor", floorText.getText());
+    locationDAO.updateLocation(nodeIDText.getText(), "building", buildingText.getText());
+    locationDAO.updateLocation(nodeIDText.getText(), "nodeType", typeText.getText());
+    locationDAO.updateLocation(nodeIDText.getText(), "longName", longnameText.getText());
+    locationDAO.updateLocation(nodeIDText.getText(), "ShortName", shortnameText.getText());
+
+    clearSubmission();
+    String originalFloorName = floorName;
+    floorSelectionComboBox.setValue("Choose Floor");
+    floorSelectionComboBox.setValue(originalFloorName);
   }
 
   // Edit Location
