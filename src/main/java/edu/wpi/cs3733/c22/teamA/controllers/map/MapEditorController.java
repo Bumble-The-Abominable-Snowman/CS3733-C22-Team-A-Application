@@ -632,7 +632,7 @@ public class MapEditorController {
                     + dragDelta.buttonY);
 
             // TODO make sure math on this is right
-            if (markerType == 1) {
+            if (markerType == 1 || markerType == 2) {
               // standard circle radius around medical equipment markers, 30 is placeholder
               double radius = Math.sqrt(2 * Math.pow(10, 2));
               for (Location l : locations) {
@@ -674,7 +674,7 @@ public class MapEditorController {
     button.setOnMouseReleased(
         mouseEvent -> {
           button.setCursor(Cursor.HAND);
-          if (markerType == 1) {
+          if (markerType == 1 || markerType== 2) {
             boolean isSnapped = false;
             Location nearestLocation = locations.get(0);
             double radiusOfNearest = Integer.MAX_VALUE;
