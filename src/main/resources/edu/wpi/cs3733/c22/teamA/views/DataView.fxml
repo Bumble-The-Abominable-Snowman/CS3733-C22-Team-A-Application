@@ -15,8 +15,11 @@
 
 <GridPane prefHeight="600.0" prefWidth="960.0" styleClass="background" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.DataViewCtrl">
    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="319.93890380859375" minWidth="10.0" prefWidth="319.93890380859375" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="778.1488342285156" minWidth="10.0" prefWidth="640.0610961914062" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="378.40391540527344" minWidth="10.0" prefWidth="283.6412048339844" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="778.1488342285156" minWidth="1.85113525390625" prefWidth="18.858795166015625" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="778.1488342285156" minWidth="10.0" prefWidth="310.53057861328125" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="778.1488342285156" minWidth="10.0" prefWidth="340.133544921875" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="778.1488342285156" minWidth="10.0" prefWidth="23.866455078125" />
    </columnConstraints>
    <rowConstraints>
       <RowConstraints maxHeight="580.319091796875" minHeight="10.0" prefHeight="122.05036926269531" vgrow="SOMETIMES" />
@@ -25,26 +28,24 @@
       <RowConstraints maxHeight="290.0052185058594" minHeight="10.0" prefHeight="47.380126953125" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-       <Label fx:id="titleLabel" text="Data View" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+       <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="524.0" text="Data View" textFill="WHITE" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
            <font>
                <Font name="System Bold" size="32.0" />
            </font>
        </Label>
-       <JFXTreeTableView fx:id="table" prefHeight="146.0" prefWidth="709.0" showRoot="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-       <JFXButton alignment="CENTER" contentDisplay="CENTER" onAction="#deleteSelected" text="Delete Selected" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-      <GridPane alignment="CENTER" prefHeight="600.0" prefWidth="402.0" styleClass="background" stylesheets="@../css/styleSheet.css" GridPane.rowSpan="4">
+       <JFXTreeTableView fx:id="table" prefHeight="146.0" prefWidth="709.0" showRoot="false" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+       <JFXButton fx:id="addDataButton" alignment="CENTER" contentDisplay="CENTER" onAction="#addData" text="Add Data" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+      <JFXButton fx:id="deleteSelectedButton" alignment="CENTER" contentDisplay="CENTER" onAction="#deleteSelected" text="Delete Selected" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+      <GridPane fx:id="menuGrid" GridPane.rowSpan="4">
          <columnConstraints>
-            <ColumnConstraints />
-            <ColumnConstraints />
-            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1203.0" minWidth="-Infinity" prefWidth="260.2331085205078" />
+            <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints maxHeight="1529.9185028076172" minHeight="-Infinity" prefHeight="103.7584228515625" valignment="CENTER" vgrow="ALWAYS" />
-            <RowConstraints maxHeight="1600.5" minHeight="0.0" prefHeight="1423.7415771484375" valignment="CENTER" vgrow="NEVER" />
-            <RowConstraints maxHeight="1600.5" minHeight="10.0" prefHeight="72.8822021484375" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="68.51911544799805" minHeight="13.000980377197266" prefHeight="65.51813888549805" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="529.9990196228027" minHeight="10.0" prefHeight="477.48186111450195" vgrow="ALWAYS" />
          </rowConstraints>
          <children>
-            <GridPane GridPane.columnIndex="2">
+            <GridPane>
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -53,15 +54,15 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <JFXHamburger fx:id="hamburger" prefHeight="60.0" prefWidth="300.0" scaleX="1.5" scaleY="1.5" scaleZ="1.5" stylesheets="@../css/styleSheet.css" />
-                  <JFXButton fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" onAction="#goToHome" stylesheets="@../css/styleSheet.css" text="Back" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <JFXHamburger fx:id="hamburger" prefHeight="76.0" prefWidth="139.0" stylesheets="@../css/styleSheet.css" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
+                  <JFXButton fx:id="backButton" onAction="#goToHome" stylesheets="@../css/styleSheet.css" text="Back" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
-            <JFXDrawer fx:id="drawer" defaultDrawerSize="2000.0" overLayVisible="false" prefHeight="486.0" prefWidth="339.0" styleClass="menuBox" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <JFXDrawer fx:id="drawer" defaultDrawerSize="500.0" prefHeight="560.0" prefWidth="223.0" stylesheets="@../css/styleSheet.css" GridPane.rowIndex="1">
                <children>
-                  <VBox fx:id="menuBox" alignment="CENTER_LEFT" prefHeight="525.0" prefWidth="397.0" styleClass="menuBox" stylesheets="@../css/styleSheet.css">
+                  <VBox fx:id="menuBox" alignment="CENTER_LEFT" prefHeight="489.0" prefWidth="237.0" styleClass="menuBox" stylesheets="@../css/styleSheet.css">
                      <children>
-                        <JFXButton fx:id="newSRButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToSelectServiceRequest" prefHeight="60.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="New Service Request" textAlignment="CENTER" textFill="WHITE">
+                        <JFXButton fx:id="selectSRButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToSelectServiceRequest" prefHeight="60.0" prefWidth="1000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="New Service Request" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -70,7 +71,7 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <JFXButton fx:id="mapButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToMap" prefHeight="60.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Map" textAlignment="CENTER" textFill="WHITE">
+                        <JFXButton fx:id="mapButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToMap" prefHeight="60.0" prefWidth="1000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Map" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -79,7 +80,7 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <JFXButton fx:id="viewSRButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToServiceRequestData" prefHeight="60.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Service Requests" textAlignment="CENTER" textFill="WHITE">
+                        <JFXButton fx:id="viewSRButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToServiceRequestData" prefHeight="60.0" prefWidth="1000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Service Requests" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -88,7 +89,7 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <JFXButton fx:id="viewEmployeesButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToEmployeeData" prefHeight="60.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Employees" textAlignment="CENTER" textFill="WHITE">
+                        <JFXButton fx:id="viewEmployeesButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToEmployeeData" prefHeight="60.0" prefWidth="1000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Employees" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -106,7 +107,7 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <JFXButton fx:id="viewEquipmentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToEquipmentData" prefHeight="60.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Equipment" textAlignment="CENTER" textFill="WHITE">
+                        <JFXButton fx:id="viewEquipmentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToEquipmentData" prefHeight="60.0" prefWidth="1000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Equipment" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -133,11 +134,20 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <JFXButton fx:id="logOutButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToLogin" prefHeight="60.0" prefWidth="1000.0" snapToPixel="false" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Log Out" textAlignment="CENTER" textFill="WHITE">
+                        <JFXButton fx:id="loginButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToLogin" prefHeight="60.0" prefWidth="1000.0" snapToPixel="false" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Log Out" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/mail.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="homeButton" alignment="BASELINE_LEFT" layoutX="11.0" layoutY="229.0" mnemonicParsing="false" onAction="#goToHome" prefHeight="60.0" prefWidth="1000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Home" textAlignment="CENTER" textFill="WHITE">
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/home_2.png" />
                                  </image>
                               </ImageView>
                            </graphic>
