@@ -84,6 +84,18 @@ public class DefaultTest {
 
     // Testing if we can reload a file we wrote
     equipmentSRServiceRequestDerby.populateFromCSV(filepath);
+
+    // Testing export all
+    Adb.exportAllToCSV("test");
+
+    String testAllPath = "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/test/";
+
+    // Testing if we can populate from the exportAll files
+    EmployeeDerbyImpl.inputFromCSV("", testAllPath + "Employee.csv");
+    System.out.println("Printing out all Employees");
+    EmployeeDerbyImpl employeeDerby = new EmployeeDerbyImpl();
+    System.out.println(employeeDerby.getEmployeeList());
+    // LocationDerbyImpl.inputFromCSV("", testAllPath + "TowerLocations.csv");
   }
 
   @Test

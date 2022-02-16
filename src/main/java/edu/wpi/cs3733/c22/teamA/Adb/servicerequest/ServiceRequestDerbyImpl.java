@@ -349,6 +349,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
       throws IOException, ParseException, InvocationTargetException, IllegalAccessException,
           SQLException {
     refreshVariables();
+    System.out.println("STARTING SERVICEREQUEST.POPULATEFROMCSV");
 
     // delete all before populating
     List<T> serviceRequestList = this.getServiceRequestList();

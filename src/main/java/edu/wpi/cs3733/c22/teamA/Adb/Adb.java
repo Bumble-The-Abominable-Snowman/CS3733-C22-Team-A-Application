@@ -1,6 +1,15 @@
 package edu.wpi.cs3733.c22.teamA.Adb;
 
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
+import java.text.ParseException;
 
 public class Adb {
 
@@ -450,5 +459,73 @@ public class Adb {
     // ourselves into a corner.
     s.executeUpdate(setProperty + propertiesOnly + ", 'false')");
     s.close();
+  }
+
+  public static void exportAllToCSV(String folderName)
+      throws IOException, SQLException, ParseException, InvocationTargetException,
+          IllegalAccessException {
+    String csvBasePath = "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/";
+    String dirPath = csvBasePath + folderName;
+    File newFolder = new File(dirPath);
+
+    // Creating the directory
+    boolean b = newFolder.mkdirs();
+    if (b) {
+      System.out.println("Directory created successfully");
+    } else {
+      System.out.println("Sorry couldnt create specified directory");
+    }
+
+    EmployeeDerbyImpl.exportToCSV("", dirPath + "/Employee.csv");
+
+    LocationDerbyImpl.exportToCSV("", dirPath + "/TowerLocations.csv");
+
+    EquipmentDerbyImpl.exportToCSV("", dirPath + "/Equipment.csv");
+
+    // Service Requests
+    ServiceRequestDerbyImpl<EquipmentSR> equipmentSRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new EquipmentSR());
+    equipmentSRServiceRequestDerby.exportToCSV(dirPath + "/MedicalEquipmentServiceRequest.csv");
+
+    ServiceRequestDerbyImpl<FloralDeliverySR> floralDeliverySRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new FloralDeliverySR());
+    floralDeliverySRServiceRequestDerby.exportToCSV(dirPath + "/FloralDeliveryServiceRequest.csv");
+
+    ServiceRequestDerbyImpl<FoodDeliverySR> foodDeliverySRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new FoodDeliverySR());
+    foodDeliverySRServiceRequestDerby.exportToCSV(dirPath + "/FoodDeliveryServiceRequest.csv");
+
+    ServiceRequestDerbyImpl<GiftDeliverySR> giftDeliverySRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new GiftDeliverySR());
+    giftDeliverySRServiceRequestDerby.exportToCSV(dirPath + "/GiftDeliveryServiceRequest.csv");
+
+    ServiceRequestDerbyImpl<LanguageSR> languageSRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new LanguageSR());
+    languageSRServiceRequestDerby.exportToCSV(dirPath + "/LanguageServiceRequest.csv");
+
+    ServiceRequestDerbyImpl<LaundrySR> laundrySRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new LaundrySR());
+    laundrySRServiceRequestDerby.exportToCSV(dirPath + "/LaundryServiceRequest.csv");
+
+    ServiceRequestDerbyImpl<MaintenanceSR> maintenanceSRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new MaintenanceSR());
+    maintenanceSRServiceRequestDerby.exportToCSV(dirPath + "/MaintenanceServiceRequest.csv");
+
+    ServiceRequestDerbyImpl<MedicineDeliverySR> medicineDeliverySRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new MedicineDeliverySR());
+    medicineDeliverySRServiceRequestDerby.exportToCSV(
+        dirPath + "/MedicineDeliveryServiceRequest.csv");
+
+    ServiceRequestDerbyImpl<ReligiousSR> religiousSRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new ReligiousSR());
+    religiousSRServiceRequestDerby.exportToCSV(dirPath + "/ReligiousServiceRequest.csv");
+
+    ServiceRequestDerbyImpl<SanitationSR> sanitationSRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new SanitationSR());
+    sanitationSRServiceRequestDerby.exportToCSV(dirPath + "/SanitationServiceRequest.csv");
+
+    ServiceRequestDerbyImpl<SecuritySR> securitySRServiceRequestDerby =
+        new ServiceRequestDerbyImpl<>(new SecuritySR());
+    securitySRServiceRequestDerby.exportToCSV(dirPath + "/SecurityServiceRequest.csv");
   }
 }
