@@ -29,7 +29,8 @@ import javafx.stage.FileChooser;
 
 public class LoadBackupCtrl extends MasterCtrl {
 
-  @FXML private JFXButton loadFromBackupButton;
+  @FXML private JFXButton loadBackupButton;
+  @FXML private JFXButton loadAllCSVButton;
   @FXML private JFXComboBox<String> TypeCSV;
   @FXML private Text selectedFileText;
   @FXML private ListView<String> fileList;
@@ -42,19 +43,16 @@ public class LoadBackupCtrl extends MasterCtrl {
 
     this.refreshFiles();
 
-    double loadFromBackupTextSize = loadFromBackupButton.getFont().getSize();
-    // double TypeCSVTextSize = TypeCSV.getFont().getSize();
+    double loadBackupTextSize = loadBackupButton.getFont().getSize();
     double selectedFileTextSize = selectedFileText.getFont().getSize();
-    // double fileListTextSize = fileList.getFont().getSize();
-    // double lastSelectedFileTextSize = lastSelectedFile.getFont().getSize();
 
     App.getStage()
         .widthProperty()
         .addListener(
             (obs, oldVal, newVal) -> {
-              loadFromBackupButton.setStyle(
+              loadBackupButton.setStyle(
                   "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * loadFromBackupTextSize)
+                      + ((App.getStage().getWidth() / 1000) * loadBackupTextSize)
                       + "pt;");
               selectedFileText.setStyle(
                   "-fx-font-size: "
@@ -115,23 +113,26 @@ public class LoadBackupCtrl extends MasterCtrl {
   @FXML
   public void refreshFiles() {
     File f = new File("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/");
-
+    // File f = new File(String.valueOf(App.class.getResourceAsStream("db/CSVs/")));
+    // File f = new File(String.valueOf(App.class.getResource("db/CSVs/")));
     ObservableList<String> items = FXCollections.observableArrayList();
-
-    for (String pathname : Objects.requireNonNull(f.list())) {
-      if (pathname.toLowerCase().endsWith(".csv")) {
-        items.add(pathname);
+    try {
+      for (String pathname : Objects.requireNonNull(f.list())) {
+        if (pathname.toLowerCase().endsWith(".csv")) {
+          items.add(pathname);
+        }
       }
+    } catch (Exception e) {
+      items.add("Please add files manually");
     }
 
     Collections.sort(items);
     fileList.setItems(items);
   }
 
-  public void loadFromBackup()
+  public void loadBackup()
       throws IOException, ParseException, InvocationTargetException, IllegalAccessException,
           SQLException {
-    //    String filepath = "edu/wpi/cs3733/c22/teamA/db/CSVs/" + lastSelectedFile;
 
     try {
       if (!TypeCSV.getValue().equals("CSV Type") && lastSelectedFile.length() > 4) {
@@ -229,8 +230,12 @@ public class LoadBackupCtrl extends MasterCtrl {
     String[] arrOfStr = lastSelectedFile.split("/");
     selectedFileText.setText(arrOfStr[arrOfStr.length - 1]);
     selectedFileText.setFill(Color.BLACK);
+  }
 
-    //    this.loadFromBackup(actionEvent);
+  @FXML
+  public void loadAllCSV() {
+
+    // Add load all CSV code here
 
   }
 }

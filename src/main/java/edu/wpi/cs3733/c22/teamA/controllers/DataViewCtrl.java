@@ -1,9 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTreeTableColumn;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
@@ -13,29 +10,24 @@ import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
-import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
@@ -49,7 +41,7 @@ import javafx.stage.Popup;
 public class DataViewCtrl extends MasterCtrl {
 
   @FXML
-  public void deleteSelected(ActionEvent actionEvent)
+  public void deleteSelected()
       throws SQLException, InvocationTargetException, IllegalAccessException {
     System.out.println(table.getSelectionModel().getSelectedItem().getValue().sr);
 
@@ -83,6 +75,134 @@ public class DataViewCtrl extends MasterCtrl {
     }
   }
 
+  @FXML
+  public void addData() {
+
+    if (HomeCtrl.sceneFlag == 3) {
+
+      DataViewCtrl.addPopup.get().hide();
+
+      // cancel button
+      JFXButton cancelUpdateButton = new JFXButton();
+      cancelUpdateButton.setText("X");
+
+      cancelUpdateButton.setOnAction(
+          event -> {
+            DataViewCtrl.addPopup.get().hide();
+          });
+
+      Label equipmentIDLabel = new Label("equipmentID");
+      Label equipmentTypeLabel = new Label("equipmentType");
+      Label isCleanLabel = new Label("isClean");
+      Label currentLocationLabel = new Label("currentLocation");
+      Label isAvailableLabel = new Label("isAvailable");
+
+      equipmentIDLabel.setPadding(new Insets(10, 10, 10, 5));
+      equipmentTypeLabel.setPadding(new Insets(10, 10, 10, 5));
+      isCleanLabel.setPadding(new Insets(10, 10, 10, 5));
+      currentLocationLabel.setPadding(new Insets(10, 10, 10, 5));
+      isAvailableLabel.setPadding(new Insets(10, 10, 10, 5));
+      cancelUpdateButton.setStyle("-fx-alignment: center ;");
+      cancelUpdateButton.setAlignment(Pos.CENTER);
+
+      // value text area
+      TextArea equipmentIDText = new TextArea();
+      equipmentIDText.setPromptText("Enter equipmentID:");
+      equipmentIDText.setMinSize(50, 30);
+      equipmentIDText.setMaxSize(150, 30);
+
+      TextArea equipmentTypeText = new TextArea();
+      equipmentTypeText.setPromptText("Enter equipmentType:");
+      equipmentTypeText.setMinSize(50, 30);
+      equipmentTypeText.setMaxSize(150, 30);
+
+      JFXCheckBox isCleanCheckBox = new JFXCheckBox();
+
+      TextArea currentLocationText = new TextArea();
+      currentLocationText.setPromptText("Enter currentLocation:");
+      currentLocationText.setMinSize(50, 30);
+      currentLocationText.setMaxSize(150, 30);
+
+      JFXCheckBox isAvailableCheckBox = new JFXCheckBox();
+
+      JFXButton updateButton = new JFXButton();
+      updateButton.setText("Update");
+
+      updateButton.setOnAction(
+          e -> {
+            if (equipmentIDText.getText().length() > 2
+                && equipmentTypeText.getText().length() > 2
+                && currentLocationText.getText().length() > 2) {
+              EquipmentDerbyImpl equipmentDerby = new EquipmentDerbyImpl();
+              equipmentDerby.enterMedicalEquipment(
+                  equipmentIDText.getText(),
+                  equipmentTypeText.getText(),
+                  isCleanCheckBox.isSelected(),
+                  currentLocationText.getText(),
+                  isAvailableCheckBox.isSelected());
+              updateButton.setTextFill(Color.GREEN);
+            } else {
+              updateButton.setTextFill(Color.RED);
+            }
+          });
+
+      // add it to the scene
+      var content = new GridPane();
+      content.setRowIndex(equipmentIDLabel, 0);
+      content.setColumnIndex(equipmentIDLabel, 0);
+      content.setRowIndex(equipmentTypeLabel, 1);
+      content.setColumnIndex(equipmentTypeLabel, 0);
+      content.setRowIndex(isCleanLabel, 2);
+      content.setColumnIndex(isCleanLabel, 0);
+      content.setRowIndex(currentLocationLabel, 3);
+      content.setColumnIndex(currentLocationLabel, 0);
+      content.setRowIndex(isAvailableLabel, 4);
+      content.setColumnIndex(isAvailableLabel, 0);
+      content.setRowIndex(cancelUpdateButton, 5);
+      content.setColumnIndex(cancelUpdateButton, 0);
+
+      content.setRowIndex(equipmentIDText, 0);
+      content.setColumnIndex(equipmentIDText, 1);
+      content.setRowIndex(equipmentTypeText, 1);
+      content.setColumnIndex(equipmentTypeText, 1);
+      content.setRowIndex(isCleanCheckBox, 2);
+      content.setColumnIndex(isCleanCheckBox, 1);
+      content.setRowIndex(currentLocationText, 3);
+      content.setColumnIndex(currentLocationText, 1);
+      content.setRowIndex(isAvailableCheckBox, 4);
+      content.setColumnIndex(isAvailableCheckBox, 1);
+      content.setRowIndex(updateButton, 5);
+      content.setColumnIndex(updateButton, 1);
+
+      content
+          .getChildren()
+          .addAll(
+              equipmentIDLabel,
+              equipmentTypeLabel,
+              isCleanLabel,
+              currentLocationLabel,
+              isAvailableLabel,
+              cancelUpdateButton,
+              equipmentIDText,
+              equipmentTypeText,
+              isCleanCheckBox,
+              currentLocationText,
+              isAvailableCheckBox,
+              updateButton);
+
+      content.setPadding(new Insets(10, 5, 10, 5));
+      content.setBackground(
+          new Background(new BackgroundFill(Color.WHITE, new CornerRadii(10), null)));
+      content.setEffect(new DropShadow());
+
+      var p = new Popup();
+      p.getContent().add(content);
+
+      DataViewCtrl.addPopup.set(p);
+      DataViewCtrl.addPopup.get().show(App.getStage());
+    }
+  }
+
   static class RecursiveObj extends RecursiveTreeObject<RecursiveObj> {
     public SR sr;
     public Location locStart;
@@ -94,20 +214,60 @@ public class DataViewCtrl extends MasterCtrl {
     public Employee employee;
   }
 
-  @FXML JFXButton backButton;
   @FXML Label titleLabel;
   @FXML JFXTreeTableView<RecursiveObj> table;
+
+  @FXML JFXButton addDataButton;
+  @FXML JFXButton deleteSelectedButton;
 
   boolean fillerYes = true;
 
   private StringBuilder detailLabel = new StringBuilder("No further details  ");
   private List<Object> srList = new ArrayList<>();
-  public static AtomicReference<Popup> popup = new AtomicReference<>(new Popup());
+  private List<Location> locList = new ArrayList<>();
+  private List<Equipment> eqList = new ArrayList<>();
+  private List<Employee> empList = new ArrayList<>();
+  public static AtomicReference<Popup> detailsPopup = new AtomicReference<>(new Popup());
+  public static AtomicReference<Popup> modifyPopup = new AtomicReference<>(new Popup());
+  public static AtomicReference<Popup> addPopup = new AtomicReference<>(new Popup());
 
-  private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
+  String[] locationColumnNames = {
+    "ID",
+    "Room Name",
+    "Floor Number",
+    "Store XRAY?",
+    "Store Beds?",
+    "Store I. Pumps?",
+    "Store Recliners?"
+  };
+
+  String[] srColumnNames = {
+    "Type",
+    "ID",
+    "Start Location",
+    "End Location",
+    "Requested By",
+    "Employee Assigned",
+    "Request Time",
+    "Status",
+    "Priority",
+    "Comments"
+  };
+
+  String[] equipmentColumnNames = {"ID", "Type", "Is Clean?", "Location", "Is Available?"};
+
+  String[] employeeColumnNames = {
+    "ID", "Type", "First Name", "Last Name", "Email", "Phone Number", "Address", "Start Date"
+  };
+
+  AtomicReference<Point2D> point = new AtomicReference<>(new Point2D(0., 0.));
+
+  ContextMenu rightClickMenu = new ContextMenu();
+  MenuItem viewDetails = new MenuItem("View Details");
+  MenuItem modify = new MenuItem("Modify");
 
   public void initialize() throws SQLException, InvocationTargetException, IllegalAccessException {
-    double backTextSize = backButton.getFont().getSize();
+
     double titleTextSize = titleLabel.getFont().getSize();
 
     configure();
@@ -116,8 +276,6 @@ public class DataViewCtrl extends MasterCtrl {
         .widthProperty()
         .addListener(
             (obs, oldVal, newVal) -> {
-              backButton.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * backTextSize) + "pt;");
               titleLabel.setStyle(
                   "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * titleTextSize) + "pt;");
             });
@@ -140,67 +298,58 @@ public class DataViewCtrl extends MasterCtrl {
   }
 
   public void initializeLocationTable() {
-    // Create all columns in the tracker table
-    JFXTreeTableColumn<RecursiveObj, String> id = new JFXTreeTableColumn<>("ID");
-    JFXTreeTableColumn<RecursiveObj, String> name = new JFXTreeTableColumn<>("Room Name");
-    JFXTreeTableColumn<RecursiveObj, String> floorNum = new JFXTreeTableColumn<>("Floor Number");
-    JFXTreeTableColumn<RecursiveObj, String> storeXRAY = new JFXTreeTableColumn<>("Store XRAY?");
-    JFXTreeTableColumn<RecursiveObj, String> storeBed = new JFXTreeTableColumn<>("Store Beds?");
-    JFXTreeTableColumn<RecursiveObj, String> storePump =
-        new JFXTreeTableColumn<>("Store I. Pumps?");
-    JFXTreeTableColumn<RecursiveObj, String> storeRecliner =
-        new JFXTreeTableColumn<>("Store Recliners?");
 
-    id.setPrefWidth(80);
-    name.setPrefWidth(80);
-    floorNum.setPrefWidth(80);
-    storeXRAY.setPrefWidth(80);
-    storeBed.setPrefWidth(80);
-    storePump.setPrefWidth(80);
-    storeRecliner.setPrefWidth(80);
+    List<JFXTreeTableColumn<RecursiveObj, String>> locationColumns = new ArrayList<>();
 
-    id.setStyle("-fx-alignment: center ;");
-    name.setStyle("-fx-alignment: center ;");
-    floorNum.setStyle("-fx-alignment: center ;");
-    storeXRAY.setStyle("-fx-alignment: center ;");
-    storeBed.setStyle("-fx-alignment: center ;");
-    storePump.setStyle("-fx-alignment: center ;");
-    storeRecliner.setStyle("-fx-alignment: center ;");
+    for (String columnName : this.locationColumnNames) {
+      JFXTreeTableColumn<RecursiveObj, String> column = new JFXTreeTableColumn<>(columnName);
+      column.setPrefWidth(80);
+      column.setStyle("-fx-alignment: center ;");
 
-    id.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().loc.getNodeID()));
-    name.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().loc.getLongName()));
-    floorNum.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().loc.getFloor()));
-    // the following code has to be implemented when a location's medical equipment is known.
-    // eahc is currently filled with filler Yes values, which represent that atm every room
-    // can store every equipment. In the future, this will not be true and must be updated
-    storeXRAY.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(fillerYes ? "Yes" : "No"));
-    // new SimpleStringProperty(param.getValue().getValue().getCanStoreXRAY()));
-    storeBed.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(fillerYes ? "Yes" : "No"));
-    // new SimpleStringProperty(param.getValue().getValue().getCanStoreBed()));
-    storePump.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(fillerYes ? "Yes" : "No"));
-    // new SimpleStringProperty(param.getValue().getValue().getCanStorePump()));
-    storeRecliner.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(fillerYes ? "Yes" : "No"));
-    // new SimpleStringProperty(param.getValue().getValue().getCanStoreRecliner()));
+      locationColumns.add(column);
+    }
+
+    locationColumns
+        .get(0)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().loc.getNodeID()));
+    locationColumns
+        .get(1)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().loc.getLongName()));
+    locationColumns
+        .get(2)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().loc.getFloor()));
+    locationColumns
+        .get(3)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(fillerYes ? "Yes" : "No"));
+    locationColumns
+        .get(4)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(fillerYes ? "Yes" : "No"));
+    locationColumns
+        .get(5)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(fillerYes ? "Yes" : "No"));
+    locationColumns
+        .get(6)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(fillerYes ? "Yes" : "No"));
 
     // Grab location / equipment from database, these are dummies
     LocationDAO locationBase = new LocationDerbyImpl();
-    List<Location> locationFromDatabase = locationBase.getNodeList();
+    this.locList = locationBase.getNodeList();
     ObservableList<RecursiveObj> locations = FXCollections.observableArrayList();
-    for (Location currLoc : locationFromDatabase) {
+    for (Location currLoc : this.locList) {
       RecursiveObj recursiveLoc = new RecursiveObj();
       recursiveLoc.loc = currLoc;
       locations.add(recursiveLoc);
@@ -208,81 +357,76 @@ public class DataViewCtrl extends MasterCtrl {
     // Sets up the table and puts the location data under the columns
     final TreeItem<RecursiveObj> root =
         new RecursiveTreeItem<>(locations, RecursiveTreeObject::getChildren);
-    this.table
-        .getColumns()
-        .setAll(id, name, floorNum, storeXRAY, storeBed, storePump, storeRecliner);
+
+    table.getColumns().setAll(locationColumns);
     this.table.setRoot(root);
+
+    this.setupViewDetailsAndModify();
   }
 
   public void initializeRequestsTable()
       throws SQLException, InvocationTargetException, IllegalAccessException {
 
-    // Create all columns in the tracker table
-    JFXTreeTableColumn<RecursiveObj, String> reqType = new JFXTreeTableColumn<>("Type");
-    JFXTreeTableColumn<RecursiveObj, String> reqID = new JFXTreeTableColumn<>("ID");
-    JFXTreeTableColumn<RecursiveObj, String> startLoc = new JFXTreeTableColumn<>("Start Location");
-    JFXTreeTableColumn<RecursiveObj, String> endLoc = new JFXTreeTableColumn<>("End Location");
-    JFXTreeTableColumn<RecursiveObj, String> employeeReq = new JFXTreeTableColumn<>("Requested By");
-    JFXTreeTableColumn<RecursiveObj, String> employeeAss =
-        new JFXTreeTableColumn<>("Employee Assigned");
-    JFXTreeTableColumn<RecursiveObj, String> reqTime = new JFXTreeTableColumn<>("Request Time");
-    JFXTreeTableColumn<RecursiveObj, String> reqStatus = new JFXTreeTableColumn<>("Status");
-    JFXTreeTableColumn<RecursiveObj, String> reqPriority = new JFXTreeTableColumn<>("Priority");
-    JFXTreeTableColumn<RecursiveObj, String> comments = new JFXTreeTableColumn<>("Comments");
+    List<JFXTreeTableColumn<RecursiveObj, String>> srColumns = new ArrayList<>();
 
-    reqType.setPrefWidth(80);
-    reqID.setPrefWidth(80);
-    startLoc.setPrefWidth(80);
-    endLoc.setPrefWidth(80);
-    employeeReq.setPrefWidth(80);
-    employeeAss.setPrefWidth(80);
-    reqTime.setPrefWidth(80);
-    reqStatus.setPrefWidth(80);
-    comments.setPrefWidth(80);
-    reqPriority.setPrefWidth(80);
+    for (String columnName : this.srColumnNames) {
+      JFXTreeTableColumn<RecursiveObj, String> column = new JFXTreeTableColumn<>(columnName);
+      column.setPrefWidth(80);
+      column.setStyle("-fx-alignment: center ;");
 
-    reqType.setStyle("-fx-alignment: center ;");
-    reqID.setStyle("-fx-alignment: center ;");
-    startLoc.setStyle("-fx-alignment: center ;");
-    endLoc.setStyle("-fx-alignment: center ;");
-    employeeReq.setStyle("-fx-alignment: center ;");
-    employeeAss.setStyle("-fx-alignment: center ;");
-    reqTime.setStyle("-fx-alignment: center ;");
-    reqStatus.setStyle("-fx-alignment: center ;");
-    comments.setStyle("-fx-alignment: center ;");
-    reqPriority.setStyle("-fx-alignment: center ;");
+      srColumns.add(column);
+    }
 
-    reqType.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().sr.getSrType().toString()));
-    reqID.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().sr.getRequestID()));
-    startLoc.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().locStart.getShortName()));
-    endLoc.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().locEnd.getShortName()));
-    employeeReq.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().employeeReq.getFullName()));
-    employeeAss.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().employeeAss.getFullName()));
-    reqTime.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().sr.getRequestTime()));
-    reqStatus.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().sr.getRequestStatus()));
-    comments.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().sr.getComments()));
-    reqPriority.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().sr.getRequestPriority()));
-    //    ServiceRequestDAO serviceRequestBase = new ServiceRequestDerbyImpl(new FoodDeliverySR());
+    srColumns
+        .get(0)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().sr.getSrType().toString()));
+    srColumns
+        .get(1)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().sr.getRequestID()));
+    srColumns
+        .get(2)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().locStart.getShortName()));
+    srColumns
+        .get(3)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().locEnd.getShortName()));
+    srColumns
+        .get(4)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().employeeReq.getFullName()));
+    srColumns
+        .get(5)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().employeeAss.getFullName()));
+    srColumns
+        .get(6)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().sr.getRequestTime()));
+    srColumns
+        .get(7)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().sr.getRequestStatus()));
+    srColumns
+        .get(8)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().sr.getComments()));
+    srColumns
+        .get(9)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().sr.getRequestPriority()));
 
     this.srList = ServiceRequestDerbyImpl.getAllServiceRequestList();
     ObservableList<RecursiveObj> requests = FXCollections.observableArrayList();
@@ -300,109 +444,152 @@ public class DataViewCtrl extends MasterCtrl {
 
     // Sets up the table and puts the equipment data under the columns
     final TreeItem<RecursiveObj> root =
-        new RecursiveTreeItem<RecursiveObj>(requests, RecursiveTreeObject::getChildren);
+        new RecursiveTreeItem<>(requests, RecursiveTreeObject::getChildren);
 
-    table
-        .getColumns()
-        .setAll(
-            reqType,
-            reqID,
-            startLoc,
-            endLoc,
-            employeeReq,
-            employeeAss,
-            reqTime,
-            reqStatus,
-            reqPriority,
-            comments);
+    table.getColumns().setAll(srColumns);
     table.setRoot(root);
 
-    //    AtomicLong sinceOnTable = new AtomicLong(Clock.systemDefaultZone().millis());
-    //    AtomicLong sinceNotOnTable = new AtomicLong(Clock.systemDefaultZone().millis());
-    //    AtomicBoolean mouseOnTable = new AtomicBoolean(false);
-    AtomicReference<Point2D> point = new AtomicReference<>(new Point2D(0., 0.));
-    //    sceneSwitcher.currentScene.setOnMouseMoved(
-    //        e -> {
-    //          sinceNotOnTable.set(Clock.systemDefaultZone().millis());
-    //        });
-    //
-    //    table.setOnMouseMoved(
-    //        e -> {
-    //          point.set(table.localToScreen(e.getX(), e.getY()));
-    //          sinceOnTable.set(Clock.systemDefaultZone().millis());
-    //        });
-    //
-    //    System.out.println(table.getBorder());
-    //
-
-    AtomicBoolean showPopUp = new AtomicBoolean(false);
-    Task task =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            final int[] waitTime = {100};
-            while (true) {
-              Platform.runLater(
-                  new Runnable() {
-                    @Override
-                    public void run() {
-                      if (showPopUp.get()) {
-                        DataViewCtrl.popup
-                            .get()
-                            .show(App.getStage(), point.get().getX(), point.get().getY());
-                      } else {
-                        DataViewCtrl.popup.get().hide();
-                      }
-                    }
-                  });
-
-              TimeUnit.MILLISECONDS.sleep(waitTime[0]);
-            }
-          }
-        };
-    new Thread(task).start();
-
-    ContextMenu rightClickMenu = new ContextMenu();
-    MenuItem viewDetails = new MenuItem("View Details");
-    MenuItem modify = new MenuItem("Modify");
-    rightClickMenu.getItems().addAll(viewDetails);
-    rightClickMenu.getItems().addAll(modify);
-
-    viewDetails.setOnAction(
-        e -> {
-          rightClickMenu.hide();
-          try {
-            this.createNewPopup();
-          } catch (InvocationTargetException | IllegalAccessException ex) {
-            ex.printStackTrace();
-          }
-          showPopUp.set(true);
-        });
-    modify.setOnAction(
-        e -> {
-          System.out.println("Modify baby");
-          rightClickMenu.hide();
-        });
-
-    table.setOnMouseClicked(
-        e -> {
-          if (e.getButton() == MouseButton.PRIMARY) {
-            showPopUp.set(false);
-          }
-          if (e.getButton() == MouseButton.SECONDARY) {
-            point.set(new Point2D(e.getScreenX(), e.getScreenY()));
-            rightClickMenu.show(table, e.getScreenX(), e.getScreenY());
-            showPopUp.set(false);
-          }
-        });
+    this.setupViewDetailsAndModify();
   }
 
-  private void createNewPopup() throws InvocationTargetException, IllegalAccessException {
-    DataViewCtrl.popup.get().hide();
+  public void initializeEquipmentTable() {
+
+    List<JFXTreeTableColumn<RecursiveObj, String>> equipmentColumns = new ArrayList<>();
+
+    for (String columnName : this.equipmentColumnNames) {
+      JFXTreeTableColumn<RecursiveObj, String> column = new JFXTreeTableColumn<>(columnName);
+      column.setPrefWidth(100);
+      column.setStyle("-fx-alignment: center ;");
+
+      equipmentColumns.add(column);
+    }
+
+    equipmentColumns
+        .get(0)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().equip.getEquipmentID()));
+    equipmentColumns
+        .get(1)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().equip.getEquipmentType()));
+    equipmentColumns
+        .get(2)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(
+                    param.getValue().getValue().equip.getIsClean() ? "Yes" : "No"));
+    equipmentColumns
+        .get(3)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().equip.getCurrentLocation()));
+    equipmentColumns
+        .get(4)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(
+                    param.getValue().getValue().equip.getIsAvailable() ? "Yes" : "No"));
+
+    // Grab equipment from database
+    EquipmentDAO database = new EquipmentDerbyImpl();
+    this.eqList = database.getMedicalEquipmentList();
+    ObservableList<RecursiveObj> equipment = FXCollections.observableArrayList();
+    for (Equipment item : this.eqList) {
+      RecursiveObj recursiveEquipment = new RecursiveObj();
+      recursiveEquipment.equip = item;
+      equipment.add(recursiveEquipment);
+    }
+
+    // Sets up the table and puts the equipment data under the columns
+    final TreeItem<RecursiveObj> root =
+        new RecursiveTreeItem<>(equipment, RecursiveTreeObject::getChildren);
+    table.getColumns().setAll(equipmentColumns);
+    table.setRoot(root);
+
+    this.setupViewDetailsAndModify();
+  }
+
+  public void initializeEmployeeTable() {
+
+    List<JFXTreeTableColumn<RecursiveObj, String>> employeeColumns = new ArrayList<>();
+
+    for (String columnName : this.employeeColumnNames) {
+      JFXTreeTableColumn<RecursiveObj, String> column = new JFXTreeTableColumn<>(columnName);
+      column.setPrefWidth(80);
+      column.setStyle("-fx-alignment: center ;");
+
+      employeeColumns.add(column);
+    }
+
+    employeeColumns
+        .get(0)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().employee.getEmployeeID()));
+    employeeColumns
+        .get(1)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().employee.getEmployeeType()));
+    employeeColumns
+        .get(2)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().employee.getFirstName()));
+    employeeColumns
+        .get(3)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().employee.getLastName()));
+    employeeColumns
+        .get(4)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().employee.getEmail()));
+    employeeColumns
+        .get(5)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().employee.getPhoneNum()));
+    employeeColumns
+        .get(6)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(param.getValue().getValue().employee.getAddress()));
+    employeeColumns
+        .get(7)
+        .setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                new SimpleStringProperty(
+                    param.getValue().getValue().employee.getStartDate().toString()));
+
+    // Grab location / equipment from database, these are dummies
+    EmployeeDAO employeeBase = new EmployeeDerbyImpl();
+    this.empList = employeeBase.getEmployeeList();
+    ObservableList<RecursiveObj> employees = FXCollections.observableArrayList();
+    for (Employee anEmployee : this.empList) {
+      RecursiveObj recursiveEmployee = new RecursiveObj();
+      recursiveEmployee.employee = anEmployee;
+      employees.add(recursiveEmployee);
+    }
+
+    // Sets up the table and puts the location data under the columns
+    final TreeItem<RecursiveObj> root =
+        new RecursiveTreeItem<>(employees, RecursiveTreeObject::getChildren);
+    table.getColumns().setAll(employeeColumns);
+    table.setRoot(root);
+
+    this.setupViewDetailsAndModify();
+  }
+
+  private void createDetailsPopup() throws InvocationTargetException, IllegalAccessException {
+    DataViewCtrl.detailsPopup.get().hide();
 
     this.detailLabel = new StringBuilder("Nothing selected  ");
 
-    if (table.getSelectionModel().getSelectedIndex() > -1) {
+    if (HomeCtrl.sceneFlag == 1 && table.getSelectionModel().getSelectedIndex() > -1) {
       this.detailLabel = new StringBuilder("");
 
       Object sr = this.srList.get(table.getSelectionModel().getSelectedIndex());
@@ -429,6 +616,10 @@ public class DataViewCtrl extends MasterCtrl {
       }
     }
 
+    if (HomeCtrl.sceneFlag != 1) {
+      this.detailLabel = new StringBuilder("No further details  ");
+    }
+
     var content = new StackPane(new Label(this.detailLabel.toString()));
     content.setPadding(new Insets(10, 5, 10, 5));
     content.setBackground(
@@ -438,149 +629,377 @@ public class DataViewCtrl extends MasterCtrl {
     var p = new Popup();
     p.getContent().add(content);
 
-    DataViewCtrl.popup.set(p);
+    DataViewCtrl.detailsPopup.set(p);
   }
 
-  public void initializeEquipmentTable() {
-    // Create all columns in the tracker table
-    JFXTreeTableColumn<RecursiveObj, String> id = new JFXTreeTableColumn<>("ID");
-    JFXTreeTableColumn<RecursiveObj, String> type = new JFXTreeTableColumn<>("Type");
-    JFXTreeTableColumn<RecursiveObj, String> clean = new JFXTreeTableColumn<>("Is Clean?");
-    JFXTreeTableColumn<RecursiveObj, String> location = new JFXTreeTableColumn<>("Location");
-    JFXTreeTableColumn<RecursiveObj, String> available = new JFXTreeTableColumn<>("Is Available?");
-    id.setPrefWidth(112);
-    type.setPrefWidth(110);
-    clean.setPrefWidth(110);
-    location.setPrefWidth(115);
-    available.setPrefWidth(110);
-    id.setStyle("-fx-alignment: center ;");
-    type.setStyle("-fx-alignment: center ;");
-    clean.setStyle("-fx-alignment: center ;");
-    location.setStyle("-fx-alignment: center ;");
-    available.setStyle("-fx-alignment: center ;");
-    id.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().equip.getEquipmentID()));
-    type.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().equip.getEquipmentType()));
-    clean.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(
-                param.getValue().getValue().equip.getIsClean() ? "Yes" : "No"));
-    location.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().equip.getCurrentLocation()));
-    available.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(
-                param.getValue().getValue().equip.getIsAvailable() ? "Yes" : "No"));
+  private void createModifyPopup() throws InvocationTargetException, IllegalAccessException {
+    DataViewCtrl.modifyPopup.get().hide();
 
-    // Grab equipment from database
-    EquipmentDAO database = new EquipmentDerbyImpl();
-    List<Equipment> equipFromDatabase = database.getMedicalEquipmentList();
-    ObservableList<RecursiveObj> equipment = FXCollections.observableArrayList();
-    for (Equipment item : equipFromDatabase) {
-      RecursiveObj recursiveEquipment = new RecursiveObj();
-      recursiveEquipment.equip = item;
-      equipment.add(recursiveEquipment);
+    // cancel button
+    JFXButton cancelUpdateButton = new JFXButton();
+    cancelUpdateButton.setText("X");
+
+    cancelUpdateButton.setOnAction(
+        event -> {
+          DataViewCtrl.modifyPopup.get().hide();
+        });
+
+    // combobox field
+    JFXComboBox<String> field = new JFXComboBox<>();
+    field.setValue("Select Field");
+    field.setMinSize(50, 30);
+    field.setMaxSize(150, 30);
+
+    // value text area
+    TextArea value = new TextArea();
+    value.setPromptText("Enter value:");
+    value.setMinSize(50, 30);
+    value.setMaxSize(150, 30);
+
+    JFXButton updateButton = new JFXButton();
+    updateButton.setText("Update");
+
+    Method[] methods;
+
+    // fill out the combobox
+    switch (HomeCtrl.sceneFlag) {
+      case 1:
+        Object sr = this.srList.get(table.getSelectionModel().getSelectedIndex());
+        methods = sr.getClass().getMethods();
+        for (Method method : methods) {
+          boolean is_the_method_of_super = method.getDeclaringClass().equals(SR.class);
+          boolean is_the_method_exclusive = method.getDeclaringClass().equals(sr.getClass());
+          boolean starts_with_set = method.getName().split("^set")[0].equals("");
+          boolean is_not_sr_type = !method.getName().toLowerCase(Locale.ROOT).contains("srtype");
+
+          if (is_not_sr_type
+              && starts_with_set
+              && (is_the_method_of_super || is_the_method_exclusive)) {
+            field.getItems().addAll(method.getName().substring(3));
+          }
+        }
+
+        field.setOnAction(
+            e -> {
+              if (field.getSelectionModel().getSelectedIndex() > -1) {
+                for (Method method : methods) {
+                  boolean starts_with_get = method.getName().split("^get")[0].equals("");
+                  boolean contains_name =
+                      method
+                          .getName()
+                          .toLowerCase(Locale.ROOT)
+                          .contains(
+                              field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
+                  if (starts_with_get && contains_name) {
+                    try {
+                      value.setText((String) method.invoke(sr));
+                    } catch (IllegalAccessException | InvocationTargetException ex) {
+                      ex.printStackTrace();
+                    }
+                  }
+                }
+              }
+            });
+
+        updateButton.setOnAction(
+            e -> {
+              if (field.getSelectionModel().getSelectedIndex() > -1
+                  && value.getText().length() > 0) {
+                for (Method method : methods) {
+                  boolean starts_with_set = method.getName().split("^set")[0].equals("");
+                  boolean contains_name =
+                      method
+                          .getName()
+                          .toLowerCase(Locale.ROOT)
+                          .contains(
+                              field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
+                  if (starts_with_set && contains_name) {
+
+                    ServiceRequestDerbyImpl<Object> objectServiceRequestDerby =
+                        new ServiceRequestDerbyImpl<>(sr);
+                    try {
+                      method.invoke(sr, value.getText());
+                      objectServiceRequestDerby.updateServiceRequest((SR) sr);
+                      updateButton.setTextFill(Color.GREEN);
+                    } catch (SQLException | InvocationTargetException | IllegalAccessException ex) {
+                      ex.printStackTrace();
+                      updateButton.setTextFill(Color.RED);
+                    }
+                  }
+                }
+              }
+            });
+        break;
+      case 2:
+        Location loc = this.locList.get(table.getSelectionModel().getSelectedIndex());
+        methods = loc.getClass().getMethods();
+        for (Method method : methods) {
+          boolean is_the_method_of_loc = method.getDeclaringClass().equals(loc.getClass());
+          boolean starts_with_set = method.getName().split("^set")[0].equals("");
+          boolean return_string =
+              Arrays.toString(method.getParameterTypes())
+                  .toLowerCase(Locale.ROOT)
+                  .contains("string");
+
+          if (is_the_method_of_loc && starts_with_set && return_string) {
+            field.getItems().addAll(method.getName().substring(3));
+          }
+        }
+
+        field.setOnAction(
+            e -> {
+              if (field.getSelectionModel().getSelectedIndex() > -1) {
+                for (Method method : methods) {
+                  boolean starts_with_get = method.getName().split("^get")[0].equals("");
+                  boolean contains_name =
+                      method
+                          .getName()
+                          .toLowerCase(Locale.ROOT)
+                          .contains(
+                              field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
+                  if (starts_with_get && contains_name) {
+                    try {
+                      value.setText((String) method.invoke(loc));
+                    } catch (IllegalAccessException | InvocationTargetException ex) {
+                      ex.printStackTrace();
+                    }
+                  }
+                }
+              }
+            });
+
+        updateButton.setOnAction(
+            e -> {
+              if (field.getSelectionModel().getSelectedIndex() > -1
+                  && value.getText().length() > 0) {
+                for (Method method : methods) {
+                  boolean starts_with_set = method.getName().split("^set")[0].equals("");
+                  boolean contains_name =
+                      method
+                          .getName()
+                          .toLowerCase(Locale.ROOT)
+                          .contains(
+                              field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
+                  if (starts_with_set && contains_name) {
+
+                    LocationDerbyImpl locationDerby = new LocationDerbyImpl();
+                    try {
+                      locationDerby.updateLocation(
+                          loc.getNodeID(), field.getValue(), value.getText());
+                      updateButton.setTextFill(Color.GREEN);
+                    } catch (Exception ex) {
+                      ex.printStackTrace();
+                      updateButton.setTextFill(Color.RED);
+                    }
+                  }
+                }
+              }
+            });
+
+        break;
+      case 3:
+        Equipment eq = this.eqList.get(table.getSelectionModel().getSelectedIndex());
+        methods = eq.getClass().getMethods();
+        for (Method method : methods) {
+          boolean is_the_method_of_eq = method.getDeclaringClass().equals(eq.getClass());
+          boolean starts_with_set = method.getName().split("^set")[0].equals("");
+          boolean return_string =
+              Arrays.toString(method.getParameterTypes())
+                  .toLowerCase(Locale.ROOT)
+                  .contains("string");
+
+          if (is_the_method_of_eq && starts_with_set && return_string) {
+            field.getItems().addAll(method.getName().substring(3));
+          }
+        }
+
+        field.setOnAction(
+            e -> {
+              if (field.getSelectionModel().getSelectedIndex() > -1) {
+                for (Method method : methods) {
+                  boolean starts_with_get = method.getName().split("^get")[0].equals("");
+                  boolean contains_name =
+                      method
+                          .getName()
+                          .toLowerCase(Locale.ROOT)
+                          .contains(
+                              field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
+                  if (starts_with_get && contains_name) {
+                    try {
+                      value.setText((String) method.invoke(eq));
+                    } catch (IllegalAccessException | InvocationTargetException ex) {
+                      ex.printStackTrace();
+                    }
+                  }
+                }
+              }
+            });
+
+        updateButton.setOnAction(
+            e -> {
+              if (field.getSelectionModel().getSelectedIndex() > -1
+                  && value.getText().length() > 0) {
+                for (Method method : methods) {
+                  boolean starts_with_set = method.getName().split("^set")[0].equals("");
+                  boolean contains_name =
+                      method
+                          .getName()
+                          .toLowerCase(Locale.ROOT)
+                          .contains(
+                              field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
+                  if (starts_with_set && contains_name) {
+
+                    EquipmentDerbyImpl equipmentDerby = new EquipmentDerbyImpl();
+                    try {
+                      equipmentDerby.updateMedicalEquipment(
+                          eq.getEquipmentID(), field.getValue(), value.getText());
+                      updateButton.setTextFill(Color.GREEN);
+                    } catch (Exception ex) {
+                      ex.printStackTrace();
+                      updateButton.setTextFill(Color.RED);
+                    }
+                  }
+                }
+              }
+            });
+
+        break;
+      case 4:
+        Employee emp = this.empList.get(table.getSelectionModel().getSelectedIndex());
+        methods = emp.getClass().getMethods();
+        for (Method method : methods) {
+          boolean is_the_method_of_emp = method.getDeclaringClass().equals(emp.getClass());
+          boolean starts_with_set = method.getName().split("^set")[0].equals("");
+          boolean return_string =
+              Arrays.toString(method.getParameterTypes())
+                  .toLowerCase(Locale.ROOT)
+                  .contains("string");
+
+          if (is_the_method_of_emp && starts_with_set && return_string) {
+            field.getItems().addAll(method.getName().substring(3));
+          }
+        }
+
+        field.setOnAction(
+            e -> {
+              if (field.getSelectionModel().getSelectedIndex() > -1) {
+                for (Method method : methods) {
+                  boolean starts_with_get = method.getName().split("^get")[0].equals("");
+                  boolean contains_name =
+                      method
+                          .getName()
+                          .toLowerCase(Locale.ROOT)
+                          .contains(
+                              field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
+                  if (starts_with_get && contains_name) {
+                    try {
+                      value.setText((String) method.invoke(emp));
+                    } catch (IllegalAccessException | InvocationTargetException ex) {
+                      ex.printStackTrace();
+                    }
+                  }
+                }
+              }
+            });
+
+        updateButton.setOnAction(
+            e -> {
+              if (field.getSelectionModel().getSelectedIndex() > -1
+                  && value.getText().length() > 0) {
+                for (Method method : methods) {
+                  boolean starts_with_set = method.getName().split("^set")[0].equals("");
+                  boolean contains_name =
+                      method
+                          .getName()
+                          .toLowerCase(Locale.ROOT)
+                          .contains(
+                              field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
+                  if (starts_with_set && contains_name) {
+
+                    EmployeeDerbyImpl employeeDerby = new EmployeeDerbyImpl();
+                    try {
+                      employeeDerby.updateEmployee(
+                          emp.getEmployeeID(), field.getValue(), value.getText());
+                      updateButton.setTextFill(Color.GREEN);
+                    } catch (Exception ex) {
+                      ex.printStackTrace();
+                      updateButton.setTextFill(Color.RED);
+                    }
+                  }
+                }
+              }
+            });
+
+        break;
     }
 
-    // Sets up the table and puts the equipment data under the columns
-    final TreeItem<RecursiveObj> root =
-        new RecursiveTreeItem<RecursiveObj>(equipment, RecursiveTreeObject::getChildren);
-    table.getColumns().setAll(id, type, clean, location, available);
-    table.setRoot(root);
+    // add it to the scene
+    var content = new GridPane();
+    content.setRowIndex(cancelUpdateButton, 0);
+    content.setColumnIndex(cancelUpdateButton, 0);
+    content.setRowIndex(field, 0);
+    content.setColumnIndex(field, 1);
+    content.setRowIndex(value, 0);
+    content.setColumnIndex(value, 2);
+    content.setRowIndex(updateButton, 0);
+    content.setColumnIndex(updateButton, 3);
+    content.getChildren().addAll(cancelUpdateButton, field, value, updateButton);
+
+    content.setPadding(new Insets(10, 5, 10, 5));
+    content.setBackground(
+        new Background(new BackgroundFill(Color.WHITE, new CornerRadii(10), null)));
+    content.setEffect(new DropShadow());
+
+    var p = new Popup();
+    p.getContent().add(content);
+
+    DataViewCtrl.modifyPopup.set(p);
   }
 
-  boolean isSelected() {
-    return false;
+  private void setupViewDetailsAndModify() {
+
+    this.rightClickMenu.getItems().addAll(this.viewDetails);
+    this.rightClickMenu.getItems().addAll(this.modify);
+
+    this.viewDetails.setOnAction(
+        e -> {
+          this.rightClickMenu.hide();
+          try {
+            this.createDetailsPopup();
+          } catch (InvocationTargetException | IllegalAccessException ex) {
+            ex.printStackTrace();
+          }
+          DataViewCtrl.detailsPopup
+              .get()
+              .show(App.getStage(), this.point.get().getX(), this.point.get().getY());
+        });
+    this.modify.setOnAction(
+        e -> {
+          this.rightClickMenu.hide();
+          try {
+            this.createModifyPopup();
+          } catch (InvocationTargetException | IllegalAccessException ex) {
+            ex.printStackTrace();
+          }
+          DataViewCtrl.modifyPopup
+              .get()
+              .show(App.getStage(), this.point.get().getX(), this.point.get().getY());
+        });
+
+    this.table.setOnMouseClicked(
+        e -> {
+          if (e.getButton() == MouseButton.PRIMARY) {
+            DataViewCtrl.detailsPopup.get().hide();
+          }
+          if (e.getButton() == MouseButton.SECONDARY) {
+            this.point.set(new Point2D(e.getScreenX(), e.getScreenY()));
+            this.rightClickMenu.show(this.table, e.getScreenX(), e.getScreenY());
+          }
+        });
   }
 
-  public void initializeEmployeeTable() {
-    // Create all columns in the tracker table
-    JFXTreeTableColumn<RecursiveObj, String> employeeID = new JFXTreeTableColumn<>("ID");
-    JFXTreeTableColumn<RecursiveObj, String> employeeType = new JFXTreeTableColumn<>("Type");
-    JFXTreeTableColumn<RecursiveObj, String> firstName = new JFXTreeTableColumn<>("First Name");
-    JFXTreeTableColumn<RecursiveObj, String> lastName = new JFXTreeTableColumn<>("Last Name");
-    JFXTreeTableColumn<RecursiveObj, String> email = new JFXTreeTableColumn<>("Email");
-    JFXTreeTableColumn<RecursiveObj, String> phoneNum = new JFXTreeTableColumn<>("Phone Number");
-    JFXTreeTableColumn<RecursiveObj, String> address = new JFXTreeTableColumn<>("Address");
-    JFXTreeTableColumn<RecursiveObj, String> startDate = new JFXTreeTableColumn<>("Start Date");
-
-    employeeID.setPrefWidth(80);
-    employeeType.setPrefWidth(80);
-    firstName.setPrefWidth(80);
-    lastName.setPrefWidth(80);
-    email.setPrefWidth(80);
-    phoneNum.setPrefWidth(80);
-    address.setPrefWidth(80);
-    startDate.setPrefWidth(80);
-
-    // TODO CSS Sheet
-    employeeID.setStyle("-fx-alignment: center ;");
-    employeeType.setStyle("-fx-alignment: center ;");
-    firstName.setStyle("-fx-alignment: center ;");
-    lastName.setStyle("-fx-alignment: center ;");
-    email.setStyle("-fx-alignment: center ;");
-    phoneNum.setStyle("-fx-alignment: center ;");
-    address.setStyle("-fx-alignment: center ;");
-    startDate.setStyle("-fx-alignment: center ;");
-
-    employeeID.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().employee.getEmployeeID()));
-    employeeType.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().employee.getEmployeeType()));
-    firstName.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().employee.getFirstName()));
-    // the following code has to be implemented when a location's medical equipment is known.
-    // eahc is currently filled with filler Yes values, which represent that atm every room
-    // can store every equipment. In the future, this will not be true and must be updated
-    lastName.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().employee.getLastName()));
-    // new SimpleStringProperty(param.getValue().getValue().getCanStoreXRAY()));
-    email.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().employee.getEmail()));
-    // new SimpleStringProperty(param.getValue().getValue().getCanStoreBed()));
-    phoneNum.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().employee.getPhoneNum()));
-    // new SimpleStringProperty(param.getValue().getValue().getCanStorePump()));
-    address.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(param.getValue().getValue().employee.getAddress()));
-    // new SimpleStringProperty(param.getValue().getValue().getCanStoreRecliner()));
-    startDate.setCellValueFactory(
-        (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-            new SimpleStringProperty(
-                param.getValue().getValue().employee.getStartDate().toString()));
-
-    // Grab location / equipment from database, these are dummies
-    EmployeeDAO employeeBase = new EmployeeDerbyImpl();
-    List<Employee> employeeFromDatabase = employeeBase.getEmployeeList();
-    ObservableList<RecursiveObj> employees = FXCollections.observableArrayList();
-    for (Employee anEmployee : employeeFromDatabase) {
-      RecursiveObj recursiveEmployee = new RecursiveObj();
-      recursiveEmployee.employee = anEmployee;
-      employees.add(recursiveEmployee);
-    }
-
-    // Sets up the table and puts the location data under the columns
-    final TreeItem<RecursiveObj> root =
-        new RecursiveTreeItem<>(employees, RecursiveTreeObject::getChildren);
-    table
-        .getColumns()
-        .setAll(employeeID, employeeType, firstName, lastName, email, phoneNum, address, startDate);
-    table.setRoot(root);
-  }
-
-  @FXML
-  private void returnToHomeScene() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
+  protected void onSceneSwitch() {
+    DataViewCtrl.detailsPopup.get().hide();
+    DataViewCtrl.modifyPopup.get().hide();
   }
 }

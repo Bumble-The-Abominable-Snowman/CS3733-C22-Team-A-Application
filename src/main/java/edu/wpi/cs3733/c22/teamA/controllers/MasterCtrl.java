@@ -9,6 +9,7 @@ import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 public abstract class MasterCtrl {
@@ -17,6 +18,7 @@ public abstract class MasterCtrl {
   @FXML public JFXDrawer drawer;
   @FXML public JFXButton backButton;
   @FXML public VBox menuBox;
+  @FXML public GridPane menuGrid;
 
   @FXML public JFXButton selectSRButton;
   @FXML public JFXButton mapButton;
@@ -64,13 +66,27 @@ public abstract class MasterCtrl {
     drawer.setSidePane(menuBox);
     HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(hamburger);
     burgerTask.setRate(-1);
+
+    menuGrid.toBack();
+    drawer.toBack();
+    menuBox.toBack();
+
     hamburger.addEventHandler(
         MouseEvent.MOUSE_PRESSED,
         (e) -> {
           burgerTask.setRate(burgerTask.getRate() * -1);
           burgerTask.play();
-          if (drawer.isOpened()) drawer.close();
-          else drawer.open();
+          if (drawer.isOpened()) {
+            drawer.close();
+            menuGrid.toBack();
+            drawer.toBack();
+            menuBox.toBack();
+          } else {
+            drawer.open();
+            menuGrid.toFront();
+            drawer.toFront();
+            menuBox.toFront();
+          }
         });
 
     stageWidth = App.getStage().getWidth();
@@ -104,47 +120,57 @@ public abstract class MasterCtrl {
     homeButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * homeButtonSize) + "pt;");
   }
 
+  protected void onSceneSwitch() {}
+
   @FXML
   private void goToSelectServiceRequest() throws IOException {
+    this.onSceneSwitch();
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.SELECT_SERVICE_REQUEST);
   }
 
   @FXML
   private void goToSettings() throws IOException {
+    this.onSceneSwitch();
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.SETTINGS);
   }
 
   @FXML
   private void goToServiceRequestData() throws IOException {
+    this.onSceneSwitch();
     sceneFlag = 1;
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
   @FXML
   private void goToLocationData() throws IOException {
+    this.onSceneSwitch();
     sceneFlag = 2;
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
   @FXML
   private void goToEquipmentData() throws IOException {
+    this.onSceneSwitch();
     sceneFlag = 3;
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
   @FXML
   public void goToEmployeeData() throws IOException {
+    this.onSceneSwitch();
     sceneFlag = 4;
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
   @FXML
   private void goToMap() throws IOException {
+    this.onSceneSwitch();
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.MAP);
   }
 
   @FXML
   private void goToLogin() throws IOException {
+    this.onSceneSwitch();
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOGIN);
   }
 
@@ -154,12 +180,14 @@ public abstract class MasterCtrl {
   }
 
   @FXML
-  private void back() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
+  private void goToSelectService() throws IOException {
+    this.onSceneSwitch();
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SELECT_SERVICE_REQUEST);
   }
 
   @FXML
   private void goToHome() throws IOException {
+    this.onSceneSwitch();
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
   }
 }

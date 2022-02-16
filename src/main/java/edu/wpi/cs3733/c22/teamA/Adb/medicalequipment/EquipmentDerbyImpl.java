@@ -45,38 +45,33 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
     }
   }
 
-  public void updateMedicalEquipment(String ID, String field, Object change) {
-    try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-      Statement update = connection.createStatement();
+  public void updateMedicalEquipment(String ID, String field, String change) throws SQLException {
+    Connection connection =
+        DriverManager.getConnection(
+            String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
+    Statement update = connection.createStatement();
 
-      String str = "";
-      if (change instanceof String) {
-        str =
-            String.format(
-                "UPDATE MedicalEquipment SET " + field + " = %s WHERE equipmentID = '%s'",
-                change,
-                ID);
-      } else {
-        String change1 = String.valueOf(change);
-        str =
-            String.format(
-                "UPDATE MedicalEquipment SET "
-                    + field
-                    + " = '"
-                    + change1
-                    + "' WHERE equipmentID = '%s'",
-                ID);
-      }
+    String str = "";
 
-      update.execute(str);
-    } catch (SQLException e) {
-      System.out.println("Failed");
-      e.printStackTrace();
-      return;
+    if (change instanceof String) {
+      str =
+          String.format(
+              "UPDATE MedicalEquipment SET " + field + " = %s WHERE equipmentID = '%s'",
+              change,
+              ID);
+    } else {
+      String change1 = String.valueOf(change);
+      str =
+          String.format(
+              "UPDATE MedicalEquipment SET "
+                  + field
+                  + " = '"
+                  + change1
+                  + "' WHERE equipmentID = '%s'",
+              ID);
     }
+
+    update.execute(str);
   }
 
   public void enterMedicalEquipment(
