@@ -77,7 +77,6 @@ public class LoadBackupCtrl extends MasterCtrl {
             }
           }
         });
-
     TypeCSV.getItems().removeAll(TypeCSV.getItems());
     TypeCSV.getItems()
         .addAll(

@@ -1,9 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
-import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
@@ -15,7 +12,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -68,36 +64,28 @@ public class SanitationSRCtrl extends SRCtrl {
               }
             });
 
-    // Put locations in temporary location menu
-    toLocationChoice.getSelectionModel().select("Select Location");
-    toLocationChoice
-        .getItems()
-        .addAll(
-            new LocationDerbyImpl()
-                .getNodeList().stream().map(Location::getShortName).collect(Collectors.toList()));
-    toLocationChoice.setVisibleRowCount(5);
-    employeeChoice.setVisibleRowCount(5);
-
-    EmployeeDAO EmployeeDAO = new EmployeeDerbyImpl();
-
-    employeeChoice
-        .getItems()
-        .addAll(
-            EmployeeDAO.getEmployeeList().stream()
-                .map(Employee::getFirstName)
-                .collect(Collectors.toList()));
+    this.populateEmployeeAndLocationList();
+    this.populateEmployeeComboBox(this.employeeChoice);
+    this.populateLocationComboBox(this.toLocationChoice);
   }
 
   @FXML
   void submitRequest() throws SQLException, InvocationTargetException, IllegalAccessException {
+
+    int employeeIndex = this.employeeChoice.getSelectionModel().getSelectedIndex();
+    Employee employeeSelected = this.employeeList.get(employeeIndex);
+
+    int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
+    Location toLocationSelected = this.locationList.get(locationIndex);
+
     // Create request object
     SanitationSR sanitationSR =
         new SanitationSR(
             "SanitationSRID",
             "N/A",
-            "N/A",
+            toLocationSelected.getNodeID(),
             "001",
-            "002",
+            employeeSelected.getEmployeeID(),
             new Timestamp((new Date()).getTime()),
             SR.Status.BLANK,
             SR.Priority.REGULAR,
