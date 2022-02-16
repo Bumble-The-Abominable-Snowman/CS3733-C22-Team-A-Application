@@ -81,6 +81,9 @@ public class DefaultTest {
     // Test ServiceRequest.exportToCSV
     String filepath = "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/testCSV.csv";
     equipmentSRServiceRequestDerby.exportToCSV(filepath);
+
+    // Testing if we can reload a file we wrote
+    equipmentSRServiceRequestDerby.populateFromCSV(filepath);
   }
 
   @Test

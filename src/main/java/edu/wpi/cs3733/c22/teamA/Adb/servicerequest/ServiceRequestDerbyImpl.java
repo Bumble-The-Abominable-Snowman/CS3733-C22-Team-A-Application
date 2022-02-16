@@ -380,6 +380,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
         for (Method method : this.all_sr_set_data_methods) {
           String methodName = method.getName().toLowerCase(Locale.ROOT);
           if (methodName.contains(columnName)) {
+            System.out.println("name: " + method.getName());
             method.invoke(this.t, data);
           }
         }
@@ -435,7 +436,9 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
 
     for (Method method : this.all_sr_get_data_methods) {
       String data = method.getName().substring(3) + ", ";
-      tleString.append(data);
+      if (!(data.equals("SrType, "))) {
+        tleString.append(data);
+      }
     }
 
     String firstLine = tleString.toString().substring(0, tleString.toString().length() - 2);
@@ -450,12 +453,15 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
       String str = "";
 
       for (int x = 0; x < this.all_sr_get_data_methods.size(); x++) {
-        String data = all_sr_get_data_methods.get(x).invoke(thisSR).toString();
-        System.out.println("data: " + data);
-        if (x == 0) {
-          str = data;
-        } else {
-          str = String.join(",", str, data);
+        if (!(this.all_sr_get_data_methods.get(x).getName().contains("SrType"))) {
+
+          String data = all_sr_get_data_methods.get(x).invoke(thisSR).toString();
+          System.out.println("data: " + data);
+          if (x == 0) {
+            str = data;
+          } else {
+            str = String.join(",", str, data);
+          }
         }
       }
 
