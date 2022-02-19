@@ -72,5 +72,6 @@ public class SceneSwitcher {
     else currentScene.setRoot(root);
     App.getStage().setScene(currentScene);
     App.getStage().show();
+
   }
 }
