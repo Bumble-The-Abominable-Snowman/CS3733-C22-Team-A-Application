@@ -29,6 +29,7 @@ public class App extends Application {
     factory.setPort(5672); // 5672 for regular connections, 5671 for connections that use TLS
   }
 
+
   @Override
   public void start(Stage primaryStage) throws IOException {
     guiStage = primaryStage;
