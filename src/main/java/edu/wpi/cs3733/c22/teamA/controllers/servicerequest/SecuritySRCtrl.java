@@ -19,29 +19,16 @@ public class SecuritySRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> toLocationChoice;
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
-  @FXML private TextArea typeOtherBox;
 
   @FXML
   private void initialize() {
-    sceneID = SceneSwitcher.SCENES.SANITATION_SR;
+    sceneID = SceneSwitcher.SCENES.SECURITY_SR;
 
     commentsBox.setWrapText(true);
-    typeOtherBox.setWrapText(true);
 
     // Put sanitation types in temporary type menu
     typeChoice.getItems().addAll("Decontaminate Area", "Floor Spill", "Other");
     typeChoice.getSelectionModel().select("Select Type");
-    typeChoice
-        .getSelectionModel()
-        .selectedItemProperty()
-        .addListener(
-            (obs, oldValue, newValue) -> {
-              if (newValue.equals("Other")) {
-                typeOtherBox.setVisible(true);
-              } else {
-                typeOtherBox.setVisible(false);
-              }
-            });
 
     // Put locations in temporary location menu
     this.populateEmployeeAndLocationList();
