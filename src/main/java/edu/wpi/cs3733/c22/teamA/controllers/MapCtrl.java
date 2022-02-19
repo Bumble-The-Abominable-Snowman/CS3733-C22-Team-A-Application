@@ -16,18 +16,13 @@ import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.map.*;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.animation.Interpolator;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
-import javafx.scene.Cursor;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -41,11 +36,8 @@ import net.kurobako.gesturefx.GesturePane;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,13 +45,20 @@ import java.util.stream.Collectors;
 // with method in backend once implemented
 public class MapCtrl extends MasterCtrl {
 
-	@FXML private JFXComboBox pfFromComboBox, pfToComboBox, floorSelectionComboBox, searchComboBox;
-	@FXML private JFXCheckBox locationCheckBox, dragCheckBox, equipmentCheckBox, serviceRequestCheckBox, showTextCheckBox;
-	@FXML private JFXButton deleteButton, saveButton, editButton, clearButton;
-	@FXML private JFXTextArea nodeIDText, xPosText, yPosText, floorText, buildingText, typeText, longnameText, shortnameText;
-	@FXML private VBox inputVBox;
-	@FXML private ImageView mapImageView = new ImageView();
-	@FXML private GesturePane gesturePane;
+	@FXML
+	private JFXComboBox pfFromComboBox, pfToComboBox, floorSelectionComboBox, searchComboBox;
+	@FXML
+	private JFXCheckBox locationCheckBox, dragCheckBox, equipmentCheckBox, serviceRequestCheckBox, showTextCheckBox;
+	@FXML
+	private JFXButton deleteButton, saveButton, editButton, clearButton;
+	@FXML
+	private JFXTextArea nodeIDText, xPosText, yPosText, floorText, buildingText, typeText, longnameText, shortnameText;
+	@FXML
+	private VBox inputVBox;
+	@FXML
+	private ImageView mapImageView = new ImageView();
+	@FXML
+	private GesturePane gesturePane;
 
 	private LocationMarker newLocationMarker = null;
 	private Dimension2D transformed = new Dimension2D(967, 1050);
@@ -77,26 +76,18 @@ public class MapCtrl extends MasterCtrl {
 	private String currentID;
 	private Location selectedLocation;
 
-	private LocationDAO locationDAO = new LocationDerbyImpl();
-	private EquipmentDAO equipmentDAO = new EquipmentDerbyImpl();
-
-	private HashMap<Button, LocationMarker> buttonLocationMarker;
-	private HashMap<Button, EquipmentMarker> buttonEquipmentMarker;
-	private HashMap<Button, SRMarker> buttonServiceRequestMarker;
-
 	private SelectionManager selectionManager;
 	private CheckBoxManager checkBoxManager;
 	private MarkerManager markerManager;
+
+	private LocationDAO locationDAO;
+	private EquipmentDAO equipmentDAO;
 
 	public MapCtrl() {
 		locationMarkerShape = new Polygon();
 		equipmentMarkerShape = new Polygon();
 		locationMarkerShape.getPoints().addAll(new Double[]{1.0, 4.0, 0.0, 2.0, 1.0, 0.0, 2.0, 2.0});
 		equipmentMarkerShape.getPoints().addAll(new Double[]{0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0});
-
-		buttonLocationMarker = new HashMap<>();
-		buttonEquipmentMarker = new HashMap<>();
-		buttonServiceRequestMarker = new HashMap<>();
 
 		locations = new ArrayList<>();
 		equipments = new ArrayList<>();
@@ -107,7 +98,9 @@ public class MapCtrl extends MasterCtrl {
 
 		selectionManager = new SelectionManager(editButton, saveButton, clearButton, deleteButton, inputVBox, nodeIDText, xPosText, yPosText, floorText, buildingText, typeText, longnameText, shortnameText);
 		checkBoxManager = new CheckBoxManager(equipmentCheckBox, locationCheckBox, serviceRequestCheckBox, showTextCheckBox, dragCheckBox);
-		//markerManager = new MarkerManager();
+
+		locationDAO = new LocationDerbyImpl();
+		equipmentDAO = new EquipmentDerbyImpl();
 	}
 
 	@FXML
@@ -160,8 +153,6 @@ public class MapCtrl extends MasterCtrl {
 								neighborMap = getEdges();
 							} catch (IOException e) {
 								e.printStackTrace();
-							} catch (ParseException e) {
-								e.printStackTrace();
 							}
 							pfToComboBox
 									.getItems()
@@ -203,15 +194,15 @@ public class MapCtrl extends MasterCtrl {
 		locations.clear();
 		equipments.clear();
 		serviceRequests.clear();
-		locations.addAll(new ArrayList<>(new LocationDerbyImpl().getNodeList()));
+		locations.addAll(locationDAO.getNodeList());
 		for (Location l : locations) {
 			if (l.getNodeID().equals("N/A")) {
 				locations.remove(l);
 				break;
 			}
 		}
-		equipments.addAll(new ArrayList<>(new EquipmentDerbyImpl().getMedicalEquipmentList()));
-		// TODO when implementation done
+		equipments.addAll(equipmentDAO.getMedicalEquipmentList());
+
 		try {
 			List<?> requestList = ServiceRequestDerbyImpl.getAllServiceRequestList();
 			for (Object sr : requestList) {

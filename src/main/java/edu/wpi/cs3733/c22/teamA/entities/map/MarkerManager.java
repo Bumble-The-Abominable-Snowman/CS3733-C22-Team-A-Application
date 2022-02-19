@@ -1,10 +1,26 @@
 package edu.wpi.cs3733.c22.teamA.entities.map;
 
 import edu.wpi.cs3733.c22.teamA.entities.Location;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.AnchorPane;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MarkerManager {
+	private Map<Button, LocationMarker> buttonLocationMarker;
+	private Map<Button, EquipmentMarker> buttonEquipmentMarker;
+	private Map<Button, SRMarker> buttonServiceRequestMarker;
+	private AnchorPane miniAnchorPane;
+
+	public MarkerManager(){
+		buttonLocationMarker = new HashMap<>();
+		buttonEquipmentMarker = new HashMap<>();
+		buttonServiceRequestMarker = new HashMap<>();
+		miniAnchorPane = new AnchorPane();
+	}
 
 	// Clears all Buttons and Labels from screen
 	public void newLocationPressed() {

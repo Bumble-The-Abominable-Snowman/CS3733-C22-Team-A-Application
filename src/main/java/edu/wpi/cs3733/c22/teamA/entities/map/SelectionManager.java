@@ -1,7 +1,10 @@
 package edu.wpi.cs3733.c22.teamA.entities.map;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
@@ -11,6 +14,7 @@ import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public class SelectionManager {
 	private JFXButton editButton;
@@ -161,8 +165,7 @@ public class SelectionManager {
 	}
 
 	// Delete Location
-	@FXML
-	public void deleteLocation() {
+	public void deleteLocation(LocationDAO locationDAO, JFXComboBox floorSelectionComboBox, String floorName) {
 		locationDAO.deleteLocationNode(nodeIDText.getText());
 		String originalFloorName = floorName;
 		floorSelectionComboBox.setValue("Choose Floor");
@@ -170,7 +173,7 @@ public class SelectionManager {
 	}
 
 	// Save Changes
-	public void saveChanges() {
+	public void saveChanges(LocationMarker newLocationMarker, Location selectedLocation, JFXComboBox floorSelectionComboBox, LocationDAO locationDAO, String floorName) {
 		if (newLocationMarker != null && newLocationMarker.getLocation().equals(selectedLocation)) {
 			newLocationMarker.getLocation().setNodeID(nodeIDText.getText());
 			newLocationMarker.getLocation().setXCoord((int) Double.parseDouble(xPosText.getText()));
@@ -208,7 +211,7 @@ public class SelectionManager {
 	}
 
 	// Update Medical Equipment / Service Request on Drag Release
-	public void updateOnRelease(Button button) throws SQLException {
+	public void updateOnRelease(Button button, EquipmentDAO equipmentDAO, Map<Button, EquipmentMarker> buttonEquipmentMarker) throws SQLException {
 		System.out.println("update on release is going rn");
 		equipmentDAO.updateMedicalEquipment(
 				buttonEquipmentMarker.get(button).getEquipment().getEquipmentID(),

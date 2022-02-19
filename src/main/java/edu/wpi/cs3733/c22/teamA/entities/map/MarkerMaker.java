@@ -72,37 +72,26 @@ public class MarkerMaker {
 		switch (serviceRequest.getSrType()) {
 			case EQUIPMENT:
 				return "-fx-background-color: YELLOW";
-			break;
 			case FLORAL_DELIVERY:
 				return "-fx-background-color: GREEN";
-			break;
 			case FOOD_DELIVERY:
 				return "-fx-background-color: ORANGE";
-			break;
 			case GIFT_DELIVERY:
 				return "-fx-background-color: ORCHID";
-			break;
 			case LANGUAGE:
 				return "-fx-background-color: WHEAT";
-			break;
 			case LAUNDRY:
 				return "-fx-background-color: MEDIUMBLUE";
-			break;
 			case MAINTENANCE:
 				return "-fx-background-color: MINTCREAM";
-			break;
 			case MEDICINE_DELIVERY:
 				return "-fx-background-color: SADDLEBROWN";
-			break;
 			case RELIGIOUS:
 				return "-fx-background-color: TOMATO";
-			break;
 			case SANITATION:
 				return "-fx-background-color: DIMGREY";
-			break;
 			case SECURITY:
 				return "-fx-background-color: MAROON";
-			break;
 		}
 		return "-fx-background-color: YELLOW";
 	}
@@ -137,6 +126,7 @@ public class MarkerMaker {
 	}
 
 	// Sets drag functions
+	/*
 	public void setDragFunctions(Button button, int markerType) {
 		final Delta dragDelta = new Delta();
 		button.setOnAction(
@@ -274,6 +264,8 @@ public class MarkerMaker {
 					}
 				});
 	}
+
+	 */
 }
 
 
