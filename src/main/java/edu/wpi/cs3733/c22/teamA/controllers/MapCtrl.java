@@ -55,18 +55,8 @@ public class MapCtrl extends MasterCtrl {
 
 	@FXML private JFXComboBox pfFromComboBox, pfToComboBox, floorSelectionComboBox, searchComboBox;
 	@FXML private JFXCheckBox locationCheckBox, dragCheckBox, equipmentCheckBox, serviceRequestCheckBox, showTextCheckBox;
-	@FXML private JFXButton deleteButton;
-	@FXML private JFXTextArea nodeIDText;
-	@FXML private JFXTextArea xPosText;
-	@FXML private JFXTextArea yPosText;
-	@FXML private JFXTextArea floorText;
-	@FXML private JFXTextArea buildingText;
-	@FXML private JFXTextArea typeText;
-	@FXML private JFXTextArea longnameText;
-	@FXML private JFXTextArea shortnameText;
-	@FXML private JFXButton saveButton;
-	@FXML private JFXButton editButton;
-	@FXML private JFXButton clearButton;
+	@FXML private JFXButton deleteButton, saveButton, editButton, clearButton;
+	@FXML private JFXTextArea nodeIDText, xPosText, yPosText, floorText, buildingText, typeText, longnameText, shortnameText;
 	@FXML private VBox inputVBox;
 	@FXML private ImageView mapImageView = new ImageView();
 	@FXML private GesturePane gesturePane;
