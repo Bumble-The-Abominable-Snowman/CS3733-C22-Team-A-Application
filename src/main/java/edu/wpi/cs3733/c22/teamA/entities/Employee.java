@@ -20,7 +20,7 @@ public class Employee {
   private String email;
   private String phoneNum;
   private String address;
-  private Date startDate;
+  public Date startDate;
 
   public Employee() {}
 

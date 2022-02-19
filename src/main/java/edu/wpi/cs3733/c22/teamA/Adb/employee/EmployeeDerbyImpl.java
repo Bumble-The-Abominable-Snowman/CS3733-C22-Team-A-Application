@@ -206,9 +206,9 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
         else if (dataIndex == 5) thisEmployee.setPhoneNum(data);
         else if (dataIndex == 6) thisEmployee.setAddress(data);
         else if (dataIndex == 7) {
-          SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
-          Date date = originalFormat.parse(data);
-          thisEmployee.setStartDate(date.toString());
+          //          SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+          //          Date date = originalFormat.parse(data);
+          thisEmployee.setStartDate(data);
         } else System.out.println("Invalid data, I broke::" + data);
         dataIndex++;
       }
@@ -284,9 +284,9 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
       for (Employee l : List) {
         Statement addStatement = connection.createStatement();
 
-        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.println(l.getStartDate() == null);
-        String date = originalFormat.format(l.getStartDate());
+        //        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //        System.out.println(l.getStartDate() == null);
+        //        String date = originalFormat.format(l.getStartDate();
 
         addStatement.executeUpdate(
             "INSERT INTO Employee(employeeID, employeeType, firstName, lastName, email, phoneNum, address, startDate) VALUES('"
@@ -304,7 +304,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
                 + "', '"
                 + l.getAddress()
                 + "', '"
-                + date
+                + l.getStartDate()
                 + "')");
       }
     } catch (SQLException | IOException | ParseException e) {
