@@ -115,7 +115,7 @@
             <JFXCheckBox fx:id="equipmentCheckBox" alignment="CENTER" prefHeight="22.0" prefWidth="75.0" text="Toggle Equipment View" wrapText="true" />
          </children>
       </VBox>
-      <GesturePane fx:id="gesturePane" fitMode="UNBOUNDED" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.rowSpan="5" GridPane.valignment="TOP" />
+      <GesturePane fx:id="gesturePane" fitMode="UNBOUNDED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.rowSpan="7" GridPane.valignment="TOP" />
       <JFXButton fx:id="viewTableButton" onAction="#goToLocationTable" prefHeight="33.0" prefWidth="127.0" text="View Table" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
       <GridPane fx:id="menuGrid" prefHeight="563.0" prefWidth="273.0" GridPane.columnSpan="3" GridPane.rowSpan="10">
          <columnConstraints>

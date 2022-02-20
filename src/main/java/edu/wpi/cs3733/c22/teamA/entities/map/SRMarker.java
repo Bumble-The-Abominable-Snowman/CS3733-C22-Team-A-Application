@@ -20,6 +20,4 @@ public class SRMarker extends Marker {
   public void setServiceRequest(SR serviceRequest) {
     this.serviceRequest = serviceRequest;
   }
-
-
 }

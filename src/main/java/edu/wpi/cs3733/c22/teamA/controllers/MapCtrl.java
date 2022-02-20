@@ -1,375 +1,156 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextArea;
-import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
-import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
-import edu.wpi.cs3733.c22.teamA.entities.Equipment;
-import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.map.*;
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javafx.animation.Interpolator;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Polygon;
 import javafx.util.Duration;
 import net.kurobako.gesturefx.AffineEvent;
 import net.kurobako.gesturefx.GesturePane;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-
 // TODO Change all instances of looping through locations to find related short names & node ids
 // with method in backend once implemented
 public class MapCtrl extends MasterCtrl {
+  @FXML private JFXComboBox<String> floorSelectionComboBox;
+  @FXML private GesturePane gesturePane;
 
-	@FXML
-	private JFXComboBox pfFromComboBox, pfToComboBox, floorSelectionComboBox, searchComboBox;
-	@FXML
-	private JFXCheckBox locationCheckBox, dragCheckBox, equipmentCheckBox, serviceRequestCheckBox, showTextCheckBox;
-	@FXML
-	private JFXButton deleteButton, saveButton, editButton, clearButton;
-	@FXML
-	private JFXTextArea nodeIDText, xPosText, yPosText, floorText, buildingText, typeText, longnameText, shortnameText;
-	@FXML
-	private VBox inputVBox;
-	@FXML
-	private ImageView mapImageView = new ImageView();
-	@FXML
-	private GesturePane gesturePane;
+  private AnchorPane anchorPane;
+  private ImageView mapImageView;
+  private ArrayList<String> floorNames;
+  private String currentFloor;
 
-	private LocationMarker newLocationMarker = null;
-	private Dimension2D transformed = new Dimension2D(967, 1050);
-	private AnchorPane miniAnchorPane = new AnchorPane();
-	private List<Line> pfLine = new ArrayList<>();
+  public MapCtrl() {
+    // Setup Floors
+    floorNames =
+        new ArrayList<>(
+            Arrays.asList("Choose Floor:", "Floor 1", "Floor 2", "Floor 3", "L1", "L2"));
+  }
 
-	private List<Location> locations;
-	private List<Equipment> equipments;
-	private List<SR> serviceRequests;
-	private Polygon locationMarkerShape;
-	private Polygon equipmentMarkerShape;
+  /** Floor Combo Box */
+  @FXML
+  public void initialize() {
+    mapImageView = new ImageView();
+    anchorPane = new AnchorPane();
 
-	private String floor;
-	private String floorName;
-	private String currentID;
-	private Location selectedLocation;
+    configure();
+    initGesture();
+    initFloorSelection();
+  }
 
-	private SelectionManager selectionManager;
-	private CheckBoxManager checkBoxManager;
-	private MarkerManager markerManager;
+  private void initFloorSelection() {
+    floorSelectionComboBox.getItems().removeAll(floorNames);
+    floorSelectionComboBox.getItems().addAll(floorNames);
+    floorSelectionComboBox.getSelectionModel().select("Choose Floor:");
+    floorSelectionComboBox
+        .getSelectionModel()
+        .selectedItemProperty()
+        .addListener(
+            (obs, oldValue, newValue) -> {
+              setMapFloor(newValue);
+            });
+  }
 
-	private LocationDAO locationDAO;
-	private EquipmentDAO equipmentDAO;
+  private void setMapFloor(String floor) {
+    URL url;
+    switch (floor) {
+      case "Choose Floor: ":
+        currentFloor = "";
+        url = App.class.getResource("images/Side View.png");
+        break;
+      case "Floor 1":
+        currentFloor = "1";
+        url = App.class.getResource("images/1st Floor.png");
+        break;
+      case "Floor 2":
+        currentFloor = "2";
+        url = App.class.getResource("images/2nd Floor.png");
+        break;
+      case "Floor 3":
+        currentFloor = "3";
+        url = App.class.getResource("images/3rd Floor.png");
+        break;
+      case "L1":
+        currentFloor = "L1";
+        url = App.class.getResource("images/LL1.png");
+        break;
+      case "L2":
+        currentFloor = "L2";
+        url = App.class.getResource("images/LL2.png");
+        break;
+      default:
+        currentFloor = "";
+        url = App.class.getResource("images/Side View.png");
+        break;
+    }
 
-	public MapCtrl() {
-		locationMarkerShape = new Polygon();
-		equipmentMarkerShape = new Polygon();
-		locationMarkerShape.getPoints().addAll(new Double[]{1.0, 4.0, 0.0, 2.0, 1.0, 0.0, 2.0, 2.0});
-		equipmentMarkerShape.getPoints().addAll(new Double[]{0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0});
+    Image image = new Image(String.valueOf(url));
+    mapImageView.setImage(image);
+  }
 
-		locations = new ArrayList<>();
-		equipments = new ArrayList<>();
-		serviceRequests = new ArrayList<>();
+  public void initGesture() {
+    anchorPane.getChildren().add(mapImageView);
+    anchorPane.setLayoutX(0);
+    anchorPane.setLayoutY(0);
+    //    anchorPane.setPrefHeight(gesturePane.getHeight());
+    //    anchorPane.setPrefWidth(gesturePane.getWidth());
+    mapImageView.setStyle(
+        " -fx-border-color: black;\n"
+            + "    -fx-border-style: solid;\n"
+            + "    -fx-border-width: 5;");
+    mapImageView.setPreserveRatio(true);
+    mapImageView.setLayoutX(200);
+    mapImageView.setLayoutY(0);
+    gesturePane.setMinScale(0.75f);
+    gesturePane.reset();
+    gesturePane.setContent(anchorPane);
+    gesturePane.addEventFilter(
+        AffineEvent.CHANGED,
+        event -> {
+          System.out.println(
+              event.getTransformedDimension().getHeight()
+                  + " "
+                  + event.getTransformedDimension().getWidth());
+          System.out.println(gesturePane.getCurrentX() + " " + gesturePane.getTranslateY());
+          // transformed = event.getTransformedDimension();
+        });
+    gesturePane.setOnMouseClicked(
+        e -> {
+          if (e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 2) {
+            Point2D pivotOnTarget =
+                gesturePane
+                    .targetPointAt(new Point2D(e.getX(), e.getY()))
+                    .orElse(gesturePane.targetPointAtViewportCentre());
+            // increment of scale makes more sense exponentially instead of linearly
+            gesturePane
+                .animate(Duration.millis(200))
+                .interpolateWith(Interpolator.EASE_BOTH)
+                .zoomBy(gesturePane.getCurrentScale(), pivotOnTarget);
+          }
+        });
+  }
 
-		currentID = "";
-		floor = "";
+  public void editLocation(ActionEvent actionEvent) {}
 
-		selectionManager = new SelectionManager(editButton, saveButton, clearButton, deleteButton, inputVBox, nodeIDText, xPosText, yPosText, floorText, buildingText, typeText, longnameText, shortnameText);
-		checkBoxManager = new CheckBoxManager(equipmentCheckBox, locationCheckBox, serviceRequestCheckBox, showTextCheckBox, dragCheckBox);
+  public void clearSubmission(ActionEvent actionEvent) {}
 
-		locationDAO = new LocationDerbyImpl();
-		equipmentDAO = new EquipmentDerbyImpl();
-	}
+  public void saveChanges(ActionEvent actionEvent) {}
 
-	@FXML
-	public void initialize() {
+  public void deleteLocation(ActionEvent actionEvent) {}
 
-		configure();
+  public void newLocationPressed(ActionEvent actionEvent) {}
 
-		// Pathfinding Setup
-		// Setup Functions
-		fillFromDB();
-		checkBoxManager.setupCheckboxListeners();
-		selectionManager.setInitialUIStates();
-		checkBoxManager.setIntitialUIState();
-		//setupContextMenu();
-		setupSearchListener();
-		setupFloor("Choose Floor:");
+  public void findPath(ActionEvent actionEvent) {}
 
-		floorSelectionComboBox.getItems().removeAll(floorSelectionComboBox.getItems());
-		floorSelectionComboBox
-				.getItems()
-				.addAll("Choose Floor:", "Floor 1", "Floor 2", "Floor 3", "L1", "L2");
+  public void clearPath(ActionEvent actionEvent) {}
 
-		floorSelectionComboBox.getSelectionModel().select("Choose Floor:");
-		floorSelectionComboBox
-				.getSelectionModel()
-				.selectedItemProperty()
-				.addListener(
-						(obs, oldValue, newValue) -> {
-							fillFromDB();
-							// Sets up floor on Map
-							setupFloor(newValue.toString());
-							clearAll();
-
-							// Maps Location IDs to their markers
-							HashMap<String, LocationMarker> locationIDs = new HashMap<>();
-
-							List<Location> thisFloorLocations = new ArrayList<>();
-
-							// Loops through every location & draws them if present on the floor
-							for (Location location : locations) {
-								if (location.getFloor().equals(floor)) {
-									LocationMarker locationMarker = newDraggableLocation(location);
-									locationMarker.draw(miniAnchorPane);
-									locationIDs.put(location.getNodeID(), locationMarker);
-									thisFloorLocations.add(location);
-								}
-							}
-
-							try {
-								neighborMap = getEdges();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-							pfToComboBox
-									.getItems()
-									.addAll(
-											thisFloorLocations.stream()
-													.map(Location::getShortName)
-													.collect(Collectors.toList()));
-							pfFromComboBox
-									.getItems()
-									.addAll(
-											thisFloorLocations.stream()
-													.map(Location::getShortName)
-													.collect(Collectors.toList()));
-
-							// Loops through every medical equipment & draws them if they're on this floor
-							for (Equipment equipment : equipments) {
-								if (locationIDs.containsKey(equipment.getCurrentLocation())) {
-									EquipmentMarker equipmentMarker =
-											newDraggableEquipment(
-													equipment, locationIDs.get(equipment.getCurrentLocation()));
-									equipmentMarker.draw(miniAnchorPane);
-								}
-							}
-
-							// Loops through every service request & draws them if they're on this floor
-							for (SR serviceRequest : serviceRequests) {
-								if (locationIDs.containsKey(serviceRequest.getEndLocation())) {
-									SRMarker serviceRequestMarker =
-											newDraggableServiceRequest(
-													serviceRequest, locationIDs.get(serviceRequest.getEndLocation()));
-									serviceRequestMarker.draw(miniAnchorPane);
-								}
-							}
-						});
-	}
-
-	// Fills info from DB
-	public void fillFromDB() {
-		locations.clear();
-		equipments.clear();
-		serviceRequests.clear();
-		locations.addAll(locationDAO.getNodeList());
-		for (Location l : locations) {
-			if (l.getNodeID().equals("N/A")) {
-				locations.remove(l);
-				break;
-			}
-		}
-		equipments.addAll(equipmentDAO.getMedicalEquipmentList());
-
-		try {
-			List<?> requestList = ServiceRequestDerbyImpl.getAllServiceRequestList();
-			for (Object sr : requestList) {
-				serviceRequests.add((SR) sr);
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
-
-	// Set up searchbar for LOCATIONS ONLY
-	// TODO IMPLEMENT CHOICE OF LOCATION, EQUIPMENT, SR SEARCH (another button?)
-	public void setupSearchListener() {
-		searchComboBox.setEditable(true);
-		// set up list of locations to be wrapped
-		ObservableList<Location> searchLocationList = FXCollections.observableArrayList();
-		searchLocationList.addAll(locations);
-
-		// create filtered list, can be filtered (duh)
-		FilteredList<Location> filteredLocations = new FilteredList<>(searchLocationList, p -> true);
-		// add listener that checks whenever changes are made to JFXText searchText
-		searchComboBox
-				.getEditor()
-				.textProperty()
-				.addListener(
-						(observable, oldValue, newValue) -> {
-							filteredLocations.setPredicate(
-									location -> {
-										// if field is empty display all locations
-										if ((newValue == null
-												|| searchComboBox.getSelectionModel().toString().isEmpty())
-												&& location.getFloor().equals(floor)) {
-											return true;
-										}
-										// make sure case is factored out
-										String lowerCaseFilter = newValue.toLowerCase();
-										// if search matches either name or ID, display it
-										// if not, this returns false and doesn't display
-										return (location.getLongName().toLowerCase().contains(lowerCaseFilter)
-												|| location.getShortName().toLowerCase().contains(lowerCaseFilter)
-												|| location.getNodeID().toLowerCase().contains(lowerCaseFilter))
-												&& location.getFloor().equals(floor);
-									});
-							// add items to comboBox dropdown
-							ArrayList<String> locationNames = new ArrayList<>();
-							for (Location l : filteredLocations) {
-								locationNames.add(l.getLongName());
-							}
-							searchComboBox.getItems().clear();
-							searchComboBox.getItems().addAll(locationNames);
-							if (searchComboBox.getItems().size() < 5) {
-								searchComboBox.setVisibleRowCount(searchComboBox.getItems().size());
-							} else {
-								searchComboBox.setVisibleRowCount(5);
-							}
-							// select location if search complete
-							if (searchComboBox.getItems().size() == 1) {
-								existingLocationSelected(filteredLocations.get(0));
-								editButton.setDisable(false);
-							}
-
-							clearAll();
-							HashMap<String, LocationMarker> locationIDs = new HashMap<>();
-							// Loops through every location filtered & draws them if present on the floor
-							// TODO clean this up somehow, need a new .contains type method
-							for (Location l : locations) {
-								System.out.println(l.getLongName());
-								for (Location ls : filteredLocations) {
-									if (ls.getNodeID().equals(l.getNodeID())) {
-										LocationMarker locationMarker = newDraggableLocation(l);
-										locationMarker.draw(miniAnchorPane);
-										locationMarker.setButtonVisibility(true);
-										locationIDs.put(l.getNodeID(), locationMarker);
-										break;
-									}
-								}
-							}
-							// Loops through every medical equipment & draws them if they're on this floor
-							for (Equipment equipment : equipments) {
-								if (locationIDs.containsKey(equipment.getCurrentLocation())) {
-									EquipmentMarker equipmentMarker =
-											newDraggableEquipment(
-													equipment, locationIDs.get(equipment.getCurrentLocation()));
-									equipmentMarker.draw(miniAnchorPane);
-								}
-							}
-						});
-	}
-
-	// Sets up the floor
-	public void setupFloor(String newValue) {
-		URL url;
-		switch (newValue) {
-			case "Choose Floor: ":
-				floor = "";
-				floorName = "";
-				url = App.class.getResource("images/Side View.png");
-				break;
-			case "Floor 1":
-				floor = "1";
-				floorName = "Floor 1";
-				url = App.class.getResource("images/1st Floor.png");
-				break;
-			case "Floor 2":
-				floor = "2";
-				floorName = "Floor 2";
-				url = App.class.getResource("images/2nd Floor.png");
-				break;
-			case "Floor 3":
-				floor = "3";
-				floorName = "Floor 3";
-				url = App.class.getResource("images/3rd Floor.png");
-				break;
-			case "L1":
-				floor = "L1";
-				floorName = "L1";
-				url = App.class.getResource("images/LL1.png");
-				break;
-			case "L2":
-				floor = "L2";
-				floorName = "L2";
-				url = App.class.getResource("images/LL2.png");
-				break;
-			default:
-				url = App.class.getResource("images/Side View.png");
-				break;
-		}
-
-		Image image = new Image(String.valueOf(url));
-		mapImageView.setImage(image);
-		setupGesture();
-		hideSideView();
-	}
-
-	public void setupGesture() {
-		miniAnchorPane.getChildren().remove(mapImageView);
-		miniAnchorPane.getChildren().add(mapImageView);
-		miniAnchorPane.setLayoutX(0);
-		mapImageView.setLayoutX(0);
-		gesturePane.reset();
-		gesturePane.setContent(miniAnchorPane);
-		gesturePane.addEventFilter(
-				AffineEvent.CHANGED,
-				event -> {
-					// System.out.println(event.getTransformedDimension());
-					transformed = event.getTransformedDimension();
-				});
-		gesturePane.setOnMouseClicked(
-				e -> {
-					if (e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 2) {
-						Point2D pivotOnTarget =
-								gesturePane
-										.targetPointAt(new Point2D(e.getX(), e.getY()))
-										.orElse(gesturePane.targetPointAtViewportCentre());
-						// increment of scale makes more sense exponentially instead of linearly
-						gesturePane
-								.animate(Duration.millis(200))
-								.interpolateWith(Interpolator.EASE_BOTH)
-								.zoomBy(gesturePane.getCurrentScale(), pivotOnTarget);
-					}
-				});
-	}
-
-	// Go to Location Table
-	@FXML
-	public void goToLocationTable() throws IOException {
-		HomeCtrl.sceneFlag = 2;
-		sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
-	}
+  public void goToLocationTable(ActionEvent actionEvent) {}
 }
