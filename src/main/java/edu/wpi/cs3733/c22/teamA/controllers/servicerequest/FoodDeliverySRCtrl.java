@@ -75,7 +75,7 @@ public class FoodDeliverySRCtrl extends SRCtrl {
 
     commentsBox.setWrapText(true);
 
-    mainChoice.getItems().addAll("Turkey Sandwich", "Grilled Cheese Sandwich", "Friend Chicken");
+    mainChoice.getItems().addAll("Turkey Sandwich", "Grilled Cheese Sandwich", "Fried Chicken");
     drinkChoice.getItems().addAll("Water", "Juice", "Milk");
     sideChoice.getItems().addAll("French Fries", "Apple", "Biscuit");
     dessertChoice.getItems().addAll("Cookie", "Brownie", "Cinnamon Roll");
