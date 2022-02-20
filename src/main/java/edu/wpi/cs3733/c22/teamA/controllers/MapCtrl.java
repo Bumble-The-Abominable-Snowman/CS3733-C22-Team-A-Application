@@ -1,7 +1,12 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
 import com.jfoenix.controls.JFXComboBox;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
+import edu.wpi.cs3733.c22.teamA.entities.map.MarkerManager;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,12 +32,18 @@ public class MapCtrl extends MasterCtrl {
   private ImageView mapImageView;
   private ArrayList<String> floorNames;
   private String currentFloor;
+  private MarkerManager markerManager;
+  private LocationDAO locationDAO;
+  private EquipmentDAO equipmentDAO;
 
   public MapCtrl() {
     // Setup Floors
     floorNames =
         new ArrayList<>(
             Arrays.asList("Choose Floor:", "Floor 1", "Floor 2", "Floor 3", "L1", "L2"));
+
+    locationDAO = new LocationDerbyImpl();
+    equipmentDAO = new EquipmentDerbyImpl();
   }
 
   /** Floor Combo Box */
@@ -44,6 +55,8 @@ public class MapCtrl extends MasterCtrl {
     configure();
     initGesture();
     initFloorSelection();
+
+    markerManager = new MarkerManager(locationDAO, equipmentDAO, anchorPane);
   }
 
   private void initFloorSelection() {
@@ -56,6 +69,8 @@ public class MapCtrl extends MasterCtrl {
         .addListener(
             (obs, oldValue, newValue) -> {
               setMapFloor(newValue);
+              markerManager.initFloor(
+                  currentFloor, ((int) mapImageView.getLayoutX()), (int) mapImageView.getLayoutY());
             });
   }
 
@@ -107,7 +122,7 @@ public class MapCtrl extends MasterCtrl {
             + "    -fx-border-style: solid;\n"
             + "    -fx-border-width: 5;");
     mapImageView.setPreserveRatio(true);
-    mapImageView.setLayoutX(200);
+    // mapImageView.setLayoutX(layoutStart);
     mapImageView.setLayoutY(0);
     gesturePane.setMinScale(0.75f);
     gesturePane.reset();

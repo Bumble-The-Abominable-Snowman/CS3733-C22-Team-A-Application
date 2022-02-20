@@ -13,8 +13,7 @@ public class MarkerMaker {
   private static Polygon locationMarkerShape = new Polygon(1.0, 4.0, 0.0, 2.0, 1.0, 0.0, 2.0, 2.0);
   private static Polygon equipmentMarkerShape = new Polygon(0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0);
 
-  public static LocationMarker makeLocationMarker(
-      Location location, int offSetX, int offSetY) {
+  public static LocationMarker makeLocationMarker(Location location, int offSetX, int offSetY) {
     double buttonX = location.getXCoord() + offSetX - 8;
     double buttonY = location.getYCoord() + offSetY - 24;
     Button button = newDraggableButton(buttonX, buttonY, 0);
@@ -31,7 +30,8 @@ public class MarkerMaker {
     return locationMarker;
   }
 
-  public static EquipmentMarker makeEquipmentMarker(Equipment equipment, LocationMarker locationMarker, int offSetX, int offSetY) {
+  public static EquipmentMarker makeEquipmentMarker(
+      Equipment equipment, LocationMarker locationMarker, int offSetX, int offSetY) {
     double buttonX = locationMarker.getLocation().getXCoord() + offSetX - 8 + 10;
     double buttonY = locationMarker.getLocation().getYCoord() + offSetY - 24 + 10;
     Button button = newDraggableButton(buttonX, buttonY, 1);
@@ -46,15 +46,13 @@ public class MarkerMaker {
     button.setShape(equipmentMarkerShape);
 
     EquipmentMarker equipmentMarker = new EquipmentMarker(equipment, button, label, locationMarker);
+    locationMarker.setEquipmentMarker(equipmentMarker);
     // buttonEquipmentMarker.put(button, equipmentMarker);
     return equipmentMarker;
   }
 
   public static SRMarker makeSRMarker(
-      SR serviceRequest,
-      LocationMarker locationMarker,
-      int offSetX,
-      int offSetY) {
+      SR serviceRequest, LocationMarker locationMarker, int offSetX, int offSetY) {
     double buttonX = locationMarker.getLocation().getXCoord() + offSetX - 8;
     double buttonY = locationMarker.getLocation().getYCoord() + offSetY - 24;
     Button button = newDraggableButton(buttonX, buttonY, 2);
@@ -67,6 +65,7 @@ public class MarkerMaker {
     button.setShape(locationMarkerShape);
 
     SRMarker serviceRequestMarker = new SRMarker(serviceRequest, button, label, locationMarker);
+    locationMarker.setServiceRequestMarker(serviceRequestMarker);
     // buttonServiceRequestMarker.put(button, serviceRequestMarker);
     return serviceRequestMarker;
   }
