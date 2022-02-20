@@ -20,7 +20,9 @@ import javafx.scene.control.*;
 
 // TODO fix naming
 // TODO make dependent on database for medical equipment
+
 public class EquipmentDeliverySRCtrl extends SRCtrl {
+
   @FXML private JFXComboBox<String> typeChoice;
   @FXML private JFXComboBox<String> fromChoice;
   @FXML private JFXComboBox<String> statusChoice;

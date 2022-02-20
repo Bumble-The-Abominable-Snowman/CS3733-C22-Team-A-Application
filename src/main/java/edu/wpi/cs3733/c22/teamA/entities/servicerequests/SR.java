@@ -44,6 +44,7 @@ public class SR {
     RELIGIOUS,
     SANITATION,
     SECURITY,
+    CONSULTATION,
     INVALID,
   }
 

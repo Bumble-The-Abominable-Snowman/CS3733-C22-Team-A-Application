@@ -21,8 +21,9 @@ public class SceneSwitcher {
     FLORAL_DELIVERY_SR,
     MEDICINE_DELIVERY_SR,
     MAINTENANCE_SR,
-    GIFT_SR,
+    GIFT_DELIVERY_SR,
     SECURITY_SR,
+    CONSULTATION_SR,
     DATA_VIEW,
     SETTINGS,
     LOAD_BACKUP,
@@ -52,6 +53,7 @@ public class SceneSwitcher {
     addScene(SCENES.SANITATION_SR, "views/servicerequest/SanitationSR.fxml");
     addScene(SCENES.FLORAL_DELIVERY_SR, "views/servicerequest/FloralDeliverySR.fxml");
     addScene(SCENES.MEDICINE_DELIVERY_SR, "views/servicerequest/MedicineDeliverySR.fxml");
+    addScene(SCENES.CONSULTATION_SR, "views/servicerequest/ConsultationSR.fxml");
 
     // Data View + Map Editor
     addScene(SCENES.DATA_VIEW, "views/DataView.fxml");
@@ -72,5 +74,6 @@ public class SceneSwitcher {
     else currentScene.setRoot(root);
     App.getStage().setScene(currentScene);
     App.getStage().show();
+
   }
 }
