@@ -31,9 +31,7 @@ public class MarkerMaker {
     return locationMarker;
   }
 
-  public static EquipmentMarker makeEquipmentMarker(Equipment equipment, LocationMarker locationMarker,
-      int offSetX,
-      int offSetY) {
+  public static EquipmentMarker makeEquipmentMarker(Equipment equipment, LocationMarker locationMarker, int offSetX, int offSetY) {
     double buttonX = locationMarker.getLocation().getXCoord() + offSetX - 8 + 10;
     double buttonY = locationMarker.getLocation().getYCoord() + offSetY - 24 + 10;
     Button button = newDraggableButton(buttonX, buttonY, 1);

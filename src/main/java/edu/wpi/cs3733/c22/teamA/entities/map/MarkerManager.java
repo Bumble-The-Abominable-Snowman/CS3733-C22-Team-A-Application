@@ -1,24 +1,50 @@
 package edu.wpi.cs3733.c22.teamA.entities.map;
 
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
+import java.util.*;
 
 public class MarkerManager {
 	private List<Location> allLocations;
-	private List<Location> currentFloorLocations;
-	private List<LocationMarker> currentFloorLocationMarkers;
+	private List<Equipment> allEquipments;
+	private List<SR> allSRs;
+
+	private List<Location> floorLocations;
+	private List<Equipment> floorEquipment;
+	private List<SR> floorSRs;
+
+	private Set<String> currentFloorIDs;
+	private Map<String, LocationMarker> idToLocationMarker;
+	private List<LocationMarker> locationMarkers;
 	private List<EquipmentMarker> equipmentMarkers;
-	private List<SRMarker> serviceRequestMarkers; 
+	private List<SRMarker> serviceRequestMarkers;
 	private int mapLayoutX;
 	private int mapLayoutY;
 
-	public MarkerManager(LocationDAO locationDAO, int mapLayoutX, int mapLayoutY){
-		currentFloorLocations = new ArrayList<>();
+	public MarkerManager(LocationDAO locationDAO, EquipmentDAO equipmentDAO, int mapLayoutX, int mapLayoutY) throws IllegalAccessException, SQLException, InvocationTargetException {
+		floorLocations = new ArrayList<>();
+		currentFloorIDs = new HashSet<>();
+		idToLocationMarker = new HashMap<>();
+
 		allLocations = locationDAO.getNodeList();
+		allEquipments = equipmentDAO.getMedicalEquipmentList();
+		try {
+			List<?> requestList = ServiceRequestDerbyImpl.getAllServiceRequestList();
+			for (Object sr : requestList) {
+				allSRs.add((SR) sr);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
 		this.mapLayoutX = mapLayoutX;
 		this.mapLayoutY = mapLayoutY;
 	}
@@ -26,24 +52,58 @@ public class MarkerManager {
 	public void initFloor(String floor){
 		clear();
 		getFloorLocations(floor);
-
+		getEquipmentLocations();
+		getSRLocations();
 	}
 
-	public void getFloorLocations(String floor){
+	private void getFloorLocations(String floor){
 		for(Location l: allLocations) {
 			if (floor.equals(l.getFloor())) {
-				currentFloorLocations.add(l);
+				floorLocations.add(l);
+				currentFloorIDs.add(l.getNodeID());
 			}
 		}
 	}
 
-	public void clear(){
-		currentFloorLocations.clear();
+	private void getEquipmentLocations(){
+		for(Equipment e: allEquipments){
+			if(currentFloorIDs.contains(e.getCurrentLocation())){
+				floorEquipment.add(e);
+			}
+		}
 	}
 
-	public void drawFloorLocations(){
-		for(Location l: currentFloorLocations){
+	private void getSRLocations(){
+		for(SR sr: allSRs){
+			if(currentFloorIDs.contains(sr.getEndLocation())){
+				floorSRs.add(sr);
+			}
+		}
+	}
+
+	private void clear(){
+		floorLocations.clear();
+	}
+
+	private void createFloorLocations(){
+		for(Location l: floorLocations){
 			LocationMarker newLocationMarker = MarkerMaker.makeLocationMarker(l, mapLayoutX, mapLayoutY);
+			locationMarkers.add(newLocationMarker);
+			idToLocationMarker.put(l.getNodeID(), newLocationMarker);
+		}
+	}
+
+	private void createFloorEquipments(){
+		for(Equipment e: floorEquipment){
+			EquipmentMarker newEquipmentMarker = MarkerMaker.makeEquipmentMarker(e,idToLocationMarker.get(e.getCurrentLocation()), mapLayoutX, mapLayoutY);
+			equipmentMarkers.add(newEquipmentMarker);
+		}
+	}
+
+	private void createFloorSRs(){
+		for(Location l: floorLocations){
+			LocationMarker newLocationMarker = MarkerMaker.makeLocationMarker(l, mapLayoutX, mapLayoutY);
+			locationMarkers.add(newLocationMarker);
 		}
 	}
 
