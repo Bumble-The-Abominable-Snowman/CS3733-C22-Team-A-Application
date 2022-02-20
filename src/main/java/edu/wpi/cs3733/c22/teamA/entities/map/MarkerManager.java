@@ -1,6 +1,52 @@
 package edu.wpi.cs3733.c22.teamA.entities.map;
 
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
+import edu.wpi.cs3733.c22.teamA.entities.Equipment;
+import edu.wpi.cs3733.c22.teamA.entities.Location;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MarkerManager {
+	private List<Location> allLocations;
+	private List<Location> currentFloorLocations;
+	private List<LocationMarker> currentFloorLocationMarkers;
+	private List<EquipmentMarker> equipmentMarkers;
+	private List<SRMarker> serviceRequestMarkers; 
+	private int mapLayoutX;
+	private int mapLayoutY;
+
+	public MarkerManager(LocationDAO locationDAO, int mapLayoutX, int mapLayoutY){
+		currentFloorLocations = new ArrayList<>();
+		allLocations = locationDAO.getNodeList();
+		this.mapLayoutX = mapLayoutX;
+		this.mapLayoutY = mapLayoutY;
+	}
+
+	public void initFloor(String floor){
+		clear();
+		getFloorLocations(floor);
+
+	}
+
+	public void getFloorLocations(String floor){
+		for(Location l: allLocations) {
+			if (floor.equals(l.getFloor())) {
+				currentFloorLocations.add(l);
+			}
+		}
+	}
+
+	public void clear(){
+		currentFloorLocations.clear();
+	}
+
+	public void drawFloorLocations(){
+		for(Location l: currentFloorLocations){
+			LocationMarker newLocationMarker = MarkerMaker.makeLocationMarker(l, mapLayoutX, mapLayoutY);
+		}
+	}
+
   /*
   private Map<Button, LocationMarker> buttonLocationMarker;
   private Map<Button, EquipmentMarker> buttonEquipmentMarker;

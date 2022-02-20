@@ -10,8 +10,11 @@ import javafx.scene.text.Font;
 
 public class MarkerMaker {
 
+  private static Polygon locationMarkerShape = new Polygon(1.0, 4.0, 0.0, 2.0, 1.0, 0.0, 2.0, 2.0);
+  private static Polygon equipmentMarkerShape = new Polygon(0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0);
+
   public static LocationMarker makeLocationMarker(
-      Location location, Polygon locationMarkerShape, int offSetX, int offSetY) {
+      Location location, int offSetX, int offSetY) {
     double buttonX = location.getXCoord() + offSetX - 8;
     double buttonY = location.getYCoord() + offSetY - 24;
     Button button = newDraggableButton(buttonX, buttonY, 0);
@@ -28,10 +31,7 @@ public class MarkerMaker {
     return locationMarker;
   }
 
-  public static EquipmentMarker makeEquipmentMarker(
-      Equipment equipment,
-      Polygon equipmentMarkerShape,
-      LocationMarker locationMarker,
+  public static EquipmentMarker makeEquipmentMarker(Equipment equipment, LocationMarker locationMarker,
       int offSetX,
       int offSetY) {
     double buttonX = locationMarker.getLocation().getXCoord() + offSetX - 8 + 10;
@@ -55,7 +55,6 @@ public class MarkerMaker {
   public static SRMarker makeSRMarker(
       SR serviceRequest,
       LocationMarker locationMarker,
-      Polygon locationMarkerShape,
       int offSetX,
       int offSetY) {
     double buttonX = locationMarker.getLocation().getXCoord() + offSetX - 8;
