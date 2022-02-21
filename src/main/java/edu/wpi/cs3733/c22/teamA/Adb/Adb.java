@@ -203,7 +203,7 @@ public class Adb {
               + "FOREIGN KEY (medicineID) REFERENCES Medicine (medicineID))");
 
     } catch (SQLException e) {
-
+      System.out.println("MedicineDosage table already exists");
     }
 
     // Check ServiceRequestDerbyImpl table.
