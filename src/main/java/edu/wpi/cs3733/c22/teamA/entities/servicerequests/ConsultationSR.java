@@ -9,34 +9,33 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class ConsultationSR extends SR {
-    private String consultation;
+  private String consultation;
 
-    public ConsultationSR() {
-        super();
-        this.srType = SRType.CONSULTATION;
-    }
+  public ConsultationSR() {
+    super();
+    this.srType = SRType.CONSULTATION;
+  }
 
-    public ConsultationSR(
-            String requestID,
-            String startLocation,
-            String endLocation,
-            String employeeRequested,
-            String employeeAssigned,
-            Timestamp requestTime,
-            Status requestStatus,
-            Priority requestPriority,
-            String comments) {
-        super(
-                requestID,
-                startLocation,
-                endLocation,
-                employeeRequested,
-                employeeAssigned,
-                requestTime,
-                requestStatus,
-                requestPriority,
-                comments);
-        this.srType = SRType.CONSULTATION;
-    }
+  public ConsultationSR(
+      String requestID,
+      String startLocation,
+      String endLocation,
+      String employeeRequested,
+      String employeeAssigned,
+      Timestamp requestTime,
+      Status requestStatus,
+      Priority requestPriority,
+      String comments) {
+    super(
+        requestID,
+        startLocation,
+        endLocation,
+        employeeRequested,
+        employeeAssigned,
+        requestTime,
+        requestStatus,
+        requestPriority,
+        comments);
+    this.srType = SRType.CONSULTATION;
+  }
 }
-

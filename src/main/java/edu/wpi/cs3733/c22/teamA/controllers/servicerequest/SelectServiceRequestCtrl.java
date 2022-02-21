@@ -17,6 +17,10 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
   @FXML private JFXButton languageServicesButton;
   @FXML private JFXButton floralServicesButton;
   @FXML private JFXButton medicineDeliveryButton;
+  @FXML private JFXButton consultationButton;
+  @FXML private JFXButton giftDeliveryButton;
+  @FXML private JFXButton maintenanceButton;
+  @FXML private JFXButton securityButton;
 
   @FXML
   private void initialize() {
@@ -31,6 +35,10 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
     double languageServicesTextSize = languageServicesButton.getFont().getSize();
     double floralServicesTextSize = floralServicesButton.getFont().getSize();
     double medicineDeliveryTextSize = medicineDeliveryButton.getFont().getSize();
+    double consultationTextSize = consultationButton.getFont().getSize();
+    double giftDeliveryTextSize = giftDeliveryButton.getFont().getSize();
+    double maintenanceTextSize = maintenanceButton.getFont().getSize();
+    double securityTextSize = securityButton.getFont().getSize();
 
     App.getStage()
         .widthProperty()
@@ -67,6 +75,22 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
               medicineDeliveryButton.setStyle(
                   "-fx-font-size: "
                       + ((App.getStage().getWidth() / 1000) * medicineDeliveryTextSize)
+                      + "pt;");
+              consultationButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * consultationTextSize)
+                      + "pt;");
+              giftDeliveryButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * giftDeliveryTextSize)
+                      + "pt;");
+              maintenanceButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * maintenanceTextSize)
+                      + "pt;");
+              securityButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * securityTextSize)
                       + "pt;");
             });
   }
@@ -109,5 +133,25 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
   @FXML
   private void goToMedicineDelivery() throws IOException {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.MEDICINE_DELIVERY_SR);
+  }
+
+  @FXML
+  private void goToConsultation() throws IOException {
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.CONSULTATION_SR);
+  }
+
+  @FXML
+  private void goToGiftDelivery() throws IOException {
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.GIFT_DELIVERY_SR);
+  }
+
+  @FXML
+  private void goToMaintenance() throws IOException {
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.MAINTENANCE_SR);
+  }
+
+  @FXML
+  private void goToSecurity() throws IOException {
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SECURITY_SR);
   }
 }

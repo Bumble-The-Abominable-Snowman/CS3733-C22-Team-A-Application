@@ -57,49 +57,42 @@ public class MaintenanceSRCtrl extends SRCtrl {
                       + ((App.getStage().getWidth() / 1000) * commentsTextSize)
                       + "pt;");
               typeOtherBox.setStyle(
-                      "-fx-font-size: "
-                              + ((App.getStage().getWidth() / 1000) * typeOtherTextSize)
-                              + "pt;");
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * typeOtherTextSize)
+                      + "pt;");
               titleLabel.setStyle(
-                      "-fx-font-size: "
-                              + ((App.getStage().getWidth() / 1000) * titleTextSize)
-                              + "pt;");
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * titleTextSize) + "pt;");
               mapLabel.setStyle(
-                      "-fx-font-size: "
-                              + ((App.getStage().getWidth() / 1000) * mapTextSize)
-                              + "pt;");
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * mapTextSize) + "pt;");
               locationLabel.setStyle(
-                      "-fx-font-size: "
-                              + ((App.getStage().getWidth() / 1000) * locationTextSize)
-                              + "pt;");
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * locationTextSize)
+                      + "pt;");
               typeLabel.setStyle(
-                      "-fx-font-size: "
-                              + ((App.getStage().getWidth() / 1000) * typeTextSize)
-                              + "pt;");
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * typeTextSize) + "pt;");
               employeeLabel.setStyle(
-                      "-fx-font-size: "
-                              + ((App.getStage().getWidth() / 1000) * employeeTextSize)
-                              + "pt;");
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * employeeTextSize)
+                      + "pt;");
             });
 
     commentsBox.setWrapText(true);
     typeOtherBox.setWrapText(true);
 
-
     // Put sanitation types in temporary type menu
     typeChoice.getItems().addAll("Change Light Bulb", "Repair AC", "Other");
     typeChoice.getSelectionModel().select("Select Type");
     typeChoice
-            .getSelectionModel()
-            .selectedItemProperty()
-            .addListener(
-                    (obs, oldValue, newValue) -> {
-                      if (newValue.equals("Other")) {
-                        typeOtherBox.setVisible(true);
-                      } else {
-                        typeOtherBox.setVisible(false);
-                      }
-                    });
+        .getSelectionModel()
+        .selectedItemProperty()
+        .addListener(
+            (obs, oldValue, newValue) -> {
+              if (newValue.equals("Other")) {
+                typeOtherBox.setVisible(true);
+              } else {
+                typeOtherBox.setVisible(false);
+              }
+            });
 
     // Put locations in temporary location menu
     this.populateEmployeeAndLocationList();

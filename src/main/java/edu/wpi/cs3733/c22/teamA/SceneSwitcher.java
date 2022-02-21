@@ -54,6 +54,9 @@ public class SceneSwitcher {
     addScene(SCENES.FLORAL_DELIVERY_SR, "views/servicerequest/FloralDeliverySR.fxml");
     addScene(SCENES.MEDICINE_DELIVERY_SR, "views/servicerequest/MedicineDeliverySR.fxml");
     addScene(SCENES.CONSULTATION_SR, "views/servicerequest/ConsultationSR.fxml");
+    addScene(SCENES.GIFT_DELIVERY_SR, "views/servicerequest/GiftDeliverySR.fxml");
+    addScene(SCENES.MAINTENANCE_SR, "views/servicerequest/MaintenanceSR.fxml");
+    addScene(SCENES.SECURITY_SR, "views/servicerequest/SecuritySR.fxml");
 
     // Data View + Map Editor
     addScene(SCENES.DATA_VIEW, "views/DataView.fxml");
@@ -74,6 +77,5 @@ public class SceneSwitcher {
     else currentScene.setRoot(root);
     App.getStage().setScene(currentScene);
     App.getStage().show();
-
   }
 }
