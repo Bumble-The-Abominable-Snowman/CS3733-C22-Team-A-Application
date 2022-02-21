@@ -69,9 +69,8 @@ public class SelectionManager {
   }
 
   // Selected Location
-  public void existingLocationSelected(Location currLocation, Location selectedLocation) {
+  public void existingLocationSelected(Location selectedLocation) {
     inputVBox.setDisable(false);
-    selectedLocation = currLocation;
     nodeIDText.setEditable(false);
     xPosText.setEditable(false);
     yPosText.setEditable(false);
@@ -252,5 +251,21 @@ public class SelectionManager {
               button.getLayoutY());
     }
      */
+  }
+
+  public JFXButton getEditButton() {
+    return editButton;
+  }
+
+  public JFXButton getSaveButton() {
+    return saveButton;
+  }
+
+  public JFXButton getClearButton() {
+    return clearButton;
+  }
+
+  public JFXButton getDeleteButton() {
+    return deleteButton;
   }
 }

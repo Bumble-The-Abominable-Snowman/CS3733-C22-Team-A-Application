@@ -47,7 +47,6 @@ public class CheckBoxManager {
         .selectedProperty()
         .addListener(
             (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
-              System.out.println("here");
               showLocations(new_val);
             });
 
@@ -66,11 +65,11 @@ public class CheckBoxManager {
             });
 
     dragCheckBox
-            .selectedProperty()
-            .addListener(
-                    (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
-                      // TODO here
-                    });
+        .selectedProperty()
+        .addListener(
+            (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
+              // TODO here
+            });
   }
 
   public void switchFloor(MarkerManager markerManager) {
@@ -135,5 +134,9 @@ public class CheckBoxManager {
         serviceRequestMarker.setLabelVisibility(value);
       }
     }
+  }
+
+  public JFXCheckBox getDragCheckBox() {
+    return dragCheckBox;
   }
 }
