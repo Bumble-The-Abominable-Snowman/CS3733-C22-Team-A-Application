@@ -57,10 +57,11 @@ public class MarkerManager {
     this.anchorPane = anchorPane;
   }
 
-  public void initFloor(String floor, int mapLayoutX, int mapLayoutY) {
+  public void initFloor(
+      String floor, int mapLayoutX, int mapLayoutY, SelectionManager selectionManager) {
     clear();
     getFloorInfo(floor);
-    createFloorEntities();
+    createFloorEntities(selectionManager);
     initialDraw();
     this.mapLayoutX = mapLayoutX;
     this.mapLayoutY = mapLayoutY;
@@ -97,35 +98,38 @@ public class MarkerManager {
     }
   }
 
-  private void createFloorEntities() {
-    createFloorLocations();
-    createFloorEquipments();
-    createFloorSRs();
+  private void createFloorEntities(SelectionManager selectionManager) {
+    createFloorLocations(selectionManager);
+    createFloorEquipments(selectionManager);
+    createFloorSRs(selectionManager);
   }
 
-  private void createFloorLocations() {
+  private void createFloorLocations(SelectionManager selectionManager) {
     for (Location l : floorLocations) {
       LocationMarker newLocationMarker = MarkerMaker.makeLocationMarker(l, mapLayoutX, mapLayoutY);
       locationMarkers.add(newLocationMarker);
       idToLocationMarker.put(l.getNodeID(), newLocationMarker);
+      setDragLocation(newLocationMarker, selectionManager);
     }
   }
 
-  private void createFloorEquipments() {
+  private void createFloorEquipments(SelectionManager selectionManager) {
     for (Equipment e : floorEquipment) {
       EquipmentMarker newEquipmentMarker =
           MarkerMaker.makeEquipmentMarker(
               e, idToLocationMarker.get(e.getCurrentLocation()), mapLayoutX, mapLayoutY);
       equipmentMarkers.add(newEquipmentMarker);
+      setDragEquipment(newEquipmentMarker, selectionManager);
     }
   }
 
-  private void createFloorSRs() {
+  private void createFloorSRs(SelectionManager selectionManager) {
     for (SR sr : floorSRs) {
       SRMarker newSRMarker =
           MarkerMaker.makeSRMarker(
               sr, idToLocationMarker.get(sr.getEndLocation()), mapLayoutX, mapLayoutY);
       serviceRequestMarkers.add(newSRMarker);
+      setDragSR(newSRMarker, selectionManager);
     }
   }
 
@@ -173,10 +177,59 @@ public class MarkerManager {
     return serviceRequestMarkers;
   }
 
+  public void setDragEquipment(EquipmentMarker equipmentMarker, SelectionManager selectionManager) {
+    final Delta dragDelta = new Delta();
+    Button button = equipmentMarker.getButton();
+    button.setOnAction(
+        event -> {
+          selectionManager.existingLocationSelected(
+              equipmentMarker.getLocationMarker().getLocation());
+        });
+    button.setOnMousePressed(
+        mouseEvent -> {
+          // record a delta distance for the drag and drop operation.
+          dragDelta.buttonX = button.getLayoutX();
+          dragDelta.buttonY = button.getLayoutY();
+          dragDelta.mouseX = mouseEvent.getSceneX();
+          dragDelta.mouseY = mouseEvent.getSceneY();
+          button.setCursor(Cursor.MOVE);
+          selectionManager.existingLocationSelected(
+              equipmentMarker.getLocationMarker().getLocation());
+
+          selectionManager.getEditButton().setDisable(false);
+          selectionManager.getDeleteButton().setDisable(false);
+          selectionManager.getSaveButton().setDisable(true);
+          selectionManager.getClearButton().setDisable(true);
+        });
+  }
+
+  public void setDragSR(SRMarker srMarker, SelectionManager selectionManager) {
+    final Delta dragDelta = new Delta();
+    Button button = srMarker.getButton();
+    button.setOnAction(
+        event -> {
+          selectionManager.existingLocationSelected(srMarker.getLocationMarker().getLocation());
+        });
+    button.setOnMousePressed(
+        mouseEvent -> {
+          // record a delta distance for the drag and drop operation.
+          dragDelta.buttonX = button.getLayoutX();
+          dragDelta.buttonY = button.getLayoutY();
+          dragDelta.mouseX = mouseEvent.getSceneX();
+          dragDelta.mouseY = mouseEvent.getSceneY();
+          button.setCursor(Cursor.MOVE);
+          selectionManager.existingLocationSelected(srMarker.getLocationMarker().getLocation());
+
+          selectionManager.getEditButton().setDisable(false);
+          selectionManager.getDeleteButton().setDisable(false);
+          selectionManager.getSaveButton().setDisable(true);
+          selectionManager.getClearButton().setDisable(true);
+        });
+  }
+
   public void setDragLocation(
-      LocationMarker locationMarker,
-      SelectionManager selectionManager,
-      CheckBoxManager checkBoxManager) {
+      LocationMarker locationMarker, SelectionManager selectionManager /*,
+      CheckBoxManager checkBoxManager*/) {
     final Delta dragDelta = new Delta();
     Button button = locationMarker.getButton();
     button.setOnAction(

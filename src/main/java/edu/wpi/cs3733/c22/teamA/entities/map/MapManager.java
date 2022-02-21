@@ -6,14 +6,17 @@ public class MapManager {
   private MarkerManager markerManager;
   private CheckBoxManager checkBoxManager;
   private GesturePaneManager gesturePaneManager;
+  private SelectionManager selectionManager;
 
   public MapManager(
       MarkerManager markerManager,
       CheckBoxManager checkBoxManager,
-      GesturePaneManager gesturePaneManager) {
+      GesturePaneManager gesturePaneManager,
+      SelectionManager selectionManager) {
     this.markerManager = markerManager;
     this.checkBoxManager = checkBoxManager;
     this.gesturePaneManager = gesturePaneManager;
+    this.selectionManager = selectionManager;
   }
 
   public void init() {
@@ -23,7 +26,8 @@ public class MapManager {
   public void initFloor(String floor, int mapLayoutX, int mapLayoutY) {
     gesturePaneManager.setMapFloor(floor);
     // gesturePaneManager.initGesture();
-    markerManager.initFloor(gesturePaneManager.getCurrentFloor(), mapLayoutX, mapLayoutY);
+    markerManager.initFloor(
+        gesturePaneManager.getCurrentFloor(), mapLayoutX, mapLayoutY, selectionManager);
     checkBoxManager.switchFloor(markerManager);
   }
 

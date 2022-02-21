@@ -1,36 +1,54 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextArea;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.entities.map.CheckBoxManager;
-import edu.wpi.cs3733.c22.teamA.entities.map.GesturePaneManager;
-import edu.wpi.cs3733.c22.teamA.entities.map.MapManager;
-import edu.wpi.cs3733.c22.teamA.entities.map.MarkerManager;
+import edu.wpi.cs3733.c22.teamA.entities.map.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import net.kurobako.gesturefx.GesturePane;
 
 // TODO Change all instances of looping through locations to find related short names & node ids
 // with method in backend once implemented
 public class MapCtrl extends MasterCtrl {
+  // Selection Manager
+  @FXML private VBox inputVBox;
+  @FXML private JFXTextArea nodeIDText;
+  @FXML private JFXTextArea xPosText;
+  @FXML private JFXTextArea yPosText;
+  @FXML private JFXTextArea floorText;
+  @FXML private JFXTextArea towerText;
+  @FXML private JFXTextArea typeText;
+  @FXML private JFXTextArea longnameText;
+  @FXML private JFXTextArea shortnameText;
+  @FXML private JFXButton editButton;
+  @FXML private JFXButton clearButton;
+  @FXML private JFXButton saveButton;
+  @FXML private JFXButton deleteButton;
+
+  // Check Box Manager
   @FXML private JFXCheckBox dragCheckBox;
   @FXML private JFXCheckBox serviceRequestCheckBox;
   @FXML private JFXCheckBox locationCheckBox;
   @FXML private JFXCheckBox showTextCheckBox;
   @FXML private JFXCheckBox equipmentCheckBox;
+
+  // Gesuture Pane Manager
   @FXML private JFXComboBox<String> floorSelectionComboBox;
   @FXML private GesturePane gesturePane;
-
   private AnchorPane anchorPane;
   private ImageView mapImageView;
+
   private ArrayList<String> floorNames;
 
   private LocationDAO locationDAO;
@@ -40,6 +58,7 @@ public class MapCtrl extends MasterCtrl {
   private MarkerManager markerManager;
   private CheckBoxManager checkBoxManager;
   private GesturePaneManager gesturePaneManager;
+  private SelectionManager selectionManager;
 
   public MapCtrl() {
     // Setup Floors
@@ -70,7 +89,23 @@ public class MapCtrl extends MasterCtrl {
             showTextCheckBox,
             dragCheckBox);
     gesturePaneManager = new GesturePaneManager(gesturePane, anchorPane, mapImageView);
-    mapManager = new MapManager(markerManager, checkBoxManager, gesturePaneManager);
+    selectionManager =
+        new SelectionManager(
+            editButton,
+            saveButton,
+            clearButton,
+            deleteButton,
+            inputVBox,
+            nodeIDText,
+            xPosText,
+            yPosText,
+            floorText,
+            towerText,
+            typeText,
+            longnameText,
+            shortnameText);
+    mapManager =
+        new MapManager(markerManager, checkBoxManager, gesturePaneManager, selectionManager);
 
     mapManager.init();
   }
