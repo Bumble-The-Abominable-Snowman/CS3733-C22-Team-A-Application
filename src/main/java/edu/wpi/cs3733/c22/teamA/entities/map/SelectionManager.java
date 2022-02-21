@@ -1,17 +1,14 @@
 package edu.wpi.cs3733.c22.teamA.entities.map;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
-import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
-import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import javafx.scene.control.Button;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
@@ -23,6 +20,8 @@ public class SelectionManager {
   private List<InfoField> equipmentFields;
   private List<InfoField> srFields;
 
+  private List<InfoField> currentList;
+
   private JFXButton editButton;
   private JFXButton saveButton;
   private JFXButton clearButton;
@@ -33,13 +32,43 @@ public class SelectionManager {
     inputVBox.setDisable(true);
     instantiateButtons();
     fillBoxes();
+
+    currentList = new ArrayList<>();
   }
 
   public void instantiateButtons() {
     editButton = new JFXButton("Edit");
+    editButton.setOnAction(
+        new EventHandler<ActionEvent>() {
+          @Override
+          public void handle(ActionEvent e) {
+            edit();
+          }
+        });
     saveButton = new JFXButton("Save");
+    saveButton.setOnAction(
+        new EventHandler<ActionEvent>() {
+          @Override
+          public void handle(ActionEvent e) {
+            save();
+          }
+        });
     clearButton = new JFXButton("Clear");
+    clearButton.setOnAction(
+        new EventHandler<ActionEvent>() {
+          @Override
+          public void handle(ActionEvent e) {
+            clear();
+          }
+        });
     deleteButton = new JFXButton("Delete");
+    deleteButton.setOnAction(
+        new EventHandler<ActionEvent>() {
+          @Override
+          public void handle(ActionEvent e) {
+            delete();
+          }
+        });
   }
 
   public void fillBoxes() {
@@ -144,120 +173,61 @@ public class SelectionManager {
   // Selected Location
   public void existingLocationSelected(Location selectedLocation) {
     inputVBox.setDisable(false);
+    currentList = locationFields;
     locationVBox();
-
-    nodeIDText.setText(selectedLocation.getNodeID());
+    List<String> currentFields = selectedLocation.getListForm();
+    for (int i = 0; i < currentFields.size(); i++) {
+      locationFields.get(i).textArea.setText(currentFields.get(i));
+    }
+    /*
     if (xPosText.getText() == null || xPosText.getText().equals("")) {
       xPosText.setText(String.valueOf(selectedLocation.getXCoord()));
       yPosText.setText(String.valueOf(selectedLocation.getYCoord()));
     }
-
-    floorText.setText(selectedLocation.getFloor());
-    buildingText.setText(selectedLocation.getBuilding());
-    typeText.setText(selectedLocation.getNodeType());
-    longnameText.setText(selectedLocation.getLongName());
-    shortnameText.setText(selectedLocation.getShortName());
     */
-
   }
 
   // Existing Equipment Selected
   public void existingEquipmentSelected(Equipment equipment /*List<Location> locations*/) {
     inputVBox.setDisable(false);
+    currentList = equipmentFields;
     equipmentVBox();
-    /*
-    nodeIDText.setEditable(false);
-    xPosText.setEditable(false);
-    yPosText.setEditable(false);
-    floorText.setEditable(false);
-    buildingText.setEditable(false);
-    typeText.setEditable(false);
-    longnameText.setEditable(false);
-    shortnameText.setEditable(false);
-
-    nodeIDText.setText(equipment.getEquipmentID());
-    typeText.setText(equipment.getEquipmentType());
-    longnameText.setText("N/A");
-    for (Location l : locations) {
-      if (l.getNodeID().equals(equipment.getCurrentLocation())) {
-        shortnameText.setText(l.getShortName());
-        floorText.setText(l.getFloor());
-        buildingText.setText(l.getBuilding());
-        break;
-      }
+    List<String> currentFields = equipment.getListForm();
+    for (int i = 0; i < currentFields.size(); i++) {
+      equipmentFields.get(i).textArea.setText(currentFields.get(i));
     }
-    8/
-     */
   }
 
   // Existing Service Request Selected
   public void existingServiceRequestSelected(SR serviceRequest) {
     inputVBox.setDisable(false);
+    currentList = srFields;
     srVBox();
-    /*
-    nodeIDText.setEditable(false);
-    xPosText.setEditable(false);
-    yPosText.setEditable(false);
-    floorText.setEditable(false);
-    buildingText.setEditable(false);
-    typeText.setEditable(false);
-    longnameText.setEditable(false);
-    shortnameText.setEditable(false);
-
-    nodeIDText.setText(serviceRequest.getRequestID());
-    typeText.setText(serviceRequest.getRequestPriority());
-    longnameText.setText("N/A");
-
-    for (Location l : locations) {
-      if (l.getNodeID().equals(serviceRequest.getEndLocation())) {
-        shortnameText.setText(l.getShortName());
-        floorText.setText(l.getFloor());
-        buildingText.setText(l.getBuilding());
-        break;
-      }
+    List<String> currentFields = serviceRequest.getListForm();
+    for (int i = 0; i < currentFields.size(); i++) {
+      srFields.get(i).textArea.setText(currentFields.get(i));
     }
-    8/
-     */
   }
 
-  // Edit Location
-  public void editLocation() {
-    editButton.setDisable(true);
+  // Edit
+  public void edit() {
+    for (InfoField i : currentList) {
+      i.textArea.setEditable(true);
+    }
     saveButton.setDisable(false);
     clearButton.setDisable(false);
-    deleteButton.setDisable(false);
-
-    /*
-    nodeIDText.setEditable(true);
-    xPosText.setEditable(true);
-    yPosText.setEditable(true);
-    floorText.setEditable(true);
-    buildingText.setEditable(true);
-    typeText.setEditable(true);
-    longnameText.setEditable(true);
-    shortnameText.setEditable(true);
-
-     */
   }
 
-  // Clear Submission
-  public void clearSubmission() {
-    /*
-    nodeIDText.setText("");
-    xPosText.setText("");
-    yPosText.setText("");
-    floorText.setText("");
-    buildingText.setText("");
-    typeText.setText("");
-    longnameText.setText("");
-    shortnameText.setText("");
-
-     */
+  // Clear
+  public void clear() {
+    for (InfoField i : currentList) {
+      i.textArea.setText("");
+    }
   }
 
   // Delete Location
-  public void deleteLocation(
-      LocationDAO locationDAO, JFXComboBox floorSelectionComboBox, String floorName) {
+  public void delete() {
+    // TODO delete
     /*
     locationDAO.deleteLocationNode(nodeIDText.getText());
     String originalFloorName = floorName;
@@ -268,12 +238,8 @@ public class SelectionManager {
   }
 
   // Save Changes
-  public void saveChanges(
-      LocationMarker newLocationMarker,
-      Location selectedLocation,
-      JFXComboBox floorSelectionComboBox,
-      LocationDAO locationDAO,
-      String floorName) {
+  public void save() {
+    // TODO
     /*
     if (newLocationMarker != null && newLocationMarker.getLocation().equals(selectedLocation)) {
       newLocationMarker.getLocation().setNodeID(nodeIDText.getText());
@@ -312,7 +278,7 @@ public class SelectionManager {
 
      */
   }
-
+  /*
   // Update Medical Equipment / Service Request on Drag Release
   public void updateOnRelease(
       Button button, EquipmentDAO equipmentDAO, Map<Button, EquipmentMarker> buttonEquipmentMarker)
@@ -337,8 +303,9 @@ public class SelectionManager {
               "yCoord",
               button.getLayoutY());
     }
-     */
+
   }
+  */
 
   public JFXButton getEditButton() {
     return editButton;
