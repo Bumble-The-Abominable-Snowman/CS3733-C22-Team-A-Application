@@ -22,6 +22,9 @@ public abstract class SRCtrl extends MasterCtrl {
   @FXML Button submitButton;
   @FXML Button clearButton;
 
+  double stageWidth;
+  double stageHeight;
+
   List<Employee> employeeList = new ArrayList<>();
   List<Location> locationList = new ArrayList<>();
 
