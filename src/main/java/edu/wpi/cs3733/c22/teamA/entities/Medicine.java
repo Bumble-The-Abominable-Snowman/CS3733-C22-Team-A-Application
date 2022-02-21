@@ -1,35 +1,33 @@
 package edu.wpi.cs3733.c22.teamA.entities;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import java.util.Date;
 import java.util.List;
 
 public class Medicine extends RecursiveTreeObject<Medicine> {
 
-  private String medicineID;      // ID of this medicine (Primary Key of table)
-  private String genericName;     // Long fancy pharmacy name(similar to active Ingredient) (ex. ibuprofen)
-  private String brandName;       // Name given to this drug by its manufacturer (ex. Advil)
-  private String medicineClass;   // Type of drug (pharmacy term used to make sure patient doesnt take conflicting drugs)
-  private String uses;            // What disease state this drug is used for (ex. Pain and fever)
-  private String warnings;        // "Do not take while (x,y,z)"
-  private String sideEffects;     // Listed sideeffects of the medicine (ex. Nausea)
-  private String form;            // Method of drug delivery (tablet, liquid, IV, etc.)
+  private String medicineID; // ID of this medicine (Primary Key of table)
+  private String genericName; // Long fancy pharmacy name(similar to active Ingredient) (ex. ibuprofen)
+  private String brandName; // Name given to this drug by its manufacturer (ex. Advil)
+  private String medicineClass; // Type of drug (pharmacy term used to make sure patient doesnt take conflicting drugs)
+  private String uses; // What disease state this drug is used for (ex. Pain and fever)
+  private String warnings; // "Do not take while (x,y,z)"
+  private String sideEffects; // Listed sideeffects of the medicine (ex. Nausea)
+  private String form; // Method of drug delivery (tablet, liquid, IV, etc.)
 
-  private List<Float> dosageAmounts;  // Different dosage amounts (in milligrams)
-
+  private List<Float> dosageAmounts; // Different dosage amounts (in milligrams)
 
   public Medicine() {}
 
   public Medicine(
-          String medicineID,
-          String genericName,
-          String brandName,
-          String medicineClass,
-          String uses,
-          String warnings,
-          String sideEffects,
-          String form,
-          List<Float> dosageAmounts) {
+      String medicineID,
+      String genericName,
+      String brandName,
+      String medicineClass,
+      String uses,
+      String warnings,
+      String sideEffects,
+      String form,
+      List<Float> dosageAmounts) {
     this.medicineID = medicineID;
     this.genericName = genericName;
     this.brandName = brandName;
