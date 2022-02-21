@@ -132,7 +132,6 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
       }
     }
 
-    Adb.connection.close();
     return this.t;
   }
 
@@ -190,7 +189,6 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
         }
       }
     }
-    Adb.connection.close();
   }
 
   @Override
@@ -227,8 +225,6 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
     String str2 = str2_2.toString() + ")" + str2_3.toString() + ")";
     insert.execute(str2);
 
-    Adb.connection.close();
-
     refreshVariables();
   }
 
@@ -243,8 +239,6 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
 
     delete.execute(
         String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", sr.getRequestID()));
-
-    Adb.connection.close();
   }
 
   @Override
@@ -275,7 +269,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
       reqList.add(this.t);
       refreshVariables();
     }
-    Adb.connection.close();
+
     return reqList;
   }
 

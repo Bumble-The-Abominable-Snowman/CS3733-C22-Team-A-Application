@@ -82,7 +82,7 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
                   + " VALUES('%s', '%s', '%b', '%s', '%b')",
               equipmentID, equipmentType, isClean, currentLocation, isAvailable);
       insert.execute(str);
-      Adb.connection.close();
+
     } catch (SQLException e) {
       System.out.println("Failed");
       e.printStackTrace();
@@ -96,7 +96,7 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
       Statement delete = Adb.connection.createStatement();
       String str = String.format("DELETE FROM MedicalEquipment WHERE equipmentID = '%s'", ID);
       delete.execute(str);
-      Adb.connection.close();
+
     } catch (SQLException e) {
       System.out.println("Failed");
       e.printStackTrace();

@@ -99,12 +99,13 @@ public class Adb {
     */
 
     // Check if tables exist
-    System.out.println("-------------------------------------Checking tables-------------------------------------");
+    System.out.println(
+        "-------------------------------------Checking tables-------------------------------------");
     Statement stmt = null;
 
-    try{
+    try {
       stmt = connection.createStatement();
-    }catch(SQLException e){
+    } catch (SQLException e) {
       System.out.println("Error: " + e);
       return;
     }
@@ -127,7 +128,7 @@ public class Adb {
     }
 
     // Check Employee table.
-    try{
+    try {
       stmt.execute(
           "CREATE TABLE Employee(employeeID varchar(25), "
               + "employeeType varchar(25), "
@@ -313,6 +314,9 @@ public class Adb {
     } catch (SQLException e) {
       System.out.println("Table SecurityServiceRequest already exist");
     }
+
+    System.out.println(
+        "-------------------------------------Tables checked-------------------------------------");
 
     // Initialize the database and input data
     //    if (!isInitialized) {
