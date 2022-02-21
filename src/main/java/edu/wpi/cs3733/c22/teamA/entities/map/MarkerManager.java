@@ -20,6 +20,7 @@ public class MarkerManager {
 
   private Set<String> currentFloorIDs;
   private Map<String, LocationMarker> idToLocationMarker;
+
   private List<LocationMarker> locationMarkers;
   private List<EquipmentMarker> equipmentMarkers;
   private List<SRMarker> serviceRequestMarkers;
@@ -156,6 +157,18 @@ public class MarkerManager {
     locationMarkers.clear();
     equipmentMarkers.clear();
     serviceRequestMarkers.clear();
+  }
+
+  public List<LocationMarker> getLocationMarkers() {
+    return locationMarkers;
+  }
+
+  public List<EquipmentMarker> getEquipmentMarkers() {
+    return equipmentMarkers;
+  }
+
+  public List<SRMarker> getServiceRequestMarkers() {
+    return serviceRequestMarkers;
   }
 
   /*

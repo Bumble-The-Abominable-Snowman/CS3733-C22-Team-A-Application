@@ -1,11 +1,14 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
+import edu.wpi.cs3733.c22.teamA.entities.map.CheckBoxManager;
+import edu.wpi.cs3733.c22.teamA.entities.map.MapManager;
 import edu.wpi.cs3733.c22.teamA.entities.map.MarkerManager;
 import java.net.URL;
 import java.util.ArrayList;
@@ -25,6 +28,11 @@ import net.kurobako.gesturefx.GesturePane;
 // TODO Change all instances of looping through locations to find related short names & node ids
 // with method in backend once implemented
 public class MapCtrl extends MasterCtrl {
+  @FXML private JFXCheckBox dragCheckBox;
+  @FXML private JFXCheckBox serviceRequestCheckBox;
+  @FXML private JFXCheckBox locationCheckBox;
+  @FXML private JFXCheckBox showTextCheckBox;
+  @FXML private JFXCheckBox equipmentCheckBox;
   @FXML private JFXComboBox<String> floorSelectionComboBox;
   @FXML private GesturePane gesturePane;
 
@@ -32,9 +40,13 @@ public class MapCtrl extends MasterCtrl {
   private ImageView mapImageView;
   private ArrayList<String> floorNames;
   private String currentFloor;
-  private MarkerManager markerManager;
+
   private LocationDAO locationDAO;
   private EquipmentDAO equipmentDAO;
+
+  private MapManager mapManager;
+  private MarkerManager markerManager;
+  private CheckBoxManager checkBoxManager;
 
   public MapCtrl() {
     // Setup Floors
@@ -57,6 +69,14 @@ public class MapCtrl extends MasterCtrl {
     initFloorSelection();
 
     markerManager = new MarkerManager(locationDAO, equipmentDAO, anchorPane);
+    checkBoxManager =
+        new CheckBoxManager(
+            locationCheckBox,
+            equipmentCheckBox,
+            serviceRequestCheckBox,
+            showTextCheckBox,
+            dragCheckBox);
+    mapManager = new MapManager(markerManager, checkBoxManager);
   }
 
   private void initFloorSelection() {
@@ -69,7 +89,8 @@ public class MapCtrl extends MasterCtrl {
         .addListener(
             (obs, oldValue, newValue) -> {
               setMapFloor(newValue);
-              markerManager.initFloor(
+              gesturePane.reset();
+              mapManager.initFloor(
                   currentFloor, ((int) mapImageView.getLayoutX()), (int) mapImageView.getLayoutY());
             });
   }
