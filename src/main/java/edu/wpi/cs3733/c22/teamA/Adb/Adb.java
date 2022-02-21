@@ -15,6 +15,10 @@ public class Adb {
 
   public static String pathToDBA = "";
 
+  public static Connection connection = null;
+
+  public static Statement stmt = null;
+
   public static boolean usingEmbedded = true;
 
   public static void initialConnection(String arg) {
@@ -59,7 +63,7 @@ public class Adb {
 
       // Check if database exist. If not then create one.
       try {
-        Connection connection =
+        connection =
             DriverManager.getConnection(
                 String.format(
                     "jdbc:derby:%s;user=Admin;password=admin",
@@ -70,10 +74,10 @@ public class Adb {
         System.out.println("DB already exist");
 
       } catch (SQLException e) {
-        Connection c =
+        connection =
             DriverManager.getConnection(String.format("jdbc:derby:%s;create=true", pathToDBA));
-        turnOnBuiltInUsers(c);
-        c.close();
+        turnOnBuiltInUsers(connection);
+        connection.close();
         System.out.println("DB initialized");
         System.out.println("Closed connection");
 
@@ -97,15 +101,18 @@ public class Adb {
     */
 
     // Check if tables exist
+    System.out.println("-------------------------------------Checking tables-------------------------------------");
+
+    try{
+      stmt = connection.createStatement();
+    }catch(SQLException e){
+      System.out.println("Error: " + e);
+      return;
+    }
+
     // Check Locations table.
     try {
-
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
-      Statement addTable = connection.createStatement();
-
-      addTable.execute(
+      stmt.execute(
           "CREATE TABLE TowerLocations(nodeID varchar(25), "
               + "xcoord int, "
               + "ycoord int, "
@@ -121,14 +128,8 @@ public class Adb {
     }
 
     // Check Employee table.
-    try {
-
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
-      Statement addTable = connection.createStatement();
-
-      addTable.execute(
+    try{
+      stmt.execute(
           "CREATE TABLE Employee(employeeID varchar(25), "
               + "employeeType varchar(25), "
               + "firstName varchar(25), "
@@ -145,13 +146,7 @@ public class Adb {
 
     // Check MedicalEquipment table.
     try {
-
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
-      Statement addTable = connection.createStatement();
-
-      addTable.execute(
+      stmt.execute(
           "CREATE TABLE MedicalEquipment(equipmentID varchar(25), "
               + "equipmentType varchar(25), "
               + "isClean varchar(25), "
@@ -166,12 +161,7 @@ public class Adb {
 
     // Check ServiceRequestDerbyImpl table.
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
-      Statement addTable = connection.createStatement();
-
-      addTable.execute(
+      stmt.execute(
           "CREATE TABLE ServiceRequest(requestID varchar(25), "
               + "startLocation varchar(25), "
               + "endLocation varchar(25), "
@@ -193,12 +183,7 @@ public class Adb {
 
     // Check MedicalEquipmentServiceRequest table.
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
-      Statement addTable = connection.createStatement();
-
-      addTable.execute(
+      stmt.execute(
           "CREATE TABLE MedicalEquipmentServiceRequest(requestID varchar(25), "
               + "equipmentID varchar(25), "
               + "PRIMARY KEY (requestID), "
@@ -210,12 +195,7 @@ public class Adb {
 
     // Check Food Delivery Table
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
-      Statement addTable = connection.createStatement();
-
-      addTable.execute(
+      stmt.execute(
           "CREATE TABLE FoodDeliveryServiceRequest(requestID varchar(25), "
               + "mainDish varchar(50), "
               + "sideDish varchar(50), "
@@ -230,12 +210,7 @@ public class Adb {
 
     // Check Language  table.
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
-      Statement addTable = connection.createStatement();
-
-      addTable.execute(
+      stmt.execute(
           "CREATE TABLE LanguageServiceRequest(requestID varchar(25), "
               + "language varchar(25), "
               + "PRIMARY KEY (requestID), "
@@ -247,12 +222,7 @@ public class Adb {
 
     //   Check Laundry  table.
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
-      Statement addTable = connection.createStatement();
-
-      addTable.execute(
+      stmt.execute(
           "CREATE TABLE LaundryServiceRequest(requestID varchar(25), "
               + "washMode varchar(25), "
               + "PRIMARY KEY (requestID), "
@@ -264,13 +234,7 @@ public class Adb {
 
     //  Check Religious  table.
     try {
-
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
-      Statement addTable = connection.createStatement();
-
-      addTable.execute(
+      stmt.execute(
           "CREATE TABLE ReligiousServiceRequest(requestID varchar(25), "
               + "religion varchar(25), "
               + "PRIMARY KEY (requestID), "
@@ -282,13 +246,7 @@ public class Adb {
 
     // Check Sanitation  table.
     try {
-
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
-      Statement addTable = connection.createStatement();
-
-      addTable.execute(
+      stmt.execute(
           "CREATE TABLE SanitationServiceRequest(requestID varchar(25), "
               + "sanitationType varchar(25), "
               + "PRIMARY KEY (requestID), "
@@ -300,13 +258,7 @@ public class Adb {
 
     // check FloralDeliveryServiceRequest
     try {
-
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
-      Statement addTable = connection.createStatement();
-
-      addTable.execute(
+      stmt.execute(
           "CREATE TABLE FloralDeliveryServiceRequest(requestID varchar(25), "
               + "flower varchar(25), "
               + "bouquetType varchar(25), "
@@ -319,13 +271,7 @@ public class Adb {
 
     // check GiftDeliveryServiceRequest
     try {
-
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
-      Statement addTable = connection.createStatement();
-
-      addTable.execute(
+      stmt.execute(
           "CREATE TABLE GiftDeliveryServiceRequest(requestID varchar(25), "
               + "giftDescription varchar(25), "
               + "PRIMARY KEY (requestID), "
@@ -337,13 +283,7 @@ public class Adb {
 
     // check MaintenanceServiceRequest
     try {
-
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
-      Statement addTable = connection.createStatement();
-
-      addTable.execute(
+      stmt.execute(
           "CREATE TABLE MaintenanceServiceRequest(requestID varchar(25), "
               + "PRIMARY KEY (requestID), "
               + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
@@ -354,13 +294,7 @@ public class Adb {
 
     // check MedicineDeliveryServiceRequest
     try {
-
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
-      Statement addTable = connection.createStatement();
-
-      addTable.execute(
+      stmt.execute(
           "CREATE TABLE MedicineDeliveryServiceRequest(requestID varchar(25), "
               + "medicineChoice varchar(25), "
               + "PRIMARY KEY (requestID), "
@@ -372,13 +306,7 @@ public class Adb {
 
     // check SecurityServiceRequest
     try {
-
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
-      Statement addTable = connection.createStatement();
-
-      addTable.execute(
+      stmt.execute(
           "CREATE TABLE SecurityServiceRequest(requestID varchar(25), "
               + "PRIMARY KEY (requestID), "
               + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
