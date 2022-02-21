@@ -17,8 +17,6 @@ public class Adb {
 
   public static Connection connection = null;
 
-  public static Statement stmt = null;
-
   public static boolean usingEmbedded = true;
 
   public static void initialConnection(String arg) {
@@ -102,6 +100,7 @@ public class Adb {
 
     // Check if tables exist
     System.out.println("-------------------------------------Checking tables-------------------------------------");
+    Statement stmt = null;
 
     try{
       stmt = connection.createStatement();
