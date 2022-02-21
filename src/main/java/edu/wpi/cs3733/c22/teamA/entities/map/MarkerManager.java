@@ -182,8 +182,7 @@ public class MarkerManager {
     Button button = equipmentMarker.getButton();
     button.setOnAction(
         event -> {
-          selectionManager.existingLocationSelected(
-              equipmentMarker.getLocationMarker().getLocation());
+          selectionManager.existingEquipmentSelected(equipmentMarker.getEquipment());
         });
     button.setOnMousePressed(
         mouseEvent -> {
@@ -193,8 +192,7 @@ public class MarkerManager {
           dragDelta.mouseX = mouseEvent.getSceneX();
           dragDelta.mouseY = mouseEvent.getSceneY();
           button.setCursor(Cursor.MOVE);
-          selectionManager.existingLocationSelected(
-              equipmentMarker.getLocationMarker().getLocation());
+          selectionManager.existingEquipmentSelected(equipmentMarker.getEquipment());
 
           selectionManager.getEditButton().setDisable(false);
           selectionManager.getDeleteButton().setDisable(false);
@@ -208,7 +206,7 @@ public class MarkerManager {
     Button button = srMarker.getButton();
     button.setOnAction(
         event -> {
-          selectionManager.existingLocationSelected(srMarker.getLocationMarker().getLocation());
+          selectionManager.existingServiceRequestSelected(srMarker.getServiceRequest());
         });
     button.setOnMousePressed(
         mouseEvent -> {
@@ -218,7 +216,7 @@ public class MarkerManager {
           dragDelta.mouseX = mouseEvent.getSceneX();
           dragDelta.mouseY = mouseEvent.getSceneY();
           button.setCursor(Cursor.MOVE);
-          selectionManager.existingLocationSelected(srMarker.getLocationMarker().getLocation());
+          selectionManager.existingServiceRequestSelected(srMarker.getServiceRequest());
 
           selectionManager.getEditButton().setDisable(false);
           selectionManager.getDeleteButton().setDisable(false);

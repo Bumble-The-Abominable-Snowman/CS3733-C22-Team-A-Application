@@ -1,9 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextArea;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
@@ -23,18 +21,6 @@ import net.kurobako.gesturefx.GesturePane;
 public class MapCtrl extends MasterCtrl {
   // Selection Manager
   @FXML private VBox inputVBox;
-  @FXML private JFXTextArea nodeIDText;
-  @FXML private JFXTextArea xPosText;
-  @FXML private JFXTextArea yPosText;
-  @FXML private JFXTextArea floorText;
-  @FXML private JFXTextArea towerText;
-  @FXML private JFXTextArea typeText;
-  @FXML private JFXTextArea longnameText;
-  @FXML private JFXTextArea shortnameText;
-  @FXML private JFXButton editButton;
-  @FXML private JFXButton clearButton;
-  @FXML private JFXButton saveButton;
-  @FXML private JFXButton deleteButton;
 
   // Check Box Manager
   @FXML private JFXCheckBox dragCheckBox;
@@ -89,21 +75,7 @@ public class MapCtrl extends MasterCtrl {
             showTextCheckBox,
             dragCheckBox);
     gesturePaneManager = new GesturePaneManager(gesturePane, anchorPane, mapImageView);
-    selectionManager =
-        new SelectionManager(
-            editButton,
-            saveButton,
-            clearButton,
-            deleteButton,
-            inputVBox,
-            nodeIDText,
-            xPosText,
-            yPosText,
-            floorText,
-            towerText,
-            typeText,
-            longnameText,
-            shortnameText);
+    selectionManager = new SelectionManager(inputVBox);
     mapManager =
         new MapManager(markerManager, checkBoxManager, gesturePaneManager, selectionManager);
 
