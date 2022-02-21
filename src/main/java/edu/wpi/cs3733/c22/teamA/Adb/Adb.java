@@ -27,34 +27,22 @@ public class Adb {
     switch (arg) {
       case "EmbeddedDriver":
         usingEmbedded = true;
-
         pathToDBA = "src/main/resources/edu/wpi/cs3733/c22/teamA/db/HospitalDBA";
-
-        try {
-          Class.forName("org.apache.derby.jdbc." + arg);
-          System.out.println("Apache Derby embedded driver registered!\n");
-          break;
-
-        } catch (ClassNotFoundException e) {
-          System.out.println("Apache Derby Not Found");
-          e.printStackTrace();
-          return;
-        }
 
       case "ClientDriver":
         usingEmbedded = false;
         pathToDBA = "//198.199.83.208:1527/HospitalDBA";
 
-        try {
-          Class.forName("org.apache.derby.jdbc." + arg);
-          System.out.println("Apache Derby client driver registered!\n");
-          break;
+    }
 
-        } catch (ClassNotFoundException e) {
-          System.out.println("Apache Derby Not Found");
-          e.printStackTrace();
-          return;
-        }
+    try {
+      Class.forName("org.apache.derby.jdbc." + arg);
+      System.out.println("Apache Derby client driver registered!\n");
+
+    } catch (ClassNotFoundException e) {
+      System.out.println("Apache Derby Not Found");
+      e.printStackTrace();
+      return;
     }
 
     try {
