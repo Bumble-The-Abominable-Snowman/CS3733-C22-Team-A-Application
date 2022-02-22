@@ -92,59 +92,48 @@ public class SaveBackupCtrl extends MasterCtrl {
             EquipmentDerbyImpl.exportToCSV("MedicalEquipment", filepath);
             break;
           case "MedicalEquipmentServiceRequest":
-            ServiceRequestDerbyImpl<EquipmentSR> equipmentSRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new EquipmentSR());
-            equipmentSRServiceRequestDerby.exportToCSV(filepath);
+            ServiceRequestDerbyImpl serviceRequestDerbyEq = new ServiceRequestDerbyImpl(SR.SRType.EQUIPMENT);
+            serviceRequestDerbyEq.exportToCSV(filepath);
             break;
           case "FloralDeliveryServiceRequest":
-            ServiceRequestDerbyImpl<FloralDeliverySR> floralDeliverySRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new FloralDeliverySR());
-            floralDeliverySRServiceRequestDerby.exportToCSV(filepath);
+            ServiceRequestDerbyImpl serviceRequestDerbyFloral = new ServiceRequestDerbyImpl(SR.SRType.FLORAL_DELIVERY);
+            serviceRequestDerbyFloral.exportToCSV(filepath);
             break;
           case "FoodDeliveryServiceRequest":
-            ServiceRequestDerbyImpl<FoodDeliverySR> foodDeliverySRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new FoodDeliverySR());
-            foodDeliverySRServiceRequestDerby.exportToCSV(filepath);
+            ServiceRequestDerbyImpl serviceRequestDerbyFood = new ServiceRequestDerbyImpl(SR.SRType.FOOD_DELIVERY);
+            serviceRequestDerbyFood.exportToCSV(filepath);
             break;
           case "GiftDeliveryServiceRequest":
-            ServiceRequestDerbyImpl<GiftDeliverySR> giftDeliverySRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new GiftDeliverySR());
-            giftDeliverySRServiceRequestDerby.exportToCSV(filepath);
+            ServiceRequestDerbyImpl serviceRequestDerbyGift = new ServiceRequestDerbyImpl(SR.SRType.GIFT_DELIVERY);
+            serviceRequestDerbyGift.exportToCSV(filepath);
             break;
           case "LanguageServiceRequest":
-            ServiceRequestDerbyImpl<LanguageSR> languageSRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new LanguageSR());
-            languageSRServiceRequestDerby.exportToCSV(filepath);
+            ServiceRequestDerbyImpl serviceRequestDerbyLanguage = new ServiceRequestDerbyImpl(SR.SRType.LANGUAGE);
+            serviceRequestDerbyLanguage.exportToCSV(filepath);
             break;
           case "LaundryServiceRequest":
-            ServiceRequestDerbyImpl<LaundrySR> laundrySRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new LaundrySR());
-            laundrySRServiceRequestDerby.exportToCSV(filepath);
+            ServiceRequestDerbyImpl serviceRequestDerbyLaundry = new ServiceRequestDerbyImpl(SR.SRType.LAUNDRY);
+            serviceRequestDerbyLaundry.exportToCSV(filepath);
             break;
           case "MaintenanceServiceRequest":
-            ServiceRequestDerbyImpl<MaintenanceSR> maintenanceSRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new MaintenanceSR());
-            maintenanceSRServiceRequestDerby.exportToCSV(filepath);
+            ServiceRequestDerbyImpl serviceRequestDerbyMaintenance = new ServiceRequestDerbyImpl(SR.SRType.MAINTENANCE);
+            serviceRequestDerbyMaintenance.exportToCSV(filepath);
             break;
           case "MedicineDeliveryServiceRequest":
-            ServiceRequestDerbyImpl<MedicineDeliverySR> medicineDeliverySRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new MedicineDeliverySR());
-            medicineDeliverySRServiceRequestDerby.exportToCSV(filepath);
+            ServiceRequestDerbyImpl serviceRequestDerbyMedicine = new ServiceRequestDerbyImpl(SR.SRType.MEDICINE_DELIVERY);
+            serviceRequestDerbyMedicine.exportToCSV(filepath);
             break;
           case "ReligiousServiceRequest":
-            ServiceRequestDerbyImpl<ReligiousSR> religiousSRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new ReligiousSR());
-            religiousSRServiceRequestDerby.exportToCSV(filepath);
+            ServiceRequestDerbyImpl serviceRequestDerbyReligious = new ServiceRequestDerbyImpl(SR.SRType.RELIGIOUS);
+            serviceRequestDerbyReligious.exportToCSV(filepath);
             break;
           case "SanitationServiceRequest":
-            ServiceRequestDerbyImpl<SanitationSR> sanitationSRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new SanitationSR());
-            sanitationSRServiceRequestDerby.exportToCSV(filepath);
+            ServiceRequestDerbyImpl serviceRequestDerbySanitation = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
+            serviceRequestDerbySanitation.exportToCSV(filepath);
             break;
           case "SecurityServiceRequest":
-            ServiceRequestDerbyImpl<SecuritySR> securitySRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new SecuritySR());
-            securitySRServiceRequestDerby.exportToCSV(filepath);
+            ServiceRequestDerbyImpl serviceRequestDerbySecurity = new ServiceRequestDerbyImpl(SR.SRType.SECURITY);
+            serviceRequestDerbySecurity.exportToCSV(filepath);
             break;
         }
         exportFileText.setText(filepath);
@@ -152,6 +141,7 @@ public class SaveBackupCtrl extends MasterCtrl {
       } catch (Exception e) {
         exportFileText.setText("Failed!");
         exportFileText.setFill(Color.RED);
+        e.printStackTrace();
       }
     }
   }

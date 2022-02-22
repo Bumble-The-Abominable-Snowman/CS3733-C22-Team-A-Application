@@ -1,19 +1,23 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.FoodDeliverySR;
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
+//import edu.wpi.cs3733.c22.teamA.entities.servicerequests.FoodDeliverySR;
+//import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Date;
+
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -105,25 +109,44 @@ public class FoodDeliverySRCtrl extends SRCtrl {
     int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
     Location toLocationSelected = this.locationList.get(locationIndex);
 
-    FoodDeliverySR foodDeliverySR =
-        new FoodDeliverySR(
-            "FoodDeliverySRID",
-            "N/A",
-            toLocationSelected.getNodeID(),
-            "001",
-            employeeSelected.getEmployeeID(),
+    SR sr = new SR("FoodDeliverySRID",
+            (new LocationDerbyImpl()).getLocationNode("N/A"),
+            toLocationSelected,
+            (new EmployeeDerbyImpl()).getEmployee("001"),
+            employeeSelected,
             new Timestamp((new Date()).getTime()),
             SR.Status.BLANK,
             SR.Priority.REGULAR,
-            commentsBox.getText().equals("") ? "N/A" : commentsBox.getText());
+            commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
+            SR.SRType.FOOD_DELIVERY);
 
-    foodDeliverySR.setDessert(this.dessertChoice.getValue());
-    foodDeliverySR.setBeverage(this.drinkChoice.getValue());
-    foodDeliverySR.setMainDish(this.mainChoice.getValue());
-    foodDeliverySR.setSideDish(this.sideChoice.getValue());
+    sr.setFieldByString("main_dish", this.mainChoice.getValue());
+    sr.setFieldByString("side_dish", this.sideChoice.getValue());
+    sr.setFieldByString("beverage", this.drinkChoice.getValue());
+    sr.setFieldByString("dessert", this.dessertChoice.getValue());
 
-    ServiceRequestDerbyImpl<FoodDeliverySR> serviceRequestDAO =
-        new ServiceRequestDerbyImpl<>(new FoodDeliverySR());
-    serviceRequestDAO.enterServiceRequest(foodDeliverySR);
+    ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.FOOD_DELIVERY);
+    serviceRequestDerby.enterServiceRequest(sr);
+
+//    FoodDeliverySR foodDeliverySR =
+//        new FoodDeliverySR(
+//            "FoodDeliverySRID",
+//            "N/A",
+//            toLocationSelected.getNodeID(),
+//            "001",
+//            employeeSelected.getEmployeeID(),
+//            new Timestamp((new Date()).getTime()),
+//            SR.Status.BLANK,
+//            SR.Priority.REGULAR,
+//            commentsBox.getText().equals("") ? "N/A" : commentsBox.getText());
+//
+//    foodDeliverySR.setDessert(this.dessertChoice.getValue());
+//    foodDeliverySR.setBeverage(this.drinkChoice.getValue());
+//    foodDeliverySR.setMainDish(this.mainChoice.getValue());
+//    foodDeliverySR.setSideDish(this.sideChoice.getValue());
+//
+//    ServiceRequestDerbyImpl<FoodDeliverySR> serviceRequestDAO =
+//        new ServiceRequestDerbyImpl<>(new FoodDeliverySR());
+//    serviceRequestDAO.enterServiceRequest(foodDeliverySR);
   }
 }
