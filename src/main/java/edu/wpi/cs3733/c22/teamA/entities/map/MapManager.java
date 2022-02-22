@@ -7,16 +7,19 @@ public class MapManager {
   private CheckBoxManager checkBoxManager;
   private GesturePaneManager gesturePaneManager;
   private SelectionManager selectionManager;
+  private Searcher searcher;
 
   public MapManager(
       MarkerManager markerManager,
       CheckBoxManager checkBoxManager,
       GesturePaneManager gesturePaneManager,
-      SelectionManager selectionManager) {
+      SelectionManager selectionManager,
+      Searcher searcher) {
     this.markerManager = markerManager;
     this.checkBoxManager = checkBoxManager;
     this.gesturePaneManager = gesturePaneManager;
     this.selectionManager = selectionManager;
+    this.searcher = searcher;
   }
 
   public void init() {
@@ -33,6 +36,12 @@ public class MapManager {
         selectionManager,
         checkBoxManager,
         gesturePaneManager);
+    searcher.setAll(
+        markerManager.getLocationMarkers(),
+        markerManager.getEquipmentMarkers(),
+        markerManager.getServiceRequestMarkers(),
+        floor);
+    searcher.initSearchListener();
     checkBoxManager.switchFloor(markerManager);
   }
 

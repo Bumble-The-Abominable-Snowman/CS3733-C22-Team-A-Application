@@ -35,6 +35,8 @@ public class MapCtrl extends MasterCtrl {
   private AnchorPane anchorPane;
   private ImageView mapImageView;
 
+  @FXML private JFXComboBox searchComboBox;
+
   private ArrayList<String> floorNames;
 
   private LocationDAO locationDAO;
@@ -45,6 +47,7 @@ public class MapCtrl extends MasterCtrl {
   private CheckBoxManager checkBoxManager;
   private GesturePaneManager gesturePaneManager;
   private SelectionManager selectionManager;
+  private Searcher searcher;
 
   public MapCtrl() {
     // Setup Floors
@@ -59,7 +62,7 @@ public class MapCtrl extends MasterCtrl {
     equipmentDAO = new EquipmentDerbyImpl();
   }
 
-  /** Floor Combo Box */
+  /* Floor Combo Box */
   @FXML
   public void initialize() {
 
@@ -76,8 +79,10 @@ public class MapCtrl extends MasterCtrl {
             dragCheckBox);
     gesturePaneManager = new GesturePaneManager(gesturePane, anchorPane, mapImageView);
     selectionManager = new SelectionManager(inputVBox);
+    searcher = new Searcher(searchComboBox);
     mapManager =
-        new MapManager(markerManager, checkBoxManager, gesturePaneManager, selectionManager);
+        new MapManager(
+            markerManager, checkBoxManager, gesturePaneManager, selectionManager, searcher);
 
     mapManager.init();
   }
