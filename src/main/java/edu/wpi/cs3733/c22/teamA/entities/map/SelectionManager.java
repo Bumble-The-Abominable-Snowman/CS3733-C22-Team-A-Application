@@ -122,17 +122,12 @@ public class SelectionManager {
             comments);
   }
 
-  // Sets up UI states of text areas, and buttons
-  public void setInitialUIStates() {
-    editButton.setDisable(true);
-    saveButton.setDisable(true);
-    clearButton.setDisable(true);
-    deleteButton.setDisable(true);
-    inputVBox.setDisable(true);
+  public void clearVBox() {
+    inputVBox.getChildren().clear();
   }
 
   public void locationVBox() {
-    inputVBox.getChildren().clear();
+    clearVBox();
     for (int i = 0; i < locationFields.size(); i++) {
       inputVBox.getChildren().add(locationFields.get(i).label);
       inputVBox.getChildren().add(locationFields.get(i).textArea);
@@ -145,7 +140,7 @@ public class SelectionManager {
   }
 
   public void equipmentVBox() {
-    inputVBox.getChildren().clear();
+    clearVBox();
     for (int i = 0; i < equipmentFields.size(); i++) {
       inputVBox.getChildren().add(equipmentFields.get(i).label);
       inputVBox.getChildren().add(equipmentFields.get(i).textArea);
@@ -158,7 +153,7 @@ public class SelectionManager {
   }
 
   public void srVBox() {
-    inputVBox.getChildren().clear();
+    clearVBox();
     for (int i = 0; i < srFields.size(); i++) {
       inputVBox.getChildren().add(srFields.get(i).label);
       inputVBox.getChildren().add(srFields.get(i).textArea);

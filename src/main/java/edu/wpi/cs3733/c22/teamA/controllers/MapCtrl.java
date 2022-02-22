@@ -6,7 +6,10 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.App;
+import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.map.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.event.ActionEvent;
@@ -45,6 +48,8 @@ public class MapCtrl extends MasterCtrl {
   private CheckBoxManager checkBoxManager;
   private GesturePaneManager gesturePaneManager;
   private SelectionManager selectionManager;
+
+  public final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   public MapCtrl() {
     // Setup Floors
@@ -97,19 +102,15 @@ public class MapCtrl extends MasterCtrl {
             });
   }
 
-  public void editLocation(ActionEvent actionEvent) {}
-
-  public void clearSubmission(ActionEvent actionEvent) {}
-
-  public void saveChanges(ActionEvent actionEvent) {}
-
-  public void deleteLocation(ActionEvent actionEvent) {}
-
   public void newLocationPressed(ActionEvent actionEvent) {}
 
   public void findPath(ActionEvent actionEvent) {}
 
   public void clearPath(ActionEvent actionEvent) {}
 
-  public void goToLocationTable(ActionEvent actionEvent) {}
+  public void goToLocationTable() throws IOException {
+    this.onSceneSwitch();
+    sceneFlag = 2;
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
+  }
 }
