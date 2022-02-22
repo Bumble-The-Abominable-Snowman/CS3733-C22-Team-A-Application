@@ -3,6 +3,7 @@ package edu.wpi.cs3733.c22.teamA.entities.map;
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -58,17 +59,16 @@ public class Searcher {
     for (EquipmentMarker e : equipments) {
       searchEquipmentList.add(e.getEquipment());
     }
-    /*
+
     ObservableList<SR> searchSRList = FXCollections.observableArrayList();
-    for(SR s : SRs){
-        searchSRList.add(s.get)
+    for (SRMarker s : SRs) {
+      searchSRList.add(s.getServiceRequest());
     }
-     */
 
     // create filtered list, can be filtered (duh)
     FilteredList<Location> filteredLocations = new FilteredList<>(searchLocationList, p -> true);
     FilteredList<Equipment> filteredEquipment = new FilteredList<>(searchEquipmentList, p -> true);
-    // FilteredList<SR> filteredSR = new FilteredList<>(searchSRList, p->true);
+    FilteredList<SR> filteredSR = new FilteredList<>(searchSRList, p -> true);
     // add listener that checks whenever changes are made to JFXText searchText
     searchComboBox
         .getEditor()
@@ -105,6 +105,21 @@ public class Searcher {
                         || equipment.getEquipmentType().toLowerCase().contains(lowerCaseFilter)
                         || equipment.getCurrentLocation().toLowerCase().contains(lowerCaseFilter));
                   });
+              filteredSR.setPredicate(
+                  request -> {
+                    if ((newValue == null
+                        || searchComboBox.getSelectionModel().toString().isEmpty())) {
+                      return true;
+                    }
+                    // make sure case is factored out
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    // if search matches either name or ID, display it
+                    // if not, this returns false and doesn't display
+                    return (request.getSrType().toString().toLowerCase().contains(lowerCaseFilter)
+                        || request.getRequestID().toLowerCase().contains(lowerCaseFilter)
+                        || request.getEndLocation().toLowerCase().contains(lowerCaseFilter));
+                  });
+
               // add items to comboBox dropdown
               ArrayList<String> locationNames = new ArrayList<>();
               for (Location l : filteredLocations) {
