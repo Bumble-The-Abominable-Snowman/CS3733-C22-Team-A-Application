@@ -29,7 +29,7 @@ public class MapCtrl extends MasterCtrl {
   @FXML private JFXCheckBox showTextCheckBox;
   @FXML private JFXCheckBox equipmentCheckBox;
 
-  // Gesuture Pane Manager
+  // Gesture Pane Manager
   @FXML private JFXComboBox<String> floorSelectionComboBox;
   @FXML private GesturePane gesturePane;
   private AnchorPane anchorPane;
