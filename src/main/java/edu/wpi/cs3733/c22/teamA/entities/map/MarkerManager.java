@@ -253,6 +253,19 @@ public class MarkerManager {
                         button.getLayoutY()
                             - gesturePaneManager.getMapImageView().getLayoutY()
                             + 24));
+            // standard circle radius around medical equipment markers, 20 is placeholder
+            double radius = Math.sqrt(2 * Math.pow(20, 2));
+            for (Location l : floorLocations) {
+              // check hypotenuse between this equipment and every location on floor
+              double radiusCheck =
+                  Math.sqrt(
+                      Math.pow(l.getXCoord() - button.getLayoutX(), 2)
+                          + (Math.pow(l.getYCoord() - button.getLayoutY(), 2)));
+              if (radius > radiusCheck) {
+                button.setLayoutX(l.getXCoord());
+                button.setLayoutY(l.getYCoord() - 20);
+              }
+            }
             Label correspondingLabel = equipmentMarker.getLabel();
             correspondingLabel.setLayoutX(
                 (mouseEvent.getSceneX() - dragDelta.mouseX)
@@ -267,6 +280,47 @@ public class MarkerManager {
                     + dragDelta.buttonY
                     - 24);
           }
+        });
+    button.setOnMouseReleased(
+        mouseEvent -> {
+          button.setCursor(Cursor.HAND);
+          boolean isSnapped = false;
+          Location nearestLocation = floorLocations.get(0);
+          System.out.println(nearestLocation.getLongName() + " <- default location");
+          double radiusOfNearest = Integer.MAX_VALUE;
+          for (Location l : floorLocations) {
+            double radiusCheck =
+                Math.sqrt(
+                    Math.pow(l.getXCoord() - button.getLayoutX(), 2)
+                        + (Math.pow(l.getYCoord() - button.getLayoutY(), 2)));
+            // update nearest location
+            if (radiusCheck < radiusOfNearest) {
+              radiusOfNearest = radiusCheck;
+              nearestLocation = l;
+            }
+            // when it finds the location already snapped to, do this
+            if (radiusOfNearest == 0) {
+              nearestLocation = l;
+              isSnapped = true;
+              break;
+            }
+          }
+          if (!isSnapped) {
+            button.setLayoutX(nearestLocation.getXCoord());
+            button.setLayoutY(nearestLocation.getYCoord() - 24);
+          }
+          // update label to new location
+          Label correspondingLabel = equipmentMarker.getLabel();
+          correspondingLabel.setLayoutX(equipmentMarker.getButton().getLayoutX());
+          correspondingLabel.setLayoutY(equipmentMarker.getButton().getLayoutY() - 24);
+          // TODO this function should update database but getting errors
+          /*
+             try {
+                 updateOnRelease(button);
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+          */
         });
   }
 
@@ -328,6 +382,21 @@ public class MarkerManager {
                         button.getLayoutY()
                             - gesturePaneManager.getMapImageView().getLayoutY()
                             + 24));
+
+            // standard circle radius around medical equipment markers, 20 is placeholder
+            double radius = Math.sqrt(2 * Math.pow(20, 2));
+            for (Location l : floorLocations) {
+              // check hypotenuse between this equipment and every location on floor
+              double radiusCheck =
+                  Math.sqrt(
+                      Math.pow(l.getXCoord() - button.getLayoutX(), 2)
+                          + (Math.pow(l.getYCoord() - button.getLayoutY(), 2)));
+              if (radius > radiusCheck) {
+                button.setLayoutX(l.getXCoord());
+                button.setLayoutY(l.getYCoord() - 20);
+              }
+            }
+
             Label correspondingLabel = srMarker.getLabel();
             correspondingLabel.setLayoutX(
                 (mouseEvent.getSceneX() - dragDelta.mouseX)
@@ -342,6 +411,46 @@ public class MarkerManager {
                     + dragDelta.buttonY
                     - 24);
           }
+        });
+    button.setOnMouseReleased(
+        mouseEvent -> {
+          button.setCursor(Cursor.HAND);
+          boolean isSnapped = false;
+          Location nearestLocation = floorLocations.get(0);
+          double radiusOfNearest = Integer.MAX_VALUE;
+          for (Location l : floorLocations) {
+            double radiusCheck =
+                Math.sqrt(
+                    Math.pow(l.getXCoord() - button.getLayoutX(), 2)
+                        + (Math.pow(l.getYCoord() - button.getLayoutY(), 2)));
+            // update nearest location
+            if (radiusCheck < radiusOfNearest) {
+              radiusOfNearest = radiusCheck;
+              nearestLocation = l;
+            }
+            // when it finds the location already snapped to, do this
+            if (button.getLayoutX() == l.getXCoord() && button.getLayoutY() == l.getYCoord()) {
+              nearestLocation = l;
+              isSnapped = true;
+              break;
+            }
+          }
+          if (!isSnapped) {
+            button.setLayoutX(nearestLocation.getXCoord());
+            button.setLayoutY(nearestLocation.getYCoord() - 24);
+          }
+          // update label to new location
+          Label correspondingLabel = srMarker.getLabel();
+          correspondingLabel.setLayoutX(srMarker.getButton().getLayoutX());
+          correspondingLabel.setLayoutY(srMarker.getButton().getLayoutY() - 24);
+          // TODO this function should update database but getting errors
+          /*
+             try {
+                 updateOnRelease(button);
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+          */
         });
   }
 
