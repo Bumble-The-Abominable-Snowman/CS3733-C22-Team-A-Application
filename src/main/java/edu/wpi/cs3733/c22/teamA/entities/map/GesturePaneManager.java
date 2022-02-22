@@ -48,12 +48,6 @@ public class GesturePaneManager {
     gesturePane.addEventFilter(
         AffineEvent.CHANGED,
         event -> {
-          //          System.out.println(
-          //              event.getTransformedDimension().getHeight()
-          //                  + " "
-          //                  + event.getTransformedDimension().getWidth());
-          //          System.out.println(gesturePane.getCurrentX() + " " +
-          // gesturePane.getTranslateY());
           transformed = event.getTransformedDimension();
         });
     gesturePane.setOnMouseClicked(
