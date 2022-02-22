@@ -665,6 +665,10 @@ public class MapCtrl extends MasterCtrl {
           if (markerType == 0) {
             existingLocationSelected(buttonLocationMarker.get(button).getLocation());
           } else if (markerType == 1) {
+            if (buttonEquipmentMarker.get(button).getEquipment().getIsClean() == false) {
+              System.out.println("HAH THING IS NOT CLEAN");
+              return;
+            }
             existingEquipmentSelected(buttonEquipmentMarker.get(button).getEquipment());
           } else {
             existingServiceRequestSelected(
@@ -831,7 +835,7 @@ public class MapCtrl extends MasterCtrl {
     }
   }
 
-  // Toggles Equipment
+  // Toggles Service Requests
   public void showServiceRequests(boolean value) {
     for (SRMarker serviceRequestMarker : buttonServiceRequestMarker.values()) {
       serviceRequestMarker.setButtonVisibility(value);
