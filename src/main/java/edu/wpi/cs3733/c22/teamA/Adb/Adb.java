@@ -28,11 +28,11 @@ public class Adb {
       case "EmbeddedDriver":
         usingEmbedded = true;
         pathToDBA = "src/main/resources/edu/wpi/cs3733/c22/teamA/db/HospitalDBA";
-
+        break;
       case "ClientDriver":
         usingEmbedded = false;
         pathToDBA = "//198.199.83.208:1527/HospitalDBA";
-
+        break;
     }
 
     try {
@@ -63,7 +63,7 @@ public class Adb {
         connection =
             DriverManager.getConnection(String.format("jdbc:derby:%s;create=true", pathToDBA));
         turnOnBuiltInUsers(connection);
-        connection.close();
+//        connection.close();
         System.out.println("DB initialized");
         System.out.println("Closed connection");
 
@@ -121,8 +121,8 @@ public class Adb {
       stmt.execute(
           "CREATE TABLE Employee(employee_id varchar(25), "
               + "employee_type varchar(25), "
-              + "firstName varchar(25), "
               + "first_name varchar(25), "
+              + "last_name varchar(25), "
               + "email varchar(25), "
               + "phone_num varchar(25), "
               + "address varchar(25), "
@@ -143,7 +143,7 @@ public class Adb {
               + "current_location varchar(25), "
               + "is_available varchar(25), "
               + "PRIMARY KEY (equipment_id),"
-              + "FOREIGN KEY (current_location) REFERENCES TowerLocations(nodeID) ON DELETE CASCADE)");
+              + "FOREIGN KEY (current_location) REFERENCES TowerLocations(node_id) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table MedicalEquipment already exist");
@@ -174,10 +174,10 @@ public class Adb {
     // Check MedicalEquipmentServiceRequest table.
     try {
       stmt.execute(
-          "CREATE TABLE MedicalEquipmentServiceRequest(requestID varchar(25), "
+          "CREATE TABLE MedicalEquipmentServiceRequest(request_id varchar(25), "
               + "equipment_id varchar(25), "
               + "PRIMARY KEY (request_id), "
-              + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE)");
+              + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
 
     } catch (SQLException e) {
       System.out.println("Table MedicalEquipmentServiceRequest already exist");
@@ -186,7 +186,7 @@ public class Adb {
     // Check Food Delivery Table
     try {
       stmt.execute(
-          "CREATE TABLE FoodDeliveryServiceRequest(requestID varchar(25), "
+          "CREATE TABLE FoodDeliveryServiceRequest(request_id varchar(25), "
               + "main_dish varchar(50), "
               + "side_dish varchar(50), "
               + "beverage varchar(50), "
@@ -311,48 +311,38 @@ public class Adb {
     // Initialize the database and input data
     if (!isInitialized) {
       try {
-        LocationDerbyImpl.inputFromCSV(
-            "TowerLocations",
-            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
-        EmployeeDerbyImpl.inputFromCSV(
-            "Employee", "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.csv");
+        LocationDerbyImpl.inputFromCSV("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
+        EmployeeDerbyImpl.inputFromCSV("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.csv");
         EquipmentDerbyImpl.inputFromCSV(
             "MedicalEquipment",
             "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipment.csv");
 
         // EquipmentSR
-        ServiceRequestDerbyImpl<EquipmentSR> EquipmentRequestDerby =
-            new ServiceRequestDerbyImpl<>(new EquipmentSR());
-        EquipmentRequestDerby.populateFromCSV(
-            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipmentServiceRequest.csv");
+        ServiceRequestDerbyImpl EquipmentRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.EQUIPMENT);
+        EquipmentRequestDerby.populateFromCSV("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipmentServiceRequest.csv");
 
         // ReligiousSR
-        ServiceRequestDerbyImpl<ReligiousSR> religiousSRServiceRequestDerby =
-            new ServiceRequestDerbyImpl<>(new ReligiousSR());
+        ServiceRequestDerbyImpl religiousSRServiceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.RELIGIOUS);
         religiousSRServiceRequestDerby.populateFromCSV(
             "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/ReligiousServiceRequest.csv");
 
         // SanitationSR
-        ServiceRequestDerbyImpl<SanitationSR> sanitationServiceRequestDerby =
-            new ServiceRequestDerbyImpl<>(new SanitationSR());
+        ServiceRequestDerbyImpl sanitationServiceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
         sanitationServiceRequestDerby.populateFromCSV(
             "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/SanitationServiceRequest.csv");
 
         // LaundrySR
-        ServiceRequestDerbyImpl<LaundrySR> LaundryServiceRequestDerby =
-            new ServiceRequestDerbyImpl<>(new LaundrySR());
+        ServiceRequestDerbyImpl LaundryServiceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.LAUNDRY);
         LaundryServiceRequestDerby.populateFromCSV(
             "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/LaundryServiceRequest.csv");
 
         // LaundrySR
-        ServiceRequestDerbyImpl<LanguageSR> LanguageServiceRequestDerby =
-            new ServiceRequestDerbyImpl<>(new LanguageSR());
+        ServiceRequestDerbyImpl LanguageServiceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.LANGUAGE);
         LanguageServiceRequestDerby.populateFromCSV(
             "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/LanguageServiceRequest.csv");
 
         // LaundrySR
-        ServiceRequestDerbyImpl<FoodDeliverySR> FoodDeliveryServiceRequestDerby =
-            new ServiceRequestDerbyImpl<>(new FoodDeliverySR());
+        ServiceRequestDerbyImpl FoodDeliveryServiceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.FOOD_DELIVERY);
         FoodDeliveryServiceRequestDerby.populateFromCSV(
             "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/FoodDeliveryServiceRequest.csv");
 

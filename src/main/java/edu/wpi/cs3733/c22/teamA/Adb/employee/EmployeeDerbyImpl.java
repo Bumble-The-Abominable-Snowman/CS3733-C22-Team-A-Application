@@ -22,7 +22,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
   public Employee getEmployee(String ID) {
     try {
       Statement get = Adb.connection.createStatement();
-      String str = String.format("SELECT * FROM Employee WHERE employeeID = '%s'", ID);
+      String str = String.format("SELECT * FROM Employee WHERE employee_id = '%s'", ID);
       ResultSet rset = get.executeQuery(str);
       Employee emp = new Employee();
 
@@ -267,8 +267,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
         //        String date = originalFormat.format(l.getStartDate();
         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        addStatement.executeUpdate(
-            "INSERT INTO Employee(employee_id, employee_type, first_name, last_name, email, phone_num, address, start_date) VALUES('"
+        String str = "INSERT INTO Employee(employee_id, employee_type, first_name, last_name, email, phone_num, address, start_date) VALUES('"
                 + employee.getEmployeeID()
                 + "', '"
                 + employee.getEmployeeType()
@@ -284,7 +283,10 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
                 + employee.getAddress()
                 + "', '"
                 + employee.getStartDate()
-                + "')");
+                + "')";
+
+        System.out.println(str);
+        addStatement.executeUpdate(str);
       }
     } catch (SQLException | IOException | ParseException e) {
       System.out.println("Insertion on Employee failed!");

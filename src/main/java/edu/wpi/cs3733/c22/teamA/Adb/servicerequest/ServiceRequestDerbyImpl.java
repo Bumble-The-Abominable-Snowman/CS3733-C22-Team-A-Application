@@ -83,14 +83,12 @@ public class ServiceRequestDerbyImpl implements ServiceRequestDAO {
       }
     }
 
-    connection.close();
     return sr;
   }
 
   @Override
   public void updateServiceRequest(SR sr)
       throws SQLException, InvocationTargetException, IllegalAccessException {
-    refreshVariables();
 
     Statement get = Adb.connection.createStatement();
 
@@ -147,8 +145,6 @@ public class ServiceRequestDerbyImpl implements ServiceRequestDAO {
   @Override
   public void enterServiceRequest(SR sr)
       throws SQLException, InvocationTargetException, IllegalAccessException {
-    refreshVariables();
-
     Statement insert = Adb.connection.createStatement();
 
     HashMap<String, String> sr_string_fields = sr.getStringFields();
@@ -193,25 +189,21 @@ public class ServiceRequestDerbyImpl implements ServiceRequestDAO {
 
     String str2 = str2_2.toString() + ")" + str2_3.toString() + ")";
     insert.execute(str2);
-
-    refreshVariables();
   }
 
   @Override
   public void deleteServiceRequest(SR sr) throws SQLException {
-    refreshVariables();
-
     Statement delete = Adb.connection.createStatement();
 
     delete.execute(
         String.format("DELETE FROM %s WHERE request_id = '%s'", this.tableName, sr.getFields().get("request_id")));
 
     delete.execute(
-        String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", sr.getRequestID()));
+        String.format("DELETE FROM ServiceRequest WHERE request_id = '%s'", sr.getFields().get("request_id")));
   }
 
   @Override
-  public List<T> getServiceRequestList()
+  public List<SR> getServiceRequestList()
       throws SQLException, InvocationTargetException, IllegalAccessException {
 
     Statement getNodeList = Adb.connection.createStatement();
@@ -238,7 +230,7 @@ public class ServiceRequestDerbyImpl implements ServiceRequestDAO {
   }
 
   public static List<SR> getAllServiceRequestList()
-      throws SQLException, IllegalAccessException {
+          throws SQLException, IllegalAccessException, InvocationTargetException {
     ArrayList<SR> allReqList = new ArrayList<>();
 
     for (SR.SRType srType: SR.SRType.values()) {
@@ -295,49 +287,55 @@ public class ServiceRequestDerbyImpl implements ServiceRequestDAO {
   }
 
   public void exportToCSV(String csvFilePath)
-      throws IOException, ParseException, InvocationTargetException, IllegalAccessException,
-          SQLException {
+          throws Exception {
 
     // Get list of this type of service Requests
     List<SR> list = getServiceRequestList();
-    File file = new File(csvFilePath);
-    file.createNewFile();
-    BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
+    if (list.size() > 0) {
 
-    StringBuilder tleString = new StringBuilder();
+      File file = new File(csvFilePath);
+      file.createNewFile();
+      BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
-    // column line
-    for (String key: list.get(0).getStringFields().keySet()) {
-      key = key + ", ";
-      if (!(key.equals("sr_type, "))) {
-        tleString.append(key);
-      }
-    }
-    String firstLine = tleString.toString().substring(0, tleString.toString().length() - 2);
+      StringBuilder tleString = new StringBuilder();
 
-    writer.write(firstLine);
-    writer.newLine();
-
-    // rows
-    for (SR thisSR : list) {
-      String str = "";
-
-      boolean first_column = true;
-      for (String key: thisSR.getStringFields().keySet()) {
-        if (!(key.equals("sr_type"))) {
-          if (first_column) {
-            str = thisSR.getStringFields().get(key);
-            first_column = false;
-          } else {
-            str = String.join(",", str, thisSR.getStringFields().get(key));
-          }
+      // column line
+      for (String key : list.get(0).getStringFields().keySet()) {
+        key = key + ", ";
+        if (!(key.equals("sr_type, "))) {
+          tleString.append(key);
         }
       }
+      String firstLine = tleString.toString().substring(0, tleString.toString().length() - 2);
 
-      writer.write(str);
+      writer.write(firstLine);
       writer.newLine();
+
+      // rows
+      for (SR thisSR : list) {
+        String str = "";
+
+        boolean first_column = true;
+        for (String key : thisSR.getStringFields().keySet()) {
+          if (!(key.equals("sr_type"))) {
+            if (first_column) {
+              str = thisSR.getStringFields().get(key);
+              first_column = false;
+            } else {
+              str = String.join(",", str, thisSR.getStringFields().get(key));
+            }
+          }
+        }
+
+        writer.write(str);
+        writer.newLine();
+      }
+      writer.close(); // close the writer
     }
-    writer.close(); // close the writer
+    else
+    {
+      throw new Exception("SR list is empty!");
+    }
   }
 
   // Write CSV for table currently unused

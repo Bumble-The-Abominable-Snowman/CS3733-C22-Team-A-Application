@@ -270,6 +270,7 @@ public class DataViewCtrl extends MasterCtrl {
   MenuItem viewDetails = new MenuItem("View Details");
   MenuItem modify = new MenuItem("Modify");
 
+  @FXML
   public void initialize() throws SQLException, InvocationTargetException, IllegalAccessException {
 
     double titleTextSize = titleLabel.getFont().getSize();
@@ -301,6 +302,7 @@ public class DataViewCtrl extends MasterCtrl {
     }
   }
 
+  @FXML
   public void initializeLocationTable() {
 
     List<JFXTreeTableColumn<RecursiveObj, String>> locationColumns = new ArrayList<>();
@@ -368,6 +370,7 @@ public class DataViewCtrl extends MasterCtrl {
     this.setupViewDetailsAndModify();
   }
 
+  @FXML
   public void initializeRequestsTable()
       throws SQLException, InvocationTargetException, IllegalAccessException {
 
@@ -454,6 +457,7 @@ public class DataViewCtrl extends MasterCtrl {
     this.setupViewDetailsAndModify();
   }
 
+  @FXML
   public void initializeEquipmentTable() {
 
     List<JFXTreeTableColumn<RecursiveObj, String>> equipmentColumns = new ArrayList<>();
@@ -513,6 +517,7 @@ public class DataViewCtrl extends MasterCtrl {
     this.setupViewDetailsAndModify();
   }
 
+  @FXML
   public void initializeEmployeeTable() {
 
     List<JFXTreeTableColumn<RecursiveObj, String>> employeeColumns = new ArrayList<>();
@@ -586,6 +591,7 @@ public class DataViewCtrl extends MasterCtrl {
     this.setupViewDetailsAndModify();
   }
 
+  @FXML
   private void createDetailsPopup() throws InvocationTargetException, IllegalAccessException {
     DataViewCtrl.detailsPopup.get().hide();
 
@@ -638,6 +644,7 @@ public class DataViewCtrl extends MasterCtrl {
     DataViewCtrl.detailsPopup.set(p);
   }
 
+  @FXML
   private void createModifyPopup() throws InvocationTargetException, IllegalAccessException {
     DataViewCtrl.modifyPopup.get().hide();
 
@@ -711,7 +718,7 @@ public class DataViewCtrl extends MasterCtrl {
                   serviceRequestDerby.updateServiceRequest(sr);
 
                   updateButton.setTextFill(Color.GREEN);
-                } catch (SQLException | IllegalAccessException ex) {
+                } catch (SQLException | IllegalAccessException | InvocationTargetException ex) {
                   ex.printStackTrace();
                   updateButton.setTextFill(Color.RED);
                 }
@@ -959,6 +966,7 @@ public class DataViewCtrl extends MasterCtrl {
     DataViewCtrl.modifyPopup.set(p);
   }
 
+  @FXML
   private void setupViewDetailsAndModify() {
 
     this.rightClickMenu.getItems().addAll(this.viewDetails);

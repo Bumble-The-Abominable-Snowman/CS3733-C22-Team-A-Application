@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 
+
 public class MarkerMaker {
 
   private static Polygon locationMarkerShape = new Polygon(1.0, 4.0, 0.0, 2.0, 1.0, 0.0, 2.0, 2.0);
@@ -71,7 +72,7 @@ public class MarkerMaker {
   }
 
   public static String colorSR(SR serviceRequest) {
-    switch (serviceRequest.getSrType()) {
+    switch ( (SR.SRType) serviceRequest.getFields().get("sr_type")) {
       case EQUIPMENT:
         return "-fx-background-color: YELLOW";
       case FLORAL_DELIVERY:
