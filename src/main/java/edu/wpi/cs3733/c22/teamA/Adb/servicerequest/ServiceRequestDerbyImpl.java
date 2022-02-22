@@ -108,10 +108,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
   @Override
   public T getRequest(String ID)
       throws SQLException, InvocationTargetException, IllegalAccessException {
-    Connection connection =
-        DriverManager.getConnection(
-            String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-    Statement get = connection.createStatement();
+    Statement get = Adb.connection.createStatement();
 
     refreshVariables();
 
@@ -135,7 +132,6 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
       }
     }
 
-    connection.close();
     return this.t;
   }
 
@@ -144,10 +140,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
       throws SQLException, InvocationTargetException, IllegalAccessException {
     refreshVariables();
 
-    Connection connection =
-        DriverManager.getConnection(
-            String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-    Statement get = connection.createStatement();
+    Statement get = Adb.connection.createStatement();
 
     String str =
         String.format(
@@ -162,7 +155,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
         String returnValOld = resultSet.getString(i);
         String columnName = resultSetMetaData.getColumnName(i).toLowerCase(Locale.ROOT);
 
-        Statement update = connection.createStatement();
+        Statement update = Adb.connection.createStatement();
 
         for (Method method : this.sr_get_data_methods) {
           String methodName = method.toString().toLowerCase(Locale.ROOT);
@@ -196,7 +189,6 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
         }
       }
     }
-    connection.close();
   }
 
   @Override
@@ -204,10 +196,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
       throws SQLException, InvocationTargetException, IllegalAccessException {
     refreshVariables();
 
-    Connection connection =
-        DriverManager.getConnection(
-            String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-    Statement insert = connection.createStatement();
+    Statement insert = Adb.connection.createStatement();
 
     String str =
         String.format(
@@ -236,8 +225,6 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
     String str2 = str2_2.toString() + ")" + str2_3.toString() + ")";
     insert.execute(str2);
 
-    connection.close();
-
     refreshVariables();
   }
 
@@ -245,27 +232,20 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
   public void deleteServiceRequest(SR sr) throws SQLException {
     refreshVariables();
 
-    Connection connection =
-        DriverManager.getConnection(
-            String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-    Statement delete = connection.createStatement();
+    Statement delete = Adb.connection.createStatement();
 
     delete.execute(
         String.format("DELETE FROM %s WHERE requestID = '%s'", this.tableName, sr.getRequestID()));
 
     delete.execute(
         String.format("DELETE FROM ServiceRequest WHERE requestID = '%s'", sr.getRequestID()));
-
-    connection.close();
   }
 
   @Override
   public List<T> getServiceRequestList()
       throws SQLException, InvocationTargetException, IllegalAccessException {
-    Connection connection =
-        DriverManager.getConnection(
-            String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-    Statement getNodeList = connection.createStatement();
+
+    Statement getNodeList = Adb.connection.createStatement();
 
     ArrayList<T> reqList = new ArrayList<>();
 
@@ -289,7 +269,7 @@ public class ServiceRequestDerbyImpl<T> implements ServiceRequestDAO {
       reqList.add(this.t);
       refreshVariables();
     }
-    connection.close();
+
     return reqList;
   }
 
