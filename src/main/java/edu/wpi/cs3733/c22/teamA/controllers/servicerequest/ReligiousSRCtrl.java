@@ -1,13 +1,15 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.ReligiousSR;
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
+//import edu.wpi.cs3733.c22.teamA.entities.servicerequests.ReligiousSR;
+//import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
@@ -16,6 +18,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -126,21 +130,19 @@ public class ReligiousSRCtrl extends SRCtrl {
       int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
       Location toLocationSelected = this.locationList.get(locationIndex);
 
-      ReligiousSR religiousSR =
-          new ReligiousSR(
-              "ReligiousSRID",
-              "N/A",
-              toLocationSelected.getNodeID(),
-              "001",
-              employeeSelected.getEmployeeID(),
+      SR sr = new SR("ReligiousSRID",
+              (new LocationDerbyImpl()).getLocationNode("N/A"),
+              toLocationSelected,
+              (new EmployeeDerbyImpl()).getEmployee("001"),
+              employeeSelected,
               new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,
               SR.Priority.REGULAR,
-              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText());
+              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
+              SR.SRType.RELIGIOUS);
 
-      ServiceRequestDerbyImpl<ReligiousSR> serviceRequestDAO =
-          new ServiceRequestDerbyImpl<>(new ReligiousSR());
-      serviceRequestDAO.enterServiceRequest(religiousSR);
+      ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.RELIGIOUS);
+      serviceRequestDerby.enterServiceRequest(sr);
     }
   }
 }

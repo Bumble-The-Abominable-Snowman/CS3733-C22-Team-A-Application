@@ -19,44 +19,37 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
 
   public Equipment getMedicalEquipment(String ID) {
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-      Statement get = connection.createStatement();
-      String str = String.format("SELECT * FROM MedicalEquipment WHERE equipmentID = '%s'", ID);
+      Statement get = Adb.connection.createStatement();
+      String str = String.format("SELECT * FROM MedicalEquipment WHERE equipment_id = '%s'", ID);
 
       ResultSet rset = get.executeQuery(str);
       Equipment me = new Equipment();
       if (rset.next()) {
-        String equipmentID = rset.getString("equipmentID");
-        String equipmentType = rset.getString("equipmentType");
-        boolean isClean = rset.getBoolean("isClean");
-        String currentLocation = rset.getString("currentLocation");
-        boolean isAvailable = rset.getBoolean("isAvailable");
+        String equipmentID = rset.getString("equipment_id");
+        String equipmentType = rset.getString("equipment_type");
+        boolean isClean = rset.getBoolean("is_clean");
+        String currentLocation = rset.getString("current_location");
+        boolean isAvailable = rset.getBoolean("is_available");
 
         me = new Equipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable);
       }
       return me;
 
     } catch (SQLException e) {
-      System.out.println("Connection Failed");
       e.printStackTrace();
       return null;
     }
   }
 
   public void updateMedicalEquipment(String ID, String field, String change) throws SQLException {
-    Connection connection =
-        DriverManager.getConnection(
-            String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-    Statement update = connection.createStatement();
+    Statement update = Adb.connection.createStatement();
 
     String str = "";
 
     if (change instanceof String) {
       str =
           String.format(
-              "UPDATE MedicalEquipment SET " + field + " = %s WHERE equipmentID = '%s'",
+              "UPDATE MedicalEquipment SET " + field + " = %s WHERE equipment_id = '%s'",
               change,
               ID);
     } else {
@@ -67,7 +60,7 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
                   + field
                   + " = '"
                   + change1
-                  + "' WHERE equipmentID = '%s'",
+                  + "' WHERE equipment_id = '%s'",
               ID);
     }
 
@@ -81,18 +74,15 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
       String currentLocation,
       boolean isAvailable) {
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-      Statement insert = connection.createStatement();
+      Statement insert = Adb.connection.createStatement();
 
       String str =
           String.format(
-              "INSERT INTO MedicalEquipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable)"
+              "INSERT INTO MedicalEquipment(equipment_id, equipment_type, is_clean, current_location, is_available)"
                   + " VALUES('%s', '%s', '%b', '%s', '%b')",
               equipmentID, equipmentType, isClean, currentLocation, isAvailable);
       insert.execute(str);
-      connection.close();
+
     } catch (SQLException e) {
       System.out.println("Failed");
       e.printStackTrace();
@@ -102,14 +92,11 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
 
   public void deleteMedicalEquipment(String ID) {
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
       System.out.println("Connection MAde");
-      Statement delete = connection.createStatement();
-      String str = String.format("DELETE FROM MedicalEquipment WHERE equipmentID = '%s'", ID);
+      Statement delete = Adb.connection.createStatement();
+      String str = String.format("DELETE FROM MedicalEquipment WHERE equipment_id = '%s'", ID);
       delete.execute(str);
-      connection.close();
+
     } catch (SQLException e) {
       System.out.println("Failed");
       e.printStackTrace();
@@ -120,18 +107,15 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
   public List<Equipment> getMedicalEquipmentList() {
     List<Equipment> equipList = new ArrayList<>();
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-      Statement getNodeList = connection.createStatement();
+      Statement getNodeList = Adb.connection.createStatement();
       ResultSet rset = getNodeList.executeQuery("SELECT * FROM MedicalEquipment");
 
       while (rset.next()) {
-        String equipmentID = rset.getString("equipmentID");
-        String equipmentType = rset.getString("equipmentType");
-        boolean isClean = rset.getBoolean("isClean");
-        String currentLocation = rset.getString("currentLocation");
-        boolean isAvailable = rset.getBoolean("isAvailable");
+        String equipmentID = rset.getString("equipment_id");
+        String equipmentType = rset.getString("equipment_type");
+        boolean isClean = rset.getBoolean("is_clean");
+        String currentLocation = rset.getString("current_location");
+        boolean isAvailable = rset.getBoolean("is_available");
 
         Equipment e =
             new Equipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable);
@@ -202,7 +186,7 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
     file.createNewFile();
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
-    writer.write("getEquipmentID, getEquipmentType, isClean, getCurrentLocation, isAvailable");
+    writer.write("equipment_id, equipment_type, is_clean, current_location, is_available");
     writer.newLine();
 
     // write location data
@@ -228,10 +212,7 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
   public static void inputFromCSV(String tableName, String csvFilePath) {
     // Check MedicalEquipment table
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-      Statement dropTable = connection.createStatement();
+      Statement dropTable = Adb.connection.createStatement();
 
       dropTable.execute("DELETE FROM MedicalEquipment");
     } catch (SQLException e) {
@@ -239,15 +220,12 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
     }
 
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
 
       List<Equipment> List = EquipmentDerbyImpl.readMedicalEquipmentCSV(csvFilePath);
       for (Equipment l : List) {
-        Statement addStatement = connection.createStatement();
+        Statement addStatement = Adb.connection.createStatement();
         addStatement.executeUpdate(
-            "INSERT INTO MedicalEquipment( equipmentID, equipmentType, isClean, currentLocation, isAvailable) VALUES('"
+            "INSERT INTO MedicalEquipment( equipment_id, equipment_type, is_clean, current_location, is_available) VALUES('"
                 + l.getEquipmentID()
                 + "', '"
                 + l.getEquipmentType()
