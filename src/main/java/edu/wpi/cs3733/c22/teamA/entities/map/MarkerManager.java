@@ -109,8 +109,8 @@ public class MarkerManager {
       CheckBoxManager checkBoxManager,
       GesturePaneManager gesturePaneManager) {
     createFloorLocations(selectionManager, checkBoxManager, gesturePaneManager);
-    createFloorEquipments(selectionManager);
-    createFloorSRs(selectionManager);
+    createFloorEquipments(selectionManager, checkBoxManager, gesturePaneManager);
+    createFloorSRs(selectionManager, checkBoxManager, gesturePaneManager);
   }
 
   private void createFloorLocations(
@@ -125,23 +125,29 @@ public class MarkerManager {
     }
   }
 
-  private void createFloorEquipments(SelectionManager selectionManager) {
+  private void createFloorEquipments(
+      SelectionManager selectionManager,
+      CheckBoxManager checkBoxManager,
+      GesturePaneManager gesturePaneManager) {
     for (Equipment e : floorEquipment) {
       EquipmentMarker newEquipmentMarker =
           MarkerMaker.makeEquipmentMarker(
               e, idToLocationMarker.get(e.getCurrentLocation()), mapLayoutX, mapLayoutY);
       equipmentMarkers.add(newEquipmentMarker);
-      setDragEquipment(newEquipmentMarker, selectionManager);
+      setDragEquipment(newEquipmentMarker, selectionManager, checkBoxManager, gesturePaneManager);
     }
   }
 
-  private void createFloorSRs(SelectionManager selectionManager) {
+  private void createFloorSRs(
+      SelectionManager selectionManager,
+      CheckBoxManager checkBoxManager,
+      GesturePaneManager gesturePaneManager) {
     for (SR sr : floorSRs) {
       SRMarker newSRMarker =
           MarkerMaker.makeSRMarker(
               sr, idToLocationMarker.get(sr.getEndLocation()), mapLayoutX, mapLayoutY);
       serviceRequestMarkers.add(newSRMarker);
-      setDragSR(newSRMarker, selectionManager);
+      setDragSR(newSRMarker, selectionManager, checkBoxManager, gesturePaneManager);
     }
   }
 
@@ -189,7 +195,11 @@ public class MarkerManager {
     return serviceRequestMarkers;
   }
 
-  public void setDragEquipment(EquipmentMarker equipmentMarker, SelectionManager selectionManager) {
+  public void setDragEquipment(
+      EquipmentMarker equipmentMarker,
+      SelectionManager selectionManager,
+      CheckBoxManager checkBoxManager,
+      GesturePaneManager gesturePaneManager) {
     final Delta dragDelta = new Delta();
     Button button = equipmentMarker.getButton();
     button.setOnAction(
@@ -211,9 +221,60 @@ public class MarkerManager {
           selectionManager.getSaveButton().setDisable(true);
           selectionManager.getClearButton().setDisable(true);
         });
+    button.setOnMouseDragged(
+        mouseEvent -> {
+          if (checkBoxManager.getDragCheckBox().isSelected()) {
+            button.setLayoutX(
+                (mouseEvent.getSceneX() - dragDelta.mouseX)
+                        / (gesturePaneManager.getTransformed().getHeight()
+                            / gesturePaneManager.getAnchorPane().getHeight())
+                    + dragDelta.buttonX);
+            button.setLayoutY(
+                (mouseEvent.getSceneY() - dragDelta.mouseY)
+                        / (gesturePaneManager.getTransformed().getHeight()
+                            / gesturePaneManager.getAnchorPane().getHeight())
+                    + dragDelta.buttonY);
+
+            selectionManager
+                .getCurrentList()
+                .get(1)
+                .textArea
+                .setText(
+                    String.valueOf(
+                        button.getLayoutX()
+                            - gesturePaneManager.getMapImageView().getLayoutX()
+                            + 8));
+            selectionManager
+                .getCurrentList()
+                .get(2)
+                .textArea
+                .setText(
+                    String.valueOf(
+                        button.getLayoutY()
+                            - gesturePaneManager.getMapImageView().getLayoutY()
+                            + 24));
+            Label correspondingLabel = equipmentMarker.getLabel();
+            correspondingLabel.setLayoutX(
+                (mouseEvent.getSceneX() - dragDelta.mouseX)
+                        / (gesturePaneManager.getTransformed().getHeight()
+                            / gesturePaneManager.getAnchorPane().getHeight())
+                    + dragDelta.buttonX
+                    + 8);
+            correspondingLabel.setLayoutY(
+                (mouseEvent.getSceneY() - dragDelta.mouseY)
+                        / (gesturePaneManager.getTransformed().getHeight()
+                            / gesturePaneManager.getAnchorPane().getHeight())
+                    + dragDelta.buttonY
+                    - 24);
+          }
+        });
   }
 
-  public void setDragSR(SRMarker srMarker, SelectionManager selectionManager) {
+  public void setDragSR(
+      SRMarker srMarker,
+      SelectionManager selectionManager,
+      CheckBoxManager checkBoxManager,
+      GesturePaneManager gesturePaneManager) {
     final Delta dragDelta = new Delta();
     Button button = srMarker.getButton();
     button.setOnAction(
@@ -234,6 +295,53 @@ public class MarkerManager {
           selectionManager.getDeleteButton().setDisable(false);
           selectionManager.getSaveButton().setDisable(true);
           selectionManager.getClearButton().setDisable(true);
+        });
+    button.setOnMouseDragged(
+        mouseEvent -> {
+          if (checkBoxManager.getDragCheckBox().isSelected()) {
+            button.setLayoutX(
+                (mouseEvent.getSceneX() - dragDelta.mouseX)
+                        / (gesturePaneManager.getTransformed().getHeight()
+                            / gesturePaneManager.getAnchorPane().getHeight())
+                    + dragDelta.buttonX);
+            button.setLayoutY(
+                (mouseEvent.getSceneY() - dragDelta.mouseY)
+                        / (gesturePaneManager.getTransformed().getHeight()
+                            / gesturePaneManager.getAnchorPane().getHeight())
+                    + dragDelta.buttonY);
+
+            selectionManager
+                .getCurrentList()
+                .get(1)
+                .textArea
+                .setText(
+                    String.valueOf(
+                        button.getLayoutX()
+                            - gesturePaneManager.getMapImageView().getLayoutX()
+                            + 8));
+            selectionManager
+                .getCurrentList()
+                .get(2)
+                .textArea
+                .setText(
+                    String.valueOf(
+                        button.getLayoutY()
+                            - gesturePaneManager.getMapImageView().getLayoutY()
+                            + 24));
+            Label correspondingLabel = srMarker.getLabel();
+            correspondingLabel.setLayoutX(
+                (mouseEvent.getSceneX() - dragDelta.mouseX)
+                        / (gesturePaneManager.getTransformed().getHeight()
+                            / gesturePaneManager.getAnchorPane().getHeight())
+                    + dragDelta.buttonX
+                    + 8);
+            correspondingLabel.setLayoutY(
+                (mouseEvent.getSceneY() - dragDelta.mouseY)
+                        / (gesturePaneManager.getTransformed().getHeight()
+                            / gesturePaneManager.getAnchorPane().getHeight())
+                    + dragDelta.buttonY
+                    - 24);
+          }
         });
   }
 

@@ -270,7 +270,6 @@ public class SelectionManager {
     String originalFloorName = floorName;
     floorSelectionComboBox.setValue("Choose Floor");
     floorSelectionComboBox.setValue(originalFloorName);
-
      */
   }
   /*

@@ -70,7 +70,6 @@ public class MapCtrl extends MasterCtrl {
   /* Floor Combo Box */
   @FXML
   public void initialize() {
-
     configure();
     initFloorSelection();
 
