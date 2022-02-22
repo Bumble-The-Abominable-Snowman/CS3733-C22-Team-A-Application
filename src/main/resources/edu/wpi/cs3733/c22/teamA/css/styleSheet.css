@@ -17,6 +17,10 @@
 
 }
 
+.snowman{
+    -fx-background-image: url('../images/snowmanHI.png');
+}
+
 .button{
 
     -fx-font-size: 12pt;
