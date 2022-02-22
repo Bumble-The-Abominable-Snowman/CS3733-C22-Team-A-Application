@@ -40,6 +40,12 @@ import javafx.stage.Popup;
 
 public class DataViewCtrl extends MasterCtrl {
 
+  @FXML private VBox inputVBox;
+  @FXML private JFXButton saveButton;
+  @FXML private JFXButton editButton;
+  @FXML private JFXButton clearButton;
+  @FXML private JFXButton deleteButton;
+
   @FXML
   public void deleteSelected()
       throws SQLException, InvocationTargetException, IllegalAccessException {
@@ -56,13 +62,13 @@ public class DataViewCtrl extends MasterCtrl {
       LocationDAO locationDAO = new LocationDerbyImpl();
       locationDAO.deleteLocationNode(
           table.getSelectionModel().getSelectedItem().getValue().loc.getNodeID());
-      titleLabel.setText("Rooms");
+      titleLabel.setText("Locations");
       initializeLocationTable();
     } else if (HomeCtrl.sceneFlag == 3) {
       EquipmentDAO equipmentDAO = new EquipmentDerbyImpl();
       equipmentDAO.deleteMedicalEquipment(
           table.getSelectionModel().getSelectedItem().getValue().equip.getEquipmentID());
-      titleLabel.setText("Medical Equipment");
+      titleLabel.setText("Equipment");
       initializeEquipmentTable();
     } else if (HomeCtrl.sceneFlag == 4) {
       EmployeeDAO employeeDAO = new EmployeeDerbyImpl();
@@ -204,6 +210,7 @@ public class DataViewCtrl extends MasterCtrl {
   }
 
   static class RecursiveObj extends RecursiveTreeObject<RecursiveObj> {
+
     public SR sr;
     public Location locStart;
     public Location locEnd;
@@ -214,9 +221,7 @@ public class DataViewCtrl extends MasterCtrl {
     public Employee employee;
   }
 
-  @FXML Label titleLabel;
   @FXML JFXTreeTableView<RecursiveObj> table;
-
   @FXML JFXButton addDataButton;
   @FXML JFXButton deleteSelectedButton;
 
@@ -268,26 +273,16 @@ public class DataViewCtrl extends MasterCtrl {
 
   public void initialize() throws SQLException, InvocationTargetException, IllegalAccessException {
 
-    double titleTextSize = titleLabel.getFont().getSize();
-
     configure();
-
-    App.getStage()
-        .widthProperty()
-        .addListener(
-            (obs, oldVal, newVal) -> {
-              titleLabel.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * titleTextSize) + "pt;");
-            });
 
     if (HomeCtrl.sceneFlag == 1) {
       titleLabel.setText("Service Requests");
       initializeRequestsTable();
     } else if (HomeCtrl.sceneFlag == 2) {
-      titleLabel.setText("Rooms");
+      titleLabel.setText("Locations");
       initializeLocationTable();
     } else if (HomeCtrl.sceneFlag == 3) {
-      titleLabel.setText("Medical Equipment");
+      titleLabel.setText("Equipment");
       initializeEquipmentTable();
     } else if (HomeCtrl.sceneFlag == 4) {
       titleLabel.setText("Employees");
@@ -997,6 +992,18 @@ public class DataViewCtrl extends MasterCtrl {
           }
         });
   }
+
+  @FXML
+  void edit() {}
+
+  @FXML
+  void clear() {}
+
+  @FXML
+  void save() {}
+
+  @FXML
+  void delete() {}
 
   protected void onSceneSwitch() {
     DataViewCtrl.detailsPopup.get().hide();

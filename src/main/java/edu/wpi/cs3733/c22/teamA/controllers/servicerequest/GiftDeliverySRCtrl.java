@@ -50,25 +50,19 @@ public class GiftDeliverySRCtrl extends SRCtrl {
                       + ((App.getStage().getWidth() / 1000) * commentsTextSize)
                       + "pt;");
               titleLabel.setStyle(
-                      "-fx-font-size: "
-                              + ((App.getStage().getWidth() / 1000) * titleTextSize)
-                              + "pt;");
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * titleTextSize) + "pt;");
               mapLabel.setStyle(
-                      "-fx-font-size: "
-                              + ((App.getStage().getWidth() / 1000) * mapTextSize)
-                              + "pt;");
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * mapTextSize) + "pt;");
               locationLabel.setStyle(
-                      "-fx-font-size: "
-                              + ((App.getStage().getWidth() / 1000) * locationTextSize)
-                              + "pt;");
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * locationTextSize)
+                      + "pt;");
               typeLabel.setStyle(
-                      "-fx-font-size: "
-                              + ((App.getStage().getWidth() / 1000) * typeTextSize)
-                              + "pt;");
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * typeTextSize) + "pt;");
               employeeLabel.setStyle(
-                      "-fx-font-size: "
-                              + ((App.getStage().getWidth() / 1000) * employeeTextSize)
-                              + "pt;");
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * employeeTextSize)
+                      + "pt;");
             });
 
     commentsBox.setWrapText(true);

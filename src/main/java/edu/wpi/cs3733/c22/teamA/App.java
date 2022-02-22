@@ -18,11 +18,13 @@ public class App extends Application {
   public static Connection connection;
 
   public static Stage getStage() {
+
     return guiStage;
   }
 
   @Override
   public void init() {
+
     log.info("Starting Up");
 
     factory.setHost("198.199.83.208");
@@ -31,6 +33,7 @@ public class App extends Application {
 
   @Override
   public void start(Stage primaryStage) throws IOException {
+
     guiStage = primaryStage;
     sceneSwitcher = new SceneSwitcher();
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOGIN);
