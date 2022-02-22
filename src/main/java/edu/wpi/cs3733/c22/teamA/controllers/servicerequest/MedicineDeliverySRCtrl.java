@@ -1,19 +1,23 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.MedicineDeliverySR;
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
+//import edu.wpi.cs3733.c22.teamA.entities.servicerequests.MedicineDeliverySR;
+//import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Date;
+
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
@@ -82,20 +86,19 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
       int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
       Location toLocationSelected = this.locationList.get(locationIndex);
 
-      MedicineDeliverySR medicineDeliverySR =
-          new MedicineDeliverySR(
-              "MedicineDeliverySRID",
-              "N/A",
-              toLocationSelected.getNodeID(),
-              "001",
-              employeeSelected.getEmployeeID(),
+      SR sr = new SR("MedicineDeliverySRID",
+              (new LocationDerbyImpl()).getLocationNode("N/A"),
+              toLocationSelected,
+              (new EmployeeDerbyImpl()).getEmployee("001"),
+              employeeSelected,
               new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,
               SR.Priority.REGULAR,
-              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText());
-      ServiceRequestDerbyImpl<MedicineDeliverySR> serviceRequestDAO =
-          new ServiceRequestDerbyImpl<>(new MedicineDeliverySR());
-      serviceRequestDAO.enterServiceRequest(medicineDeliverySR);
+              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
+              SR.SRType.MEDICINE_DELIVERY);
+
+      ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.MEDICINE_DELIVERY);
+      serviceRequestDerby.enterServiceRequest(sr);
     }
   }
 }

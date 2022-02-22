@@ -25,19 +25,19 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
           DriverManager.getConnection(
               String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
       Statement get = connection.createStatement();
-      String str = String.format("SELECT * FROM Employee WHERE employeeID = '%s'", ID);
+      String str = String.format("SELECT * FROM Employee WHERE employee_id = '%s'", ID);
       ResultSet rset = get.executeQuery(str);
       Employee emp = new Employee();
 
       if (rset.next()) {
-        String employeeID = rset.getString("employeeID");
-        String employeeType = rset.getString("employeeType");
-        String firstName = rset.getString("firstName");
-        String lastName = rset.getString("lastName");
+        String employeeID = rset.getString("employee_id");
+        String employeeType = rset.getString("employee_type");
+        String firstName = rset.getString("first_name");
+        String lastName = rset.getString("last_name");
         String email = rset.getString("email");
-        String phoneNum = rset.getString("phoneNum");
+        String phoneNum = rset.getString("phone_num");
         String address = rset.getString("address");
-        Date startDate = rset.getDate("startDate");
+        Date startDate = rset.getDate("start_date");
 
         emp =
             new Employee(
@@ -63,7 +63,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
       if (change instanceof String) {
         str =
             String.format(
-                "UPDATE Employee SET " + field + " = '%s' WHERE employeeID = '%s'", change, ID);
+                "UPDATE Employee SET " + field + " = '%s' WHERE employee_id = '%s'", change, ID);
       } else {
         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
         String startDateStr = originalFormat.format(change);
@@ -74,7 +74,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
                     + field
                     + " = '"
                     + startDateStr
-                    + "' WHERE employeeID = '%s'",
+                    + "' WHERE employee_id = '%s'",
                 ID);
       }
 
@@ -106,9 +106,9 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
 
       String str =
           String.format(
-              "INSERT INTO Employee(employeeID, employeeType, firstName, "
-                  + "lastName, email, phoneNum, "
-                  + "address, startDate) "
+              "INSERT INTO Employee(employee_id, employee_type, first_name, "
+                  + "last_name, email, phone_num, "
+                  + "address, start_date) "
                   + " VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
               employeeID,
               employeeType,
@@ -133,7 +133,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
           DriverManager.getConnection(
               String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
       Statement delete = connection.createStatement();
-      String str = String.format("DELETE FROM Employee WHERE employeeID = '%s'", ID);
+      String str = String.format("DELETE FROM Employee WHERE employee_id = '%s'", ID);
       delete.execute(str);
 
     } catch (SQLException e) {
@@ -153,14 +153,14 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
       ResultSet rset = getNodeList.executeQuery("SELECT * FROM Employee");
 
       while (rset.next()) {
-        String employeeID = rset.getString("employeeID");
-        String employeeType = rset.getString("employeeType");
-        String firstName = rset.getString("firstName");
-        String lastName = rset.getString("lastName");
+        String employeeID = rset.getString("employee_id");
+        String employeeType = rset.getString("employee_type");
+        String firstName = rset.getString("first_name");
+        String lastName = rset.getString("last_name");
         String email = rset.getString("email");
-        String phoneNum = rset.getString("phoneNum");
+        String phoneNum = rset.getString("phone_num");
         String address = rset.getString("address");
-        Date startDate = rset.getDate("startDate");
+        Date startDate = rset.getDate("start_date");
 
         Employee emp =
             new Employee(
@@ -198,6 +198,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
       while (dataScanner.hasNext()) {
 
         String data = dataScanner.next();
+        data = data.trim();
         if (dataIndex == 0) thisEmployee.setEmployeeID(data);
         else if (dataIndex == 1) thisEmployee.setEmployeeType(data);
         else if (dataIndex == 2) thisEmployee.setFirstName(data);
@@ -206,8 +207,6 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
         else if (dataIndex == 5) thisEmployee.setPhoneNum(data);
         else if (dataIndex == 6) thisEmployee.setAddress(data);
         else if (dataIndex == 7) {
-          //          SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
-          //          Date date = originalFormat.parse(data);
           thisEmployee.setStartDate(data);
         } else System.out.println("Invalid data, I broke::" + data);
         dataIndex++;
@@ -215,7 +214,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
 
       dataIndex = 0;
       list.add(thisEmployee);
-      // System.out.println(thisLocation);
+       System.out.println(thisEmployee);
 
     }
 
@@ -232,7 +231,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(
-        "getEmployeeID, getEmployeeType, getFirstName, getLastName, getEmail, getPhoneNum, getAddress, startDate");
+        "employee_id, employee_type, first_name, last_name, email, phone_num, address, start_date");
     writer.newLine();
 
     // write location data
@@ -257,7 +256,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
   }
 
   // input from CSV
-  public static void inputFromCSV(String tableName, String csvFilePath) { // Check employee table
+  public static void inputFromCSV(String csvFilePath) { // Check employee table
     try {
       Connection connection =
           DriverManager.getConnection(
@@ -280,8 +279,8 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
           DriverManager.getConnection(
               String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
 
-      List<Employee> List = EmployeeDerbyImpl.readEmployeeCSV(csvFilePath);
-      for (Employee l : List) {
+      List<Employee> employeeList1 = EmployeeDerbyImpl.readEmployeeCSV(csvFilePath);
+      for (Employee employee : employeeList1) {
         Statement addStatement = connection.createStatement();
 
         //        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -289,26 +288,27 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
         //        String date = originalFormat.format(l.getStartDate();
 
         addStatement.executeUpdate(
-            "INSERT INTO Employee(employeeID, employeeType, firstName, lastName, email, phoneNum, address, startDate) VALUES('"
-                + l.getEmployeeID()
+            "INSERT INTO Employee(employee_id, employee_type, first_name, last_name, email, phone_num, address, start_date) VALUES('"
+                + employee.getEmployeeID()
                 + "', '"
-                + l.getEmployeeType()
+                + employee.getEmployeeType()
                 + "', '"
-                + l.getFirstName()
+                + employee.getFirstName()
                 + "', '"
-                + l.getLastName()
+                + employee.getLastName()
                 + "', '"
-                + l.getEmail()
+                + employee.getEmail()
                 + "', '"
-                + l.getPhoneNum()
+                + employee.getPhoneNum()
                 + "', '"
-                + l.getAddress()
+                + employee.getAddress()
                 + "', '"
-                + l.getStartDate()
+                + employee.getStartDate()
                 + "')");
       }
     } catch (SQLException | IOException | ParseException e) {
       System.out.println("Insertion on Employee failed!");
+      e.printStackTrace();
     }
   }
 
