@@ -24,6 +24,10 @@ public class MapManager {
 
   public void init() {
     gesturePaneManager.initGesture();
+    initFloor(
+        "Choose Floor:",
+        (int) gesturePaneManager.getMapImageView().getLayoutX(),
+        (int) gesturePaneManager.getMapImageView().getLayoutY());
   }
 
   public void initFloor(String floor, int mapLayoutX, int mapLayoutY) {
@@ -42,7 +46,8 @@ public class MapManager {
         markerManager.getServiceRequestMarkers(),
         floor);
     searcher.initSearchListener();
-    checkBoxManager.switchFloor(markerManager);
+    checkBoxManager.switchFloor(markerManager, gesturePaneManager.getCurrentFloor().equals(""));
+    selectionManager.clearVBox();
   }
 
   public void reset() {
