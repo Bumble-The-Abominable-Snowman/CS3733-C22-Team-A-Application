@@ -73,9 +73,9 @@ public class Adb {
         Connection c =
             DriverManager.getConnection(String.format("jdbc:derby:%s;create=true", pathToDBA));
         turnOnBuiltInUsers(c);
-        c.close();
+        // c.close();
         System.out.println("DB initialized");
-        System.out.println("Closed connection");
+        // System.out.println("Closed connection");
 
         isInitialized = false;
       }
@@ -184,7 +184,7 @@ public class Adb {
               + "PRIMARY KEY (medicineID))");
 
     } catch (SQLException e) {
-      System.out.println("Medicine Table already exists");
+      System.out.println("Table Medicine already exists");
     }
 
     // MedicineDosages
@@ -199,11 +199,11 @@ public class Adb {
               + "CREATE TABLE MedicineDosage("
               + "medicineID varchar(25), "
               + "dosageAmount float,"
-              + "PRIMARY KEY (medicineID),"
+              + "PRIMARY KEY (medicineID,dosageAmount),"
               + "FOREIGN KEY (medicineID) REFERENCES Medicine (medicineID))");
 
     } catch (SQLException e) {
-      System.out.println("MedicineDosage table already exists");
+      System.out.println("Table MedicineDosage already exists");
     }
 
     // Check ServiceRequestDerbyImpl table.
