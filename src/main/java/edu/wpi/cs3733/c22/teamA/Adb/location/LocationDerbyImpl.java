@@ -19,10 +19,7 @@ public class LocationDerbyImpl implements LocationDAO {
     try {
 
       Location = new ArrayList<Location>();
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-      Statement getNodeList = connection.createStatement();
+      Statement getNodeList = Adb.connection.createStatement();
       ResultSet rset = getNodeList.executeQuery("SELECT * FROM TowerLocations");
 
       while (rset.next()) {
@@ -54,10 +51,7 @@ public class LocationDerbyImpl implements LocationDAO {
 
     String tableName = "TowerLocations";
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-      Statement deleteNode = connection.createStatement();
+      Statement deleteNode = Adb.connection.createStatement();
 
       String str =
           String.format(
@@ -97,10 +91,7 @@ public class LocationDerbyImpl implements LocationDAO {
 
     String tableName = "TowerLocations";
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-      Statement enterNode = connection.createStatement();
+      Statement enterNode = Adb.connection.createStatement();
 
       String str =
           String.format(
@@ -131,10 +122,7 @@ public class LocationDerbyImpl implements LocationDAO {
 
     String tableName = "TowerLocations";
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-      Statement updateCoords = connection.createStatement();
+      Statement updateCoords = Adb.connection.createStatement();
 
       String str = "";
       if (change instanceof String) {
@@ -164,10 +152,7 @@ public class LocationDerbyImpl implements LocationDAO {
 
     String tableName = "TowerLocations";
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-      Statement getNode = connection.createStatement();
+      Statement getNode = Adb.connection.createStatement();
       String str =
           String.format(
               "select * from " + tableName + " Where nodeID = '%s'",
@@ -287,10 +272,7 @@ public class LocationDerbyImpl implements LocationDAO {
   // Input from CSV
   public static void inputFromCSV(String tableName, String csvFilePath) {
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-      Statement deleteTable = connection.createStatement();
+      Statement deleteTable = Adb.connection.createStatement();
 
       deleteTable.execute("DELETE FROM TowerLocations");
     } catch (SQLException e) {
@@ -298,13 +280,10 @@ public class LocationDerbyImpl implements LocationDAO {
     }
 
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
 
       List<Location> locList = LocationDerbyImpl.readLocationCSV(csvFilePath);
       for (Location l : locList) {
-        Statement addStatement = connection.createStatement();
+        Statement addStatement = Adb.connection.createStatement();
         addStatement.executeUpdate(
             "INSERT INTO TowerLocations(nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName) VALUES('"
                 + l.getNodeID()

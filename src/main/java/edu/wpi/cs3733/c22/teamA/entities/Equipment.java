@@ -1,6 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.entities;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import java.util.List;
 
 public class Equipment extends RecursiveTreeObject<Equipment> {
   private String equipmentID;
@@ -22,6 +23,15 @@ public class Equipment extends RecursiveTreeObject<Equipment> {
     this.isClean = isClean;
     this.currentLocation = currentLocation;
     this.isAvailable = isAvailable;
+  }
+
+  public List<String> getListForm() {
+    return List.of(
+        equipmentID,
+        equipmentType,
+        Boolean.toString(isClean),
+        currentLocation,
+        Boolean.toString(isAvailable));
   }
 
   public String getEquipmentID() {

@@ -1,6 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.entities;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import java.util.List;
 
 public class Location extends RecursiveTreeObject<Location> {
 
@@ -33,6 +34,18 @@ public class Location extends RecursiveTreeObject<Location> {
     this.nodeType = nodeType;
     this.longName = longName;
     this.shortName = shortName;
+  }
+
+  public List<String> getListForm() {
+    return List.of(
+        nodeID,
+        Integer.toString(xCoord),
+        Integer.toString(yCoord),
+        floor,
+        building,
+        nodeType,
+        longName,
+        shortName);
   }
 
   public void setNodeID(String nodeID) {

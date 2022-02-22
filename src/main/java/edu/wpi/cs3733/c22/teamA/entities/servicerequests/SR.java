@@ -2,6 +2,7 @@ package edu.wpi.cs3733.c22.teamA.entities.servicerequests;
 
 import java.lang.reflect.Field;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Locale;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -90,6 +91,19 @@ public class SR {
     this.comments = comments;
 
     this.srType = SRType.INVALID;
+  }
+
+  public List<String> getListForm() {
+    return List.of(
+        requestID,
+        startLocation,
+        endLocation,
+        employeeRequested,
+        employeeAssigned,
+        requestTime.toString(),
+        requestStatus.toString(),
+        requestPriority.toString(),
+        comments);
   }
 
   // status get/set
