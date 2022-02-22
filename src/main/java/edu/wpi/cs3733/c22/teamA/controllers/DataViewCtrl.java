@@ -421,12 +421,12 @@ public class DataViewCtrl extends MasterCtrl {
         .get(8)
         .setCellValueFactory(
             (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-                new SimpleStringProperty(param.getValue().getValue().sr.getComments()));
+                new SimpleStringProperty(param.getValue().getValue().sr.getRequestPriority()));
     srColumns
         .get(9)
         .setCellValueFactory(
             (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-                new SimpleStringProperty(param.getValue().getValue().sr.getRequestPriority()));
+                new SimpleStringProperty(param.getValue().getValue().sr.getComments()));
 
     this.srList = ServiceRequestDerbyImpl.getAllServiceRequestList();
     ObservableList<RecursiveObj> requests = FXCollections.observableArrayList();

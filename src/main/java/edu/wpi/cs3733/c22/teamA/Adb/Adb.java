@@ -32,7 +32,6 @@ public class Adb {
       case "ClientDriver":
         usingEmbedded = false;
         pathToDBA = "//198.199.83.208:1527/HospitalDBA";
-
     }
 
     try {
