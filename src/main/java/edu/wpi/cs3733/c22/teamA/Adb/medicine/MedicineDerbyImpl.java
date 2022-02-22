@@ -16,10 +16,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
 
   public Medicine getMedicine(String ID) {
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-      Statement get = connection.createStatement();
+      Statement get = Adb.connection.createStatement();
 
       String strMed = String.format("SELECT * FROM Medicine WHERE medicineID = '%s'", ID);
 
@@ -51,10 +48,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
 
   public void updateMedicine(String ID, String field, String change) {
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-      Statement update = connection.createStatement();
+      Statement update = Adb.connection.createStatement();
 
       String str =
           String.format("UPDATE Medicine SET %s = '%s' WHERE medicineID = '%s'", field, change, ID);
@@ -94,10 +88,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
       String form,
       List<Float> dosageAmount) {
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-      Statement insert = connection.createStatement();
+      Statement insert = Adb.connection.createStatement();
       String strMed =
           String.format(
               "INSERT INTO Medicine(medicineID, genericName, brandName, medicineClass, uses, warnings, sideEffects, form)"
@@ -124,10 +115,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
 
   public void enterMedicineDosage(String ID, Float dosage) {
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-      Statement insert = connection.createStatement();
+      Statement insert = Adb.connection.createStatement();
       String str =
           String.format(
               "INSERT INTO MedicineDosage(medicineID, dosageAmount) VALUES('%s', %f)", ID, dosage);
@@ -143,16 +131,11 @@ public class MedicineDerbyImpl implements MedicineDAO {
 
   public void deleteMedicineDosage(String ID, Float dosage) {
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-      Statement delete = connection.createStatement();
+      Statement delete = Adb.connection.createStatement();
       delete.execute(
           String.format(
               "DELETE FROM MedicineDosage WHERE (medicineID = '%s' AND dosageAmount = '%f')",
               ID, dosage));
-
-      connection.close();
 
     } catch (SQLException e) {
       System.out.println("Error caught");
@@ -164,10 +147,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
 
   public void deleteMedicine(String ID) {
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-      Statement delete = connection.createStatement();
+      Statement delete = Adb.connection.createStatement();
       delete.execute(String.format("DELETE FROM MedicineDosage WHERE medicineID = '%s'", ID));
 
       delete.execute(String.format("DELETE FROM Medicine WHERE medicineID = '%s'", ID));
@@ -182,10 +162,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
 
   public List<Float> getDosages(String ID) {
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-      Statement get = connection.createStatement();
+      Statement get = Adb.connection.createStatement();
 
       ResultSet rset =
           get.executeQuery(
@@ -208,10 +185,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
 
   public List<Medicine> getMedicineList() {
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-      Statement get = connection.createStatement();
+      Statement get = Adb.connection.createStatement();
       String str = String.format("SELECT * FROM Medicine");
       ResultSet rset = get.executeQuery(str);
       List<Medicine> returnList = new ArrayList<>();
@@ -241,10 +215,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
   public static void inputFromCSV(String medicineCSVFilePath, String dosageCSVFilePath) {
     // Delete all contents of both table
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", Adb.pathToDBA));
-      Statement dropTable = connection.createStatement();
+      Statement dropTable = Adb.connection.createStatement();
       dropTable.execute("DELETE FROM MedicineDosage");
       dropTable.execute("DELETE FROM Medicine");
     } catch (SQLException e) {

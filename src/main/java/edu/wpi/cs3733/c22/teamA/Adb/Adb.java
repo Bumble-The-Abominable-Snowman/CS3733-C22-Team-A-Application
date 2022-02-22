@@ -153,11 +153,7 @@ public class Adb {
 
     // Medicine Table
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
-      Statement addTable = connection.createStatement();
-      addTable.execute(
+      stmt.execute(
           ""
               + "CREATE TABLE Medicine("
               + "medicineID varchar(25), "
@@ -176,12 +172,7 @@ public class Adb {
 
     // MedicineDosages
     try {
-      Connection connection =
-          DriverManager.getConnection(
-              String.format("jdbc:derby:%s;user=Admin;password=admin", pathToDBA));
-      Statement addTable = connection.createStatement();
-
-      addTable.execute(
+      stmt.execute(
           ""
               + "CREATE TABLE MedicineDosage("
               + "medicineID varchar(25), "

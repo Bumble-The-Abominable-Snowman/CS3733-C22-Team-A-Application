@@ -76,8 +76,8 @@ public class DefaultTest {
 
     System.out.println("Testing delete");
     derby.deleteMedicine(medicineID);
-    System.out.println("Atttempting get (should fail)");
-    System.out.println(derby.getMedicine(medicineID));
+    System.out.println("Attempting get (should fail)");
+    System.out.println(derby.getMedicine(medicineID).getMedicineID());
   }
 
   @Test
