@@ -207,6 +207,6 @@ public abstract class MasterCtrl {
   private void help() throws IOException {
 
     this.onSceneSwitch();
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HELP);
   }
 }

@@ -17,10 +17,6 @@
 
 }
 
-.snowman{
-    -fx-background-image: url('../images/snowmanHI.png');
-}
-
 .button{
 
     -fx-font-size: 12pt;
@@ -47,6 +43,18 @@
     -fx-background-radius: 40;
     -fx-cursor: HAND;
     -fx-font-weight: BOLD;
+}
+
+.snowmanButton{
+
+    -fx-font-size: 12pt;
+    -fx-font-family: "Helvetica Neue";
+    -fx-background-color: TRANSPARENT;
+    -fx-background-image: url('../images/BumbleIcon.png');
+    -fx-text-fill: TRANSPARENT;
+    -fx-background-size: 100% 100%;
+    -fx-border-color: TRANSPARENT;
+    -fx-cursor: HAND;
 }
 
 .menuButton{

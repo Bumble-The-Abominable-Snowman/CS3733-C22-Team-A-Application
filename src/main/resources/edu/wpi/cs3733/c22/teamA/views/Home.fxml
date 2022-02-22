@@ -55,7 +55,7 @@
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/Map%20Icon.png" />
+                              <Image url="@../images/Map Icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -82,7 +82,7 @@
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/Location%20Marker%20Icon.png" />
+                              <Image url="@../images/Location Marker Icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -109,7 +109,7 @@
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/Door%20Icon.png" />
+                              <Image url="@../images/Door Icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -141,7 +141,7 @@
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/Back%20Arrow.png" />
+                        <Image url="@../images/Back Arrow.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -157,7 +157,7 @@
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/Question%20Mark%20Icon.png" />
+                        <Image url="@../images/Question Mark Icon.png" />
                      </image>
                   </ImageView>
                </graphic>

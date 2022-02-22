@@ -93,7 +93,7 @@
                         <graphic>
                            <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                               <image>
-                                 <Image url="@../../images/location.png" />
+                                 <Image url="@../../images/Location Marker Icon.png" />
                               </image>
                            </ImageView>
                         </graphic>
@@ -102,7 +102,7 @@
                         <graphic>
                            <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                               <image>
-                                 <Image url="@../../images/bed_with_pump2.png" />
+                                 <Image url="@../../images/Bed_with_pump.png" />
                               </image>
                            </ImageView>
                         </graphic>
