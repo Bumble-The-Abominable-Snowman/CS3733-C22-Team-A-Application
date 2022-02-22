@@ -1,6 +1,38 @@
 package edu.wpi.cs3733.c22.teamA.entities.map;
 
+import com.jfoenix.controls.JFXButton;
+import java.util.ArrayList;
+import java.util.List;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+
 public class SideView {
+
+  private List<JFXButton> buttons = new ArrayList<>();
+  private GesturePaneManager gestureManager;
+  private AnchorPane anchorPane;
+  private ImageView mapImageView;
+
+  public SideView(
+      AnchorPane anchorPane, GesturePaneManager gestureManager, ImageView mapImageView) {
+    this.anchorPane = anchorPane;
+    this.gestureManager = gestureManager;
+    this.mapImageView = mapImageView;
+  }
+
+  public void init() {
+    int initialY = 1028;
+    for (int i = 0; i < 5; i++) {
+      double buttonX = 107 + mapImageView.getLayoutX();
+      double buttonY = initialY + i * 52 + mapImageView.getLayoutY();
+      JFXButton button = new JFXButton();
+      button.setLayoutX(buttonX);
+      button.setLayoutY(buttonY);
+      button.setScaleY(button.getScaleY() + .3);
+      buttons.add(button);
+    }
+    anchorPane.getChildren().addAll(buttons);
+  }
   /*
   private List<Button> sideView = new ArrayList<>();
 
