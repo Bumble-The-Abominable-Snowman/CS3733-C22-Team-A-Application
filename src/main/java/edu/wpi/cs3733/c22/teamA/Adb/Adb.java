@@ -388,32 +388,62 @@ public class Adb {
     }
 
     // Initialize the database and input data
-    //    if (!isInitialized) {
-    //      LocationDerbyImpl.inputFromCSV(
-    //          "TowerLocations", "edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
-    //      EmployeeDerbyImpl.inputFromCSV("Employee",
-    // "edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.csv");
-    //      EquipmentDerbyImpl.inputFromCSV(
-    //          "MedicalEquipment", "edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipment.csv");
-    //      EquipmentServiceRequestDerbyImpl.inputFromCSV(
-    //          "MedicalEquipmentServiceRequest",
-    //          "edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipmentServiceRequest.csv");
-    //      ReligiousServiceRequestDerbyImpl.inputFromCSV(
-    //          "ReligiousServiceRequest",
-    //          "edu/wpi/cs3733/c22/teamA/db/CSVs/ReligiousServiceRequest.csv");
-    //      SanitationServiceRequestDerbyImpl.inputFromCSV(
-    //          "SanitationServiceRequest",
-    //          "edu/wpi/cs3733/c22/teamA/db/CSVs/SanitationServiceRequest.csv");
-    //      LaundryServiceRequestDerbyImpl.inputFromCSV(
-    //          "LaundryServiceRequest",
-    // "edu/wpi/cs3733/c22/teamA/db/CSVs/LaundryServiceRequest.csv");
-    //      LanguageServiceRequestDerbyImpl.inputFromCSV(
-    //          "LanguageServiceRequest",
-    // "edu/wpi/cs3733/c22/teamA/db/CSVs/LanguageServiceRequest.csv");
-    //      FoodDeliveryServiceRequestDerbyImpl.inputFromCSV(
-    //          "FoodDeliveryServiceRequest",
-    //          "edu/wpi/cs3733/c22/teamA/db/CSVs/FoodDeliveryServiceRequest.csv");
-    //    }
+    if (!isInitialized) {
+      try {
+        LocationDerbyImpl.inputFromCSV(
+            "TowerLocations",
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
+        EmployeeDerbyImpl.inputFromCSV(
+            "Employee", "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.csv");
+        EquipmentDerbyImpl.inputFromCSV(
+            "MedicalEquipment",
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipment.csv");
+
+        // EquipmentSR
+        ServiceRequestDerbyImpl<EquipmentSR> EquipmentRequestDerby =
+            new ServiceRequestDerbyImpl<>(new EquipmentSR());
+        EquipmentRequestDerby.populateFromCSV(
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipmentServiceRequest.csv");
+
+        // ReligiousSR
+        ServiceRequestDerbyImpl<ReligiousSR> religiousSRServiceRequestDerby =
+            new ServiceRequestDerbyImpl<>(new ReligiousSR());
+        religiousSRServiceRequestDerby.populateFromCSV(
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/ReligiousServiceRequest.csv");
+
+        // SanitationSR
+        ServiceRequestDerbyImpl<SanitationSR> sanitationServiceRequestDerby =
+            new ServiceRequestDerbyImpl<>(new SanitationSR());
+        sanitationServiceRequestDerby.populateFromCSV(
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/SanitationServiceRequest.csv");
+
+        // LaundrySR
+        ServiceRequestDerbyImpl<LaundrySR> LaundryServiceRequestDerby =
+            new ServiceRequestDerbyImpl<>(new LaundrySR());
+        LaundryServiceRequestDerby.populateFromCSV(
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/LaundryServiceRequest.csv");
+
+        // LaundrySR
+        ServiceRequestDerbyImpl<LanguageSR> LanguageServiceRequestDerby =
+            new ServiceRequestDerbyImpl<>(new LanguageSR());
+        LanguageServiceRequestDerby.populateFromCSV(
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/LanguageServiceRequest.csv");
+
+        // LaundrySR
+        ServiceRequestDerbyImpl<FoodDeliverySR> FoodDeliveryServiceRequestDerby =
+            new ServiceRequestDerbyImpl<>(new FoodDeliverySR());
+        FoodDeliveryServiceRequestDerby.populateFromCSV(
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/FoodDeliveryServiceRequest.csv");
+
+      } catch (SQLException
+          | IOException
+          | ParseException
+          | InvocationTargetException
+          | IllegalAccessException e) {
+        System.out.println("Cannot insert into tables.");
+        return;
+      }
+    }
   }
 
   public static void turnOnBuiltInUsers(Connection conn) throws SQLException {
