@@ -3,6 +3,7 @@ package edu.wpi.cs3733.c22.teamA.entities.map;
 import edu.wpi.cs3733.c22.teamA.App;
 import java.net.URL;
 import javafx.animation.Interpolator;
+import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,12 +19,14 @@ public class GesturePaneManager {
   private AnchorPane anchorPane;
   private ImageView mapImageView;
   private String currentFloor;
+  private Dimension2D transformed;
 
   public GesturePaneManager(
       GesturePane gesturePane, AnchorPane anchorPane, ImageView mapImageView) {
     this.gesturePane = gesturePane;
     this.anchorPane = anchorPane;
     this.mapImageView = mapImageView;
+    transformed = new Dimension2D(1000, 1000); // TODO Fix initial dimension
   }
 
   public void initGesture() {
@@ -51,7 +54,7 @@ public class GesturePaneManager {
           //                  + event.getTransformedDimension().getWidth());
           //          System.out.println(gesturePane.getCurrentX() + " " +
           // gesturePane.getTranslateY());
-          // transformed = event.getTransformedDimension();
+          transformed = event.getTransformedDimension();
         });
     gesturePane.setOnMouseClicked(
         e -> {
@@ -112,5 +115,17 @@ public class GesturePaneManager {
 
   public String getCurrentFloor() {
     return currentFloor;
+  }
+
+  public Dimension2D getTransformed() {
+    return transformed;
+  }
+
+  public ImageView getMapImageView() {
+    return mapImageView;
+  }
+
+  public AnchorPane getAnchorPane() {
+    return anchorPane;
   }
 }

@@ -323,6 +323,10 @@ public class SelectionManager {
     return deleteButton;
   }
 
+  public List<InfoField> getCurrentList() {
+    return currentList;
+  }
+
   class InfoField {
     Label label;
     TextArea textArea;

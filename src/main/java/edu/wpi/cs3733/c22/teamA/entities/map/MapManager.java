@@ -27,7 +27,12 @@ public class MapManager {
     gesturePaneManager.setMapFloor(floor);
     // gesturePaneManager.initGesture();
     markerManager.initFloor(
-        gesturePaneManager.getCurrentFloor(), mapLayoutX, mapLayoutY, selectionManager);
+        gesturePaneManager.getCurrentFloor(),
+        mapLayoutX,
+        mapLayoutY,
+        selectionManager,
+        checkBoxManager,
+        gesturePaneManager);
     checkBoxManager.switchFloor(markerManager);
   }
 
