@@ -1,8 +1,7 @@
 getEmployeeID, getEmployeeType, getFirstName, getLastName, getEmail, getPhoneNum, getAddress, startDate
-001,Admin,Yanbo,Dai,ydai2@wpi.edu,0000000001,100 institute Rd,2022-02-01 00:00:00
-002,Admin,Yasar,Idikut,yidikut@wpi.edu,0000000002,Area 51,2022-02-03 00:00:00
-003, Admin, Alex, Sun, asun@wpi.edu, 0000000003, Smart World,2022-02-04 00:00:00
-004,Admin,The,Rock,rock@wpi.edu,0000000002,Ethans Discord,2022-02-03 00:00:00
-005, Admin, Brendon, King, bking2@wpi.edu, 0000000003, Smart World 420,2022-02-04 00:00:00
-006,Admin,Ethan,Schrim,jeschrim@wpi.edu,0000000002,Faraday Hall,2022-02-03 00:00:00
-006,Admin,Admin,admin,admin@wpi.edu,0000000002,Galaxy,2022-02-03 00:00:00
+001,Admin,Yanbo,Dai,ydai2@wpi.edu,0000000001,100 institute Rd,2022-02-01
+002,Admin,Yasar,Idikut,yidikut@wpi.edu,0000000002,Area 51,2022-02-03
+003, Admin, Alex, Sun, asun@wpi.edu, 0000000003, Smart World,2022-02-04
+004,Admin,The,Rock,rock@wpi.edu,0000000002,Ethans Discord,2022-02-03
+005, Admin, Brendan, King, bking2@wpi.edu, 0000000003, Smart World 420,2022-02-04
+006,Admin,Ethan,Schrim,jeschrim@wpi.edu,0000000002,Faraday Hall,2022-02-03
