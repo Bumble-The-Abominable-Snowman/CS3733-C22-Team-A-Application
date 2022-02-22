@@ -62,9 +62,9 @@ public class DefaultTest {
     System.out.println("Found GenericName: " + copyM.getGenericName());
     System.out.println("Found Uses: " + copyM.getUses());
 
-    //    System.out.println("Testing update changing uses to 'lots of uses'");
-    //    derby.updateMedicine(medicineID, "uses", "lots of uses");
-    //    System.out.println(derby.getMedicine(medicineID).getUses());
+    System.out.println("Testing update changing uses to 'lots of uses'");
+    derby.updateMedicine(medicineID, "uses", "lots of uses");
+    System.out.println(derby.getMedicine(medicineID).getUses());
 
     System.out.println("Testing getList");
     System.out.println(derby.getMedicineList());
