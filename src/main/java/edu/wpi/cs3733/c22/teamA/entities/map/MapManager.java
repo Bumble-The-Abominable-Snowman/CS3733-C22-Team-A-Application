@@ -50,6 +50,10 @@ public class MapManager {
     selectionManager.clearVBox();
   }
 
+  public void newLocationPressed() {
+    markerManager.newLocationPressed();
+  }
+
   public void reset() {
     gesturePaneManager.reset();
   }

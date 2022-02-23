@@ -163,6 +163,25 @@ public class MarkerManager {
     }
   }
 
+  private void midRunDraw() {
+    for (LocationMarker l : locationMarkers) {
+      l.clear(anchorPane);
+      if (l.getEquipmentMarker() != null) {
+        l.getEquipmentMarker().clear(anchorPane);
+      }
+      if (l.getServiceRequestMarker() != null) {
+        l.getServiceRequestMarker().clear(anchorPane);
+      }
+    }
+    for (SRMarker sr : serviceRequestMarkers) {
+      sr.clear(anchorPane);
+    }
+    for (EquipmentMarker e : equipmentMarkers) {
+      e.clear(anchorPane);
+    }
+    initialDraw();
+  }
+
   private void clear() {
     for (LocationMarker l : locationMarkers) {
       l.clear(anchorPane);
@@ -532,6 +551,17 @@ public class MarkerManager {
         mouseEvent -> {
           button.setCursor(Cursor.HAND);
         });
+  }
+
+  public void newLocationPressed() {
+    Location newLocation = new Location();
+    newLocation.setXCoord(10);
+    newLocation.setYCoord(10);
+    Button newButton = new Button();
+    Label newLabel = new Label("ADDED");
+    LocationMarker newLocationMarker = new LocationMarker(newButton, newLabel, newLocation);
+    locationMarkers.add(newLocationMarker);
+    midRunDraw();
   }
 }
 /*
