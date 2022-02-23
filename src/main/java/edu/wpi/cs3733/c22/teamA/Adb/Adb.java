@@ -23,11 +23,14 @@ public class Adb {
 
   public static String password;
 
-  public static boolean b = true;
+  public static Boolean b;
 
-  public static void initialConnection(String arg) throws SQLException {
+  public static boolean isInitialized;
 
-    boolean isInitialized = false;
+  public static void initialConnection(String arg) {
+
+    b = true;
+    isInitialized = false;
     // Connection to database driver
     System.out.println("----- Apache Derby Connection Testing -----");
     switch (arg) {
@@ -51,6 +54,8 @@ public class Adb {
       return;
     }
 
+    try {
+
       // Check if database exist. If not then create one.
       try {
         connection =
@@ -60,7 +65,6 @@ public class Adb {
                     pathToDBA, username, password)); // Modify the database name from TowerLocation to Adb
         // for better
         // recognition.
-        isInitialized = true;
         System.out.println("DB already exist");
 
       } catch (SQLException e) {
@@ -69,6 +73,7 @@ public class Adb {
 
         turnOnBuiltInUsers(connection);
         connection.close();
+        DriverManager.getConnection(String.format("jdbc:derby:%s;user=%s;shutdown=true", pathToDBA, username));
 
         connection =
                 DriverManager.getConnection(
@@ -76,11 +81,20 @@ public class Adb {
                                 "jdbc:derby:%s;user=%s;password=%s",
                                 pathToDBA, username, password));
 
+        isInitialized = false;
+
         System.out.println("DB initialized");
         // System.out.println("Closed connection");
-
-        isInitialized = false;
       }
+
+    } catch (SQLException e) {
+      System.out.println("Connection failed");
+      b = false;
+      System.out.println(b);
+      return;
+    }
+
+    System.out.println(b);
 
     /*    try {
          Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
@@ -361,9 +375,12 @@ public class Adb {
     System.out.println(
         "-------------------------------------Tables checked-------------------------------------");
 
+    System.out.println("Check isInitialized: " + isInitialized);
+
     // Initialize the database and input data
     if (!isInitialized) {
       try {
+        System.out.println("starting insertion");
         LocationDerbyImpl.inputFromCSV("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
         EmployeeDerbyImpl.inputFromCSV("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.csv");
         EquipmentDerbyImpl.inputFromCSV(
@@ -399,6 +416,8 @@ public class Adb {
         FoodDeliveryServiceRequestDerby.populateFromCSV(
             "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/FoodDeliveryServiceRequest.csv");
 
+        System.out.println("insertion complete");
+
       } catch (SQLException
           | IOException
           | ParseException
@@ -411,55 +430,80 @@ public class Adb {
   }
 
   public static void turnOnBuiltInUsers(Connection conn) throws SQLException {
-
-    String setProperty = "CALL SYSCS_UTIL.SYSCS_SET_DATABASE_PROPERTY(";
-    String getProperty = "VALUES SYSCS_UTIL.SYSCS_GET_DATABASE_PROPERTY(";
+    String setProperty =
+            "CALL SYSCS_UTIL.SYSCS_SET_DATABASE_PROPERTY(";
+    String getProperty =
+            "VALUES SYSCS_UTIL.SYSCS_GET_DATABASE_PROPERTY(";
     String requireAuth = "'derby.connection.requireAuthentication'";
-    String defaultConnMode = "'derby.database.defaultConnectionMode'";
+    String sqlAuthorization = "'derby.database.sqlAuthorization'";
+    String defaultConnMode =
+            "'derby.database.defaultConnectionMode'";
     String fullAccessUsers = "'derby.database.fullAccessUsers'";
-    String readOnlyAccessUsers = "'derby.database.readOnlyAccessUsers'";
+    String readOnlyAccessUsers =
+            "'derby.database.readOnlyAccessUsers'";
     String provider = "'derby.authentication.provider'";
     String propertiesOnly = "'derby.database.propertiesOnly'";
 
-    System.out.println("Turning on authentication.");
+    System.out.println(
+            "Turning on authentication and SQL authorization.");
     Statement s = conn.createStatement();
 
-    // Set and confirm requireAuthentication
+    // Set requireAuthentication
     s.executeUpdate(setProperty + requireAuth + ", 'true')");
+    // Set sqlAuthorization
+    s.executeUpdate(setProperty + sqlAuthorization + ", 'true')");
+
+    // Retrieve and display property values
     ResultSet rs = s.executeQuery(getProperty + requireAuth + ")");
     rs.next();
-    System.out.println("Value of requireAuthentication is " + rs.getString(1));
+    System.out.println(
+            "Value of requireAuthentication is " + rs.getString(1));
+
+    rs = s.executeQuery(getProperty + sqlAuthorization + ")");
+    rs.next();
+    System.out.println(
+            "Value of sqlAuthorization is " + rs.getString(1));
 
     // Set authentication scheme to Derby builtin
     s.executeUpdate(setProperty + provider + ", 'BUILTIN')");
 
     // Create some sample users
-    s.executeUpdate(setProperty + "'derby.user.admin', 'admin')");
-    s.executeUpdate(setProperty + "'derby.user.guest', 'guest')");
+    s.executeUpdate(
+            setProperty + "'derby.user.admin', 'admin')");
+    s.executeUpdate(
+            setProperty + "'derby.user.guest', 'guest')");
 
     // Define noAccess as default connection mode
-    s.executeUpdate(setProperty + defaultConnMode + ", 'noAccess')");
+    s.executeUpdate(
+            setProperty + defaultConnMode + ", 'noAccess')");
 
     // Confirm default connection mode
     rs = s.executeQuery(getProperty + defaultConnMode + ")");
     rs.next();
-    System.out.println("Value of defaultConnectionMode is " + rs.getString(1));
+    System.out.println("Value of defaultConnectionMode is " +
+            rs.getString(1));
 
-    // Define read-write user
-    s.executeUpdate(setProperty + fullAccessUsers + ", 'admin')");
+    // Define read-write users
+    s.executeUpdate(
+            setProperty + fullAccessUsers + ", 'admin')");
 
     // Define read-only user
-    s.executeUpdate(setProperty + readOnlyAccessUsers + ", 'guest')");
+    s.executeUpdate(
+            setProperty + readOnlyAccessUsers + ", 'guest')");
+
+    // Therefore, user sa has no access
 
     // Confirm full-access users
     rs = s.executeQuery(getProperty + fullAccessUsers + ")");
     rs.next();
-    System.out.println("Value of fullAccessUsers is " + rs.getString(1));
+    System.out.println(
+            "Value of fullAccessUsers is " + rs.getString(1));
 
     // Confirm read-only users
     rs = s.executeQuery(getProperty + readOnlyAccessUsers + ")");
     rs.next();
-    System.out.println("Value of readOnlyAccessUsers is " + rs.getString(1));
+    System.out.println(
+            "Value of readOnlyAccessUsers is " + rs.getString(1));
 
     // We would set the following property to TRUE only when we were
     // ready to deploy. Setting it to FALSE means that we can always

@@ -11,6 +11,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class LoginCtrl {
   @FXML private Text welcomeBox;
   @FXML private TextField usernameBox;
@@ -78,17 +81,30 @@ public class LoginCtrl {
 
   @FXML
   private void logIn() {
+
     Adb.username = usernameBox.getText();
     Adb.password = passwordBox.getText();
 
-    try {
-      Adb.initialConnection("EmbeddedDriver");
+    Adb.initialConnection("EmbeddedDriver");
+      if(!Adb.isInitialized){
+          try {
+              DriverManager.getConnection(String.format("jdbc:derby:%s;user=%s;shutdown=true", Adb.pathToDBA, Adb.username));
+          } catch (SQLException e) {
+              System.out.println(e);
+          }
+          Adb.initialConnection("EmbeddedDriver");
+      }
 
-      sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
-    } catch (Exception e) {
-      warningText.setFill(Color.RED);
+    if (Adb.b) {
+        try {
+            sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }else{
+        warningText.setFill(Color.RED);
 
-      passwordBox.setText("");
+        passwordBox.setText("");
     }
   }
 
