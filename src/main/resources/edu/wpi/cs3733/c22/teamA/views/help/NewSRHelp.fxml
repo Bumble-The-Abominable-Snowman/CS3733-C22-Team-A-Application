@@ -16,8 +16,8 @@
       <GridPane.margin>
          <Insets top="100.0" />
       </GridPane.margin></Label>
-   <Label fx:id="paragraphBodyLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="310.0" layoutY="10.0" prefHeight="312.0" prefWidth="300.0" styleClass="bodyFormat" text="help text hee hee" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+   <Label fx:id="paragraphBodyLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="310.0" layoutY="10.0" prefHeight="312.0" prefWidth="300.0" styleClass="bodyFormat" text="To create a service request, first select one of the twelve service request options. Second, fill out the required fields. Press the ‘Clear All Fields’ button to reset all fields to their default. When satisfied with the inputted fields, press the ‘Submit’ button to submit the request. Submitted requests can be viewed on the ‘View Service Requests’ page." textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
       <GridPane.margin>
-         <Insets bottom="200.0" />
+         <Insets bottom="100.0" />
       </GridPane.margin></Label>
 </GridPane>
