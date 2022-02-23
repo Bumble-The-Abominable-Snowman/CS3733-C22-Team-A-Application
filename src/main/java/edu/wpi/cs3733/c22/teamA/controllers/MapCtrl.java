@@ -7,6 +7,8 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.map.*;
@@ -52,6 +54,7 @@ public class MapCtrl extends MasterCtrl {
 
   private LocationDAO locationDAO;
   private EquipmentDAO equipmentDAO;
+  private ServiceRequestDAO SRDAO;
 
   private MapManager mapManager;
   private MarkerManager markerManager;
@@ -75,6 +78,7 @@ public class MapCtrl extends MasterCtrl {
 
     locationDAO = new LocationDerbyImpl();
     equipmentDAO = new EquipmentDerbyImpl();
+    //SRDAO = new ServiceRequestDerbyImpl();
   }
 
   /* Floor Combo Box */
