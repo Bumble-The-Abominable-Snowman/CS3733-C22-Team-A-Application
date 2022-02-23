@@ -879,33 +879,32 @@ public class DataViewCtrl extends MasterCtrl {
                       } else if (field.getValue().equals("CurrentLocation")){
                         aField = "current_location";
                       }
-                      LocationDAO locationDAO = new LocationDerbyImpl();
-                      List<Location> aList = locationDAO.getNodeList();
-                      Location theL = new Location();
-                      for (Location aL: aList){
-                        if(value.getText().equals(aL.getNodeID())){
-                          theL = aL;
-                          break;
+                      if (aField == "current_location") {
+                        LocationDAO locationDAO = new LocationDerbyImpl();
+                        List<Location> aList = locationDAO.getNodeList();
+                        Location theL = new Location();
+                        for (Location aL : aList) {
+                          if (value.getText().equals(aL.getNodeID())) {
+                            theL = aL;
+                            break;
+                          }
                         }
-                      }
-                      if(theL.getNodeID() == null){
-                        System.out.println("Location does not exist");
-                        updateButton.setTextFill(Color.RED);
-                        return;
-                      }
-                      if(!(theL.getNodeType().equals("STOR")) && !(theL.getNodeType().equals("PATI"))){
-                        System.out.println("THIS EQUIPMENT CANNOT BE STORED HERE");
-                        updateButton.setTextFill(Color.RED);
-                        return;
+                        if (theL.getNodeID() == null) {
+                          System.out.println("Location does not exist");
+                          updateButton.setTextFill(Color.RED);
+                          return;
+                        }
+                        if (!(theL.getNodeType().equals("STOR")) && !(theL.getNodeType().equals("PATI"))) {
+                          System.out.println("THIS EQUIPMENT CANNOT BE STORED HERE");
+                          updateButton.setTextFill(Color.RED);
+                          return;
+                        }
                       }
                       equipmentDerby.updateMedicalEquipment(
                           eq.getEquipmentID(), aField, value.getText());
                       updateButton.setTextFill(Color.GREEN);
-                      try {
-                        this.initializeRequestsTable();
-                      } catch (SQLException | InvocationTargetException | IllegalAccessException ex) {
-                        ex.printStackTrace();
-                      }
+                        System.out.println("B4 initialize");
+                        this.initializeEquipmentTable();
                     } catch (Exception ex) {
                       ex.printStackTrace();
                       updateButton.setTextFill(Color.RED);
