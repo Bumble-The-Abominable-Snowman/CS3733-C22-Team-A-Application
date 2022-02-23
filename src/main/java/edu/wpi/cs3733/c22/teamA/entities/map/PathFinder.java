@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.entities.map;
 
+import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
@@ -12,27 +13,33 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 public class PathFinder {
-  List<Location> locations;
-  Map<Location, HashSet<Edge>> neighborMap;
-  String path;
+  private List<Location> locations;
+  private Map<Location, HashSet<Edge>> neighborMap;
+  private List<Line> pfLine;
+  private String path;
+  private MarkerManager markerManager;
 
-  public PathFinder(String path) {
-    // "db/CSVs/AllEdgesHand.csv"
+  private JFXComboBox fromBox;
+  private JFXComboBox toBox;
+
+  public PathFinder(String path, JFXComboBox fromBox, JFXComboBox toBox, MarkerManager markerManager) {
     locations = new LocationDerbyImpl().getNodeList();
+    pfLine = new ArrayList<>();
     this.path = path;
     this.neighborMap = getEdges();
+    this.fromBox = fromBox;
+    this.toBox = toBox;
+    this.markerManager = markerManager;
   }
 
-  public List<Location> findPath(
-      String shortNameFrom, String shortNameTo, Map<Location, HashSet<Edge>> neighborMap)
-      throws IOException, ParseException {
+  public List<Location> findPath() {
     Location start = null;
     Location end = null;
     for (Location l : locations) {
-      if (l.getShortName().equals(shortNameFrom)) {
+      if (l.getShortName().equals(fromBox.getSelectionModel().getSelectedItem())) {
         start = l;
       }
-      if (l.getShortName().equals(shortNameTo)) {
+      if (l.getShortName().equals(toBox.getSelectionModel().getSelectedItem())) {
         end = l;
       }
       if (start != null && end != null) {
@@ -46,7 +53,7 @@ public class PathFinder {
     return path;
   }
 
-  public Map<Location, HashSet<Edge>> getEdges() {
+  private Map<Location, HashSet<Edge>> getEdges() {
     HashMap<String, Location> map = new HashMap<>();
     HashMap<Location, HashSet<Edge>> resultMap = new HashMap<>();
 
@@ -70,6 +77,7 @@ public class PathFinder {
       String edge2 = "";
       boolean isTaxiCab = false;
       boolean isTop = false;
+      boolean isFloorCross = false;
 
       while (dataScanner.hasNext()) {
 
@@ -78,6 +86,7 @@ public class PathFinder {
         else if (dataIndex == 1) edge2 = data;
         else if (dataIndex == 2) isTaxiCab = data.equals("TRUE") ? true : false;
         else if (dataIndex == 3) isTop = (isTaxiCab && data.equals("TRUE")) ? true : false;
+        else if (dataIndex == 4) isFloorCross = data.equals("TRUE") ? true : false;
         else System.out.println("Invalid data, I broke::" + data);
         dataIndex++;
       }
@@ -87,15 +96,15 @@ public class PathFinder {
         continue;
       }
 
-      resultMap.get(map.get(edge1)).add(new Edge(map.get(edge1), map.get(edge2), isTaxiCab, isTop));
-      resultMap.get(map.get(edge2)).add(new Edge(map.get(edge2), map.get(edge1), isTaxiCab, isTop));
+      resultMap.get(map.get(edge1)).add(new Edge(map.get(edge1), map.get(edge2), isTaxiCab, isTop, isFloorCross));
+      resultMap.get(map.get(edge2)).add(new Edge(map.get(edge2), map.get(edge1), isTaxiCab, isTop, isFloorCross));
     }
 
     lineScanner.close();
     return resultMap;
   }
 
-  public HashMap<Location, Integer> dijkstra(
+  private HashMap<Location, Integer> dijkstra(
       List<Location> allLocations, Location here, Map<Location, HashSet<Edge>> neighborMap) {
 
     HashMap<Location, Integer> minDistances = new HashMap<>();
@@ -122,7 +131,7 @@ public class PathFinder {
     return minDistances;
   }
 
-  public List<Location> getPath(
+  private List<Location> getPath(
       Location end, Map<Location, HashSet<Edge>> neighborMap, Map<Location, Integer> minDistances) {
     List<Location> path = new ArrayList<>();
     int lowestDist = Integer.MAX_VALUE;
@@ -137,10 +146,11 @@ public class PathFinder {
         }
       }
     }
+    path.add(current);
     return path;
   }
 
-  public void drawPath(List<Location> path, AnchorPane miniAnchorPane, List<Line> pfLine) {
+  public void drawPath(List<Location> path, AnchorPane miniAnchorPane) {
     Location prev = path.get(0);
     int offsetX = 4;
     int offsetY = 6;
@@ -160,10 +170,20 @@ public class PathFinder {
     }
   }
 
-  public void clearPath(List<Line> pfLine, AnchorPane miniAnchorPane) {
+  public void clearPath(AnchorPane miniAnchorPane) {
     for (Line line : pfLine) {
       miniAnchorPane.getChildren().remove(line);
     }
     pfLine.clear();
+  }
+
+  public void updateComboBoxes() {
+    fromBox.getItems().clear();
+    toBox.getItems().clear();
+    List<Location> floorLocations = markerManager.returnFloorLocations();
+    for (Location l : floorLocations) {
+      fromBox.getItems().add(l.getShortName());
+      toBox.getItems().add(l.getShortName());
+    }
   }
 }
