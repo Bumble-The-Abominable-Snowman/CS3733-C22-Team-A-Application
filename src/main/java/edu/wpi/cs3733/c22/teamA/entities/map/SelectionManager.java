@@ -2,6 +2,8 @@ package edu.wpi.cs3733.c22.teamA.entities.map;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
@@ -28,12 +30,22 @@ public class SelectionManager {
   private JFXButton clearButton;
   private JFXButton deleteButton;
 
-  public SelectionManager(VBox inputVBox) {
+  private MarkerManager markerManager;
+  private CheckBoxManager checkBoxManager;
+  private GesturePaneManager gesturePaneManager;
+
+  private LocationDAO locationDatabase;
+
+  private LocationMarker selectedLocation;
+
+  public SelectionManager(VBox inputVBox, MarkerManager markerManager) {
     this.inputVBox = inputVBox;
+    this.markerManager = markerManager;
     inputVBox.setDisable(true);
     instantiateButtons();
     fillBoxes();
 
+    locationDatabase = new LocationDerbyImpl();
     currentList = new ArrayList<>();
   }
 
@@ -51,7 +63,7 @@ public class SelectionManager {
         new EventHandler<ActionEvent>() {
           @Override
           public void handle(ActionEvent e) {
-            save();
+            save(selectedLocation);
           }
         });
     clearButton = new JFXButton("Clear");
@@ -67,7 +79,7 @@ public class SelectionManager {
         new EventHandler<ActionEvent>() {
           @Override
           public void handle(ActionEvent e) {
-            delete();
+            delete(selectedLocation);
           }
         });
   }
@@ -123,17 +135,12 @@ public class SelectionManager {
             comments);
   }
 
-  // Sets up UI states of text areas, and buttons
-  public void setInitialUIStates() {
-    editButton.setDisable(true);
-    saveButton.setDisable(true);
-    clearButton.setDisable(true);
-    deleteButton.setDisable(true);
-    inputVBox.setDisable(true);
+  public void clearVBox() {
+    inputVBox.getChildren().clear();
   }
 
   public void locationVBox() {
-    inputVBox.getChildren().clear();
+    clearVBox();
     for (int i = 0; i < locationFields.size(); i++) {
       inputVBox.getChildren().add(locationFields.get(i).label);
       inputVBox.getChildren().add(locationFields.get(i).textArea);
@@ -143,10 +150,11 @@ public class SelectionManager {
     inputVBox.getChildren().add(clearButton);
     inputVBox.getChildren().add(saveButton);
     inputVBox.getChildren().add(deleteButton);
+    inputVBox.toFront();
   }
 
   public void equipmentVBox() {
-    inputVBox.getChildren().clear();
+    clearVBox();
     for (int i = 0; i < equipmentFields.size(); i++) {
       inputVBox.getChildren().add(equipmentFields.get(i).label);
       inputVBox.getChildren().add(equipmentFields.get(i).textArea);
@@ -156,10 +164,11 @@ public class SelectionManager {
     inputVBox.getChildren().add(clearButton);
     inputVBox.getChildren().add(saveButton);
     inputVBox.getChildren().add(deleteButton);
+    inputVBox.toFront();
   }
 
   public void srVBox() {
-    inputVBox.getChildren().clear();
+    clearVBox();
     for (int i = 0; i < srFields.size(); i++) {
       inputVBox.getChildren().add(srFields.get(i).label);
       inputVBox.getChildren().add(srFields.get(i).textArea);
@@ -169,17 +178,19 @@ public class SelectionManager {
     inputVBox.getChildren().add(clearButton);
     inputVBox.getChildren().add(saveButton);
     inputVBox.getChildren().add(deleteButton);
+    inputVBox.toFront();
   }
 
   // Selected Location
-  public void existingLocationSelected(Location selectedLocation) {
+  public void existingLocationSelected(LocationMarker selectedLocation) {
     inputVBox.setDisable(false);
     currentList = locationFields;
     locationVBox();
-    List<String> currentFields = selectedLocation.getListForm();
+    List<String> currentFields = selectedLocation.getLocation().getListForm();
     for (int i = 0; i < currentFields.size(); i++) {
       locationFields.get(i).textArea.setText(currentFields.get(i));
     }
+    this.selectedLocation = selectedLocation;
     /*
     if (xPosText.getText() == null || xPosText.getText().equals("")) {
       xPosText.setText(String.valueOf(selectedLocation.getXCoord()));
@@ -232,57 +243,28 @@ public class SelectionManager {
   }
 
   // Delete Location
-  public void delete() {
-    // TODO delete
-    /*
-    locationDAO.deleteLocationNode(nodeIDText.getText());
-    String originalFloorName = floorName;
-    floorSelectionComboBox.setValue("Choose Floor");
-    floorSelectionComboBox.setValue(originalFloorName);
-
-           */
+  public void delete(LocationMarker location) {
+    locationDatabase.deleteLocationNode(location.getLocation().getNodeID());
+    location.setButtonVisibility(false);
+    location.setLabelVisibility(false);
+    clear();
+    markerManager.getLocationMarkers().remove(location);
+    markerManager.midRunDraw();
   }
 
   // Save Changes
-  public void save() {
-    // TODO
-    /*
-    if (newLocationMarker != null && newLocationMarker.getLocation().equals(selectedLocation)) {
-      newLocationMarker.getLocation().setNodeID(nodeIDText.getText());
-      newLocationMarker.getLocation().setXCoord((int) Double.parseDouble(xPosText.getText()));
-      newLocationMarker.getLocation().setYCoord((int) Double.parseDouble(yPosText.getText()));
-      newLocationMarker.getLocation().setFloor(floorText.getText());
-      newLocationMarker.getLocation().setBuilding(buildingText.getText());
-      newLocationMarker.getLocation().setNodeType(typeText.getText());
-      newLocationMarker.getLocation().setLongName(longnameText.getText());
-      newLocationMarker.getLocation().setShortName(shortnameText.getText());
-
-      locationDAO.enterLocationNode(newLocationMarker.getLocation());
-      newLocationMarker = null;
-      clearSubmission();
-      String originalFloorName = floorName;
-      floorSelectionComboBox.setValue("Choose Floor");
-      floorSelectionComboBox.setValue(originalFloorName);
-      System.out.println("here");
-      return;
-    }
-
-    locationDAO.updateLocation(
-        nodeIDText.getText(), "xCoord", (int) Double.parseDouble(xPosText.getText()));
-    locationDAO.updateLocation(
-        nodeIDText.getText(), "yCoord", (int) Double.parseDouble(yPosText.getText()));
-    locationDAO.updateLocation(nodeIDText.getText(), "floor", floorText.getText());
-    locationDAO.updateLocation(nodeIDText.getText(), "building", buildingText.getText());
-    locationDAO.updateLocation(nodeIDText.getText(), "nodeType", typeText.getText());
-    locationDAO.updateLocation(nodeIDText.getText(), "longName", longnameText.getText());
-    locationDAO.updateLocation(nodeIDText.getText(), "ShortName", shortnameText.getText());
-
-    clearSubmission();
-    String originalFloorName = floorName;
-    floorSelectionComboBox.setValue("Choose Floor");
-    floorSelectionComboBox.setValue(originalFloorName);
-
-     */
+  public void save(LocationMarker location) {
+    String nodeID = locationFields.get(0).textArea.getText();
+    locationDatabase.updateLocation(
+        nodeID, "xCoord", (int) Double.parseDouble(locationFields.get(1).textArea.getText()));
+    locationDatabase.updateLocation(
+        nodeID, "yCoord", (int) Double.parseDouble(locationFields.get(2).textArea.getText()));
+    locationDatabase.updateLocation(nodeID, "floor", locationFields.get(3).textArea.getText());
+    locationDatabase.updateLocation(nodeID, "building", locationFields.get(4).textArea.getText());
+    locationDatabase.updateLocation(nodeID, "node_type", locationFields.get(5).textArea.getText());
+    locationDatabase.updateLocation(nodeID, "long_Name", locationFields.get(6).textArea.getText());
+    locationDatabase.updateLocation(nodeID, "Short_Name", locationFields.get(7).textArea.getText());
+    markerManager.redrawEditedLocation();
   }
   /*
   // Update Medical Equipment / Service Request on Drag Release

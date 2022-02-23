@@ -72,9 +72,14 @@ public class CheckBoxManager {
             });
   }
 
-  public void switchFloor(MarkerManager markerManager) {
+  public void switchFloor(MarkerManager markerManager, boolean sideView) {
     initCheckBoxInfo(markerManager);
-    setIntitialUIState();
+    initialUIStates();
+    equipmentCheckBox.setDisable(sideView);
+    locationCheckBox.setDisable(sideView);
+    serviceRequestCheckBox.setDisable(sideView);
+    showTextCheckBox.setDisable(sideView);
+    dragCheckBox.setDisable(sideView);
   }
 
   public void initCheckBoxInfo(MarkerManager markerManager) {
@@ -83,12 +88,12 @@ public class CheckBoxManager {
     this.serviceRequestMarkers = markerManager.getServiceRequestMarkers();
   }
 
-  public void setIntitialUIState() {
-    dragCheckBox.setSelected(true);
-    showTextCheckBox.setSelected(true);
+  public void initialUIStates() {
     equipmentCheckBox.setSelected(true);
-    serviceRequestCheckBox.setSelected(true);
     locationCheckBox.setSelected(true);
+    serviceRequestCheckBox.setSelected(true);
+    showTextCheckBox.setSelected(true);
+    dragCheckBox.setSelected(true);
   }
 
   public void showServiceRequests(boolean value) {
