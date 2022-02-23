@@ -1,11 +1,20 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXButton;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
+import java.util.List;
+
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
+import teamA_API.Main;
+import teamA_API.exceptions.ServiceException;
 
 public class SelectServiceRequestCtrl extends MasterCtrl {
 
@@ -21,7 +30,8 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
   @FXML private JFXButton consultationButton;
   @FXML private JFXButton maintenanceButton;
   @FXML private JFXButton giftDeliveryButton;
-  @FXML private JFXButton APIButton;
+  @FXML private JFXButton loadAPIButton;
+  @FXML private JFXButton saveAPIButton;
 
   double stageWidth;
   double equipmentDeliveryTextSize;
@@ -36,7 +46,8 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
   double consultationTextSize;
   double maintenanceTextSize;
   double giftDeliveryTextSize;
-  double APIButtonTextSize;
+  double loadAPIButtonTextSize;
+  double saveAPIButtonTextSize;
 
   @FXML
   private void initialize() {
@@ -55,7 +66,8 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
     consultationTextSize = consultationButton.getFont().getSize();
     maintenanceTextSize = maintenanceButton.getFont().getSize();
     giftDeliveryTextSize = giftDeliveryButton.getFont().getSize();
-    APIButtonTextSize = APIButton.getFont().getSize();
+    loadAPIButtonTextSize = loadAPIButton.getFont().getSize();
+    saveAPIButtonTextSize = saveAPIButton.getFont().getSize();
 
     updateSize();
 
@@ -132,9 +144,27 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
   }
 
   @FXML
-  private void runAPI() throws IOException {
+  private void loadAPI() throws ServiceException, IOException {
+    Main.run(500, 200, 960, 600, "", "N/A");
+  }
 
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
+  @FXML
+  private void saveAPI() throws IllegalAccessException, SQLException, InvocationTargetException {
+    List<teamA_API.entities.SR> list = Main.getRequestList();
+    ServiceRequestDAO data = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
+    for (teamA_API.entities.SR req : list) {
+      SR sr = new SR(SR.SRType.SANITATION);
+      sr.setFieldByString("request_id", req.getFields_string().get("request_id"));
+      sr.setFieldByString("start_location", "N/A");
+      sr.setFieldByString("end_location", req.getFields_string().get("end_location"));
+      sr.setFieldByString("employee_requested", "001");
+      sr.setFieldByString("employee_assigned", req.getFields_string().get("employee_assigned"));
+      sr.setFieldByString("comments", req.getFields_string().get("comments"));
+      sr.setFieldByString("sanitation_type", req.getFields_string().get("sanitation_type"));
+
+      System.out.println(sr);
+      data.enterServiceRequest(sr);
+    }
   }
 
   @FXML
@@ -165,6 +195,7 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
         "-fx-font-size: " + ((stageWidth / 1000) * maintenanceTextSize) + "pt;");
     giftDeliveryButton.setStyle(
         "-fx-font-size: " + ((stageWidth / 1000) * giftDeliveryTextSize) + "pt;");
-    APIButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * APIButtonTextSize) + "pt;");
+    loadAPIButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * loadAPIButtonTextSize) + "pt;");
+    saveAPIButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * saveAPIButtonTextSize) + "pt;");
   }
 }

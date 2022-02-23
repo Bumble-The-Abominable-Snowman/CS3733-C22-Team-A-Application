@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 
 public class DefaultTest {
 
-  @Test
+  /**@Test
   public void medicineTest() throws IOException {
     Adb.initialConnection("EmbeddedDriver");
 
@@ -103,12 +103,12 @@ public class DefaultTest {
       System.out.printf("Key: %s\tValue: %s\n", key, srStringFields.get(key));
     }
 
-    EmployeeDerbyImpl.inputFromCSV("/Users/yasaridikut/IdeaProjects/CS3733-C22-Team-A-Application/src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.CSV");
+    EmployeeDerbyImpl.inputFromCSV("/Users/Brendan/IdeaProjects/CS3733-C22-Team-A-Application/src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.CSV");
 
-    LocationDerbyImpl.inputFromCSV("/Users/yasaridikut/IdeaProjects/CS3733-C22-Team-A-Application/src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
+    LocationDerbyImpl.inputFromCSV("/Users/Brendan/IdeaProjects/CS3733-C22-Team-A-Application/src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
 
     ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.EQUIPMENT);
-    serviceRequestDerby.populateFromCSV("/Users/yasaridikut/IdeaProjects/CS3733-C22-Team-A-Application/src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipmentServiceRequest.CSV");
+    serviceRequestDerby.populateFromCSV("/Users/Brendan/IdeaProjects/CS3733-C22-Team-A-Application/src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipmentServiceRequest.CSV");
     List<SR> srArrayList = serviceRequestDerby.getServiceRequestList();
     for (SR sr_item: srArrayList) {
       System.out.println(sr_item);
@@ -116,7 +116,7 @@ public class DefaultTest {
         System.out.printf("Key: %s\tValue: %s\n", key, sr_item.getFields().get(key));
       }
     }
-  }
+  }*/
   //    Connection connection = null;
   //    Adb.initialConnection("EmbeddedDriver");
   //

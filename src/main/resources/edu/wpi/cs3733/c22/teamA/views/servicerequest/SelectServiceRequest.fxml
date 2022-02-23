@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -190,5 +191,13 @@
          <Font size="18.0" />
       </font>
    </Label>
-   <JFXButton fx:id="APIButton" buttonType="RAISED" mnemonicParsing="false" onAction="#runAPI" styleClass="bodyFormat" text="Load External SR" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+   <JFXButton fx:id="loadAPIButton" buttonType="RAISED" mnemonicParsing="false" onAction="#loadAPI" styleClass="bodyFormat" text="Load SR API" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+      <GridPane.margin>
+         <Insets right="25.0" />
+      </GridPane.margin></JFXButton>
+   <JFXButton fx:id="saveAPIButton" buttonType="RAISED" mnemonicParsing="false" onAction="#saveAPI" styleClass="bodyFormat" text="Save SR API" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
+      <GridPane.margin>
+         <Insets left="25.0" />
+      </GridPane.margin>
+   </JFXButton>
 </GridPane>
