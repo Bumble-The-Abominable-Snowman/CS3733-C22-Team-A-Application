@@ -65,7 +65,6 @@ public class MarkerManager {
       SelectionManager selectionManager,
       CheckBoxManager checkBoxManager,
       GesturePaneManager gesturePaneManager) {
-    clear();
     getFloorInfo(floor);
     createFloorEntities(selectionManager, checkBoxManager, gesturePaneManager);
     initialDraw();
@@ -73,7 +72,8 @@ public class MarkerManager {
     this.mapLayoutY = mapLayoutY;
   }
 
-  private void getFloorInfo(String floor) {
+  public void getFloorInfo(String floor) {
+    clear();
     getFloorLocations(floor);
     getEquipmentLocations();
     getSRLocations();
@@ -102,6 +102,14 @@ public class MarkerManager {
         floorSRs.add(sr);
       }
     }
+  }
+
+  public List<SR> returnSRLocations() {
+    return floorSRs;
+  }
+
+  public List<Equipment> returnEquipmentLocations() {
+    return floorEquipment;
   }
 
   private void createFloorEntities(

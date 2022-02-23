@@ -85,10 +85,15 @@ public class MapCtrl extends MasterCtrl {
     gesturePaneManager = new GesturePaneManager(gesturePane, anchorPane, mapImageView);
     selectionManager = new SelectionManager(inputVBox);
     searcher = new Searcher(searchComboBox);
-    sideView = new SideView(anchorPane, gesturePaneManager, mapImageView);
+    sideView = new SideView(anchorPane, mapImageView, markerManager);
     mapManager =
         new MapManager(
-            markerManager, checkBoxManager, gesturePaneManager, selectionManager, searcher);
+            markerManager,
+            checkBoxManager,
+            gesturePaneManager,
+            selectionManager,
+            searcher,
+            sideView);
 
     mapManager.init();
     sideView.init();

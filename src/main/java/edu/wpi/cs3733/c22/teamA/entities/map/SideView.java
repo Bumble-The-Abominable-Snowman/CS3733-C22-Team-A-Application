@@ -1,84 +1,90 @@
 package edu.wpi.cs3733.c22.teamA.entities.map;
 
 import com.jfoenix.controls.JFXButton;
+import edu.wpi.cs3733.c22.teamA.entities.Equipment;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 public class SideView {
 
-  private List<JFXButton> buttons = new ArrayList<>();
-  private GesturePaneManager gestureManager;
+  private List<JFXButton> buttons;
+  private Label display;
+  private MarkerManager markerManager;
   private AnchorPane anchorPane;
   private ImageView mapImageView;
+  private String[] floorNames = {"3", "2", "1", "L1", "L2"};
 
-  public SideView(
-      AnchorPane anchorPane, GesturePaneManager gestureManager, ImageView mapImageView) {
+  public SideView(AnchorPane anchorPane, ImageView mapImageView, MarkerManager markerManager) {
     this.anchorPane = anchorPane;
-    this.gestureManager = gestureManager;
     this.mapImageView = mapImageView;
+    this.markerManager = markerManager;
   }
 
   public void init() {
+    // Creates side view buttons
+    buttons = new ArrayList<>();
     int initialY = 1028;
     for (int i = 0; i < 5; i++) {
-      double buttonX = 107 + mapImageView.getLayoutX();
       double buttonY = initialY + i * 52 + mapImageView.getLayoutY();
       JFXButton button = new JFXButton();
-      button.setLayoutX(buttonX);
+      button.setLayoutX(107 + mapImageView.getLayoutX());
       button.setLayoutY(buttonY);
       button.setScaleY(button.getScaleY() + .3);
+      int finalI = i;
+      button.setOnMousePressed(e -> buttonClicked(floorNames[finalI]));
       buttons.add(button);
     }
     anchorPane.getChildren().addAll(buttons);
+
+    // Creates side view display label
+    display = new Label();
+    display.setFont(new Font(25));
+    display.setTextAlignment(TextAlignment.CENTER);
+    display.setLayoutX(530 + mapImageView.getLayoutX());
+    display.setLayoutY(25 + mapImageView.getLayoutY());
+    anchorPane.getChildren().add(display);
   }
-  /*
-  private List<Button> sideView = new ArrayList<>();
 
-  public SideView() {}
-
-  public void hideSideView() {
-    for (Button b : sideView) {
-      b.setVisible(false);
+  public void buttonClicked(String floor) {
+    markerManager.getFloorInfo(floor);
+    String displayText = "Service Requests\n";
+    List<SR> requests = markerManager.returnSRLocations();
+    for (SR request : requests) {
+      displayText += request.getRequestID() + ", " + request.getEndLocation() + "\n";
     }
+    if (displayText.equals("Service Requests\n")) displayText += "None\n";
+    displayText += "\n";
+    List<Equipment> equipments = markerManager.returnEquipmentLocations();
+    String clean = "";
+    String dirty = "";
+    for (Equipment equip : equipments) {
+      if (equip.getIsClean())
+        clean += equip.getEquipmentID() + ", " + equip.getCurrentLocation() + "\n";
+      else dirty += equip.getEquipmentID() + ", " + equip.getCurrentLocation() + "\n";
+    }
+    if (clean.equals("")) clean += "None\n";
+    if (dirty.equals("")) dirty += "None\n";
+    displayText += "Clean Equipment\n" + clean + "\nDirty Equipment\n" + dirty;
+    displayText = displayText.substring(0, displayText.length() - 1);
+    display.setText(displayText);
   }
 
-  // Sets up the side view
-  public void showSideView() {
-    String[] floorNames = {"Floor 3", "Floor 2", "Floor 1", "L1", "L2"};
-    int initialY = 1025;
-    for (int i = 0; i < 5; i++) {
-      double buttonX = 116 + mapImageView.getLayoutX();
-      double buttonY = initialY + i * 50 + mapImageView.getLayoutY();
-      Button button = newButton(buttonX, buttonY, 420, 45);
-      sideView.add(button);
-      button.setShape(equipmentMarkerShape);
-      String floor = floorNames[i];
-      int srCount = 0;
-      int dEquipCount = 0;
-      int cEquipCount = 0;
-      for (Location location : locations) {
-        if (location.getFloor().equals(floor.replace("Floor ", ""))) {
-          for (int j = 0; j < serviceRequests.size(); j++) {
-            if (serviceRequests.get(j).getEndLocation().equals(location.getNodeID())) {
-              srCount++;
-            }
-          }
-          for (int j = 0; j < equipments.size(); j++) {
-            if (equipments.get(j).getCurrentLocation().equals(location.getNodeID())) {
-              if (!equipments.get(j).getIsClean()) dEquipCount++;
-              else cEquipCount++;
-            }
-          }
-        }
+  public void toggleVisibility(boolean visible) {
+    if (buttons != null) {
+      for (JFXButton btn : buttons) {
+        btn.setVisible(visible);
       }
-      button.setText(
-          "Reqs: " + srCount + " | Clean Equip: " + cEquipCount + " | Dirty Equip: " + dEquipCount);
-      button.setOnMousePressed(mouseEvent -> floorSelectionComboBox.setValue(floor));
-      miniAnchorPane.getChildren().add(button);
     }
+    if (display != null) display.setVisible(visible);
   }
 
-   */
+  public void clearLabel() {
+    if (display != null) display.setText("");
+  }
 }
