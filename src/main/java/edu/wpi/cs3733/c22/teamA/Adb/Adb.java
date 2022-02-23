@@ -190,7 +190,7 @@ public class Adb {
       System.out.println(e.getMessage());
     }
 
-    // Check ServiceRequestDerbyImpl table.
+    // Check ServiceRequestDerbyImpl table. if exists
     try {
       stmt.execute(
           "CREATE TABLE ServiceRequest(request_id varchar(25), "
