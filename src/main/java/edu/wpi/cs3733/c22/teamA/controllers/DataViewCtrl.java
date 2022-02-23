@@ -22,6 +22,8 @@ import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -279,6 +281,26 @@ public class DataViewCtrl extends MasterCtrl {
 
     configure();
 
+    selectEmployeeBox
+            .getSelectionModel()
+            .selectedItemProperty()
+            .addListener(
+                    (obs, oldValue, newValue) -> {
+                      if (HomeCtrl.sceneFlag == 4) {
+                        filterEmployees(newValue.toString());
+                      } else if(HomeCtrl.sceneFlag == 1){
+                        try {
+                          filterSRs(newValue.toString());
+                        } catch (SQLException e) {
+                          e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                          e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                          e.printStackTrace();
+                        }
+                      }
+
+                    });
     if (HomeCtrl.sceneFlag == 1) {
       titleLabel.setText("Service Requests");
       initializeRequestsTable();
@@ -298,7 +320,7 @@ public class DataViewCtrl extends MasterCtrl {
 
   @FXML
   public void initializeLocationTable() {
-
+    selectEmployeeBox.setVisible(false);
     List<JFXTreeTableColumn<RecursiveObj, String>> locationColumns = new ArrayList<>();
 
     for (String columnName : this.locationColumnNames) {
@@ -368,6 +390,9 @@ public class DataViewCtrl extends MasterCtrl {
   public void initializeRequestsTable()
       throws SQLException, InvocationTargetException, IllegalAccessException {
 
+    EmployeeDAO employeeDAO = new EmployeeDerbyImpl();
+    selectEmployeeBox.getItems().addAll(employeeDAO.getEmployeeList().stream().map(Employee::getFullName));
+    selectEmployeeBox.setVisible(true);
     List<JFXTreeTableColumn<RecursiveObj, String>> srColumns = new ArrayList<>();
 
     for (String columnName : this.srColumnNames) {
@@ -453,6 +478,7 @@ public class DataViewCtrl extends MasterCtrl {
 
   @FXML
   public void initializeEquipmentTable() {
+    selectEmployeeBox.setVisible(false);
 
     List<JFXTreeTableColumn<RecursiveObj, String>> equipmentColumns = new ArrayList<>();
 
@@ -513,6 +539,11 @@ public class DataViewCtrl extends MasterCtrl {
 
   @FXML
   public void initializeEmployeeTable() {
+
+    EmployeeDAO employeeDAO = new EmployeeDerbyImpl();
+    selectEmployeeBox.getItems().addAll(employeeDAO.getEmployeeList().stream().map(Employee::getFullName).collect(Collectors.toList()));
+    selectEmployeeBox.getItems().addAll("All");
+    selectEmployeeBox.setVisible(true);
 
     List<JFXTreeTableColumn<RecursiveObj, String>> employeeColumns = new ArrayList<>();
 
@@ -585,6 +616,166 @@ public class DataViewCtrl extends MasterCtrl {
     this.setupViewDetailsAndModify();
   }
 
+  private void filterEmployees(String newValue){
+
+    List<JFXTreeTableColumn<RecursiveObj, String>> employeeColumns = new ArrayList<>();
+
+    for (String columnName : this.employeeColumnNames) {
+      JFXTreeTableColumn<RecursiveObj, String> column = new JFXTreeTableColumn<>(columnName);
+      column.setPrefWidth(80);
+      column.setStyle("-fx-alignment: center ;");
+
+      employeeColumns.add(column);
+    }
+
+    employeeColumns
+            .get(0)
+            .setCellValueFactory(
+                    (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                            new SimpleStringProperty(param.getValue().getValue().employee.getEmployeeID()));
+    employeeColumns
+            .get(1)
+            .setCellValueFactory(
+                    (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                            new SimpleStringProperty(param.getValue().getValue().employee.getEmployeeType()));
+    employeeColumns
+            .get(2)
+            .setCellValueFactory(
+                    (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                            new SimpleStringProperty(param.getValue().getValue().employee.getFirstName()));
+    employeeColumns
+            .get(3)
+            .setCellValueFactory(
+                    (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                            new SimpleStringProperty(param.getValue().getValue().employee.getLastName()));
+    employeeColumns
+            .get(4)
+            .setCellValueFactory(
+                    (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                            new SimpleStringProperty(param.getValue().getValue().employee.getEmail()));
+    employeeColumns
+            .get(5)
+            .setCellValueFactory(
+                    (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                            new SimpleStringProperty(param.getValue().getValue().employee.getPhoneNum()));
+    employeeColumns
+            .get(6)
+            .setCellValueFactory(
+                    (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                            new SimpleStringProperty(param.getValue().getValue().employee.getAddress()));
+    employeeColumns
+            .get(7)
+            .setCellValueFactory(
+                    (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                            new SimpleStringProperty(
+                                    param.getValue().getValue().employee.getStartDate().toString()));
+
+
+    // Grab location / equipment from database, these are dummies
+    EmployeeDAO employeeBase = new EmployeeDerbyImpl();
+    this.empList = employeeBase.getEmployeeList();
+    ObservableList<RecursiveObj> employees = FXCollections.observableArrayList();
+    for (Employee anEmployee : this.empList) {
+      if(anEmployee.getFullName().equals(newValue) || newValue.equals("All")) {
+        RecursiveObj recursiveEmployee = new RecursiveObj();
+        recursiveEmployee.employee = anEmployee;
+        employees.add(recursiveEmployee);
+      }
+    }
+
+    final TreeItem<RecursiveObj> root =
+            new RecursiveTreeItem<>(employees, RecursiveTreeObject::getChildren);
+    table.getColumns().setAll(employeeColumns);
+    table.setRoot(root);
+
+    this.setupViewDetailsAndModify();
+  }
+
+  private void filterSRs(String newValue) throws SQLException, InvocationTargetException, IllegalAccessException {
+    List<JFXTreeTableColumn<RecursiveObj, String>> srColumns = new ArrayList<>();
+
+    for (String columnName : this.srColumnNames) {
+      JFXTreeTableColumn<RecursiveObj, String> column = new JFXTreeTableColumn<>(columnName);
+      column.setPrefWidth(80);
+      column.setStyle("-fx-alignment: center ;");
+
+      srColumns.add(column);
+    }
+
+    srColumns
+            .get(0)
+            .setCellValueFactory(
+                    (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                            new SimpleStringProperty(param.getValue().getValue().sr.getFields().get("sr_type").toString()));
+    srColumns
+            .get(1)
+            .setCellValueFactory(
+                    (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                            new SimpleStringProperty(param.getValue().getValue().sr.getFields().get("request_id").toString()));
+    srColumns
+            .get(2)
+            .setCellValueFactory(
+                    (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                            new SimpleStringProperty(param.getValue().getValue().locStart.getShortName()));
+    srColumns
+            .get(3)
+            .setCellValueFactory(
+                    (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                            new SimpleStringProperty(param.getValue().getValue().locEnd.getShortName()));
+    srColumns
+            .get(4)
+            .setCellValueFactory(
+                    (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                            new SimpleStringProperty(param.getValue().getValue().employeeReq.getFullName()));
+    srColumns
+            .get(5)
+            .setCellValueFactory(
+                    (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                            new SimpleStringProperty(param.getValue().getValue().employeeAss.getFullName()));
+    srColumns
+            .get(6)
+            .setCellValueFactory(
+                    (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                            new SimpleStringProperty(param.getValue().getValue().sr.getFields().get("request_time").toString()));
+    srColumns
+            .get(7)
+            .setCellValueFactory(
+                    (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                            new SimpleStringProperty(param.getValue().getValue().sr.getFields().get("request_status").toString()));
+    srColumns
+            .get(8)
+            .setCellValueFactory(
+                    (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                            new SimpleStringProperty(param.getValue().getValue().sr.getFields().get("request_priority").toString()));
+    srColumns
+            .get(9)
+            .setCellValueFactory(
+                    (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
+                            new SimpleStringProperty(param.getValue().getValue().sr.getFields().get("comments").toString()));
+
+    this.srList = ServiceRequestDerbyImpl.getAllServiceRequestList();
+    ObservableList<RecursiveObj> requests = FXCollections.observableArrayList();
+    for (SR sr : this.srList) {
+      RecursiveObj recursiveSR = new RecursiveObj();
+      recursiveSR.sr = sr;
+      recursiveSR.locStart = (Location) sr.getFields().get("start_location");
+      recursiveSR.locEnd = (Location) sr.getFields().get("end_location");
+      recursiveSR.employeeReq = (Employee) sr.getFields().get("employee_requested");
+      recursiveSR.employeeAss = (Employee) sr.getFields().get("employee_assigned");
+      if(newValue.equals(recursiveSR.employeeReq.getFullName()) || newValue.equals(recursiveSR.employeeAss.getFullName()) || newValue.equals("All")) {
+        requests.add(recursiveSR);
+      }
+    }
+    // Sets up the table and puts the equipment data under the columns
+    final TreeItem<RecursiveObj> root =
+            new RecursiveTreeItem<>(requests, RecursiveTreeObject::getChildren);
+
+    table.getColumns().setAll(srColumns);
+    table.setRoot(root);
+
+    this.setupViewDetailsAndModify();
+  }
+
   @FXML
   private void createDetailsPopup() throws InvocationTargetException, IllegalAccessException {
     DataViewCtrl.detailsPopup.get().hide();
@@ -636,6 +827,7 @@ public class DataViewCtrl extends MasterCtrl {
     p.getContent().add(content);
 
     DataViewCtrl.detailsPopup.set(p);
+
   }
 
   @FXML
@@ -1008,9 +1200,6 @@ public class DataViewCtrl extends MasterCtrl {
 
   @FXML
   void clear() {}
-
-  @FXML
-  private void employeeFilter() throws IOException {}
 
   protected void onSceneSwitch() {
     DataViewCtrl.detailsPopup.get().hide();

@@ -40,6 +40,13 @@ public abstract class MasterCtrl {
   public static int sceneFlag = 0;
   public static List<Integer> sceneFlags = new ArrayList<Integer>();
 
+  public enum ACCOUNT {
+    ADMIN,
+    STAFF,
+  }
+
+  public ACCOUNT account;
+
   double selectSRButtonSize;
   double mapButtonSize;
   double viewSRButtonSize;
@@ -59,6 +66,22 @@ public abstract class MasterCtrl {
   boolean animating = false;
 
   public void configure() {
+
+if (account == ACCOUNT.STAFF) {
+
+  selectSRButton.setVisible(false);
+  mapButton.setVisible(true);
+  viewSRButton.setVisible(true);
+  viewEmployeesButton.setVisible(false);
+  viewLocationsButton.setVisible(true);
+  viewEquipmentButton.setVisible(true);
+  settingsButton.setVisible(false);
+  exitButton.setVisible(true);
+  loginButton.setVisible(true);
+  aboutButton.setVisible(true);
+  homeButton.setVisible(true);
+
+}
 
     selectSRButtonSize = selectSRButton.getFont().getSize();
     mapButtonSize = mapButton.getFont().getSize();
@@ -163,6 +186,7 @@ public abstract class MasterCtrl {
     sceneFlag = 1;
     sceneFlags.add(sceneFlag);
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
+
   }
 
   @FXML
