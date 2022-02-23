@@ -6,7 +6,7 @@ import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.ConsultationSR;
+//import edu.wpi.cs3733.c22.teamA.entities.servicerequests.ConsultationSR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -95,21 +95,21 @@ public class ConsultationSRCtrl extends SRCtrl {
       int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
       Location toLocationSelected = this.locationList.get(locationIndex);
 
-      ConsultationSR consultationSR =
-          new ConsultationSR(
-              "ConsultationSRID",
-              "N/A",
-              toLocationSelected.getNodeID(),
-              "001",
-              employeeSelected.getEmployeeID(),
-              new Timestamp((new Date()).getTime()),
-              SR.Status.BLANK,
-              SR.Priority.REGULAR,
-              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText());
+      //ConsultationSR consultationSR =
+        //  new ConsultationSR(
+          //    "ConsultationSRID",
+            //  "N/A",
+              //toLocationSelected.getNodeID(),
+              //"001",
+              //employeeSelected.getEmployeeID(),
+              //new Timestamp((new Date()).getTime()),
+              //SR.Status.BLANK,
+              //SR.Priority.REGULAR,
+              //commentsBox.getText().equals("") ? "N/A" : commentsBox.getText());
 
-      ServiceRequestDerbyImpl<ConsultationSR> serviceRequestDAO =
-          new ServiceRequestDerbyImpl<>(new ConsultationSR());
-      serviceRequestDAO.enterServiceRequest(consultationSR);
+     // ServiceRequestDerbyImpl<ConsultationSR> serviceRequestDAO =
+      //    new ServiceRequestDerbyImpl<>(new ConsultationSR());
+     // serviceRequestDAO.enterServiceRequest(consultationSR);
     }
   }
 }

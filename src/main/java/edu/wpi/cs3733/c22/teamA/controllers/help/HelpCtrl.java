@@ -1,15 +1,24 @@
-package edu.wpi.cs3733.c22.teamA.controllers;
+package edu.wpi.cs3733.c22.teamA.controllers.help;
 
 import com.jfoenix.controls.JFXButton;
 import edu.wpi.cs3733.c22.teamA.App;
+import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
+import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+import java.io.IOException;
+
 public class HelpCtrl extends MasterCtrl {
   @FXML private JFXButton bumbleButton;
+  @FXML private JFXButton bumbleXButton;
+  @FXML private JFXButton newSRHelpButton;
+  @FXML private JFXButton mapHelpButton;
+  @FXML private JFXButton viewDataHelpButton;
+  @FXML private JFXButton settingsHelpButton;
   @FXML private ImageView speechBubble;
   @FXML private Label bubbleText;
   @FXML private ImageView frame1;
@@ -22,6 +31,13 @@ public class HelpCtrl extends MasterCtrl {
   private void initialize() {
 
     double bumbleTextSize = bumbleButton.getFont().getSize();
+    double bumbleXTextSize = bumbleXButton.getFont().getSize();
+    double bubbleTextSize = bubbleText.getFont().getSize();
+    double newSRHelpTextSize = newSRHelpButton.getFont().getSize();
+    double mapHelpTextSize = mapHelpButton.getFont().getSize();
+    double viewDataHelpTextSize = viewDataHelpButton.getFont().getSize();
+    double settingsHelpTextSize = settingsHelpButton.getFont().getSize();
+
     App.getStage()
         .widthProperty()
         .addListener(
@@ -30,16 +46,41 @@ public class HelpCtrl extends MasterCtrl {
                   "-fx-font-size: "
                       + ((App.getStage().getWidth() / 1000) * bumbleTextSize)
                       + "pt;");
+              bumbleXButton.setStyle(
+                      "-fx-font-size: "
+                              + ((App.getStage().getWidth() / 1000) * bumbleXTextSize)
+                              + "pt;");
+              bubbleText.setStyle(
+                      "-fx-font-size: "
+                              + ((App.getStage().getWidth() / 1000) * bubbleTextSize)
+                              + "pt;");
+              newSRHelpButton.setStyle(
+                      "-fx-font-size: "
+                              + ((App.getStage().getWidth() / 1000) * newSRHelpTextSize)
+                              + "pt;");
+              mapHelpButton.setStyle(
+                      "-fx-font-size: "
+                              + ((App.getStage().getWidth() / 1000) * mapHelpTextSize)
+                              + "pt;");
+              viewDataHelpButton.setStyle(
+                      "-fx-font-size: "
+                              + ((App.getStage().getWidth() / 1000) * viewDataHelpTextSize)
+                              + "pt;");
+              settingsHelpButton.setStyle(
+                      "-fx-font-size: "
+                              + ((App.getStage().getWidth() / 1000) * settingsHelpTextSize)
+                              + "pt;");
             });
   }
 
   @FXML
   private void activateBumble() {
     double dur = 0;
+    giveHelp();
+    bumbleButton.setVisible(false);
+    bumbleXButton.setVisible(true);
 
-    for (int i = 0; i < 1000; i++) {
-      speechBubble.setVisible(true);
-      bubbleText.setVisible(true);
+    for(int i = 0; i<5000; i++) {
 
       dur = dur + 100;
       PauseTransition pt = new PauseTransition(Duration.millis(dur));
@@ -114,5 +155,26 @@ public class HelpCtrl extends MasterCtrl {
       pt15.setOnFinished(e -> frame1.setVisible(true));
       pt15.play();
     }
+  }
+
+  @FXML private void giveHelp(){
+    speechBubble.setVisible(true);
+    bubbleText.setVisible(true);
+  }
+
+  @FXML private void goToDataViewHelp() throws IOException {
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW_HELP);
+  }
+
+  @FXML private void goToMapHelp() throws IOException {
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.MAP_HELP);
+  }
+
+  @FXML private void goToNewSRHelp() throws IOException {
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.NEW_SR_HELP);
+  }
+
+  @FXML private void goToSettingsHelp() throws IOException {
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SETTINGS_HELP);
   }
 }

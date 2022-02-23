@@ -30,7 +30,11 @@ public class SceneSwitcher {
     SAVE_BACKUP,
     MAP,
     ABOUT,
-    HELP
+    HELP,
+    NEW_SR_HELP,
+    DATA_VIEW_HELP,
+    MAP_HELP,
+    SETTINGS_HELP
   }
 
   private final HashMap<SCENES, String> screenMap = new HashMap<>();
@@ -45,7 +49,11 @@ public class SceneSwitcher {
     addScene(SCENES.LOAD_BACKUP, "views/settings/LoadBackup.fxml");
     addScene(SCENES.SAVE_BACKUP, "views/settings/SaveBackup.fxml");
     addScene(SCENES.ABOUT, "views/About.fxml");
-    addScene(SCENES.HELP, "views/Help.fxml");
+    addScene(SCENES.HELP, "views/help/Help.fxml");
+    addScene(SCENES.NEW_SR_HELP, "views/help/NewSRHelp.fxml");
+    addScene(SCENES.DATA_VIEW_HELP, "views/help/DataViewHelp.fxml");
+    addScene(SCENES.MAP_HELP, "views/help/MapHelp.fxml");
+    addScene(SCENES.SETTINGS_HELP, "views/help/SettingsHelp.fxml");
 
     // Service Requests
     addScene(SCENES.SELECT_SERVICE_REQUEST, "views/servicerequest/SelectServiceRequest.fxml");
