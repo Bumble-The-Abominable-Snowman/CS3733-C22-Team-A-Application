@@ -118,6 +118,10 @@ public class MarkerManager {
     return floorEquipment;
   }
 
+  public List<Location> returnFloorLocations() {
+        return floorLocations;
+    }
+
   private void createFloorEntities(
       SelectionManager selectionManager,
       CheckBoxManager checkBoxManager,

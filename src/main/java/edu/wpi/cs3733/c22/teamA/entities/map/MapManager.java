@@ -2,6 +2,10 @@ package edu.wpi.cs3733.c22.teamA.entities.map;
 
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 
+import com.jfoenix.controls.JFXButton;
+
+import java.util.List;
+
 // Facade
 public class MapManager {
 
@@ -11,6 +15,7 @@ public class MapManager {
   private SelectionManager selectionManager;
   private Searcher searcher;
   private SideView sideView;
+  private List<JFXButton> buttons;
 
   public MapManager(
       MarkerManager markerManager,
@@ -18,13 +23,15 @@ public class MapManager {
       GesturePaneManager gesturePaneManager,
       SelectionManager selectionManager,
       Searcher searcher,
-      SideView sideView) {
+      SideView sideView,
+      List<JFXButton> buttons) {
     this.markerManager = markerManager;
     this.checkBoxManager = checkBoxManager;
     this.gesturePaneManager = gesturePaneManager;
     this.selectionManager = selectionManager;
     this.searcher = searcher;
     this.sideView = sideView;
+    this.buttons = buttons;
   }
 
   public void init() {
@@ -41,7 +48,13 @@ public class MapManager {
     if (floor.equals("Choose Floor:")) {
       sideView.clearLabel();
       sideView.toggleVisibility(true);
-    } else sideView.toggleVisibility(false);
+      for (JFXButton btn : buttons)
+        btn.setDisable(true);
+    } else {
+      sideView.toggleVisibility(false);
+      for (JFXButton btn : buttons)
+        btn.setDisable(false);
+    }
     markerManager.initFloor(
         gesturePaneManager.getCurrentFloor(),
         mapLayoutX,

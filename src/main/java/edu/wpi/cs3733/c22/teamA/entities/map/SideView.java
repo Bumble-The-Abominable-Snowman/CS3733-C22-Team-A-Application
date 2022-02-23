@@ -1,11 +1,13 @@
 package edu.wpi.cs3733.c22.teamA.entities.map;
 
 import com.jfoenix.controls.JFXButton;
-import edu.wpi.cs3733.c22.teamA.entities.Equipment;
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
+import com.jfoenix.controls.JFXTextArea;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import edu.wpi.cs3733.c22.teamA.entities.Equipment;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -15,7 +17,8 @@ import javafx.scene.text.TextAlignment;
 public class SideView {
 
   private List<JFXButton> buttons;
-  private Label display;
+  private List<JFXTextArea> texts;
+  private Label label;
   private MarkerManager markerManager;
   private AnchorPane anchorPane;
   private ImageView mapImageView;
@@ -44,37 +47,53 @@ public class SideView {
     anchorPane.getChildren().addAll(buttons);
 
     // Creates side view display label
-    display = new Label();
-    display.setFont(new Font(25));
-    display.setTextAlignment(TextAlignment.CENTER);
-    display.setLayoutX(530 + mapImageView.getLayoutX());
-    display.setLayoutY(25 + mapImageView.getLayoutY());
-    anchorPane.getChildren().add(display);
+    label = new Label();
+    label.setFont(new Font(25));
+    label.setTextAlignment(TextAlignment.CENTER);
+    label.setLayoutX(575 + mapImageView.getLayoutX());
+    label.setLayoutY(25 + mapImageView.getLayoutY());
+    anchorPane.getChildren().add(label);
+
+    // Create side view text areas
+    texts = new ArrayList<>();
+    initialY = 65;
+    for (int i = 0; i < 3; i++) {
+      JFXTextArea box = new JFXTextArea();
+      box.setLayoutX(525 + mapImageView.getLayoutX());
+      box.setLayoutY(initialY + 325 * i + mapImageView.getLayoutY());
+      box.setPrefWidth(300);
+      box.setPrefHeight(250);
+      box.setEditable(false);
+      box.setVisible(false);
+      texts.add(box);
+      anchorPane.getChildren().add(box);
+    }
   }
 
   public void buttonClicked(String floor) {
+    label.setText("Service Requests\n\n\n\n\n\n\n\n\nClean Equipment\n\n\n\n\n\n\n\n\nDirty Equipment");
     markerManager.getFloorInfo(floor);
-    String displayText = "Service Requests\n";
-    List<SR> requests = markerManager.returnSRLocations();
-    for (SR request : requests) {
-      HashMap<String, String> data = request.getStringFields();
-      displayText += data.get("request_id") + ", " + data.get("end_location") + "\n";
+    for (int i = 0; i < 3; i++) {
+      String displayText = "";
+      if (i == 0) {
+        List<SR> requests = markerManager.returnSRLocations();
+        for (SR request : requests) {
+          HashMap<String, String> data = request.getStringFields();
+          displayText += data.get("request_id") + ", " + data.get("end_location") + "\n";
+        }
+      }
+      else {
+        List<Equipment> equipments = markerManager.returnEquipmentLocations();
+        for (Equipment equip : equipments) {
+          if ((i == 1 && equip.getIsClean()) || (i == 2 && !equip.getIsClean()))
+            displayText += equip.getEquipmentID() + ", " + equip.getCurrentLocation() + "\n";
+        }
+      }
+      if (displayText.equals("")) displayText += "None\n";
+      displayText = displayText.substring(0, displayText.length() - 1);
+      texts.get(i).setText(displayText);
+      texts.get(i).setVisible(true);
     }
-    if (displayText.equals("Service Requests\n")) displayText += "None\n";
-    displayText += "\n";
-    List<Equipment> equipments = markerManager.returnEquipmentLocations();
-    String clean = "";
-    String dirty = "";
-    for (Equipment equip : equipments) {
-      if (equip.getIsClean())
-        clean += equip.getEquipmentID() + ", " + equip.getCurrentLocation() + "\n";
-      else dirty += equip.getEquipmentID() + ", " + equip.getCurrentLocation() + "\n";
-    }
-    if (clean.equals("")) clean += "None\n";
-    if (dirty.equals("")) dirty += "None\n";
-    displayText += "Clean Equipment\n" + clean + "\nDirty Equipment\n" + dirty;
-    displayText = displayText.substring(0, displayText.length() - 1);
-    display.setText(displayText);
   }
 
   public void toggleVisibility(boolean visible) {
@@ -83,10 +102,15 @@ public class SideView {
         btn.setVisible(visible);
       }
     }
-    if (display != null) display.setVisible(visible);
+    if (label != null) label.setVisible(visible);
+    if (texts != null) {
+      for (JFXTextArea box : texts) {
+        box.setVisible(false);
+      }
+    }
   }
 
   public void clearLabel() {
-    if (display != null) display.setText("");
+    if (label != null) label.setText("");
   }
 }
