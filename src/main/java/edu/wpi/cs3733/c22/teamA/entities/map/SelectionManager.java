@@ -22,6 +22,7 @@ public class SelectionManager {
   private List<InfoField> locationFields;
   private List<InfoField> equipmentFields;
   private List<InfoField> srFields;
+  private List<String> srNames;
 
   private List<InfoField> currentList;
 
@@ -133,6 +134,7 @@ public class SelectionManager {
             status,
             priority,
             comments);
+    srNames = List.of("request_id", "start_location", "end_location", "employee_requested", "employee_assigned", "request_time", "request_status", "request_priority", "comments" );
   }
 
   public void clearVBox() {
@@ -220,10 +222,9 @@ public class SelectionManager {
     srVBox();
     HashMap<String, String> currentFields = serviceRequest.getStringFields();
 
-//    TODO: IMPLEMENT THIS
-//    for (int i = 0; i < currentFields.size(); i++) {
-//      srFields.get(i).textArea.setText(currentFields.get(i));
-//    }
+    for (int i = 0; i < srFields.size(); i++) {
+      srFields.get(i).textArea.setText(currentFields.get(srNames.get(i)));
+    }
   }
 
   // Edit
