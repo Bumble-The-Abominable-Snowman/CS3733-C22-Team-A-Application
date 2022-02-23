@@ -21,46 +21,50 @@ public class SaveBackupCtrl extends MasterCtrl {
   @FXML public Text exportFileText;
   @FXML private JFXComboBox<String> TypeCSV;
 
-
-  private double stageWidth;
-  private double saveBackupTextSize;
-  private double fileNameTextSize;
-  private double exportFileTextSize;
-
   @FXML
   public void initialize() {
 
     configure();
 
-    saveBackupTextSize = saveBackupButton.getFont().getSize();
-    fileNameTextSize = fileName.getFont().getSize();
-    exportFileTextSize = exportFileText.getFont().getSize();
-
-    updateSize();
+    double saveBackupTextSize = saveBackupButton.getFont().getSize();
+    double fileNameTextSize = fileName.getFont().getSize();
+    double exportFileTextSize = exportFileText.getFont().getSize();
 
     App.getStage()
-            .widthProperty()
-            .addListener(
-                    (obs, oldVal, newVal) -> {
-                      updateSize();
-                    });
+        .widthProperty()
+        .addListener(
+            (obs, oldVal, newVal) -> {
+              saveBackupButton.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * saveBackupTextSize)
+                      + "pt;");
+              fileName.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * fileNameTextSize)
+                      + "pt;");
+              exportFileText.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * exportFileTextSize)
+                      + "pt;");
+            });
 
     TypeCSV.getItems().removeAll(TypeCSV.getItems());
     TypeCSV.getItems()
-            .addAll(
-                    "TowerLocations",
-                    "Employee",
-                    "MedicalEquipmentServiceRequest",
-                    "FloralDeliveryServiceRequest",
-                    "FoodDeliveryServiceRequest",
-                    "GiftDeliveryServiceRequest",
-                    "LanguageServiceRequest",
-                    "LaundryServiceRequest",
-                    "MaintenanceServiceRequest",
-                    "MedicineDeliveryServiceRequest",
-                    "ReligiousServiceRequest",
-                    "SanitationServiceRequest",
-                    "SecurityServiceRequest");
+        .addAll(
+            "TowerLocations",
+            "Employee",
+            "MedicalEquipment",
+            "MedicalEquipmentServiceRequest",
+            "FloralDeliveryServiceRequest",
+            "FoodDeliveryServiceRequest",
+            "GiftDeliveryServiceRequest",
+            "LanguageServiceRequest",
+            "LaundryServiceRequest",
+            "MaintenanceServiceRequest",
+            "MedicineDeliveryServiceRequest",
+            "ReligiousServiceRequest",
+            "SanitationServiceRequest",
+            "SecurityServiceRequest");
     TypeCSV.setValue("CSV Type");
   }
 
@@ -142,16 +146,4 @@ public class SaveBackupCtrl extends MasterCtrl {
       }
     }
   }
-
-  @FXML
-  private void updateSize() {
-
-    stageWidth = App.getStage().getWidth();
-
-    saveBackupButton.setStyle(
-            "-fx-font-size: " + ((stageWidth / 1000) * saveBackupTextSize) + "pt;");
-    fileName.setStyle("-fx-font-size: " + ((stageWidth / 1000) * fileNameTextSize) + "pt;");
-    exportFileText.setStyle("-fx-font-size: " + ((stageWidth / 1000) * exportFileTextSize) + "pt;");
-  }
-
 }
