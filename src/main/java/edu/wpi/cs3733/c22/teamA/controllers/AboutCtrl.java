@@ -12,4 +12,5 @@ public class AboutCtrl extends MasterCtrl {
     this.onSceneSwitch();
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
   }
+
 }
