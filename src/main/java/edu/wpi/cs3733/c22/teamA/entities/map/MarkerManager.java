@@ -383,11 +383,15 @@ public class MarkerManager {
               break;
             }
           }
-
           if (!isSnapped) {
             button.setLayoutX(nearestLocation.getXCoord());
             button.setLayoutY(nearestLocation.getYCoord() - 24);
           }
+            if (!(nearestLocation.getNodeType().equals("STOR")) && !(nearestLocation.getNodeType().equals("PATI"))){
+                button.setLayoutX(dragDelta.buttonX);
+                button.setLayoutY(dragDelta.buttonY);
+                return;
+            }
           // update label to new location
           Label correspondingLabel = equipmentMarker.getLabel();
           correspondingLabel.setLayoutX(equipmentMarker.getButton().getLayoutX());
