@@ -49,7 +49,7 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
     if (change instanceof String) {
       str =
           String.format(
-              "UPDATE MedicalEquipment SET " + field + " = %s WHERE equipment_id = '%s'",
+              "UPDATE MedicalEquipment SET " + field + " = '%s' WHERE equipment_id = '%s'",
               change,
               ID);
     } else {

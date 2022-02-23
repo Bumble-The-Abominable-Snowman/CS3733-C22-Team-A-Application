@@ -2,10 +2,13 @@ package edu.wpi.cs3733.c22.teamA.entities.map;
 
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
+
+import java.sql.SQLException;
 import java.util.*;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -32,8 +35,11 @@ public class MarkerManager {
   private AnchorPane anchorPane;
 
   // shit to make edit / save work
+    // TODO make service request database work
   String floor;
   LocationDAO locationDAO;
+  EquipmentDAO equipmentDAO;
+  //ServiceRequestDAO SRDAO;
 
   public MarkerManager(LocationDAO locationDAO, EquipmentDAO equipmentDAO, AnchorPane anchorPane) {
     floorLocations = new ArrayList<>();
@@ -46,6 +52,8 @@ public class MarkerManager {
     floorEquipment = new ArrayList<>();
     floorSRs = new ArrayList<>();
     this.locationDAO=locationDAO;
+    this.equipmentDAO=equipmentDAO;
+    //this.SRDAO=SRDAO;
 
     allLocations = locationDAO.getNodeList();
     allEquipments = equipmentDAO.getMedicalEquipmentList();
@@ -200,6 +208,7 @@ public class MarkerManager {
           LocationMarker newLocationMarker = MarkerMaker.makeLocationMarker(newLocation, 10, 10);
           locationMarkers.add(newLocationMarker);
           idToLocationMarker.put("New", newLocationMarker);
+          locationDAO.enterLocationNode(newLocation);
           setDragLocation(newLocationMarker, selectionManager, checkBoxManager, gesturePaneManager);
           midRunDraw();
           selectionManager.existingLocationSelected(newLocationMarker);
@@ -389,13 +398,14 @@ public class MarkerManager {
           correspondingLabel.setLayoutX(equipmentMarker.getButton().getLayoutX());
           correspondingLabel.setLayoutY(equipmentMarker.getButton().getLayoutY() - 24);
           // TODO this function should update database but getting errors
-          /*
+
              try {
-                 updateOnRelease(button);
+                 String equipmentID = equipmentMarker.getEquipment().getEquipmentID();
+                 equipmentDAO.updateMedicalEquipment(equipmentID,"current_location", nearestLocation.getNodeID());
              } catch (SQLException e) {
                  e.printStackTrace();
              }
-          */
+
         });
   }
 
