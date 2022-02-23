@@ -173,7 +173,7 @@ public class Adb {
       System.out.println(e.getMessage());
     }
 
-    // MedicineDosages
+    // MedicineDosages if exists
     try {
       stmt.execute(
           ""
