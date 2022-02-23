@@ -101,11 +101,11 @@ check.dependsOn jacocoTestCoverageVerification
 jacocoTestCoverageVerification.dependsOn jacocoTestReport
 compileJava.dependsOn 'spotlessApply'
 
-spotless {
-    java {
-        googleJavaFormat()
-    }
-}
+//spotless {
+//    java {
+//        googleJavaFormat()
+//    }
+//}
 
 mainClassName = 'edu.wpi.cs3733.c22.teamA.Main'
 

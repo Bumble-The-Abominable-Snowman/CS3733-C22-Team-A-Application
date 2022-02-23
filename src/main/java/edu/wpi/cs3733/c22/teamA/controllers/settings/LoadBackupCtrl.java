@@ -140,68 +140,57 @@ public class LoadBackupCtrl extends MasterCtrl {
 
         switch (TypeCSV.getSelectionModel().getSelectedItem().toString()) {
           case "TowerLocations":
-            LocationDerbyImpl.inputFromCSV("Location", lastSelectedFile);
+            LocationDerbyImpl.inputFromCSV(lastSelectedFile);
             break;
           case "Employee":
-            EmployeeDerbyImpl.inputFromCSV("Employee", lastSelectedFile);
+            EmployeeDerbyImpl.inputFromCSV( lastSelectedFile);
             break;
           case "MedicalEquipment":
             EquipmentDerbyImpl.inputFromCSV("MedicalEquipment", lastSelectedFile);
             break;
           case "MedicalEquipmentServiceRequest":
-            ServiceRequestDerbyImpl<EquipmentSR> equipmentSRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new EquipmentSR());
-            equipmentSRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            ServiceRequestDerbyImpl serviceRequestDerbyEq = new ServiceRequestDerbyImpl(SR.SRType.EQUIPMENT);
+            serviceRequestDerbyEq.populateFromCSV(lastSelectedFile);
             break;
           case "FloralDeliveryServiceRequest":
-            ServiceRequestDerbyImpl<FloralDeliverySR> floralDeliverySRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new FloralDeliverySR());
-            floralDeliverySRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            ServiceRequestDerbyImpl serviceRequestDerbyFloral = new ServiceRequestDerbyImpl(SR.SRType.FLORAL_DELIVERY);
+            serviceRequestDerbyFloral.populateFromCSV(lastSelectedFile);
             break;
           case "FoodDeliveryServiceRequest":
-            ServiceRequestDerbyImpl<FoodDeliverySR> foodDeliverySRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new FoodDeliverySR());
-            foodDeliverySRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            ServiceRequestDerbyImpl serviceRequestDerbyFood = new ServiceRequestDerbyImpl(SR.SRType.FOOD_DELIVERY);
+            serviceRequestDerbyFood.populateFromCSV(lastSelectedFile);
             break;
           case "GiftDeliveryServiceRequest":
-            ServiceRequestDerbyImpl<GiftDeliverySR> giftDeliverySRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new GiftDeliverySR());
-            giftDeliverySRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            ServiceRequestDerbyImpl serviceRequestDerbyGift = new ServiceRequestDerbyImpl(SR.SRType.GIFT_DELIVERY);
+            serviceRequestDerbyGift.populateFromCSV(lastSelectedFile);
             break;
           case "LanguageServiceRequest":
-            ServiceRequestDerbyImpl<LanguageSR> languageSRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new LanguageSR());
-            languageSRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            ServiceRequestDerbyImpl serviceRequestDerbyLanguage = new ServiceRequestDerbyImpl(SR.SRType.LANGUAGE);
+            serviceRequestDerbyLanguage.populateFromCSV(lastSelectedFile);
             break;
           case "LaundryServiceRequest":
-            ServiceRequestDerbyImpl<LaundrySR> laundrySRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new LaundrySR());
-            laundrySRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            ServiceRequestDerbyImpl serviceRequestDerbyLaundry = new ServiceRequestDerbyImpl(SR.SRType.LAUNDRY);
+            serviceRequestDerbyLaundry.populateFromCSV(lastSelectedFile);
             break;
           case "MaintenanceServiceRequest":
-            ServiceRequestDerbyImpl<MaintenanceSR> maintenanceSRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new MaintenanceSR());
-            maintenanceSRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            ServiceRequestDerbyImpl serviceRequestDerbyMaintenance = new ServiceRequestDerbyImpl(SR.SRType.MAINTENANCE);
+            serviceRequestDerbyMaintenance.populateFromCSV(lastSelectedFile);
             break;
           case "MedicineDeliveryServiceRequest":
-            ServiceRequestDerbyImpl<MedicineDeliverySR> medicineDeliverySRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new MedicineDeliverySR());
-            medicineDeliverySRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            ServiceRequestDerbyImpl serviceRequestDerbyMedicine = new ServiceRequestDerbyImpl(SR.SRType.MEDICINE_DELIVERY);
+            serviceRequestDerbyMedicine.populateFromCSV(lastSelectedFile);
             break;
           case "ReligiousServiceRequest":
-            ServiceRequestDerbyImpl<ReligiousSR> religiousSRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new ReligiousSR());
-            religiousSRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            ServiceRequestDerbyImpl serviceRequestDerbyReligious = new ServiceRequestDerbyImpl(SR.SRType.RELIGIOUS);
+            serviceRequestDerbyReligious.populateFromCSV(lastSelectedFile);
             break;
           case "SanitationServiceRequest":
-            ServiceRequestDerbyImpl<SanitationSR> sanitationSRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new SanitationSR());
-            sanitationSRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            ServiceRequestDerbyImpl serviceRequestDerbySanitation = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
+            serviceRequestDerbySanitation.populateFromCSV(lastSelectedFile);
             break;
           case "SecurityServiceRequest":
-            ServiceRequestDerbyImpl<SecuritySR> securitySRServiceRequestDerby =
-                new ServiceRequestDerbyImpl<>(new SecuritySR());
-            securitySRServiceRequestDerby.populateFromCSV(lastSelectedFile);
+            ServiceRequestDerbyImpl serviceRequestDerbySecurity = new ServiceRequestDerbyImpl(SR.SRType.SECURITY);
+            serviceRequestDerbySecurity.populateFromCSV(lastSelectedFile);
             break;
         }
         selectedFileText.setText("Success!");

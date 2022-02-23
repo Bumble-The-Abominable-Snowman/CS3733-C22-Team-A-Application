@@ -8,18 +8,21 @@ public class MapManager {
   private GesturePaneManager gesturePaneManager;
   private SelectionManager selectionManager;
   private Searcher searcher;
+  private SideView sideView;
 
   public MapManager(
       MarkerManager markerManager,
       CheckBoxManager checkBoxManager,
       GesturePaneManager gesturePaneManager,
       SelectionManager selectionManager,
-      Searcher searcher) {
+      Searcher searcher,
+      SideView sideView) {
     this.markerManager = markerManager;
     this.checkBoxManager = checkBoxManager;
     this.gesturePaneManager = gesturePaneManager;
     this.selectionManager = selectionManager;
     this.searcher = searcher;
+    this.sideView = sideView;
   }
 
   public void init() {
@@ -33,6 +36,10 @@ public class MapManager {
   public void initFloor(String floor, int mapLayoutX, int mapLayoutY) {
     gesturePaneManager.setMapFloor(floor);
     // gesturePaneManager.initGesture();
+    if (floor.equals("Choose Floor:")) {
+      sideView.clearLabel();
+      sideView.toggleVisibility(true);
+    } else sideView.toggleVisibility(false);
     markerManager.initFloor(
         gesturePaneManager.getCurrentFloor(),
         mapLayoutX,

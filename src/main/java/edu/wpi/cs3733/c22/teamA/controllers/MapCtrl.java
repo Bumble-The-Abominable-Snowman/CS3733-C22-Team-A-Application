@@ -53,6 +53,7 @@ public class MapCtrl extends MasterCtrl {
   private GesturePaneManager gesturePaneManager;
   private SelectionManager selectionManager;
   private Searcher searcher;
+  private SideView sideView;
 
   public final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
@@ -86,10 +87,17 @@ public class MapCtrl extends MasterCtrl {
     gesturePaneManager = new GesturePaneManager(gesturePane, anchorPane, mapImageView);
     selectionManager = new SelectionManager(inputVBox);
     searcher = new Searcher(searchComboBox);
+    sideView = new SideView(anchorPane, mapImageView, markerManager);
     mapManager =
         new MapManager(
-            markerManager, checkBoxManager, gesturePaneManager, selectionManager, searcher);
+            markerManager,
+            checkBoxManager,
+            gesturePaneManager,
+            selectionManager,
+            searcher,
+            sideView);
     mapManager.init();
+    sideView.init();
   }
 
   private void initFloorSelection() {
