@@ -60,7 +60,7 @@
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/Map%20Icon.png" />
+                              <Image url="@../images/Map Icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -87,7 +87,7 @@
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/Location%20Marker%20Icon.png" />
+                              <Image url="@../images/Location Marker Icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -114,7 +114,7 @@
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/Speech%20Bubble%20Icon.png" />
+                              <Image url="@../images/Speech Bubble Icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -123,7 +123,7 @@
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/Door%20Icon.png" />
+                              <Image url="@../images/Door Icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -155,7 +155,7 @@
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/Back%20Arrow.png" />
+                        <Image url="@../images/Back Arrow.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -164,14 +164,14 @@
                </font>
             </JFXButton>
             <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <JFXButton fx:id="helpButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#activateBumble" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" text="." textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <JFXButton fx:id="helpButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#help" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" text="." textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font size="12.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/Question%20Mark%20Icon.png" />
+                        <Image url="@../images/Question Mark Icon.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -179,5 +179,52 @@
             <JFXHamburger fx:id="hamburger" alignment="CENTER" prefHeight="50.0" prefWidth="75.0" stylesheets="@../css/styleSheet.css" />
          </children>
       </GridPane>
+        <ImageView fx:id="speechBubble" fitHeight="357.0" fitWidth="433.0" pickOnBounds="true" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+            <image>
+                <Image url="@../images/SpeechBubble.png" />
+            </image>
+        </ImageView>
+       <ImageView fx:id="frame5" fitHeight="347.0" fitWidth="481.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+          <image>
+             <Image url="@../images/BumbleFrame5.png" />
+          </image>
+       </ImageView>
+       <ImageView fx:id="frame4" fitHeight="347.0" fitWidth="481.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+          <image>
+             <Image url="@../images/BumbleFrame4.png" />
+          </image>
+       </ImageView>
+       <ImageView fx:id="frame3" fitHeight="347.0" fitWidth="481.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+          <image>
+             <Image url="@../images/BumbleFrame3.png" />
+          </image>
+       </ImageView>
+       <ImageView fx:id="frame2" fitHeight="347.0" fitWidth="481.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+          <image>
+             <Image url="@../images/BumbleFrame2.png" />
+          </image>
+       </ImageView>
+       <ImageView fx:id="frame1" fitHeight="347.0" fitWidth="481.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+          <image>
+             <Image url="@../images/BumbleFrame1.png" />
+          </image>
+       </ImageView>
+        <JFXButton fx:id="bumbleButton" mnemonicParsing="false" onAction="#activateBumble" prefHeight="100.0" prefWidth="70.0" styleClass="snowmanButton" text="Button" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" visible="false" >
+            <GridPane.margin>
+                <Insets right="50.0" />
+            </GridPane.margin>
+        </JFXButton>
+        <JFXButton fx:id="bumbleXButton" mnemonicParsing="false" onAction="#goToHome" prefHeight="100.0" prefWidth="70.0" styleClass="noSnowmanButton" text="Button" visible="false" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" >
+            <GridPane.margin>
+                <Insets right="50.0" />
+            </GridPane.margin>
+        </JFXButton>
+        <Label fx:id="bubbleText" prefHeight="211.0" prefWidth="320.0" text="I'm Bumble the Helpful Abominable Snowman. What feature do you want to know about?" textAlignment="CENTER" visible="false" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+            <font>
+                <Font size="24.0" />
+            </font>
+            <GridPane.margin>
+                <Insets top="25.0" />
+            </GridPane.margin></Label>
     </children>
 </GridPane>

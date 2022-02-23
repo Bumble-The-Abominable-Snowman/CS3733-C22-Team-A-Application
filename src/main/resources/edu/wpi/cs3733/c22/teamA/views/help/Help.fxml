@@ -23,7 +23,7 @@
     </rowConstraints>
     <JFXButton fx:id="bumbleButton" mnemonicParsing="false" onAction="#activateBumble" prefHeight="100.0" prefWidth="119.0" styleClass="snowmanButton" text="Button" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
     <JFXButton fx:id="bumbleXButton" mnemonicParsing="false" onAction="#help" prefHeight="100.0" prefWidth="119.0" styleClass="noSnowmanButton" text="Button" visible="false" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
-        <ImageView fx:id="speechBubble" fitHeight="357.0" fitWidth="433.0" pickOnBounds="true" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="TOP">
+    <ImageView fx:id="speechBubble" fitHeight="357.0" fitWidth="433.0" pickOnBounds="true" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="TOP">
         <image>
             <Image url="@../../images/SpeechBubble.png" />
         </image>
