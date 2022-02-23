@@ -226,5 +226,25 @@
             <GridPane.margin>
                 <Insets top="25.0" />
             </GridPane.margin></Label>
+        <JFXButton fx:id="newSRHelpButton" visible="false" mnemonicParsing="false" onAction="#newSRHelp" prefHeight="41.0" prefWidth="436.0" styleClass="bodyFormat" text="New Service Request Help" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP" GridPane.rowIndex="3">
+            <GridPane.margin>
+                <Insets top="50.0" />
+            </GridPane.margin>
+        </JFXButton>
+        <JFXButton fx:id="settingsHelpButton" visible="false" layoutX="772.0" layoutY="92.0" mnemonicParsing="false" onAction="#settingsHelp" prefHeight="41.0" prefWidth="436.0" styleClass="bodyFormat" text="Settings Help" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+            <GridPane.margin>
+                <Insets top="200.0" />
+            </GridPane.margin>
+        </JFXButton>
+        <JFXButton fx:id="mapHelpButton" visible="false" layoutX="772.0" layoutY="292.0" mnemonicParsing="false" onAction="#mapHelp" prefHeight="41.0" prefWidth="436.0" styleClass="bodyFormat" text="Map Help" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP" GridPane.rowIndex="3">
+            <GridPane.margin>
+                <Insets top="100.0" />
+            </GridPane.margin>
+        </JFXButton>
+        <JFXButton fx:id="viewDataHelpButton" visible="false" layoutX="772.0" layoutY="173.0" mnemonicParsing="false" onAction="#dataViewHelp" prefHeight="41.0" prefWidth="436.0" styleClass="bodyFormat" text="View Data Help" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+            <GridPane.margin>
+                <Insets top="150.0" />
+            </GridPane.margin>
+        </JFXButton>
     </children>
 </GridPane>

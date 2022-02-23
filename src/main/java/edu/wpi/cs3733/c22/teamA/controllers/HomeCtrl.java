@@ -27,6 +27,10 @@ public class HomeCtrl extends MasterCtrl {
   @FXML private JFXButton bumbleXButton;
   @FXML private ImageView speechBubble;
   @FXML private Label bubbleText;
+  @FXML private JFXButton newSRHelpButton;
+  @FXML private JFXButton mapHelpButton;
+  @FXML private JFXButton viewDataHelpButton;
+  @FXML private JFXButton settingsHelpButton;
 
   @FXML
   private void initialize() {
@@ -39,6 +43,10 @@ public class HomeCtrl extends MasterCtrl {
     double bumbleTextSize = bumbleButton.getFont().getSize();
     double bumbleXTextSize = bumbleXButton.getFont().getSize();
     double bubbleTextSize = bubbleText.getFont().getSize();
+    double newSRHelpTextSize = newSRHelpButton.getFont().getSize();
+    double mapHelpTextSize = mapHelpButton.getFont().getSize();
+    double viewDataHelpTextSize = viewDataHelpButton.getFont().getSize();
+    double settingsHelpTextSize = settingsHelpButton.getFont().getSize();
 
     App.getStage()
             .widthProperty()
@@ -55,6 +63,22 @@ public class HomeCtrl extends MasterCtrl {
                       bubbleText.setStyle(
                               "-fx-font-size: "
                                       + ((App.getStage().getWidth() / 1000) * bubbleTextSize)
+                                      + "pt;");
+                      newSRHelpButton.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * newSRHelpTextSize)
+                                      + "pt;");
+                      mapHelpButton.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * mapHelpTextSize)
+                                      + "pt;");
+                      viewDataHelpButton.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * viewDataHelpTextSize)
+                                      + "pt;");
+                      settingsHelpButton.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * settingsHelpTextSize)
                                       + "pt;");
                     });
 
@@ -157,6 +181,22 @@ public class HomeCtrl extends MasterCtrl {
   @FXML private void giveHelp(){
     speechBubble.setVisible(true);
     bubbleText.setVisible(true);
+    newSRHelpButton.setVisible(true);
+    mapHelpButton.setVisible(true);
+    viewDataHelpButton.setVisible(true);
+    settingsHelpButton.setVisible(true);
+  }
+
+  @FXML private void newSRHelp(){
+  }
+
+  @FXML private void mapHelp(){
+  }
+
+  @FXML private void dataViewHelp(){
+  }
+
+  @FXML private void settingsHelp(){
   }
 
 }
