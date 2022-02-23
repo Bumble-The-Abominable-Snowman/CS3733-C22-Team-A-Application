@@ -9,7 +9,6 @@ import java.util.List;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
@@ -18,7 +17,7 @@ import javafx.scene.text.TextAlignment;
 public class SideView {
 
   private List<JFXButton> buttons;
-  private List<TextArea> texts;
+  private List<JFXTextArea> texts;
   private Label label;
   private MarkerManager markerManager;
   private AnchorPane anchorPane;
@@ -57,13 +56,13 @@ public class SideView {
 
     // Create side view text areas
     texts = new ArrayList<>();
-    initialY = 30;
+    initialY = 65;
     for (int i = 0; i < 3; i++) {
-      TextArea box = new TextArea();
-      box.setLayoutX(520 + mapImageView.getLayoutX());
-      box.setLayoutY(initialY + 50 * i + mapImageView.getLayoutY());
-      box.setScaleX(1);
-      box.setScaleY(1);
+      JFXTextArea box = new JFXTextArea();
+      box.setLayoutX(525 + mapImageView.getLayoutX());
+      box.setLayoutY(initialY + 325 * i + mapImageView.getLayoutY());
+      box.setPrefWidth(300);
+      box.setPrefHeight(250);
       box.setEditable(false);
       box.setVisible(false);
       texts.add(box);
@@ -105,7 +104,7 @@ public class SideView {
     }
     if (label != null) label.setVisible(visible);
     if (texts != null) {
-      for (TextArea box : texts) {
+      for (JFXTextArea box : texts) {
         box.setVisible(false);
       }
     }
