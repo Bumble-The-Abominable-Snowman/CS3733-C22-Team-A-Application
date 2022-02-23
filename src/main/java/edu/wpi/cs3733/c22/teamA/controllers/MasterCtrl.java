@@ -45,7 +45,7 @@ public abstract class MasterCtrl {
     STAFF,
   }
 
-  public ACCOUNT account;
+  public ACCOUNT account = ACCOUNT.STAFF;
 
   double selectSRButtonSize;
   double mapButtonSize;
@@ -69,13 +69,15 @@ public abstract class MasterCtrl {
 
 if (account == ACCOUNT.STAFF) {
 
-  selectSRButton.setVisible(false);
+  selectSRButton.setVisible(true);
   mapButton.setVisible(true);
   viewSRButton.setVisible(true);
-  viewEmployeesButton.setVisible(false);
+  viewEmployeesButton.setStyle("-fx-background-color: #808080");
+  viewEmployeesButton.setDisable(true);
   viewLocationsButton.setVisible(true);
   viewEquipmentButton.setVisible(true);
-  settingsButton.setVisible(false);
+  settingsButton.setStyle("-fx-background-color: #808080");
+  settingsButton.setDisable(true);
   exitButton.setVisible(true);
   loginButton.setVisible(true);
   aboutButton.setVisible(true);

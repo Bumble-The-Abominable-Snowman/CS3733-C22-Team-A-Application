@@ -97,4 +97,5 @@ public class LoginCtrl {
     exitButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * exitButtonTextSize) + "pt;");
     warningText.setStyle("-fx-font-size: " + ((stageWidth / 1000) * warningTextSize) + "pt;");
   }
+
 }
