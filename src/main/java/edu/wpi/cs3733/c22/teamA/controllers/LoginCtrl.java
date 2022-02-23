@@ -1,7 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
 import com.jfoenix.controls.JFXButton;
-import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import javafx.fxml.FXML;
@@ -10,9 +9,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-
-import java.io.IOException;
-import java.sql.SQLException;
 
 public class LoginCtrl {
   @FXML private Text welcomeBox;
@@ -79,22 +75,21 @@ public class LoginCtrl {
             });
   }
 
-    @FXML
-    private void logIn() {
+  @FXML
+  private void logIn() {
+    App.factory.setUsername(usernameBox.getText());
+    App.factory.setPassword(passwordBox.getText());
 
-        Adb.username = usernameBox.getText();
-        Adb.password = passwordBox.getText();
+    try {
+      App.connection = App.factory.newConnection("app:audit component:event-consumer");
 
-        try {
-            Adb.initialConnection("EmbeddedDriver");
+      sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
+    } catch (Exception e) {
+      warningText.setFill(Color.RED);
 
-            sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
-        } catch (Exception e) {
-            warningText.setFill(Color.RED);
-
-            passwordBox.setText("");
-        }
+      passwordBox.setText("");
     }
+  }
 
   @FXML
   private void exitApp() {

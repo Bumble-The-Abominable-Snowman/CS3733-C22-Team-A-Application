@@ -56,7 +56,7 @@ public class SettingsCtrl extends MasterCtrl {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.SAVE_BACKUP);
   }
 
-  public void toggleClientServer() throws Exception {
+  public void toggleClientServer() {
     if (toggleClientServerButton.isSelected()) {
       Adb.initialConnection("ClientDriver");
       System.out.println("Client Driver");
