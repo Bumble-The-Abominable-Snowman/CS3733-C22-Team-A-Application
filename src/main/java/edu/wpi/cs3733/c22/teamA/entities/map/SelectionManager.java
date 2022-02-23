@@ -196,6 +196,9 @@ public class SelectionManager {
     List<String> currentFields = equipment.getListForm();
     for (int i = 0; i < currentFields.size(); i++) {
       equipmentFields.get(i).textArea.setText(currentFields.get(i));
+      if(i == 2){
+        System.out.println(currentFields.get(i));
+      }
     }
   }
 
