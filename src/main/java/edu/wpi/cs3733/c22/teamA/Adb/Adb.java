@@ -62,10 +62,12 @@ public class Adb {
       } catch (SQLException e) {
         connection =
             DriverManager.getConnection(String.format("jdbc:derby:%s;create=true", pathToDBA));
+
         turnOnBuiltInUsers(connection);
 //        connection.close();
+
         System.out.println("DB initialized");
-        System.out.println("Closed connection");
+        // System.out.println("Closed connection");
 
         isInitialized = false;
       }
@@ -147,6 +149,39 @@ public class Adb {
 
     } catch (SQLException e) {
       System.out.println("Table MedicalEquipment already exist");
+    }
+
+    // Medicine Table
+    try {
+      stmt.execute(
+          ""
+              + "CREATE TABLE Medicine("
+              + "medicineID varchar(25), "
+              + "genericName varchar(100), "
+              + "brandName varchar(100), "
+              + "medicineClass varchar(100), "
+              + "uses varchar(255), "
+              + "warnings varchar(255), "
+              + "sideEffects varchar(255), "
+              + "form varchar(50), "
+              + "PRIMARY KEY (medicineID))");
+
+    } catch (SQLException e) {
+      System.out.println("Table Medicine already exists");
+    }
+
+    // MedicineDosages
+    try {
+      stmt.execute(
+          ""
+              + "CREATE TABLE MedicineDosage("
+              + "medicineID varchar(25), "
+              + "dosageAmount float,"
+              + "PRIMARY KEY (medicineID,dosageAmount),"
+              + "FOREIGN KEY (medicineID) REFERENCES Medicine (medicineID))");
+
+    } catch (SQLException e) {
+      System.out.println("Table MedicineDosage already exists");
     }
 
     // Check ServiceRequestDerbyImpl table.
@@ -284,11 +319,17 @@ public class Adb {
 
     // check MedicineDeliveryServiceRequest
     try {
+
+
       stmt.execute(
-          "CREATE TABLE MedicineDeliveryServiceRequest(request_id varchar(25), "
-              + "medicine_choice varchar(25), "
-              + "PRIMARY KEY (request_id), "
-              + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
+          "CREATE TABLE MedicineDeliveryServiceRequest("
+              + "requestID varchar(25), "
+              + "medicineID varchar(25), "
+              + "dosage float,"
+              + "PRIMARY KEY (requestID), "
+              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE,"
+              + "FOREIGN KEY (medicineID) REFERENCES Medicine(medicineID) ON DELETE CASCADE)");
+
 
     } catch (SQLException e) {
       System.out.println("Table MedicineDeliveryServiceRequest already exist");

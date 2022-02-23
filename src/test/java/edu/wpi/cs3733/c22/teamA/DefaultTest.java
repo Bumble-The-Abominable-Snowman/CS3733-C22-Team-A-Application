@@ -8,10 +8,13 @@ import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
+import edu.wpi.cs3733.c22.teamA.entities.Medicine;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -19,11 +22,70 @@ import java.sql.*;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 public class DefaultTest {
+
+  @Test
+  public void medicineTest() throws IOException {
+    Adb.initialConnection("EmbeddedDriver");
+
+    System.out.println("\n Starting MedicineTest");
+    MedicineDerbyImpl derby = new MedicineDerbyImpl();
+
+    System.out.println("Testing import from CSV");
+    MedicineDerbyImpl.inputFromCSV(
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/Medicine.csv",
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicineDosage.csv"
+    );
+
+
+    List<Float> dosageList = new ArrayList<>();
+    dosageList.add(Float.parseFloat("2"));
+    dosageList.add(Float.parseFloat("4"));
+
+    String medicineID = "med999";
+    Medicine m =
+        new Medicine(
+            medicineID,
+            "genName",
+            "bran",
+            "classA",
+            "dont use",
+            "no warnings",
+            "stupidness",
+            "liquid",
+            dosageList);
+    System.out.println("Testing enter");
+    derby.enterMedicine(m);
+
+    System.out.println("Testing getDosages");
+    System.out.println("Found dosages for " + medicineID + ": " + derby.getDosages(medicineID));
+    System.out.println("Testing get");
+    Medicine copyM = derby.getMedicine(medicineID);
+    System.out.println("Found GenericName: " + copyM.getGenericName());
+    System.out.println("Found Uses: " + copyM.getUses());
+
+    System.out.println("Testing update changing uses to 'lots of uses'");
+    derby.updateMedicine(medicineID, "uses", "lots of uses");
+    System.out.println(derby.getMedicine(medicineID).getUses());
+
+    System.out.println("Testing getList");
+    System.out.println(derby.getMedicineList());
+
+    System.out.println("Testing Export to csv");
+    MedicineDerbyImpl.exportToCSV(
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/testMedCSV.csv",
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/testDosCSV.csv");
+
+    System.out.println("Testing delete");
+    derby.deleteMedicine(medicineID);
+    System.out.println("Attempting get (should fail)");
+    System.out.println(derby.getMedicine(medicineID).getMedicineID());
+  }
 
   @Test
   public void test()
