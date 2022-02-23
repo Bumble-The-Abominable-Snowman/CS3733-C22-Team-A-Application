@@ -6,6 +6,7 @@ import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -198,10 +199,12 @@ public class SelectionManager {
     inputVBox.setDisable(false);
     currentList = srFields;
     srVBox();
-    List<String> currentFields = serviceRequest.getListForm();
-    for (int i = 0; i < currentFields.size(); i++) {
-      srFields.get(i).textArea.setText(currentFields.get(i));
-    }
+    HashMap<String, String> currentFields = serviceRequest.getStringFields();
+
+//    TODO: IMPLEMENT THIS
+//    for (int i = 0; i < currentFields.size(); i++) {
+//      srFields.get(i).textArea.setText(currentFields.get(i));
+//    }
   }
 
   // Edit

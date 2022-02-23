@@ -98,7 +98,7 @@ public class MarkerManager {
 
   private void getSRLocations() {
     for (SR sr : allSRs) {
-      if (currentFloorIDs.contains(sr.getEndLocation())) {
+      if (currentFloorIDs.contains( ((Location) sr.getFields().get("end_location")).getNodeID())) {
         floorSRs.add(sr);
       }
     }
@@ -153,7 +153,7 @@ public class MarkerManager {
     for (SR sr : floorSRs) {
       SRMarker newSRMarker =
           MarkerMaker.makeSRMarker(
-              sr, idToLocationMarker.get(sr.getEndLocation()), mapLayoutX, mapLayoutY);
+              sr, idToLocationMarker.get(((Location) sr.getFields().get("end_location")).getNodeID()), mapLayoutX, mapLayoutY);
       serviceRequestMarkers.add(newSRMarker);
       setDragSR(newSRMarker, selectionManager, checkBoxManager, gesturePaneManager);
     }

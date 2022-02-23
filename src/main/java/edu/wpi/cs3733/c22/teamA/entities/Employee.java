@@ -1,5 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.entities;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import lombok.Data;
@@ -46,14 +48,14 @@ public class Employee {
   }
 
   // timestamp get/set
-  /*public String getStartDate() {
+  public String getStartDate() {
     if (this.startDate == null) {
       return "";
     }
     return this.startDate.toString();
-  }*/
+  }
 
-  //  public void setStartDate(String s) {
-  //    this.startDate = Timestamp.valueOf(s);
-  //  }
+  public void setStartDate(String s) {
+    this.startDate = Timestamp.valueOf(s + " 00:00:00");
+  }
 }

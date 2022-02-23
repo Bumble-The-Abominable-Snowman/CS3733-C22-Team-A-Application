@@ -1,17 +1,21 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SanitationSR;
+//import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
+//import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SanitationSR;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
+
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -79,20 +83,18 @@ public class SanitationSRCtrl extends SRCtrl {
     Location toLocationSelected = this.locationList.get(locationIndex);
 
     // Create request object
-    SanitationSR sanitationSR =
-        new SanitationSR(
-            "SanitationSRID",
-            "N/A",
-            toLocationSelected.getNodeID(),
-            "001",
-            employeeSelected.getEmployeeID(),
+    SR sr = new SR("SanitationSRID",
+            (new LocationDerbyImpl()).getLocationNode("N/A"),
+            toLocationSelected,
+            (new EmployeeDerbyImpl()).getEmployee("001"),
+            employeeSelected,
             new Timestamp((new Date()).getTime()),
             SR.Status.BLANK,
             SR.Priority.REGULAR,
-            commentsBox.getText().equals("") ? "N/A" : commentsBox.getText());
+            commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
+            SR.SRType.SANITATION);
 
-    ServiceRequestDerbyImpl<SanitationSR> serviceRequestDAO =
-        new ServiceRequestDerbyImpl<>(new SanitationSR());
-    serviceRequestDAO.enterServiceRequest(sanitationSR);
+    ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
+    serviceRequestDerby.enterServiceRequest(sr);
   }
 }
