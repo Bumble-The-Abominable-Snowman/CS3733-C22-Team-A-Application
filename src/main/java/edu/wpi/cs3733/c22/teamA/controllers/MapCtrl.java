@@ -13,6 +13,8 @@ import edu.wpi.cs3733.c22.teamA.entities.map.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
@@ -39,6 +41,8 @@ public class MapCtrl extends MasterCtrl {
   private AnchorPane anchorPane;
   private ImageView mapImageView;
   @FXML JFXButton newLocButton = new JFXButton();
+  @FXML JFXButton findPathButton = new JFXButton();
+  @FXML JFXButton clearPathButton = new JFXButton();
 
   @FXML private JFXComboBox searchComboBox;
 
@@ -88,6 +92,10 @@ public class MapCtrl extends MasterCtrl {
     selectionManager = new SelectionManager(inputVBox);
     searcher = new Searcher(searchComboBox);
     sideView = new SideView(anchorPane, mapImageView, markerManager);
+    List<JFXButton> buttons = new ArrayList<JFXButton>();
+    buttons.add(newLocButton);
+    buttons.add(findPathButton);
+    buttons.add(clearPathButton);
     mapManager =
         new MapManager(
             markerManager,
@@ -95,7 +103,8 @@ public class MapCtrl extends MasterCtrl {
             gesturePaneManager,
             selectionManager,
             searcher,
-            sideView);
+            sideView,
+            buttons);
     mapManager.init();
     sideView.init();
   }
