@@ -226,6 +226,34 @@
             <GridPane.margin>
                 <Insets top="25.0" />
             </GridPane.margin></Label>
+        <Label fx:id="newSRText" prefHeight="211.0" prefWidth="320.0" text="You can create new service requests by pressing the 'New Service Request' button." textAlignment="CENTER" visible="false" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+            <font>
+                <Font size="24.0" />
+            </font>
+            <GridPane.margin>
+                <Insets top="25.0" />
+            </GridPane.margin></Label>
+        <Label fx:id="mapText" prefHeight="211.0" prefWidth="320.0" text="You can view, edit, and pathfind between location by pressing the 'Map' button." textAlignment="CENTER" visible="false" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+            <font>
+                <Font size="24.0" />
+            </font>
+            <GridPane.margin>
+                <Insets top="25.0" />
+            </GridPane.margin></Label>
+        <Label fx:id="dataViewText" prefHeight="211.0" prefWidth="320.0" text="You can view and edit data by pressing any of the 'View' buttons." textAlignment="CENTER" visible="false" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+            <font>
+                <Font size="24.0" />
+            </font>
+            <GridPane.margin>
+                <Insets top="25.0" />
+            </GridPane.margin></Label>
+        <Label fx:id="settingsText" prefHeight="211.0" prefWidth="320.0" text="You can edit various settings by pressing the 'Settings' button." textAlignment="CENTER" visible="false" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+            <font>
+                <Font size="24.0" />
+            </font>
+            <GridPane.margin>
+                <Insets top="25.0" />
+            </GridPane.margin></Label>
         <JFXButton fx:id="newSRHelpButton" visible="false" mnemonicParsing="false" onAction="#newSRHelp" prefHeight="41.0" prefWidth="436.0" styleClass="bodyFormat" text="New Service Request Help" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP" GridPane.rowIndex="3">
             <GridPane.margin>
                 <Insets top="50.0" />

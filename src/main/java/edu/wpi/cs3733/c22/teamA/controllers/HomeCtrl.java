@@ -31,6 +31,10 @@ public class HomeCtrl extends MasterCtrl {
   @FXML private JFXButton mapHelpButton;
   @FXML private JFXButton viewDataHelpButton;
   @FXML private JFXButton settingsHelpButton;
+  @FXML private Label newSRText;
+  @FXML private Label mapText;
+  @FXML private Label dataViewText;
+  @FXML private Label settingsText;
 
   @FXML
   private void initialize() {
@@ -47,6 +51,10 @@ public class HomeCtrl extends MasterCtrl {
     double mapHelpTextSize = mapHelpButton.getFont().getSize();
     double viewDataHelpTextSize = viewDataHelpButton.getFont().getSize();
     double settingsHelpTextSize = settingsHelpButton.getFont().getSize();
+    double newSRTextSize = newSRText.getFont().getSize();
+    double mapTextSize = mapText.getFont().getSize();
+    double dataViewTextSize = dataViewText.getFont().getSize();
+    double settingsTextSize = settingsText.getFont().getSize();
 
     App.getStage()
             .widthProperty()
@@ -79,6 +87,22 @@ public class HomeCtrl extends MasterCtrl {
                       settingsHelpButton.setStyle(
                               "-fx-font-size: "
                                       + ((App.getStage().getWidth() / 1000) * settingsHelpTextSize)
+                                      + "pt;");
+                      newSRText.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * newSRTextSize)
+                                      + "pt;");
+                      mapText.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * mapTextSize)
+                                      + "pt;");
+                      dataViewText.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * dataViewTextSize)
+                                      + "pt;");
+                      settingsText.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * settingsTextSize)
                                       + "pt;");
                     });
 
@@ -188,15 +212,35 @@ public class HomeCtrl extends MasterCtrl {
   }
 
   @FXML private void newSRHelp(){
+    bubbleText.setVisible(false);
+    newSRText.setVisible(true);
+    mapText.setVisible(false);
+    dataViewText.setVisible(false);
+    settingsText.setVisible(false);
   }
 
   @FXML private void mapHelp(){
+    bubbleText.setVisible(false);
+    newSRText.setVisible(false);
+    mapText.setVisible(true);
+    dataViewText.setVisible(false);
+    settingsText.setVisible(false);
   }
 
   @FXML private void dataViewHelp(){
+    bubbleText.setVisible(false);
+    newSRText.setVisible(false);
+    mapText.setVisible(false);
+    dataViewText.setVisible(true);
+    settingsText.setVisible(false);
   }
 
   @FXML private void settingsHelp(){
+    bubbleText.setVisible(false);
+    newSRText.setVisible(false);
+    mapText.setVisible(false);
+    dataViewText.setVisible(false);
+    settingsText.setVisible(true);
   }
 
 }
