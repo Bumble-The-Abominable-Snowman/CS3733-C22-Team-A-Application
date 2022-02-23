@@ -53,7 +53,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
       String str =
           String.format("UPDATE Medicine SET %s = '%s' WHERE medicineID = '%s'", field, change, ID);
 
-      System.out.println(str);
+      //System.out.println(str);
       update.execute(str);
 
     } catch (SQLException e) {
@@ -77,6 +77,9 @@ public class MedicineDerbyImpl implements MedicineDAO {
         med.getDosageAmounts());
   }
 
+  /**
+   * Enters a Medicine into Medicine Table and its dosages into the dosage table
+   */
   public void enterMedicine(
       String medicineID,
       String genericName,
@@ -203,11 +206,14 @@ public class MedicineDerbyImpl implements MedicineDAO {
         med.setDosageAmounts(getDosages(med.getMedicineID()));
         returnList.add(med);
       }
-      System.out.println(returnList);
+      //System.out.println(returnList);
       return returnList;
 
     } catch (SQLException e) {
       System.out.println("Error caught");
+      System.out.println("Error Code: " + e.getErrorCode());
+      System.out.println("SQL State: " + e.getSQLState());
+      System.out.println(e.getMessage());
       return null;
     }
   }
@@ -221,11 +227,18 @@ public class MedicineDerbyImpl implements MedicineDAO {
     } catch (SQLException e) {
       System.out.println("delete failed");
     }
+
+    //Read all values from the medicine CSV
     try {
       List<Medicine> medicineList = readMedicineCSV(medicineCSVFilePath, dosageCSVFilePath);
+      MedicineDerbyImpl derby = new MedicineDerbyImpl();
+      for(Medicine med : medicineList){
+        derby.enterMedicine(med);
+      }
 
     } catch (Exception e) {
-      System.out.println("Insertion failed!");
+      System.out.println("Error caught");
+      System.out.println("Error Code: " + e.getMessage());
     }
   }
 
@@ -238,6 +251,8 @@ public class MedicineDerbyImpl implements MedicineDAO {
     Scanner lineScanner = new Scanner(medFile);
     Scanner dataScanner;
     int dataIndex = 0;
+
+    lineScanner.nextLine();
     while (lineScanner.hasNext()) { // Scan CSV line by line
       dataScanner = new Scanner(lineScanner.nextLine());
       dataScanner.useDelimiter(",");
@@ -266,6 +281,8 @@ public class MedicineDerbyImpl implements MedicineDAO {
     File dosFile = new File(dosageCSVFilePath);
     lineScanner = new Scanner(dosFile);
     dataIndex = 0;
+
+    lineScanner.nextLine();
     while (lineScanner.hasNext()) {
       dataScanner = new Scanner(lineScanner.nextLine());
       dataScanner.useDelimiter(",");

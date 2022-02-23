@@ -41,6 +41,20 @@ public class Medicine extends RecursiveTreeObject<Medicine> {
     this.dosageAmounts = dosageAmounts;
   }
 
+  public List<String> getListForm(){
+    return List.of(
+            this.medicineID,
+            this.genericName,
+            this.brandName,
+            this.medicineClass,
+            this.uses,
+            this.warnings,
+            this.sideEffects,
+            this.form,
+            this.dosageAmounts.toString()
+    );
+  }
+
   public String getMedicineID() {
     return this.medicineID;
   }

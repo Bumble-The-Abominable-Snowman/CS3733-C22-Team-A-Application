@@ -36,6 +36,13 @@ public class DefaultTest {
     System.out.println("\n Starting MedicineTest");
     MedicineDerbyImpl derby = new MedicineDerbyImpl();
 
+    System.out.println("Testing import from CSV");
+    MedicineDerbyImpl.inputFromCSV(
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/Medicine.csv",
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicineDosage.csv"
+    );
+
+
     List<Float> dosageList = new ArrayList<>();
     dosageList.add(Float.parseFloat("2"));
     dosageList.add(Float.parseFloat("4"));
