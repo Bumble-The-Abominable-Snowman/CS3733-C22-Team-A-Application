@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="CENTER" prefHeight="600.0" prefWidth="960.0" styleClass="background" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.HomeCtrl">
+<GridPane alignment="CENTER" prefHeight="600.0" prefWidth="960.0" styleClass="background" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="edu.wpi.cs3733.c22.teamA.controllers.AboutCtrl">
    <columnConstraints>
       <ColumnConstraints hgrow="ALWAYS" />
       <ColumnConstraints hgrow="ALWAYS" prefWidth="650.0" />
@@ -62,7 +62,7 @@
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/Map%20Icon.png" />
+                              <Image url="@../images/Map Icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -89,7 +89,7 @@
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/Location%20Marker%20Icon.png" />
+                              <Image url="@../images/Location Marker Icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -116,7 +116,7 @@
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/Speech%20Bubble%20Icon.png" />
+                              <Image url="@../images/Speech Bubble Icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -125,7 +125,7 @@
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/Door%20Icon.png" />
+                              <Image url="@../images/Door Icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -157,7 +157,7 @@
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/Back%20Arrow.png" />
+                        <Image url="@../images/Back Arrow.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -173,7 +173,7 @@
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/Question%20Mark%20Icon.png" />
+                        <Image url="@../images/Question Mark Icon.png" />
                      </image>
                   </ImageView>
                </graphic>

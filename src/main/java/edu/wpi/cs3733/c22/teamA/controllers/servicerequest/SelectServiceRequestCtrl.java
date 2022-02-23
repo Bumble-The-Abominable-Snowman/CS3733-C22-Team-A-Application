@@ -1,18 +1,23 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXButton;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
+import edu.wpi.cs3733.c22.teamA.entities.Employee;
+
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
+//import teamA_API.entities.Employee;
 import teamA_API.Main;
 import teamA_API.exceptions.ServiceException;
 
@@ -145,22 +150,82 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
 
   @FXML
   private void loadAPI() throws ServiceException, IOException {
-    Main.run(500, 200, 960, 600, "", "N/A");
+    Main.run(500, 200, 960, 600, "", "N/A", "N/A");
   }
 
   @FXML
   private void saveAPI() throws IllegalAccessException, SQLException, InvocationTargetException {
     List<teamA_API.entities.SR> list = Main.getRequestList();
-    ServiceRequestDAO data = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
+    ServiceRequestDerbyImpl data = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
     for (teamA_API.entities.SR req : list) {
       SR sr = new SR(SR.SRType.SANITATION);
-      sr.setFieldByString("request_id", req.getFields_string().get("request_id"));
-      sr.setFieldByString("start_location", "N/A");
-      sr.setFieldByString("end_location", req.getFields_string().get("end_location"));
-      sr.setFieldByString("employee_requested", "001");
-      sr.setFieldByString("employee_assigned", req.getFields_string().get("employee_assigned"));
-      sr.setFieldByString("comments", req.getFields_string().get("comments"));
-      sr.setFieldByString("sanitation_type", req.getFields_string().get("sanitation_type"));
+      sr.setFieldByString("request_id", req.getStringFields().get("request_id"));
+      sr.setFieldByString("start_location", req.getStringFields().get("start_location"));
+      sr.setFieldByString("end_location", req.getStringFields().get("end_location"));
+
+      teamA_API.entities.Employee employeeRequestedAPI = (teamA_API.entities.Employee) req.getFields().get("employee_requested");
+      Employee employeeRequested = new Employee(
+              employeeRequestedAPI.getEmployeeID(),
+              employeeRequestedAPI.getEmployeeType(),
+              employeeRequestedAPI.getFirstName(),
+              employeeRequestedAPI.getLastName(),
+              employeeRequestedAPI.getEmail(),
+              employeeRequestedAPI.getPhoneNum(),
+              employeeRequestedAPI.getAddress(),
+              employeeRequestedAPI.startDate);
+      teamA_API.entities.Employee employeeAssignedAPI = (teamA_API.entities.Employee) req.getFields().get("employee_assigned");
+      Employee employeeAssigned = new Employee(
+              employeeAssignedAPI.getEmployeeID(),
+              employeeAssignedAPI.getEmployeeType(),
+              employeeAssignedAPI.getFirstName(),
+              employeeAssignedAPI.getLastName(),
+              employeeAssignedAPI.getEmail(),
+              employeeAssignedAPI.getPhoneNum(),
+              employeeAssignedAPI.getAddress(),
+              employeeAssignedAPI.startDate);
+
+      EmployeeDerbyImpl employeeDerby = new EmployeeDerbyImpl();
+      boolean doesEmployeeRequestedNotExist = false;
+      boolean doesEmployeeAssignedNotExist = false;
+      for (Employee e: employeeDerby.getEmployeeList()) {
+        if (e.getEmployeeID().equals(employeeRequested.getEmployeeID()))
+        {
+          doesEmployeeRequestedNotExist = true;
+        }
+        if (e.getEmployeeID().equals(employeeAssigned.getEmployeeID()))
+        {
+          doesEmployeeAssignedNotExist = true;
+        }
+      }
+      if (!doesEmployeeRequestedNotExist)
+      {
+        employeeDerby.enterEmployee(employeeRequestedAPI.getEmployeeID(),
+                employeeRequestedAPI.getEmployeeType(),
+                employeeRequestedAPI.getFirstName(),
+                employeeRequestedAPI.getLastName(),
+                employeeRequestedAPI.getEmail(),
+                employeeRequestedAPI.getPhoneNum(),
+                employeeRequestedAPI.getAddress(),
+                employeeRequestedAPI.startDate);
+
+      }
+      if (!doesEmployeeAssignedNotExist)
+      {
+        employeeDerby.enterEmployee(employeeAssigned.getEmployeeID(),
+                employeeAssigned.getEmployeeType(),
+                employeeAssigned.getFirstName(),
+                employeeAssigned.getLastName(),
+                employeeAssigned.getEmail(),
+                employeeAssigned.getPhoneNum(),
+                employeeAssigned.getAddress(),
+                employeeAssigned.startDate);
+      }
+
+      sr.setField("employee_requested", employeeRequested);
+      sr.setField("employee_assigned", employeeAssigned);
+
+      sr.setFieldByString("comments", req.getStringFields().get("comments"));
+      sr.setFieldByString("sanitation_type", req.getStringFields().get("sanitation_type"));
 
       System.out.println(sr);
       data.enterServiceRequest(sr);

@@ -187,6 +187,8 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
               commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               SR.SRType.EQUIPMENT);
 
+      sr.setField("equipment_id", typeChoice.getValue());
+
       ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.EQUIPMENT);
       serviceRequestDerby.enterServiceRequest(sr);
     }

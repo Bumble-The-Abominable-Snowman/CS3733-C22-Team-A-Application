@@ -77,6 +77,7 @@ public class DataViewCtrl extends MasterCtrl {
       employeeDAO.deleteEmployee(
           table.getSelectionModel().getSelectedItem().getValue().employee.getEmployeeID());
       titleLabel.setText("Employees");
+      titleLabel.setText("Employees");
       initializeEmployeeTable();
     } else {
       // wait what how did you get here

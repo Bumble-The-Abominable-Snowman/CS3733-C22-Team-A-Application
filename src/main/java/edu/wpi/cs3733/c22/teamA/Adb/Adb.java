@@ -421,6 +421,18 @@ public class Adb {
       System.out.println("Table SecurityServiceRequest already exist");
     }
 
+    // check ConsultationServiceRequest
+    try {
+      stmt.execute(
+              "CREATE TABLE ConsultationServiceRequest(request_id varchar(25), "
+                      + "PRIMARY KEY (request_id), "
+                      + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
+
+    } catch (SQLException e) {
+      System.out.println("Table ConsultationServiceRequest already exist");
+    }
+
+
     System.out.println(
         "-------------------------------------Tables checked-------------------------------------");
 

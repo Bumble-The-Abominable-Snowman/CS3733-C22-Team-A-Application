@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
+import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
@@ -45,7 +46,7 @@ public abstract class MasterCtrl {
     STAFF,
   }
 
-  public ACCOUNT account = ACCOUNT.STAFF;
+  public static ACCOUNT account = ACCOUNT.STAFF;
 
   double selectSRButtonSize;
   double mapButtonSize;
@@ -66,6 +67,11 @@ public abstract class MasterCtrl {
   boolean animating = false;
 
   public void configure() {
+
+    if (Adb.username.equals("admin"))
+    {
+      account = ACCOUNT.ADMIN;
+    }
 
 if (account == ACCOUNT.STAFF) {
 

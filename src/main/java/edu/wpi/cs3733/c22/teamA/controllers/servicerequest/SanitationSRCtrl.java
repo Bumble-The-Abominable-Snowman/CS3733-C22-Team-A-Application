@@ -118,7 +118,9 @@ public class SanitationSRCtrl extends SRCtrl {
             commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
             SR.SRType.SANITATION);
 
-    ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
+      sr.setField("sanitation_type", typeChoice.getValue());
+
+      ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
     serviceRequestDerby.enterServiceRequest(sr);
   }
 }

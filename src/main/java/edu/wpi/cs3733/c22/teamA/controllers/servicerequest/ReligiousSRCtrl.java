@@ -141,6 +141,8 @@ public class ReligiousSRCtrl extends SRCtrl {
               commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               SR.SRType.RELIGIOUS);
 
+      sr.setField("religious", religionChoice.getValue());
+
       ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.RELIGIOUS);
       serviceRequestDerby.enterServiceRequest(sr);
     }

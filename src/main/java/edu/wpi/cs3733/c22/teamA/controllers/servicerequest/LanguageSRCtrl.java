@@ -121,6 +121,8 @@ public class LanguageSRCtrl extends SRCtrl {
               commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               SR.SRType.LANGUAGE);
 
+      sr.setField("sanitation_type", languageChoice.getValue());
+
       ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.LANGUAGE);
       serviceRequestDerby.enterServiceRequest(sr);
     }

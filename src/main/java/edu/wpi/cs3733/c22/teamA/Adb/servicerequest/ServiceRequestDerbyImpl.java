@@ -56,6 +56,9 @@ public class ServiceRequestDerbyImpl implements ServiceRequestDAO {
       case SECURITY:
         this.tableName = "SecurityServiceRequest";
         break;
+      case CONSULTATION:
+        this.tableName = "ConsultationServiceRequest";
+        break;
       case INVALID:
         this.tableName = "INVALID";
         break;
@@ -162,7 +165,9 @@ public class ServiceRequestDerbyImpl implements ServiceRequestDAO {
                 sr_string_fields.get("request_status"),
                 sr_string_fields.get("request_priority"),
                 sr_string_fields.get("comments"));
+    System.out.println(str);
     insert.execute(str);
+
 
 
     StringBuilder str2_2 = new StringBuilder();
@@ -213,6 +218,7 @@ public class ServiceRequestDerbyImpl implements ServiceRequestDAO {
     String str =
         String.format(
             "SELECT * FROM ServiceRequest s, %s m WHERE s.request_id=m.request_id", this.tableName);
+    System.out.println(str);
 
     ResultSet resultSet = getNodeList.executeQuery(str);
     ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
@@ -237,6 +243,7 @@ public class ServiceRequestDerbyImpl implements ServiceRequestDAO {
       if (srType != SR.SRType.INVALID)
       {
         ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(srType);
+        System.out.println(srType.toString());
         allReqList.addAll(serviceRequestDerby.getServiceRequestList());
       }
     }
