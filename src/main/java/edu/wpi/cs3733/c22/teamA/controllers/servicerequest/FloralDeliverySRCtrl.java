@@ -1,12 +1,14 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.FloralDeliverySR;
+//import edu.wpi.cs3733.c22.teamA.entities.servicerequests.FloralDeliverySR;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -112,21 +114,19 @@ public class FloralDeliverySRCtrl extends SRCtrl {
       int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
       Location toLocationSelected = this.locationList.get(locationIndex);
 
-      FloralDeliverySR floralDeliverySR =
-          new FloralDeliverySR(
-              "FloralDeliverySRID",
-              "N/A",
-              toLocationSelected.getNodeID(),
-              "001",
-              employeeSelected.getEmployeeID(),
+      SR sr = new SR("FloralDeliverySRID",
+              (new LocationDerbyImpl()).getLocationNode("N/A"),
+              toLocationSelected,
+              (new EmployeeDerbyImpl()).getEmployee("001"),
+              employeeSelected,
               new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,
               SR.Priority.REGULAR,
-              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText());
+              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
+              SR.SRType.FLORAL_DELIVERY);
 
-      ServiceRequestDerbyImpl<FloralDeliverySR> serviceRequestDAO =
-          new ServiceRequestDerbyImpl<>(new FloralDeliverySR());
-      serviceRequestDAO.enterServiceRequest(floralDeliverySR);
+      ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.FLORAL_DELIVERY);
+      serviceRequestDerby.enterServiceRequest(sr);
     }
   }
 }
