@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 public class DefaultTest {
 
   @Test
-  public void medicineTest() throws IOException {
+  public void medicineTest() throws Exception {
     Adb.initialConnection("EmbeddedDriver");
 
     System.out.println("\n Starting MedicineTest");
@@ -89,8 +89,7 @@ public class DefaultTest {
 
   @Test
   public void test()
-      throws ParseException, IOException, InvocationTargetException, IllegalAccessException,
-          SQLException {
+          throws Exception {
 
     Adb.initialConnection("EmbeddedDriver");
     Location location = new Location();
@@ -116,6 +115,13 @@ public class DefaultTest {
         System.out.printf("Key: %s\tValue: %s\n", key, sr_item.getFields().get(key));
       }
     }
+  }
+
+  @Test
+  public void testOnLogIn() throws Exception {
+    Adb.username = "admin";
+    Adb.password = "a";
+    Adb.initialConnection("EmbeddedDriver");
   }
   //    Connection connection = null;
   //    Adb.initialConnection("EmbeddedDriver");

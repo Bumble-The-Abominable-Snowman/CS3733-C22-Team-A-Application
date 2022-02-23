@@ -4,7 +4,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 
 public class Main {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
 
     Adb.initialConnection("EmbeddedDriver");
 
