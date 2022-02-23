@@ -156,18 +156,21 @@ public class Adb {
       stmt.execute(
           ""
               + "CREATE TABLE Medicine("
-              + "medicineID varchar(25), "
-              + "genericName varchar(100), "
-              + "brandName varchar(100), "
-              + "medicineClass varchar(100), "
+              + "medicine_id varchar(25), "
+              + "generic_name varchar(100), "
+              + "brand_name varchar(100), "
+              + "medicine_class varchar(100), "
               + "uses varchar(255), "
               + "warnings varchar(255), "
-              + "sideEffects varchar(255), "
+              + "side_effects varchar(255), "
               + "form varchar(50), "
-              + "PRIMARY KEY (medicineID))");
+              + "PRIMARY KEY (medicine_id))");
 
     } catch (SQLException e) {
-      System.out.println("Table Medicine already exists");
+      System.out.println("Error caught trying to create Medicine");
+      System.out.println("Error Code: " + e.getErrorCode());
+      System.out.println("SQL State: " + e.getSQLState());
+      System.out.println(e.getMessage());
     }
 
     // MedicineDosages
@@ -175,13 +178,16 @@ public class Adb {
       stmt.execute(
           ""
               + "CREATE TABLE MedicineDosage("
-              + "medicineID varchar(25), "
-              + "dosageAmount float,"
-              + "PRIMARY KEY (medicineID,dosageAmount),"
-              + "FOREIGN KEY (medicineID) REFERENCES Medicine (medicineID))");
+              + "medicine_id varchar(25), "
+              + "dosage_amount float,"
+              + "PRIMARY KEY (medicine_id,dosage_amount),"
+              + "FOREIGN KEY (medicine_id) REFERENCES Medicine (medicine_id))");
 
     } catch (SQLException e) {
-      System.out.println("Table MedicineDosage already exists");
+      System.out.println("Error caught trying to create MedicineDosage");
+      System.out.println("Error Code: " + e.getErrorCode());
+      System.out.println("SQL State: " + e.getSQLState());
+      System.out.println(e.getMessage());
     }
 
     // Check ServiceRequestDerbyImpl table.
@@ -319,20 +325,22 @@ public class Adb {
 
     // check MedicineDeliveryServiceRequest
     try {
-
-
       stmt.execute(
           "CREATE TABLE MedicineDeliveryServiceRequest("
-              + "requestID varchar(25), "
-              + "medicineID varchar(25), "
-              + "dosage float,"
-              + "PRIMARY KEY (requestID), "
-              + "FOREIGN KEY (requestID) REFERENCES ServiceRequest(requestID) ON DELETE CASCADE,"
-              + "FOREIGN KEY (medicineID) REFERENCES Medicine(medicineID) ON DELETE CASCADE)");
+              + "request_id varchar(25), "
+              + "medicine_id varchar(25), "
+              + "dosage_amount float,"
+              + "PRIMARY KEY (request_id), "
+              + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE,"
+              + "FOREIGN KEY (medicine_id) REFERENCES Medicine(medicine_id) ON DELETE CASCADE)");
 
 
     } catch (SQLException e) {
-      System.out.println("Table MedicineDeliveryServiceRequest already exist");
+      System.out.println("Error caught trying to create MedicineDeliveryServiceRequest");
+      System.out.println("Error Code: " + e.getErrorCode());
+      System.out.println("SQL State: " + e.getSQLState());
+      System.out.println(e.getMessage());
+      //System.out.println("Table MedicineDeliveryServiceRequest already exist");
     }
 
     // check SecurityServiceRequest

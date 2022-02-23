@@ -18,18 +18,18 @@ public class MedicineDerbyImpl implements MedicineDAO {
     try {
       Statement get = Adb.connection.createStatement();
 
-      String strMed = String.format("SELECT * FROM Medicine WHERE medicineID = '%s'", ID);
+      String strMed = String.format("SELECT * FROM Medicine WHERE medicine_id = '%s'", ID);
 
       ResultSet rset = get.executeQuery(strMed);
       Medicine med = new Medicine();
       if (rset.next()) {
-        med.setMedicineID(rset.getString("medicineID"));
-        med.setGenericName(rset.getString("genericName"));
-        med.setBrandName(rset.getString("brandName"));
-        med.setMedicineClass(rset.getString("medicineClass"));
+        med.setMedicineID(rset.getString("medicine_id"));
+        med.setGenericName(rset.getString("generic_name"));
+        med.setBrandName(rset.getString("brand_name"));
+        med.setMedicineClass(rset.getString("medicine_class"));
         med.setUses(rset.getString("uses"));
         med.setWarnings(rset.getString("warnings"));
-        med.setSideEffects(rset.getString("sideEffects"));
+        med.setSideEffects(rset.getString("side_effects"));
         med.setForm(rset.getString("form"));
       }
 
@@ -51,7 +51,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
       Statement update = Adb.connection.createStatement();
 
       String str =
-          String.format("UPDATE Medicine SET %s = '%s' WHERE medicineID = '%s'", field, change, ID);
+          String.format("UPDATE Medicine SET %s = '%s' WHERE medicine_id = '%s'", field, change, ID);
 
       //System.out.println(str);
       update.execute(str);
@@ -94,7 +94,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
       Statement insert = Adb.connection.createStatement();
       String strMed =
           String.format(
-              "INSERT INTO Medicine(medicineID, genericName, brandName, medicineClass, uses, warnings, sideEffects, form)"
+              "INSERT INTO Medicine(medicine_id, generic_name, brand_name, medicine_class, uses, warnings, side_effects, form)"
                   + " VALUES('%s', '%s','%s','%s','%s','%s','%s','%s')",
               medicineID, genericName, brandName, medicineClass, uses, warnings, sideEffects, form);
 
@@ -103,7 +103,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
         String f = dos.toString();
         String strDos =
             String.format(
-                "INSERT INTO MedicineDosage(medicineID, dosageAmount)" + " VALUES('%s',%f)",
+                "INSERT INTO MedicineDosage(medicine_id, dosage_amount)" + " VALUES('%s',%f)",
                 medicineID, dos);
         insert.executeUpdate(strDos);
       }
@@ -121,7 +121,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
       Statement insert = Adb.connection.createStatement();
       String str =
           String.format(
-              "INSERT INTO MedicineDosage(medicineID, dosageAmount) VALUES('%s', %f)", ID, dosage);
+              "INSERT INTO MedicineDosage(medicine_id, dosage_amount) VALUES('%s', %f)", ID, dosage);
       insert.execute(str);
 
     } catch (SQLException e) {
@@ -137,7 +137,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
       Statement delete = Adb.connection.createStatement();
       delete.execute(
           String.format(
-              "DELETE FROM MedicineDosage WHERE (medicineID = '%s' AND dosageAmount = '%f')",
+              "DELETE FROM MedicineDosage WHERE (medicine_id = '%s' AND dosage_amount = '%f')",
               ID, dosage));
 
     } catch (SQLException e) {
@@ -151,9 +151,9 @@ public class MedicineDerbyImpl implements MedicineDAO {
   public void deleteMedicine(String ID) {
     try {
       Statement delete = Adb.connection.createStatement();
-      delete.execute(String.format("DELETE FROM MedicineDosage WHERE medicineID = '%s'", ID));
+      delete.execute(String.format("DELETE FROM MedicineDosage WHERE medicine_id = '%s'", ID));
 
-      delete.execute(String.format("DELETE FROM Medicine WHERE medicineID = '%s'", ID));
+      delete.execute(String.format("DELETE FROM Medicine WHERE medicine_id = '%s'", ID));
 
     } catch (SQLException e) {
       System.out.println("Error caught");
@@ -169,11 +169,11 @@ public class MedicineDerbyImpl implements MedicineDAO {
 
       ResultSet rset =
           get.executeQuery(
-              String.format("SELECT * FROM MedicineDosage WHERE medicineID = '%s'", ID));
+              String.format("SELECT * FROM MedicineDosage WHERE medicine_id = '%s'", ID));
 
       List<Float> returnList = new ArrayList<>();
       while (rset.next()) {
-        returnList.add(rset.getFloat("dosageAmount"));
+        returnList.add(rset.getFloat("dosage_amount"));
       }
       return returnList;
     } catch (SQLException e) {
@@ -195,13 +195,13 @@ public class MedicineDerbyImpl implements MedicineDAO {
       List<Medicine> returnList = new ArrayList<>();
       while (rset.next()) {
         Medicine med = new Medicine();
-        med.setMedicineID(rset.getString("medicineID"));
-        med.setGenericName(rset.getString("genericName"));
-        med.setBrandName(rset.getString("brandName"));
-        med.setMedicineClass(rset.getString("medicineClass"));
+        med.setMedicineID(rset.getString("medicine_id"));
+        med.setGenericName(rset.getString("generic_name"));
+        med.setBrandName(rset.getString("brand_name"));
+        med.setMedicineClass(rset.getString("medicine_class"));
         med.setUses(rset.getString("uses"));
         med.setWarnings(rset.getString("warnings"));
-        med.setSideEffects(rset.getString("sideEffects"));
+        med.setSideEffects(rset.getString("side_effects"));
         med.setForm(rset.getString("form"));
 
         med.setDosageAmounts(getDosages(med.getMedicineID()));
@@ -325,7 +325,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
     BufferedWriter medWriter = Files.newBufferedWriter(Paths.get(medicineCSVFilePath));
 
     String medTitleLine =
-        "medicineID,genericName,brandName,medicineClass,uses,warnings,sideEffect,form";
+        "medicine_id,generic_name,brand_name,medicine_class,uses,warnings,side_effect,form";
     medWriter.write(medTitleLine);
     medWriter.newLine();
     for (Medicine med : medicineList) {
@@ -350,7 +350,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
     dosFile.createNewFile();
     BufferedWriter dosWriter = Files.newBufferedWriter(Paths.get(dosageCSVFilePath));
 
-    String dosTitleString = "medicineID, dosageAmount";
+    String dosTitleString = "medicine_id, dosage_amount";
     dosWriter.write(dosTitleString);
     dosWriter.newLine();
 
