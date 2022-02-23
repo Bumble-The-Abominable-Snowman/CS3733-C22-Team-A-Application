@@ -53,6 +53,7 @@ public class SaveBackupCtrl extends MasterCtrl {
         .addAll(
             "TowerLocations",
             "Employee",
+            "MedicalEquipment",
             "MedicalEquipmentServiceRequest",
             "FloralDeliveryServiceRequest",
             "FoodDeliveryServiceRequest",
