@@ -259,6 +259,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     try {
 
       List<Employee> employeeList1 = EmployeeDerbyImpl.readEmployeeCSV(csvFilePath);
+
       for (Employee employee : employeeList1) {
         Statement addStatement = Adb.connection.createStatement();
 

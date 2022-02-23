@@ -1,3 +1,5 @@
 equipment_id, equipment_type, is_clean, current_location, is_available
 EQ5678,Xray machine,true,FDEPT00201,true
-EQ5689,Xray machine,false,FEXIT00101,true
+EQ5689,Xray machine,FALSE,FEXIT00101,true
+EQ0000,Xray machine,TRUE,aSTOR00103, true
+EQ1111,Xray machine,TRUE,aSTOR00203, true

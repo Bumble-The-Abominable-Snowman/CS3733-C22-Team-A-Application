@@ -156,11 +156,11 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
         else if (dataIndex == 1) thisME.setEquipmentType(data);
         else if (dataIndex == 2) {
           Boolean boolData = Boolean.parseBoolean(data);
+          System.out.println("boolData: " + boolData);
           thisME.setIsClean(boolData);
         } else if (dataIndex == 3) thisME.setCurrentLocation(data);
         else if (dataIndex == 4) {
           Boolean boolData = Boolean.parseBoolean(data);
-          thisME.setIsClean(boolData);
           thisME.setIsAvailable(boolData);
         } else System.out.println("Invalid data, I broke::" + data);
         dataIndex++;
@@ -222,6 +222,10 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
     try {
 
       List<Equipment> List = EquipmentDerbyImpl.readMedicalEquipmentCSV(csvFilePath);
+      for(Equipment equip : List){
+        System.out.println("equip IsClean: " + equip.getIsClean());
+      }
+
       for (Equipment l : List) {
         Statement addStatement = Adb.connection.createStatement();
         addStatement.executeUpdate(
