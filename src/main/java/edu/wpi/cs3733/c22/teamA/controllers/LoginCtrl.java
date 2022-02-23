@@ -81,27 +81,21 @@ public class LoginCtrl {
 
   @FXML
   private void logIn() {
+      Adb.username = usernameBox.getText();
+      Adb.password = passwordBox.getText();
 
-    Adb.username = usernameBox.getText();
-    Adb.password = passwordBox.getText();
-
-    Adb.initialConnection("EmbeddedDriver");
-      if(!Adb.isInitialized){
-          try {
-              DriverManager.getConnection(String.format("jdbc:derby:%s;user=%s;shutdown=true", Adb.pathToDBA, Adb.username));
-          } catch (SQLException e) {
-              System.out.println(e);
-          }
-          Adb.initialConnection("EmbeddedDriver");
-      }
-
-    if (Adb.b) {
-        try {
-            sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
-        } catch (Exception e) {
-            System.out.println(e);
+    try {
+        Adb.initialConnection("EmbeddedDriver");
+        if(!Adb.isInitialized) {
+            try {
+                DriverManager.getConnection(String.format("jdbc:derby:%s;user=%s;shutdown=true", Adb.pathToDBA, Adb.username));
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+            Adb.initialConnection("EmbeddedDriver");
         }
-    }else{
+        sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
+    } catch (Exception e) {
         warningText.setFill(Color.RED);
 
         passwordBox.setText("");
