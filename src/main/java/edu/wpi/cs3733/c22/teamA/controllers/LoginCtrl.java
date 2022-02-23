@@ -1,6 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import javafx.fxml.FXML;
@@ -77,11 +78,11 @@ public class LoginCtrl {
 
   @FXML
   private void logIn() {
-    App.factory.setUsername(usernameBox.getText());
-    App.factory.setPassword(passwordBox.getText());
+    Adb.username = usernameBox.getText();
+    Adb.password = passwordBox.getText();
 
     try {
-      App.connection = App.factory.newConnection("app:audit component:event-consumer");
+      Adb.initialConnection("EmbeddedDriver");
 
       sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
     } catch (Exception e) {

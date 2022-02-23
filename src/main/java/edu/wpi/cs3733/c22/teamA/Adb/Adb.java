@@ -19,7 +19,13 @@ public class Adb {
 
   public static boolean usingEmbedded = true;
 
-  public static void initialConnection(String arg) {
+  public static String username;
+
+  public static String password;
+
+  public static boolean b = true;
+
+  public static void initialConnection(String arg) throws SQLException {
 
     boolean isInitialized = false;
     // Connection to database driver
@@ -45,15 +51,13 @@ public class Adb {
       return;
     }
 
-    try {
-
       // Check if database exist. If not then create one.
       try {
         connection =
             DriverManager.getConnection(
                 String.format(
-                    "jdbc:derby:%s;user=Admin;password=admin",
-                    pathToDBA)); // Modify the database name from TowerLocation to Adb
+                    "jdbc:derby:%s;user=%s;password=%s",
+                    pathToDBA, username, password)); // Modify the database name from TowerLocation to Adb
         // for better
         // recognition.
         isInitialized = true;
@@ -64,19 +68,19 @@ public class Adb {
             DriverManager.getConnection(String.format("jdbc:derby:%s;create=true", pathToDBA));
 
         turnOnBuiltInUsers(connection);
-//        connection.close();
+        connection.close();
+
+        connection =
+                DriverManager.getConnection(
+                        String.format(
+                                "jdbc:derby:%s;user=%s;password=%s",
+                                pathToDBA, username, password));
 
         System.out.println("DB initialized");
         // System.out.println("Closed connection");
 
         isInitialized = false;
       }
-
-    } catch (SQLException e) {
-      System.out.println("Connection failed");
-//      e.printStackTrace();
-      return;
-    }
 
     /*    try {
          Connection connection = DriverManager.getConnection("jdbc:derby:HospitalDBA;");
@@ -430,8 +434,8 @@ public class Adb {
     s.executeUpdate(setProperty + provider + ", 'BUILTIN')");
 
     // Create some sample users
-    s.executeUpdate(setProperty + "'derby.user.Admin', 'admin')");
-    s.executeUpdate(setProperty + "'derby.user.Guest', 'guest')");
+    s.executeUpdate(setProperty + "'derby.user.admin', 'admin')");
+    s.executeUpdate(setProperty + "'derby.user.guest', 'guest')");
 
     // Define noAccess as default connection mode
     s.executeUpdate(setProperty + defaultConnMode + ", 'noAccess')");
@@ -442,10 +446,10 @@ public class Adb {
     System.out.println("Value of defaultConnectionMode is " + rs.getString(1));
 
     // Define read-write user
-    s.executeUpdate(setProperty + fullAccessUsers + ", 'Admin')");
+    s.executeUpdate(setProperty + fullAccessUsers + ", 'admin')");
 
     // Define read-only user
-    s.executeUpdate(setProperty + readOnlyAccessUsers + ", 'Guest')");
+    s.executeUpdate(setProperty + readOnlyAccessUsers + ", 'guest')");
 
     // Confirm full-access users
     rs = s.executeQuery(getProperty + fullAccessUsers + ")");
