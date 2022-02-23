@@ -52,11 +52,10 @@ public class DataViewCtrl extends MasterCtrl {
     System.out.println(table.getSelectionModel().getSelectedItem().getValue().sr);
 
     if (HomeCtrl.sceneFlag == 1) {
-      ServiceRequestDerbyImpl<SR> serviceRequestDerby =
-          new ServiceRequestDerbyImpl<>(table.getSelectionModel().getSelectedItem().getValue().sr);
-      serviceRequestDerby.deleteServiceRequest(
-          table.getSelectionModel().getSelectedItem().getValue().sr);
       titleLabel.setText("Service Requests");
+      SR sr = table.getSelectionModel().getSelectedItem().getValue().sr;
+      ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl((SR.SRType) sr.getFields().get("sr_type"));
+      serviceRequestDerby.deleteServiceRequest(table.getSelectionModel().getSelectedItem().getValue().sr);
       initializeRequestsTable();
     } else if (HomeCtrl.sceneFlag == 2) {
       LocationDAO locationDAO = new LocationDerbyImpl();
@@ -147,6 +146,11 @@ public class DataViewCtrl extends MasterCtrl {
                   currentLocationText.getText(),
                   isAvailableCheckBox.isSelected());
               updateButton.setTextFill(Color.GREEN);
+              try {
+                this.initializeRequestsTable();
+              } catch (SQLException | InvocationTargetException | IllegalAccessException ex) {
+                ex.printStackTrace();
+              }
             } else {
               updateButton.setTextFill(Color.RED);
             }
@@ -228,7 +232,7 @@ public class DataViewCtrl extends MasterCtrl {
   boolean fillerYes = true;
 
   private StringBuilder detailLabel = new StringBuilder("No further details  ");
-  private List<Object> srList = new ArrayList<>();
+  private List<SR> srList = new ArrayList<>();
   private List<Location> locList = new ArrayList<>();
   private List<Equipment> eqList = new ArrayList<>();
   private List<Employee> empList = new ArrayList<>();
@@ -271,6 +275,7 @@ public class DataViewCtrl extends MasterCtrl {
   MenuItem viewDetails = new MenuItem("View Details");
   MenuItem modify = new MenuItem("Modify");
 
+  @FXML
   public void initialize() throws SQLException, InvocationTargetException, IllegalAccessException {
 
     configure();
@@ -292,6 +297,7 @@ public class DataViewCtrl extends MasterCtrl {
     }
   }
 
+  @FXML
   public void initializeLocationTable() {
 
     List<JFXTreeTableColumn<RecursiveObj, String>> locationColumns = new ArrayList<>();
@@ -359,6 +365,7 @@ public class DataViewCtrl extends MasterCtrl {
     this.setupViewDetailsAndModify();
   }
 
+  @FXML
   public void initializeRequestsTable()
       throws SQLException, InvocationTargetException, IllegalAccessException {
 
@@ -376,12 +383,12 @@ public class DataViewCtrl extends MasterCtrl {
         .get(0)
         .setCellValueFactory(
             (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-                new SimpleStringProperty(param.getValue().getValue().sr.getSrType().toString()));
+                new SimpleStringProperty(param.getValue().getValue().sr.getFields().get("sr_type").toString()));
     srColumns
         .get(1)
         .setCellValueFactory(
             (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-                new SimpleStringProperty(param.getValue().getValue().sr.getRequestID()));
+                new SimpleStringProperty(param.getValue().getValue().sr.getFields().get("request_id").toString()));
     srColumns
         .get(2)
         .setCellValueFactory(
@@ -406,34 +413,32 @@ public class DataViewCtrl extends MasterCtrl {
         .get(6)
         .setCellValueFactory(
             (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-                new SimpleStringProperty(param.getValue().getValue().sr.getRequestTime()));
+                new SimpleStringProperty(param.getValue().getValue().sr.getFields().get("request_time").toString()));
     srColumns
         .get(7)
         .setCellValueFactory(
             (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-                new SimpleStringProperty(param.getValue().getValue().sr.getRequestStatus()));
+                new SimpleStringProperty(param.getValue().getValue().sr.getFields().get("request_status").toString()));
     srColumns
         .get(8)
         .setCellValueFactory(
             (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-                new SimpleStringProperty(param.getValue().getValue().sr.getComments()));
+                new SimpleStringProperty(param.getValue().getValue().sr.getFields().get("request_priority").toString()));
     srColumns
         .get(9)
         .setCellValueFactory(
             (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-                new SimpleStringProperty(param.getValue().getValue().sr.getRequestPriority()));
+                new SimpleStringProperty(param.getValue().getValue().sr.getFields().get("comments").toString()));
 
     this.srList = ServiceRequestDerbyImpl.getAllServiceRequestList();
     ObservableList<RecursiveObj> requests = FXCollections.observableArrayList();
-    for (Object sr : this.srList) {
+    for (SR sr : this.srList) {
       RecursiveObj recursiveSR = new RecursiveObj();
-      recursiveSR.sr = (SR) sr;
-      recursiveSR.locStart = new LocationDerbyImpl().getLocationNode(((SR) sr).getStartLocation());
-      recursiveSR.locEnd = new LocationDerbyImpl().getLocationNode(((SR) sr).getEndLocation());
-      recursiveSR.employeeReq =
-          new EmployeeDerbyImpl().getEmployee(((SR) sr).getEmployeeRequested());
-      recursiveSR.employeeAss =
-          new EmployeeDerbyImpl().getEmployee(((SR) sr).getEmployeeAssigned());
+      recursiveSR.sr = sr;
+      recursiveSR.locStart = (Location) sr.getFields().get("start_location");
+      recursiveSR.locEnd = (Location) sr.getFields().get("end_location");
+      recursiveSR.employeeReq = (Employee) sr.getFields().get("employee_requested");
+      recursiveSR.employeeAss = (Employee) sr.getFields().get("employee_assigned");
       requests.add(recursiveSR);
     }
 
@@ -447,6 +452,7 @@ public class DataViewCtrl extends MasterCtrl {
     this.setupViewDetailsAndModify();
   }
 
+  @FXML
   public void initializeEquipmentTable() {
 
     List<JFXTreeTableColumn<RecursiveObj, String>> equipmentColumns = new ArrayList<>();
@@ -506,6 +512,7 @@ public class DataViewCtrl extends MasterCtrl {
     this.setupViewDetailsAndModify();
   }
 
+  @FXML
   public void initializeEmployeeTable() {
 
     List<JFXTreeTableColumn<RecursiveObj, String>> employeeColumns = new ArrayList<>();
@@ -579,30 +586,35 @@ public class DataViewCtrl extends MasterCtrl {
     this.setupViewDetailsAndModify();
   }
 
+  @FXML
   private void createDetailsPopup() throws InvocationTargetException, IllegalAccessException {
     DataViewCtrl.detailsPopup.get().hide();
 
     this.detailLabel = new StringBuilder("Nothing selected  ");
 
     if (HomeCtrl.sceneFlag == 1 && table.getSelectionModel().getSelectedIndex() > -1) {
-      this.detailLabel = new StringBuilder("");
+      this.detailLabel = new StringBuilder();
 
-      Object sr = this.srList.get(table.getSelectionModel().getSelectedIndex());
-      System.out.println(sr);
-      Method[] methods = sr.getClass().getMethods();
-      for (Method method : methods) {
-        boolean is_the_method_exclusive = method.getDeclaringClass().equals(sr.getClass());
-        boolean starts_with_get = method.getName().split("^get")[0].equals("");
+      SR sr = this.srList.get(table.getSelectionModel().getSelectedIndex());
 
-        if (starts_with_get && is_the_method_exclusive) {
-          try {
-            this.detailLabel.append(
-                String.format("%s: %s, ", method.getName().substring(3), method.invoke(sr)));
-          } catch (IllegalAccessException | InvocationTargetException ex) {
-            ex.printStackTrace();
-          }
+      for (String key : sr.getStringFields().keySet()) {
+        if (!(Objects.equals(key, "request_id")
+                || Objects.equals(key, "start_location")
+                || Objects.equals(key, "end_location")
+                || Objects.equals(key, "employee_requested")
+                || Objects.equals(key, "employee_assigned")
+                || Objects.equals(key, "request_time")
+                || Objects.equals(key, "request_status")
+                || Objects.equals(key, "request_priority")
+                || Objects.equals(key, "comments")
+                || Objects.equals(key, "sr_type")))
+        {
+          this.detailLabel.append(
+                  String.format("%s: %s, ", key, sr.getStringFields().get(key)));
         }
       }
+
+
       if (this.detailLabel.length() > 1) {
         this.detailLabel.delete(this.detailLabel.length() - 2, this.detailLabel.length());
       }
@@ -627,6 +639,7 @@ public class DataViewCtrl extends MasterCtrl {
     DataViewCtrl.detailsPopup.set(p);
   }
 
+  @FXML
   private void createModifyPopup() throws InvocationTargetException, IllegalAccessException {
     DataViewCtrl.modifyPopup.get().hide();
 
@@ -659,40 +672,33 @@ public class DataViewCtrl extends MasterCtrl {
     // fill out the combobox
     switch (HomeCtrl.sceneFlag) {
       case 1:
-        Object sr = this.srList.get(table.getSelectionModel().getSelectedIndex());
-        methods = sr.getClass().getMethods();
-        for (Method method : methods) {
-          boolean is_the_method_of_super = method.getDeclaringClass().equals(SR.class);
-          boolean is_the_method_exclusive = method.getDeclaringClass().equals(sr.getClass());
-          boolean starts_with_set = method.getName().split("^set")[0].equals("");
-          boolean is_not_sr_type = !method.getName().toLowerCase(Locale.ROOT).contains("srtype");
+        SR sr = this.srList.get(table.getSelectionModel().getSelectedIndex());
 
-          if (is_not_sr_type
-              && starts_with_set
-              && (is_the_method_of_super || is_the_method_exclusive)) {
-            field.getItems().addAll(method.getName().substring(3));
-          }
-        }
+        field.getItems().addAll(sr.getStringFields().keySet());
 
         field.setOnAction(
             e -> {
               if (field.getSelectionModel().getSelectedIndex() > -1) {
-                for (Method method : methods) {
-                  boolean starts_with_get = method.getName().split("^get")[0].equals("");
-                  boolean contains_name =
-                      method
-                          .getName()
-                          .toLowerCase(Locale.ROOT)
-                          .contains(
-                              field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
-                  if (starts_with_get && contains_name) {
-                    try {
-                      value.setText((String) method.invoke(sr));
-                    } catch (IllegalAccessException | InvocationTargetException ex) {
-                      ex.printStackTrace();
-                    }
-                  }
-                }
+                value.setText(sr.getStringFields().get(field.getSelectionModel().getSelectedItem()));
+
+
+
+//                for (Method method : methods) {
+//                  boolean starts_with_get = method.getName().split("^get")[0].equals("");
+//                  boolean contains_name =
+//                      method
+//                          .getName()
+//                          .toLowerCase(Locale.ROOT)
+//                          .contains(
+//                              field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
+//                  if (starts_with_get && contains_name) {
+//                    try {
+//                      value.setText((String) method.invoke(sr));
+//                    } catch (IllegalAccessException | InvocationTargetException ex) {
+//                      ex.printStackTrace();
+//                    }
+//                  }
+//                }
               }
             });
 
@@ -700,27 +706,16 @@ public class DataViewCtrl extends MasterCtrl {
             e -> {
               if (field.getSelectionModel().getSelectedIndex() > -1
                   && value.getText().length() > 0) {
-                for (Method method : methods) {
-                  boolean starts_with_set = method.getName().split("^set")[0].equals("");
-                  boolean contains_name =
-                      method
-                          .getName()
-                          .toLowerCase(Locale.ROOT)
-                          .contains(
-                              field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
-                  if (starts_with_set && contains_name) {
 
-                    ServiceRequestDerbyImpl<Object> objectServiceRequestDerby =
-                        new ServiceRequestDerbyImpl<>(sr);
-                    try {
-                      method.invoke(sr, value.getText());
-                      objectServiceRequestDerby.updateServiceRequest((SR) sr);
-                      updateButton.setTextFill(Color.GREEN);
-                    } catch (SQLException | InvocationTargetException | IllegalAccessException ex) {
-                      ex.printStackTrace();
-                      updateButton.setTextFill(Color.RED);
-                    }
-                  }
+                ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl((SR.SRType) sr.getFields().get("sr_type"));
+                try {
+                  sr.setFieldByString(field.getSelectionModel().getSelectedItem(), value.getText());
+                  serviceRequestDerby.updateServiceRequest(sr);
+
+                  updateButton.setTextFill(Color.GREEN);
+                } catch (SQLException | IllegalAccessException | InvocationTargetException ex) {
+                  ex.printStackTrace();
+                  updateButton.setTextFill(Color.RED);
                 }
               }
             });
@@ -782,6 +777,11 @@ public class DataViewCtrl extends MasterCtrl {
                       locationDerby.updateLocation(
                           loc.getNodeID(), field.getValue(), value.getText());
                       updateButton.setTextFill(Color.GREEN);
+                      try {
+                        this.initializeRequestsTable();
+                      } catch (SQLException | InvocationTargetException | IllegalAccessException ex) {
+                        ex.printStackTrace();
+                      }
                     } catch (Exception ex) {
                       ex.printStackTrace();
                       updateButton.setTextFill(Color.RED);
@@ -849,6 +849,11 @@ public class DataViewCtrl extends MasterCtrl {
                       equipmentDerby.updateMedicalEquipment(
                           eq.getEquipmentID(), field.getValue(), value.getText());
                       updateButton.setTextFill(Color.GREEN);
+                      try {
+                        this.initializeRequestsTable();
+                      } catch (SQLException | InvocationTargetException | IllegalAccessException ex) {
+                        ex.printStackTrace();
+                      }
                     } catch (Exception ex) {
                       ex.printStackTrace();
                       updateButton.setTextFill(Color.RED);
@@ -916,6 +921,11 @@ public class DataViewCtrl extends MasterCtrl {
                       employeeDerby.updateEmployee(
                           emp.getEmployeeID(), field.getValue(), value.getText());
                       updateButton.setTextFill(Color.GREEN);
+                      try {
+                        this.initializeRequestsTable();
+                      } catch (SQLException | InvocationTargetException | IllegalAccessException ex) {
+                        ex.printStackTrace();
+                      }
                     } catch (Exception ex) {
                       ex.printStackTrace();
                       updateButton.setTextFill(Color.RED);
@@ -951,6 +961,7 @@ public class DataViewCtrl extends MasterCtrl {
     DataViewCtrl.modifyPopup.set(p);
   }
 
+  @FXML
   private void setupViewDetailsAndModify() {
 
     this.rightClickMenu.getItems().addAll(this.viewDetails);
