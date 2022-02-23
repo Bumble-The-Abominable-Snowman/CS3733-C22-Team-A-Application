@@ -52,6 +52,8 @@ public abstract class MasterCtrl {
   double stageWidth;
   double stageHeight;
 
+  boolean animating = false;
+
   public void configure() {
 
     selectSRButtonSize = selectSRButton.getFont().getSize();
@@ -67,6 +69,8 @@ public abstract class MasterCtrl {
     titleTextSize = titleLabel.getFont().getSize();
 
     drawer.setSidePane(menuBox);
+    drawer.setOnDrawerClosed(e -> animating = false);
+    drawer.setOnDrawerOpened(e -> animating = false);
     HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(hamburger);
     burgerTask.setRate(-1);
 
@@ -76,16 +80,19 @@ public abstract class MasterCtrl {
     hamburger.addEventHandler(
         MouseEvent.MOUSE_PRESSED,
         (e) -> {
-          burgerTask.setRate(burgerTask.getRate() * -1);
-          burgerTask.play();
-          if (drawer.isOpened()) {
-            drawer.close();
-            drawer.toBack();
-            menuBox.toBack();
-          } else {
-            drawer.open();
-            drawer.toFront();
-            menuBox.toFront();
+          if (!animating) {
+            animating = true;
+            burgerTask.setRate(burgerTask.getRate() * -1);
+            burgerTask.play();
+            if (drawer.isOpened()) {
+              drawer.close();
+              drawer.toBack();
+              menuBox.toBack();
+            } else {
+              drawer.open();
+              drawer.toFront();
+              menuBox.toFront();
+            }
           }
         });
 
