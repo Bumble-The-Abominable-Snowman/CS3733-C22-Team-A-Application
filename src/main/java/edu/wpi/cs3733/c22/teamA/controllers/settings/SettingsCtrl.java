@@ -7,6 +7,8 @@ import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
 import java.io.IOException;
+import java.sql.SQLException;
+
 import javafx.fxml.FXML;
 
 public class SettingsCtrl extends MasterCtrl {
@@ -57,12 +59,16 @@ public class SettingsCtrl extends MasterCtrl {
   }
 
   public void toggleClientServer() {
-    if (toggleClientServerButton.isSelected()) {
-      Adb.initialConnection("ClientDriver");
-      System.out.println("Client Driver");
-    } else {
-      Adb.initialConnection("EmbeddedDriver");
-      System.out.println("Embedded Driver");
+    try{
+      if (toggleClientServerButton.isSelected()) {
+        Adb.initialConnection("ClientDriver");
+        System.out.println("Client Driver");
+      } else {
+        Adb.initialConnection("EmbeddedDriver");
+        System.out.println("Embedded Driver");
+      }
+    }catch (SQLException e){
+      System.out.println(e);
     }
     // add client server toggle code here
   }

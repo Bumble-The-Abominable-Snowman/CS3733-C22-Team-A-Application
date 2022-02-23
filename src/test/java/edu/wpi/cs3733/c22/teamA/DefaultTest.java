@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 public class DefaultTest {
 
   @Test
-  public void medicineTest() throws IOException{
+  public void medicineTest() throws IOException, SQLException {
     Adb.initialConnection("EmbeddedDriver");
 
     System.out.println("\n Starting MedicineTest");
@@ -119,10 +119,18 @@ public class DefaultTest {
   }
 
   @Test
-  public void testConnection(){
+  public void testConnection() throws SQLException {
     Adb.username = "admin";
-    Adb.password = "admin";
+    Adb.password = "";
     Adb.initialConnection("EmbeddedDriver");
+    if(!Adb.isInitialized){
+      try {
+        DriverManager.getConnection(String.format("jdbc:derby:%s;user=%s;shutdown=true", Adb.pathToDBA, Adb.username));
+      } catch (SQLException e) {
+        System.out.println(e);
+      }
+      Adb.initialConnection("EmbeddedDriver");
+    }
   }
   //    Connection connection = null;
   //    Adb.initialConnection("EmbeddedDriver");
