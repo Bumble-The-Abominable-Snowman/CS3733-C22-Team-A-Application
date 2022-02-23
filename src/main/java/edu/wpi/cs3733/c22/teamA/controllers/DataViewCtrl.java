@@ -410,7 +410,7 @@ public class DataViewCtrl extends MasterCtrl {
       throws SQLException, InvocationTargetException, IllegalAccessException {
 
     EmployeeDAO employeeDAO = new EmployeeDerbyImpl();
-    selectEmployeeBox.getItems().addAll(employeeDAO.getEmployeeList().stream().map(Employee::getFullName));
+    selectEmployeeBox.getItems().addAll(employeeDAO.getEmployeeList().stream().map(Employee::getFullName).collect(Collectors.toList()));
     selectEmployeeBox.setVisible(true);
     List<JFXTreeTableColumn<RecursiveObj, String>> srColumns = new ArrayList<>();
 

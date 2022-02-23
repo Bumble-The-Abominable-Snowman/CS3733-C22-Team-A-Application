@@ -86,6 +86,7 @@ public class MapCtrl extends MasterCtrl {
   public void initialize() {
     configure();
 
+    floorSelectionComboBox.toFront();
     markerManager = new MarkerManager(locationDAO, equipmentDAO, anchorPane);
     checkBoxManager =
         new CheckBoxManager(

@@ -34,7 +34,7 @@ public abstract class MasterCtrl {
   @FXML public JFXButton settingsButton;
   @FXML public JFXButton exitButton;
   @FXML public JFXButton loginButton;
-  @FXML public JFXButton aboutButton;
+  //@FXML public JFXButton aboutButton;
   @FXML public JFXButton homeButton;
 
   public final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
@@ -73,23 +73,23 @@ public abstract class MasterCtrl {
       account = ACCOUNT.ADMIN;
     }
 
-if (account == ACCOUNT.STAFF) {
+    if (account == ACCOUNT.STAFF) {
 
-  selectSRButton.setVisible(true);
-  mapButton.setVisible(true);
-  viewSRButton.setVisible(true);
-  viewEmployeesButton.setStyle("-fx-background-color: #808080");
-  viewEmployeesButton.setDisable(true);
-  viewLocationsButton.setVisible(true);
-  viewEquipmentButton.setVisible(true);
-  settingsButton.setStyle("-fx-background-color: #808080");
-  settingsButton.setDisable(true);
-  exitButton.setVisible(true);
-  loginButton.setVisible(true);
-  aboutButton.setVisible(true);
-  homeButton.setVisible(true);
+      selectSRButton.setVisible(true);
+      mapButton.setVisible(true);
+      viewSRButton.setVisible(true);
+      viewEmployeesButton.setStyle("-fx-background-color: #808080");
+      viewEmployeesButton.setDisable(true);
+      viewLocationsButton.setVisible(true);
+      viewEquipmentButton.setVisible(true);
+      settingsButton.setStyle("-fx-background-color: #808080");
+      settingsButton.setDisable(true);
+      exitButton.setVisible(true);
+      loginButton.setVisible(true);
+     // aboutButton.setVisible(true);
+      homeButton.setVisible(true);
 
-}
+    }
 
     selectSRButtonSize = selectSRButton.getFont().getSize();
     mapButtonSize = mapButton.getFont().getSize();
@@ -101,8 +101,8 @@ if (account == ACCOUNT.STAFF) {
     exitButtonSize = exitButton.getFont().getSize();
     loginButtonSize = loginButton.getFont().getSize();
     homeButtonSize = homeButton.getFont().getSize();
-    aboutButtonSize = aboutButton.getFont().getSize();
-    titleTextSize = titleLabel.getFont().getSize();
+    //aboutButtonSize = aboutButton.getFont().getSize();
+    //titleTextSize = titleLabel.getFont().getSize();
 
     drawer.setSidePane(menuBox);
     drawer.setOnDrawerClosed(e -> animating = false);
@@ -112,7 +112,6 @@ if (account == ACCOUNT.STAFF) {
 
     drawer.toBack();
     menuBox.toBack();
-
     hamburger.addEventHandler(
         MouseEvent.MOUSE_PRESSED,
         (e) -> {
@@ -134,6 +133,7 @@ if (account == ACCOUNT.STAFF) {
 
     updateSize();
 
+
     App.getStage()
         .widthProperty()
         .addListener(
@@ -147,7 +147,7 @@ if (account == ACCOUNT.STAFF) {
     stageWidth = App.getStage().getWidth();
     stageHeight = App.getStage().getHeight();
 
-    titleLabel.setStyle("-fx-font-size: " + ((stageWidth / 1000) * titleTextSize) + "pt;");
+//    titleLabel.setStyle("-fx-font-size: " + ((stageWidth / 1000) * titleTextSize) + "pt;");
     selectSRButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * selectSRButtonSize) + "pt;");
     mapButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * mapButtonSize) + "pt;");
     viewSRButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * viewSRButtonSize) + "pt;");
@@ -160,7 +160,7 @@ if (account == ACCOUNT.STAFF) {
         "-fx-font-size: " + ((stageWidth / 1000) * viewLocationsButtonSize) + "pt;");
     exitButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * exitButtonSize) + "pt;");
     loginButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * loginButtonSize) + "pt;");
-    aboutButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * aboutButtonSize) + "pt;");
+    //aboutButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * aboutButtonSize) + "pt;");
     homeButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * homeButtonSize) + "pt;");
   }
 
