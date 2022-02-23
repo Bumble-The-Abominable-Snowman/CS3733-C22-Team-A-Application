@@ -913,7 +913,6 @@ public class DataViewCtrl extends MasterCtrl {
                 }
               }
             });
-
         break;
       case 4:
         Employee emp = this.empList.get(table.getSelectionModel().getSelectedIndex());
