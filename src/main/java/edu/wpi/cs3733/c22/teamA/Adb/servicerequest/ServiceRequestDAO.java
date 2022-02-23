@@ -26,6 +26,5 @@ public interface ServiceRequestDAO<T> {
           SQLException;
 
   void exportToCSV(String csvFilePath)
-      throws IOException, ParseException, InvocationTargetException, IllegalAccessException,
-          SQLException;
+          throws Exception;
 }
