@@ -1,21 +1,21 @@
 getEquipmentID, getEquipmentType, isClean, getCurrentLocation, isAvailable
-EQ5678,Xray machine,true,FDEPT00201,true
-EQ5689,Xray machine,true,FDEPT00201,true
-EQ0001,Infusion Pump,true,HBATH00102,true
-EQ0002,Infusion Pump,true,FSTAI00101,true
-EQ0003,Bed,true,aPATI00903,true
+EQ5678,Xray machine,true,aSTOR00103,true
+EQ5689,Xray machine,true,aSTOR00103,true
+EQ0001,Infusion Pump,true,aSTOR00103,true
+EQ0002,Infusion Pump,true,aPATI00903,true
+EQ0003,Bed,true,aPATI00303,true
 EQ0004,Bed,false,aPATI00903,true
 EQ0005,Recliner,true,HRETL00202,true
-EQ0006,Xray machine,true,HRETL00202,true
-EQ0007,Infusion Pump,true,HRETL00202,true
-EQ0008,Recliner,true,FSERV00301,true
-EQ0009,Recliner,false,aPATI01203,true
+EQ0006,Xray machine,true,aPATI01203,true
+EQ0007,Infusion Pump,true,aPATI01203,true
+EQ0008,Recliner,true,aSTOR00103,true
+EQ0009,Recliner,false,aPATI00303,true
 EQ0010,Bed,true,aPATI01203,true
 EQ0011,Bed,false,aPATI01603,true
 EQ0012,Infusion Pump,true,aPATI01603,true
 EQ0013,Xray machine,false,aPATI01603,true
 EQ0014,Xray machine,false,aPATI01803,true
-EQ0015,Bed,true,CREST001L1,true
-EQ0016,Bed,true,WELEV00ML1,true
-EQ0017,Recliner,false,HHALL00903,false
-EQ0018,Bed,true,FEXIT00101,true
+EQ0015,Bed,true,aPATI01003,true
+EQ0016,Bed,true,aPATI01003,true
+EQ0017,Recliner,false,aPATI01603,false
+EQ0018,Bed,true,aPATI01603,true
