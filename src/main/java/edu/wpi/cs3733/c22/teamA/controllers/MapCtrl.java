@@ -37,6 +37,8 @@ public class MapCtrl extends MasterCtrl {
 
   // Gesture Pane Manager
   @FXML private JFXComboBox<String> floorSelectionComboBox;
+  @FXML private JFXComboBox<String> pfFromComboBox;
+  @FXML private JFXComboBox<String> pfToComboBox;
   @FXML private GesturePane gesturePane;
   private AnchorPane anchorPane;
   private ImageView mapImageView;
@@ -58,6 +60,7 @@ public class MapCtrl extends MasterCtrl {
   private SelectionManager selectionManager;
   private Searcher searcher;
   private SideView sideView;
+  private PathFinder pathFinder;
 
   public final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
@@ -92,7 +95,7 @@ public class MapCtrl extends MasterCtrl {
     selectionManager = new SelectionManager(inputVBox);
     searcher = new Searcher(searchComboBox);
     sideView = new SideView(anchorPane, mapImageView, markerManager);
-    List<JFXButton> buttons = new ArrayList<JFXButton>();
+    List<JFXButton> buttons = new ArrayList<>();
     buttons.add(newLocButton);
     buttons.add(findPathButton);
     buttons.add(clearPathButton);
@@ -105,6 +108,8 @@ public class MapCtrl extends MasterCtrl {
             searcher,
             sideView,
             buttons);
+    pathFinder = new PathFinder("db/CSVs/AllEdgesHand.csv", pfFromComboBox, pfToComboBox, markerManager);
+
     mapManager.init();
     sideView.init();
   }
@@ -121,6 +126,7 @@ public class MapCtrl extends MasterCtrl {
               mapManager.reset();
               mapManager.initFloor(
                   newValue, ((int) mapImageView.getLayoutX()), (int) mapImageView.getLayoutY());
+              pathFinder.updateComboBoxes();
             });
   }
 
@@ -128,9 +134,13 @@ public class MapCtrl extends MasterCtrl {
     mapManager.newLocationPressed();
   }
 
-  public void findPath(ActionEvent actionEvent) {}
+  public void findPath() {
+    pathFinder.drawPath(pathFinder.findPath(), anchorPane);
+  }
 
-  public void clearPath(ActionEvent actionEvent) {}
+  public void clearPath() {
+    pathFinder.clearPath(anchorPane);
+  }
 
   public void goToLocationTable() throws IOException {
     this.onSceneSwitch();
