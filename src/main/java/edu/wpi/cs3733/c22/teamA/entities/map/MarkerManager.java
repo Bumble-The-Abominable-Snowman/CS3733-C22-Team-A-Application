@@ -31,6 +31,10 @@ public class MarkerManager {
   private int mapLayoutY;
   private AnchorPane anchorPane;
 
+  // shit to make edit / save work
+  String floor;
+  LocationDAO locationDAO;
+
   public MarkerManager(LocationDAO locationDAO, EquipmentDAO equipmentDAO, AnchorPane anchorPane) {
     floorLocations = new ArrayList<>();
     currentFloorIDs = new HashSet<>();
@@ -41,6 +45,7 @@ public class MarkerManager {
     serviceRequestMarkers = new ArrayList<>();
     floorEquipment = new ArrayList<>();
     floorSRs = new ArrayList<>();
+    this.locationDAO=locationDAO;
 
     allLocations = locationDAO.getNodeList();
     allEquipments = equipmentDAO.getMedicalEquipmentList();
@@ -65,6 +70,7 @@ public class MarkerManager {
       SelectionManager selectionManager,
       CheckBoxManager checkBoxManager,
       GesturePaneManager gesturePaneManager) {
+      this.floor = floor;
     getFloorInfo(floor);
     createFloorEntities(selectionManager, checkBoxManager, gesturePaneManager);
     initialDraw();
@@ -161,7 +167,9 @@ public class MarkerManager {
 
   private void initialDraw() {
     for (LocationMarker l : locationMarkers) {
-      l.draw(anchorPane);
+        if(!l.getLocation().getNodeID().equals("")) {
+            l.draw(anchorPane);
+        }
       if (l.getEquipmentMarker() != null) {
         l.getEquipmentMarker().draw(anchorPane);
       }
@@ -170,10 +178,34 @@ public class MarkerManager {
       }
     }
   }
+  // TODO probably move this to selectionManager
+    public void newLocationPressed(SelectionManager selectionManager, CheckBoxManager checkBoxManager, GesturePaneManager gesturePaneManager) {
+      // only one new location at a time
+      if(!idToLocationMarker.containsKey("New")) {
+          // create fields so shit isnt null and the vbox component wont break
+          Location newLocation = new Location();
+          newLocation.setNodeID("New");
+          newLocation.setShortName("New");
+          newLocation.setLongName("New");
+          newLocation.setFloor("1");
+          newLocation.setNodeType("New");
+          newLocation.setBuilding("Tower");
+          newLocation.setYCoord(10);
+          newLocation.setXCoord(10);
+          // make marker for location where its actually usable
+          LocationMarker newLocationMarker = MarkerMaker.makeLocationMarker(newLocation, 10, 10);
+          locationMarkers.add(newLocationMarker);
+          idToLocationMarker.put("New", newLocationMarker);
+          setDragLocation(newLocationMarker, selectionManager, checkBoxManager, gesturePaneManager);
+          midRunDraw();
+          selectionManager.existingLocationSelected(newLocationMarker);
+      }
+    }
 
-  private void midRunDraw() {
+  public void midRunDraw() {
     for (LocationMarker l : locationMarkers) {
       l.clear(anchorPane);
+        System.out.println(l.getLabel().getText());
       if (l.getEquipmentMarker() != null) {
         l.getEquipmentMarker().clear(anchorPane);
       }
@@ -187,7 +219,19 @@ public class MarkerManager {
     for (EquipmentMarker e : equipmentMarkers) {
       e.clear(anchorPane);
     }
+      System.out.println("here");
     initialDraw();
+  }
+
+  public void redrawEditedLocation(){
+      allLocations.clear();
+      allLocations = locationDAO.getNodeList();
+      System.out.println("redraw pre checking");
+      floorLocations.clear();
+      getFloorLocations(floor);
+      locationMarkers.clear();
+
+      midRunDraw();
   }
 
   private void clear() {
@@ -490,7 +534,12 @@ public class MarkerManager {
     Button button = locationMarker.getButton();
     button.setOnAction(
         event -> {
-          selectionManager.existingLocationSelected(locationMarker.getLocation());
+            try {
+                selectionManager.existingLocationSelected(locationMarker);
+            }
+            catch(Exception e){
+                System.out.println("Dragged too fast :/");
+            }
         });
     button.setOnMousePressed(
         mouseEvent -> {
@@ -500,7 +549,12 @@ public class MarkerManager {
           dragDelta.mouseX = mouseEvent.getSceneX();
           dragDelta.mouseY = mouseEvent.getSceneY();
           button.setCursor(Cursor.MOVE);
-          selectionManager.existingLocationSelected(locationMarker.getLocation());
+          try {
+              selectionManager.existingLocationSelected(locationMarker);
+          }
+          catch(Exception e){
+              System.out.println("Dragged too fast 2");
+          }
 
           selectionManager.getEditButton().setDisable(false);
           selectionManager.getDeleteButton().setDisable(false);
@@ -561,16 +615,7 @@ public class MarkerManager {
         });
   }
 
-  public void newLocationPressed() {
-    Location newLocation = new Location();
-    newLocation.setXCoord(10);
-    newLocation.setYCoord(10);
-    Button newButton = new Button();
-    Label newLabel = new Label("ADDED");
-    LocationMarker newLocationMarker = new LocationMarker(newButton, newLabel, newLocation);
-    locationMarkers.add(newLocationMarker);
-    midRunDraw();
-  }
+
 }
 /*
   private Map<Button, LocationMarker> buttonLocationMarker;

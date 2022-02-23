@@ -1,5 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.entities.map;
 
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
+
 // Facade
 public class MapManager {
 
@@ -58,7 +60,7 @@ public class MapManager {
   }
 
   public void newLocationPressed() {
-    markerManager.newLocationPressed();
+    markerManager.newLocationPressed(selectionManager, checkBoxManager, gesturePaneManager);
   }
 
   public void reset() {

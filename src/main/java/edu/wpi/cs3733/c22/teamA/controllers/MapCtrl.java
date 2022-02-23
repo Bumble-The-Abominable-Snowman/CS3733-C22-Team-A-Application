@@ -85,7 +85,7 @@ public class MapCtrl extends MasterCtrl {
             showTextCheckBox,
             dragCheckBox);
     gesturePaneManager = new GesturePaneManager(gesturePane, anchorPane, mapImageView);
-    selectionManager = new SelectionManager(inputVBox);
+    selectionManager = new SelectionManager(inputVBox, markerManager);
     searcher = new Searcher(searchComboBox);
     sideView = new SideView(anchorPane, mapImageView, markerManager);
     mapManager =
