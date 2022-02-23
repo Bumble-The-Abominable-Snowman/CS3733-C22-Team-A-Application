@@ -2,10 +2,13 @@ package edu.wpi.cs3733.c22.teamA.entities.map;
 
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
+
+import java.sql.SQLException;
 import java.util.*;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -31,6 +34,13 @@ public class MarkerManager {
   private int mapLayoutY;
   private AnchorPane anchorPane;
 
+  // shit to make edit / save work
+    // TODO make service request database work
+  String floor;
+  LocationDAO locationDAO;
+  EquipmentDAO equipmentDAO;
+  //ServiceRequestDAO SRDAO;
+
   public MarkerManager(LocationDAO locationDAO, EquipmentDAO equipmentDAO, AnchorPane anchorPane) {
     floorLocations = new ArrayList<>();
     currentFloorIDs = new HashSet<>();
@@ -41,6 +51,9 @@ public class MarkerManager {
     serviceRequestMarkers = new ArrayList<>();
     floorEquipment = new ArrayList<>();
     floorSRs = new ArrayList<>();
+    this.locationDAO=locationDAO;
+    this.equipmentDAO=equipmentDAO;
+    //this.SRDAO=SRDAO;
 
     allLocations = locationDAO.getNodeList();
     allEquipments = equipmentDAO.getMedicalEquipmentList();
@@ -65,7 +78,7 @@ public class MarkerManager {
       SelectionManager selectionManager,
       CheckBoxManager checkBoxManager,
       GesturePaneManager gesturePaneManager) {
-    clear();
+      this.floor = floor;
     getFloorInfo(floor);
     createFloorEntities(selectionManager, checkBoxManager, gesturePaneManager);
     initialDraw();
@@ -73,7 +86,8 @@ public class MarkerManager {
     this.mapLayoutY = mapLayoutY;
   }
 
-  private void getFloorInfo(String floor) {
+  public void getFloorInfo(String floor) {
+    clear();
     getFloorLocations(floor);
     getEquipmentLocations();
     getSRLocations();
@@ -98,19 +112,31 @@ public class MarkerManager {
 
   private void getSRLocations() {
     for (SR sr : allSRs) {
-      if (currentFloorIDs.contains(sr.getEndLocation())) {
+      if (currentFloorIDs.contains( ((Location) sr.getFields().get("end_location")).getNodeID())) {
         floorSRs.add(sr);
       }
     }
   }
+
+  public List<SR> returnSRLocations() {
+    return floorSRs;
+  }
+
+  public List<Equipment> returnEquipmentLocations() {
+    return floorEquipment;
+  }
+
+  public List<Location> returnFloorLocations() {
+        return floorLocations;
+    }
 
   private void createFloorEntities(
       SelectionManager selectionManager,
       CheckBoxManager checkBoxManager,
       GesturePaneManager gesturePaneManager) {
     createFloorLocations(selectionManager, checkBoxManager, gesturePaneManager);
-    createFloorEquipments(selectionManager);
-    createFloorSRs(selectionManager);
+    createFloorEquipments(selectionManager, checkBoxManager, gesturePaneManager);
+    createFloorSRs(selectionManager, checkBoxManager, gesturePaneManager);
   }
 
   private void createFloorLocations(
@@ -125,29 +151,37 @@ public class MarkerManager {
     }
   }
 
-  private void createFloorEquipments(SelectionManager selectionManager) {
+  private void createFloorEquipments(
+      SelectionManager selectionManager,
+      CheckBoxManager checkBoxManager,
+      GesturePaneManager gesturePaneManager) {
     for (Equipment e : floorEquipment) {
       EquipmentMarker newEquipmentMarker =
           MarkerMaker.makeEquipmentMarker(
               e, idToLocationMarker.get(e.getCurrentLocation()), mapLayoutX, mapLayoutY);
       equipmentMarkers.add(newEquipmentMarker);
-      setDragEquipment(newEquipmentMarker, selectionManager);
+      setDragEquipment(newEquipmentMarker, selectionManager, checkBoxManager, gesturePaneManager);
     }
   }
 
-  private void createFloorSRs(SelectionManager selectionManager) {
+  private void createFloorSRs(
+      SelectionManager selectionManager,
+      CheckBoxManager checkBoxManager,
+      GesturePaneManager gesturePaneManager) {
     for (SR sr : floorSRs) {
       SRMarker newSRMarker =
           MarkerMaker.makeSRMarker(
-              sr, idToLocationMarker.get(sr.getEndLocation()), mapLayoutX, mapLayoutY);
+              sr, idToLocationMarker.get(((Location) sr.getFields().get("end_location")).getNodeID()), mapLayoutX, mapLayoutY);
       serviceRequestMarkers.add(newSRMarker);
-      setDragSR(newSRMarker, selectionManager);
+      setDragSR(newSRMarker, selectionManager, checkBoxManager, gesturePaneManager);
     }
   }
 
   private void initialDraw() {
     for (LocationMarker l : locationMarkers) {
-      l.draw(anchorPane);
+        if(!l.getLocation().getNodeID().equals("")) {
+            l.draw(anchorPane);
+        }
       if (l.getEquipmentMarker() != null) {
         l.getEquipmentMarker().draw(anchorPane);
       }
@@ -155,6 +189,62 @@ public class MarkerManager {
         l.getServiceRequestMarker().draw(anchorPane);
       }
     }
+  }
+  // TODO probably move this to selectionManager
+    public void newLocationPressed(SelectionManager selectionManager, CheckBoxManager checkBoxManager, GesturePaneManager gesturePaneManager) {
+      // only one new location at a time
+      if(!idToLocationMarker.containsKey("New")) {
+          // create fields so shit isnt null and the vbox component wont break
+          Location newLocation = new Location();
+          newLocation.setNodeID("New");
+          newLocation.setShortName("New");
+          newLocation.setLongName("New");
+          newLocation.setFloor("1");
+          newLocation.setNodeType("New");
+          newLocation.setBuilding("Tower");
+          newLocation.setYCoord(10);
+          newLocation.setXCoord(10);
+          // make marker for location where its actually usable
+          LocationMarker newLocationMarker = MarkerMaker.makeLocationMarker(newLocation, 10, 10);
+          locationMarkers.add(newLocationMarker);
+          idToLocationMarker.put("New", newLocationMarker);
+          locationDAO.enterLocationNode(newLocation);
+          setDragLocation(newLocationMarker, selectionManager, checkBoxManager, gesturePaneManager);
+          midRunDraw();
+          selectionManager.existingLocationSelected(newLocationMarker);
+      }
+    }
+
+  public void midRunDraw() {
+    for (LocationMarker l : locationMarkers) {
+      l.clear(anchorPane);
+        System.out.println(l.getLabel().getText());
+      if (l.getEquipmentMarker() != null) {
+        l.getEquipmentMarker().clear(anchorPane);
+      }
+      if (l.getServiceRequestMarker() != null) {
+        l.getServiceRequestMarker().clear(anchorPane);
+      }
+    }
+    for (SRMarker sr : serviceRequestMarkers) {
+      sr.clear(anchorPane);
+    }
+    for (EquipmentMarker e : equipmentMarkers) {
+      e.clear(anchorPane);
+    }
+      System.out.println("here");
+    initialDraw();
+  }
+
+  public void redrawEditedLocation(){
+      allLocations.clear();
+      allLocations = locationDAO.getNodeList();
+      System.out.println("redraw pre checking");
+      floorLocations.clear();
+      getFloorLocations(floor);
+      locationMarkers.clear();
+
+      midRunDraw();
   }
 
   private void clear() {
@@ -189,7 +279,11 @@ public class MarkerManager {
     return serviceRequestMarkers;
   }
 
-  public void setDragEquipment(EquipmentMarker equipmentMarker, SelectionManager selectionManager) {
+  public void setDragEquipment(
+      EquipmentMarker equipmentMarker,
+      SelectionManager selectionManager,
+      CheckBoxManager checkBoxManager,
+      GesturePaneManager gesturePaneManager) {
     final Delta dragDelta = new Delta();
     Button button = equipmentMarker.getButton();
     button.setOnAction(
@@ -211,9 +305,123 @@ public class MarkerManager {
           selectionManager.getSaveButton().setDisable(true);
           selectionManager.getClearButton().setDisable(true);
         });
+    button.setOnMouseDragged(
+        mouseEvent -> {
+            if (equipmentMarker.getEquipment().getIsClean() == false){
+                return;
+            }
+          if (checkBoxManager.getDragCheckBox().isSelected()) {
+            button.setLayoutX(
+                (mouseEvent.getSceneX() - dragDelta.mouseX)
+                        / (gesturePaneManager.getTransformed().getHeight()
+                            / gesturePaneManager.getAnchorPane().getHeight())
+                    + dragDelta.buttonX);
+            button.setLayoutY(
+                (mouseEvent.getSceneY() - dragDelta.mouseY)
+                        / (gesturePaneManager.getTransformed().getHeight()
+                            / gesturePaneManager.getAnchorPane().getHeight())
+                    + dragDelta.buttonY);
+
+            selectionManager
+                .getCurrentList()
+                .get(1)
+                .textArea
+                .setText(
+                    String.valueOf(
+                        button.getLayoutX()
+                            - gesturePaneManager.getMapImageView().getLayoutX()
+                            + 8));
+            selectionManager
+                .getCurrentList()
+                .get(2)
+                .textArea
+                .setText(
+                    String.valueOf(
+                        button.getLayoutY()
+                            - gesturePaneManager.getMapImageView().getLayoutY()
+                            + 24));
+            // standard circle radius around medical equipment markers, 20 is placeholder
+            double radius = Math.sqrt(2 * Math.pow(20, 2));
+            for (Location l : floorLocations) {
+              // check hypotenuse between this equipment and every location on floor
+              double radiusCheck =
+                  Math.sqrt(
+                      Math.pow(l.getXCoord() - button.getLayoutX(), 2)
+                          + (Math.pow(l.getYCoord() - button.getLayoutY(), 2)));
+              if (radius > radiusCheck) {
+                button.setLayoutX(l.getXCoord());
+                button.setLayoutY(l.getYCoord() - 20);
+              }
+            }
+            Label correspondingLabel = equipmentMarker.getLabel();
+            correspondingLabel.setLayoutX(
+                (mouseEvent.getSceneX() - dragDelta.mouseX)
+                        / (gesturePaneManager.getTransformed().getHeight()
+                            / gesturePaneManager.getAnchorPane().getHeight())
+                    + dragDelta.buttonX
+                    + 8);
+            correspondingLabel.setLayoutY(
+                (mouseEvent.getSceneY() - dragDelta.mouseY)
+                        / (gesturePaneManager.getTransformed().getHeight()
+                            / gesturePaneManager.getAnchorPane().getHeight())
+                    + dragDelta.buttonY
+                    - 24);
+          }
+        });
+    button.setOnMouseReleased(
+        mouseEvent -> {
+          button.setCursor(Cursor.HAND);
+          boolean isSnapped = false;
+          Location nearestLocation = floorLocations.get(0);
+          System.out.println(nearestLocation.getLongName() + " <- default location");
+          double radiusOfNearest = Integer.MAX_VALUE;
+          for (Location l : floorLocations) {
+            double radiusCheck =
+                Math.sqrt(
+                    Math.pow(l.getXCoord() - button.getLayoutX(), 2)
+                        + (Math.pow(l.getYCoord() - button.getLayoutY(), 2)));
+            // update nearest location
+            if (radiusCheck < radiusOfNearest) {
+              radiusOfNearest = radiusCheck;
+              nearestLocation = l;
+            }
+            // when it finds the location already snapped to, do this
+            if (radiusOfNearest == 0) {
+              nearestLocation = l;
+              isSnapped = true;
+              break;
+            }
+          }
+          if (!isSnapped) {
+            button.setLayoutX(nearestLocation.getXCoord());
+            button.setLayoutY(nearestLocation.getYCoord() - 24);
+          }
+            if (!(nearestLocation.getNodeType().equals("STOR")) && !(nearestLocation.getNodeType().equals("PATI"))){
+                button.setLayoutX(dragDelta.buttonX);
+                button.setLayoutY(dragDelta.buttonY);
+                return;
+            }
+          // update label to new location
+          Label correspondingLabel = equipmentMarker.getLabel();
+          correspondingLabel.setLayoutX(equipmentMarker.getButton().getLayoutX());
+          correspondingLabel.setLayoutY(equipmentMarker.getButton().getLayoutY() - 24);
+          // TODO this function should update database but getting errors
+
+             try {
+                 String equipmentID = equipmentMarker.getEquipment().getEquipmentID();
+                 equipmentDAO.updateMedicalEquipment(equipmentID,"current_location", nearestLocation.getNodeID());
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+
+        });
   }
 
-  public void setDragSR(SRMarker srMarker, SelectionManager selectionManager) {
+  public void setDragSR(
+      SRMarker srMarker,
+      SelectionManager selectionManager,
+      CheckBoxManager checkBoxManager,
+      GesturePaneManager gesturePaneManager) {
     final Delta dragDelta = new Delta();
     Button button = srMarker.getButton();
     button.setOnAction(
@@ -235,6 +443,108 @@ public class MarkerManager {
           selectionManager.getSaveButton().setDisable(true);
           selectionManager.getClearButton().setDisable(true);
         });
+    button.setOnMouseDragged(
+        mouseEvent -> {
+          if (checkBoxManager.getDragCheckBox().isSelected()) {
+            button.setLayoutX(
+                (mouseEvent.getSceneX() - dragDelta.mouseX)
+                        / (gesturePaneManager.getTransformed().getHeight()
+                            / gesturePaneManager.getAnchorPane().getHeight())
+                    + dragDelta.buttonX);
+            button.setLayoutY(
+                (mouseEvent.getSceneY() - dragDelta.mouseY)
+                        / (gesturePaneManager.getTransformed().getHeight()
+                            / gesturePaneManager.getAnchorPane().getHeight())
+                    + dragDelta.buttonY);
+
+            selectionManager
+                .getCurrentList()
+                .get(1)
+                .textArea
+                .setText(
+                    String.valueOf(
+                        button.getLayoutX()
+                            - gesturePaneManager.getMapImageView().getLayoutX()
+                            + 8));
+            selectionManager
+                .getCurrentList()
+                .get(2)
+                .textArea
+                .setText(
+                    String.valueOf(
+                        button.getLayoutY()
+                            - gesturePaneManager.getMapImageView().getLayoutY()
+                            + 24));
+
+            // standard circle radius around medical equipment markers, 20 is placeholder
+            double radius = Math.sqrt(2 * Math.pow(20, 2));
+            for (Location l : floorLocations) {
+              // check hypotenuse between this equipment and every location on floor
+              double radiusCheck =
+                  Math.sqrt(
+                      Math.pow(l.getXCoord() - button.getLayoutX(), 2)
+                          + (Math.pow(l.getYCoord() - button.getLayoutY(), 2)));
+              if (radius > radiusCheck) {
+                button.setLayoutX(l.getXCoord());
+                button.setLayoutY(l.getYCoord() - 20);
+              }
+            }
+
+            Label correspondingLabel = srMarker.getLabel();
+            correspondingLabel.setLayoutX(
+                (mouseEvent.getSceneX() - dragDelta.mouseX)
+                        / (gesturePaneManager.getTransformed().getHeight()
+                            / gesturePaneManager.getAnchorPane().getHeight())
+                    + dragDelta.buttonX
+                    + 8);
+            correspondingLabel.setLayoutY(
+                (mouseEvent.getSceneY() - dragDelta.mouseY)
+                        / (gesturePaneManager.getTransformed().getHeight()
+                            / gesturePaneManager.getAnchorPane().getHeight())
+                    + dragDelta.buttonY
+                    - 24);
+          }
+        });
+    button.setOnMouseReleased(
+        mouseEvent -> {
+          button.setCursor(Cursor.HAND);
+          boolean isSnapped = false;
+          Location nearestLocation = floorLocations.get(0);
+          double radiusOfNearest = Integer.MAX_VALUE;
+          for (Location l : floorLocations) {
+            double radiusCheck =
+                Math.sqrt(
+                    Math.pow(l.getXCoord() - button.getLayoutX(), 2)
+                        + (Math.pow(l.getYCoord() - button.getLayoutY(), 2)));
+            // update nearest location
+            if (radiusCheck < radiusOfNearest) {
+              radiusOfNearest = radiusCheck;
+              nearestLocation = l;
+            }
+            // when it finds the location already snapped to, do this
+            if (button.getLayoutX() == l.getXCoord() && button.getLayoutY() == l.getYCoord()) {
+              nearestLocation = l;
+              isSnapped = true;
+              break;
+            }
+          }
+          if (!isSnapped) {
+            button.setLayoutX(nearestLocation.getXCoord());
+            button.setLayoutY(nearestLocation.getYCoord() - 24);
+          }
+          // update label to new location
+          Label correspondingLabel = srMarker.getLabel();
+          correspondingLabel.setLayoutX(srMarker.getButton().getLayoutX());
+          correspondingLabel.setLayoutY(srMarker.getButton().getLayoutY() - 24);
+          // TODO this function should update database but getting errors
+          /*
+             try {
+                 updateOnRelease(button);
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+          */
+        });
   }
 
   public void setDragLocation(
@@ -246,7 +556,12 @@ public class MarkerManager {
     Button button = locationMarker.getButton();
     button.setOnAction(
         event -> {
-          selectionManager.existingLocationSelected(locationMarker.getLocation());
+            try {
+                selectionManager.existingLocationSelected(locationMarker);
+            }
+            catch(Exception e){
+                System.out.println("Dragged too fast :/");
+            }
         });
     button.setOnMousePressed(
         mouseEvent -> {
@@ -256,7 +571,12 @@ public class MarkerManager {
           dragDelta.mouseX = mouseEvent.getSceneX();
           dragDelta.mouseY = mouseEvent.getSceneY();
           button.setCursor(Cursor.MOVE);
-          selectionManager.existingLocationSelected(locationMarker.getLocation());
+          try {
+              selectionManager.existingLocationSelected(locationMarker);
+          }
+          catch(Exception e){
+              System.out.println("Dragged too fast 2");
+          }
 
           selectionManager.getEditButton().setDisable(false);
           selectionManager.getDeleteButton().setDisable(false);
@@ -316,6 +636,8 @@ public class MarkerManager {
           button.setCursor(Cursor.HAND);
         });
   }
+
+
 }
 /*
   private Map<Button, LocationMarker> buttonLocationMarker;

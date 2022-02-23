@@ -73,9 +73,9 @@ public class GesturePaneManager {
   public void setMapFloor(String floor) {
     URL url;
     switch (floor) {
-      case "Choose Floor: ":
+      case "Choose Floor:":
         currentFloor = "";
-        url = App.class.getResource("images/Side View.png");
+        url = App.class.getResource("images/Side View.jpg");
         break;
       case "Floor 1":
         currentFloor = "1";

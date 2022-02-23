@@ -20,16 +20,16 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
   public Equipment getMedicalEquipment(String ID) {
     try {
       Statement get = Adb.connection.createStatement();
-      String str = String.format("SELECT * FROM MedicalEquipment WHERE equipmentID = '%s'", ID);
+      String str = String.format("SELECT * FROM MedicalEquipment WHERE equipment_id = '%s'", ID);
 
       ResultSet rset = get.executeQuery(str);
       Equipment me = new Equipment();
       if (rset.next()) {
-        String equipmentID = rset.getString("equipmentID");
-        String equipmentType = rset.getString("equipmentType");
-        boolean isClean = rset.getBoolean("isClean");
-        String currentLocation = rset.getString("currentLocation");
-        boolean isAvailable = rset.getBoolean("isAvailable");
+        String equipmentID = rset.getString("equipment_id");
+        String equipmentType = rset.getString("equipment_type");
+        boolean isClean = rset.getBoolean("is_clean");
+        String currentLocation = rset.getString("current_location");
+        boolean isAvailable = rset.getBoolean("is_available");
 
         me = new Equipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable);
       }
@@ -49,7 +49,7 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
     if (change instanceof String) {
       str =
           String.format(
-              "UPDATE MedicalEquipment SET " + field + " = %s WHERE equipmentID = '%s'",
+              "UPDATE MedicalEquipment SET " + field + " = '%s' WHERE equipment_id = '%s'",
               change,
               ID);
     } else {
@@ -60,7 +60,7 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
                   + field
                   + " = '"
                   + change1
-                  + "' WHERE equipmentID = '%s'",
+                  + "' WHERE equipment_id = '%s'",
               ID);
     }
 
@@ -78,7 +78,7 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
 
       String str =
           String.format(
-              "INSERT INTO MedicalEquipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable)"
+              "INSERT INTO MedicalEquipment(equipment_id, equipment_type, is_clean, current_location, is_available)"
                   + " VALUES('%s', '%s', '%b', '%s', '%b')",
               equipmentID, equipmentType, isClean, currentLocation, isAvailable);
       insert.execute(str);
@@ -94,7 +94,7 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
     try {
       System.out.println("Connection MAde");
       Statement delete = Adb.connection.createStatement();
-      String str = String.format("DELETE FROM MedicalEquipment WHERE equipmentID = '%s'", ID);
+      String str = String.format("DELETE FROM MedicalEquipment WHERE equipment_id = '%s'", ID);
       delete.execute(str);
 
     } catch (SQLException e) {
@@ -111,11 +111,11 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
       ResultSet rset = getNodeList.executeQuery("SELECT * FROM MedicalEquipment");
 
       while (rset.next()) {
-        String equipmentID = rset.getString("equipmentID");
-        String equipmentType = rset.getString("equipmentType");
-        boolean isClean = rset.getBoolean("isClean");
-        String currentLocation = rset.getString("currentLocation");
-        boolean isAvailable = rset.getBoolean("isAvailable");
+        String equipmentID = rset.getString("equipment_id");
+        String equipmentType = rset.getString("equipment_type");
+        boolean isClean = rset.getBoolean("is_clean");
+        String currentLocation = rset.getString("current_location");
+        boolean isAvailable = rset.getBoolean("is_available");
 
         Equipment e =
             new Equipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable);
@@ -156,11 +156,11 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
         else if (dataIndex == 1) thisME.setEquipmentType(data);
         else if (dataIndex == 2) {
           Boolean boolData = Boolean.parseBoolean(data);
+          System.out.println("boolData: " + boolData);
           thisME.setIsClean(boolData);
         } else if (dataIndex == 3) thisME.setCurrentLocation(data);
         else if (dataIndex == 4) {
           Boolean boolData = Boolean.parseBoolean(data);
-          thisME.setIsClean(boolData);
           thisME.setIsAvailable(boolData);
         } else System.out.println("Invalid data, I broke::" + data);
         dataIndex++;
@@ -186,7 +186,7 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
     file.createNewFile();
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
-    writer.write("getEquipmentID, getEquipmentType, isClean, getCurrentLocation, isAvailable");
+    writer.write("equipment_id, equipment_type, is_clean, current_location, is_available");
     writer.newLine();
 
     // write location data
@@ -222,10 +222,14 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
     try {
 
       List<Equipment> List = EquipmentDerbyImpl.readMedicalEquipmentCSV(csvFilePath);
+      for(Equipment equip : List){
+        System.out.println("equip IsClean: " + equip.getIsClean());
+      }
+
       for (Equipment l : List) {
         Statement addStatement = Adb.connection.createStatement();
         addStatement.executeUpdate(
-            "INSERT INTO MedicalEquipment( equipmentID, equipmentType, isClean, currentLocation, isAvailable) VALUES('"
+            "INSERT INTO MedicalEquipment( equipment_id, equipment_type, is_clean, current_location, is_available) VALUES('"
                 + l.getEquipmentID()
                 + "', '"
                 + l.getEquipmentType()

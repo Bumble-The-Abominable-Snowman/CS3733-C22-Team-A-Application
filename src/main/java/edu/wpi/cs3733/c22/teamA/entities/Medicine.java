@@ -1,106 +1,129 @@
 package edu.wpi.cs3733.c22.teamA.entities;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import java.util.Date;
 import java.util.List;
 
 public class Medicine extends RecursiveTreeObject<Medicine> {
 
-  // TODO implement getting column names and add as static List to all
-  // SEE DOCUMENT FOR SPECIFICS
-  public static List<String> columnNames = null;
+  private String medicineID; // ID of this medicine (Primary Key of table)
+  private String
+      genericName; // Long fancy pharmacy name(similar to active Ingredient) (ex. ibuprofen)
+  private String brandName; // Name given to this drug by its manufacturer (ex. Advil)
+  private String medicineClass; // Type of drug (pharmacy term used to make sure patient doesnt take
+  // conflicting drugs)
+  private String uses; // What disease state this drug is used for (ex. Pain and fever)
+  private String warnings; // "Do not take while (x,y,z)"
+  private String sideEffects; // Listed sideeffects of the medicine (ex. Nausea)
+  private String form; // Method of drug delivery (tablet, liquid, IV, etc.)
 
-  private String employeeID;
-  private String employeeType;
-  private String firstName;
-  private String lastName;
-  private String email;
-  private String phoneNum;
-  private String address;
-  private Date startDate;
+  private List<Float> dosageAmounts; // Different dosage amounts (in milligrams)
 
   public Medicine() {}
 
   public Medicine(
-      String employeeID,
-      String employeeType,
-      String firstName,
-      String lastName,
-      String email,
-      String phoneNum,
-      String address,
-      Date startDate) {
-    this.employeeID = employeeID;
-    this.employeeType = employeeType;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    this.phoneNum = phoneNum;
-    this.address = address;
-    this.startDate = startDate;
+      String medicineID,
+      String genericName,
+      String brandName,
+      String medicineClass,
+      String uses,
+      String warnings,
+      String sideEffects,
+      String form,
+      List<Float> dosageAmounts) {
+    this.medicineID = medicineID;
+    this.genericName = genericName;
+    this.brandName = brandName;
+    this.medicineClass = medicineClass;
+    this.uses = uses;
+    this.warnings = warnings;
+    this.sideEffects = sideEffects;
+    this.form = form;
+    this.dosageAmounts = dosageAmounts;
   }
 
-  public String getEmployeeID() {
-    return employeeID;
+  public List<String> getListForm(){
+    return List.of(
+            this.medicineID,
+            this.genericName,
+            this.brandName,
+            this.medicineClass,
+            this.uses,
+            this.warnings,
+            this.sideEffects,
+            this.form,
+            this.dosageAmounts.toString()
+    );
   }
 
-  public String getEmployeeType() {
-    return employeeType;
+  public String getMedicineID() {
+    return this.medicineID;
   }
 
-  public String getFirstName() {
-    return firstName;
+  public void setMedicineID(String medicineID) {
+    this.medicineID = medicineID;
   }
 
-  public String getLastName() {
-    return lastName;
+  public String getGenericName() {
+    return this.genericName;
   }
 
-  public String getEmail() {
-    return email;
+  public void setGenericName(String genericName) {
+    this.genericName = genericName;
   }
 
-  public String getPhoneNum() {
-    return phoneNum;
+  public String getBrandName() {
+    return this.brandName;
   }
 
-  public String getAddress() {
-    return address;
+  public void setBrandName(String brandName) {
+    this.brandName = brandName;
   }
 
-  public Date getStartDate() {
-    return startDate;
+  public String getMedicineClass() {
+    return this.medicineClass;
   }
 
-  public void setEmployeeID(String employeeID) {
-    this.employeeID = employeeID;
+  public void setMedicineClass(String medicineClass) {
+    this.medicineClass = medicineClass;
   }
 
-  public void setEmployeeType(String employeeType) {
-    this.employeeType = employeeType;
+  public String getUses() {
+    return this.uses;
   }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
+  public void setUses(String uses) {
+    this.uses = uses;
   }
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
+  public String getWarnings() {
+    return this.warnings;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
+  public void setWarnings(String warnings) {
+    this.warnings = warnings;
   }
 
-  public void setPhoneNum(String phoneNum) {
-    this.phoneNum = phoneNum;
+  public String getSideEffects() {
+    return this.sideEffects;
   }
 
-  public void setAddress(String address) {
-    this.address = address;
+  public void setSideEffects(String sideEffects) {
+    this.sideEffects = sideEffects;
   }
 
-  public void setStartDate(Date startDate) {
-    this.startDate = startDate;
+  public String getForm() {
+    return this.form;
+  }
+
+  public void setForm(String form) {
+    this.form = form;
+  }
+
+  public List<Float> getDosageAmounts() {
+    return this.dosageAmounts;
+  }
+
+  public void setDosageAmounts(List<Float> dosageAmounts) {
+    this.dosageAmounts = dosageAmounts;
   }
 }

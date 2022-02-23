@@ -1,14 +1,22 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.App;
+import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.map.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
@@ -29,22 +37,35 @@ public class MapCtrl extends MasterCtrl {
   @FXML private JFXCheckBox showTextCheckBox;
   @FXML private JFXCheckBox equipmentCheckBox;
 
-  // Gesuture Pane Manager
+  // Gesture Pane Manager
   @FXML private JFXComboBox<String> floorSelectionComboBox;
+  @FXML private JFXComboBox<String> pfFromComboBox;
+  @FXML private JFXComboBox<String> pfToComboBox;
   @FXML private GesturePane gesturePane;
   private AnchorPane anchorPane;
   private ImageView mapImageView;
+  @FXML JFXButton newLocButton = new JFXButton();
+  @FXML JFXButton findPathButton = new JFXButton();
+  @FXML JFXButton clearPathButton = new JFXButton();
+
+  @FXML private JFXComboBox searchComboBox;
 
   private ArrayList<String> floorNames;
 
   private LocationDAO locationDAO;
   private EquipmentDAO equipmentDAO;
+  private ServiceRequestDAO SRDAO;
 
   private MapManager mapManager;
   private MarkerManager markerManager;
   private CheckBoxManager checkBoxManager;
   private GesturePaneManager gesturePaneManager;
   private SelectionManager selectionManager;
+  private Searcher searcher;
+  private SideView sideView;
+  private PathFinder pathFinder;
+
+  public final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   public MapCtrl() {
     // Setup Floors
@@ -57,12 +78,12 @@ public class MapCtrl extends MasterCtrl {
 
     locationDAO = new LocationDerbyImpl();
     equipmentDAO = new EquipmentDerbyImpl();
+    //SRDAO = new ServiceRequestDerbyImpl();
   }
 
-  /** Floor Combo Box */
+  /* Floor Combo Box */
   @FXML
   public void initialize() {
-
     configure();
     initFloorSelection();
 
@@ -75,11 +96,26 @@ public class MapCtrl extends MasterCtrl {
             showTextCheckBox,
             dragCheckBox);
     gesturePaneManager = new GesturePaneManager(gesturePane, anchorPane, mapImageView);
-    selectionManager = new SelectionManager(inputVBox);
+    selectionManager = new SelectionManager(inputVBox, markerManager);
+    searcher = new Searcher(searchComboBox);
+    sideView = new SideView(anchorPane, mapImageView, markerManager);
+    List<JFXButton> buttons = new ArrayList<>();
+    buttons.add(newLocButton);
+    buttons.add(findPathButton);
+    buttons.add(clearPathButton);
     mapManager =
-        new MapManager(markerManager, checkBoxManager, gesturePaneManager, selectionManager);
+        new MapManager(
+            markerManager,
+            checkBoxManager,
+            gesturePaneManager,
+            selectionManager,
+            searcher,
+            sideView,
+            buttons);
+    pathFinder = new PathFinder("db/CSVs/AllEdgesHand.csv", pfFromComboBox, pfToComboBox, markerManager);
 
     mapManager.init();
+    sideView.init();
   }
 
   private void initFloorSelection() {
@@ -94,22 +130,27 @@ public class MapCtrl extends MasterCtrl {
               mapManager.reset();
               mapManager.initFloor(
                   newValue, ((int) mapImageView.getLayoutX()), (int) mapImageView.getLayoutY());
+              pathFinder.updateComboBoxes();
+              if (newValue.equals("Choose Floor:"))
+                clearPath();
             });
   }
 
-  public void editLocation(ActionEvent actionEvent) {}
+  public void newLocationPressed() {
+    mapManager.newLocationPressed();
+  }
 
-  public void clearSubmission(ActionEvent actionEvent) {}
+  public void findPath() {
+    pathFinder.drawPath(pathFinder.findPath(), anchorPane);
+  }
 
-  public void saveChanges(ActionEvent actionEvent) {}
+  public void clearPath() {
+    pathFinder.clearPath(anchorPane);
+  }
 
-  public void deleteLocation(ActionEvent actionEvent) {}
-
-  public void newLocationPressed(ActionEvent actionEvent) {}
-
-  public void findPath(ActionEvent actionEvent) {}
-
-  public void clearPath(ActionEvent actionEvent) {}
-
-  public void goToLocationTable(ActionEvent actionEvent) {}
+  public void goToLocationTable() throws IOException {
+    this.onSceneSwitch();
+    sceneFlag = 2;
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
+  }
 }

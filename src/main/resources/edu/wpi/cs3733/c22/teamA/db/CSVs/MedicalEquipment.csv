@@ -1,6 +1,8 @@
-getEquipmentID, getEquipmentType, isClean, getCurrentLocation, isAvailable
-EQ5678,Xray machine,true,aSTOR00103,true
-EQ5689,Xray machine,true,aSTOR00103,true
+equipment_id, equipment_type, is_clean, current_location, is_available
+EQ5678,Xray machine,true,FDEPT00201,true
+EQ5689,Xray machine,FALSE,FEXIT00101,true
+EQ0000,Xray machine,TRUE,aSTOR00103, true
+EQ1111,Xray machine,TRUE,aSTOR00203, true
 EQ0001,Infusion Pump,true,aSTOR00103,true
 EQ0002,Infusion Pump,true,aPATI00903,true
 EQ0003,Bed,true,aPATI00303,true

@@ -23,14 +23,14 @@ public class LocationDerbyImpl implements LocationDAO {
       ResultSet rset = getNodeList.executeQuery("SELECT * FROM TowerLocations");
 
       while (rset.next()) {
-        String nodeID = rset.getString("nodeID");
-        int xc = rset.getInt("xCoord");
-        int yc = rset.getInt("yCoord");
+        String nodeID = rset.getString("node_id");
+        int xc = rset.getInt("xcoord");
+        int yc = rset.getInt("ycoord");
         String floor = rset.getString("floor");
         String building = rset.getString("building");
-        String nodeType = rset.getString("nodeType");
-        String longName = rset.getString("longName");
-        String shortName = rset.getString("shortName");
+        String nodeType = rset.getString("node_type");
+        String longName = rset.getString("long_name");
+        String shortName = rset.getString("short_name");
 
         Location l = new Location(nodeID, xc, yc, floor, building, nodeType, longName, shortName);
         Location.add(l);
@@ -55,7 +55,7 @@ public class LocationDerbyImpl implements LocationDAO {
 
       String str =
           String.format(
-              "DELETE FROM " + tableName + " WHERE nodeID ='%s'", ID); // delete the selected node
+              "DELETE FROM " + tableName + " WHERE node_id ='%s'", ID); // delete the selected node
 
       deleteNode.execute(str);
 
@@ -97,7 +97,7 @@ public class LocationDerbyImpl implements LocationDAO {
           String.format(
               "INSERT INTO "
                   + tableName
-                  + "(nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName)"
+                  + "(node_id,xcoord,ycoord,floor,building,node_type,long_name,short_name)"
                   + "VALUES ('%s', %d, %d, '%s', '%s', '%s', '%s', '%s')",
               ID,
               xcoord,
@@ -128,23 +128,24 @@ public class LocationDerbyImpl implements LocationDAO {
       if (change instanceof String) {
         str =
             String.format(
-                "update " + tableName + " set " + field + " = '%s' where nodeID = '%s'",
+                "update " + tableName + " set " + field + " = '%s' where node_id = '%s'",
                 change,
                 ID);
       } else {
         str =
             String.format(
-                "update " + tableName + " set " + field + " = " + change + " where nodeID = '%s'",
+                "update " + tableName + " set " + field + " = " + change + " where node_id = '%s'",
                 ID);
       }
       updateCoords.execute(str);
 
     } catch (SQLException e) {
-      System.out.println("Failed");
+      System.out.println("Error Caught :");
+      System.out.println("Error Code: " + e.getErrorCode());
+      System.out.println("SQL State: " + e.getSQLState());
+      System.out.println(e.getMessage());
       e.printStackTrace();
-      return;
     }
-    return;
   }
 
   // Method to get node from the location table.
@@ -155,7 +156,7 @@ public class LocationDerbyImpl implements LocationDAO {
       Statement getNode = Adb.connection.createStatement();
       String str =
           String.format(
-              "select * from " + tableName + " Where nodeID = '%s'",
+              "select * from " + tableName + " Where node_id = '%s'",
               ID); // get node from table location
 
       getNode.execute(str);
@@ -165,14 +166,14 @@ public class LocationDerbyImpl implements LocationDAO {
       Location l = new Location();
       // process results
       if (rset.next()) {
-        String nodeID = rset.getString("nodeID");
-        int xc = rset.getInt("xCoord");
-        int yc = rset.getInt("yCoord");
+        String nodeID = rset.getString("node_id");
+        int xc = rset.getInt("xcoord");
+        int yc = rset.getInt("ycoord");
         String floor = rset.getString("floor");
         String building = rset.getString("building");
-        String nodeType = rset.getString("nodeType");
-        String longName = rset.getString("longName");
-        String shortName = rset.getString("shortName");
+        String nodeType = rset.getString("node_type");
+        String longName = rset.getString("long_name");
+        String shortName = rset.getString("short_name");
 
         l = new Location(nodeID, xc, yc, floor, building, nodeType, longName, shortName);
       }
@@ -227,8 +228,6 @@ public class LocationDerbyImpl implements LocationDAO {
 
       dataIndex = 0;
       list.add(thisLocation);
-      // System.out.println(thisLocation);
-
     }
 
     lineIndex++;
@@ -245,7 +244,7 @@ public class LocationDerbyImpl implements LocationDAO {
     BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
 
     writer.write(
-        "getNodeID, xCord, yCord, getFloor(),getBuilding, getNodeType, getLongName, getShortName");
+        "node_id,xcoord,ycoord,floor,building,node_type,long_name,short_name");
     writer.newLine();
 
     // write location data
@@ -270,7 +269,7 @@ public class LocationDerbyImpl implements LocationDAO {
   }
 
   // Input from CSV
-  public static void inputFromCSV(String tableName, String csvFilePath) {
+  public static void inputFromCSV(String csvFilePath) {
     try {
       Statement deleteTable = Adb.connection.createStatement();
 
@@ -285,7 +284,7 @@ public class LocationDerbyImpl implements LocationDAO {
       for (Location l : locList) {
         Statement addStatement = Adb.connection.createStatement();
         addStatement.executeUpdate(
-            "INSERT INTO TowerLocations(nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName) VALUES('"
+            "INSERT INTO TowerLocations(node_id,xcoord,ycoord,floor,building,node_type,long_name,short_name) VALUES('"
                 + l.getNodeID()
                 + "', "
                 + l.getXCoord()
@@ -305,6 +304,7 @@ public class LocationDerbyImpl implements LocationDAO {
       }
     } catch (SQLException | IOException e) {
       System.out.println("Insertion on TowerLocations failed!");
+      e.printStackTrace();
       return;
     }
     return;
