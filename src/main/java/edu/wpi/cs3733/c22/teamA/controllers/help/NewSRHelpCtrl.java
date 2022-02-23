@@ -1,10 +1,11 @@
 package edu.wpi.cs3733.c22.teamA.controllers.help;
 
 import edu.wpi.cs3733.c22.teamA.App;
+import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class NewSRHelpCtrl {
+public class NewSRHelpCtrl extends MasterCtrl {
     @FXML private Label titleLabel;
     @FXML private Label paragraphBodyLabel;
 

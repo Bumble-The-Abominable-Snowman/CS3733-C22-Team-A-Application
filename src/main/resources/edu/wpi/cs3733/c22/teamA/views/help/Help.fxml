@@ -33,7 +33,7 @@
          <Font size="24.0" />
       </font>
         <GridPane.margin>
-            <Insets top="18.0" />
+            <Insets top="25.0" />
         </GridPane.margin></Label>
     <ImageView fx:id="frame5" fitHeight="347.0" fitWidth="481.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
         <image>
