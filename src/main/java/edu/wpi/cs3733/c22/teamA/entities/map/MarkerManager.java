@@ -298,6 +298,9 @@ public class MarkerManager {
         });
     button.setOnMouseDragged(
         mouseEvent -> {
+            if (equipmentMarker.getEquipment().getIsClean() == false){
+                return;
+            }
           if (checkBoxManager.getDragCheckBox().isSelected()) {
             button.setLayoutX(
                 (mouseEvent.getSceneX() - dragDelta.mouseX)
@@ -380,6 +383,7 @@ public class MarkerManager {
               break;
             }
           }
+
           if (!isSnapped) {
             button.setLayoutX(nearestLocation.getXCoord());
             button.setLayoutY(nearestLocation.getYCoord() - 24);
