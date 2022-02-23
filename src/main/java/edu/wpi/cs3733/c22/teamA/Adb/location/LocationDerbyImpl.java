@@ -140,11 +140,12 @@ public class LocationDerbyImpl implements LocationDAO {
       updateCoords.execute(str);
 
     } catch (SQLException e) {
-      System.out.println("Failed");
+      System.out.println("Error Caught :");
+      System.out.println("Error Code: " + e.getErrorCode());
+      System.out.println("SQL State: " + e.getSQLState());
+      System.out.println(e.getMessage());
       e.printStackTrace();
-      return;
     }
-    return;
   }
 
   // Method to get node from the location table.

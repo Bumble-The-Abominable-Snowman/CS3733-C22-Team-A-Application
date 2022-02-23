@@ -46,8 +46,8 @@
       <JFXComboBox fx:id="searchComboBox" prefHeight="26.0" prefWidth="167.0" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
       <JFXComboBox fx:id="pfToComboBox" prefHeight="26.0" prefWidth="97.0" promptText="To:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="BOTTOM" />
       <JFXComboBox fx:id="pfFromComboBox" prefHeight="26.0" prefWidth="95.0" promptText="From:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="TOP" />
-      <JFXButton onAction="#findPath" prefHeight="33.0" prefWidth="104.0" text=" Find Path" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="TOP" />
-      <JFXButton onAction="#clearPath" text="Clear Path" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
+      <JFXButton fx:id="findPathButton" onAction="#findPath" prefHeight="33.0" prefWidth="104.0" text=" Find Path" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="TOP" />
+      <JFXButton fx:id="clearPathButton" onAction="#clearPath" text="Clear Path" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
       <VBox prefHeight="76.0" prefWidth="219.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <children>
             <JFXCheckBox fx:id="dragCheckBox" alignment="CENTER" prefHeight="22.0" prefWidth="176.0" text="Toggle Drag/Drop Locations" wrapText="true" />
