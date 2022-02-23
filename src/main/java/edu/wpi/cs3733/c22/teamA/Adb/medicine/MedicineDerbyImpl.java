@@ -186,6 +186,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
     }
   }
 
+  // get all medicine
   public List<Medicine> getMedicineList() {
     try {
       Statement get = Adb.connection.createStatement();
