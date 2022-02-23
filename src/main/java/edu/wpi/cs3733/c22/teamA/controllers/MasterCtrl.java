@@ -7,18 +7,22 @@ import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 public abstract class MasterCtrl {
 
+  @FXML public Label titleLabel;
+
   @FXML public JFXHamburger hamburger;
-  @FXML public JFXDrawer drawer;
   @FXML public JFXButton backButton;
+  @FXML public JFXButton helpButton;
+  @FXML public JFXDrawer drawer;
   @FXML public VBox menuBox;
-  @FXML public GridPane menuGrid;
 
   @FXML public JFXButton selectSRButton;
   @FXML public JFXButton mapButton;
@@ -29,10 +33,19 @@ public abstract class MasterCtrl {
   @FXML public JFXButton settingsButton;
   @FXML public JFXButton exitButton;
   @FXML public JFXButton loginButton;
+  @FXML public JFXButton aboutButton;
   @FXML public JFXButton homeButton;
 
   public final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
   public static int sceneFlag = 0;
+  public static List<Integer> sceneFlags = new ArrayList<Integer>();
+
+  public enum ACCOUNT {
+    ADMIN,
+    STAFF,
+  }
+
+  public ACCOUNT account = ACCOUNT.STAFF;
 
   double selectSRButtonSize;
   double mapButtonSize;
@@ -43,13 +56,34 @@ public abstract class MasterCtrl {
   double settingsButtonSize;
   double exitButtonSize;
   double loginButtonSize;
-  double backButtonSize;
   double homeButtonSize;
+  double aboutButtonSize;
+  double titleTextSize;
 
   double stageWidth;
   double stageHeight;
 
+  boolean animating = false;
+
   public void configure() {
+
+if (account == ACCOUNT.STAFF) {
+
+  selectSRButton.setVisible(true);
+  mapButton.setVisible(true);
+  viewSRButton.setVisible(true);
+  viewEmployeesButton.setStyle("-fx-background-color: #808080");
+  viewEmployeesButton.setDisable(true);
+  viewLocationsButton.setVisible(true);
+  viewEquipmentButton.setVisible(true);
+  settingsButton.setStyle("-fx-background-color: #808080");
+  settingsButton.setDisable(true);
+  exitButton.setVisible(true);
+  loginButton.setVisible(true);
+  aboutButton.setVisible(true);
+  homeButton.setVisible(true);
+
+}
 
     selectSRButtonSize = selectSRButton.getFont().getSize();
     mapButtonSize = mapButton.getFont().getSize();
@@ -60,50 +94,54 @@ public abstract class MasterCtrl {
     settingsButtonSize = settingsButton.getFont().getSize();
     exitButtonSize = exitButton.getFont().getSize();
     loginButtonSize = loginButton.getFont().getSize();
-    backButtonSize = backButton.getFont().getSize();
     homeButtonSize = homeButton.getFont().getSize();
+    aboutButtonSize = aboutButton.getFont().getSize();
+    titleTextSize = titleLabel.getFont().getSize();
 
     drawer.setSidePane(menuBox);
+    drawer.setOnDrawerClosed(e -> animating = false);
+    drawer.setOnDrawerOpened(e -> animating = false);
     HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(hamburger);
     burgerTask.setRate(-1);
 
-    menuGrid.toBack();
     drawer.toBack();
     menuBox.toBack();
 
     hamburger.addEventHandler(
         MouseEvent.MOUSE_PRESSED,
         (e) -> {
-          burgerTask.setRate(burgerTask.getRate() * -1);
-          burgerTask.play();
-          if (drawer.isOpened()) {
-            drawer.close();
-            menuGrid.toBack();
-            drawer.toBack();
-            menuBox.toBack();
-          } else {
-            drawer.open();
-            menuGrid.toFront();
-            drawer.toFront();
-            menuBox.toFront();
+          if (!animating) {
+            animating = true;
+            burgerTask.setRate(burgerTask.getRate() * -1);
+            burgerTask.play();
+            if (drawer.isOpened()) {
+              drawer.close();
+              drawer.toBack();
+              menuBox.toBack();
+            } else {
+              drawer.open();
+              drawer.toFront();
+              menuBox.toFront();
+            }
           }
         });
 
-    stageWidth = App.getStage().getWidth();
-    stageHeight = App.getStage().getHeight();
     updateSize();
+
     App.getStage()
         .widthProperty()
         .addListener(
             (obs, oldVal, newVal) -> {
-              stageWidth = App.getStage().getWidth();
-              stageHeight = App.getStage().getHeight();
               updateSize();
             });
   }
 
   private void updateSize() {
 
+    stageWidth = App.getStage().getWidth();
+    stageHeight = App.getStage().getHeight();
+
+    titleLabel.setStyle("-fx-font-size: " + ((stageWidth / 1000) * titleTextSize) + "pt;");
     selectSRButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * selectSRButtonSize) + "pt;");
     mapButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * mapButtonSize) + "pt;");
     viewSRButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * viewSRButtonSize) + "pt;");
@@ -116,78 +154,114 @@ public abstract class MasterCtrl {
         "-fx-font-size: " + ((stageWidth / 1000) * viewLocationsButtonSize) + "pt;");
     exitButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * exitButtonSize) + "pt;");
     loginButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * loginButtonSize) + "pt;");
-    backButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * backButtonSize) + "pt;");
+    aboutButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * aboutButtonSize) + "pt;");
     homeButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * homeButtonSize) + "pt;");
   }
 
   protected void onSceneSwitch() {}
 
   @FXML
+  private void goToHome() throws IOException {
+
+    this.onSceneSwitch();
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
+  }
+
+  @FXML
   private void goToSelectServiceRequest() throws IOException {
+
     this.onSceneSwitch();
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.SELECT_SERVICE_REQUEST);
   }
 
   @FXML
-  private void goToSettings() throws IOException {
-    this.onSceneSwitch();
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SETTINGS);
-  }
-
-  @FXML
-  private void goToServiceRequestData() throws IOException {
-    this.onSceneSwitch();
-    sceneFlag = 1;
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
-  }
-
-  @FXML
-  private void goToLocationData() throws IOException {
-    this.onSceneSwitch();
-    sceneFlag = 2;
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
-  }
-
-  @FXML
-  private void goToEquipmentData() throws IOException {
-    this.onSceneSwitch();
-    sceneFlag = 3;
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
-  }
-
-  @FXML
-  public void goToEmployeeData() throws IOException {
-    this.onSceneSwitch();
-    sceneFlag = 4;
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
-  }
-
-  @FXML
   private void goToMap() throws IOException {
+
     this.onSceneSwitch();
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.MAP);
   }
 
   @FXML
+  private void goToServiceRequestData() throws IOException {
+
+    this.onSceneSwitch();
+    sceneFlag = 1;
+    sceneFlags.add(sceneFlag);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
+
+  }
+
+  @FXML
+  private void goToLocationData() throws IOException {
+
+    this.onSceneSwitch();
+    sceneFlag = 2;
+    sceneFlags.add(sceneFlag);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
+  }
+
+  @FXML
+  private void goToEquipmentData() throws IOException {
+
+    this.onSceneSwitch();
+    sceneFlag = 3;
+    sceneFlags.add(sceneFlag);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
+  }
+
+  @FXML
+  public void goToEmployeeData() throws IOException {
+
+    this.onSceneSwitch();
+    sceneFlag = 4;
+    sceneFlags.add(sceneFlag);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
+  }
+
+  @FXML
+  private void goToSettings() throws IOException {
+
+    this.onSceneSwitch();
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SETTINGS);
+  }
+
+  @FXML
+  private void goToAbout() throws IOException {
+
+    this.onSceneSwitch();
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.ABOUT);
+  }
+
+  @FXML
   private void goToLogin() throws IOException {
+
     this.onSceneSwitch();
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOGIN);
   }
 
   @FXML
   private void exitApp() {
+
     System.exit(0);
   }
 
   @FXML
-  private void goToSelectService() throws IOException {
+  private void back() throws IOException {
+
     this.onSceneSwitch();
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SELECT_SERVICE_REQUEST);
+    sceneSwitcher.fxmlval.remove(sceneSwitcher.fxmlval.size() - 1);
+    SceneSwitcher.SCENES lastScene = sceneSwitcher.fxmlval.get(sceneSwitcher.fxmlval.size() - 1);
+    if (lastScene == SceneSwitcher.SCENES.DATA_VIEW) {
+      sceneFlags.remove(sceneFlags.size() - 1);
+      sceneFlag = sceneFlags.get(sceneFlags.size() - 1);
+    }
+    sceneSwitcher.switchScene(lastScene);
+    sceneSwitcher.fxmlval.remove(sceneSwitcher.fxmlval.size() - 1);
   }
 
   @FXML
-  private void goToHome() throws IOException {
-    this.onSceneSwitch();
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
+  private void help() throws IOException {
+
   }
+
 }

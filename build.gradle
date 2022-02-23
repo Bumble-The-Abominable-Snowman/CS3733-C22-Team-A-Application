@@ -21,6 +21,7 @@ javafx {
 }
 
 dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     implementation(
             'com.jfoenix:jfoenix:9.0.10',
 
@@ -37,7 +38,7 @@ dependencies {
 
             'org.apache.commons:commons-lang3:3.0',
             'net.kurobako:gesturefx:0.7.1',
-            'commons-dbutils:commons-dbutils:1.7',
+            files('C:\\Users\\Brendan\\IdeaProjects\\CS3733-C22-Team-A-API\\build\\libs\\CS3733-C22-Team-A-API.jar')
     )
 
     testCompile(

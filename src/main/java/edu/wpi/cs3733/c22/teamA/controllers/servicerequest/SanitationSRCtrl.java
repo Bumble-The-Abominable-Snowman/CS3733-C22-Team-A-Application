@@ -25,6 +25,11 @@ public class SanitationSRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
   @FXML private TextArea typeOtherBox;
+  @FXML private Label titleLabel;
+  @FXML private Label mapLabel;
+  @FXML private Label locationLabel;
+  @FXML private Label typeLabel;
+  @FXML private Label employeeLabel;
 
   @FXML
   private void initialize() {
@@ -35,6 +40,11 @@ public class SanitationSRCtrl extends SRCtrl {
     // double employeeChoiceTextSize = employeeChoice.getFont().getSize();
     double commentsTextSize = commentsBox.getFont().getSize();
     double typeOtherTextSize = typeOtherBox.getFont().getSize();
+    double titleTextSize = titleLabel.getFont().getSize();
+    double mapTextSize = mapLabel.getFont().getSize();
+    double locationTextSize = locationLabel.getFont().getSize();
+    double typeTextSize = typeLabel.getFont().getSize();
+    double employeeTextSize = employeeLabel.getFont().getSize();
 
     App.getStage()
         .widthProperty()
@@ -47,6 +57,20 @@ public class SanitationSRCtrl extends SRCtrl {
               typeOtherBox.setStyle(
                   "-fx-font-size: "
                       + ((App.getStage().getWidth() / 1000) * typeOtherTextSize)
+                      + "pt;");
+              titleLabel.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * titleTextSize) + "pt;");
+              mapLabel.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * mapTextSize) + "pt;");
+              locationLabel.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * locationTextSize)
+                      + "pt;");
+              typeLabel.setStyle(
+                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * typeTextSize) + "pt;");
+              employeeLabel.setStyle(
+                  "-fx-font-size: "
+                      + ((App.getStage().getWidth() / 1000) * employeeTextSize)
                       + "pt;");
             });
 

@@ -15,6 +15,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class LoginCtrl {
+
   @FXML private Text welcomeBox;
   @FXML private TextField usernameBox;
   @FXML private PasswordField passwordBox;
@@ -22,10 +23,25 @@ public class LoginCtrl {
   @FXML private JFXButton exitButton;
   @FXML private Text warningText;
 
+  double stageWidth;
+  double welcomeTextSize;
+  double usernameTextSize;
+  double passwordTextSize;
+  double logInButtonTextSize;
+  double exitButtonTextSize;
+  double warningTextSize;
+
   private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   @FXML
   private void initialize() {
+
+    welcomeTextSize = welcomeBox.getFont().getSize();
+    usernameTextSize = usernameBox.getFont().getSize();
+    passwordTextSize = passwordBox.getFont().getSize();
+    logInButtonTextSize = logInButton.getFont().getSize();
+    exitButtonTextSize = exitButton.getFont().getSize();
+    warningTextSize = warningText.getFont().getSize();
 
     usernameBox.setOnKeyPressed(
         event -> {
@@ -41,41 +57,13 @@ public class LoginCtrl {
           }
         });
 
-    double welcomeTextSize = welcomeBox.getFont().getSize();
-    double usernameTextSize = usernameBox.getFont().getSize();
-    double passwordTextSize = passwordBox.getFont().getSize();
-    double logInButtonTextSize = logInButton.getFont().getSize();
-    double exitButtonTextSize = exitButton.getFont().getSize();
-    double warningTextSize = warningText.getFont().getSize();
+    updateSize();
 
     App.getStage()
         .widthProperty()
         .addListener(
             (obs, oldVal, newVal) -> {
-              welcomeBox.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * welcomeTextSize)
-                      + "pt;");
-              usernameBox.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * usernameTextSize)
-                      + "pt;");
-              passwordBox.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * passwordTextSize)
-                      + "pt;");
-              logInButton.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * logInButtonTextSize)
-                      + "pt;");
-              exitButton.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * exitButtonTextSize)
-                      + "pt;");
-              warningText.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * warningTextSize)
-                      + "pt;");
+              updateSize();
             });
   }
 
@@ -106,4 +94,18 @@ public class LoginCtrl {
   private void exitApp() {
     System.exit(0);
   }
+
+  @FXML
+  private void updateSize() {
+
+    stageWidth = App.getStage().getWidth();
+
+    welcomeBox.setStyle("-fx-font-size: " + ((stageWidth / 1000) * welcomeTextSize) + "pt;");
+    usernameBox.setStyle("-fx-font-size: " + ((stageWidth / 1000) * usernameTextSize) + "pt;");
+    passwordBox.setStyle("-fx-font-size: " + ((stageWidth / 1000) * passwordTextSize) + "pt;");
+    logInButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * logInButtonTextSize) + "pt;");
+    exitButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * exitButtonTextSize) + "pt;");
+    warningText.setStyle("-fx-font-size: " + ((stageWidth / 1000) * warningTextSize) + "pt;");
+  }
+
 }

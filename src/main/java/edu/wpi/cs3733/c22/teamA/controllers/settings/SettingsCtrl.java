@@ -14,8 +14,16 @@ import javafx.fxml.FXML;
 public class SettingsCtrl extends MasterCtrl {
 
   @FXML private JFXToggleButton toggleClientServerButton;
+  @FXML private JFXToggleButton toggleCloudButton;
   @FXML private JFXButton loadBackupButton;
   @FXML private JFXButton saveBackupButton;
+
+  double stageWidth;
+
+  double loadBackupTextSize;
+  double saveBackupTextSize;
+  double clientServerTextSize;
+  double cloudTextSize;
 
   @FXML
   private void initialize() {
@@ -28,21 +36,18 @@ public class SettingsCtrl extends MasterCtrl {
       toggleClientServerButton.setSelected(true);
     }
 
-    double loadBackupTextSize = loadBackupButton.getFont().getSize();
-    double saveBackupTextSize = saveBackupButton.getFont().getSize();
+    loadBackupTextSize = loadBackupButton.getFont().getSize();
+    saveBackupTextSize = saveBackupButton.getFont().getSize();
+    clientServerTextSize = toggleClientServerButton.getFont().getSize();
+    cloudTextSize = toggleClientServerButton.getFont().getSize();
+
+    updateSize();
 
     App.getStage()
         .widthProperty()
         .addListener(
             (obs, oldVal, newVal) -> {
-              loadBackupButton.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * loadBackupTextSize)
-                      + "pt;");
-              saveBackupButton.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * saveBackupTextSize)
-                      + "pt;");
+              updateSize();
             });
   }
 
@@ -72,4 +77,23 @@ public class SettingsCtrl extends MasterCtrl {
     }
     // add client server toggle code here
   }
+
+  public void toggleCloud() {}
+
+  @FXML
+  private void updateSize() {
+
+    stageWidth = App.getStage().getWidth();
+
+    loadBackupButton.setStyle(
+        "-fx-font-size: " + ((stageWidth / 1000) * loadBackupTextSize) + "pt;");
+    saveBackupButton.setStyle(
+        "-fx-font-size: " + ((stageWidth / 1000) * saveBackupTextSize) + "pt;");
+    toggleClientServerButton.setStyle(
+        "-fx-font-size: " + ((stageWidth / 1000) * loadBackupTextSize) + "pt;");
+    toggleCloudButton.setStyle(
+        "-fx-font-size: " + ((stageWidth / 1000) * saveBackupTextSize) + "pt;");
+  }
+
+
 }
