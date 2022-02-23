@@ -24,6 +24,10 @@ public class Edge {
                     + Math.pow((end.getYCoord() - start.getYCoord()), 2));
   }
 
+  public Edge() {
+
+  }
+
   public Location getStart() {
     return start;
   }
@@ -62,5 +66,9 @@ public class Edge {
 
   public void setTop(boolean top) {
     this.top = top;
+  }
+
+  public boolean isFloorCross() {
+    return floorCross;
   }
 }

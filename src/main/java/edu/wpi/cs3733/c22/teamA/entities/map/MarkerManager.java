@@ -35,10 +35,9 @@ public class MarkerManager {
   private AnchorPane anchorPane;
 
   // shit to make edit / save work
-    // TODO make service request database work
-  String floor;
-  LocationDAO locationDAO;
-  EquipmentDAO equipmentDAO;
+  private String floor;
+  private LocationDAO locationDAO;
+  private EquipmentDAO equipmentDAO;
   //ServiceRequestDAO SRDAO;
 
   public MarkerManager(LocationDAO locationDAO, EquipmentDAO equipmentDAO, AnchorPane anchorPane) {
@@ -637,7 +636,13 @@ public class MarkerManager {
         });
   }
 
+    public List<Location> getAllLocations() {
+        return allLocations;
+    }
 
+    public String getFloor() {
+        return floor;
+    }
 }
 /*
   private Map<Button, LocationMarker> buttonLocationMarker;

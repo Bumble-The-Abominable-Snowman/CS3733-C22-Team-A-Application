@@ -85,7 +85,6 @@ public class MapCtrl extends MasterCtrl {
   @FXML
   public void initialize() {
     configure();
-    initFloorSelection();
 
     markerManager = new MarkerManager(locationDAO, equipmentDAO, anchorPane);
     checkBoxManager =
@@ -116,9 +115,11 @@ public class MapCtrl extends MasterCtrl {
 
     mapManager.init();
     sideView.init();
+    initFloorSelection();
   }
 
   private void initFloorSelection() {
+    pathFinder.updateComboBoxes();
     floorSelectionComboBox.getItems().removeAll(floorNames);
     floorSelectionComboBox.getItems().addAll(floorNames);
     floorSelectionComboBox.getSelectionModel().select("Choose Floor:");
@@ -130,7 +131,7 @@ public class MapCtrl extends MasterCtrl {
               mapManager.reset();
               mapManager.initFloor(
                   newValue, ((int) mapImageView.getLayoutX()), (int) mapImageView.getLayoutY());
-              pathFinder.updateComboBoxes();
+              //pathFinder.updateComboBoxes();
               if (newValue.equals("Choose Floor:"))
                 clearPath();
             });
@@ -141,7 +142,7 @@ public class MapCtrl extends MasterCtrl {
   }
 
   public void findPath() {
-    pathFinder.drawPath(pathFinder.findPath(), anchorPane);
+    pathFinder.drawPath(pathFinder.findPath(markerManager.getFloor()), anchorPane);
   }
 
   public void clearPath() {

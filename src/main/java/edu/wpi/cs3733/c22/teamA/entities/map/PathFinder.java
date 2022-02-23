@@ -32,7 +32,7 @@ public class PathFinder {
     this.markerManager = markerManager;
   }
 
-  public List<Location> findPath() {
+  public List<Location> findPath(String floor) {
     Location start = null;
     Location end = null;
     for (Location l : locations) {
@@ -48,7 +48,7 @@ public class PathFinder {
     }
 
     Map<Location, Integer> minDistances = dijkstra(locations, start, neighborMap);
-    List<Location> path = getPath(end, neighborMap, minDistances);
+    List<Location> path = getPath(end, neighborMap, minDistances, floor);
 
     return path;
   }
@@ -132,25 +132,37 @@ public class PathFinder {
   }
 
   private List<Location> getPath(
-      Location end, Map<Location, HashSet<Edge>> neighborMap, Map<Location, Integer> minDistances) {
+      Location end, Map<Location, HashSet<Edge>> neighborMap, Map<Location, Integer> minDistances, String floor) {
     List<Location> path = new ArrayList<>();
+    List<Edge> edgePath = new ArrayList<>();
+    List<Location> resultPath = new ArrayList<>();
     int lowestDist = Integer.MAX_VALUE;
     Location current = end;
+    Edge chosen = new Edge();
+    boolean cancelled = false;
     while (lowestDist > 0) {
       path.add(current);
+      edgePath.add(chosen);
 
       for (Edge e : neighborMap.get(current)) {
         if (lowestDist > minDistances.get(e.getEnd())) {
           current = e.getEnd();
+          chosen = e;
           lowestDist = minDistances.get(e.getEnd());
         }
       }
     }
-    path.add(current);
-    return path;
+   path.add(current);
+  for(Location l:path){
+    if(l.getFloor().equals(floor)) resultPath.add(l);
+  }
+    return resultPath;
   }
 
   public void drawPath(List<Location> path, AnchorPane miniAnchorPane) {
+    if(path.size() == 0){
+      return;
+    }
     Location prev = path.get(0);
     int offsetX = 4;
     int offsetY = 6;
@@ -180,7 +192,7 @@ public class PathFinder {
   public void updateComboBoxes() {
     fromBox.getItems().clear();
     toBox.getItems().clear();
-    List<Location> floorLocations = markerManager.returnFloorLocations();
+    List<Location> floorLocations = markerManager.getAllLocations();
     for (Location l : floorLocations) {
       fromBox.getItems().add(l.getShortName());
       toBox.getItems().add(l.getShortName());
