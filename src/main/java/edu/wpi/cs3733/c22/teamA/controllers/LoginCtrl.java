@@ -1,6 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import javafx.fxml.FXML;
@@ -9,6 +10,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class LoginCtrl {
   @FXML private Text welcomeBox;
@@ -77,17 +81,30 @@ public class LoginCtrl {
 
   @FXML
   private void logIn() {
-    App.factory.setUsername(usernameBox.getText());
-    App.factory.setPassword(passwordBox.getText());
 
-    try {
-      App.connection = App.factory.newConnection("app:audit component:event-consumer");
+    Adb.username = usernameBox.getText();
+    Adb.password = passwordBox.getText();
 
-      sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
-    } catch (Exception e) {
-      warningText.setFill(Color.RED);
+    Adb.initialConnection("EmbeddedDriver");
+      if(!Adb.isInitialized){
+          try {
+              DriverManager.getConnection(String.format("jdbc:derby:%s;user=%s;shutdown=true", Adb.pathToDBA, Adb.username));
+          } catch (SQLException e) {
+              System.out.println(e);
+          }
+          Adb.initialConnection("EmbeddedDriver");
+      }
 
-      passwordBox.setText("");
+    if (Adb.b) {
+        try {
+            sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }else{
+        warningText.setFill(Color.RED);
+
+        passwordBox.setText("");
     }
   }
 
