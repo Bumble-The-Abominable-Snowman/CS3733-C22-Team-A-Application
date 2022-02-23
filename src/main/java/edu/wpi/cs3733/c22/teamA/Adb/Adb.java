@@ -117,7 +117,7 @@ public class Adb {
       try{
         LocationDerbyImpl.inputFromCSV("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
       }catch (Exception e){
-        System.out.println("Insertion failed");
+        System.out.println("TowerLocations Insertion failed");
       }
 
     } catch (SQLException e) {
@@ -141,7 +141,7 @@ public class Adb {
       try{
         EmployeeDerbyImpl.inputFromCSV("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.csv");
       }catch (Exception e){
-        System.out.println("Insertion failed");
+        System.out.println("Employee Insertion failed");
       }
 
     } catch (SQLException e) {
@@ -165,7 +165,7 @@ public class Adb {
                 "MedicalEquipment",
                 "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipment.csv");
       }catch (Exception e){
-        System.out.println("Insertion failed");
+        System.out.println("MedicalEquipment Insertion failed");
       }
 
     } catch (SQLException e) {
@@ -247,7 +247,7 @@ public class Adb {
         EquipmentRequestDerby.populateFromCSV("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipmentServiceRequest.csv");
 
       }catch (Exception e){
-        System.out.println("Insertion failed");
+        System.out.println("MedicalEquipmentServiceRequest Insertion failed");
       }
 
     } catch (SQLException e) {
@@ -270,7 +270,7 @@ public class Adb {
         FoodDeliveryServiceRequestDerby.populateFromCSV(
                 "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/FoodDeliveryServiceRequest.csv");
       }catch (Exception e){
-        System.out.println("Insertion failed");
+        System.out.println("FoodDeliveryServiceRequest Insertion failed");
       }
 
     } catch (SQLException e) {
@@ -290,7 +290,7 @@ public class Adb {
         LanguageServiceRequestDerby.populateFromCSV(
                 "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/LanguageServiceRequest.csv");
       }catch (Exception e){
-        System.out.println("Insertion failed");
+        System.out.println("LanguageServiceRequest Insertion failed");
       }
 
     } catch (SQLException e) {
@@ -310,7 +310,7 @@ public class Adb {
         LaundryServiceRequestDerby.populateFromCSV(
                 "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/LaundryServiceRequest.csv");
       }catch (Exception e){
-        System.out.println("Insertion failed");
+        System.out.println("LaundryServiceRequest Insertion failed");
       }
     } catch (SQLException e) {
       System.out.println("Table laundryservicerequest already exist");
@@ -329,7 +329,7 @@ public class Adb {
         religiousSRServiceRequestDerby.populateFromCSV(
                 "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/ReligiousServiceRequest.csv");
       }catch (Exception e){
-        System.out.println("Insertion failed");
+        System.out.println("ReligiousServiceRequest Insertion failed");
       }
     } catch (SQLException e) {
       System.out.println("Table ReligiousServiceRequest already exist");
@@ -348,7 +348,7 @@ public class Adb {
         sanitationServiceRequestDerby.populateFromCSV(
                 "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/SanitationServiceRequest.csv");
       }catch (Exception e){
-        System.out.println("Insertion failed");
+        System.out.println("SanitationServiceRequest Insertion failed");
       }
     } catch (SQLException e) {
       System.out.println("Table SanitationServiceRequest already exist");
