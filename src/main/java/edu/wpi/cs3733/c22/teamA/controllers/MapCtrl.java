@@ -127,6 +127,8 @@ public class MapCtrl extends MasterCtrl {
               mapManager.initFloor(
                   newValue, ((int) mapImageView.getLayoutX()), (int) mapImageView.getLayoutY());
               pathFinder.updateComboBoxes();
+              if (newValue.equals("Choose Floor:"))
+                clearPath();
             });
   }
 

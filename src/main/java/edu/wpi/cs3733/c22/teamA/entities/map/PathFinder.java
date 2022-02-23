@@ -77,6 +77,7 @@ public class PathFinder {
       String edge2 = "";
       boolean isTaxiCab = false;
       boolean isTop = false;
+      boolean isFloorCross = false;
 
       while (dataScanner.hasNext()) {
 
@@ -85,6 +86,7 @@ public class PathFinder {
         else if (dataIndex == 1) edge2 = data;
         else if (dataIndex == 2) isTaxiCab = data.equals("TRUE") ? true : false;
         else if (dataIndex == 3) isTop = (isTaxiCab && data.equals("TRUE")) ? true : false;
+        else if (dataIndex == 4) isFloorCross = data.equals("TRUE") ? true : false;
         else System.out.println("Invalid data, I broke::" + data);
         dataIndex++;
       }
@@ -94,8 +96,8 @@ public class PathFinder {
         continue;
       }
 
-      resultMap.get(map.get(edge1)).add(new Edge(map.get(edge1), map.get(edge2), isTaxiCab, isTop));
-      resultMap.get(map.get(edge2)).add(new Edge(map.get(edge2), map.get(edge1), isTaxiCab, isTop));
+      resultMap.get(map.get(edge1)).add(new Edge(map.get(edge1), map.get(edge2), isTaxiCab, isTop, isFloorCross));
+      resultMap.get(map.get(edge2)).add(new Edge(map.get(edge2), map.get(edge1), isTaxiCab, isTop, isFloorCross));
     }
 
     lineScanner.close();
@@ -144,6 +146,7 @@ public class PathFinder {
         }
       }
     }
+    path.add(current);
     return path;
   }
 
@@ -178,7 +181,6 @@ public class PathFinder {
     fromBox.getItems().clear();
     toBox.getItems().clear();
     List<Location> floorLocations = markerManager.returnFloorLocations();
-    System.out.println(floorLocations.size());
     for (Location l : floorLocations) {
       fromBox.getItems().add(l.getShortName());
       toBox.getItems().add(l.getShortName());

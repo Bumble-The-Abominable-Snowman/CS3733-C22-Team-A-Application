@@ -7,12 +7,14 @@ public class Edge {
   private double weight;
   private boolean taxiCabDistance;
   private boolean top;
+  private boolean floorCross;
 
-  public Edge(Location start, Location end, boolean taxiCabDistance, boolean top) {
+  public Edge(Location start, Location end, boolean taxiCabDistance, boolean top, boolean floorCross) {
     this.start = start;
     this.end = end;
     this.taxiCabDistance = taxiCabDistance;
     this.top = top;
+    this.floorCross = floorCross;
     weight =
         taxiCabDistance
             ? Math.abs(start.getXCoord() - end.getXCoord())
