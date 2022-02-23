@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
@@ -37,6 +38,7 @@ public class MapCtrl extends MasterCtrl {
   @FXML private GesturePane gesturePane;
   private AnchorPane anchorPane;
   private ImageView mapImageView;
+  @FXML JFXButton newLocButton = new JFXButton();
 
   @FXML private JFXComboBox searchComboBox;
 
@@ -87,7 +89,6 @@ public class MapCtrl extends MasterCtrl {
     mapManager =
         new MapManager(
             markerManager, checkBoxManager, gesturePaneManager, selectionManager, searcher);
-
     mapManager.init();
   }
 
@@ -106,7 +107,9 @@ public class MapCtrl extends MasterCtrl {
             });
   }
 
-  public void newLocationPressed(ActionEvent actionEvent) {}
+  public void newLocationPressed() {
+    mapManager.newLocationPressed();
+  }
 
   public void findPath(ActionEvent actionEvent) {}
 
