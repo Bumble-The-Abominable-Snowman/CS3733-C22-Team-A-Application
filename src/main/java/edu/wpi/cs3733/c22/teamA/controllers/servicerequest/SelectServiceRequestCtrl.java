@@ -21,6 +21,7 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
   @FXML private JFXButton consultationButton;
   @FXML private JFXButton maintenanceButton;
   @FXML private JFXButton giftDeliveryButton;
+  @FXML private JFXButton APIButton;
 
   double stageWidth;
   double equipmentDeliveryTextSize;
@@ -35,6 +36,7 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
   double consultationTextSize;
   double maintenanceTextSize;
   double giftDeliveryTextSize;
+  double APIButtonTextSize;
 
   @FXML
   private void initialize() {
@@ -53,6 +55,7 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
     consultationTextSize = consultationButton.getFont().getSize();
     maintenanceTextSize = maintenanceButton.getFont().getSize();
     giftDeliveryTextSize = giftDeliveryButton.getFont().getSize();
+    APIButtonTextSize = APIButton.getFont().getSize();
 
     updateSize();
 
@@ -129,6 +132,12 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
   }
 
   @FXML
+  private void runAPI() throws IOException {
+
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
+  }
+
+  @FXML
   private void updateSize() {
 
     stageWidth = App.getStage().getWidth();
@@ -156,5 +165,6 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
         "-fx-font-size: " + ((stageWidth / 1000) * maintenanceTextSize) + "pt;");
     giftDeliveryButton.setStyle(
         "-fx-font-size: " + ((stageWidth / 1000) * giftDeliveryTextSize) + "pt;");
+    APIButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * APIButtonTextSize) + "pt;");
   }
 }

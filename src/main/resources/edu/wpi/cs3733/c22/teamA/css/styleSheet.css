@@ -104,14 +104,21 @@
     -fx-font-weight: BOLD;
 }
 
-.combo-box{
+.comboBox{
 
     -fx-background-color: #B55243;
-    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 12pt;
+    -fx-font-family: "Helvetica Neue";
+    -fx-text-fill: WHITE;
+    -fx-prompt-text-fill: WHITE;
+    -fx-background-size: 100% 100%;
+    -fx-border-color: BLACK;
+    -fx-cursor: HAND;
+    -fx-font-weight: BOLD;
 
 }
 
-.combo-box:focused{
+.comboBox:focused{
 
     -fx-background-color: #0048BA;
     -fx-text-fill: #FFFFFF;

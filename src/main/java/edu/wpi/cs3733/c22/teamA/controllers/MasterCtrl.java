@@ -7,6 +7,8 @@ import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -31,10 +33,12 @@ public abstract class MasterCtrl {
   @FXML public JFXButton settingsButton;
   @FXML public JFXButton exitButton;
   @FXML public JFXButton loginButton;
+  @FXML public JFXButton aboutButton;
   @FXML public JFXButton homeButton;
 
   public final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
   public static int sceneFlag = 0;
+  public static List<Integer> sceneFlags = new ArrayList<Integer>();
 
   double selectSRButtonSize;
   double mapButtonSize;
@@ -45,8 +49,8 @@ public abstract class MasterCtrl {
   double settingsButtonSize;
   double exitButtonSize;
   double loginButtonSize;
-  double backButtonSize;
   double homeButtonSize;
+  double aboutButtonSize;
   double titleTextSize;
 
   double stageWidth;
@@ -66,6 +70,7 @@ public abstract class MasterCtrl {
     exitButtonSize = exitButton.getFont().getSize();
     loginButtonSize = loginButton.getFont().getSize();
     homeButtonSize = homeButton.getFont().getSize();
+    aboutButtonSize = aboutButton.getFont().getSize();
     titleTextSize = titleLabel.getFont().getSize();
 
     drawer.setSidePane(menuBox);
@@ -124,7 +129,7 @@ public abstract class MasterCtrl {
         "-fx-font-size: " + ((stageWidth / 1000) * viewLocationsButtonSize) + "pt;");
     exitButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * exitButtonSize) + "pt;");
     loginButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * loginButtonSize) + "pt;");
-    backButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * backButtonSize) + "pt;");
+    aboutButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * aboutButtonSize) + "pt;");
     homeButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * homeButtonSize) + "pt;");
   }
 
@@ -156,6 +161,7 @@ public abstract class MasterCtrl {
 
     this.onSceneSwitch();
     sceneFlag = 1;
+    sceneFlags.add(sceneFlag);
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
@@ -164,6 +170,7 @@ public abstract class MasterCtrl {
 
     this.onSceneSwitch();
     sceneFlag = 2;
+    sceneFlags.add(sceneFlag);
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
@@ -172,6 +179,7 @@ public abstract class MasterCtrl {
 
     this.onSceneSwitch();
     sceneFlag = 3;
+    sceneFlags.add(sceneFlag);
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
@@ -180,6 +188,7 @@ public abstract class MasterCtrl {
 
     this.onSceneSwitch();
     sceneFlag = 4;
+    sceneFlags.add(sceneFlag);
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
@@ -188,6 +197,13 @@ public abstract class MasterCtrl {
 
     this.onSceneSwitch();
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.SETTINGS);
+  }
+
+  @FXML
+  private void goToAbout() throws IOException {
+
+    this.onSceneSwitch();
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.ABOUT);
   }
 
   @FXML
@@ -207,13 +223,19 @@ public abstract class MasterCtrl {
   private void back() throws IOException {
 
     this.onSceneSwitch();
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
+    sceneSwitcher.fxmlval.remove(sceneSwitcher.fxmlval.size() - 1);
+    SceneSwitcher.SCENES lastScene = sceneSwitcher.fxmlval.get(sceneSwitcher.fxmlval.size() - 1);
+    if (lastScene == SceneSwitcher.SCENES.DATA_VIEW) {
+      sceneFlags.remove(sceneFlags.size() - 1);
+      sceneFlag = sceneFlags.get(sceneFlags.size() - 1);
+    }
+    sceneSwitcher.switchScene(lastScene);
+    sceneSwitcher.fxmlval.remove(sceneSwitcher.fxmlval.size() - 1);
   }
 
   @FXML
   private void help() throws IOException {
 
-    this.onSceneSwitch();
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.HELP);
   }
+
 }

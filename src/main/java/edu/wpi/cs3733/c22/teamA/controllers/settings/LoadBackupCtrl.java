@@ -35,6 +35,9 @@ public class LoadBackupCtrl extends MasterCtrl {
   @FXML private Text selectedFileText;
   @FXML private ListView<String> fileList;
   @FXML private String lastSelectedFile;
+  private double stageWidth;
+  private double loadBackupTextSize;
+  private double selectedFileTextSize;
 
   @FXML
   public void initialize() {
@@ -43,71 +46,65 @@ public class LoadBackupCtrl extends MasterCtrl {
 
     this.refreshFiles();
 
-    double loadBackupTextSize = loadBackupButton.getFont().getSize();
-    double selectedFileTextSize = selectedFileText.getFont().getSize();
+    loadBackupTextSize = loadBackupButton.getFont().getSize();
+    selectedFileTextSize = selectedFileText.getFont().getSize();
 
     App.getStage()
-        .widthProperty()
-        .addListener(
-            (obs, oldVal, newVal) -> {
-              loadBackupButton.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * loadBackupTextSize)
-                      + "pt;");
-              selectedFileText.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * selectedFileTextSize)
-                      + "pt;");
-            });
+            .widthProperty()
+            .addListener(
+                    (obs, oldVal, newVal) -> {
+                      updateSize();
+                    });
+
 
     fileList.setOnMouseClicked(
-        new EventHandler<MouseEvent>() {
-          @Override
-          public void handle(MouseEvent event) {
-            if (event.getButton() == MouseButton.PRIMARY) {
-              String currentItemSelected = fileList.getSelectionModel().getSelectedItem();
-              lastSelectedFile =
-                  "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/" + currentItemSelected;
-              String[] arrOfStr = lastSelectedFile.split("/");
-              selectedFileText.setText(arrOfStr[arrOfStr.length - 1]);
-              selectedFileText.setFill(Color.BLACK);
-            }
-          }
-        });
+            new EventHandler<MouseEvent>() {
+              @Override
+              public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                  String currentItemSelected = fileList.getSelectionModel().getSelectedItem();
+                  lastSelectedFile =
+                          "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/" + currentItemSelected;
+                  String[] arrOfStr = lastSelectedFile.split("/");
+                  selectedFileText.setText(arrOfStr[arrOfStr.length - 1]);
+                  selectedFileText.setFill(Color.BLACK);
+                }
+              }
+            });
     TypeCSV.getItems().removeAll(TypeCSV.getItems());
     TypeCSV.getItems()
-        .addAll(
-            "TowerLocations",
-            "Employee",
-            "MedicalEquipment",
-            "MedicalEquipmentServiceRequest",
-            "FloralDeliveryServiceRequest",
-            "FoodDeliveryServiceRequest",
-            "GiftDeliveryServiceRequest",
-            "LanguageServiceRequest",
-            "LaundryServiceRequest",
-            "MaintenanceServiceRequest",
-            "MedicineDeliveryServiceRequest",
-            "ReligiousServiceRequest",
-            "SanitationServiceRequest",
-            "SecurityServiceRequest");
+            .addAll(
+                    "TowerLocations",
+                    "Employee",
+                    "MedicalEquipment",
+                    "MedicalEquipmentServiceRequest",
+                    "FloralDeliveryServiceRequest",
+                    "FoodDeliveryServiceRequest",
+                    "GiftDeliveryServiceRequest",
+                    "LanguageServiceRequest",
+                    "LaundryServiceRequest",
+                    "MaintenanceServiceRequest",
+                    "MedicineDeliveryServiceRequest",
+                    "ReligiousServiceRequest",
+                    "SanitationServiceRequest",
+                    "SecurityServiceRequest");
     TypeCSV.setValue("CSV Type");
 
     TypeCSV.setOnMouseClicked(
-        new EventHandler<MouseEvent>() {
-          @Override
-          public void handle(MouseEvent event) {
-            if (event.getButton() == MouseButton.PRIMARY) {
-              //                  String currentItemSelected =
-              // fileList.getSelectionModel().getSelectedItem();
-              //                  lastSelectedFile = "edu/wpi/cs3733/c22/teamA/db/CSVs/" +
-              // currentItemSelected;
-              String[] arrOfStr = lastSelectedFile.split("/");
-              selectedFileText.setText(arrOfStr[arrOfStr.length - 1]);
-              selectedFileText.setFill(Color.BLACK);
-            }
-          }
-        });
+            new EventHandler<MouseEvent>() {
+              @Override
+              public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                  //                  String currentItemSelected =
+                  // fileList.getSelectionModel().getSelectedItem();
+                  //                  lastSelectedFile = "edu/wpi/cs3733/c22/teamA/db/CSVs/" +
+                  // currentItemSelected;
+                  String[] arrOfStr = lastSelectedFile.split("/");
+                  selectedFileText.setText(arrOfStr[arrOfStr.length - 1]);
+                  selectedFileText.setFill(Color.BLACK);
+                }
+              }
+            });
   }
 
   @FXML
@@ -132,7 +129,7 @@ public class LoadBackupCtrl extends MasterCtrl {
   }
 
   public void loadBackup()
-      throws IOException, ParseException, InvocationTargetException, IllegalAccessException,
+          throws IOException, ParseException, InvocationTargetException, IllegalAccessException,
           SQLException {
 
     try {
@@ -210,8 +207,8 @@ public class LoadBackupCtrl extends MasterCtrl {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Select the CSV file");
     fileChooser
-        .getExtensionFilters()
-        .addAll(new FileChooser.ExtensionFilter("CSV Backup Files", "*.csv", "*.CSV"));
+            .getExtensionFilters()
+            .addAll(new FileChooser.ExtensionFilter("CSV Backup Files", "*.csv", "*.CSV"));
     File selectedFile = fileChooser.showOpenDialog(App.getStage());
     System.out.println(selectedFile.getAbsolutePath());
 
@@ -228,4 +225,17 @@ public class LoadBackupCtrl extends MasterCtrl {
     // Add load all CSV code here
 
   }
+
+  @FXML
+  private void updateSize() {
+
+    stageWidth = App.getStage().getWidth();
+
+    loadBackupButton.setStyle(
+            "-fx-font-size: " + ((stageWidth / 1000) * loadBackupTextSize) + "pt;");
+    selectedFileText.setStyle(
+            "-fx-font-size: " + ((stageWidth / 1000) * selectedFileTextSize) + "pt;");
+  }
+
+
 }

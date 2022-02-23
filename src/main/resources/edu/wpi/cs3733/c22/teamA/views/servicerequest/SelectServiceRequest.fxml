@@ -116,6 +116,15 @@
                      </ImageView>
                   </graphic>
                </JFXButton>
+               <JFXButton fx:id="aboutButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToAbout" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../../css/styleSheet.css" text="About" textAlignment="CENTER" textFill="WHITE">
+                  <graphic>
+                     <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../images/Speech%20Bubble%20Icon.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+               </JFXButton>
                <JFXButton fx:id="loginButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToLogin" prefHeight="100.0" prefWidth="2000.0" snapToPixel="false" styleClass="menuButton" stylesheets="@../../css/styleSheet.css" text="Log Out" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
                   <graphic>
                      <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
@@ -181,4 +190,5 @@
          <Font size="18.0" />
       </font>
    </Label>
+   <JFXButton fx:id="APIButton" buttonType="RAISED" mnemonicParsing="false" onAction="#runAPI" styleClass="bodyFormat" text="Load External SR" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
 </GridPane>

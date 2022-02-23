@@ -4,6 +4,8 @@ import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
+
+import java.io.IOException;
 import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -26,4 +28,12 @@ public class HomeCtrl extends MasterCtrl {
       }
     }
   }
+
+  @FXML
+  private void activateBumble() throws IOException {
+
+
+
+  }
+
 }

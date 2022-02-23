@@ -14,6 +14,7 @@ import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
@@ -41,14 +42,14 @@ import javafx.stage.Popup;
 public class DataViewCtrl extends MasterCtrl {
 
   @FXML private VBox inputVBox;
+  @FXML private JFXComboBox selectEmployeeBox;
   @FXML private JFXButton saveButton;
   @FXML private JFXButton editButton;
   @FXML private JFXButton clearButton;
   @FXML private JFXButton deleteButton;
 
   @FXML
-  public void deleteSelected()
-      throws SQLException, InvocationTargetException, IllegalAccessException {
+  public void delete() throws SQLException, InvocationTargetException, IllegalAccessException {
     System.out.println(table.getSelectionModel().getSelectedItem().getValue().sr);
 
     if (HomeCtrl.sceneFlag == 1) {
@@ -81,7 +82,7 @@ public class DataViewCtrl extends MasterCtrl {
   }
 
   @FXML
-  public void addData() {
+  public void save() {
 
     if (HomeCtrl.sceneFlag == 3) {
 
@@ -226,8 +227,6 @@ public class DataViewCtrl extends MasterCtrl {
   }
 
   @FXML JFXTreeTableView<RecursiveObj> table;
-  @FXML JFXButton addDataButton;
-  @FXML JFXButton deleteSelectedButton;
 
   boolean fillerYes = true;
 
@@ -1011,10 +1010,7 @@ public class DataViewCtrl extends MasterCtrl {
   void clear() {}
 
   @FXML
-  void save() {}
-
-  @FXML
-  void delete() {}
+  private void employeeFilter() throws IOException {}
 
   protected void onSceneSwitch() {
     DataViewCtrl.detailsPopup.get().hide();

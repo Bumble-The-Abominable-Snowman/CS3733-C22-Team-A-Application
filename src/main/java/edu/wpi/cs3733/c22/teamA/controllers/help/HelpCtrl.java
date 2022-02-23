@@ -162,19 +162,4 @@ public class HelpCtrl extends MasterCtrl {
     bubbleText.setVisible(true);
   }
 
-  @FXML private void goToDataViewHelp() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW_HELP);
-  }
-
-  @FXML private void goToMapHelp() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.MAP_HELP);
-  }
-
-  @FXML private void goToNewSRHelp() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.NEW_SR_HELP);
-  }
-
-  @FXML private void goToSettingsHelp() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.SETTINGS_HELP);
-  }
 }
