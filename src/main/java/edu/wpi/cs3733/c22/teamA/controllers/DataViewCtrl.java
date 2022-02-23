@@ -125,7 +125,7 @@ public class DataViewCtrl extends MasterCtrl {
       JFXCheckBox isCleanCheckBox = new JFXCheckBox();
 
       TextArea currentLocationText = new TextArea();
-      currentLocationText.setPromptText("Enter currentLocation:");
+      currentLocationText.setPromptText("Enter currentLocation ID:");
       currentLocationText.setMinSize(50, 30);
       currentLocationText.setMaxSize(150, 30);
 
@@ -140,6 +140,24 @@ public class DataViewCtrl extends MasterCtrl {
                 && equipmentTypeText.getText().length() > 2
                 && currentLocationText.getText().length() > 2) {
               EquipmentDerbyImpl equipmentDerby = new EquipmentDerbyImpl();
+              LocationDAO locationDAO = new LocationDerbyImpl();
+              List<Location> aList = locationDAO.getNodeList();
+              Location theL = new Location();
+              for (Location aL: aList){
+                if(currentLocationText.getText().equals(aL.getNodeID())){
+                  theL = aL;
+                  System.out.println(theL.getNodeID());
+                  break;
+                }
+              }
+              if(theL.getNodeID() == null){
+                System.out.println("Location does not exist");
+                return;
+              }
+              if(!(theL.getNodeType().equals("STOR")) && !(theL.getNodeType().equals("PATI"))){
+                System.out.println("THIS EQUIPMENT CANNOT BE STORED HERE");
+                return;
+              }
               equipmentDerby.enterMedicalEquipment(
                   equipmentIDText.getText(),
                   equipmentTypeText.getText(),
@@ -710,7 +728,6 @@ public class DataViewCtrl extends MasterCtrl {
                 try {
                   sr.setFieldByString(field.getSelectionModel().getSelectedItem(), value.getText());
                   serviceRequestDerby.updateServiceRequest(sr);
-
                   updateButton.setTextFill(Color.GREEN);
                 } catch (SQLException | IllegalAccessException | InvocationTargetException ex) {
                   ex.printStackTrace();
@@ -773,6 +790,7 @@ public class DataViewCtrl extends MasterCtrl {
 
                     LocationDerbyImpl locationDerby = new LocationDerbyImpl();
                     try {
+
                       locationDerby.updateLocation(
                           loc.getNodeID(), field.getValue(), value.getText());
                       updateButton.setTextFill(Color.GREEN);
@@ -792,6 +810,7 @@ public class DataViewCtrl extends MasterCtrl {
 
         break;
       case 3:
+        // BIGGER MARKER
         Equipment eq = this.eqList.get(table.getSelectionModel().getSelectedIndex());
         methods = eq.getClass().getMethods();
         for (Method method : methods) {
@@ -845,14 +864,41 @@ public class DataViewCtrl extends MasterCtrl {
 
                     EquipmentDerbyImpl equipmentDerby = new EquipmentDerbyImpl();
                     try {
-                      equipmentDerby.updateMedicalEquipment(
-                          eq.getEquipmentID(), field.getValue(), value.getText());
-                      updateButton.setTextFill(Color.GREEN);
-                      try {
-                        this.initializeRequestsTable();
-                      } catch (SQLException | InvocationTargetException | IllegalAccessException ex) {
-                        ex.printStackTrace();
+                      String aField = "";
+                      System.out.println(field.getValue());
+                      if(field.getValue().equals("EquipmentType")){
+                        aField = "equipment_type";
+                      } else if (field.getValue().equals("EquipmentID")){
+                        aField = "equipment_id";
+                      } else if (field.getValue().equals("CurrentLocation")){
+                        aField = "current_location";
                       }
+                      if (aField == "current_location") {
+                        LocationDAO locationDAO = new LocationDerbyImpl();
+                        List<Location> aList = locationDAO.getNodeList();
+                        Location theL = new Location();
+                        for (Location aL : aList) {
+                          if (value.getText().equals(aL.getNodeID())) {
+                            theL = aL;
+                            break;
+                          }
+                        }
+                        if (theL.getNodeID() == null) {
+                          System.out.println("Location does not exist");
+                          updateButton.setTextFill(Color.RED);
+                          return;
+                        }
+                        if (!(theL.getNodeType().equals("STOR")) && !(theL.getNodeType().equals("PATI"))) {
+                          System.out.println("THIS EQUIPMENT CANNOT BE STORED HERE");
+                          updateButton.setTextFill(Color.RED);
+                          return;
+                        }
+                      }
+                      equipmentDerby.updateMedicalEquipment(
+                          eq.getEquipmentID(), aField, value.getText());
+                      updateButton.setTextFill(Color.GREEN);
+                        System.out.println("B4 initialize");
+                        this.initializeEquipmentTable();
                     } catch (Exception ex) {
                       ex.printStackTrace();
                       updateButton.setTextFill(Color.RED);
@@ -861,7 +907,6 @@ public class DataViewCtrl extends MasterCtrl {
                 }
               }
             });
-
         break;
       case 4:
         Employee emp = this.empList.get(table.getSelectionModel().getSelectedIndex());
