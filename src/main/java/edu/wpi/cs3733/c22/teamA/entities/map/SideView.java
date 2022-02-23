@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -56,7 +57,8 @@ public class SideView {
     String displayText = "Service Requests\n";
     List<SR> requests = markerManager.returnSRLocations();
     for (SR request : requests) {
-      displayText += request.getRequestID() + ", " + request.getEndLocation() + "\n";
+      HashMap<String, String> data = request.getStringFields();
+      displayText += data.get("request_id") + ", " + data.get("end_location") + "\n";
     }
     if (displayText.equals("Service Requests\n")) displayText += "None\n";
     displayText += "\n";

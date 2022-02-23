@@ -5,6 +5,7 @@ import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -115,9 +116,10 @@ public class Searcher {
                     String lowerCaseFilter = newValue.toLowerCase();
                     // if search matches either name or ID, display it
                     // if not, this returns false and doesn't display
-                    return (request.getSrType().toString().toLowerCase().contains(lowerCaseFilter)
-                        || request.getRequestID().toLowerCase().contains(lowerCaseFilter)
-                        || request.getEndLocation().toLowerCase().contains(lowerCaseFilter));
+                      HashMap<String, String> data = request.getStringFields();
+                    return (data.get("request_id").toLowerCase().contains(lowerCaseFilter)
+                        || data.get("sr_type").toLowerCase().contains(lowerCaseFilter)
+                        || data.get("end_location").toLowerCase().contains(lowerCaseFilter));
                   });
 
               // add items to comboBox dropdown
