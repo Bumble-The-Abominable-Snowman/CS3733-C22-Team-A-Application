@@ -3,7 +3,11 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -13,8 +17,7 @@
 
 <GridPane prefHeight="600.0" prefWidth="960.0" styleClass="background" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.MapCtrl">
    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="113.90144348144531" minWidth="10.0" prefWidth="19.57808494567871" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="218.4219150543213" minWidth="10.0" prefWidth="218.4219150543213" />
+      <ColumnConstraints hgrow="ALWAYS" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="210.0" minWidth="10.0" prefWidth="179.25302124023438" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="210.0" minWidth="10.0" prefWidth="99.40304565429688" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="144.02981567382812" minWidth="0.0" prefWidth="110.59695434570312" />
@@ -25,8 +28,9 @@
    </columnConstraints>
    <rowConstraints>
       <RowConstraints />
-      <RowConstraints maxHeight="1035.0" minHeight="23.112960815429688" prefHeight="47.39423942565918" />
-      <RowConstraints maxHeight="1035.0" minHeight="23.112960815429688" prefHeight="47.39423942565918" />
+      <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="NEVER" />
+      <RowConstraints vgrow="ALWAYS" />
+      <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="NEVER" />
       <RowConstraints maxHeight="1035.0" minHeight="0.0" prefHeight="148.60576057434082" />
       <RowConstraints maxHeight="1035.0" minHeight="25.740341186523438" prefHeight="25.740341186523438" />
       <RowConstraints maxHeight="1035.0" minHeight="67.63458251953125" prefHeight="140.01495361328125" />
@@ -36,17 +40,18 @@
       <RowConstraints maxHeight="181.13287353515625" minHeight="10.0" prefHeight="70.70428466796875" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="181.13287353515625" minHeight="10.0" prefHeight="48.29571533203125" vgrow="SOMETIMES" />
       <RowConstraints />
+      <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="NEVER" />
    </rowConstraints>
    <children>
-      <VBox fx:id="inputVBox" prefHeight="655.0" prefWidth="160.0" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="6" GridPane.valignment="TOP" />
-      <JFXButton fx:id="newLocButton" alignment="CENTER" contentDisplay="CENTER" onAction="#newLocationPressed" prefHeight="33.0" prefWidth="124.0" text="New Location" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-      <JFXComboBox fx:id="floorSelectionComboBox" prefHeight="26.0" prefWidth="106.0" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="TOP" />
-      <JFXComboBox fx:id="searchComboBox" prefHeight="26.0" prefWidth="167.0" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-      <JFXComboBox fx:id="pfToComboBox" prefHeight="26.0" prefWidth="97.0" promptText="To:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="BOTTOM" />
-      <JFXComboBox fx:id="pfFromComboBox" prefHeight="26.0" prefWidth="95.0" promptText="From:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="TOP" />
-      <JFXButton fx:id="findPathButton" onAction="#findPath" prefHeight="33.0" prefWidth="104.0" text=" Find Path" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="TOP" />
-      <JFXButton fx:id="clearPathButton" onAction="#clearPath" text="Clear Path" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
-      <VBox prefHeight="76.0" prefWidth="219.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <VBox fx:id="inputVBox" prefHeight="655.0" prefWidth="160.0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="6" GridPane.valignment="TOP" />
+      <JFXButton fx:id="newLocButton" alignment="CENTER" contentDisplay="CENTER" onAction="#newLocationPressed" prefHeight="33.0" prefWidth="124.0" text="New Location" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+      <JFXComboBox fx:id="floorSelectionComboBox" prefHeight="26.0" prefWidth="106.0" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+      <JFXComboBox fx:id="searchComboBox" prefHeight="26.0" prefWidth="167.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+      <JFXComboBox fx:id="pfToComboBox" prefHeight="26.0" prefWidth="97.0" promptText="To:" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="BOTTOM" />
+      <JFXComboBox fx:id="pfFromComboBox" prefHeight="26.0" prefWidth="95.0" promptText="From:" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="TOP" />
+      <JFXButton fx:id="findPathButton" onAction="#findPath" prefHeight="33.0" prefWidth="104.0" text=" Find Path" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="TOP" />
+      <JFXButton fx:id="clearPathButton" onAction="#clearPath" text="Clear Path" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="BOTTOM" />
+      <VBox prefHeight="76.0" prefWidth="219.0" spacing="10.0" GridPane.rowIndex="4">
          <children>
             <JFXCheckBox fx:id="dragCheckBox" alignment="CENTER" prefHeight="22.0" prefWidth="176.0" text="Toggle Drag/Drop Locations" wrapText="true" />
             <JFXCheckBox fx:id="serviceRequestCheckBox" alignment="CENTER" prefHeight="22.0" prefWidth="75.0" text="Toggle Service Request View" wrapText="true" />
@@ -55,12 +60,151 @@
             <JFXCheckBox fx:id="equipmentCheckBox" alignment="CENTER" prefHeight="22.0" prefWidth="75.0" text="Toggle Equipment View" wrapText="true" />
          </children>
       </VBox>
-      <GesturePane fx:id="gesturePane" fitMode="UNBOUNDED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.rowSpan="7" GridPane.valignment="TOP" />
-      <JFXButton fx:id="viewTableButton" onAction="#goToLocationTable" prefHeight="33.0" prefWidth="127.0" text="View Table" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
-      <Label fx:id="titleLabel" alignment="CENTER" styleClass="titleFormat" stylesheets="@../css/styleSheet.css" text="Hospital Map" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+      <GesturePane fx:id="gesturePane" fitMode="UNBOUNDED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="423.0" prefWidth="406.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.rowSpan="8" GridPane.valignment="TOP" />
+      <JFXButton fx:id="viewTableButton" onAction="#goToLocationTable" prefHeight="33.0" prefWidth="127.0" text="View Table" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
+      <Label fx:id="titleLabel" alignment="CENTER" styleClass="titleFormat" stylesheets="@../css/styleSheet.css" text="Hospital Map" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
+      <GridPane GridPane.rowIndex="2">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="ALWAYS" />
+        </rowConstraints>
+         <children>
+            <JFXButton fx:id="helpButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#help" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/Question%20Mark%20Icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="backButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#back" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/Back%20Arrow.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" GridPane.halignment="CENTER" />
+            <JFXHamburger fx:id="hamburger" alignment="CENTER" stylesheets="@../css/styleSheet.css" GridPane.halignment="CENTER" />
+         </children>
+      </GridPane>
+      <JFXDrawer fx:id="drawer" GridPane.rowIndex="4" GridPane.rowSpan="8">
+         <children>
+            <VBox fx:id="menubox" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <JFXButton fx:id="homeButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToHome" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Home" textAlignment="CENTER" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/home_2.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="selectSRButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToSelectServiceRequest" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="New Service Request" textAlignment="CENTER" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/form_2.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="mapButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToMap" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Map" textAlignment="CENTER" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Map%20Icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="viewSRButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToServiceRequestData" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Service Requests" textAlignment="CENTER" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/listOrTable.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="viewEmployeesButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToEmployeeData" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Employees" textAlignment="CENTER" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/person.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="viewLocationsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToLocationData" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Locations" textAlignment="CENTER" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Location%20Marker%20Icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="viewEquipmentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToEquipmentData" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Equipment" textAlignment="CENTER" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Bed_with_pump.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="settingsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToSettings" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Settings" textAlignment="CENTER" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/settings-gear.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="aboutButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToAbout" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="About" textAlignment="CENTER" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Speech%20Bubble%20Icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="loginButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToLogin" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Log Out" textAlignment="CENTER" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Door%20Icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="exitButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#exitApp" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Exit" textAlignment="CENTER" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/exit.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </VBox>
+         </children>
+      </JFXDrawer>
    </children>
 </GridPane>
