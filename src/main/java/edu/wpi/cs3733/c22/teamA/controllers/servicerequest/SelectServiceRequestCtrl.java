@@ -150,7 +150,7 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
 
   @FXML
   private void loadAPI() throws ServiceException, IOException {
-    Main.run(500, 200, 960, 600, "", "N/A", "N/A");
+    Main.run(500, 200, 960, 600, "", "");
   }
 
   @FXML
@@ -159,22 +159,12 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
     ServiceRequestDerbyImpl data = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
     for (teamA_API.entities.SR req : list) {
       SR sr = new SR(SR.SRType.SANITATION);
-      sr.setFieldByString("request_id", req.getStringFields().get("request_id"));
-      sr.setFieldByString("start_location", req.getStringFields().get("start_location"));
-      sr.setFieldByString("end_location", req.getStringFields().get("end_location"));
+      sr.setFieldByString("request_id", req.getFields_string().get("request_id"));
+      sr.setFieldByString("start_location", "N/A");
+      sr.setFieldByString("end_location", req.getFields_string().get("end_location"));
 
-      teamA_API.entities.Employee employeeRequestedAPI = (teamA_API.entities.Employee) req.getFields().get("employee_requested");
+      teamA_API.entities.Employee employeeAssignedAPI = (teamA_API.entities.Employee) Main.getEmployee(req.getFields_string().get("employee_assigned"));
       Employee employeeRequested = new Employee(
-              employeeRequestedAPI.getEmployeeID(),
-              employeeRequestedAPI.getEmployeeType(),
-              employeeRequestedAPI.getFirstName(),
-              employeeRequestedAPI.getLastName(),
-              employeeRequestedAPI.getEmail(),
-              employeeRequestedAPI.getPhoneNum(),
-              employeeRequestedAPI.getAddress(),
-              employeeRequestedAPI.startDate);
-      teamA_API.entities.Employee employeeAssignedAPI = (teamA_API.entities.Employee) req.getFields().get("employee_assigned");
-      Employee employeeAssigned = new Employee(
               employeeAssignedAPI.getEmployeeID(),
               employeeAssignedAPI.getEmployeeType(),
               employeeAssignedAPI.getFirstName(),
@@ -185,47 +175,31 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
               employeeAssignedAPI.startDate);
 
       EmployeeDerbyImpl employeeDerby = new EmployeeDerbyImpl();
-      boolean doesEmployeeRequestedNotExist = false;
       boolean doesEmployeeAssignedNotExist = false;
       for (Employee e: employeeDerby.getEmployeeList()) {
         if (e.getEmployeeID().equals(employeeRequested.getEmployeeID()))
         {
-          doesEmployeeRequestedNotExist = true;
-        }
-        if (e.getEmployeeID().equals(employeeAssigned.getEmployeeID()))
-        {
           doesEmployeeAssignedNotExist = true;
         }
       }
-      if (!doesEmployeeRequestedNotExist)
-      {
-        employeeDerby.enterEmployee(employeeRequestedAPI.getEmployeeID(),
-                employeeRequestedAPI.getEmployeeType(),
-                employeeRequestedAPI.getFirstName(),
-                employeeRequestedAPI.getLastName(),
-                employeeRequestedAPI.getEmail(),
-                employeeRequestedAPI.getPhoneNum(),
-                employeeRequestedAPI.getAddress(),
-                employeeRequestedAPI.startDate);
-
-      }
       if (!doesEmployeeAssignedNotExist)
       {
-        employeeDerby.enterEmployee(employeeAssigned.getEmployeeID(),
-                employeeAssigned.getEmployeeType(),
-                employeeAssigned.getFirstName(),
-                employeeAssigned.getLastName(),
-                employeeAssigned.getEmail(),
-                employeeAssigned.getPhoneNum(),
-                employeeAssigned.getAddress(),
-                employeeAssigned.startDate);
+        employeeDerby.enterEmployee(employeeAssignedAPI.getEmployeeID(),
+                employeeAssignedAPI.getEmployeeType(),
+                employeeAssignedAPI.getFirstName(),
+                employeeAssignedAPI.getLastName(),
+                employeeAssignedAPI.getEmail(),
+                employeeAssignedAPI.getPhoneNum(),
+                employeeAssignedAPI.getAddress(),
+                employeeAssignedAPI.startDate);
+
       }
 
-      sr.setField("employee_requested", employeeRequested);
-      sr.setField("employee_assigned", employeeAssigned);
+      sr.setField("employee_assigned", employeeRequested);
+      sr.setField("employee_requested", employeeDerby.getEmployee("001"));
 
-      sr.setFieldByString("comments", req.getStringFields().get("comments"));
-      sr.setFieldByString("sanitation_type", req.getStringFields().get("sanitation_type"));
+      sr.setFieldByString("comments", req.getFields_string().get("comments"));
+      sr.setFieldByString("sanitation_type", req.getFields_string().get("sanitation_type"));
 
       System.out.println(sr);
       data.enterServiceRequest(sr);

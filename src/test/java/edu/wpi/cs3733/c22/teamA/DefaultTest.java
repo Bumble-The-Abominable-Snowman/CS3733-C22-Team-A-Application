@@ -31,6 +31,9 @@ public class DefaultTest {
 
   @Test
   public void medicineTest() throws IOException, SQLException {
+    Adb.username = "admin";
+    Adb.password = "admin";
+
     Adb.initialConnection("EmbeddedDriver");
 
     System.out.println("\n Starting MedicineTest");
@@ -91,9 +94,11 @@ public class DefaultTest {
   public void test()
       throws ParseException, IOException, InvocationTargetException, IllegalAccessException,
           SQLException {
+    Adb.username = "admin";
+    Adb.password = "admin";
 
     Adb.initialConnection("EmbeddedDriver");
-    Location location = new Location();
+    /**Location location = new Location();
 
     SR sr = new SR();
 
@@ -115,7 +120,7 @@ public class DefaultTest {
       for (String key : sr_item.getFields().keySet()) {
         System.out.printf("Key: %s\tValue: %s\n", key, sr_item.getFields().get(key));
       }
-    }
+    }*/
   }
 
   @Test
