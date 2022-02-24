@@ -114,7 +114,7 @@ public class HomeCtrl extends MasterCtrl {
   }
 
   @FXML
-  private void help() throws IOException {
+  private void bumbleHelp() throws IOException {
     bumbleButton.setVisible(true);
   }
 

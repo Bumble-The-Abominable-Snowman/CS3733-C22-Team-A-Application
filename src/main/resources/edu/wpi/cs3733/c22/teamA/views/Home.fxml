@@ -17,7 +17,7 @@
     <columnConstraints>
         <ColumnConstraints hgrow="ALWAYS" />
       <ColumnConstraints hgrow="ALWAYS" prefWidth="650.0" />
-      <ColumnConstraints hgrow="NEVER" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" />
+      <ColumnConstraints hgrow="ALWAYS" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" />
     </columnConstraints>
     <rowConstraints>
       <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="NEVER" />
@@ -164,7 +164,7 @@
                </font>
             </JFXButton>
             <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <JFXButton fx:id="helpButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#help" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" text="." textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <JFXButton fx:id="helpButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#bumbleHelp" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" text="." textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font size="12.0" />
                </font>
@@ -209,12 +209,12 @@
              <Image url="@../images/BumbleFrame1.png" />
           </image>
        </ImageView>
-        <JFXButton fx:id="bumbleButton" mnemonicParsing="false" onAction="#activateBumble" prefHeight="100.0" prefWidth="70.0" styleClass="snowmanButton" text="Button" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" visible="false" >
+        <JFXButton fx:id="bumbleButton" mnemonicParsing="false" onAction="#activateBumble" prefHeight="100.0" prefWidth="70.0" styleClass="snowmanButton" text="Button" visible="false" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
             <GridPane.margin>
                 <Insets right="50.0" />
             </GridPane.margin>
         </JFXButton>
-        <JFXButton fx:id="bumbleXButton" mnemonicParsing="false" onAction="#goToHome" prefHeight="100.0" prefWidth="70.0" styleClass="noSnowmanButton" text="Button" visible="false" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" >
+        <JFXButton fx:id="bumbleXButton" mnemonicParsing="false" onAction="#goToHome" prefHeight="100.0" prefWidth="70.0" styleClass="noSnowmanButton" text="Button" visible="false" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
             <GridPane.margin>
                 <Insets right="50.0" />
             </GridPane.margin>
@@ -254,22 +254,22 @@
             <GridPane.margin>
                 <Insets top="25.0" />
             </GridPane.margin></Label>
-        <JFXButton fx:id="newSRHelpButton" visible="false" mnemonicParsing="false" onAction="#newSRHelp" prefHeight="41.0" prefWidth="436.0" styleClass="bodyFormat" text="New Service Request Help" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP" GridPane.rowIndex="3">
+        <JFXButton fx:id="newSRHelpButton" mnemonicParsing="false" onAction="#newSRHelp" prefHeight="41.0" prefWidth="436.0" styleClass="bodyFormat" text="New Service Request Help" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
             <GridPane.margin>
                 <Insets top="50.0" />
             </GridPane.margin>
         </JFXButton>
-        <JFXButton fx:id="settingsHelpButton" visible="false" layoutX="772.0" layoutY="92.0" mnemonicParsing="false" onAction="#settingsHelp" prefHeight="41.0" prefWidth="436.0" styleClass="bodyFormat" text="Settings Help" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+        <JFXButton fx:id="settingsHelpButton" layoutX="772.0" layoutY="92.0" mnemonicParsing="false" onAction="#settingsHelp" prefHeight="41.0" prefWidth="436.0" styleClass="bodyFormat" text="Settings Help" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
             <GridPane.margin>
                 <Insets top="200.0" />
             </GridPane.margin>
         </JFXButton>
-        <JFXButton fx:id="mapHelpButton" visible="false" layoutX="772.0" layoutY="292.0" mnemonicParsing="false" onAction="#mapHelp" prefHeight="41.0" prefWidth="436.0" styleClass="bodyFormat" text="Map Help" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP" GridPane.rowIndex="3">
+        <JFXButton fx:id="mapHelpButton" layoutX="772.0" layoutY="292.0" mnemonicParsing="false" onAction="#mapHelp" prefHeight="41.0" prefWidth="436.0" styleClass="bodyFormat" text="Map Help" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
             <GridPane.margin>
                 <Insets top="100.0" />
             </GridPane.margin>
         </JFXButton>
-        <JFXButton fx:id="viewDataHelpButton" visible="false" layoutX="772.0" layoutY="173.0" mnemonicParsing="false" onAction="#dataViewHelp" prefHeight="41.0" prefWidth="436.0" styleClass="bodyFormat" text="View Data Help" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+        <JFXButton fx:id="viewDataHelpButton" layoutX="772.0" layoutY="173.0" mnemonicParsing="false" onAction="#dataViewHelp" prefHeight="41.0" prefWidth="436.0" styleClass="bodyFormat" text="View Data Help" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
             <GridPane.margin>
                 <Insets top="150.0" />
             </GridPane.margin>
