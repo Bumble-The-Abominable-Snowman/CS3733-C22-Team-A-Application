@@ -182,11 +182,12 @@ public class PathFinder {
     }
   }
 
-  public void clearPath(AnchorPane miniAnchorPane) {
+  public void clearPath(AnchorPane miniAnchorPane, boolean clearList) {
     for (Line line : pfLine) {
       miniAnchorPane.getChildren().remove(line);
     }
-    pfLine.clear();
+    if (clearList)
+      pfLine.clear();
   }
 
   public void updateComboBoxes() {

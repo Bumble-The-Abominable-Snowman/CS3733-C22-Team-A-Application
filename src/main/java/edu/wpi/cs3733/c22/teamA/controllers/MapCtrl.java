@@ -52,6 +52,7 @@ public class MapCtrl extends MasterCtrl {
   @FXML private JFXComboBox searchComboBox;
 
   private ArrayList<String> floorNames;
+  private boolean drawPathOnSwitch;
 
   private LocationDAO locationDAO;
   private EquipmentDAO equipmentDAO;
@@ -137,8 +138,9 @@ public class MapCtrl extends MasterCtrl {
               mapManager.initFloor(
                   newValue, ((int) mapImageView.getLayoutX()), (int) mapImageView.getLayoutY());
               //pathFinder.updateComboBoxes();
-              if (newValue.equals("Choose Floor:"))
-                clearPath();
+              pathFinder.clearPath(anchorPane, false);
+              if (drawPathOnSwitch)
+                pathFinder.drawPath(pathFinder.findPath(markerManager.getFloor()), anchorPane);
             });
   }
 
@@ -147,11 +149,14 @@ public class MapCtrl extends MasterCtrl {
   }
 
   public void findPath() {
+    pathFinder.clearPath(anchorPane, true);
     pathFinder.drawPath(pathFinder.findPath(markerManager.getFloor()), anchorPane);
+    drawPathOnSwitch = true;
   }
 
   public void clearPath() {
-    pathFinder.clearPath(anchorPane);
+    pathFinder.clearPath(anchorPane, true);
+    drawPathOnSwitch = false;
   }
 
   public void goToLocationTable() throws IOException {
