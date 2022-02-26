@@ -39,13 +39,13 @@ public class DefaultTest {
     System.out.println("\n Starting MedicineTest");
     MedicineDerbyImpl derby = new MedicineDerbyImpl();
 
-    System.out.println("Testing import from CSV");
+    System.out.println("Testing medicine import from CSV");
     MedicineDerbyImpl.importMedicineFromCSV(
-            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/Medicine.csv"
-    );
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/Medicine.csv");
+    System.out.println("Testing medicineDosage import from CSV");
+
     MedicineDerbyImpl.importDosagesFromCSV(
-            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicineDosage.csv"
-    );
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicineDosage.csv");
 
     List<Float> dosageList = new ArrayList<>();
     dosageList.add(Float.parseFloat("2"));
@@ -67,7 +67,7 @@ public class DefaultTest {
     derby.enterMedicine(m);
 
     System.out.println("Testing getDosages");
-    System.out.println("Found dosages for " + medicineID + ": " + derby.getDosages(medicineID));
+    System.out.println("Found dosages for " + medicineID + ": " + derby.getSpecificDosages(medicineID));
     System.out.println("Testing get");
     Medicine copyM = derby.getMedicine(medicineID);
     System.out.println("Found GenericName: " + copyM.getGenericName());
@@ -80,15 +80,44 @@ public class DefaultTest {
     System.out.println("Testing getList");
     System.out.println(derby.getMedicineList());
 
-    System.out.println("Testing Export to csv");
-    MedicineDerbyImpl.exportToCSV(
-        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/testMedCSV.csv",
-        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/testDosCSV.csv");
+    System.out.println("Testing Export Medicine to csv");
+    MedicineDerbyImpl.exportMedicineToCSV(
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/testMedCSV.csv");
+    System.out.println("Testing Export MedicineDosages to csv");
+    MedicineDerbyImpl.exportDosagesToCSV(
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/testDosCSV.csv");
 
     System.out.println("Testing delete");
     derby.deleteMedicine(medicineID);
     System.out.println("Attempting get (should fail)");
     System.out.println(derby.getMedicine(medicineID).getMedicineID());
+  }
+
+  @Test
+  public void testMedicineCSV() throws SQLException, IOException {
+    Adb.username = "admin";
+    Adb.password = "admin";
+
+    Adb.initialConnection("EmbeddedDriver");
+
+    System.out.println("\n Starting MedicineTest");
+    MedicineDerbyImpl derby = new MedicineDerbyImpl();
+
+    System.out.println("Testing medicine import from CSV");
+    MedicineDerbyImpl.importMedicineFromCSV(
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/Medicine.csv");
+    System.out.println("Testing medicineDosage import from CSV");
+
+    MedicineDerbyImpl.importDosagesFromCSV(
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicineDosage.csv");
+
+    System.out.println("Testing Export Medicine to csv");
+    MedicineDerbyImpl.exportMedicineToCSV(
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/testMedCSV.csv");
+    System.out.println("Testing Export MedicineDosages to csv");
+    MedicineDerbyImpl.exportDosagesToCSV(
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/testDosCSV.csv");
+
   }
 
   @Test

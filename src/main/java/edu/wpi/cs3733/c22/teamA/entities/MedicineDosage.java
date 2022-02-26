@@ -32,4 +32,10 @@ public class MedicineDosage {
     public void setDosage_amount(Float dosage_amount) {
         this.dosage_amount = dosage_amount;
     }
+
+    public String toString(){
+        return "" +
+                "medID: " + medicine_id +
+                " dosage: " + dosage_amount + "\n";
+    }
 }
