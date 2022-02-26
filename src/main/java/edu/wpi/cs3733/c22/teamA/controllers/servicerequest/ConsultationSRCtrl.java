@@ -7,6 +7,7 @@ import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 //import edu.wpi.cs3733.c22.teamA.entities.servicerequests.ConsultationSR;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -74,11 +75,14 @@ public class ConsultationSRCtrl extends SRCtrl {
     reasonChoice.getItems().removeAll(reasonChoice.getItems());
     reasonChoice.getItems().addAll("Change In Care", "General Check-up", "Professional Advice");
     reasonChoice.getSelectionModel().select("Reason");
+    new AutoCompleteBox(reasonChoice);
     reasonChoice.setVisibleRowCount(5);
 
     this.populateEmployeeAndLocationList();
     this.populateEmployeeComboBox(this.employeeChoice);
     this.populateLocationComboBox(this.toLocationChoice);
+    new AutoCompleteBox(toLocationChoice);
+    new AutoCompleteBox(employeeChoice);
   }
 
   @FXML

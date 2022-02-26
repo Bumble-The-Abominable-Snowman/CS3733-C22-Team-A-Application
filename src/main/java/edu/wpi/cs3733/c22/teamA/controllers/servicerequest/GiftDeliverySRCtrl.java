@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -73,11 +74,12 @@ public class GiftDeliverySRCtrl extends SRCtrl {
 
     // Put sanitation types in temporary type menu
     typeChoice.getItems().addAll("Balloons", "Card", "Stuffed Animal");
-    typeChoice.getSelectionModel().select("Type");
-
+    new AutoCompleteBox(typeChoice);
     this.populateEmployeeAndLocationList();
     this.populateEmployeeComboBox(this.employeeChoice);
     this.populateLocationComboBox(this.toLocationChoice);
+    new AutoCompleteBox(toLocationChoice);
+    new AutoCompleteBox(employeeChoice);
   }
 
   @FXML
