@@ -1,7 +1,7 @@
 .background{
 
     -fx-background-image: url('../images/Logo.png');
-    -fx-background-color: #61A5B0;
+    -fx-background-color: #496591;
     -fx-background-size: 50%,50%;
     -fx-background-repeat: no-repeat;
     -fx-background-position: 120%;
@@ -10,7 +10,7 @@
 .backgroundAlt{
 
     -fx-background-image: url('../images/Hospital.jpeg');
-    -fx-background-color: #61A5B0;
+    -fx-background-color:#496591;
     -fx-background-size: 55%,55%;
     -fx-background-repeat: no-repeat;
     -fx-background-position: bottom right;
@@ -21,12 +21,12 @@
 
     -fx-font-size: 12pt;
     -fx-font-family: "Helvetica Neue";
-    -fx-background-color: #B55243;
+    -fx-background-color: #161E69;
     -fx-text-fill: WHITE;
     -fx-background-size: 100% 100%;
     -fx-border-color: BLACK;
-    -fx-border-radius: 40;
-    -fx-background-radius: 40;
+    /*-fx-border-radius: 40;
+    -fx-background-radius: 40;*/
     -fx-cursor: HAND;
     -fx-font-weight: BOLD;
 }
@@ -35,12 +35,12 @@
 
     -fx-font-size: 12pt;
     -fx-font-family: "Helvetica Neue";
-    -fx-background-color: #B55243;
+    -fx-background-color: #161E69;
     -fx-text-fill: TRANSPARENT;
     -fx-background-size: 100% 100%;
     -fx-border-color: BLACK;
-    -fx-border-radius: 40;
-    -fx-background-radius: 40;
+    /* -fx-border-radius: 40;
+    -fx-background-radius: 40;*/
     -fx-cursor: HAND;
     -fx-font-weight: BOLD;
 }
@@ -72,7 +72,7 @@
 
     -fx-font-size: 12pt;
     -fx-font-family: "Helvetica Neue";
-    -fx-background-color: #B55243;
+    -fx-background-color: #161E69;
     -fx-text-fill: WHITE;
     -fx-background-size: 100% 100%;
     -fx-border-color: BLACK;
@@ -86,8 +86,8 @@
 
 .menuBox{
 
-    -fx-background-color:  #61A5B0;
-    -fx-border-color: #61A5B0;
+    -fx-background-color:  #161E69;
+    -fx-border-color: #161E69;
     -fx-effect: null;
 
 }
