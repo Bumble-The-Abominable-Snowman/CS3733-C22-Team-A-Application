@@ -2,6 +2,8 @@ package edu.wpi.cs3733.c22.teamA.Adb.medicine;
 
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.entities.Medicine;
+import edu.wpi.cs3733.c22.teamA.entities.MedicineDosage;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -132,6 +134,11 @@ public class MedicineDerbyImpl implements MedicineDAO {
     }
   }
 
+  /**
+   * Delete a specific Dosage
+   * @param ID The specifc ID
+   * @param dosage The specifc Dosage
+   */
   public void deleteMedicineDosage(String ID, Float dosage) {
     try {
       Statement delete = Adb.connection.createStatement();
@@ -148,6 +155,10 @@ public class MedicineDerbyImpl implements MedicineDAO {
     }
   }
 
+  /**
+   * Delete a specific medicine
+   * @param ID The ID of the medicine you want to delete
+   */
   public void deleteMedicine(String ID) {
     try {
       Statement delete = Adb.connection.createStatement();
@@ -163,6 +174,11 @@ public class MedicineDerbyImpl implements MedicineDAO {
     }
   }
 
+  /**
+   * Get all the dosages for a specific dosage
+   * @param ID
+   * @return
+   */
   public List<Float> getDosages(String ID) {
     try {
       Statement get = Adb.connection.createStatement();
@@ -185,6 +201,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
       return null;
     }
   }
+
 
   // get all medicine
   public List<Medicine> getMedicineList() {
@@ -219,7 +236,34 @@ public class MedicineDerbyImpl implements MedicineDAO {
     }
   }
 
-  public static void inputFromCSV(String medicineCSVFilePath, String dosageCSVFilePath) {
+  /**
+   * Import dosages from a csv file
+   * NOTE: this function does not check or anything if foreign key stuff
+   * @param dosageCSVFilePath
+   */
+  public static void importDosagesFromCSV(String dosageCSVFilePath){
+    try{
+      Statement dropTable = Adb.connection.createStatement();
+      dropTable.execute("DELETE FROM MedicineDosage");
+      List<MedicineDosage> dosList = readDosagesFromCSV(dosageCSVFilePath);
+      MedicineDerbyImpl derby = new MedicineDerbyImpl();
+
+      for(MedicineDosage thisDos: dosList){
+        derby.enterMedicineDosage(thisDos.getMedicine_id(), thisDos.getDosage_amount());
+      }
+
+    } catch(Exception e){
+      System.out.println("Error Caught! Uh Oh!");
+      System.out.println("Error Code: " + e.getMessage());
+    }
+  }
+
+  /**
+   * Import medicine from a csv file
+   * Note: This function does not do dosages
+   * @param medicineCSVFilePath
+   */
+  public static void importMedicineFromCSV(String medicineCSVFilePath) {
     // Delete all contents of both table
     try {
       Statement dropTable = Adb.connection.createStatement();
@@ -231,7 +275,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
 
     //Read all values from the medicine CSV
     try {
-      List<Medicine> medicineList = readMedicineCSV(medicineCSVFilePath, dosageCSVFilePath);
+      List<Medicine> medicineList = readMedicineCSV(medicineCSVFilePath);
       MedicineDerbyImpl derby = new MedicineDerbyImpl();
       for(Medicine med : medicineList){
         derby.enterMedicine(med);
@@ -243,7 +287,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
     }
   }
 
-  public static List<Medicine> readMedicineCSV(String medicineCSVFilePath, String dosageCSVFilePath)
+  public static List<Medicine> readMedicineCSV(String medicineCSVFilePath)
       throws IOException, ParseException {
     List<Medicine> medicineList = new ArrayList<>();
 
@@ -273,19 +317,23 @@ public class MedicineDerbyImpl implements MedicineDAO {
         dataIndex++;
       }
 
-      thisMed.setDosageAmounts(new ArrayList<Float>());
-      dataIndex = 0;
+      thisMed.setDosageAmounts(null);
       medicineList.add(thisMed);
+      dataIndex = 0;
     }
+    return medicineList;
+  }
 
-    // Go through Dosage CSV File
+  public static List<MedicineDosage> readDosagesFromCSV(String dosageCSVFilePath)
+          throws FileNotFoundException {
+    List<MedicineDosage> dosList = new ArrayList<>();
     File dosFile = new File(dosageCSVFilePath);
-    lineScanner = new Scanner(dosFile);
-    dataIndex = 0;
+    Scanner lineScanner = new Scanner(dosFile);
+    int dataIndex = 0;
 
     lineScanner.nextLine();
     while (lineScanner.hasNext()) {
-      dataScanner = new Scanner(lineScanner.nextLine());
+      Scanner dataScanner = new Scanner(lineScanner.nextLine());
       dataScanner.useDelimiter(",");
       String thisID = "";
       String thisDosage = "";
@@ -296,16 +344,14 @@ public class MedicineDerbyImpl implements MedicineDAO {
 
         dataIndex++;
       }
-
-      for (Medicine med : medicineList) {
-        if (med.getMedicineID().equals(thisID))
-          med.getDosageAmounts().add(Float.parseFloat(thisDosage));
-      }
+      MedicineDosage thisDos = new MedicineDosage(thisID, Float.parseFloat(thisDosage));
+      dosList.add(thisDos);
       dataIndex = 0;
     }
-
-    return medicineList;
+    return dosList;
   }
+
+  /** EXPORT FUNCTIONS *************************************************/
 
   public static void exportToCSV(String medicineCSVFilePath, String dosageCSVFilePath)
       throws IOException {
