@@ -9,6 +9,7 @@ import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 //import edu.wpi.cs3733.c22.teamA.entities.servicerequests.FloralDeliverySR;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -93,11 +94,14 @@ public class FloralDeliverySRCtrl extends SRCtrl {
     bouquetTypeChoice.getItems().removeAll(bouquetTypeChoice.getItems());
     bouquetTypeChoice.getItems().addAll("Full Bouquet", "Single Flower");
     bouquetTypeChoice.getSelectionModel().select("Bouquet Type");
+    new AutoCompleteBox(bouquetTypeChoice);
     bouquetTypeChoice.setVisibleRowCount(5);
 
     this.populateEmployeeAndLocationList();
     this.populateEmployeeComboBox(this.employeeChoice);
     this.populateLocationComboBox(this.toLocationChoice);
+    new AutoCompleteBox(toLocationChoice);
+    new AutoCompleteBox(employeeChoice);
   }
 
   @FXML

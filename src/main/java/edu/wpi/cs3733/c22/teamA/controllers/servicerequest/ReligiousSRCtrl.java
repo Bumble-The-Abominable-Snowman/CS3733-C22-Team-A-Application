@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -85,7 +86,8 @@ public class ReligiousSRCtrl extends SRCtrl {
 
     religionChoice.getItems().removeAll(religionChoice.getItems());
     religionChoice.getItems().addAll("Christian", "Non-Religious", "Other");
-    religionChoice.getSelectionModel().select("Type");
+    new AutoCompleteBox(religionChoice);
+
     religionChoice
         .getSelectionModel()
         .selectedItemProperty()
@@ -115,6 +117,8 @@ public class ReligiousSRCtrl extends SRCtrl {
     this.populateEmployeeAndLocationList();
     this.populateEmployeeComboBox(this.employeeChoice);
     this.populateLocationComboBox(this.toLocationChoice);
+    new AutoCompleteBox(toLocationChoice);
+    new AutoCompleteBox(employeeChoice);
   }
 
   @FXML

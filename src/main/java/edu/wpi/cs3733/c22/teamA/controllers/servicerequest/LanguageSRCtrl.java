@@ -17,6 +17,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Date;
 
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -88,12 +89,13 @@ public class LanguageSRCtrl extends SRCtrl {
             "Mandarin",
             "Russian",
             "Spanish");
-    languageChoice.getSelectionModel().select("Language");
+    new AutoCompleteBox(languageChoice);
     languageChoice.setVisibleRowCount(5);
-
     this.populateEmployeeAndLocationList();
     this.populateEmployeeComboBox(this.employeeChoice);
     this.populateLocationComboBox(this.toLocationChoice);
+    new AutoCompleteBox(toLocationChoice);
+    new AutoCompleteBox(employeeChoice);
   }
 
   @FXML
