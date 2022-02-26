@@ -121,6 +121,7 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
 
     typeChoice.getItems().removeAll(typeChoice.getItems());
     typeChoice.getItems().addAll("Type", "Bed", "XRAY", "Infusion Pump", "Patient Recliner");
+    typeChoice.getSelectionModel().select(0);
     typeChoice
         .getSelectionModel()
         .selectedItemProperty()

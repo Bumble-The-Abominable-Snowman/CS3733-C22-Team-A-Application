@@ -101,9 +101,15 @@ public class SanitationSRCtrl extends SRCtrl {
   void submitRequest() throws SQLException, InvocationTargetException, IllegalAccessException {
 
     int employeeIndex = this.employeeChoice.getSelectionModel().getSelectedIndex();
+    if(employeeIndex == -1){
+        return;
+    }
     Employee employeeSelected = this.employeeList.get(employeeIndex);
 
     int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
+      if(locationIndex == -1){
+          return;
+      }
     Location toLocationSelected = this.locationList.get(locationIndex);
 
     // Create request object

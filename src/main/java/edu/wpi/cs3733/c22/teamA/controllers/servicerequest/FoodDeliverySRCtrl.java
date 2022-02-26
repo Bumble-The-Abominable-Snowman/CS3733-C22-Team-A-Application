@@ -104,9 +104,15 @@ public class FoodDeliverySRCtrl extends SRCtrl {
       throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
 
     int employeeIndex = this.employeeChoice.getSelectionModel().getSelectedIndex();
+    if(employeeIndex == -1){
+      return;
+    }
     Employee employeeSelected = this.employeeList.get(employeeIndex);
 
     int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
+    if(locationIndex == -1){
+      return;
+    }
     Location toLocationSelected = this.locationList.get(locationIndex);
 
     SR sr = new SR("FoodDeliverySRID",
