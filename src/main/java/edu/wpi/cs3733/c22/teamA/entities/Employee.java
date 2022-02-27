@@ -1,9 +1,13 @@
 package edu.wpi.cs3733.c22.teamA.entities;
 
+import java.lang.reflect.Field;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import lombok.Data;
 
 @Data
@@ -11,16 +15,8 @@ public class Employee {
 
   // TODO implement getting column names and add as static List to all
   // SEE DOCUMENT FOR SPECIFICS
-  public static List<String> columnNames = null;
-
-  private String employeeID;
-  private String employeeType;
-  private String firstName;
-  private String lastName;
-  private String email;
-  private String phoneNum;
-  private String address;
-  public Date startDate;
+  protected HashMap<String, Object> fields = new HashMap<>();
+  protected HashMap<String, String> fields_string = new HashMap<>();
 
   public Employee() {}
 
@@ -33,29 +29,38 @@ public class Employee {
       String phoneNum,
       String address,
       Date startDate) {
-    this.employeeID = employeeID;
-    this.employeeType = employeeType;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    this.phoneNum = phoneNum;
-    this.address = address;
-    this.startDate = startDate;
+    this.fields.put("employee_id", employeeID);
+    this.fields.put("employee_type", employeeType);
+    this.fields.put("first_name", firstName);
+    this.fields.put("last_name", lastName);
+    this.fields.put("email", email);
+    this.fields.put("phone_num", phoneNum);
+    this.fields.put("address", address);
+    this.fields.put("start_date", startDate);
   }
 
-  public String getFullName() {
-    return this.firstName + " " + this.lastName;
-  }
-
-  // timestamp get/set
-  public String getStartDate() {
-    if (this.startDate == null) {
-      return "";
+  public HashMap<String, String> getStringFields() {
+    for (String key : this.fields.keySet()) {
+      this.fields_string.put(key, String.valueOf(this.fields.get(key)));
     }
-    return this.startDate.toString();
+    return this.fields_string;
   }
 
-  public void setStartDate(String s) {
-    this.startDate = Timestamp.valueOf(s + " 00:00:00");
+  public void setField(String key, Object value) {
+    this.fields.put(key, value);
+  }
+
+  public void setFieldByString(String key, String value) throws IllegalAccessException {
+    if (Objects.equals(key, "start_date")) {
+      this.fields.put(key, Date.parse(value));
+    } else {
+      this.fields.put(key, value);
+    }
+  }
+
+  public String getFullName(){
+    StringBuilder str = new StringBuilder();
+    str.append(this.getStringFields().get("last_name")).append(" ").append(this.getStringFields().get("first_name"));
+    return str.toString();
   }
 }

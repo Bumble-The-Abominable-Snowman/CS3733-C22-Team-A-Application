@@ -99,7 +99,7 @@ public class SR {
         this.fields_string.put(key, ((Location) this.fields.get(key)).getNodeID());
       } else if (Objects.equals(key, "employee_requested")
           || Objects.equals(key, "employee_assigned")) {
-        this.fields_string.put(key, ((Employee) this.fields.get(key)).getEmployeeID());
+        this.fields_string.put(key, ((Employee) this.fields.get(key)).getStringFields().get("employee_id"));
       } else {
         this.fields_string.put(key, String.valueOf(this.fields.get(key)));
       }
