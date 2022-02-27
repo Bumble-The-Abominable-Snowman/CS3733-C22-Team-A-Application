@@ -44,16 +44,7 @@ public class SideView {
       int finalI = i;
       button.setOnMousePressed(e -> buttonClicked(floorNames[finalI]));
       markerManager.getFloorInfo(floorNames[finalI]);
-      int dirty = 0;
-      int clean = 0;
-      List<Equipment> equipments = markerManager.returnEquipmentLocations();
-      for (Equipment equip : equipments) {
-        if (equip.getIsClean())
-          dirty++;
-        else
-          clean++;
-      }
-      button.setText("Requests: " + markerManager.returnSRLocations().size() + " | Clean Equip: " + clean + " | Dirty Equip: " + dirty);
+      button.setText("Requests: " + markerManager.returnSRLocations().size() + " | Clean Equip: " + markerManager.returnCleanEquipmentLocations().size() + " | Dirty Equip: " + markerManager.returnDirtyEquipmentLocations().size());
       buttons.add(button);
     }
     anchorPane.getChildren().addAll(buttons);
@@ -95,10 +86,13 @@ public class SideView {
         }
       }
       else {
-        List<Equipment> equipments = markerManager.returnEquipmentLocations();
+        List<Equipment> equipments;
+        if (i == 1)
+          equipments = markerManager.returnCleanEquipmentLocations();
+        else
+          equipments = markerManager.returnDirtyEquipmentLocations();
         for (Equipment equip : equipments) {
-          if ((i == 1 && equip.getIsClean()) || (i == 2 && !equip.getIsClean()))
-            displayText += equip.getEquipmentID() + ", " + equip.getCurrentLocation() + "\n";
+          displayText += equip.getEquipmentID() + ", " + equip.getCurrentLocation() + "\n";
         }
       }
       if (displayText.equals("")) displayText += "None\n";
