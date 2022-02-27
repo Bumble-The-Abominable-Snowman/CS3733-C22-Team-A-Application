@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import edu.wpi.cs3733.c22.teamA.auth0.rest.login.Auth0Login;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -70,6 +72,12 @@ public class SceneSwitcher {
   }
 
   public void switchScene(SCENES name) throws IOException {
+
+    if (name == SCENES.LOGIN)
+    {
+      Auth0Login.login();
+      return;
+    }
 
     FXMLLoader loader = new FXMLLoader();
     URL xmlUrl = App.class.getResource(screenMap.get(name));

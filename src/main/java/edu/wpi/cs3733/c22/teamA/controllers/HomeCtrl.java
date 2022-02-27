@@ -105,12 +105,6 @@ public class HomeCtrl extends MasterCtrl {
                                       + ((App.getStage().getWidth() / 1000) * settingsTextSize)
                                       + "pt;");
                     });
-
-    for (Employee emp : empList) {
-      if (emp.getEmail().equals(App.factory.getUsername())) {
-        homeTitle.setText("Welcome, " + emp.getFullName());
-      }
-    }
   }
 
   @FXML
