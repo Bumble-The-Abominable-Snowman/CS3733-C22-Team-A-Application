@@ -33,15 +33,27 @@ public class SideView {
   public void init() {
     // Creates side view buttons
     buttons = new ArrayList<>();
-    int initialY = 1028;
+    int initialY = 1024;
     for (int i = 0; i < 5; i++) {
-      double buttonY = initialY + i * 52 + mapImageView.getLayoutY();
+      double buttonY = initialY + i * 51 + mapImageView.getLayoutY();
       JFXButton button = new JFXButton();
-      button.setLayoutX(107 + mapImageView.getLayoutX());
+      button.setLayoutX(121 + mapImageView.getLayoutX());
       button.setLayoutY(buttonY);
-      button.setScaleY(button.getScaleY() + .3);
+      button.setPrefHeight(51);
+      button.setPrefWidth(415);
       int finalI = i;
       button.setOnMousePressed(e -> buttonClicked(floorNames[finalI]));
+      markerManager.getFloorInfo(floorNames[finalI]);
+      int dirty = 0;
+      int clean = 0;
+      List<Equipment> equipments = markerManager.returnEquipmentLocations();
+      for (Equipment equip : equipments) {
+        if (equip.getIsClean())
+          dirty++;
+        else
+          clean++;
+      }
+      button.setText("Requests: " + markerManager.returnSRLocations().size() + " | Clean Equip: " + clean + " | Dirty Equip: " + dirty);
       buttons.add(button);
     }
     anchorPane.getChildren().addAll(buttons);
