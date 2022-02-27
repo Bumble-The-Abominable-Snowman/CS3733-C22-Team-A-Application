@@ -107,8 +107,8 @@ public class HomeCtrl extends MasterCtrl {
                     });
 
     for (Employee emp : empList) {
-      if (emp.getEmail().equals(App.factory.getUsername())) {
-        homeTitle.setText("Welcome, " + emp.getFullName());
+      if (emp.getStringFields().get("email").equals(App.factory.getUsername())) {
+        homeTitle.setText("Welcome, " + emp.getStringFields().get("last_name")+ " " + emp.getStringFields().get("first_name"));
       }
     }
   }
