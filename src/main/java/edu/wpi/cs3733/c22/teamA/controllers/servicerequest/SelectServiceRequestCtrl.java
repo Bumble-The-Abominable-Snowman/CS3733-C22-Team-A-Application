@@ -164,33 +164,33 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
 
       teamA_API.entities.Employee employeeAssignedAPI = (teamA_API.entities.Employee) Main.getEmployee(req.getFields_string().get("employee_assigned"));
       Employee employeeRequested = new Employee(
-              employeeAssignedAPI.getEmployeeID(),
-              employeeAssignedAPI.getEmployeeType(),
-              employeeAssignedAPI.getFirstName(),
-              employeeAssignedAPI.getLastName(),
-              employeeAssignedAPI.getEmail(),
-              employeeAssignedAPI.getPhoneNum(),
-              employeeAssignedAPI.getAddress(),
-              employeeAssignedAPI.startDate);
+              employeeAssignedAPI.getStringFields().get("employee_id"),
+              employeeAssignedAPI.getStringFields().get("employee_type"),
+              employeeAssignedAPI.getStringFields().get("first_name"),
+              employeeAssignedAPI.getStringFields().get("last_name"),
+              employeeAssignedAPI.getStringFields().get("email"),
+              employeeAssignedAPI.getStringFields().get("phone_num"),
+              employeeAssignedAPI.getStringFields().get("address"),
+              employeeAssignedAPI.thisEmployee.getStringFields().get("start_date"));
 
       EmployeeDerbyImpl employeeDerby = new EmployeeDerbyImpl();
       boolean doesEmployeeAssignedNotExist = false;
       for (Employee e: employeeDerby.getEmployeeList()) {
-        if (e.getEmployeeID().equals(employeeRequested.getEmployeeID()))
+        if (e.getStringFields().get("employee_id").equals(employeeRequested.getStringFields().get("employee_id")))
         {
           doesEmployeeAssignedNotExist = true;
         }
       }
       if (!doesEmployeeAssignedNotExist)
       {
-        employeeDerby.enterEmployee(employeeAssignedAPI.getEmployeeID(),
-                employeeAssignedAPI.getEmployeeType(),
-                employeeAssignedAPI.getFirstName(),
-                employeeAssignedAPI.getLastName(),
-                employeeAssignedAPI.getEmail(),
-                employeeAssignedAPI.getPhoneNum(),
-                employeeAssignedAPI.getAddress(),
-                employeeAssignedAPI.startDate);
+        employeeDerby.enterEmployee(employeeAssignedAPI.getStringFields().get("employee_id"),
+                employeeAssignedAPI.getStringFields().get("employee_type"),
+                employeeAssignedAPI.getStringFields().get("first_name"),
+                employeeAssignedAPI.getStringFields().get("last_name"),
+                employeeAssignedAPI.getStringFields().get("email"),
+                employeeAssignedAPI.getStringFields().get("phone_num"),
+                employeeAssignedAPI.getStringFields().get("address"),
+                employeeAssignedAPI.thisEmployee.getStringFields().get("start_date"));
 
       }
 
