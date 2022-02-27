@@ -308,7 +308,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
 
   public static List<Medicine> readMedicineCSV(String medicineCSVFilePath)
       throws IOException, ParseException {
-    System.out.println("Starting readMedicineCSV");
+    //System.out.println("Starting readMedicineCSV");
     List<Medicine> medicineList = new ArrayList<>();
 
     // Go through medicine CSV file
@@ -319,7 +319,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
 
     lineScanner.nextLine();
     while (lineScanner.hasNext()) { // Scan CSV line by line
-      System.out.println("Starting New Line");
+      //System.out.println("Starting New Line");
       dataScanner = new Scanner(lineScanner.nextLine());
       dataScanner.useDelimiter(",");
       Medicine thisMed = new Medicine();
@@ -357,8 +357,8 @@ public class MedicineDerbyImpl implements MedicineDAO {
       Statement dropTable = Adb.connection.createStatement();
       dropTable.execute("DELETE FROM MedicineDosage");
       List<MedicineDosage> dosList = readDosagesFromCSV(dosageCSVFilePath);
-      System.out.println("Printing dosList:");
-      System.out.println(dosList);
+      //System.out.println("Printing dosList:");
+      //System.out.println(dosList);
       MedicineDerbyImpl derby = new MedicineDerbyImpl();
 
       for(MedicineDosage thisDos: dosList){
@@ -395,7 +395,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
         dataIndex++;
       }
 
-      System.out.println(thisDos);
+      //System.out.println(thisDos);
       dosList.add(thisDos);
       dataIndex = 0;
     }
@@ -414,8 +414,8 @@ public class MedicineDerbyImpl implements MedicineDAO {
   public static void exportDosagesToCSV(String dosageCSVFilePath) throws IOException {
     MedicineDerbyImpl derby = new MedicineDerbyImpl();
     List<MedicineDosage> dosList = derby.getAllDosages();
-    System.out.println("Printing dosList");
-    System.out.println(dosList);
+    //System.out.println("Printing dosList");
+    //System.out.println(dosList);
     writeDosagesToCSV(dosList, dosageCSVFilePath);
   }
 

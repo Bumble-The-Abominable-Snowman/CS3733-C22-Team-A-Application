@@ -5,9 +5,11 @@ import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
+import edu.wpi.cs3733.c22.teamA.entities.Medicine;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
 import java.io.IOException;
 import javafx.fxml.FXML;
@@ -55,6 +57,8 @@ public class SaveBackupCtrl extends MasterCtrl {
             "Employee",
             "MedicalEquipment",
             "MedicalEquipmentServiceRequest",
+            "Medicine",
+            "MedicineDosage",
             "FloralDeliveryServiceRequest",
             "FoodDeliveryServiceRequest",
             "GiftDeliveryServiceRequest",
@@ -91,6 +95,12 @@ public class SaveBackupCtrl extends MasterCtrl {
             break;
           case "MedicalEquipment":
             EquipmentDerbyImpl.exportToCSV("MedicalEquipment", filepath);
+            break;
+          case "Medicine":
+            MedicineDerbyImpl.exportMedicineToCSV(filepath);
+            break;
+          case "MedicineDosage":
+            MedicineDerbyImpl.exportDosagesToCSV(filepath);
             break;
           case "MedicalEquipmentServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyEq = new ServiceRequestDerbyImpl(SR.SRType.EQUIPMENT);
