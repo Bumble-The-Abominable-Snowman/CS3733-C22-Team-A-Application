@@ -22,6 +22,8 @@ public class PathFinder {
   private JFXComboBox fromBox;
   private JFXComboBox toBox;
 
+  private String destinationFloor = "";
+
   public PathFinder(String path, JFXComboBox fromBox, JFXComboBox toBox, MarkerManager markerManager) {
     locations = new LocationDerbyImpl().getNodeList();
     pfLine = new ArrayList<>();
@@ -139,7 +141,6 @@ public class PathFinder {
     int lowestDist = Integer.MAX_VALUE;
     Location current = end;
     Edge chosen = new Edge();
-    boolean cancelled = false;
     while (lowestDist > 0) {
       path.add(current);
       edgePath.add(chosen);
@@ -153,6 +154,7 @@ public class PathFinder {
       }
     }
    path.add(current);
+    destinationFloor = path.get(0).getFloor();
   for(Location l:path){
     if(l.getFloor().equals(floor)) resultPath.add(l);
   }
@@ -186,8 +188,10 @@ public class PathFinder {
     for (Line line : pfLine) {
       miniAnchorPane.getChildren().remove(line);
     }
-    if (clearList)
+    if (clearList){
       pfLine.clear();
+      destinationFloor = "";
+    }
   }
 
   public void updateComboBoxes() {
@@ -198,5 +202,9 @@ public class PathFinder {
       fromBox.getItems().add(l.getShortName());
       toBox.getItems().add(l.getShortName());
     }
+  }
+
+  public String getDestinationFloor() {
+    return destinationFloor;
   }
 }

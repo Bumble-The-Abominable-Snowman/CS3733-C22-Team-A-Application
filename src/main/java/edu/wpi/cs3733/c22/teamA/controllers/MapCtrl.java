@@ -25,6 +25,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import net.kurobako.gesturefx.GesturePane;
 
+import javax.swing.*;
+
 // TODO Change all instances of looping through locations to find related short names & node ids
 // with method in backend once implemented
 public class MapCtrl extends MasterCtrl {
@@ -151,6 +153,8 @@ public class MapCtrl extends MasterCtrl {
   public void findPath() {
     pathFinder.clearPath(anchorPane, true);
     pathFinder.drawPath(pathFinder.findPath(markerManager.getFloor()), anchorPane);
+    if (!pathFinder.getDestinationFloor().equals(""))
+      JOptionPane.showMessageDialog(null, "This path will take you on an elevator to Floor " + pathFinder.getDestinationFloor() + ".");
     drawPathOnSwitch = true;
   }
 
