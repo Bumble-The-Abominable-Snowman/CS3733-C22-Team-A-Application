@@ -7,12 +7,13 @@ import java.util.List;
 
 public interface MedicineDAO {
 
-  public Medicine getMedicine(String ID);
+  Medicine getMedicine(String ID);
 
+  void updateMedicine(String ID, String field, String change);
 
-  public void enterMedicine(Medicine med);
+  void enterMedicine(Medicine med);
 
-  public void enterMedicine(
+  void enterMedicine(
       String medicineID,
       String genericName,
       String brandName,
@@ -24,20 +25,20 @@ public interface MedicineDAO {
       List<Float> dosageAmount);
 
 
-  public void enterMedicineDosage(String ID, Float dosage);
+  void enterMedicineDosage(String ID, Float dosage);
 
 
-  public void deleteMedicine(String ID);
+  void deleteMedicine(String ID);
 
 
-  public void deleteMedicineDosage(String ID, Float dosage);
+  void deleteMedicineDosage(String ID, Float dosage);
 
 
-  public List<Float> getSpecificDosages(String ID);
+  List<Float> getSpecificDosages(String ID);
 
-  public List<Medicine> getMedicineList();
+  List<Medicine> getMedicineList();
 
-  public List<MedicineDosage> getAllDosages();
+  List<MedicineDosage> getAllDosages();
 
 
 }
