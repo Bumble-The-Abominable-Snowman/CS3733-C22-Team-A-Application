@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXCheckBox?>
-<?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXDrawer?>
-<?import com.jfoenix.controls.JFXHamburger?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import net.kurobako.gesturefx.GesturePane?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import net.kurobako.gesturefx.*?>
 
-<GridPane prefHeight="600.0" prefWidth="960.0" styleClass="background" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.MapCtrl">
+<GridPane prefHeight="600.0" prefWidth="960.0" styleClass="background" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.MapCtrl">
    <columnConstraints>
       <ColumnConstraints hgrow="NEVER" prefWidth="600.0" />
       <ColumnConstraints hgrow="NEVER" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
@@ -59,6 +52,9 @@
             <JFXCheckBox fx:id="showTextCheckBox" alignment="CENTER" prefHeight="22.0" prefWidth="82.0" text="Toggle Text" wrapText="true" />
             <JFXCheckBox fx:id="equipmentCheckBox" alignment="CENTER" prefHeight="22.0" prefWidth="75.0" text="Toggle Equipment View" wrapText="true" />
          </children>
+         <GridPane.margin>
+            <Insets left="12.0" />
+         </GridPane.margin>
       </VBox>
       <GesturePane fx:id="gesturePane" fitMode="UNBOUNDED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="423.0" prefWidth="406.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.rowSpan="9" GridPane.valignment="TOP" />
       <JFXButton fx:id="viewTableButton" onAction="#goToLocationTable" prefHeight="33.0" prefWidth="127.0" text="View Table" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
@@ -99,7 +95,7 @@
             <JFXHamburger fx:id="hamburger" alignment="CENTER" stylesheets="@../css/styleSheet.css" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
-      <JFXDrawer fx:id="drawer" defaultDrawerSize="2000.0" stylesheets="@../css/styleSheet.css" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.rowSpan="8" GridPane.vgrow="ALWAYS">
+      <JFXDrawer fx:id="drawer" defaultDrawerSize="2000.0" stylesheets="@../css/styleSheet.css" visible="false" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.rowSpan="8" GridPane.vgrow="ALWAYS">
          <children>
             <VBox fx:id="menuBox" prefHeight="200.0" prefWidth="100.0">
                <children>
