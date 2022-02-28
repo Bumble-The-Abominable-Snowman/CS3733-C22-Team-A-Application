@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -58,10 +59,12 @@ public class LaundrySRCtrl extends SRCtrl {
     washMode.getItems().removeAll(washMode.getItems());
     washMode.getItems().addAll("Colors", "Whites", "Perm. press", "Save the trees!");
     washMode.setValue("Wash Mode");
-
+    new AutoCompleteBox(washMode);
     this.populateEmployeeAndLocationList();
     this.populateEmployeeComboBox(this.employeeChoice);
     this.populateLocationComboBox(this.toLocationChoice);
+    new AutoCompleteBox(toLocationChoice);
+    new AutoCompleteBox(employeeChoice);
   }
 
   @FXML

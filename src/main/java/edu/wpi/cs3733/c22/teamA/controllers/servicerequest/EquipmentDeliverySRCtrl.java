@@ -9,6 +9,7 @@ import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 //import edu.wpi.cs3733.c22.teamA.entities.servicerequests.EquipmentSR;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -121,6 +122,8 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
 
     typeChoice.getItems().removeAll(typeChoice.getItems());
     typeChoice.getItems().addAll("Type", "Bed", "XRAY", "Infusion Pump", "Patient Recliner");
+    new AutoCompleteBox(typeChoice);
+    typeChoice.getSelectionModel().select(0);
     typeChoice
         .getSelectionModel()
         .selectedItemProperty()
@@ -159,6 +162,8 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
 
     statusChoice.getItems().removeAll(statusChoice.getItems());
     statusChoice.getItems().setAll(status);
+    new AutoCompleteBox(toLocationChoice);
+    new AutoCompleteBox(employeeChoice);
   }
 
   @FXML

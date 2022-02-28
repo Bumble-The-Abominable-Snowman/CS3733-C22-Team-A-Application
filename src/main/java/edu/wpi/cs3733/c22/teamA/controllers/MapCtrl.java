@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
@@ -117,6 +118,9 @@ public class MapCtrl extends MasterCtrl {
     mapManager.init();
     sideView.init();
     initFloorSelection();
+    new AutoCompleteBox(floorSelectionComboBox);
+    new AutoCompleteBox(pfToComboBox);
+    new AutoCompleteBox(pfFromComboBox);
   }
 
   private void initFloorSelection() {

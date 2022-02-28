@@ -17,6 +17,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Date;
 
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -83,10 +84,6 @@ public class FoodDeliverySRCtrl extends SRCtrl {
     drinkChoice.getItems().addAll("Water", "Juice", "Milk");
     sideChoice.getItems().addAll("French Fries", "Apple", "Biscuit");
     dessertChoice.getItems().addAll("Cookie", "Brownie", "Cinnamon Roll");
-    mainChoice.getSelectionModel().select("Entree");
-    drinkChoice.getSelectionModel().select("Beverage");
-    sideChoice.getSelectionModel().select("Side");
-    dessertChoice.getSelectionModel().select("Dessert");
     toLocationChoice.getSelectionModel().select(0);
     mainChoice.getSelectionModel().selectedItemProperty();
     drinkChoice.getSelectionModel().selectedItemProperty();
@@ -94,9 +91,16 @@ public class FoodDeliverySRCtrl extends SRCtrl {
     dessertChoice.getSelectionModel().selectedItemProperty();
     toLocationChoice.getSelectionModel().selectedItemProperty();
 
+    new AutoCompleteBox(mainChoice);
+    new AutoCompleteBox(drinkChoice);
+    new AutoCompleteBox(sideChoice);
+    new AutoCompleteBox(dessertChoice);
+
     this.populateEmployeeAndLocationList();
     this.populateEmployeeComboBox(this.employeeChoice);
     this.populateLocationComboBox(this.toLocationChoice);
+    new AutoCompleteBox(toLocationChoice);
+    new AutoCompleteBox(employeeChoice);
   }
 
   @FXML
@@ -104,9 +108,15 @@ public class FoodDeliverySRCtrl extends SRCtrl {
       throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
 
     int employeeIndex = this.employeeChoice.getSelectionModel().getSelectedIndex();
+    if(employeeIndex == -1){
+      return;
+    }
     Employee employeeSelected = this.employeeList.get(employeeIndex);
 
     int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
+    if(locationIndex == -1){
+      return;
+    }
     Location toLocationSelected = this.locationList.get(locationIndex);
 
     SR sr = new SR("FoodDeliverySRID",
