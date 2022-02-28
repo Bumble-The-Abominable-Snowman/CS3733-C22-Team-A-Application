@@ -108,6 +108,7 @@ public class LocationDataviewManager {
 		for (Location currLoc : locList) {
 			RecursiveObj recursiveLoc = new RecursiveObj();
 			recursiveLoc.loc = currLoc;
+			if (!recursiveLoc.loc.getShortName().equals("N/A"))
 			locations.add(recursiveLoc);
 		}
 		// Sets up the table and puts the location data under the columns
