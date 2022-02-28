@@ -2,6 +2,7 @@ package edu.wpi.cs3733.c22.teamA.entities;
 
 import java.lang.reflect.Field;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -50,9 +51,11 @@ public class Employee {
     this.fields.put(key, value);
   }
 
-  public void setFieldByString(String key, String value) throws IllegalAccessException {
+  public void setFieldByString(String key, String value) throws ParseException {
     if (Objects.equals(key, "start_date")) {
-      this.fields.put(key, Date.parse(value));
+      SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+      Date startDateStr = originalFormat.parse(value);
+      this.fields.put(key, startDateStr);
     } else {
       this.fields.put(key, value);
     }

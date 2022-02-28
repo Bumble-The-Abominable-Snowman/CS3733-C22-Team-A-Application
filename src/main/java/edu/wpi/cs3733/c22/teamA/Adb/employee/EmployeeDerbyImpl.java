@@ -2,18 +2,19 @@ package edu.wpi.cs3733.c22.teamA.Adb.employee;
 
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
 
 public class EmployeeDerbyImpl implements EmployeeDAO {
 
@@ -49,34 +50,40 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     }
   }
 
-  public void updateEmployee(String ID, String field, Object change) {
-    try {
-      Statement update = Adb.connection.createStatement();
+  public void updateEmployee(Employee e)
+          throws SQLException {
 
-      String str = "";
-      if (change instanceof String) {
-        str =
-            String.format(
-                "UPDATE Employee SET " + field + " = '%s' WHERE employee_id = '%s'", change, ID);
-      } else {
-        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String startDateStr = originalFormat.format(change);
+    Statement get = Adb.connection.createStatement();
 
-        str =
+    HashMap<String, String> e_string_fields = e.getStringFields();
+
+    String str =
             String.format(
-                "UPDATE Employee SET "
-                    + field
-                    + " = '"
-                    + startDateStr
-                    + "' WHERE employee_id = '%s'",
-                ID);
+                    "SELECT * FROM Employee WHERE employee_id = '%s'",
+                     e_string_fields.get("employee_id"));
+
+    ResultSet resultSet = get.executeQuery(str);
+    ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+
+    if (resultSet.next()) {
+      for (int i = 1; i < resultSetMetaData.getColumnCount() + 1; i++) {
+        String returnValOld = resultSet.getString(i);
+        String columnName = resultSetMetaData.getColumnName(i).toLowerCase(Locale.ROOT);
+
+        Statement update = Adb.connection.createStatement();
+
+        if (!returnValOld.equals(e_string_fields.get(columnName)))
+        {
+            str =
+                    String.format(
+                            "UPDATE Employee SET " + columnName + " = '%s' WHERE employee_id = '%s'",
+                            e_string_fields.get(columnName),
+                            e_string_fields.get("employee_id"));
+
+          update.execute(str);
+        }
+
       }
-
-      update.execute(str);
-    } catch (SQLException e) {
-      System.out.println("Failed");
-      e.printStackTrace();
-      return;
     }
   }
 
