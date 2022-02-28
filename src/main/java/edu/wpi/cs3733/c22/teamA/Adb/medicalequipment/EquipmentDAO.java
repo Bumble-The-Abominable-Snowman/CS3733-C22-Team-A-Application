@@ -7,7 +7,7 @@ import java.util.List;
 public interface EquipmentDAO {
   public Equipment getMedicalEquipment(String ID);
 
-  public void updateMedicalEquipment(String ID, String field, String change) throws SQLException;
+  public void updateMedicalEquipment(Equipment e) throws SQLException;
 
   public void enterMedicalEquipment(
       String equipmentID,
