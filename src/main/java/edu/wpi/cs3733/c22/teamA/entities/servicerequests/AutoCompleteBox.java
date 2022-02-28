@@ -61,8 +61,9 @@ public class AutoCompleteBox<T> {
             cmb.getTooltip().setText(txtUsr);
             Window stage = cmb.getScene().getWindow();
             double posX = stage.getX() + cmb.getBoundsInParent().getMinX();
-            double posY = stage.getY() + cmb.getBoundsInParent().getMinY();
+            double posY = stage.getY() + cmb.getBoundsInParent().getMinY()+20;
             cmb.getTooltip().show(stage, posX, posY);
+            cmb.getTooltip().setMinSize(150, 50);
             cmb.show();
         }
         cmb.getItems().setAll(filteredList);

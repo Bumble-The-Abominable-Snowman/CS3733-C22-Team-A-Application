@@ -42,7 +42,6 @@ public class EquipmentDataviewManager {
 	}
 
 	public void delete() throws SQLException {
-		table = dataViewCtrl.getTable();
 		EquipmentDAO equipmentDAO = new EquipmentDerbyImpl();
 		equipmentDAO.deleteMedicalEquipment(
 				table.getSelectionModel().getSelectedItem().getValue().equip.getEquipmentID());
@@ -51,6 +50,8 @@ public class EquipmentDataviewManager {
 	}
 
 	public void initializeEquipmentTable() {
+
+		table = dataViewCtrl.getTable();
 		dataViewCtrl.getSelectEmployeeBox().setVisible(false);
 
 		List<JFXTreeTableColumn<RecursiveObj, String>> equipmentColumns = new ArrayList<>();
