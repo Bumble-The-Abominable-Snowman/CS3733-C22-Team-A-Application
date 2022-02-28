@@ -25,6 +25,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import net.kurobako.gesturefx.GesturePane;
 
+import javax.swing.*;
+
 // TODO Change all instances of looping through locations to find related short names & node ids
 // with method in backend once implemented
 public class MapCtrl extends MasterCtrl {
@@ -52,6 +54,7 @@ public class MapCtrl extends MasterCtrl {
   @FXML private JFXComboBox searchComboBox;
 
   private ArrayList<String> floorNames;
+  private boolean drawPathOnSwitch;
 
   private LocationDAO locationDAO;
   private EquipmentDAO equipmentDAO;
@@ -137,8 +140,9 @@ public class MapCtrl extends MasterCtrl {
               mapManager.initFloor(
                   newValue, ((int) mapImageView.getLayoutX()), (int) mapImageView.getLayoutY());
               //pathFinder.updateComboBoxes();
-              if (newValue.equals("Choose Floor:"))
-                clearPath();
+              pathFinder.clearPath(anchorPane, false);
+              if (drawPathOnSwitch)
+                pathFinder.drawPath(pathFinder.findPath(markerManager.getFloor()), anchorPane);
             });
   }
 
@@ -147,11 +151,16 @@ public class MapCtrl extends MasterCtrl {
   }
 
   public void findPath() {
+    pathFinder.clearPath(anchorPane, true);
     pathFinder.drawPath(pathFinder.findPath(markerManager.getFloor()), anchorPane);
+    if (!pathFinder.getDestinationFloor().equals(""))
+      JOptionPane.showMessageDialog(null, "This path will take you on an elevator to Floor " + pathFinder.getDestinationFloor() + ".");
+    drawPathOnSwitch = true;
   }
 
   public void clearPath() {
-    pathFinder.clearPath(anchorPane);
+    pathFinder.clearPath(anchorPane, true);
+    drawPathOnSwitch = false;
   }
 
   public void goToLocationTable() throws IOException {

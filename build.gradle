@@ -40,6 +40,8 @@ dependencies {
             'net.kurobako:gesturefx:0.7.1',
             files('C:\\Users\\techn\\Github-Projects\\CS3733\\CS3733-C22-Team-A-API\\build\\libs\\CS3733-C22-Team-A-API.jar')
             //files('C:\\Users\\Brybl\\Desktop\\CS3733\\CS3733-C22-Team-A-Application\\build\\libs\\CS3733-C22-Team-A-API.jar')
+
+             //files('C:\\Users\\Brendan\\IdeaProjects\\CS3733-C22-Team-A-API\\build\\libs\\CS3733-C22-Team-A-API.jar')
     )
 
     testCompile(

@@ -149,7 +149,7 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
 
   @FXML
   private void loadAPI() throws ServiceException, IOException {
-    Main.run(500, 200, 960, 600, "", "");
+    Main.run(500, 200, 960, 600, App.class.getResource("css/styleSheet.css").toExternalForm(), "");
   }
 
   @FXML

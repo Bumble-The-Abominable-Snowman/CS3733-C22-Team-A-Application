@@ -121,13 +121,23 @@ public class MarkerManager {
     return floorSRs;
   }
 
-  public List<Equipment> returnEquipmentLocations() {
-    return floorEquipment;
+  public List<Equipment> returnDirtyEquipmentLocations() {
+      List<Equipment> equips = new ArrayList<>();
+      for (Equipment equip : floorEquipment) {
+          if (!equip.getIsClean())
+              equips.add(equip);
+      }
+      return equips;
   }
 
-  public List<Location> returnFloorLocations() {
-        return floorLocations;
-    }
+  public List<Equipment> returnCleanEquipmentLocations() {
+      List<Equipment> equips = new ArrayList<>();
+      for (Equipment equip : floorEquipment) {
+          if (equip.getIsClean())
+              equips.add(equip);
+      }
+      return equips;
+  }
 
   private void createFloorEntities(
       SelectionManager selectionManager,
