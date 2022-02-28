@@ -1,15 +1,17 @@
 package edu.wpi.cs3733.c22.teamA.auth0.rest.login;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.wpi.cs3733.c22.teamA.auth0.rest.ApiRESTIOException;
 import edu.wpi.cs3733.c22.teamA.auth0.rest.AbstractRESTConsumer;
 import edu.wpi.cs3733.c22.teamA.auth0.rest.ClientAuthenticationCredentials;
+import java.io.IOException;
+import java.net.URI;
+import java.util.Objects;
+
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
-import java.io.IOException;
-import java.net.URI;
 
 public class RESTAuth0Client extends AbstractRESTConsumer {
 
@@ -34,7 +36,9 @@ public class RESTAuth0Client extends AbstractRESTConsumer {
                     .build();
 
             try (Response response = getClient().newCall(request).execute()) {
-                return parseResponseBody(response, Auth0OauthResponse.class);
+                return new ObjectMapper()
+                        .readerFor(Auth0OauthResponse.class)
+                        .readValue(Objects.requireNonNull(response.body()).string());
             } catch (IOException e) {
                 throw new ApiRESTIOException((IOException) e);
             }

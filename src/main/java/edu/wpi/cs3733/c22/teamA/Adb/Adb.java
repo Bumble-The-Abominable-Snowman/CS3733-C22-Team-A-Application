@@ -19,9 +19,9 @@ public class Adb {
 
   public static boolean usingEmbedded = true;
 
-  public static String username;
+  public static String username = "admin";
 
-  public static String password;
+  public static String password = "admin";
 
   public static boolean isInitialized;
 

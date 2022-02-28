@@ -40,7 +40,7 @@ public class SceneSwitcher {
   }
 
   private final HashMap<SCENES, String> screenMap = new HashMap<>();
-  public Scene currentScene;
+  public static Scene currentScene;
 
   public SceneSwitcher() {
 
@@ -89,5 +89,6 @@ public class SceneSwitcher {
     App.getStage().setScene(currentScene);
     App.getStage().show();
     fxmlval.add(name);
+
   }
 }

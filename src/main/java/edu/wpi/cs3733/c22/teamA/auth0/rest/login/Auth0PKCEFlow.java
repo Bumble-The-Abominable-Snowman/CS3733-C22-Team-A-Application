@@ -1,12 +1,9 @@
 package edu.wpi.cs3733.c22.teamA.auth0.rest.login;
 
+import edu.wpi.cs3733.c22.teamA.App;
+import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.auth0.UserInfo;
 import edu.wpi.cs3733.c22.teamA.auth0.rest.ClientAuthenticationCredentials;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.jooq.lambda.Unchecked;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.URLDecoder;
@@ -16,6 +13,10 @@ import java.security.SecureRandom;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.jooq.lambda.Unchecked;
 
 /**
  * https://auth0.com/docs/flows/guides/auth-code-pkce/add-login-auth-code-pkce#example-authorization-url
@@ -58,7 +59,7 @@ public class Auth0PKCEFlow {
 
     private static final String DOMAIN = "dev-x7bjt62i.us.auth0.com";
     private static final String CLIENT_ID = "1vU3krUnEN7icaE4EHT8lEtQLFfzyR0Y";
-    private static final String REDIRECT_URI = "";
+    private static final String REDIRECT_URI = "https://vigorous-payne-ebb69d.netlify.app/";
 
     public static String createCodeVerifier() {
         final SecureRandom sr = new SecureRandom();
@@ -84,7 +85,8 @@ public class Auth0PKCEFlow {
                 + "&code_challenge_method=S256"
                 + "&code_challenge=" + challenge
                 + "&scope=openid profile email"
-                + "&state=" + state;
+                + "&state=" + state
+                + "&redirect_uri=" + REDIRECT_URI;
     }
 
     public static FlowInfo createAuthorizationFlow() {
@@ -104,10 +106,6 @@ public class Auth0PKCEFlow {
 
             final String code = fragmentParams.get("code");
             final String state = fragmentParams.get("state");
-
-            for (String key: fragmentParams.keySet()) {
-                System.out.printf("Key: %s\tValue: %s\n", key, fragmentParams.get(key));
-            }
 
             if (flowInfo.getState().equals(state) && !StringUtils.isEmpty(code)) {
                 final Auth0OauthResponse tokenInfo;

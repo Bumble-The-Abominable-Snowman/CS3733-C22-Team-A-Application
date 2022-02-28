@@ -8,6 +8,8 @@ import net.jodah.failsafe.function.CheckedSupplier;
 import okhttp3.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.util.EntityUtils;
 import org.jooq.lambda.Seq;
 import org.jooq.lambda.Unchecked;
 import org.slf4j.Logger;
@@ -192,12 +194,13 @@ public abstract class AbstractRESTConsumer implements ApiRESTConsumer {
 
         final Optional<BufferedInputStream> inputStream = getResponseDataInputStream(response);
 
+
         return inputStream.map(Unchecked.function(in -> {
             final MediaType contentType = body.contentType();
             if (contentType == null || !contentType.subtype().toLowerCase().contains("json")) {
                 throw new IllegalStateException(
                         "Expected JSON response media type but got " + contentType + ". Content:\n"
-                        + IOUtils.toString(in, StandardCharsets.UTF_8)
+                                + IOUtils.toString(in, StandardCharsets.UTF_8)
                 );
             }
 
@@ -512,22 +515,30 @@ public abstract class AbstractRESTConsumer implements ApiRESTConsumer {
 
     public static Optional<BufferedInputStream> getResponseDataInputStream(Response response) throws IOException {
         final ResponseBody body = response.body();
+        System.out.printf("BODY: %s", Objects.requireNonNull(body).string());
 
         if (body == null) {
             return Optional.empty();
         }
 
+        System.out.println("before BufferedInputStream");
         final BufferedInputStream inputStream = new BufferedInputStream(body.byteStream());
-        inputStream.mark(1);
-        if (inputStream.read() == -1) {
-            return Optional.empty();
-        }
-        inputStream.reset();
+        System.out.println("after BufferedInputStream");
+
+//        inputStream.mark(1);
+//        if (inputStream.read() == -1) {
+//            return Optional.empty();
+//        }
+//        inputStream.reset();
+        System.out.println("after reset");
+        System.out.println(inputStream);
 
         if (inputStream.available() > 0) {
+            System.out.println("available");
             return Optional.of(inputStream);
         }
 
+        System.out.println("returning empty");
         return Optional.empty();
     }
 

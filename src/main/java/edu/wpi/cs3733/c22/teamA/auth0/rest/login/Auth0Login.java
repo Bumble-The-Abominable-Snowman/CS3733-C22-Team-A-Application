@@ -34,12 +34,16 @@ public class Auth0Login {
             final WebView webView = new WebView();
             final WebEngine engine = webView.getEngine();
 
-            final Scene scene = new Scene(webView);
+            final Scene scene = new Scene(webView, WINDOW_WIDTH, WINDOW_HEIGHT);
             App.getStage().setScene(scene);
+            App.getStage().show();
 
             final Auth0PKCEFlow.FlowInfo flow = Auth0PKCEFlow.createAuthorizationFlow();
             engine.getLoadWorker().stateProperty().addListener((ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newValue) -> {
+                System.out.println("update:");
+                System.out.println(newValue);
                 if (newValue == Worker.State.SUCCEEDED) {
+                    System.out.println("succeed!");
                     try {
                         final Optional<UserInfo> userInfo = Auth0PKCEFlow.checkURLForLoginSuccess(flow, engine.getLocation());
 

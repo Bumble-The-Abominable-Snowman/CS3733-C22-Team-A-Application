@@ -11,14 +11,16 @@ public class Auth0OauthResponse {
     private final String idToken;
     private final String tokenType;
     private final long expiresIn;
+    private final String scope;
 
     @JsonCreator
-    @ConstructorProperties({"access_token", "id_token", "token_type", "expires_in"})
-    public Auth0OauthResponse(String access_token, String id_token, String token_type, long expires_in) {
+    @ConstructorProperties({"access_token", "id_token", "token_type", "expires_in", "scope"})
+    public Auth0OauthResponse(String access_token, String id_token, String token_type, long expires_in, String scope) {
         this.accessToken = access_token;
         this.idToken = id_token;
         this.tokenType = token_type;
         this.expiresIn = expires_in;
+        this.scope = scope;
     }
 
     public String getAccessToken() {
@@ -35,6 +37,10 @@ public class Auth0OauthResponse {
 
     public long getExpiresIn() {
         return expiresIn;
+    }
+
+    public String getTokenScope() {
+        return this.scope;
     }
 
     @Override

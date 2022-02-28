@@ -46,7 +46,7 @@ public abstract class MasterCtrl {
     STAFF,
   }
 
-  public static ACCOUNT account = ACCOUNT.STAFF;
+  public static ACCOUNT account = ACCOUNT.ADMIN;
 
   double selectSRButtonSize;
   double mapButtonSize;
@@ -67,11 +67,6 @@ public abstract class MasterCtrl {
   boolean animating = false;
 
   public void configure() {
-
-    if (Adb.username.equals("admin"))
-    {
-      account = ACCOUNT.ADMIN;
-    }
 
     if (account == ACCOUNT.STAFF) {
 
