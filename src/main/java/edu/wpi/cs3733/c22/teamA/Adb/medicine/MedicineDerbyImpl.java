@@ -403,6 +403,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
   }
 
   /***************** EXPORT FUNCTIONS *************************************************/
+  //To export to csv
 
   public static void exportMedicineToCSV(String medicineCSVFilePath)
       throws IOException {
