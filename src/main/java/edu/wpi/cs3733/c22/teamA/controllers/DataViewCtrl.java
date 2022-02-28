@@ -71,6 +71,7 @@ public class DataViewCtrl extends MasterCtrl {
   LocationDataviewManager locationDataviewManager;
 
   public DataViewCtrl(){
+    table = new JFXTreeTableView<>();
     srDataviewManager = new SRDataviewManager(this);
     employeeDataviewManager = new EmployeeDataviewManager(this);
     equipmentDataviewManager = new EquipmentDataviewManager(this);
@@ -412,7 +413,7 @@ public class DataViewCtrl extends MasterCtrl {
               .show(App.getStage(), this.point.get().getX(), this.point.get().getY());
         });
 
-    this.table.setOnMouseClicked(
+    table.setOnMouseClicked(
         e -> {
           if (e.getButton() == MouseButton.PRIMARY) {
             DataViewCtrl.detailsPopup.get().hide();
