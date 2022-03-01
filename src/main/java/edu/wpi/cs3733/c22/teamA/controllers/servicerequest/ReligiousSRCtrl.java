@@ -119,6 +119,7 @@ public class ReligiousSRCtrl extends SRCtrl {
     this.populateLocationComboBox(this.toLocationChoice);
     new AutoCompleteBox(toLocationChoice);
     new AutoCompleteBox(employeeChoice);
+    new AutoCompleteBox(denominationChoice);
   }
 
   @FXML

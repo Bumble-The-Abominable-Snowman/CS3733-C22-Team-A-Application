@@ -169,6 +169,8 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
     statusChoice.getItems().setAll(status);
     new AutoCompleteBox(toLocationChoice);
     new AutoCompleteBox(employeeChoice);
+    new AutoCompleteBox(fromChoice);
+    new AutoCompleteBox(statusChoice);
   }
 
   @FXML
