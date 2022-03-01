@@ -15,7 +15,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
@@ -37,8 +39,11 @@ public class FoodDeliverySRCtrl extends SRCtrl {
   @FXML private Label orderLabel;
   @FXML private Label employeeLabel;
 
+  private ServiceRequestDerbyImpl serviceRequestDatabase = new ServiceRequestDerbyImpl(SR.SRType.FOOD_DELIVERY);
+
   @FXML
-  public void initialize() throws ParseException {
+  protected void initialize() throws ParseException {
+    super.initialize();
     sceneID = SceneSwitcher.SCENES.FOOD_DELIVERY_SR;
 
     // double mainChoiceTextSize = mainChoice.getFont().getSize();
@@ -119,7 +124,25 @@ public class FoodDeliverySRCtrl extends SRCtrl {
     }
     Location toLocationSelected = this.locationList.get(locationIndex);
 
-    SR sr = new SR("FoodDeliverySRID",
+    String uniqueID = "";
+    List<String> currentIDs = new ArrayList<>();
+    for(SR sr: serviceRequestDatabase.getServiceRequestList()){
+      currentIDs.add(sr.getFields_string().get("request_id"));
+    }
+    boolean foundUnique = false;
+    while(!foundUnique){
+
+      String possibleUnique = "FODDEL" + getUniqueNumbers();
+
+      if(currentIDs.contains(possibleUnique)) continue;
+      else if(!(currentIDs.contains(possibleUnique))){
+        foundUnique = true;
+        uniqueID = possibleUnique;
+      }
+    }
+
+
+    SR sr = new SR(uniqueID,
             (new LocationDerbyImpl()).getLocationNode("N/A"),
             toLocationSelected,
             (new EmployeeDerbyImpl()).getEmployee("001"),
@@ -135,8 +158,7 @@ public class FoodDeliverySRCtrl extends SRCtrl {
     sr.setFieldByString("beverage", this.drinkChoice.getValue());
     sr.setFieldByString("dessert", this.dessertChoice.getValue());
 
-    ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.FOOD_DELIVERY);
-    serviceRequestDerby.enterServiceRequest(sr);
+    serviceRequestDatabase.enterServiceRequest(sr);
 
 //    FoodDeliverySR foodDeliverySR =
 //        new FoodDeliverySR(

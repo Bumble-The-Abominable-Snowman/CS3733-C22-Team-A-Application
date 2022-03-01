@@ -71,6 +71,7 @@ public class DataViewCtrl extends MasterCtrl {
   EmployeeDataviewManager employeeDataviewManager;
   EquipmentDataviewManager equipmentDataviewManager;
   LocationDataviewManager locationDataviewManager;
+  MedicineDataviewManager medicineDataviewManager;
 
   public DataViewCtrl(){
     table = new JFXTreeTableView<>();
@@ -78,6 +79,7 @@ public class DataViewCtrl extends MasterCtrl {
     employeeDataviewManager = new EmployeeDataviewManager(this);
     equipmentDataviewManager = new EquipmentDataviewManager(this);
     locationDataviewManager = new LocationDataviewManager(this);
+    medicineDataviewManager = new MedicineDataviewManager(this);
   }
 
   @FXML
@@ -92,6 +94,8 @@ public class DataViewCtrl extends MasterCtrl {
       equipmentDataviewManager.delete();
     } else if (HomeCtrl.sceneFlag == 4) {
       employeeDataviewManager.delete();
+    } else if (HomeCtrl.sceneFlag == 5) {
+      medicineDataviewManager.delete();
     } else {
       // wait what how did you get here
     }
@@ -285,7 +289,11 @@ public class DataViewCtrl extends MasterCtrl {
     } else if (HomeCtrl.sceneFlag == 4) {
       titleLabel.setText("Employees");
       employeeDataviewManager.initializeEmployeeTable();
-    } else {
+    } else if(HomeCtrl.sceneFlag == 5) {
+      titleLabel.setText("MEDICINE");
+      medicineDataviewManager.initializeMedicineTable();
+    }
+    else {
       // wait what how did you get here
     }
   }
@@ -359,6 +367,9 @@ public class DataViewCtrl extends MasterCtrl {
         break;
       case 4:
         employeeDataviewManager.modifyPopup(field, value, updateButton, srDataviewManager);
+        break;
+      case 5:
+        medicineDataviewManager.modifyPopup(field, value, updateButton);
         break;
     }
 
