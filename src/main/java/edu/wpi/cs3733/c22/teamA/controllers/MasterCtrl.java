@@ -138,6 +138,10 @@ public abstract class MasterCtrl {
         .addListener(
             (obs, oldVal, newVal) -> {
               updateSize();
+              bumbleXButton.setStyle(
+                      "-fx-font-size: "
+                              + ((App.getStage().getWidth() / 1000) * bumbleXTextSize)
+                              + "pt;");
               bubbleText.setStyle(
                       "-fx-font-size: "
                               + ((App.getStage().getWidth() / 1000) * bubbleTextSize)

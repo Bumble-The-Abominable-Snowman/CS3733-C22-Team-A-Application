@@ -52,6 +52,25 @@ public class MapCtrl extends MasterCtrl {
   @FXML JFXButton findPathButton = new JFXButton();
   @FXML JFXButton clearPathButton = new JFXButton();
 
+  @FXML private JFXButton previousButton;
+  @FXML private JFXButton nextButton;
+  @FXML private JFXButton previous1Button;
+  @FXML private JFXButton next1Button;
+  @FXML private JFXButton previous2Button;
+  @FXML private JFXButton next2Button;
+  @FXML private JFXButton previous3Button;
+  @FXML private JFXButton next3Button;
+  @FXML private JFXButton previous4Button;
+  @FXML private JFXButton next4Button;
+  @FXML private JFXButton previous5Button;
+  @FXML private JFXButton next5Button;
+  @FXML private Label bubble1Text;
+  @FXML private Label bubble2Text;
+  @FXML private Label bubble3Text;
+  @FXML private Label bubble4Text;
+  @FXML private Label bubble5Text;
+  @FXML private Label bubble6Text;
+
   @FXML private JFXComboBox searchComboBox;
 
   private ArrayList<String> floorNames;
@@ -126,10 +145,101 @@ public class MapCtrl extends MasterCtrl {
     new AutoCompleteBox(pfToComboBox);
     new AutoCompleteBox(pfFromComboBox);
 
+    double previousTextSize = previousButton.getFont().getSize();
+    double nextTextSize = nextButton.getFont().getSize();
+    double previous1TextSize = previous1Button.getFont().getSize();
+    double next1TextSize = next1Button.getFont().getSize();
+    double previous2TextSize = previous2Button.getFont().getSize();
+    double next2TextSize = next2Button.getFont().getSize();
+    double previous3TextSize = previous3Button.getFont().getSize();
+    double next3TextSize = next3Button.getFont().getSize();
+    double previous4TextSize = previous4Button.getFont().getSize();
+    double next4TextSize = next4Button.getFont().getSize();
+    double previous5TextSize = previous5Button.getFont().getSize();
+    double next5TextSize = next5Button.getFont().getSize();
+    double bubble1TextSize = bubble1Text.getFont().getSize();
+    double bubble2TextSize = bubble2Text.getFont().getSize();
+    double bubble3TextSize = bubble3Text.getFont().getSize();
+    double bubble4TextSize = bubble4Text.getFont().getSize();
+    double bubble5TextSize = bubble5Text.getFont().getSize();
+    double bubble6TextSize = bubble6Text.getFont().getSize();
+
     App.getStage()
             .widthProperty()
             .addListener(
                     (obs, oldVal, newVal) -> {
+                      previousButton.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * previousTextSize)
+                                      + "pt;");
+                      nextButton.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * nextTextSize)
+                                      + "pt;");
+                      previous1Button.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * previous1TextSize)
+                                      + "pt;");
+                      next1Button.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * next1TextSize)
+                                      + "pt;");
+                      previous2Button.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * previous2TextSize)
+                                      + "pt;");
+                      next2Button.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * next2TextSize)
+                                      + "pt;");
+                      previous3Button.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * previous3TextSize)
+                                      + "pt;");
+                      next3Button.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * next3TextSize)
+                                      + "pt;");
+                      previous4Button.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * previous4TextSize)
+                                      + "pt;");
+                      next4Button.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * next4TextSize)
+                                      + "pt;");
+                      previous5Button.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * previous5TextSize)
+                                      + "pt;");
+                      next5Button.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * next5TextSize)
+                                      + "pt;");
+                      bubble1Text.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * bubble1TextSize)
+                                      + "pt;");
+                      bubble2Text.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * bubble2TextSize)
+                                      + "pt;");
+                      bubble3Text.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * bubble3TextSize)
+                                      + "pt;");
+                      bubble4Text.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * bubble4TextSize)
+                                      + "pt;");
+                      bubble5Text.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * bubble5TextSize)
+                                      + "pt;");
+                      bubble6Text.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * bubble6TextSize)
+                                      + "pt;");
                     });
   }
 
@@ -181,6 +291,7 @@ public class MapCtrl extends MasterCtrl {
     bumbleXButton.setVisible(true);
     bumbleHead.setVisible(true);
     bubbleText.setVisible(true);
+    nextButton.setVisible(true);
   }
 
   public void terminateBumble(){
@@ -188,5 +299,125 @@ public class MapCtrl extends MasterCtrl {
     bumbleXButton.setVisible(false);
     bumbleHead.setVisible(false);
     bubbleText.setVisible(false);
+    bubble1Text.setVisible(false);
+    bubble2Text.setVisible(false);
+    bubble3Text.setVisible(false);
+    bubble4Text.setVisible(false);
+    bubble5Text.setVisible(false);
+    bubble6Text.setVisible(false);
+    previousButton.setVisible(false);
+    nextButton.setVisible(false);
+    previous1Button.setVisible(false);
+    next1Button.setVisible(false);
+    previous2Button.setVisible(false);
+    next2Button.setVisible(false);
+    previous3Button.setVisible(false);
+    next3Button.setVisible(false);
+    previous4Button.setVisible(false);
+    next4Button.setVisible(false);
+    previous5Button.setVisible(false);
+    next5Button.setVisible(false);
+  }
+
+  public void next(){
+    previousButton.setVisible(true);
+    nextButton.setVisible(false);
+    next1Button.setVisible(true);
+    bubbleText.setVisible(false);
+    bubble1Text.setVisible(true);
+  }
+
+  public void previous(){
+    previousButton.setVisible(false);
+    nextButton.setVisible(true);
+    next1Button.setVisible(false);
+    bubbleText.setVisible(true);
+    bubble1Text.setVisible(false);
+  }
+
+  public void next1(){
+    previous1Button.setVisible(true);
+    next1Button.setVisible(false);
+    next2Button.setVisible(true);
+    bubble1Text.setVisible(false);
+    bubble2Text.setVisible(true);
+  }
+
+  public void previous1() {
+    previous1Button.setVisible(false);
+    next1Button.setVisible(true);
+    next2Button.setVisible(false);
+    bubble1Text.setVisible(true);
+    bubble2Text.setVisible(false);
+  }
+
+  public void next2(){
+    previous1Button.setVisible(false);
+    previous2Button.setVisible(true);
+    next2Button.setVisible(false);
+    next3Button.setVisible(true);
+    bubble2Text.setVisible(false);
+    bubble3Text.setVisible(true);
+  }
+
+  public void previous2() {
+    previous1Button.setVisible(true);
+    previous2Button.setVisible(false);
+    next2Button.setVisible(true);
+    next3Button.setVisible(false);
+    bubble2Text.setVisible(true);
+    bubble3Text.setVisible(false);
+  }
+
+  public void next3(){
+    previous2Button.setVisible(false);
+    previous3Button.setVisible(true);
+    next3Button.setVisible(false);
+    next4Button.setVisible(true);
+    bubble3Text.setVisible(false);
+    bubble4Text.setVisible(true);
+  }
+
+  public void previous3() {
+    previous2Button.setVisible(true);
+    previous3Button.setVisible(false);
+    next3Button.setVisible(true);
+    next4Button.setVisible(false);
+    bubble3Text.setVisible(true);
+    bubble4Text.setVisible(false);
+  }
+
+  public void next4(){
+    previous3Button.setVisible(false);
+    previous4Button.setVisible(true);
+    next4Button.setVisible(false);
+    next5Button.setVisible(true);
+    bubble4Text.setVisible(false);
+    bubble5Text.setVisible(true);
+  }
+
+  public void previous4() {
+    previous3Button.setVisible(true);
+    previous4Button.setVisible(false);
+    next4Button.setVisible(true);
+    next5Button.setVisible(false);
+    bubble4Text.setVisible(true);
+    bubble5Text.setVisible(false);
+  }
+
+  public void next5(){
+    previous4Button.setVisible(false);
+    previous5Button.setVisible(true);
+    next5Button.setVisible(false);
+    bubble5Text.setVisible(false);
+    bubble6Text.setVisible(true);
+  }
+
+  public void previous5() {
+    previous4Button.setVisible(true);
+    previous5Button.setVisible(false);
+    next5Button.setVisible(true);
+    bubble5Text.setVisible(true);
+    bubble6Text.setVisible(false);
   }
 }
