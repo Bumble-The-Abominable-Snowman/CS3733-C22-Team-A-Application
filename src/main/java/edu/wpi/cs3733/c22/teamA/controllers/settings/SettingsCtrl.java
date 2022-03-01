@@ -19,8 +19,6 @@ public class SettingsCtrl extends MasterCtrl {
   @FXML private JFXToggleButton toggleCloudButton;
   @FXML private JFXButton loadBackupButton;
   @FXML private JFXButton saveBackupButton;
-  @FXML private ImageView bumbleHead;
-  @FXML private Label bubbleText;
 
   double stageWidth;
 
@@ -33,8 +31,6 @@ public class SettingsCtrl extends MasterCtrl {
   private void initialize() {
 
     configure();
-
-    double bubbleTextSize = bubbleText.getFont().getSize();
 
     if (Adb.usingEmbedded) {
       toggleClientServerButton.setSelected(false);
@@ -54,10 +50,6 @@ public class SettingsCtrl extends MasterCtrl {
         .addListener(
             (obs, oldVal, newVal) -> {
               updateSize();
-              bubbleText.setStyle(
-                      "-fx-font-size: "
-                              + ((App.getStage().getWidth() / 1000) * bubbleTextSize)
-                              + "pt;");
             });
   }
 

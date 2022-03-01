@@ -23,8 +23,6 @@ public class HomeCtrl extends MasterCtrl {
   @FXML private ImageView frame3;
   @FXML private ImageView frame4;
   @FXML private ImageView frame5;
-  @FXML private JFXButton bumbleXButton;
-  @FXML private Label bubbleText;
   @FXML private JFXButton newSRHelpButton;
   @FXML private JFXButton mapHelpButton;
   @FXML private JFXButton viewDataHelpButton;
@@ -42,8 +40,6 @@ public class HomeCtrl extends MasterCtrl {
     EmployeeDAO employeeBase = new EmployeeDerbyImpl();
     List<Employee> empList = employeeBase.getEmployeeList();
 
-    double bumbleXTextSize = bumbleXButton.getFont().getSize();
-    double bubbleTextSize = bubbleText.getFont().getSize();
     double newSRHelpTextSize = newSRHelpButton.getFont().getSize();
     double mapHelpTextSize = mapHelpButton.getFont().getSize();
     double viewDataHelpTextSize = viewDataHelpButton.getFont().getSize();
@@ -57,14 +53,6 @@ public class HomeCtrl extends MasterCtrl {
             .widthProperty()
             .addListener(
                     (obs, oldVal, newVal) -> {
-                      bumbleXButton.setStyle(
-                              "-fx-font-size: "
-                                      + ((App.getStage().getWidth() / 1000) * bumbleXTextSize)
-                                      + "pt;");
-                      bubbleText.setStyle(
-                              "-fx-font-size: "
-                                      + ((App.getStage().getWidth() / 1000) * bubbleTextSize)
-                                      + "pt;");
                       newSRHelpButton.setStyle(
                               "-fx-font-size: "
                                       + ((App.getStage().getWidth() / 1000) * newSRHelpTextSize)

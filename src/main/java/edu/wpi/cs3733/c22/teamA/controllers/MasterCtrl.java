@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
@@ -36,6 +37,10 @@ public abstract class MasterCtrl {
   @FXML public JFXButton loginButton;
   @FXML public JFXButton aboutButton;
   @FXML public JFXButton homeButton;
+
+  @FXML public JFXButton bumbleXButton;
+  @FXML public Label bubbleText;
+  @FXML private ImageView bumbleHead;
 
   public final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
   public static int sceneFlag = 0;
@@ -95,6 +100,9 @@ public abstract class MasterCtrl {
     aboutButtonSize = aboutButton.getFont().getSize();
     titleTextSize = titleLabel.getFont().getSize();
 
+    double bumbleXTextSize = bumbleXButton.getFont().getSize();
+    double bubbleTextSize = bubbleText.getFont().getSize();
+
     drawer.setSidePane(menuBox);
     drawer.setOnDrawerClosed(e -> animating = false);
     drawer.setOnDrawerOpened(e -> animating = false);
@@ -130,6 +138,10 @@ public abstract class MasterCtrl {
         .addListener(
             (obs, oldVal, newVal) -> {
               updateSize();
+              bubbleText.setStyle(
+                      "-fx-font-size: "
+                              + ((App.getStage().getWidth() / 1000) * bubbleTextSize)
+                              + "pt;");
             });
   }
 

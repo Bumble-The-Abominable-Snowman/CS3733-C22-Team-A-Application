@@ -34,9 +34,6 @@ public class MapCtrl extends MasterCtrl {
   // Selection Manager
   @FXML private VBox inputVBox;
 
-  @FXML private ImageView bumbleHead;
-  @FXML private Label bubbleText;
-
   // Check Box Manager
   @FXML private JFXCheckBox dragCheckBox;
   @FXML private JFXCheckBox serviceRequestCheckBox;
@@ -94,8 +91,6 @@ public class MapCtrl extends MasterCtrl {
   public void initialize() {
     configure();
 
-    double bubbleTextSize = bubbleText.getFont().getSize();
-
     floorSelectionComboBox.toFront();
     markerManager = new MarkerManager(locationDAO, equipmentDAO, anchorPane);
     checkBoxManager =
@@ -135,10 +130,6 @@ public class MapCtrl extends MasterCtrl {
             .widthProperty()
             .addListener(
                     (obs, oldVal, newVal) -> {
-                      bubbleText.setStyle(
-                              "-fx-font-size: "
-                                      + ((App.getStage().getWidth() / 1000) * bubbleTextSize)
-                                      + "pt;");
                     });
   }
 
