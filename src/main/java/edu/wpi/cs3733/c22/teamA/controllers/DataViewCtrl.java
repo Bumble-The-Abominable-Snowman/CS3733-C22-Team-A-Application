@@ -69,6 +69,7 @@ public class DataViewCtrl extends MasterCtrl {
   EmployeeDataviewManager employeeDataviewManager;
   EquipmentDataviewManager equipmentDataviewManager;
   LocationDataviewManager locationDataviewManager;
+  MedicineDataviewManager medicineDataviewManager;
 
   public DataViewCtrl(){
     table = new JFXTreeTableView<>();
@@ -76,6 +77,7 @@ public class DataViewCtrl extends MasterCtrl {
     employeeDataviewManager = new EmployeeDataviewManager(this);
     equipmentDataviewManager = new EquipmentDataviewManager(this);
     locationDataviewManager = new LocationDataviewManager(this);
+    medicineDataviewManager = new MedicineDataviewManager(this);
   }
 
   @FXML

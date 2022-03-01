@@ -29,6 +29,25 @@ import org.junit.jupiter.api.Test;
 
 public class DefaultTest {
 
+//  @Test
+//  public void randomTest(){
+//    for(int x = 0; x < 5000 ; x++){
+//      int round = 0;
+//      double rand = Math.random()*1000;
+//      if(rand < 1.0) round = (int) Math.ceil(rand);
+//      else if(rand > 999.0) round = (int) Math.floor(rand);
+//      else round = (int) Math.floor(rand);
+//
+//      String str ="med";
+//      if(round >= 100) str = str + round;
+//      else if(round >= 10 && round <= 100) str = str + "0" + round;
+//      else if(round >= 1 && round <= 9 ) str = str + "00" + round;
+//      else if(round == 0) str = "000";
+//      System.out.println("rand = " + rand +" round = " + round + " str = " + str);
+//    }
+//  }
+
+
   @Test
   public void medicineTest() throws IOException, SQLException {
     Adb.username = "admin";

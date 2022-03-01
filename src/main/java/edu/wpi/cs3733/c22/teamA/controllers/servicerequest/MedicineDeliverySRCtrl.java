@@ -3,6 +3,8 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
@@ -15,14 +17,21 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import edu.wpi.cs3733.c22.teamA.entities.Medicine;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
 public class MedicineDeliverySRCtrl extends SRCtrl {
+
+  private ServiceRequestDerbyImpl serviceRequestDatabase = new ServiceRequestDerbyImpl(SR.SRType.MEDICINE_DELIVERY);
+  private MedicineDAO medicineDatabase = new MedicineDerbyImpl();
+  private List<Medicine> medicineList = medicineDatabase.getMedicineList();
 
   @FXML private JFXComboBox<String> medicineChoice;
   @FXML private JFXComboBox<String> toLocationChoice;
@@ -51,21 +60,12 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
     commentsBox.setWrapText(true);
 
     medicineChoice.getItems().removeAll(medicineChoice.getItems());
-    medicineChoice
-        .getItems()
-        .addAll(
-            "Abacavir",
-            "Acyclovir",
-            "Baclofen",
-            "Bleomycin",
-            "Calcium",
-            "Captopril",
-            "Dacarbazine",
-            "Dactinomycin",
-            "Eltrombopag",
-            "Emicizumab",
-            "Famciclovir",
-            "Famotide");
+    for(Medicine med : medicineList) {
+      medicineChoice
+              .getItems()
+              .add(med.getGenericName());
+
+    }
     new AutoCompleteBox(medicineChoice);
     medicineChoice.setVisibleRowCount(5);
 
@@ -89,7 +89,25 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
       int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
       Location toLocationSelected = this.locationList.get(locationIndex);
 
-      SR sr = new SR("MedicineDeliverySRID",
+//      //get a uniqueID
+//      String uniqueID = "";
+//      List<String> currentIDs = new ArrayList<>();
+//      for(SR sr: serviceRequestDatabase.getServiceRequestList()){
+//        currentIDs.add(sr.get());
+//      }
+//      boolean foundUnique = false;
+//      while(!foundUnique){
+//
+//        String possibleUnique = "MEDDEL" + getUniqueNumbers();
+//
+//        if(currentIDs.contains(possibleUnique)) continue;
+//        else if(!(currentIDs.contains(possibleUnique))){
+//          foundUnique = true;
+//          uniqueID = possibleUnique;
+//        }
+//      }
+
+      SR sr = new SR("MedDel",
               (new LocationDerbyImpl()).getLocationNode("N/A"),
               toLocationSelected,
               (new EmployeeDerbyImpl()).getEmployee("001"),
@@ -100,8 +118,9 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
               commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               SR.SRType.MEDICINE_DELIVERY);
 
-      ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.MEDICINE_DELIVERY);
-      serviceRequestDerby.enterServiceRequest(sr);
+      serviceRequestDatabase.enterServiceRequest(sr);
     }
   }
+
+
 }
