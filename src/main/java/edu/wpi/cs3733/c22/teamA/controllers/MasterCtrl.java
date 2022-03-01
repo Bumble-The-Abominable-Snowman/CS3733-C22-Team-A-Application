@@ -40,7 +40,7 @@ public abstract class MasterCtrl {
 
   @FXML public JFXButton bumbleXButton;
   @FXML public Label bubbleText;
-  @FXML private ImageView bumbleHead;
+  @FXML public ImageView bumbleHead;
 
   public final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
   public static int sceneFlag = 0;

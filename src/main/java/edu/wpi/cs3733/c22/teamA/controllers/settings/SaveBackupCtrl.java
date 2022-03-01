@@ -164,4 +164,20 @@ public class SaveBackupCtrl extends MasterCtrl {
       }
     }
   }
+
+  @FXML
+  private void activateBumble(){
+    helpButton.setVisible(false);
+    bumbleXButton.setVisible(true);
+    bumbleHead.setVisible(true);
+    bubbleText.setVisible(true);
+  }
+
+  @FXML
+  private void terminateBumble(){
+    helpButton.setVisible(true);
+    bumbleXButton.setVisible(false);
+    bumbleHead.setVisible(false);
+    bubbleText.setVisible(false);
+  }
 }

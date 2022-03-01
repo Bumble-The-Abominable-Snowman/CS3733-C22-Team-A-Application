@@ -455,4 +455,18 @@ public class DataViewCtrl extends MasterCtrl {
   public JFXTreeTableView<RecursiveObj> getTable() {
     return table;
   }
+
+  public void activateBumble(){
+    helpButton.setVisible(false);
+    bumbleXButton.setVisible(true);
+    bumbleHead.setVisible(true);
+    bubbleText.setVisible(true);
+  }
+
+  public void terminateBumble(){
+    helpButton.setVisible(true);
+    bumbleXButton.setVisible(false);
+    bumbleHead.setVisible(false);
+    bubbleText.setVisible(false);
+  }
 }
