@@ -119,7 +119,7 @@ public class SecuritySRCtrl extends SRCtrl {
     int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
     Location toLocationSelected = this.locationList.get(locationIndex);
 
-      //      //get a uniqueID
+      //      //get a uniqueID for the database
       String uniqueID = "";
       List<String> currentIDs = new ArrayList<>();
       for(SR sr: serviceRequestDatabase.getServiceRequestList()){
