@@ -121,7 +121,7 @@
                   <graphic>
                      <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@../../images/Speech%20Bubble%20Icon.png" />
+                           <Image url="@../../images/Speech Bubble Icon.png" />
                         </image>
                      </ImageView>
                   </graphic>
@@ -171,18 +171,6 @@
             </font>
          </JFXButton>
          <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../../css/styleSheet.css" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-         <JFXButton fx:id="helpButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#help" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../../css/styleSheet.css" text="." textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-            <font>
-               <Font size="12.0" />
-            </font>
-            <graphic>
-               <ImageView fitHeight="25.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@../../images/Question Mark Icon.png" />
-                  </image>
-               </ImageView>
-            </graphic>
-         </JFXButton>
          <JFXHamburger fx:id="hamburger" alignment="CENTER" prefHeight="50.0" prefWidth="75.0" stylesheets="@../../css/styleSheet.css" />
       </children>
    </GridPane>
@@ -191,11 +179,11 @@
          <Font size="18.0" />
       </font>
    </Label>
-   <JFXButton fx:id="loadAPIButton" buttonType="RAISED" mnemonicParsing="false" onAction="#loadAPI" styleClass="bodyFormat" text="Load SR API" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+   <JFXButton fx:id="loadAPIButton" buttonType="RAISED" mnemonicParsing="false" styleClass="bodyFormat" text="Load SR API" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
       <GridPane.margin>
          <Insets right="25.0" />
       </GridPane.margin></JFXButton>
-   <JFXButton fx:id="saveAPIButton" buttonType="RAISED" mnemonicParsing="false" onAction="#saveAPI" styleClass="bodyFormat" text="Save SR API" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
+   <JFXButton fx:id="saveAPIButton" buttonType="RAISED" mnemonicParsing="false" styleClass="bodyFormat" text="Save SR API" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
       <GridPane.margin>
          <Insets left="25.0" />
       </GridPane.margin>
