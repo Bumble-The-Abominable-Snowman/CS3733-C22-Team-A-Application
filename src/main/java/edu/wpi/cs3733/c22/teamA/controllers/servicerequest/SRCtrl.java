@@ -84,4 +84,21 @@ public abstract class SRCtrl extends MasterCtrl {
             this.locationList.stream().map(Location::getShortName).collect(Collectors.toList()));
     locationChoice.setVisibleRowCount(5);
   }
+
+  public String getUniqueNumbers(){
+    int round = 0;
+    double rand = Math.random()*1000;
+    if(rand < 1.0) round = (int) Math.ceil(rand);
+    else if(rand > 999.0) round = (int) Math.floor(rand);
+    else round = (int) Math.floor(rand);
+
+    String str ="";
+    if(round >= 100) str = str + round;
+    else if(round >= 10 && round <= 100) str = str + "0" + round;
+    else if(round >= 1 && round <= 9 ) str = str + "00" + round;
+    else if(round == 0) str = "000";
+    System.out.println("rand = " + rand +" round = " + round + " str = " + str);
+
+    return str;
+  }
 }

@@ -13,7 +13,9 @@ import edu.wpi.cs3733.c22.teamA.entities.Location;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
@@ -31,6 +33,9 @@ public class GiftDeliverySRCtrl extends SRCtrl {
   @FXML private Label locationLabel;
   @FXML private Label typeLabel;
   @FXML private Label employeeLabel;
+
+  private ServiceRequestDerbyImpl serviceRequestDatabase = new ServiceRequestDerbyImpl(SR.SRType.GIFT_DELIVERY);
+
 
   @FXML
   private void initialize() {
@@ -91,8 +96,27 @@ public class GiftDeliverySRCtrl extends SRCtrl {
     int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
     Location toLocationSelected = this.locationList.get(locationIndex);
 
+    //      //get a uniqueID
+    String uniqueID = "";
+    List<String> currentIDs = new ArrayList<>();
+    for(SR sr: serviceRequestDatabase.getServiceRequestList()){
+      currentIDs.add(sr.getFields_string().get("request_id"));
+    }
+    boolean foundUnique = false;
+    while(!foundUnique){
+
+      String possibleUnique = "GFTDEL" + getUniqueNumbers();
+
+      if(currentIDs.contains(possibleUnique)) continue;
+      else if(!(currentIDs.contains(possibleUnique))){
+        foundUnique = true;
+        uniqueID = possibleUnique;
+      }
+    }
+
+
     // Create request object
-    SR sr = new SR("GiftDeliverySRID",
+    SR sr = new SR(uniqueID,
             (new LocationDerbyImpl()).getLocationNode("N/A"),
             toLocationSelected,
             (new EmployeeDerbyImpl()).getEmployee("001"),
@@ -103,7 +127,6 @@ public class GiftDeliverySRCtrl extends SRCtrl {
             commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
             SR.SRType.GIFT_DELIVERY);
 
-    ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.GIFT_DELIVERY);
-    serviceRequestDerby.enterServiceRequest(sr);
+    serviceRequestDatabase.enterServiceRequest(sr);
   }
 }

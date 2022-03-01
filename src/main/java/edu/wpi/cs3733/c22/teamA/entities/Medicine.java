@@ -126,4 +126,18 @@ public class Medicine extends RecursiveTreeObject<Medicine> {
   public void setDosageAmounts(List<Float> dosageAmounts) {
     this.dosageAmounts = dosageAmounts;
   }
+
+  public String toString(){
+    return "" +
+            "medID: " + medicineID +
+            " genName: " + genericName +
+            " brandName: " + brandName +
+            " class: " + medicineClass +
+            " uses: " + uses +
+            " warnings: " + warnings +
+            " sideeffects: " + sideEffects +
+            " form: " + form +
+            " doses: " + dosageAmounts;
+  }
+
 }
