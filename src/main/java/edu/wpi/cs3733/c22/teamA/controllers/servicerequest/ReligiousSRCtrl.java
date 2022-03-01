@@ -94,7 +94,7 @@ public class ReligiousSRCtrl extends SRCtrl {
         .getSelectionModel()
         .selectedItemProperty()
         .addListener(
-            (obs, oldValue, newValue) -> {
+            (obs, oldValue, newValue) -> {        //TODO this is throwing NullPointers
               if (newValue.equals("Type")) {
                 denominationChoice.getItems().clear();
                 denominationChoice.setDisable(true);
