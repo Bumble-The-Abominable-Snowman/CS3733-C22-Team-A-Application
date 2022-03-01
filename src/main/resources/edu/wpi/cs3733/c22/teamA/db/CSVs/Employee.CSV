@@ -5,22 +5,23 @@ employee_id, employee_type, first_name, last_name, email, phone_num, address, st
 004,Admin,The,Rock,rock@wpi.edu,0000000002,Ethans Discord,2022-02-03
 005, Admin, Brendan, King, bking2@wpi.edu, 0000000003, Smart World 420,2022-02-04
 006,Admin,Ethan,Schrim,jeschrim@wpi.edu,0000000002,Faraday Hall,2022-02-03
-007,Admin,Robbie,Eskridge,rceskridge@wpi.edu,2105529015,Cock Island,2022-02-20
-008,Admin,Robert,Eskridge,rceskridge@wpi.edu,2105529015,Biggum Smalls,2022-02-20
+007,Admin,Robbie,Eskridge,rceskridge@wpi.edu,2105529015,Covid land,2022-02-20
+008,Admin,Robert,Eskridge,rceskridge@wpi.edu,2105529015,Covid land,2022-02-20
 009,Admin,John,Schrim,jeschrim@wpi.edu,0000000010,Yabba Da Bado,2022-02-19
 010,Admin,Japanese,Beetle,superDuper@wpi.edu,0000000020,Yabba Da Bado,2022-02-18
 011,Admin,Robin,Banks,notACrook@wpi.edu,0000000030,Prison,2022-02-19
-012,Admin,Chad,Dungus,bigguesDickus@wpi.edu,0000000040,SheeshVille,2022-02-21
+012,Admin,Chad,chadingson,chadchadinson@wpi.edu,0000000040,SheeshVille,2022-02-21
 013,Admin,Curve,Ball,curveBall@wpi.edu,0000000050,SheeshVille,2022-02-21
 014,Admin,Loosh,Leech,urug@wpi.edu,0000000060,SheeshVille,2022-02-21
 015,Admin,Shaggy,Of The Machine,420Man@wpi.edu,0000000070,Coolsville,2022-02-21
 016,Admin,Scooby,DoobyDoo,scoobSnack@wpi.edu,0000000080,CoolsVille,2022-02-10
 017,Admin,Bill,Nye,billNye@wpi.edu,0000000090,Space,2022-02-21
 018,Admin,Tom,Cruise,cruisinForBruisin@wpi.edu,0000000100,Some Castle,2022-02-21
-019,Admin,Ali,Campbell,fuckinBrit@wpi.edu,0000000200,Some Castle,2022-02-22
+019,Admin,Ali,Campbell,britain@wpi.edu,0000000200,Some Castle,2022-02-22
 020,Admin,Obama,Obama,obama@wpi.edu,0000000300,Brazil,2022-02-24
-021,Admin,Ligma,Nudz,ligma@wpi.edu,0000000400,Hell,2022-02-21
+021,Admin,Liz,Ma,ligma@wpi.edu,0000000400,Hell,2022-02-21
 022,Admin,Owen,Money,debt@wpi.edu,0000000500,The FDA,2022-02-21
 023,Admin,Helen,Highwater,hellAnd@wpi.edu,0000000600,6th grade,2022-02-21
-024,Admin,Bofa,Deez,bofa@wpi.edu,0000000700,Hell,2022-02-21
-025,Admin,Sugondese,Nahds,sugondese@wpi.edu,0000000800,Hell,2022-02-21
+024,Admin,Jeans,Mcgee,jmacccc@wpi.edu,0000000700,Hell,2022-02-21
+025,Admin,Tom,Brady,goat@wpi.edu,0000000800,Super Bowl,2022-28-03
+026,Admin,Ryan,Dieselman,rddieselman@wpi.edu,7814394519,Alden,2022-02-22

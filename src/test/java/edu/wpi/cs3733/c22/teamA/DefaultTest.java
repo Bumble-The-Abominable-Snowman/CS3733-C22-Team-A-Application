@@ -29,6 +29,25 @@ import org.junit.jupiter.api.Test;
 
 public class DefaultTest {
 
+//  @Test
+//  public void randomTest(){
+//    for(int x = 0; x < 5000 ; x++){
+//      int round = 0;
+//      double rand = Math.random()*1000;
+//      if(rand < 1.0) round = (int) Math.ceil(rand);
+//      else if(rand > 999.0) round = (int) Math.floor(rand);
+//      else round = (int) Math.floor(rand);
+//
+//      String str ="med";
+//      if(round >= 100) str = str + round;
+//      else if(round >= 10 && round <= 100) str = str + "0" + round;
+//      else if(round >= 1 && round <= 9 ) str = str + "00" + round;
+//      else if(round == 0) str = "000";
+//      System.out.println("rand = " + rand +" round = " + round + " str = " + str);
+//    }
+//  }
+
+
   @Test
   public void medicineTest() throws IOException, SQLException {
     Adb.username = "admin";
@@ -39,12 +58,13 @@ public class DefaultTest {
     System.out.println("\n Starting MedicineTest");
     MedicineDerbyImpl derby = new MedicineDerbyImpl();
 
-    System.out.println("Testing import from CSV");
-    MedicineDerbyImpl.inputFromCSV(
-            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/Medicine.csv",
-            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicineDosage.csv"
-    );
+    System.out.println("Testing medicine import from CSV");
+    MedicineDerbyImpl.importMedicineFromCSV(
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/Medicine.csv");
+    System.out.println("Testing medicineDosage import from CSV");
 
+    MedicineDerbyImpl.importDosagesFromCSV(
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicineDosage.csv");
 
     List<Float> dosageList = new ArrayList<>();
     dosageList.add(Float.parseFloat("2"));
@@ -66,7 +86,7 @@ public class DefaultTest {
     derby.enterMedicine(m);
 
     System.out.println("Testing getDosages");
-    System.out.println("Found dosages for " + medicineID + ": " + derby.getDosages(medicineID));
+    System.out.println("Found dosages for " + medicineID + ": " + derby.getSpecificDosages(medicineID));
     System.out.println("Testing get");
     Medicine copyM = derby.getMedicine(medicineID);
     System.out.println("Found GenericName: " + copyM.getGenericName());
@@ -79,15 +99,44 @@ public class DefaultTest {
     System.out.println("Testing getList");
     System.out.println(derby.getMedicineList());
 
-    System.out.println("Testing Export to csv");
-    MedicineDerbyImpl.exportToCSV(
-        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/testMedCSV.csv",
-        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/testDosCSV.csv");
+    System.out.println("Testing Export Medicine to csv");
+    MedicineDerbyImpl.exportMedicineToCSV(
+        "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/testMedCSV.csv");
+    System.out.println("Testing Export MedicineDosages to csv");
+    MedicineDerbyImpl.exportDosagesToCSV(
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/testDosCSV.csv");
 
     System.out.println("Testing delete");
     derby.deleteMedicine(medicineID);
     System.out.println("Attempting get (should fail)");
     System.out.println(derby.getMedicine(medicineID).getMedicineID());
+  }
+
+  @Test
+  public void testMedicineCSV() throws SQLException, IOException {
+    Adb.username = "admin";
+    Adb.password = "admin";
+
+    Adb.initialConnection("EmbeddedDriver");
+
+    System.out.println("\n Starting MedicineTest");
+    MedicineDerbyImpl derby = new MedicineDerbyImpl();
+
+    System.out.println("Testing medicine import from CSV");
+    MedicineDerbyImpl.importMedicineFromCSV(
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/Medicine.csv");
+    System.out.println("Testing medicineDosage import from CSV");
+
+    MedicineDerbyImpl.importDosagesFromCSV(
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicineDosage.csv");
+
+    System.out.println("Testing Export Medicine to csv");
+    MedicineDerbyImpl.exportMedicineToCSV(
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/testMedCSV.csv");
+    System.out.println("Testing Export MedicineDosages to csv");
+    MedicineDerbyImpl.exportDosagesToCSV(
+            "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/testDosCSV.csv");
+
   }
 
   @Test

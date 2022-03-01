@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
@@ -20,9 +21,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -32,60 +31,48 @@ import javafx.stage.FileChooser;
 public class LoadBackupCtrl extends MasterCtrl {
 
   @FXML private JFXButton loadBackupButton;
-  @FXML private JFXButton loadAllCSVButton;
+  @FXML private JFXButton loadFromSystemButton;
   @FXML private JFXComboBox<String> TypeCSV;
   @FXML private Text selectedFileText;
-  @FXML private ListView<String> fileList;
+  @FXML private Text statusText;
+  @FXML private Text selectedLabel;
+  @FXML private Text insertLabel;
   @FXML private String lastSelectedFile;
   private double stageWidth;
   private double loadBackupTextSize;
+  private double loadFromSystemTextSize;
   private double selectedFileTextSize;
-  @FXML private ImageView bumbleHead;
-  @FXML private Label bubbleText;
+  private double statusTextSize;
+  private double selectedLabelTextSize;
+  private double insertLabelTextSize;
 
   @FXML
   public void initialize() {
 
     configure();
 
-    this.refreshFiles();
-
-    double bubbleTextSize = bubbleText.getFont().getSize();
     loadBackupTextSize = loadBackupButton.getFont().getSize();
+    loadFromSystemTextSize = loadFromSystemButton.getFont().getSize();
     selectedFileTextSize = selectedFileText.getFont().getSize();
+    statusTextSize = statusText.getFont().getSize();
+    selectedLabelTextSize = selectedLabel.getFont().getSize();
+    insertLabelTextSize = insertLabel.getFont().getSize();
 
     App.getStage()
             .widthProperty()
             .addListener(
                     (obs, oldVal, newVal) -> {
                       updateSize();
-                      bubbleText.setStyle(
-                              "-fx-font-size: "
-                                      + ((App.getStage().getWidth() / 1000) * bubbleTextSize)
-                                      + "pt;");
                     });
 
-
-    fileList.setOnMouseClicked(
-            new EventHandler<MouseEvent>() {
-              @Override
-              public void handle(MouseEvent event) {
-                if (event.getButton() == MouseButton.PRIMARY) {
-                  String currentItemSelected = fileList.getSelectionModel().getSelectedItem();
-                  lastSelectedFile =
-                          "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/" + currentItemSelected;
-                  String[] arrOfStr = lastSelectedFile.split("/");
-                  selectedFileText.setText(arrOfStr[arrOfStr.length - 1]);
-                  selectedFileText.setFill(Color.BLACK);
-                }
-              }
-            });
     TypeCSV.getItems().removeAll(TypeCSV.getItems());
     TypeCSV.getItems()
             .addAll(
                     "TowerLocations",
                     "Employee",
                     "MedicalEquipment",
+                    "Medicine",
+                    "MedicineDosage",
                     "MedicalEquipmentServiceRequest",
                     "FloralDeliveryServiceRequest",
                     "FoodDeliveryServiceRequest",
@@ -98,49 +85,9 @@ public class LoadBackupCtrl extends MasterCtrl {
                     "SanitationServiceRequest",
                     "SecurityServiceRequest");
     TypeCSV.setValue("CSV Type");
-
-    TypeCSV.setOnMouseClicked(
-            new EventHandler<MouseEvent>() {
-              @Override
-              public void handle(MouseEvent event) {
-                if (event.getButton() == MouseButton.PRIMARY) {
-                  //                  String currentItemSelected =
-                  // fileList.getSelectionModel().getSelectedItem();
-                  //                  lastSelectedFile = "edu/wpi/cs3733/c22/teamA/db/CSVs/" +
-                  // currentItemSelected;
-                  String[] arrOfStr = lastSelectedFile.split("/");
-                  selectedFileText.setText(arrOfStr[arrOfStr.length - 1]);
-                  selectedFileText.setFill(Color.BLACK);
-                }
-              }
-            });
   }
 
-  @FXML
-  public void refreshFiles() {
-    File f = new File("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/");
-    //    File f = new File("");
-    // File f = new File(String.valueOf(App.class.getResourceAsStream("db/CSVs/")));
-    // File f = new File(String.valueOf(App.class.getResource("db/CSVs/")));
-    ObservableList<String> items = FXCollections.observableArrayList();
-    try {
-      for (String pathname : Objects.requireNonNull(f.list())) {
-        if (pathname.toLowerCase().endsWith(".csv")) {
-          items.add(pathname);
-        }
-      }
-    } catch (Exception e) {
-      items.add("Please add files manually");
-    }
-
-    Collections.sort(items);
-    fileList.setItems(items);
-  }
-
-  public void loadBackup()
-          throws IOException, ParseException, InvocationTargetException, IllegalAccessException,
-          SQLException {
-
+  public void loadBackup() {
     try {
       if (!TypeCSV.getValue().equals("CSV Type") && lastSelectedFile.length() > 4) {
 
@@ -153,6 +100,12 @@ public class LoadBackupCtrl extends MasterCtrl {
             break;
           case "MedicalEquipment":
             EquipmentDerbyImpl.inputFromCSV("MedicalEquipment", lastSelectedFile);
+            break;
+          case "Medicine":
+            MedicineDerbyImpl.importMedicineFromCSV(lastSelectedFile);
+            break;
+          case "MedicineDosage":
+            MedicineDerbyImpl.importDosagesFromCSV(lastSelectedFile);
             break;
           case "MedicalEquipmentServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyEq = new ServiceRequestDerbyImpl(SR.SRType.EQUIPMENT);
@@ -199,15 +152,15 @@ public class LoadBackupCtrl extends MasterCtrl {
             serviceRequestDerbySecurity.populateFromCSV(lastSelectedFile);
             break;
         }
-        selectedFileText.setText("Success!");
-        selectedFileText.setFill(Color.GREEN);
+        statusText.setText("Success!");
+        statusText.setFill(Color.LAWNGREEN);
       } else {
         throw new Exception("No csv file is selected!");
       }
     } catch (Exception e) {
       e.printStackTrace();
-      selectedFileText.setText("Failed!");
-      selectedFileText.setFill(Color.RED);
+      statusText.setText("Failed!");
+      statusText.setFill(Color.RED);
     }
   }
 
@@ -219,20 +172,12 @@ public class LoadBackupCtrl extends MasterCtrl {
             .getExtensionFilters()
             .addAll(new FileChooser.ExtensionFilter("CSV Backup Files", "*.csv", "*.CSV"));
     File selectedFile = fileChooser.showOpenDialog(App.getStage());
-    System.out.println(selectedFile.getAbsolutePath());
 
     lastSelectedFile = selectedFile.getAbsolutePath();
 
     String[] arrOfStr = lastSelectedFile.split("/");
     selectedFileText.setText(arrOfStr[arrOfStr.length - 1]);
-    selectedFileText.setFill(Color.BLACK);
-  }
-
-  @FXML
-  public void loadAllCSV() {
-
-    // Add load all CSV code here
-
+    selectedFileText.setFill(Color.WHITE);
   }
 
   @FXML
@@ -242,8 +187,16 @@ public class LoadBackupCtrl extends MasterCtrl {
 
     loadBackupButton.setStyle(
             "-fx-font-size: " + ((stageWidth / 1000) * loadBackupTextSize) + "pt;");
+    loadFromSystemButton.setStyle(
+            "-fx-font-size: " + ((stageWidth / 1000) * loadFromSystemTextSize) + "pt;");
     selectedFileText.setStyle(
             "-fx-font-size: " + ((stageWidth / 1000) * selectedFileTextSize) + "pt;");
+    statusText.setStyle(
+            "-fx-font-size: " + ((stageWidth / 1000) * statusTextSize) + "pt;");
+    selectedLabel.setStyle(
+            "-fx-font-size: " + ((stageWidth / 1000) * selectedLabelTextSize) + "pt;");
+    insertLabel.setStyle(
+            "-fx-font-size: " + ((stageWidth / 1000) * insertLabelTextSize) + "pt;");
   }
 
 

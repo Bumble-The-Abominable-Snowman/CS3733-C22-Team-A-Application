@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 //import teamA_API.Main;
 //import teamA_API.exceptions.ServiceException;
@@ -235,5 +236,14 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
         "-fx-font-size: " + ((stageWidth / 1000) * giftDeliveryTextSize) + "pt;");
     loadAPIButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * loadAPIButtonTextSize) + "pt;");
     saveAPIButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * saveAPIButtonTextSize) + "pt;");
+  }
+
+  @FXML
+  private void goToMedicine(ActionEvent actionEvent) throws IOException {
+    this.onSceneSwitch();
+    sceneFlag = 5;
+    sceneFlags.add(sceneFlag);
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
+
   }
 }
