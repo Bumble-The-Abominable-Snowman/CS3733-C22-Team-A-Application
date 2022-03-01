@@ -80,7 +80,7 @@ public class DataViewCtrl extends MasterCtrl {
 
   @FXML
   public void delete() throws SQLException, InvocationTargetException, IllegalAccessException {
-    System.out.println(table.getSelectionModel().getSelectedItem().getValue().sr);
+    //System.out.println(table.getSelectionModel().getSelectedItem().getValue().sr);
 
     if (HomeCtrl.sceneFlag == 1) {
       srDataviewManager.delete();
