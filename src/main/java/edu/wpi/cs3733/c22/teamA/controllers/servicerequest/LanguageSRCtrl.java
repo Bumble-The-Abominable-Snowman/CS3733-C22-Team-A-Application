@@ -15,7 +15,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
@@ -32,6 +34,8 @@ public class LanguageSRCtrl extends SRCtrl {
   @FXML private Label locationLabel;
   @FXML private Label languageLabel;
   @FXML private Label employeeLabel;
+
+  private ServiceRequestDerbyImpl serviceRequestDatabase = new ServiceRequestDerbyImpl(SR.SRType.LANGUAGE);
 
   @FXML
   protected void initialize() throws ParseException {
@@ -113,7 +117,26 @@ public class LanguageSRCtrl extends SRCtrl {
       int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
       Location toLocationSelected = this.locationList.get(locationIndex);
 
-      SR sr = new SR("LanguageSRID",
+      //      //get a uniqueID
+      String uniqueID = "";
+      List<String> currentIDs = new ArrayList<>();
+      for(SR sr: serviceRequestDatabase.getServiceRequestList()){
+        currentIDs.add(sr.getFields_string().get("request_id"));
+      }
+      boolean foundUnique = false;
+      while(!foundUnique){
+
+        String possibleUnique = "LAN" + getUniqueNumbers();
+
+        if(currentIDs.contains(possibleUnique)) continue;
+        else if(!(currentIDs.contains(possibleUnique))){
+          foundUnique = true;
+          uniqueID = possibleUnique;
+        }
+      }
+
+
+      SR sr = new SR(uniqueID,
               (new LocationDerbyImpl()).getLocationNode("N/A"),
               toLocationSelected,
               (new EmployeeDerbyImpl()).getEmployee("001"),
@@ -126,8 +149,7 @@ public class LanguageSRCtrl extends SRCtrl {
 
       sr.setField("sanitation_type", languageChoice.getValue());
 
-      ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.LANGUAGE);
-      serviceRequestDerby.enterServiceRequest(sr);
+      serviceRequestDatabase.enterServiceRequest(sr);
     }
   }
 }

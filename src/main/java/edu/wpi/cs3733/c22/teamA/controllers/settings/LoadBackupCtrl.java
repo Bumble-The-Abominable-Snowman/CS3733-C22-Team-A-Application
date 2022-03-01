@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
@@ -70,6 +71,8 @@ public class LoadBackupCtrl extends MasterCtrl {
                     "TowerLocations",
                     "Employee",
                     "MedicalEquipment",
+                    "Medicine",
+                    "MedicineDosage",
                     "MedicalEquipmentServiceRequest",
                     "FloralDeliveryServiceRequest",
                     "FoodDeliveryServiceRequest",
@@ -97,6 +100,12 @@ public class LoadBackupCtrl extends MasterCtrl {
             break;
           case "MedicalEquipment":
             EquipmentDerbyImpl.inputFromCSV("MedicalEquipment", lastSelectedFile);
+            break;
+          case "Medicine":
+            MedicineDerbyImpl.importMedicineFromCSV(lastSelectedFile);
+            break;
+          case "MedicineDosage":
+            MedicineDerbyImpl.importDosagesFromCSV(lastSelectedFile);
             break;
           case "MedicalEquipmentServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyEq = new ServiceRequestDerbyImpl(SR.SRType.EQUIPMENT);
