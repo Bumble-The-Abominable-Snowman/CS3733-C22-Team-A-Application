@@ -43,8 +43,9 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
   @FXML private Label mapLabel;
   @FXML private Label locationLabel;
 
-  private EquipmentDerbyImpl database = new EquipmentDerbyImpl();
-  private List<Equipment> equipmentList = database.getMedicalEquipmentList();
+  private ServiceRequestDerbyImpl serviceRequestDatabase = new ServiceRequestDerbyImpl(SR.SRType.EQUIPMENT);
+  private EquipmentDerbyImpl equipmentDatabase = new EquipmentDerbyImpl();
+  private List<Equipment> equipmentList = equipmentDatabase.getMedicalEquipmentList();
   private List<String> bedLocations = new ArrayList<>();
   private List<String> xrayLocations = new ArrayList<>();
   private List<String> infusionPumpLocations = new ArrayList<>();
@@ -188,22 +189,23 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
       Location toLocationSelected = this.locationList.get(locationIndex);
 
 //      //get a uniqueID
-//      String uniqueID = "";
-//      List<String> currentIDs = new ArrayList<>();
-//      for(Equipment thisEquip: equipmentList){
-//        currentIDs.add(thisEquip.getEquipmentID());
-//      }
-//      boolean foundUnique = false;
-//      while(!foundUnique){
-//
-//        String possibleUnique = "EQPDEL" + getUniqueNumbers();
-//
-//        if(currentIDs.contains(possibleUnique)) continue;
-//        else if(!(currentIDs.contains(possibleUnique))){
-//          foundUnique = true;
-//          uniqueID = possibleUnique;
-//        }
-//      }
+      String uniqueID = "";
+      List<String> currentIDs = new ArrayList<>();
+      for(SR sr: serviceRequestDatabase.getServiceRequestList()){
+        currentIDs.add(sr.getFields_string().get("request_id"));
+      }
+      boolean foundUnique = false;
+      while(!foundUnique){
+
+        String possibleUnique = "EQPDEL" + getUniqueNumbers();
+
+        if(currentIDs.contains(possibleUnique)) continue;
+        else if(!(currentIDs.contains(possibleUnique))){
+          foundUnique = true;
+          uniqueID = possibleUnique;
+        }
+      }
+
 
       // pass medical service request object
       SR sr = new SR("EQPDEL",

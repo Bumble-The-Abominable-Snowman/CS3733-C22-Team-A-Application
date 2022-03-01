@@ -90,24 +90,24 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
       Location toLocationSelected = this.locationList.get(locationIndex);
 
 //      //get a uniqueID
-//      String uniqueID = "";
-//      List<String> currentIDs = new ArrayList<>();
-//      for(SR sr: serviceRequestDatabase.getServiceRequestList()){
-//        currentIDs.add(sr.get());
-//      }
-//      boolean foundUnique = false;
-//      while(!foundUnique){
-//
-//        String possibleUnique = "MEDDEL" + getUniqueNumbers();
-//
-//        if(currentIDs.contains(possibleUnique)) continue;
-//        else if(!(currentIDs.contains(possibleUnique))){
-//          foundUnique = true;
-//          uniqueID = possibleUnique;
-//        }
-//      }
+      String uniqueID = "";
+      List<String> currentIDs = new ArrayList<>();
+      for(SR sr: serviceRequestDatabase.getServiceRequestList()){
+        currentIDs.add(sr.getFields_string().get("request_id"));
+      }
+      boolean foundUnique = false;
+      while(!foundUnique){
 
-      SR sr = new SR("MedDel",
+        String possibleUnique = "MEDDEL" + getUniqueNumbers();
+
+        if(currentIDs.contains(possibleUnique)) continue;
+        else if(!(currentIDs.contains(possibleUnique))){
+          foundUnique = true;
+          uniqueID = possibleUnique;
+        }
+      }
+
+      SR sr = new SR(uniqueID,
               (new LocationDerbyImpl()).getLocationNode("N/A"),
               toLocationSelected,
               (new EmployeeDerbyImpl()).getEmployee("001"),
