@@ -34,7 +34,7 @@ public class Equipment extends RecursiveTreeObject<Equipment> {
   public HashMap<String, String> getStringFields() {
     for (String key : this.fields.keySet()) {
       if (Objects.equals(key, "current_location")) {
-        this.fields_string.put(key, ((Location) this.fields.get(key)).getNodeID());
+        this.fields_string.put(key, ((Location) this.fields.get(key)).getStringFields().get("node_id"));
       }
       else this.fields_string.put(key, String.valueOf(this.fields.get(key)));
     }
