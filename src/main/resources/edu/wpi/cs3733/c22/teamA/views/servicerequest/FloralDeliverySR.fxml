@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<GridPane prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@../../css/styleSheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.servicerequest.FloralDeliverySRCtrl">
+<GridPane prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@../../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.servicerequest.FloralDeliverySRCtrl">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -17,7 +21,7 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" prefHeight="30.0" prefWidth="200.0" styleClass="titleFormat" text="Floral Delivery" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-    <Label fx:id="mapLabel" alignment="CENTER" layoutX="232.0" layoutY="89.0" prefHeight="34.0" prefWidth="170.0" styleClass="bodyFormat" text="Map (To Be Added)" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+    <Label fx:id="mapLabel" alignment="CENTER" layoutX="232.0" layoutY="89.0" prefHeight="34.0" prefWidth="176.0" styleClass="bodyFormat" text="Map (To Be Added)" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
     <Label fx:id="locationLabel" layoutX="232.0" layoutY="251.0" prefHeight="57.0" prefWidth="103.0" styleClass="bodyFormat" text="Selected Location" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
     <Label fx:id="flowerLabel" styleClass="bodyFormat" text="Flower:" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
     <Label fx:id="bouquetLabel" styleClass="bodyFormat" text="Bouquet Type:" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
@@ -26,9 +30,9 @@
     <JFXButton fx:id="homeButton" buttonType="RAISED" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#goToHome" prefHeight="37.0" prefWidth="74.0" styleClass="bodyFormat" text="Home" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
     <JFXButton fx:id="clearButton" buttonType="RAISED" layoutX="481.0" layoutY="360.0" mnemonicParsing="false" onAction="#clearSubmission" prefHeight="37.0" prefWidth="137.0" styleClass="bodyFormat" text="Clear All Fields" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
     <JFXButton fx:id="submitButton" buttonType="RAISED" layoutX="191.0" layoutY="340.0" mnemonicParsing="false" onAction="#submitRequest" prefHeight="26.0" prefWidth="218.0" styleClass="bodyFormat" text="Submit" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-    <JFXComboBox fx:id="flowerChoice" layoutX="36.0" layoutY="100.0" prefHeight="28.0" prefWidth="112.0" styleClass="bodyFormat" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-    <JFXComboBox fx:id="bouquetTypeChoice" layoutX="34.0" layoutY="250.0" prefHeight="28.0" prefWidth="112.0" styleClass="bodyFormat" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-    <JFXComboBox fx:id="toLocationChoice" layoutX="225.0" layoutY="180.0" prefHeight="28.0" prefWidth="150.0" styleClass="bodyFormat" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
-    <JFXComboBox fx:id="employeeChoice" layoutX="443.0" layoutY="93.0" prefHeight="28.0" prefWidth="112.0" styleClass="bodyFormat" unFocusColor="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+    <JFXComboBox fx:id="flowerChoice" layoutX="36.0" layoutY="100.0" prefHeight="28.0" prefWidth="174.0" styleClass="bodyFormat" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+    <JFXComboBox fx:id="bouquetTypeChoice" layoutX="34.0" layoutY="250.0" prefHeight="28.0" prefWidth="174.0" styleClass="bodyFormat" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+    <JFXComboBox fx:id="toLocationChoice" layoutX="225.0" layoutY="180.0" prefHeight="28.0" prefWidth="174.0" styleClass="bodyFormat" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+    <JFXComboBox fx:id="employeeChoice" layoutX="443.0" layoutY="93.0" prefHeight="28.0" prefWidth="174.0" styleClass="bodyFormat" unFocusColor="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
     <TextArea fx:id="commentsBox" layoutX="411.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="180" prefHeight="100.0" prefWidth="148.0" promptText="Special Instructions/Notes" styleClass="bodyFormat" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
 </GridPane>
