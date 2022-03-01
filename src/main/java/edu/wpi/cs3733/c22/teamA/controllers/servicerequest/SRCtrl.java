@@ -11,6 +11,7 @@ import edu.wpi.cs3733.c22.teamA.entities.Location;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
@@ -33,7 +34,7 @@ public abstract class SRCtrl extends MasterCtrl {
   private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   @FXML
-  private void initialize() {
+  void initialize() throws ParseException {
     double submitTextSize = submitButton.getFont().getSize();
     double clearTextSize = clearButton.getFont().getSize();
 

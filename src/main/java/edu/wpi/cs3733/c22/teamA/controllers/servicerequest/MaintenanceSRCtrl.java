@@ -13,6 +13,7 @@ import edu.wpi.cs3733.c22.teamA.entities.Location;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,7 +40,8 @@ public class MaintenanceSRCtrl extends SRCtrl {
   List<Location> locationList = new ArrayList<>();
 
   @FXML
-  private void initialize() {
+  protected void initialize() throws ParseException {
+    super.initialize();
     sceneID = SceneSwitcher.SCENES.MAINTENANCE_SR;
 
     // double typeChoiceTextSize = typeChoice.getFont().getSize();

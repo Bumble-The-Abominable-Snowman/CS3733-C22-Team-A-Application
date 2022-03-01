@@ -63,7 +63,8 @@ public class ReligiousSRCtrl extends SRCtrl {
   }
 
   @FXML
-  private void initialize() throws ParseException {
+  protected void initialize() throws ParseException {
+    super.initialize();
     sceneID = SceneSwitcher.SCENES.RELIGIOUS_SR;
 
     // double religionChoiceTextSize = religionChoice.getFont().getSize();

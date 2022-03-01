@@ -10,6 +10,8 @@ import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
 import java.io.IOException;
+import java.rmi.server.ExportException;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
@@ -20,6 +22,7 @@ public class SaveBackupCtrl extends MasterCtrl {
   @FXML public TextField fileName;
   @FXML public Text exportFileText;
   @FXML private JFXComboBox<String> TypeCSV;
+  @FXML private Text exportLabel;
 
   @FXML
   public void initialize() {
@@ -29,6 +32,7 @@ public class SaveBackupCtrl extends MasterCtrl {
     double saveBackupTextSize = saveBackupButton.getFont().getSize();
     double fileNameTextSize = fileName.getFont().getSize();
     double exportFileTextSize = exportFileText.getFont().getSize();
+    double exportLabelTextSize = exportLabel.getFont().getSize();
 
     App.getStage()
         .widthProperty()
@@ -46,6 +50,10 @@ public class SaveBackupCtrl extends MasterCtrl {
                   "-fx-font-size: "
                       + ((App.getStage().getWidth() / 1000) * exportFileTextSize)
                       + "pt;");
+              exportLabel.setStyle(
+                      "-fx-font-size: "
+                              + ((App.getStage().getWidth() / 1000) * exportLabelTextSize)
+                              + "pt;");
             });
 
     TypeCSV.getItems().removeAll(TypeCSV.getItems());
@@ -68,11 +76,9 @@ public class SaveBackupCtrl extends MasterCtrl {
     TypeCSV.setValue("CSV Type");
   }
 
-  public void saveBackup() throws IOException {
+  public void saveBackup() {
     String input = fileName.getCharacters().toString();
-    System.out.println(input.length());
     if (!TypeCSV.getSelectionModel().getSelectedItem().equals("CSV Type") && input.length() > 0) {
-      System.out.println(input);
 
       String filepath;
       if (input.endsWith(".csv")) {
@@ -138,7 +144,7 @@ public class SaveBackupCtrl extends MasterCtrl {
             break;
         }
         exportFileText.setText(filepath);
-        exportFileText.setFill(Color.GREEN);
+        exportFileText.setFill(Color.LAWNGREEN);
       } catch (Exception e) {
         exportFileText.setText("Failed!");
         exportFileText.setFill(Color.RED);

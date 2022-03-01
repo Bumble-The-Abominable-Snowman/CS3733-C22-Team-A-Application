@@ -13,6 +13,7 @@ import edu.wpi.cs3733.c22.teamA.entities.Location;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.Date;
 
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
@@ -33,7 +34,8 @@ public class SanitationSRCtrl extends SRCtrl {
   @FXML private Label employeeLabel;
 
   @FXML
-  private void initialize() {
+  protected void initialize() throws ParseException {
+    super.initialize();
     sceneID = SceneSwitcher.SCENES.SANITATION_SR;
 
     // double typeChoiceTextSize = typeChoice.getFont().getSize();

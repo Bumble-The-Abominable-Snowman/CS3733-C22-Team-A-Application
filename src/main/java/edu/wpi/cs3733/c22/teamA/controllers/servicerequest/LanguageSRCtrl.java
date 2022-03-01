@@ -34,7 +34,8 @@ public class LanguageSRCtrl extends SRCtrl {
   @FXML private Label employeeLabel;
 
   @FXML
-  public void initialize() throws ParseException {
+  protected void initialize() throws ParseException {
+    super.initialize();
     sceneID = SceneSwitcher.SCENES.LANGUAGE_SR;
 
     // double languageTextSize = languageChoice.getFont().getSize();

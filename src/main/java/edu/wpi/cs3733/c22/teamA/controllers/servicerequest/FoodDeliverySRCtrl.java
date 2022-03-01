@@ -38,7 +38,8 @@ public class FoodDeliverySRCtrl extends SRCtrl {
   @FXML private Label employeeLabel;
 
   @FXML
-  public void initialize() throws ParseException {
+  protected void initialize() throws ParseException {
+    super.initialize();
     sceneID = SceneSwitcher.SCENES.FOOD_DELIVERY_SR;
 
     // double mainChoiceTextSize = mainChoice.getFont().getSize();

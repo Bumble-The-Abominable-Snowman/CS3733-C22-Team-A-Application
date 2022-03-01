@@ -30,7 +30,8 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
   @FXML private TextArea commentsBox;
 
   @FXML
-  public void initialize() throws ParseException {
+  protected void initialize() throws ParseException {
+    super.initialize();
     sceneID = SceneSwitcher.SCENES.MEDICINE_DELIVERY_SR;
 
     // double medicineChoiceTextSize = medicineChoice.getFont().getSize();

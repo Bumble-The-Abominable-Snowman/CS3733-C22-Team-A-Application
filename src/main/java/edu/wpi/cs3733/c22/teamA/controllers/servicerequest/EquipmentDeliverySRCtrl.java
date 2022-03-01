@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -69,7 +70,8 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
   }
 
   @FXML
-  private void initialize() {
+  protected void initialize() throws ParseException {
+    super.initialize();
     sceneID = SceneSwitcher.SCENES.EQUIPMENT_DELIVERY_SR;
 
     // double typeChoiceTextSize = typeChoice.getFont().getSize();

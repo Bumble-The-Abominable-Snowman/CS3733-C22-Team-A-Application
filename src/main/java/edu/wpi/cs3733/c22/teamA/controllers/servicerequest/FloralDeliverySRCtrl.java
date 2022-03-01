@@ -35,7 +35,8 @@ public class FloralDeliverySRCtrl extends SRCtrl {
   @FXML private Label employeeLabel;
 
   @FXML
-  public void initialize() throws ParseException {
+  protected void initialize() throws ParseException {
+    super.initialize();
     sceneID = SceneSwitcher.SCENES.FLORAL_DELIVERY_SR;
 
     // double flowerChoiceTextSize = flowerChoice.getFont().getSize();
