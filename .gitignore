@@ -166,3 +166,5 @@ src/main/resources/edu/wpi/cs3733/c22/teamA/db/
 
 # Ignore HospitalDBA folder which is the database folder
 HospitalDBA/
+
+hospital.db
