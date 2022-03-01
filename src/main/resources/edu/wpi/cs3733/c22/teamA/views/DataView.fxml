@@ -120,7 +120,7 @@
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/Speech%20Bubble%20Icon.png" />
+                              <Image url="@../images/Speech Bubble Icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -209,5 +209,17 @@
          </GridPane.margin>
       </VBox>
       <JFXComboBox fx:id="selectEmployeeBox" prefHeight="33.0" prefWidth="250.0" promptText="Filter By Employee" styleClass="comboBox" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+      <ImageView fx:id="bumbleHead" fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" >
+         <image>
+            <Image url="@../images/BumbleIcon.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="bubbleText" prefHeight="211.0" prefWidth="320.0" text="I'm Bumble the Helpful Abominable Snowman. Click one of the buttons on the right to hear more about our features." textAlignment="CENTER" visible="true" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <GridPane.margin>
+            <Insets bottom="75.0" left="13" />
+         </GridPane.margin></Label>
    </children>
 </GridPane>

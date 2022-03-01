@@ -37,6 +37,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -51,6 +52,8 @@ public class DataViewCtrl extends MasterCtrl {
   @FXML private JFXButton editButton;
   @FXML private JFXButton clearButton;
   @FXML private JFXButton deleteButton;
+  @FXML private ImageView bumbleHead;
+  @FXML private Label bubbleText;
 
 
 
@@ -251,6 +254,8 @@ public class DataViewCtrl extends MasterCtrl {
 
     configure();
 
+    double bubbleTextSize = bubbleText.getFont().getSize();
+
     selectEmployeeBox
             .getSelectionModel()
             .selectedItemProperty()
@@ -269,6 +274,10 @@ public class DataViewCtrl extends MasterCtrl {
                           e.printStackTrace();
                         }
                       }
+                      bubbleText.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * bubbleTextSize)
+                                      + "pt;");
 
                     });
     if (HomeCtrl.sceneFlag == 1) {

@@ -11,7 +11,9 @@ import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
 import java.io.IOException;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
@@ -20,12 +22,15 @@ public class SaveBackupCtrl extends MasterCtrl {
   @FXML public TextField fileName;
   @FXML public Text exportFileText;
   @FXML private JFXComboBox<String> TypeCSV;
+  @FXML private ImageView bumbleHead;
+  @FXML private Label bubbleText;
 
   @FXML
   public void initialize() {
 
     configure();
 
+    double bubbleTextSize = bubbleText.getFont().getSize();
     double saveBackupTextSize = saveBackupButton.getFont().getSize();
     double fileNameTextSize = fileName.getFont().getSize();
     double exportFileTextSize = exportFileText.getFont().getSize();
@@ -34,6 +39,10 @@ public class SaveBackupCtrl extends MasterCtrl {
         .widthProperty()
         .addListener(
             (obs, oldVal, newVal) -> {
+              bubbleText.setStyle(
+                      "-fx-font-size: "
+                              + ((App.getStage().getWidth() / 1000) * bubbleTextSize)
+                              + "pt;");
               saveBackupButton.setStyle(
                   "-fx-font-size: "
                       + ((App.getStage().getWidth() / 1000) * saveBackupTextSize)

@@ -20,7 +20,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -38,6 +40,8 @@ public class LoadBackupCtrl extends MasterCtrl {
   private double stageWidth;
   private double loadBackupTextSize;
   private double selectedFileTextSize;
+  @FXML private ImageView bumbleHead;
+  @FXML private Label bubbleText;
 
   @FXML
   public void initialize() {
@@ -46,6 +50,7 @@ public class LoadBackupCtrl extends MasterCtrl {
 
     this.refreshFiles();
 
+    double bubbleTextSize = bubbleText.getFont().getSize();
     loadBackupTextSize = loadBackupButton.getFont().getSize();
     selectedFileTextSize = selectedFileText.getFont().getSize();
 
@@ -54,6 +59,10 @@ public class LoadBackupCtrl extends MasterCtrl {
             .addListener(
                     (obs, oldVal, newVal) -> {
                       updateSize();
+                      bubbleText.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * bubbleTextSize)
+                                      + "pt;");
                     });
 
 

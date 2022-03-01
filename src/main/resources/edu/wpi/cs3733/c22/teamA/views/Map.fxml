@@ -77,7 +77,7 @@
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/Question%20Mark%20Icon.png" />
+                        <Image url="@../images/Question Mark Icon.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -86,7 +86,7 @@
                <graphic>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/Back%20Arrow.png" />
+                        <Image url="@../images/Back Arrow.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -121,7 +121,7 @@
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/Map%20Icon.png" />
+                              <Image url="@../images/Map Icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -148,7 +148,7 @@
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/Location%20Marker%20Icon.png" />
+                              <Image url="@../images/Location Marker Icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -175,7 +175,7 @@
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/Speech%20Bubble%20Icon.png" />
+                              <Image url="@../images/Speech Bubble Icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -184,7 +184,7 @@
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/Door%20Icon.png" />
+                              <Image url="@../images/Door Icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -203,4 +203,14 @@
          </children>
       </JFXDrawer>
    </children>
+   <ImageView fx:id="bumbleHead" fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="11" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" >
+      <image>
+         <Image url="@../images/BumbleIcon.png" />
+      </image>
+   </ImageView>
+   <Label fx:id="bubbleText" prefHeight="211.0" prefWidth="320.0" text="I'm Bumble the Helpful Abominable Snowman." textAlignment="CENTER" visible="true" wrapText="true" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" GridPane.rowSpan="5" GridPane.columnSpan="2">
+      <font>
+         <Font size="15.0" />
+      </font>
+      </Label>
 </GridPane>

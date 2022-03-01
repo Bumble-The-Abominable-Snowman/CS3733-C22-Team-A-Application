@@ -20,6 +20,7 @@ import java.util.List;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -32,6 +33,9 @@ import javax.swing.*;
 public class MapCtrl extends MasterCtrl {
   // Selection Manager
   @FXML private VBox inputVBox;
+
+  @FXML private ImageView bumbleHead;
+  @FXML private Label bubbleText;
 
   // Check Box Manager
   @FXML private JFXCheckBox dragCheckBox;
@@ -90,6 +94,8 @@ public class MapCtrl extends MasterCtrl {
   public void initialize() {
     configure();
 
+    double bubbleTextSize = bubbleText.getFont().getSize();
+
     floorSelectionComboBox.toFront();
     markerManager = new MarkerManager(locationDAO, equipmentDAO, anchorPane);
     checkBoxManager =
@@ -124,6 +130,16 @@ public class MapCtrl extends MasterCtrl {
     new AutoCompleteBox(floorSelectionComboBox);
     new AutoCompleteBox(pfToComboBox);
     new AutoCompleteBox(pfFromComboBox);
+
+    App.getStage()
+            .widthProperty()
+            .addListener(
+                    (obs, oldVal, newVal) -> {
+                      bubbleText.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * bubbleTextSize)
+                                      + "pt;");
+                    });
   }
 
   private void initFloorSelection() {
