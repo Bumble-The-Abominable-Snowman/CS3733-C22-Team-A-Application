@@ -270,7 +270,7 @@ public class SelectionManager {
             locationFields.get(6).textArea.getText(),
             locationFields.get(7).textArea.getText());
    locationDatabase.updateLocation(newLocation);
-    markerManager.redrawEditedLocation();
+    //markerManager.redrawEditedLocation();
   }
   /*
   // Update Medical Equipment / Service Request on Drag Release
