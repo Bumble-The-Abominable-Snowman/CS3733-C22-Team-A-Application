@@ -212,7 +212,7 @@ public class MarkerManager {
           newLocation.setNodeID("New");
           newLocation.setShortName("New");
           newLocation.setLongName("New");
-          newLocation.setFloor("1");
+          newLocation.setFloor(gesturePaneManager.getCurrentFloor());
           newLocation.setNodeType("New");
           newLocation.setBuilding("Tower");
           newLocation.setYCoord(10);

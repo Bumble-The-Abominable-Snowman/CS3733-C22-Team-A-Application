@@ -126,7 +126,7 @@ public class LocationDataviewManager {
 		dataViewCtrl.setupViewDetailsAndModify();
 	}
 
-	public void modifyPopup(JFXComboBox<String> field, TextArea value, JFXButton updateButton, SRDataviewManager srDataviewManager){
+	public void modifyPopup(JFXComboBox<String> field, TextArea value, JFXButton updateButton){
 		Location loc = locList.get(table.getSelectionModel().getSelectedIndex());
 		Method[] methods = loc.getClass().getMethods();
 		for (Method method : methods) {
@@ -184,11 +184,7 @@ public class LocationDataviewManager {
 									locationDerby.updateLocation(
 											loc.getNodeID(), field.getValue(), value.getText());
 									updateButton.setTextFill(Color.GREEN);
-									try {
-										srDataviewManager.initializeRequestsTable();
-									} catch (SQLException | InvocationTargetException | IllegalAccessException ex) {
-										ex.printStackTrace();
-									}
+									this.initializeLocationTable();
 								} catch (Exception ex) {
 									ex.printStackTrace();
 									updateButton.setTextFill(Color.RED);
