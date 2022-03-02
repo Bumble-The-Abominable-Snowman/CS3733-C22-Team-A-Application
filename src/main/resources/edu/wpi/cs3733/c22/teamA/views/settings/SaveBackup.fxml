@@ -209,11 +209,104 @@
          <Image url="@../../images/BumbleIcon.png" />
       </image>
    </ImageView>
-   <Label fx:id="bubbleText" prefHeight="211.0" prefWidth="320.0" text="I'm Bumble the Helpful Abominable Snowman. Click one of the buttons on the right to hear more about our features." textAlignment="CENTER" visible="false" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+   <Label fx:id="bubbleText" prefHeight="211.0" prefWidth="320.0" text="Welcome to the Save Backup page." textAlignment="CENTER" visible="false" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+      <font>
+         <Font size="15.0" />
+      </font>
+      <GridPane.margin>
+         <Insets bottom="30" left="75"/>
+      </GridPane.margin></Label>
+   <Label fx:id="bubble1Text" prefHeight="211.0" prefWidth="320.0" text="Use the ‘Export from table’ dropdown to select the data you want to save." textAlignment="CENTER" visible="false" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
       <font>
          <Font size="15.0" />
       </font>
       <GridPane.margin>
          <Insets bottom="30"/>
       </GridPane.margin></Label>
+   <Label fx:id="bubble2Text" prefHeight="211.0" prefWidth="320.0" text="Enter your desired file name in the text box." textAlignment="CENTER" visible="false" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+      <font>
+         <Font size="15.0" />
+      </font>
+      <GridPane.margin>
+         <Insets bottom="30" />
+      </GridPane.margin></Label>
+   <Label fx:id="bubble3Text" prefHeight="211.0" prefWidth="320.0" text="Press the ‘Save Backup’ button to save your chosen data as a backup." textAlignment="CENTER" visible="false" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+      <font>
+         <Font size="15.0" />
+      </font>
+      <GridPane.margin>
+         <Insets bottom="30" />
+      </GridPane.margin></Label>
+   <JFXButton fx:id="previousButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#previous" prefHeight="15.0" prefWidth="50.0" styleClass="noTextButton" stylesheets="@../../css/styleSheet.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" visible="false">
+      <graphic>
+         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/previous.png" />
+            </image>
+         </ImageView>
+      </graphic>
+      <GridPane.margin>
+         <Insets right="52.0" bottom="50" />
+      </GridPane.margin>
+   </JFXButton>
+   <JFXButton fx:id="nextButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#next" prefHeight="15.0" prefWidth="50.0" styleClass="noTextButton" stylesheets="@../../css/styleSheet.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" visible="false">
+      <graphic>
+         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/next.png" />
+            </image>
+         </ImageView>
+      </graphic>
+      <GridPane.margin>
+         <Insets left="52.0" bottom="50" />
+      </GridPane.margin>
+   </JFXButton>
+   <JFXButton fx:id="previous1Button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#previous1" prefHeight="15.0" prefWidth="50.0" styleClass="noTextButton" stylesheets="@../../css/styleSheet.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" visible="false">
+      <graphic>
+         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/previous.png" />
+            </image>
+         </ImageView>
+      </graphic>
+      <GridPane.margin>
+         <Insets right="52.0" bottom="50"/>
+      </GridPane.margin>
+   </JFXButton>
+   <JFXButton fx:id="next1Button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#next1" prefHeight="15.0" prefWidth="50.0" styleClass="noTextButton" stylesheets="@../../css/styleSheet.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" visible="false">
+      <graphic>
+         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/next.png" />
+            </image>
+         </ImageView>
+      </graphic>
+      <GridPane.margin>
+         <Insets left="52.0" bottom="50"/>
+      </GridPane.margin>
+   </JFXButton>
+   <JFXButton fx:id="previous2Button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#previous2" prefHeight="15.0" prefWidth="50.0" styleClass="noTextButton" stylesheets="@../../css/styleSheet.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" visible="false">
+      <graphic>
+         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/previous.png" />
+            </image>
+         </ImageView>
+      </graphic>
+      <GridPane.margin>
+         <Insets right="52.0" bottom="50"/>
+      </GridPane.margin>
+   </JFXButton>
+   <JFXButton fx:id="next2Button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#next2" prefHeight="15.0" prefWidth="50.0" styleClass="noTextButton" stylesheets="@../../css/styleSheet.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" visible="false">
+      <graphic>
+         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/next.png" />
+            </image>
+         </ImageView>
+      </graphic>
+      <GridPane.margin>
+         <Insets left="52.0" bottom="50"/>
+      </GridPane.margin>
+   </JFXButton>
 </GridPane>

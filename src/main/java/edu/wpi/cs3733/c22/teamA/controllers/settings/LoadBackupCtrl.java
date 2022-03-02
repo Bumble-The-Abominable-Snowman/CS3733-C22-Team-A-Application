@@ -48,6 +48,17 @@ public class LoadBackupCtrl extends MasterCtrl {
   private double selectedLabelTextSize;
   private double insertLabelTextSize;
 
+  @FXML private JFXButton previousButton;
+  @FXML private JFXButton nextButton;
+  @FXML private JFXButton previous1Button;
+  @FXML private JFXButton next1Button;
+  @FXML private JFXButton previous2Button;
+  @FXML private JFXButton next2Button;
+  @FXML private Label bubbleText;
+  @FXML private Label bubble1Text;
+  @FXML private Label bubble2Text;
+  @FXML private Label bubble3Text;
+
   @FXML
   public void initialize() {
 
@@ -60,11 +71,57 @@ public class LoadBackupCtrl extends MasterCtrl {
     selectedLabelTextSize = selectedLabel.getFont().getSize();
     insertLabelTextSize = insertLabel.getFont().getSize();
 
+    double previousTextSize = previousButton.getFont().getSize();
+    double nextTextSize = nextButton.getFont().getSize();
+    double previous1TextSize = previous1Button.getFont().getSize();
+    double next1TextSize = next1Button.getFont().getSize();
+    double previous2TextSize = previous2Button.getFont().getSize();
+    double next2TextSize = next2Button.getFont().getSize();
+    double bubble1TextSize = bubble1Text.getFont().getSize();
+    double bubble2TextSize = bubble2Text.getFont().getSize();
+    double bubble3TextSize = bubble3Text.getFont().getSize();
+
     App.getStage()
             .widthProperty()
             .addListener(
                     (obs, oldVal, newVal) -> {
                       updateSize();
+                      previousButton.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * previousTextSize)
+                                      + "pt;");
+                      nextButton.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * nextTextSize)
+                                      + "pt;");
+                      previous1Button.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * previous1TextSize)
+                                      + "pt;");
+                      next1Button.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * next1TextSize)
+                                      + "pt;");
+                      previous2Button.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * previous2TextSize)
+                                      + "pt;");
+                      next2Button.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * next2TextSize)
+                                      + "pt;");
+                      bubble1Text.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * bubble1TextSize)
+                                      + "pt;");
+                      bubble2Text.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * bubble2TextSize)
+                                      + "pt;");
+                      bubble3Text.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * bubble3TextSize)
+                                      + "pt;");
                     });
 
     TypeCSV.getItems().removeAll(TypeCSV.getItems());
@@ -201,20 +258,76 @@ public class LoadBackupCtrl extends MasterCtrl {
             "-fx-font-size: " + ((stageWidth / 1000) * insertLabelTextSize) + "pt;");
   }
 
-  @FXML
-  private void activateBumble(){
+  public void activateBumble(){
     helpButton.setVisible(false);
     bumbleXButton.setVisible(true);
     bumbleHead.setVisible(true);
     bubbleText.setVisible(true);
+    nextButton.setVisible(true);
   }
 
-  @FXML
-  private void terminateBumble(){
+  public void terminateBumble(){
     helpButton.setVisible(true);
     bumbleXButton.setVisible(false);
     bumbleHead.setVisible(false);
     bubbleText.setVisible(false);
+    bubble1Text.setVisible(false);
+    bubble2Text.setVisible(false);
+    bubble3Text.setVisible(false);
+    previousButton.setVisible(false);
+    nextButton.setVisible(false);
+    previous1Button.setVisible(false);
+    next1Button.setVisible(false);
+    previous2Button.setVisible(false);
+    next2Button.setVisible(false);
+  }
+
+  public void next(){
+    previousButton.setVisible(true);
+    nextButton.setVisible(false);
+    next1Button.setVisible(true);
+    bubbleText.setVisible(false);
+    bubble1Text.setVisible(true);
+  }
+
+  public void previous(){
+    previousButton.setVisible(false);
+    nextButton.setVisible(true);
+    next1Button.setVisible(false);
+    bubbleText.setVisible(true);
+    bubble1Text.setVisible(false);
+  }
+
+  public void next1(){
+    previous1Button.setVisible(true);
+    next1Button.setVisible(false);
+    next2Button.setVisible(true);
+    bubble1Text.setVisible(false);
+    bubble2Text.setVisible(true);
+  }
+
+  public void previous1() {
+    previous1Button.setVisible(false);
+    next1Button.setVisible(true);
+    next2Button.setVisible(false);
+    bubble1Text.setVisible(true);
+    bubble2Text.setVisible(false);
+  }
+
+  public void next2(){
+    previous1Button.setVisible(false);
+    previous2Button.setVisible(true);
+    next2Button.setVisible(false);
+    bubble2Text.setVisible(false);
+    bubble3Text.setVisible(true);
+  }
+
+  public void previous2() {
+    previous1Button.setVisible(true);
+    previous2Button.setVisible(false);
+    next2Button.setVisible(true);
+    bubble2Text.setVisible(true);
+    bubble3Text.setVisible(false);
   }
 
 
