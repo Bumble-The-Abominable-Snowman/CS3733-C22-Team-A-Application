@@ -1,6 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.Adb.location;
 
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -193,9 +194,16 @@ public class LocationDerbyImpl implements LocationDAO {
   public static List<Location> readLocationCSV(String csvFilePath) throws IOException {
     // System.out.println("beginning to read csv");
 
-    ClassLoader classLoader = LocationDerbyImpl.class.getClassLoader();
-    InputStream is = classLoader.getResourceAsStream(csvFilePath);
-    Scanner lineScanner = new Scanner(is);
+    Scanner lineScanner = null;
+    if(!Adb.isInitialized) {
+      ClassLoader classLoader = LocationDerbyImpl.class.getClassLoader();
+      InputStream is = classLoader.getResourceAsStream(csvFilePath);
+      lineScanner = new Scanner(is);
+    }else{
+      File file = new File(csvFilePath);
+      lineScanner = new Scanner(file);
+    }
+
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;

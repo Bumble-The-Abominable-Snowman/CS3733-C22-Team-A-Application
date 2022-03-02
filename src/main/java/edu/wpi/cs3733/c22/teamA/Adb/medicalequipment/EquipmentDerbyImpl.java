@@ -1,7 +1,9 @@
 package edu.wpi.cs3733.c22.teamA.Adb.medicalequipment;
 
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -140,9 +142,16 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
       throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
-    ClassLoader classLoader = EquipmentDerbyImpl.class.getClassLoader();
-    InputStream is = classLoader.getResourceAsStream(csvFilePath);
-    Scanner lineScanner = new Scanner(is);
+    Scanner lineScanner = null;
+    if(!Adb.isInitialized) {
+      ClassLoader classLoader = EquipmentDerbyImpl.class.getClassLoader();
+      InputStream is = classLoader.getResourceAsStream(csvFilePath);
+      lineScanner = new Scanner(is);
+    }else{
+      File file = new File(csvFilePath);
+      lineScanner = new Scanner(file);
+    }
+
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;

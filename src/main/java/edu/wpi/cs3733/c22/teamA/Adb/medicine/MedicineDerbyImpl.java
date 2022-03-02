@@ -1,6 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.Adb.medicine;
 
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.Medicine;
 import edu.wpi.cs3733.c22.teamA.entities.MedicineDosage;
@@ -313,9 +314,16 @@ public class MedicineDerbyImpl implements MedicineDAO {
     List<Medicine> medicineList = new ArrayList<>();
 
     // Go through medicine CSV file
-    ClassLoader classLoader = MedicineDerbyImpl.class.getClassLoader();
-    InputStream is = classLoader.getResourceAsStream(medicineCSVFilePath);
-    Scanner lineScanner = new Scanner(is);
+    Scanner lineScanner = null;
+    if(!Adb.isInitialized) {
+      ClassLoader classLoader = MedicineDerbyImpl.class.getClassLoader();
+      InputStream is = classLoader.getResourceAsStream(medicineCSVFilePath);
+      lineScanner = new Scanner(is);
+    }else{
+      File file = new File(medicineCSVFilePath);
+      lineScanner = new Scanner(file);
+    }
+
     Scanner dataScanner;
     int dataIndex = 0;
 

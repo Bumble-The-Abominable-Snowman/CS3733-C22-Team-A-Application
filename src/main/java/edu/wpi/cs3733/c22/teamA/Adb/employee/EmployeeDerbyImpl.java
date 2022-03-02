@@ -170,10 +170,16 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
   public static List<Employee> readEmployeeCSV(String csvFilePath)
       throws IOException, ParseException {
     // System.out.println("beginning to read csv");
+    Scanner lineScanner = null;
+    if(!Adb.isInitialized) {
+      ClassLoader classLoader = EmployeeDerbyImpl.class.getClassLoader();
+      InputStream is = classLoader.getResourceAsStream(csvFilePath);
+      lineScanner = new Scanner(is);
+    }else{
+      File file = new File(csvFilePath);
+      lineScanner = new Scanner(file);
+    }
 
-    ClassLoader classLoader = EmployeeDerbyImpl.class.getClassLoader();
-    InputStream is = classLoader.getResourceAsStream(csvFilePath);
-    Scanner lineScanner = new Scanner(is);
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
