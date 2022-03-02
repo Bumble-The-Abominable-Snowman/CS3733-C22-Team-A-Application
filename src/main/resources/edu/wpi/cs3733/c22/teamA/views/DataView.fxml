@@ -38,7 +38,7 @@
                <Font size="18.0" />
            </font>
        </Label>
-       <JFXTreeTableView fx:id="table" prefHeight="146.0" prefWidth="709.0" showRoot="false" GridPane.columnSpan="3" GridPane.rowIndex="3">
+       <JFXTreeTableView fx:id="table" prefHeight="146.0" prefWidth="709.0" showRoot="false" styleClass="label" stylesheets="@../css/styleSheet.css" GridPane.columnSpan="3" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets left="25.0" />
          </GridPane.margin></JFXTreeTableView>
