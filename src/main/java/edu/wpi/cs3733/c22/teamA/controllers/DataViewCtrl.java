@@ -51,10 +51,12 @@ public class DataViewCtrl extends MasterCtrl {
   @FXML private VBox inputVBox;
   @FXML private JFXComboBox selectEmployeeBox;
   @FXML private JFXButton saveButton;
+  @FXML private JFXButton addButton;
   @FXML private JFXButton editButton;
   @FXML private JFXButton clearButton;
   @FXML private JFXButton deleteButton;
 
+  /*
   @FXML private ImageView bumbleBlinkHead;
   @FXML private JFXButton previousButton;
   @FXML private JFXButton nextButton;
@@ -67,9 +69,7 @@ public class DataViewCtrl extends MasterCtrl {
   @FXML private Label bubble1Text;
   @FXML private Label bubble2Text;
   @FXML private Label bubble3Text;
-  @FXML private Label bubble4Text;
-
-
+  @FXML private Label bubble4Text; */
 
   private StringBuilder detailLabel = new StringBuilder("No further details  ");
   public static AtomicReference<Popup> detailsPopup = new AtomicReference<>(new Popup());
@@ -274,7 +274,7 @@ public class DataViewCtrl extends MasterCtrl {
   public void initialize() throws SQLException, InvocationTargetException, IllegalAccessException {
 
     configure();
-
+/*
     double previousTextSize = previousButton.getFont().getSize();
     double nextTextSize = nextButton.getFont().getSize();
     double previous1TextSize = previous1Button.getFont().getSize();
@@ -286,7 +286,7 @@ public class DataViewCtrl extends MasterCtrl {
     double bubble1TextSize = bubble1Text.getFont().getSize();
     double bubble2TextSize = bubble2Text.getFont().getSize();
     double bubble3TextSize = bubble3Text.getFont().getSize();
-    double bubble4TextSize = bubble4Text.getFont().getSize();
+    double bubble4TextSize = bubble4Text.getFont().getSize(); */
 
     selectEmployeeBox
             .getSelectionModel()
@@ -305,7 +305,7 @@ public class DataViewCtrl extends MasterCtrl {
                         } catch (IllegalAccessException e) {
                           e.printStackTrace();
                         }
-                      }
+                      } /*
                       previousButton.setStyle(
                               "-fx-font-size: "
                                       + ((App.getStage().getWidth() / 1000) * previousTextSize)
@@ -355,7 +355,7 @@ public class DataViewCtrl extends MasterCtrl {
                                       + ((App.getStage().getWidth() / 1000) * bubble4TextSize)
                                       + "pt;");
 
-                    });
+               */     });
     if (HomeCtrl.sceneFlag == 1) {
       titleLabel.setText("Service Requests");
       srDataviewManager.initializeRequestsTable();
@@ -527,10 +527,49 @@ public class DataViewCtrl extends MasterCtrl {
   @FXML
   void clear() {}
 
+  @FXML
+  void add() {}
+
   protected void onSceneSwitch() {
     DataViewCtrl.detailsPopup.get().hide();
     DataViewCtrl.modifyPopup.get().hide();
     p.hide();
+  }
+
+  @FXML
+  private void help() throws IOException {
+
+    if (helpState != 0) {
+      nextButton.setVisible(false);
+      helpText.setVisible(false);
+      drawer.setEffect(null);
+      helpButton.setEffect(null);
+      helpState = 0;
+    }
+    else {
+      borderGlow.setColor(Color.GOLD);
+      borderGlow.setOffsetX(0f);
+      borderGlow.setOffsetY(0f);
+      borderGlow.setHeight(45);
+      nextButton.setVisible(true);
+      helpText.setVisible(true);
+      helpText.setText("Select a menu option to use the application.  This menu is present on every page and is the primary navigation tool you will use.");
+      drawer.setEffect(borderGlow);
+      helpState = 1;
+    }
+
+  }
+
+  @FXML
+  private void next() throws IOException {
+
+    if (helpState == 1) {
+      drawer.setEffect(null);
+      helpText.setText("You can always click the help button to exit help at any time");
+      helpButton.setEffect(borderGlow);
+      helpState = 2;
+    }
+
   }
 
   public JFXComboBox getSelectEmployeeBox() {
@@ -540,7 +579,7 @@ public class DataViewCtrl extends MasterCtrl {
   public JFXTreeTableView<RecursiveObj> getTable() {
     return table;
   }
-
+/*
   public void activateBumble(){
     helpButton.setVisible(false);
     bumbleXButton.setVisible(true);
@@ -664,5 +703,5 @@ public class DataViewCtrl extends MasterCtrl {
     next3Button.setVisible(true);
     bubble3Text.setVisible(true);
     bubble4Text.setVisible(false);
-  }
+  } */
 }
