@@ -6,7 +6,6 @@ import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 
-import java.io.IOException;
 import java.util.List;
 
 import javafx.animation.PauseTransition;

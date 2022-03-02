@@ -8,9 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLException;
-
 public class AboutCtrl extends MasterCtrl {
 
     @FXML private ImageView bumbleBlinkHead;
