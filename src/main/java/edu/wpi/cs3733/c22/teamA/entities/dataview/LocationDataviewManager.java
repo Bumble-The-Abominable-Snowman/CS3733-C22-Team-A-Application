@@ -45,11 +45,16 @@ public class LocationDataviewManager {
 	}
 
 	public void delete() throws SQLException {
-		LocationDAO locationDAO = new LocationDerbyImpl();
-		locationDAO.deleteLocationNode(
-				table.getSelectionModel().getSelectedItem().getValue().loc.getNodeID());
-		dataViewCtrl.titleLabel.setText("Locations");
-		initializeLocationTable();
+		try {
+			LocationDAO locationDAO = new LocationDerbyImpl();
+			locationDAO.deleteLocationNode(
+					table.getSelectionModel().getSelectedItem().getValue().loc.getNodeID());
+			dataViewCtrl.titleLabel.setText("Locations");
+			initializeLocationTable();
+		}
+		catch (NullPointerException aE){
+
+		}
 	}
 
 	public void initializeLocationTable() {
