@@ -80,6 +80,8 @@ public class DataViewCtrl extends MasterCtrl {
   MenuItem viewDetails = new MenuItem("View Details");
   MenuItem modify = new MenuItem("Modify");
 
+  Popup p = new Popup();
+
   SRDataviewManager srDataviewManager;
   EmployeeDataviewManager employeeDataviewManager;
   EquipmentDataviewManager equipmentDataviewManager;
@@ -97,7 +99,7 @@ public class DataViewCtrl extends MasterCtrl {
 
   @FXML
   public void delete() throws SQLException, InvocationTargetException, IllegalAccessException {
-    System.out.println(table.getSelectionModel().getSelectedItem().getValue().sr);
+    //System.out.println(table.getSelectionModel().getSelectedItem().getValue().sr);
 
     if (HomeCtrl.sceneFlag == 1) {
       srDataviewManager.delete();
@@ -257,7 +259,7 @@ public class DataViewCtrl extends MasterCtrl {
           new Background(new BackgroundFill(Color.WHITE, new CornerRadii(10), null)));
       content.setEffect(new DropShadow());
 
-      var p = new Popup();
+      p = new Popup();
       p.getContent().add(content);
 
       DataViewCtrl.addPopup.set(p);
@@ -521,6 +523,7 @@ public class DataViewCtrl extends MasterCtrl {
   protected void onSceneSwitch() {
     DataViewCtrl.detailsPopup.get().hide();
     DataViewCtrl.modifyPopup.get().hide();
+    p.hide();
   }
 
   public JFXComboBox getSelectEmployeeBox() {

@@ -49,11 +49,15 @@ public class SRDataviewManager {
 	}
 
 	public void delete() throws SQLException, InvocationTargetException, IllegalAccessException {
-		dataViewCtrl.titleLabel.setText("Service Requests");
-		SR sr = table.getSelectionModel().getSelectedItem().getValue().sr;
-		ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl((SR.SRType) sr.getFields().get("sr_type"));
-		serviceRequestDerby.deleteServiceRequest(table.getSelectionModel().getSelectedItem().getValue().sr);
-		initializeRequestsTable();
+		try{
+			dataViewCtrl.titleLabel.setText("Service Requests");
+			SR sr = table.getSelectionModel().getSelectedItem().getValue().sr;
+			ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl((SR.SRType) sr.getFields().get("sr_type"));
+			serviceRequestDerby.deleteServiceRequest(table.getSelectionModel().getSelectedItem().getValue().sr);
+			initializeRequestsTable();
+		} catch (NullPointerException aE){
+
+		}
 	}
 
 	public void initializeRequestsTable()
