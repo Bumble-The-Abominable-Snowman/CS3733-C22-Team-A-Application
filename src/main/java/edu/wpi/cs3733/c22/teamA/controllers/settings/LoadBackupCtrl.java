@@ -381,7 +381,7 @@ public class LoadBackupCtrl extends MasterCtrl {
     }
 
   }
-
+/*
   @FXML
   private void next() throws IOException {
 
@@ -392,6 +392,6 @@ public class LoadBackupCtrl extends MasterCtrl {
       helpState = 2;
     }
 
-  }
+  } */
 
 }

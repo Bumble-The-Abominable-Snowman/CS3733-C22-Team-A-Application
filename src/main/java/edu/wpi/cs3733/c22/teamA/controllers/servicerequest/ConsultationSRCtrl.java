@@ -35,7 +35,6 @@ public class ConsultationSRCtrl extends SRCtrl {
   @FXML
   protected void initialize() throws ParseException {
     super.initialize();
-  public void initialize() throws ParseException {
 
     sceneID = SceneSwitcher.SCENES.CONSULTATION_SR;
 

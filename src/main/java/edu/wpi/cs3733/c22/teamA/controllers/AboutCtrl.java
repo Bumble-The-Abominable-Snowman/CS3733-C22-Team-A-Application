@@ -155,7 +155,7 @@ public class AboutCtrl extends MasterCtrl {
         }
 
     }
-
+/*
     @FXML
     private void next() throws IOException {
 
@@ -166,7 +166,7 @@ public class AboutCtrl extends MasterCtrl {
             helpState = 2;
         }
 
-    }
+    } */
 
 }
 

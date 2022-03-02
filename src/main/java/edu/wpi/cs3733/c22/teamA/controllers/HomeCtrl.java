@@ -6,12 +6,14 @@ import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 
+import java.io.IOException;
 import java.util.List;
 
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class HomeCtrl extends MasterCtrl {
@@ -89,18 +91,12 @@ public class HomeCtrl extends MasterCtrl {
                                       + "pt;");
                     });
 
-    for (Employee emp : empList) {
-      if (emp.getEmail().equals(App.factory.getUsername())) {
-        homeTitle.setText("Welcome, " + emp.getFullName());
-      }
-    }
   }
 
   /* @FXML
   private void bumbleHelp() throws IOException {
     bumbleButton.setVisible(true);
   } */
-  }
 
   @FXML
   private void activateBumble() {

@@ -246,7 +246,7 @@ public class SaveBackupCtrl extends MasterCtrl {
     }
 
   }
-
+/*
   @FXML
   private void next() throws IOException {
 
@@ -257,7 +257,7 @@ public class SaveBackupCtrl extends MasterCtrl {
       helpState = 2;
     }
 
-  }
+  } */
 
 
   public void activateBumble(){

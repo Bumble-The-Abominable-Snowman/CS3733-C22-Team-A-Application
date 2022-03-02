@@ -99,7 +99,7 @@ public abstract class SRCtrl extends MasterCtrl {
 
     return str;
   }
-}
+
 
   @FXML
   private void help() throws IOException {

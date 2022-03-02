@@ -560,7 +560,7 @@ public class DataViewCtrl extends MasterCtrl {
     }
 
   }
-
+/*
   @FXML
   private void next() throws IOException {
 
@@ -571,7 +571,7 @@ public class DataViewCtrl extends MasterCtrl {
       helpState = 2;
     }
 
-  }
+  } */
 
   public JFXComboBox getSelectEmployeeBox() {
     return selectEmployeeBox;

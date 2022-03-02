@@ -324,7 +324,7 @@ public class SettingsCtrl extends MasterCtrl {
     }
 
   }
-
+/*
   @FXML
   private void next() throws IOException {
 
@@ -335,7 +335,6 @@ public class SettingsCtrl extends MasterCtrl {
       helpState = 2;
     }
 
-  }
-
+  } */
 
 }

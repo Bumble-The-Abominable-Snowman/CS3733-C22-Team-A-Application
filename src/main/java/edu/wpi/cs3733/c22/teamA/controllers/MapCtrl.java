@@ -286,7 +286,6 @@ public class MapCtrl extends MasterCtrl {
   }
 
   public void goToLocationTable() throws IOException {
-    this.onSceneSwitch();
     sceneFlag = 2;
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
@@ -497,7 +496,7 @@ public class MapCtrl extends MasterCtrl {
     }
 
   }
-
+/*
   @FXML
   private void next() throws IOException {
 
@@ -508,6 +507,8 @@ public class MapCtrl extends MasterCtrl {
       helpState = 2;
     }
 
-  }
+  } */
 
+  public void goToMap(ActionEvent actionEvent) {
+  }
 }
