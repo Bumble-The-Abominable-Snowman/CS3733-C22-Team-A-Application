@@ -107,7 +107,7 @@ public class MarkerManager {
 
   private void getEquipmentLocations() {
     for (Equipment e : allEquipments) {
-      if (currentFloorIDs.contains(e.getStringFields().get("equipment_id"))) {
+      if (currentFloorIDs.contains(e.getStringFields().get("current_location"))) {
         floorEquipment.add(e);
       }
     }
