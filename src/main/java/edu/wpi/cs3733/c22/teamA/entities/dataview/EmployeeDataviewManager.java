@@ -203,7 +203,7 @@ public class EmployeeDataviewManager {
 		dataViewCtrl.setupViewDetailsAndModify();
 	}
 
-	public void modifyPopup(JFXComboBox<String> field, TextArea value, JFXButton updateButton, SRDataviewManager srDataviewManager){
+	public void modifyPopup(JFXComboBox<String> field, TextArea value, JFXButton updateButton){
 		Employee emp = empList.get(table.getSelectionModel().getSelectedIndex());
 		Method[] methods = emp.getClass().getMethods();
 		for (Method method : methods) {
@@ -259,11 +259,7 @@ public class EmployeeDataviewManager {
 								try {
 									employeeDerby.updateEmployee(emp);
 									updateButton.setTextFill(Color.GREEN);
-									try {
-										srDataviewManager.initializeRequestsTable();
-									} catch (SQLException | InvocationTargetException | IllegalAccessException ex) {
-										ex.printStackTrace();
-									}
+									this.initializeEmployeeTable();
 								} catch (Exception ex) {
 									ex.printStackTrace();
 									updateButton.setTextFill(Color.RED);

@@ -1,10 +1,12 @@
 package edu.wpi.cs3733.c22.teamA.entities.map;
 
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 
@@ -19,11 +21,13 @@ public class MarkerMaker {
     double buttonY = Integer.parseInt(location.getStringFields().get("ycoord")) + offSetY - 24;
     Button button = newDraggableButton(buttonX, buttonY, 0);
 
-    button.setStyle("-fx-background-color: #78aaf0");
-    button.setShape(locationMarkerShape);
+    ImageView pin = new ImageView(App.class.getResource("images/pin.png").toExternalForm());
+    button.setGraphic(pin);
+    button.setStyle("-fx-background-color:rgba(0, 0, 0, 0);-fx-border-color: transparent;");
 
     double labelX = Integer.parseInt(location.getStringFields().get("xcoord")) + offSetX - 8 + 7.5;
     double labelY = Integer.parseInt(location.getStringFields().get("ycoord")) + offSetY - 24 - 15;
+
     Label label = newDraggableLabel(labelX, labelY, location.getShortName());
 
     LocationMarker locationMarker = new LocationMarker(button, label, location);

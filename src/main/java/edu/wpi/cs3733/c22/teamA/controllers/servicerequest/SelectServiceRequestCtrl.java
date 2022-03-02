@@ -150,7 +150,7 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.MEDICINE_DELIVERY_SR);
   }
 
-  @FXML
+ @FXML
   private void loadAPI() throws ServiceException, IOException {
     Main.run(500, 200, 960, 600, App.class.getResource("css/styleSheet.css").toExternalForm(), "");
   }

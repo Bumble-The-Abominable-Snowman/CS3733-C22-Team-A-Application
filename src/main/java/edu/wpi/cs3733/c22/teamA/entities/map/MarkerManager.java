@@ -208,6 +208,7 @@ public class MarkerManager {
       if(!idToLocationMarker.containsKey("New")) {
           // create fields so shit isnt null and the vbox component wont break
           Location newLocation = new Location("New", 10, 10, "1", "Tower", "New", "New", "New");
+
           // make marker for location where its actually usable
           LocationMarker newLocationMarker = MarkerMaker.makeLocationMarker(newLocation, 10, 10);
           locationMarkers.add(newLocationMarker);
