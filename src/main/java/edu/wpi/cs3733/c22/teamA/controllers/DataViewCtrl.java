@@ -377,14 +377,12 @@ public class DataViewCtrl extends MasterCtrl {
   private void createDetailsPopup() throws InvocationTargetException, IllegalAccessException {
     DataViewCtrl.detailsPopup.get().hide();
 
-    detailLabel = new StringBuilder("Nothing selected  ");
-
-    if (HomeCtrl.sceneFlag == 1 && table.getSelectionModel().getSelectedIndex() > -1) {
-      srDataviewManager.details(detailLabel);
+    if (table.getSelectionModel().getSelectedIndex() == -1) {
+      detailLabel = new StringBuilder("Nothing selected  ");
     }
 
-    if (HomeCtrl.sceneFlag != 1) {
-      this.detailLabel = new StringBuilder("No further details  ");
+    else if (HomeCtrl.sceneFlag == 1) {
+      detailLabel = srDataviewManager.details(detailLabel);
     }
 
     var content = new StackPane(new Label(this.detailLabel.toString()));
