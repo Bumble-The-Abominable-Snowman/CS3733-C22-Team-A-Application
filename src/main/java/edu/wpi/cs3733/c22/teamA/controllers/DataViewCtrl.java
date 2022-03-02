@@ -89,6 +89,7 @@ public class DataViewCtrl extends MasterCtrl {
   EquipmentDataviewManager equipmentDataviewManager;
   LocationDataviewManager locationDataviewManager;
   MedicineDataviewManager medicineDataviewManager;
+  DVSelectionManager dvSelectionManager;
 
   public DataViewCtrl(){
     table = new JFXTreeTableView<>();
@@ -374,6 +375,7 @@ public class DataViewCtrl extends MasterCtrl {
     else {
       // wait what how did you get here
     }
+    dvSelectionManager = new DVSelectionManager(inputVBox, this);
   }
 
   @FXML
@@ -514,6 +516,9 @@ public class DataViewCtrl extends MasterCtrl {
             this.rightClickMenu.show(this.table, e.getScreenX(), e.getScreenY());
           }
         });
+    table.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
+      dvSelectionManager.select(newValue.getValue(), HomeCtrl.sceneFlag);
+    });
   }
 
   @FXML

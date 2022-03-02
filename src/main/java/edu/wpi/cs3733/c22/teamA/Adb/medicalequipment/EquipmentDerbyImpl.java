@@ -69,6 +69,10 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
     update.execute(str);
   }
 
+  public void enterMedicalEquipment(Equipment e){
+    enterMedicalEquipment(e.getEquipmentID(), e.getEquipmentType(), e.getIsClean(), e.getCurrentLocation(), e.getIsAvailable());
+  }
+
   public void enterMedicalEquipment(
       String equipmentID,
       String equipmentType,
@@ -136,7 +140,7 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
       throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
-    ClassLoader classLoader = LocationDerbyImpl.class.getClassLoader();
+    ClassLoader classLoader = EquipmentDerbyImpl.class.getClassLoader();
     InputStream is = classLoader.getResourceAsStream(csvFilePath);
     Scanner lineScanner = new Scanner(is);
     Scanner dataScanner;

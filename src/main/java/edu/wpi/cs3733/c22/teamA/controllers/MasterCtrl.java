@@ -42,7 +42,7 @@ public abstract class MasterCtrl {
   @FXML public Label bubbleText;
   @FXML public ImageView bumbleHead;
 
-  public final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
+  public final static SceneSwitcher sceneSwitcher = App.sceneSwitcher;
   public static int sceneFlag = 0;
   public static List<Integer> sceneFlags = new ArrayList<Integer>();
 

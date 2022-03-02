@@ -82,6 +82,10 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     }
   }
 
+  public void enterEmployee(Employee e) throws ParseException {
+    enterEmployee(e.getEmployeeID(), e.getEmployeeType(), e.getFirstName(), e.getLastName(), e.getEmail(), e.getPhoneNum(), e.getAddress(),new SimpleDateFormat("yyyy-MM-dd").parse(e.getStartDate()));
+  }
+
   public void enterEmployee(
       String employeeID,
       String employeeType,
@@ -167,7 +171,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
       throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
-    ClassLoader classLoader = LocationDerbyImpl.class.getClassLoader();
+    ClassLoader classLoader = EmployeeDerbyImpl.class.getClassLoader();
     InputStream is = classLoader.getResourceAsStream(csvFilePath);
     Scanner lineScanner = new Scanner(is);
     Scanner dataScanner;
@@ -293,7 +297,6 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
         addStatement.executeUpdate(str);
       }
     } catch (SQLException | IOException | ParseException e) {
-      System.out.println("Insertion on Employee failed!");
       e.printStackTrace();
     }
   }
