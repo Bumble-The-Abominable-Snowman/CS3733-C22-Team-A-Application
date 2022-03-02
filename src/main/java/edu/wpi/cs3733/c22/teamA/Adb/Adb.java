@@ -141,9 +141,9 @@ public class Adb {
               + "PRIMARY KEY (employee_id))");
 
       try{
-        EmployeeDerbyImpl.inputFromCSV("edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.csv");
+        EmployeeDerbyImpl.inputFromCSV("edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.CSV");
       }catch (Exception e){
-        System.out.println("Employee Insertion failed");
+        System.out.println("Employee Insertion failed" + e);
       }
 
     } catch (SQLException e) {

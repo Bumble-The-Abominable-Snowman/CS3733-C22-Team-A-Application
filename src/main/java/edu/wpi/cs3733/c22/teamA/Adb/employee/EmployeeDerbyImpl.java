@@ -293,7 +293,6 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
         addStatement.executeUpdate(str);
       }
     } catch (SQLException | IOException | ParseException e) {
-      System.out.println("Insertion on Employee failed!");
       e.printStackTrace();
     }
   }
