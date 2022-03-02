@@ -142,15 +142,57 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
       throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
-    Scanner lineScanner = null;
-    if(!Adb.isInitialized) {
       ClassLoader classLoader = EquipmentDerbyImpl.class.getClassLoader();
       InputStream is = classLoader.getResourceAsStream(csvFilePath);
-      lineScanner = new Scanner(is);
-    }else{
-      File file = new File(csvFilePath);
-      lineScanner = new Scanner(file);
+      Scanner lineScanner = new Scanner(is);
+
+    Scanner dataScanner;
+    int dataIndex = 0;
+    int lineIndex = 0;
+    int intData = 0;
+    List<Equipment> list = new ArrayList<>();
+    lineScanner.nextLine();
+
+    while (lineScanner.hasNextLine()) { // Scan CSV line by line
+
+      dataScanner = new Scanner(lineScanner.nextLine());
+      dataScanner.useDelimiter(",");
+      Equipment thisME = new Equipment();
+
+      while (dataScanner.hasNext()) {
+
+        String data = dataScanner.next();
+        if (dataIndex == 0) thisME.setEquipmentID(data);
+        else if (dataIndex == 1) thisME.setEquipmentType(data);
+        else if (dataIndex == 2) {
+          Boolean boolData = Boolean.parseBoolean(data);
+          System.out.println("boolData: " + boolData);
+          thisME.setIsClean(boolData);
+        } else if (dataIndex == 3) thisME.setCurrentLocation(data);
+        else if (dataIndex == 4) {
+          Boolean boolData = Boolean.parseBoolean(data);
+          thisME.setIsAvailable(boolData);
+        } else System.out.println("Invalid data, I broke::" + data);
+        dataIndex++;
+      }
+
+      dataIndex = 0;
+      list.add(thisME);
+      // System.out.println(thisLocation);
+
     }
+
+    lineIndex++;
+    lineScanner.close();
+    return list;
+  }
+
+  public static List<Equipment> readMedicalEquipmentCSVfile(String csvFilePath)
+          throws IOException, ParseException {
+    // System.out.println("beginning to read csv");
+
+    File file = new File(csvFilePath);
+    Scanner lineScanner = new Scanner(file);
 
     Scanner dataScanner;
     int dataIndex = 0;
@@ -256,6 +298,43 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
                 + "', '"
                 + l.getIsAvailable()
                 + "')");
+      }
+    } catch (SQLException | IOException | ParseException e) {
+      System.out.println("Insertion failed!");
+    }
+  }
+
+  public static void inputFromCSVfile(String tableName, String csvFilePath) {
+    // Check MedicalEquipment table
+    try {
+      Statement dropTable = Adb.connection.createStatement();
+
+      dropTable.execute("DELETE FROM MedicalEquipment");
+    } catch (SQLException e) {
+      System.out.println("delete failed");
+    }
+
+    try {
+
+      List<Equipment> List = EquipmentDerbyImpl.readMedicalEquipmentCSVfile(csvFilePath);
+      for(Equipment equip : List){
+        System.out.println("equip IsClean: " + equip.getIsClean());
+      }
+
+      for (Equipment l : List) {
+        Statement addStatement = Adb.connection.createStatement();
+        addStatement.executeUpdate(
+                "INSERT INTO MedicalEquipment( equipment_id, equipment_type, is_clean, current_location, is_available) VALUES('"
+                        + l.getEquipmentID()
+                        + "', '"
+                        + l.getEquipmentType()
+                        + "', '"
+                        + l.getIsClean()
+                        + "', '"
+                        + l.getCurrentLocation()
+                        + "', '"
+                        + l.getIsAvailable()
+                        + "')");
       }
     } catch (SQLException | IOException | ParseException e) {
       System.out.println("Insertion failed!");
