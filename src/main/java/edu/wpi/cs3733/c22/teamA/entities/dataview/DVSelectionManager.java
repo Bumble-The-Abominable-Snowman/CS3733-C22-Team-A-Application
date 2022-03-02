@@ -401,6 +401,8 @@ public class DVSelectionManager {
       employeeDAO.deleteEmployee(((Employee) selected).getStringFields().get("employee_id"));
     } else if(selected instanceof Location){
       locationDAO.deleteLocationNode(((Location) selected).getStringFields().get("node_id"));
+    } else if(selected instanceof Medicine){
+      medicineDAO.deleteMedicine(((Medicine) selected).getMedicineID());
     }
     MasterCtrl.sceneFlags.add(MasterCtrl.sceneFlags.get(MasterCtrl.sceneFlags.size()-1));
     MasterCtrl.sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
