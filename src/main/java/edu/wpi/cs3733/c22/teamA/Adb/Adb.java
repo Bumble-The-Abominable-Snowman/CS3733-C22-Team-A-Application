@@ -60,7 +60,7 @@ public class Adb {
         connection =
             DriverManager.getConnection(
                 String.format(
-                    "jdbc:derby:%s;user=%s;password=%s",
+                    "jdbc:derby:%s;create=true;user=%s;password=%s",
                     pathToDBA, username, password)); // Modify the database name from TowerLocation to Adb
         // for better
         // recognition.
@@ -92,417 +92,420 @@ public class Adb {
     */
 
     // Check if tables exist
-    System.out.println(
-        "-------------------------------------Checking tables-------------------------------------");
-    Statement stmt = null;
 
-    try {
-      stmt = connection.createStatement();
-    } catch (SQLException e) {
-      System.out.println("Error: " + e);
-      return;
-    }
+      System.out.println(
+              "-------------------------------------Checking tables-------------------------------------");
 
-    // Check Locations table.
-    try {
-      stmt.execute(
-          "CREATE TABLE TowerLocations(node_id varchar(25), "
-              + "xcoord int, "
-              + "ycoord int, "
-              + "floor varchar(25), "
-              + "building varchar(25), "
-              + "node_type varchar(25), "
-              + "long_name varchar(100), "
-              + "short_name varchar(50), "
-              + "PRIMARY KEY (node_id))");
+      Statement stmt = null;
 
-      try{
-        LocationDerbyImpl.inputFromCSV("edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
-      }catch (Exception e){
-        System.out.println("TowerLocations Insertion failed");
+      try {
+        stmt = connection.createStatement();
+      } catch (SQLException e) {
+        System.out.println("Error: " + e);
+        return;
       }
 
-    } catch (SQLException e) {
-      System.out.println("Table TowerLocations already exist");
+      // Check Locations table.
+      try {
+        stmt.execute(
+                "CREATE TABLE TowerLocations(node_id varchar(25), "
+                        + "xcoord int, "
+                        + "ycoord int, "
+                        + "floor varchar(25), "
+                        + "building varchar(25), "
+                        + "node_type varchar(25), "
+                        + "long_name varchar(100), "
+                        + "short_name varchar(50), "
+                        + "PRIMARY KEY (node_id))");
+
+        try {
+          LocationDerbyImpl.inputFromCSV("edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
+        } catch (Exception e) {
+          System.out.println("TowerLocations Insertion failed");
+        }
+
+      } catch (SQLException e) {
+        System.out.println("Table TowerLocations already exist");
 //      e.printStackTrace();
-    }
-
-    // Check Employee table.
-    try {
-      stmt.execute(
-          "CREATE TABLE Employee(employee_id varchar(25), "
-              + "employee_type varchar(25), "
-              + "first_name varchar(25), "
-              + "last_name varchar(25), "
-              + "email varchar(25), "
-              + "phone_num varchar(25), "
-              + "address varchar(25), "
-              + "start_date date, "
-              + "PRIMARY KEY (employee_id))");
-
-      try{
-        EmployeeDerbyImpl.inputFromCSV("edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.CSV");
-      }catch (Exception e){
-        System.out.println("Employee Insertion failed" + e);
       }
 
-    } catch (SQLException e) {
-      System.out.println("Table Employee already exist");
+      // Check Employee table.
+      try {
+        stmt.execute(
+                "CREATE TABLE Employee(employee_id varchar(25), "
+                        + "employee_type varchar(25), "
+                        + "first_name varchar(25), "
+                        + "last_name varchar(25), "
+                        + "email varchar(25), "
+                        + "phone_num varchar(25), "
+                        + "address varchar(25), "
+                        + "start_date date, "
+                        + "PRIMARY KEY (employee_id))");
+
+        try {
+          EmployeeDerbyImpl.inputFromCSV("edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.CSV");
+        } catch (Exception e) {
+          System.out.println("Employee Insertion failed" + e);
+        }
+
+
+      } catch (SQLException e) {
+        System.out.println("Table Employee already exist");
 //      e.printStackTrace();
-    }
-
-    // Check MedicalEquipment table.
-    try {
-      stmt.execute(
-          "CREATE TABLE MedicalEquipment(equipment_id varchar(25), "
-              + "equipment_type varchar(25), "
-              + "is_clean varchar(25), "
-              + "current_location varchar(25), "
-              + "is_available varchar(25), "
-              + "PRIMARY KEY (equipment_id),"
-              + "FOREIGN KEY (current_location) REFERENCES TowerLocations(node_id) ON DELETE CASCADE)");
-
-      try{
-        EquipmentDerbyImpl.inputFromCSV(
-                "MedicalEquipment",
-                "edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipment.csv");
-      }catch (Exception e){
-        System.out.println("MedicalEquipment Insertion failed");
       }
 
-    } catch (SQLException e) {
-      System.out.println("Table MedicalEquipment already exist");
-    }
+      // Check MedicalEquipment table.
+      try {
+        stmt.execute(
+                "CREATE TABLE MedicalEquipment(equipment_id varchar(25), "
+                        + "equipment_type varchar(25), "
+                        + "is_clean varchar(25), "
+                        + "current_location varchar(25), "
+                        + "is_available varchar(25), "
+                        + "PRIMARY KEY (equipment_id),"
+                        + "FOREIGN KEY (current_location) REFERENCES TowerLocations(node_id) ON DELETE CASCADE)");
 
-    // Medicine Table
-    try {
-      stmt.execute(
-          ""
-              + "CREATE TABLE Medicine("
-              + "medicine_id varchar(25), "
-              + "generic_name varchar(100), "
-              + "brand_name varchar(100), "
-              + "medicine_class varchar(100), "
-              + "uses varchar(255), "
-              + "warnings varchar(255), "
-              + "side_effects varchar(255), "
-              + "form varchar(50), "
-              + "PRIMARY KEY (medicine_id))");
+        try {
+          EquipmentDerbyImpl.inputFromCSV(
+                  "MedicalEquipment",
+                  "edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipment.csv");
+        } catch (Exception e) {
+          System.out.println("MedicalEquipment Insertion failed");
+        }
 
-      try{
-        MedicineDerbyImpl.importMedicineFromCSV(
-                "edu/wpi/cs3733/c22/teamA/db/CSVs/Medicine.csv");
-      }catch (Exception e){
-        System.out.println("Medicine Insertion failed");
+      } catch (SQLException e) {
+        System.out.println("Table MedicalEquipment already exist");
+      }
+
+      // Medicine Table
+      try {
+        stmt.execute(
+                ""
+                        + "CREATE TABLE Medicine("
+                        + "medicine_id varchar(25), "
+                        + "generic_name varchar(100), "
+                        + "brand_name varchar(100), "
+                        + "medicine_class varchar(100), "
+                        + "uses varchar(255), "
+                        + "warnings varchar(255), "
+                        + "side_effects varchar(255), "
+                        + "form varchar(50), "
+                        + "PRIMARY KEY (medicine_id))");
+
+        try {
+          MedicineDerbyImpl.importMedicineFromCSV(
+                  "edu/wpi/cs3733/c22/teamA/db/CSVs/Medicine.csv");
+        } catch (Exception e) {
+          System.out.println("Medicine Insertion failed");
+        }
+
+
+      } catch (SQLException e) {
+        System.out.println("Error caught trying to create Medicine");
+        System.out.println("Error Code: " + e.getErrorCode());
+        System.out.println("SQL State: " + e.getSQLState());
+        System.out.println(e.getMessage());
+      }
+
+      // MedicineDosages if exists
+      try {
+        stmt.execute(
+                ""
+                        + "CREATE TABLE MedicineDosage("
+                        + "medicine_id varchar(25), "
+                        + "dosage_amount float,"
+                        + "PRIMARY KEY (medicine_id,dosage_amount),"
+                        + "FOREIGN KEY (medicine_id) REFERENCES Medicine (medicine_id))");
+
+        try {
+          MedicineDerbyImpl.importDosagesFromCSV(
+                  "edu/wpi/cs3733/c22/teamA/db/CSVs/MedicineDosage.csv");
+        } catch (Exception e) {
+          System.out.println("MedicineDosage Insertion failed");
+        }
+
+
+      } catch (SQLException e) {
+        System.out.println("Error caught trying to create MedicineDosage");
+        System.out.println("Error Code: " + e.getErrorCode());
+        System.out.println("SQL State: " + e.getSQLState());
+        System.out.println(e.getMessage());
+      }
+
+      // Check ServiceRequestDerbyImpl table. if exists
+      try {
+        stmt.execute(
+                "CREATE TABLE ServiceRequest(request_id varchar(25), "
+                        + "start_location varchar(25), "
+                        + "end_location varchar(25), "
+                        + "employee_requested varchar(25), "
+                        + "employee_assigned varchar(25), "
+                        + "request_time timestamp, "
+                        + "request_status varchar(25), "
+                        + "request_priority varchar(25), "
+                        + "comments varchar(255), "
+                        + "PRIMARY KEY (request_id),"
+                        + "FOREIGN KEY (start_location) REFERENCES TowerLocations(node_id) ON DELETE CASCADE,"
+                        + "FOREIGN KEY (end_location) REFERENCES TowerLocations(node_id) ON DELETE CASCADE,"
+                        + "FOREIGN KEY (employee_requested) REFERENCES Employee(employee_id) ON DELETE CASCADE,"
+                        + "FOREIGN KEY (employee_assigned) REFERENCES Employee(employee_id) ON DELETE CASCADE)");
+
+      } catch (SQLException e) {
+        System.out.println("Table ServiceRequestDerbyImpl already exist");
+      }
+
+      // Check MedicalEquipmentServiceRequest table.
+      try {
+        stmt.execute(
+                "CREATE TABLE MedicalEquipmentServiceRequest(request_id varchar(25), "
+                        + "equipment_id varchar(25), "
+                        + "PRIMARY KEY (request_id), "
+                        + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
+
+        try {
+          // EquipmentSR
+          ServiceRequestDerbyImpl EquipmentRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.EQUIPMENT);
+          EquipmentRequestDerby.populateFromCSV("edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipmentServiceRequest.csv");
+
+        } catch (Exception e) {
+          System.out.println("MedicalEquipmentServiceRequest Insertion failed");
+        }
+
+      } catch (SQLException e) {
+        System.out.println("Table MedicalEquipmentServiceRequest already exist");
+      }
+
+      // Check Food Delivery Table
+      try {
+        stmt.execute(
+                "CREATE TABLE FoodDeliveryServiceRequest(request_id varchar(25), "
+                        + "main_dish varchar(50), "
+                        + "side_dish varchar(50), "
+                        + "beverage varchar(50), "
+                        + "dessert varchar(50), "
+                        + "PRIMARY KEY (request_id), "
+                        + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
+
+        try {
+          ServiceRequestDerbyImpl FoodDeliveryServiceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.FOOD_DELIVERY);
+          FoodDeliveryServiceRequestDerby.populateFromCSV(
+                  "edu/wpi/cs3733/c22/teamA/db/CSVs/FoodDeliveryServiceRequest.csv");
+        } catch (Exception e) {
+          System.out.println("FoodDeliveryServiceRequest Insertion failed");
+        }
+
+      } catch (SQLException e) {
+        System.out.println("Table FoodDeliveryServiceRequest already exist");
+      }
+
+      // Check Language  table.
+      try {
+        stmt.execute(
+                "CREATE TABLE LanguageServiceRequest(request_id varchar(25), "
+                        + "language varchar(25), "
+                        + "PRIMARY KEY (request_id), "
+                        + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
+
+        try {
+          ServiceRequestDerbyImpl LanguageServiceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.LANGUAGE);
+          LanguageServiceRequestDerby.populateFromCSV(
+                  "edu/wpi/cs3733/c22/teamA/db/CSVs/LanguageServiceRequest.csv");
+        } catch (Exception e) {
+          System.out.println("LanguageServiceRequest Insertion failed");
+        }
+
+      } catch (SQLException e) {
+        System.out.println("Table languageservicerequest already exist");
+      }
+
+      //   Check Laundry  table.
+      try {
+        stmt.execute(
+                "CREATE TABLE LaundryServiceRequest(request_id varchar(25), "
+                        + "wash_mode varchar(25), "
+                        + "PRIMARY KEY (request_id), "
+                        + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
+
+        try {
+          ServiceRequestDerbyImpl LaundryServiceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.LAUNDRY);
+          LaundryServiceRequestDerby.populateFromCSV(
+                  "edu/wpi/cs3733/c22/teamA/db/CSVs/LaundryServiceRequest.csv");
+        } catch (Exception e) {
+          System.out.println("LaundryServiceRequest Insertion failed");
+        }
+      } catch (SQLException e) {
+        System.out.println("Table laundryservicerequest already exist");
+      }
+
+      //  Check Religious  table.
+      try {
+        stmt.execute(
+                "CREATE TABLE ReligiousServiceRequest(request_id varchar(25), "
+                        + "religion varchar(25), "
+                        + "PRIMARY KEY (request_id), "
+                        + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
+
+        try {
+          ServiceRequestDerbyImpl religiousSRServiceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.RELIGIOUS);
+          religiousSRServiceRequestDerby.populateFromCSV(
+                  "edu/wpi/cs3733/c22/teamA/db/CSVs/ReligiousServiceRequest.csv");
+        } catch (Exception e) {
+          System.out.println("ReligiousServiceRequest Insertion failed");
+        }
+      } catch (SQLException e) {
+        System.out.println("Table ReligiousServiceRequest already exist");
+      }
+
+      // Check Sanitation  table.
+      try {
+        stmt.execute(
+                "CREATE TABLE SanitationServiceRequest(request_id varchar(25), "
+                        + "sanitation_type varchar(25), "
+                        + "PRIMARY KEY (request_id), "
+                        + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
+
+        try {
+          ServiceRequestDerbyImpl sanitationServiceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
+          sanitationServiceRequestDerby.populateFromCSV(
+                  "edu/wpi/cs3733/c22/teamA/db/CSVs/SanitationServiceRequest.csv");
+        } catch (Exception e) {
+          System.out.println("SanitationServiceRequest Insertion failed");
+        }
+      } catch (SQLException e) {
+        System.out.println("Table SanitationServiceRequest already exist");
+      }
+
+      // check FloralDeliveryServiceRequest
+      try {
+        stmt.execute(
+                "CREATE TABLE FloralDeliveryServiceRequest(request_id varchar(25), "
+                        + "flower varchar(25), "
+                        + "bouquet_type varchar(25), "
+                        + "PRIMARY KEY (request_id), "
+                        + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
+
+        ServiceRequestDerbyImpl FLORAL_DELIVERY = new ServiceRequestDerbyImpl(SR.SRType.FLORAL_DELIVERY);
+        FLORAL_DELIVERY.populateFromCSV(
+                "edu/wpi/cs3733/c22/teamA/db/CSVs/FloralDeliverySR.csv");
+
+      } catch (SQLException e) {
+        System.out.println("Table Floral Delivery Service already exist");
+      } catch (IOException e) {
+        e.printStackTrace();
+      } catch (ParseException e) {
+        e.printStackTrace();
+      } catch (InvocationTargetException e) {
+        e.printStackTrace();
+      } catch (IllegalAccessException e) {
+        e.printStackTrace();
+      }
+
+      // check GiftDeliveryServiceRequest
+      try {
+        stmt.execute(
+                "CREATE TABLE GiftDeliveryServiceRequest(request_id varchar(25), "
+                        + "gift_description varchar(25), "
+                        + "PRIMARY KEY (request_id), "
+                        + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
+
+        ServiceRequestDerbyImpl GIFT_DELIVERY = new ServiceRequestDerbyImpl(SR.SRType.GIFT_DELIVERY);
+        GIFT_DELIVERY.populateFromCSV(
+                "edu/wpi/cs3733/c22/teamA/db/CSVs/GiftDeliverySR.csv");
+
+      } catch (SQLException e) {
+        System.out.println("Table GiftDeliveryServiceRequest already exist");
+      } catch (IOException e) {
+        e.printStackTrace();
+      } catch (ParseException e) {
+        e.printStackTrace();
+      } catch (InvocationTargetException e) {
+        e.printStackTrace();
+      } catch (IllegalAccessException e) {
+        e.printStackTrace();
+      }
+
+      // check MaintenanceServiceRequest
+      try {
+        stmt.execute(
+                "CREATE TABLE MaintenanceServiceRequest(request_id varchar(25), "
+                        + "PRIMARY KEY (request_id), "
+                        + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
+
+      } catch (SQLException e) {
+        System.out.println("Table MaintenanceServiceRequest already exist");
+      }
+
+      // check MedicineDeliveryServiceRequest
+      try {
+        stmt.execute(
+                "CREATE TABLE MedicineDeliveryServiceRequest("
+                        + "request_id varchar(25), "
+                        + "medicine_id varchar(25), "
+                        + "dosage_amount float,"
+                        + "PRIMARY KEY (request_id), "
+                        + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE,"
+                        + "FOREIGN KEY (medicine_id) REFERENCES Medicine(medicine_id) ON DELETE CASCADE)");
+
+        ServiceRequestDerbyImpl MEDICINE_DELIVERY = new ServiceRequestDerbyImpl(SR.SRType.MEDICINE_DELIVERY);
+        MEDICINE_DELIVERY.populateFromCSV(
+                "edu/wpi/cs3733/c22/teamA/db/CSVs/MDSR.csv");
+
+
+      } catch (SQLException e) {
+        System.out.println("Error caught trying to create MedicineDeliveryServiceRequest");
+        System.out.println("Error Code: " + e.getErrorCode());
+        System.out.println("SQL State: " + e.getSQLState());
+        System.out.println(e.getMessage());
+        //System.out.println("Table MedicineDeliveryServiceRequest already exist");
+      } catch (IOException e) {
+        e.printStackTrace();
+      } catch (ParseException e) {
+        e.printStackTrace();
+      } catch (InvocationTargetException e) {
+        e.printStackTrace();
+      } catch (IllegalAccessException e) {
+        e.printStackTrace();
+      }
+
+      // check SecurityServiceRequest
+      try {
+        stmt.execute(
+                "CREATE TABLE SecurityServiceRequest(request_id varchar(25), "
+                        + "PRIMARY KEY (request_id), "
+                        + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
+
+
+        ServiceRequestDerbyImpl SECURITY = new ServiceRequestDerbyImpl(SR.SRType.SECURITY);
+        SECURITY.populateFromCSV(
+                "edu/wpi/cs3733/c22/teamA/db/CSVs/SSR.csv");
+
+      } catch (SQLException e) {
+        System.out.println("Table SecurityServiceRequest already exist");
+
+      } catch (IOException e) {
+        e.printStackTrace();
+      } catch (ParseException e) {
+        e.printStackTrace();
+      } catch (InvocationTargetException e) {
+        e.printStackTrace();
+      } catch (IllegalAccessException e) {
+        e.printStackTrace();
+      }
+
+      // check ConsultationServiceRequest
+      try {
+        stmt.execute(
+                "CREATE TABLE ConsultationServiceRequest(request_id varchar(25), "
+                        + "PRIMARY KEY (request_id), "
+                        + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
+
+      } catch (SQLException e) {
+        System.out.println("Table ConsultationServiceRequest already exist");
       }
 
 
-    } catch (SQLException e) {
-      System.out.println("Error caught trying to create Medicine");
-      System.out.println("Error Code: " + e.getErrorCode());
-      System.out.println("SQL State: " + e.getSQLState());
-      System.out.println(e.getMessage());
-    }
-
-    // MedicineDosages if exists
-    try {
-      stmt.execute(
-          ""
-              + "CREATE TABLE MedicineDosage("
-              + "medicine_id varchar(25), "
-              + "dosage_amount float,"
-              + "PRIMARY KEY (medicine_id,dosage_amount),"
-              + "FOREIGN KEY (medicine_id) REFERENCES Medicine (medicine_id))");
-
-      try{
-        MedicineDerbyImpl.importDosagesFromCSV(
-                "edu/wpi/cs3733/c22/teamA/db/CSVs/MedicineDosage.csv");
-      }catch (Exception e){
-        System.out.println("MedicineDosage Insertion failed");
-      }
-
-
-    } catch (SQLException e) {
-      System.out.println("Error caught trying to create MedicineDosage");
-      System.out.println("Error Code: " + e.getErrorCode());
-      System.out.println("SQL State: " + e.getSQLState());
-      System.out.println(e.getMessage());
-    }
-
-    // Check ServiceRequestDerbyImpl table. if exists
-    try {
-      stmt.execute(
-          "CREATE TABLE ServiceRequest(request_id varchar(25), "
-              + "start_location varchar(25), "
-              + "end_location varchar(25), "
-              + "employee_requested varchar(25), "
-              + "employee_assigned varchar(25), "
-              + "request_time timestamp, "
-              + "request_status varchar(25), "
-              + "request_priority varchar(25), "
-              + "comments varchar(255), "
-              + "PRIMARY KEY (request_id),"
-              + "FOREIGN KEY (start_location) REFERENCES TowerLocations(node_id) ON DELETE CASCADE,"
-              + "FOREIGN KEY (end_location) REFERENCES TowerLocations(node_id) ON DELETE CASCADE,"
-              + "FOREIGN KEY (employee_requested) REFERENCES Employee(employee_id) ON DELETE CASCADE,"
-              + "FOREIGN KEY (employee_assigned) REFERENCES Employee(employee_id) ON DELETE CASCADE)");
-
-    } catch (SQLException e) {
-      System.out.println("Table ServiceRequestDerbyImpl already exist");
-    }
-
-    // Check MedicalEquipmentServiceRequest table.
-    try {
-      stmt.execute(
-          "CREATE TABLE MedicalEquipmentServiceRequest(request_id varchar(25), "
-              + "equipment_id varchar(25), "
-              + "PRIMARY KEY (request_id), "
-              + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
-
-      try{
-        // EquipmentSR
-        ServiceRequestDerbyImpl EquipmentRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.EQUIPMENT);
-        EquipmentRequestDerby.populateFromCSV("edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipmentServiceRequest.csv");
-
-      }catch (Exception e){
-        System.out.println("MedicalEquipmentServiceRequest Insertion failed");
-      }
-
-    } catch (SQLException e) {
-      System.out.println("Table MedicalEquipmentServiceRequest already exist");
-    }
-
-    // Check Food Delivery Table
-    try {
-      stmt.execute(
-          "CREATE TABLE FoodDeliveryServiceRequest(request_id varchar(25), "
-              + "main_dish varchar(50), "
-              + "side_dish varchar(50), "
-              + "beverage varchar(50), "
-              + "dessert varchar(50), "
-              + "PRIMARY KEY (request_id), "
-              + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
-
-      try{
-        ServiceRequestDerbyImpl FoodDeliveryServiceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.FOOD_DELIVERY);
-        FoodDeliveryServiceRequestDerby.populateFromCSV(
-                "edu/wpi/cs3733/c22/teamA/db/CSVs/FoodDeliveryServiceRequest.csv");
-      }catch (Exception e){
-        System.out.println("FoodDeliveryServiceRequest Insertion failed");
-      }
-
-    } catch (SQLException e) {
-      System.out.println("Table FoodDeliveryServiceRequest already exist");
-    }
-
-    // Check Language  table.
-    try {
-      stmt.execute(
-          "CREATE TABLE LanguageServiceRequest(request_id varchar(25), "
-              + "language varchar(25), "
-              + "PRIMARY KEY (request_id), "
-              + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
-
-      try{
-        ServiceRequestDerbyImpl LanguageServiceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.LANGUAGE);
-        LanguageServiceRequestDerby.populateFromCSV(
-                "edu/wpi/cs3733/c22/teamA/db/CSVs/LanguageServiceRequest.csv");
-      }catch (Exception e){
-        System.out.println("LanguageServiceRequest Insertion failed");
-      }
-
-    } catch (SQLException e) {
-      System.out.println("Table languageservicerequest already exist");
-    }
-
-    //   Check Laundry  table.
-    try {
-      stmt.execute(
-          "CREATE TABLE LaundryServiceRequest(request_id varchar(25), "
-              + "wash_mode varchar(25), "
-              + "PRIMARY KEY (request_id), "
-              + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
-
-      try{
-        ServiceRequestDerbyImpl LaundryServiceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.LAUNDRY);
-        LaundryServiceRequestDerby.populateFromCSV(
-                "edu/wpi/cs3733/c22/teamA/db/CSVs/LaundryServiceRequest.csv");
-      }catch (Exception e){
-        System.out.println("LaundryServiceRequest Insertion failed");
-      }
-    } catch (SQLException e) {
-      System.out.println("Table laundryservicerequest already exist");
-    }
-
-    //  Check Religious  table.
-    try {
-      stmt.execute(
-          "CREATE TABLE ReligiousServiceRequest(request_id varchar(25), "
-              + "religion varchar(25), "
-              + "PRIMARY KEY (request_id), "
-              + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
-
-      try{
-        ServiceRequestDerbyImpl religiousSRServiceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.RELIGIOUS);
-        religiousSRServiceRequestDerby.populateFromCSV(
-                "edu/wpi/cs3733/c22/teamA/db/CSVs/ReligiousServiceRequest.csv");
-      }catch (Exception e){
-        System.out.println("ReligiousServiceRequest Insertion failed");
-      }
-    } catch (SQLException e) {
-      System.out.println("Table ReligiousServiceRequest already exist");
-    }
-
-    // Check Sanitation  table.
-    try {
-      stmt.execute(
-          "CREATE TABLE SanitationServiceRequest(request_id varchar(25), "
-              + "sanitation_type varchar(25), "
-              + "PRIMARY KEY (request_id), "
-              + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
-
-      try{
-        ServiceRequestDerbyImpl sanitationServiceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
-        sanitationServiceRequestDerby.populateFromCSV(
-                "edu/wpi/cs3733/c22/teamA/db/CSVs/SanitationServiceRequest.csv");
-      }catch (Exception e){
-        System.out.println("SanitationServiceRequest Insertion failed");
-      }
-    } catch (SQLException e) {
-      System.out.println("Table SanitationServiceRequest already exist");
-    }
-
-    // check FloralDeliveryServiceRequest
-    try {
-      stmt.execute(
-          "CREATE TABLE FloralDeliveryServiceRequest(request_id varchar(25), "
-              + "flower varchar(25), "
-              + "bouquet_type varchar(25), "
-              + "PRIMARY KEY (request_id), "
-              + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
-
-      ServiceRequestDerbyImpl FLORAL_DELIVERY = new ServiceRequestDerbyImpl(SR.SRType.FLORAL_DELIVERY);
-      FLORAL_DELIVERY.populateFromCSV(
-              "edu/wpi/cs3733/c22/teamA/db/CSVs/FloralDeliverySR.csv");
-
-    } catch (SQLException e) {
-      System.out.println("Table Floral Delivery Service already exist");
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (ParseException e) {
-      e.printStackTrace();
-    } catch (InvocationTargetException e) {
-      e.printStackTrace();
-    } catch (IllegalAccessException e) {
-      e.printStackTrace();
-    }
-
-    // check GiftDeliveryServiceRequest
-    try {
-      stmt.execute(
-          "CREATE TABLE GiftDeliveryServiceRequest(request_id varchar(25), "
-              + "gift_description varchar(25), "
-              + "PRIMARY KEY (request_id), "
-              + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
-
-      ServiceRequestDerbyImpl GIFT_DELIVERY = new ServiceRequestDerbyImpl(SR.SRType.GIFT_DELIVERY);
-      GIFT_DELIVERY.populateFromCSV(
-              "edu/wpi/cs3733/c22/teamA/db/CSVs/GiftDeliverySR.csv");
-
-    } catch (SQLException e) {
-      System.out.println("Table GiftDeliveryServiceRequest already exist");
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (ParseException e) {
-      e.printStackTrace();
-    } catch (InvocationTargetException e) {
-      e.printStackTrace();
-    } catch (IllegalAccessException e) {
-      e.printStackTrace();
-    }
-
-    // check MaintenanceServiceRequest
-    try {
-      stmt.execute(
-          "CREATE TABLE MaintenanceServiceRequest(request_id varchar(25), "
-              + "PRIMARY KEY (request_id), "
-              + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
-
-    } catch (SQLException e) {
-      System.out.println("Table MaintenanceServiceRequest already exist");
-    }
-
-    // check MedicineDeliveryServiceRequest
-    try {
-      stmt.execute(
-          "CREATE TABLE MedicineDeliveryServiceRequest("
-              + "request_id varchar(25), "
-              + "medicine_id varchar(25), "
-              + "dosage_amount float,"
-              + "PRIMARY KEY (request_id), "
-              + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE,"
-              + "FOREIGN KEY (medicine_id) REFERENCES Medicine(medicine_id) ON DELETE CASCADE)");
-
-      ServiceRequestDerbyImpl MEDICINE_DELIVERY = new ServiceRequestDerbyImpl(SR.SRType.MEDICINE_DELIVERY);
-      MEDICINE_DELIVERY.populateFromCSV(
-              "edu/wpi/cs3733/c22/teamA/db/CSVs/MDSR.csv");
-
-
-    } catch (SQLException e) {
-      System.out.println("Error caught trying to create MedicineDeliveryServiceRequest");
-      System.out.println("Error Code: " + e.getErrorCode());
-      System.out.println("SQL State: " + e.getSQLState());
-      System.out.println(e.getMessage());
-      //System.out.println("Table MedicineDeliveryServiceRequest already exist");
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (ParseException e) {
-      e.printStackTrace();
-    } catch (InvocationTargetException e) {
-      e.printStackTrace();
-    } catch (IllegalAccessException e) {
-      e.printStackTrace();
-    }
-
-    // check SecurityServiceRequest
-    try {
-      stmt.execute(
-          "CREATE TABLE SecurityServiceRequest(request_id varchar(25), "
-              + "PRIMARY KEY (request_id), "
-              + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
-
-
-      ServiceRequestDerbyImpl SECURITY = new ServiceRequestDerbyImpl(SR.SRType.SECURITY);
-      SECURITY.populateFromCSV(
-              "edu/wpi/cs3733/c22/teamA/db/CSVs/SSR.csv");
-
-    } catch (SQLException e) {
-      System.out.println("Table SecurityServiceRequest already exist");
-
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (ParseException e) {
-      e.printStackTrace();
-    } catch (InvocationTargetException e) {
-      e.printStackTrace();
-    } catch (IllegalAccessException e) {
-      e.printStackTrace();
-    }
-
-    // check ConsultationServiceRequest
-    try {
-      stmt.execute(
-              "CREATE TABLE ConsultationServiceRequest(request_id varchar(25), "
-                      + "PRIMARY KEY (request_id), "
-                      + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
-
-    } catch (SQLException e) {
-      System.out.println("Table ConsultationServiceRequest already exist");
-    }
-
-
-    System.out.println(
-        "-------------------------------------Tables checked-------------------------------------");
+      System.out.println(
+              "-------------------------------------Tables checked-------------------------------------");
 
     System.out.println("Check isInitialized: " + isInitialized);
   }

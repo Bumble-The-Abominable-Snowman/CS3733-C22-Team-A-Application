@@ -1,6 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.auth0.Auth0Login;
@@ -8,7 +9,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class LoginCtrl {
 
@@ -65,26 +70,26 @@ public class LoginCtrl {
 
   @FXML
   private void logIn() {
-      Auth0Login.login();
-//      Adb.username = usernameBox.getText();
-//      Adb.password = passwordBox.getText();
-//
-//    try {
-//        Adb.initialConnection("EmbeddedDriver");
-//        if(!Adb.isInitialized) {
-//            try {
-//                DriverManager.getConnection(String.format("jdbc:derby:%s;user=%s;shutdown=true", Adb.pathToDBA, Adb.username));
-//            } catch (SQLException e) {
-//                System.out.println(e);
-//            }
-//            Adb.initialConnection("EmbeddedDriver");
-//        }
-//        sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
-//    } catch (Exception e) {
-//        warningText.setFill(Color.RED);
-//
-//        passwordBox.setText("");
-//    }
+      //Auth0Login.login();
+      Adb.username = usernameBox.getText();
+      Adb.password = passwordBox.getText();
+
+    try {
+        Adb.initialConnection("EmbeddedDriver");
+        if(!Adb.isInitialized) {
+            try {
+                DriverManager.getConnection(String.format("jdbc:derby:%s;user=%s;shutdown=true", Adb.pathToDBA, Adb.username));
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+            Adb.initialConnection("EmbeddedDriver");
+        }
+        sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
+    } catch (Exception e) {
+        warningText.setFill(Color.RED);
+
+        passwordBox.setText("");
+    }
   }
 
   @FXML

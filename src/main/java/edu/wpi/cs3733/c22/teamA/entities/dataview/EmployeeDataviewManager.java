@@ -42,16 +42,11 @@ public class EmployeeDataviewManager {
 	}
 
 	public void delete() throws SQLException {
-		try{
-			EmployeeDAO employeeDAO = new EmployeeDerbyImpl();
-			employeeDAO.deleteEmployee(
-					table.getSelectionModel().getSelectedItem().getValue().employee.getEmployeeID());
-			dataViewCtrl.titleLabel.setText("Employees");
-			initializeEmployeeTable();
-		}
-		catch (NullPointerException aE){
-
-		}
+		EmployeeDAO employeeDAO = new EmployeeDerbyImpl();
+		employeeDAO.deleteEmployee(
+				table.getSelectionModel().getSelectedItem().getValue().employee.getStringFields().get("employee_id"));
+		dataViewCtrl.titleLabel.setText("Employees");
+		initializeEmployeeTable();
 	}
 
 	public void initializeEmployeeTable() {
@@ -76,43 +71,43 @@ public class EmployeeDataviewManager {
 				.get(0)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().employee.getEmployeeID()));
+								new SimpleStringProperty(param.getValue().getValue().employee.getStringFields().get("employee_id")));
 		employeeColumns
 				.get(1)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().employee.getEmployeeType()));
+								new SimpleStringProperty(param.getValue().getValue().employee.getStringFields().get("employee_type")));
 		employeeColumns
 				.get(2)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().employee.getFirstName()));
+								new SimpleStringProperty(param.getValue().getValue().employee.getStringFields().get("first_name")));
 		employeeColumns
 				.get(3)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().employee.getLastName()));
+								new SimpleStringProperty(param.getValue().getValue().employee.getStringFields().get("last_name")));
 		employeeColumns
 				.get(4)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().employee.getEmail()));
+								new SimpleStringProperty(param.getValue().getValue().employee.getStringFields().get("email")));
 		employeeColumns
 				.get(5)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().employee.getPhoneNum()));
+								new SimpleStringProperty(param.getValue().getValue().employee.getStringFields().get("phone_num")));
 		employeeColumns
 				.get(6)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().employee.getAddress()));
+								new SimpleStringProperty(param.getValue().getValue().employee.getStringFields().get("address")));
 		employeeColumns
 				.get(7)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
 								new SimpleStringProperty(
-										param.getValue().getValue().employee.getStartDate().toString()));
+										param.getValue().getValue().employee.getStringFields().get("start_date")));
 
 		// Grab location / equipment from database, these are dummies
 		EmployeeDAO employeeBase = new EmployeeDerbyImpl();
@@ -149,43 +144,43 @@ public class EmployeeDataviewManager {
 				.get(0)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().employee.getEmployeeID()));
+								new SimpleStringProperty(param.getValue().getValue().employee.getStringFields().get("employee_id")));
 		employeeColumns
 				.get(1)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().employee.getEmployeeType()));
+								new SimpleStringProperty(param.getValue().getValue().employee.getStringFields().get("employee_type")));
 		employeeColumns
 				.get(2)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().employee.getFirstName()));
+								new SimpleStringProperty(param.getValue().getValue().employee.getStringFields().get("first_name")));
 		employeeColumns
 				.get(3)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().employee.getLastName()));
+								new SimpleStringProperty(param.getValue().getValue().employee.getStringFields().get("last_name")));
 		employeeColumns
 				.get(4)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().employee.getEmail()));
+								new SimpleStringProperty(param.getValue().getValue().employee.getStringFields().get("email")));
 		employeeColumns
 				.get(5)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().employee.getPhoneNum()));
+								new SimpleStringProperty(param.getValue().getValue().employee.getStringFields().get("phone_num")));
 		employeeColumns
 				.get(6)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().employee.getAddress()));
+								new SimpleStringProperty(param.getValue().getValue().employee.getStringFields().get("address")));
 		employeeColumns
 				.get(7)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
 								new SimpleStringProperty(
-										param.getValue().getValue().employee.getStartDate().toString()));
+										param.getValue().getValue().employee.getStringFields().get("start_date").toString()));
 
 
 		// Grab location / equipment from database, these are dummies
@@ -262,8 +257,7 @@ public class EmployeeDataviewManager {
 
 								EmployeeDerbyImpl employeeDerby = new EmployeeDerbyImpl();
 								try {
-									employeeDerby.updateEmployee(
-											emp.getEmployeeID(), field.getValue(), value.getText());
+									employeeDerby.updateEmployee(emp);
 									updateButton.setTextFill(Color.GREEN);
 									this.initializeEmployeeTable();
 								} catch (Exception ex) {

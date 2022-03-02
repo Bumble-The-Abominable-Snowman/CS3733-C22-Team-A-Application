@@ -4,25 +4,29 @@ import com.jfoenix.controls.JFXButton;
 import edu.wpi.cs3733.c22.teamA.App;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
+import javafx.scene.paint.Color;
+
+import java.io.IOException;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class AboutCtrl extends MasterCtrl {
 
+    /*
+    @FXML private JFXButton nextButton;
     @FXML private ImageView bumbleBlinkHead;
     @FXML private Label bubble1Text;
     @FXML private Label bubble2Text;
     @FXML private JFXButton previousButton;
-    @FXML private JFXButton nextButton;
     @FXML private JFXButton previous1Button;
-    @FXML private JFXButton next1Button;
+    @FXML private JFXButton next1Button; */
 
     @FXML
     private void initialize() {
 
         configure();
-
+/*
         double previousTextSize = previousButton.getFont().getSize();
         double nextTextSize = nextButton.getFont().getSize();
         double previous1TextSize = previous1Button.getFont().getSize();
@@ -126,7 +130,43 @@ public class AboutCtrl extends MasterCtrl {
         previous1Button.setVisible(false);
         next1Button.setVisible(true);
         bubble1Text.setVisible(true);
-        bubble2Text.setVisible(false);
+        bubble2Text.setVisible(false); */
+    }
+
+    @FXML
+    private void help() throws IOException {
+
+        if (helpState != 0) {
+            nextButton.setVisible(false);
+            helpText.setVisible(false);
+            drawer.setEffect(null);
+            helpButton.setEffect(null);
+            helpState = 0;
+        }
+        else {
+            borderGlow.setColor(Color.GOLD);
+            borderGlow.setOffsetX(0f);
+            borderGlow.setOffsetY(0f);
+            borderGlow.setHeight(45);
+            nextButton.setVisible(true);
+            helpText.setVisible(true);
+            helpText.setText("Select a menu option to use the application.  This menu is present on every page and is the primary navigation tool you will use.");
+            drawer.setEffect(borderGlow);
+            helpState = 1;
+        }
+
+    }
+
+    @FXML
+    private void next() throws IOException {
+
+        if (helpState == 1) {
+            drawer.setEffect(null);
+            helpText.setText("You can always click the help button to exit help at any time");
+            helpButton.setEffect(borderGlow);
+            helpState = 2;
+        }
+
     }
 
 }

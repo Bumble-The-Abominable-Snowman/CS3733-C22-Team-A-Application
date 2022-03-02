@@ -21,6 +21,7 @@ javafx {
 }
 
 dependencies {
+    implementation 'org.testng:testng:7.1.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     implementation(
             'com.jfoenix:jfoenix:9.0.10',
@@ -50,12 +51,11 @@ dependencies {
 //            files('C:\\Users\\Brybl\\Desktop\\CS3733\\CS3733-C22-Team-A-Application\\build\\libs\\CS3733-C22-Team-A-API.jar')
 
 
-             //files('C:\\Users\\Brendan\\IdeaProjects\\CS3733-C22-Team-A-API\\build\\libs\\CS3733-C22-Team-A-API.jar')
     )
 
     testCompile(
             "org.testfx:testfx-core:4.0.16-alpha",
-            'org.junit.jupiter:junit-jupiter:5.6.0',
+            'org.junit.jupiter:junit-jupiter:5.8.2',
             'org.testfx:testfx-junit5:4.0.16-alpha',
     )
     compile 'javax.servlet:javax.servlet-api:3.1.0'

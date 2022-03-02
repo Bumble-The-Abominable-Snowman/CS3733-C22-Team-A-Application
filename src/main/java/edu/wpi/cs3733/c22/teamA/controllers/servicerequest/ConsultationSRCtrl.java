@@ -20,56 +20,37 @@ import javafx.scene.control.*;
 
 public class ConsultationSRCtrl extends SRCtrl {
   @FXML private Label titleLabel;
-  @FXML private Label mapLabel;
-  @FXML private Label reasonLabel;
-  @FXML private Label employeeLabel;
-  @FXML private Label locationLabel;
   @FXML private JFXComboBox<String> reasonChoice;
-  @FXML private JFXComboBox<String> toLocationChoice;
+  @FXML private JFXComboBox<String> locationChoice;
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
+
+  private double stageWidth;
+  double commentsTextSize;
+  double titleTextSize;
+  double locationChoiceSize;
+  double reasonChoiceSize;
+  double employeeChoiceSize;
 
   @FXML
   protected void initialize() throws ParseException {
     super.initialize();
+
     sceneID = SceneSwitcher.SCENES.CONSULTATION_SR;
 
-    // double reasonTextSize = reasonChoice.getFont().getSize();
-    // double toLocationTextSize = toLocationChoice.getFont().getSize();
-    // double employeeChoiceTextSize = employeeChoice.getFont().getSize();
+    configure();
 
-    double commentsTextSize = commentsBox.getFont().getSize();
-    double titleTextSize = titleLabel.getFont().getSize();
-    double mapTextSize = mapLabel.getFont().getSize();
-    double reasonTextSize = reasonLabel.getFont().getSize();
-    double employeeTextSize = employeeLabel.getFont().getSize();
-    double locationTextSize = locationLabel.getFont().getSize();
+    stageWidth = App.getStage().getWidth();
+
+    commentsTextSize = commentsBox.getFont().getSize();
+    titleTextSize = titleLabel.getFont().getSize();
+    //locationChoiceSize = locationChoice.getWidth();
+    //reasonChoiceSize = reasonChoice.getWidth();
+    //employeeChoiceSize = employeeChoice.getWidth();
 
     App.getStage()
         .widthProperty()
-        .addListener(
-            (obs, oldVal, newVal) -> {
-              commentsBox.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * commentsTextSize)
-                      + "pt;");
-              titleLabel.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * titleTextSize) + "pt;");
-              mapLabel.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * mapTextSize) + "pt;");
-              reasonLabel.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * reasonTextSize)
-                      + "pt;");
-              employeeLabel.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * employeeTextSize)
-                      + "pt;");
-              locationLabel.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * locationTextSize)
-                      + "pt;");
-            });
+        .addListener((obs, oldVal, newVal) -> {updateSize();});
 
     commentsBox.setWrapText(true);
 
@@ -81,9 +62,19 @@ public class ConsultationSRCtrl extends SRCtrl {
 
     this.populateEmployeeAndLocationList();
     this.populateEmployeeComboBox(this.employeeChoice);
-    this.populateLocationComboBox(this.toLocationChoice);
-    new AutoCompleteBox(toLocationChoice);
+    this.populateLocationComboBox(this.locationChoice);
+    new AutoCompleteBox(locationChoice);
     new AutoCompleteBox(employeeChoice);
+
+  }
+
+  @FXML
+  private void updateSize() {
+
+    stageWidth = App.getStage().getWidth();
+    commentsBox.setStyle("-fx-font-size: " + ((stageWidth / 1000) * commentsTextSize) + "pt;");
+    titleLabel.setStyle("-fx-font-size: " + ((stageWidth / 1000) * titleTextSize) + "pt;");
+
   }
 
   @FXML
@@ -91,13 +82,13 @@ public class ConsultationSRCtrl extends SRCtrl {
       throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
 
     if (!reasonChoice.getSelectionModel().getSelectedItem().equals("Reason")
-        && toLocationChoice.getSelectionModel().getSelectedItem() != null
+        && locationChoice.getSelectionModel().getSelectedItem() != null
         && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
 
       int employeeIndex = this.employeeChoice.getSelectionModel().getSelectedIndex();
       Employee employeeSelected = this.employeeList.get(employeeIndex);
 
-      int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
+      int locationIndex = this.locationChoice.getSelectionModel().getSelectedIndex();
       Location toLocationSelected = this.locationList.get(locationIndex);
 
       //ConsultationSR consultationSR =
