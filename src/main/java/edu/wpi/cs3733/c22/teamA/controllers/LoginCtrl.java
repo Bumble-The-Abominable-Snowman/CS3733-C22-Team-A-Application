@@ -80,8 +80,8 @@ public class LoginCtrl {
             } catch (SQLException e) {
                 System.out.println(e);
             }
-            Adb.initialConnection("EmbeddedDriver");
         }
+        Adb.initialConnection("EmbeddedDriver");
         sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
     } catch (Exception e) {
         warningText.setFill(Color.RED);
