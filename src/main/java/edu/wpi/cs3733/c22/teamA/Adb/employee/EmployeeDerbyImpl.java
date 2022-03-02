@@ -186,6 +186,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     int intData = 0;
     List<Employee> list = new ArrayList<>();
     lineScanner.nextLine();
+    SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     while (lineScanner.hasNextLine()) { // Scan CSV line by line
 
@@ -343,7 +344,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
                 + "', '"
                 + employee.getStringFields().get("address")
                 + "', '"
-                + originalFormat.parse(employee.getStringFields().get("start_date"))
+                + employee.getStringFields().get("start_date")
                 + "')";
 
         System.out.println(str);

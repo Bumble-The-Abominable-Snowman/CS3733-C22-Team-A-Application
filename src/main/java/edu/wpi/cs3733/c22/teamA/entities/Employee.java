@@ -50,6 +50,7 @@ public class Employee {
   public void setField(String key, Object value) {
     this.fields.put(key, value);
   }
+  SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
 
   public List<String> getListForm() {
     return List.of(getStringFields().get("employee_id"),
@@ -64,9 +65,7 @@ public class Employee {
 
   public void setFieldByString(String key, String value) throws ParseException {
     if (Objects.equals(key, "start_date")) {
-      SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
-      Date startDateStr = originalFormat.parse(value);
-      this.fields.put(key, startDateStr);
+      this.fields.put(key, originalFormat.format(Timestamp.valueOf(value + " 00:00:00")));
     } else {
       this.fields.put(key, value);
     }
