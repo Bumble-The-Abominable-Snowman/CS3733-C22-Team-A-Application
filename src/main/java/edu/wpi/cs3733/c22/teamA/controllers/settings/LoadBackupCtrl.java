@@ -156,13 +156,13 @@ public class LoadBackupCtrl extends MasterCtrl {
 
         switch (TypeCSV.getSelectionModel().getSelectedItem().toString()) {
           case "TowerLocations":
-            LocationDerbyImpl.inputFromCSV(lastSelectedFile);
+            LocationDerbyImpl.inputFromCSVfile(lastSelectedFile);
             break;
           case "Employee":
-            EmployeeDerbyImpl.inputFromCSV( lastSelectedFile);
+            EmployeeDerbyImpl.inputFromCSVfile( lastSelectedFile);
             break;
           case "MedicalEquipment":
-            EquipmentDerbyImpl.inputFromCSV("MedicalEquipment", lastSelectedFile);
+            EquipmentDerbyImpl.inputFromCSVfile("MedicalEquipment", lastSelectedFile);
             break;
           case "Medicine":
             MedicineDerbyImpl.importMedicineFromCSV(lastSelectedFile);
@@ -172,47 +172,47 @@ public class LoadBackupCtrl extends MasterCtrl {
             break;
           case "MedicalEquipmentServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyEq = new ServiceRequestDerbyImpl(SR.SRType.EQUIPMENT);
-            serviceRequestDerbyEq.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbyEq.populateFromCSVfile(lastSelectedFile);
             break;
           case "FloralDeliveryServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyFloral = new ServiceRequestDerbyImpl(SR.SRType.FLORAL_DELIVERY);
-            serviceRequestDerbyFloral.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbyFloral.populateFromCSVfile(lastSelectedFile);
             break;
           case "FoodDeliveryServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyFood = new ServiceRequestDerbyImpl(SR.SRType.FOOD_DELIVERY);
-            serviceRequestDerbyFood.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbyFood.populateFromCSVfile(lastSelectedFile);
             break;
           case "GiftDeliveryServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyGift = new ServiceRequestDerbyImpl(SR.SRType.GIFT_DELIVERY);
-            serviceRequestDerbyGift.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbyGift.populateFromCSVfile(lastSelectedFile);
             break;
           case "LanguageServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyLanguage = new ServiceRequestDerbyImpl(SR.SRType.LANGUAGE);
-            serviceRequestDerbyLanguage.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbyLanguage.populateFromCSVfile(lastSelectedFile);
             break;
           case "LaundryServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyLaundry = new ServiceRequestDerbyImpl(SR.SRType.LAUNDRY);
-            serviceRequestDerbyLaundry.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbyLaundry.populateFromCSVfile(lastSelectedFile);
             break;
           case "MaintenanceServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyMaintenance = new ServiceRequestDerbyImpl(SR.SRType.MAINTENANCE);
-            serviceRequestDerbyMaintenance.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbyMaintenance.populateFromCSVfile(lastSelectedFile);
             break;
           case "MedicineDeliveryServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyMedicine = new ServiceRequestDerbyImpl(SR.SRType.MEDICINE_DELIVERY);
-            serviceRequestDerbyMedicine.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbyMedicine.populateFromCSVfile(lastSelectedFile);
             break;
           case "ReligiousServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyReligious = new ServiceRequestDerbyImpl(SR.SRType.RELIGIOUS);
-            serviceRequestDerbyReligious.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbyReligious.populateFromCSVfile(lastSelectedFile);
             break;
           case "SanitationServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbySanitation = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
-            serviceRequestDerbySanitation.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbySanitation.populateFromCSVfile(lastSelectedFile);
             break;
           case "SecurityServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbySecurity = new ServiceRequestDerbyImpl(SR.SRType.SECURITY);
-            serviceRequestDerbySecurity.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbySecurity.populateFromCSVfile(lastSelectedFile);
             break;
         }
         statusText.setText("Success!");

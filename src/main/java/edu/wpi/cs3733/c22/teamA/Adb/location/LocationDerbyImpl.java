@@ -194,15 +194,57 @@ public class LocationDerbyImpl implements LocationDAO {
   public static List<Location> readLocationCSV(String csvFilePath) throws IOException {
     // System.out.println("beginning to read csv");
 
-    Scanner lineScanner = null;
-    if(!Adb.isInitialized) {
+
       ClassLoader classLoader = LocationDerbyImpl.class.getClassLoader();
       InputStream is = classLoader.getResourceAsStream(csvFilePath);
-      lineScanner = new Scanner(is);
-    }else{
-      File file = new File(csvFilePath);
-      lineScanner = new Scanner(file);
+      Scanner lineScanner = new Scanner(is);
+
+    Scanner dataScanner;
+    int dataIndex = 0;
+    int lineIndex = 0;
+    int intData = 0;
+    List<Location> list = new ArrayList<>();
+    lineScanner.nextLine();
+
+    while (lineScanner.hasNextLine()) { // Scan CSV line by line
+
+      dataScanner = new Scanner(lineScanner.nextLine());
+      dataScanner.useDelimiter(",");
+      Location thisLocation = new Location();
+
+      while (dataScanner.hasNext()) {
+
+        String data = dataScanner.next();
+        if (dataIndex == 0) thisLocation.setNodeID(data);
+        else if (dataIndex == 1) {
+          intData = Integer.parseInt(data);
+          thisLocation.setXCoord(intData);
+        } else if (dataIndex == 2) {
+          intData = Integer.parseInt(data);
+          thisLocation.setYCoord(intData);
+        } else if (dataIndex == 3) thisLocation.setFloor(data);
+        else if (dataIndex == 4) thisLocation.setBuilding(data);
+        else if (dataIndex == 5) thisLocation.setNodeType(data);
+        else if (dataIndex == 6) thisLocation.setLongName(data);
+        else if (dataIndex == 7) thisLocation.setShortName(data);
+        else System.out.println("Invalid data, I broke::" + data);
+        dataIndex++;
+      }
+
+      dataIndex = 0;
+      list.add(thisLocation);
     }
+
+    lineIndex++;
+    lineScanner.close();
+    return list;
+  }
+
+  public static List<Location> readLocationCSVfile(String csvFilePath) throws IOException {
+    // System.out.println("beginning to read csv");
+
+    File file = new File(csvFilePath);
+    Scanner lineScanner = new Scanner(file);
 
     Scanner dataScanner;
     int dataIndex = 0;
@@ -319,6 +361,47 @@ public class LocationDerbyImpl implements LocationDAO {
     }
     return;
   }
+
+  // Input from CSV
+  public static void inputFromCSVfile(String csvFilePath) {
+    try {
+      Statement deleteTable = Adb.connection.createStatement();
+
+      deleteTable.execute("DELETE FROM TowerLocations");
+    } catch (SQLException e) {
+      System.out.println("Delete on TowerLocations failed");
+    }
+
+    try {
+
+      List<Location> locList = LocationDerbyImpl.readLocationCSVfile(csvFilePath);
+      for (Location l : locList) {
+        Statement addStatement = Adb.connection.createStatement();
+        addStatement.executeUpdate(
+                "INSERT INTO TowerLocations(node_id,xcoord,ycoord,floor,building,node_type,long_name,short_name) VALUES('"
+                        + l.getNodeID()
+                        + "', "
+                        + l.getXCoord()
+                        + ", "
+                        + l.getYCoord()
+                        + ", '"
+                        + l.getFloor()
+                        + "', '"
+                        + l.getBuilding()
+                        + "', '"
+                        + l.getNodeType()
+                        + "', '"
+                        + l.getLongName()
+                        + "', '"
+                        + l.getShortName()
+                        + "')");
+      }
+    } catch (SQLException | IOException e) {
+      System.out.println("Insertion on TowerLocations failed!");
+      e.printStackTrace();
+      return;
+    }
+    return;}
 
   // Export to CSV
   public static void exportToCSV(String tableName, String csvFilePath) throws IOException {

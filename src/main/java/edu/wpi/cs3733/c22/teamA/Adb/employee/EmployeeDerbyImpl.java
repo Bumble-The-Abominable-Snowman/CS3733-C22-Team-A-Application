@@ -170,15 +170,9 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
   public static List<Employee> readEmployeeCSV(String csvFilePath)
       throws IOException, ParseException {
     // System.out.println("beginning to read csv");
-    Scanner lineScanner = null;
-    if(!Adb.isInitialized) {
       ClassLoader classLoader = EmployeeDerbyImpl.class.getClassLoader();
       InputStream is = classLoader.getResourceAsStream(csvFilePath);
-      lineScanner = new Scanner(is);
-    }else{
-      File file = new File(csvFilePath);
-      lineScanner = new Scanner(file);
-    }
+     Scanner lineScanner = new Scanner(is);
 
     Scanner dataScanner;
     int dataIndex = 0;
@@ -213,6 +207,53 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
       dataIndex = 0;
       list.add(thisEmployee);
        System.out.println(thisEmployee);
+
+    }
+
+    lineIndex++;
+    lineScanner.close();
+    return list;
+  }
+
+  public static List<Employee> readEmployeeCSVfile(String csvFilePath)
+          throws IOException, ParseException {
+    // System.out.println("beginning to read csv");
+    File file = new File(csvFilePath);
+    Scanner lineScanner = new Scanner(file);
+
+    Scanner dataScanner;
+    int dataIndex = 0;
+    int lineIndex = 0;
+    int intData = 0;
+    List<Employee> list = new ArrayList<>();
+    lineScanner.nextLine();
+
+    while (lineScanner.hasNextLine()) { // Scan CSV line by line
+
+      dataScanner = new Scanner(lineScanner.nextLine());
+      dataScanner.useDelimiter(",");
+      Employee thisEmployee = new Employee();
+
+      while (dataScanner.hasNext()) {
+
+        String data = dataScanner.next();
+        data = data.trim();
+        if (dataIndex == 0) thisEmployee.setEmployeeID(data);
+        else if (dataIndex == 1) thisEmployee.setEmployeeType(data);
+        else if (dataIndex == 2) thisEmployee.setFirstName(data);
+        else if (dataIndex == 3) thisEmployee.setLastName(data);
+        else if (dataIndex == 4) thisEmployee.setEmail(data);
+        else if (dataIndex == 5) thisEmployee.setPhoneNum(data);
+        else if (dataIndex == 6) thisEmployee.setAddress(data);
+        else if (dataIndex == 7) {
+          thisEmployee.setStartDate(data);
+        } else System.out.println("Invalid data, I broke::" + data);
+        dataIndex++;
+      }
+
+      dataIndex = 0;
+      list.add(thisEmployee);
+      System.out.println(thisEmployee);
 
     }
 
@@ -272,6 +313,59 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     try {
 
       List<Employee> employeeList1 = EmployeeDerbyImpl.readEmployeeCSV(csvFilePath);
+
+      for (Employee employee : employeeList1) {
+        Statement addStatement = Adb.connection.createStatement();
+
+        //        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //        System.out.println(l.getStartDate() == null);
+        //        String date = originalFormat.format(l.getStartDate();
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        String str = "INSERT INTO Employee(employee_id, employee_type, first_name, last_name, email, phone_num, address, start_date) VALUES('"
+                + employee.getEmployeeID()
+                + "', '"
+                + employee.getEmployeeType()
+                + "', '"
+                + employee.getFirstName()
+                + "', '"
+                + employee.getLastName()
+                + "', '"
+                + employee.getEmail()
+                + "', '"
+                + employee.getPhoneNum()
+                + "', '"
+                + employee.getAddress()
+                + "', '"
+                + employee.getStartDate()
+                + "')";
+
+        System.out.println(str);
+        addStatement.executeUpdate(str);
+      }
+    } catch (SQLException | IOException | ParseException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static void inputFromCSVfile(String csvFilePath) { // Check employee table
+    try {
+      Statement dropTable = Adb.connection.createStatement();
+
+      dropTable.execute("DELETE FROM Employee");
+    } catch (SQLException e) {
+      System.out.println("Delete on Employee failed");
+    }
+
+    EmployeeDerbyImpl empDerby = new EmployeeDerbyImpl();
+    List<Employee> employeeList = empDerby.getEmployeeList();
+    for (Employee emp : employeeList) {
+      empDerby.deleteEmployee(emp.getEmployeeID());
+    }
+
+    try {
+
+      List<Employee> employeeList1 = EmployeeDerbyImpl.readEmployeeCSVfile(csvFilePath);
 
       for (Employee employee : employeeList1) {
         Statement addStatement = Adb.connection.createStatement();
