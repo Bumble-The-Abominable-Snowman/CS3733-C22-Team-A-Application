@@ -150,7 +150,7 @@ public class DefaultTest {
 
   }*/
 
-  @Test
+  /**@Test
   public void test()
       throws ParseException, IOException, InvocationTargetException, IllegalAccessException,
           SQLException {
@@ -180,10 +180,10 @@ public class DefaultTest {
       for (String key : sr_item.getFields().keySet()) {
         System.out.printf("Key: %s\tValue: %s\n", key, sr_item.getFields().get(key));
       }
-    }*/
-  }
+    }
+  }*/
 
-  @Test
+  /**@Test
   public void testConnection() throws SQLException {
     Adb.username = "admin";
     Adb.password = "admin";
@@ -714,7 +714,7 @@ public class DefaultTest {
   //    System.out.println("testing delete");
   //    derby.deleteMedicalEquipment("meq123");
   //  }
-  @Test
+  /**@Test
   public void testOnRefactor() throws SQLException, ParseException {
     Adb.initialConnection("EmbeddedDriver");
     System.out.println("\n-----------------------------------Testing Employee-----------------------------------");
@@ -732,5 +732,5 @@ public class DefaultTest {
     Equipment eq = new Equipment("EQ5678","ABC",true, "0001",true);
     EquipmentDAO eq1 = new EquipmentDerbyImpl();
     eq1.updateMedicalEquipment(eq);
-  }
+  }*/
 }
