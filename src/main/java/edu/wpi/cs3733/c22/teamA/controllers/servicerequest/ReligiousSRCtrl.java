@@ -31,6 +31,8 @@ public class ReligiousSRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
 
+  private ServiceRequestDerbyImpl serviceRequestDatabase = new ServiceRequestDerbyImpl(SR.SRType.RELIGIOUS);
+
   private List<String> christianDenom = new ArrayList<>();
   private List<String> nonDenom = new ArrayList<>();
   private List<String> otherDenom = new ArrayList<>();
@@ -63,7 +65,8 @@ public class ReligiousSRCtrl extends SRCtrl {
   }
 
   @FXML
-  private void initialize() throws ParseException {
+  protected void initialize() throws ParseException {
+    super.initialize();
     sceneID = SceneSwitcher.SCENES.RELIGIOUS_SR;
 
     // double religionChoiceTextSize = religionChoice.getFont().getSize();
@@ -92,7 +95,7 @@ public class ReligiousSRCtrl extends SRCtrl {
         .getSelectionModel()
         .selectedItemProperty()
         .addListener(
-            (obs, oldValue, newValue) -> {
+            (obs, oldValue, newValue) -> {        //TODO this is throwing NullPointers
               if (newValue.equals("Type")) {
                 denominationChoice.getItems().clear();
                 denominationChoice.setDisable(true);
@@ -119,6 +122,7 @@ public class ReligiousSRCtrl extends SRCtrl {
     this.populateLocationComboBox(this.toLocationChoice);
     new AutoCompleteBox(toLocationChoice);
     new AutoCompleteBox(employeeChoice);
+    new AutoCompleteBox(denominationChoice);
   }
 
   @FXML
@@ -134,7 +138,26 @@ public class ReligiousSRCtrl extends SRCtrl {
       int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
       Location toLocationSelected = this.locationList.get(locationIndex);
 
-      SR sr = new SR("ReligiousSRID",
+      //      //get a uniqueID
+      String uniqueID = "";
+      List<String> currentIDs = new ArrayList<>();
+      for(SR sr: serviceRequestDatabase.getServiceRequestList()){
+        currentIDs.add(sr.getFields_string().get("request_id"));
+      }
+      boolean foundUnique = false;
+      while(!foundUnique){
+
+        String possibleUnique = "REL" + getUniqueNumbers();
+
+        if(currentIDs.contains(possibleUnique)) continue;
+        else if(!(currentIDs.contains(possibleUnique))){
+          foundUnique = true;
+          uniqueID = possibleUnique;
+        }
+      }
+
+
+      SR sr = new SR(uniqueID,
               (new LocationDerbyImpl()).getLocationNode("N/A"),
               toLocationSelected,
               (new EmployeeDerbyImpl()).getEmployee("001"),
@@ -145,10 +168,9 @@ public class ReligiousSRCtrl extends SRCtrl {
               commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               SR.SRType.RELIGIOUS);
 
-      sr.setField("religious", religionChoice.getValue());
+      sr.setField("religion", religionChoice.getValue());
 
-      ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.RELIGIOUS);
-      serviceRequestDerby.enterServiceRequest(sr);
+      serviceRequestDatabase.enterServiceRequest(sr);
     }
   }
 }

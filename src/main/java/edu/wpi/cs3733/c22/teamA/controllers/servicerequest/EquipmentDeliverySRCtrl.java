@@ -3,18 +3,22 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
+import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 //import edu.wpi.cs3733.c22.teamA.entities.servicerequests.EquipmentSR;
+import edu.wpi.cs3733.c22.teamA.entities.Medicine;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +37,9 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
 
+  private ServiceRequestDerbyImpl serviceRequestDatabase = new ServiceRequestDerbyImpl(SR.SRType.EQUIPMENT);
+  private EquipmentDerbyImpl equipmentDatabase = new EquipmentDerbyImpl();
+  private List<Equipment> equipmentList = equipmentDatabase.getMedicalEquipmentList();
   private List<String> bedLocations = new ArrayList<>();
   private List<String> xrayLocations = new ArrayList<>();
   private List<String> infusionPumpLocations = new ArrayList<>();
@@ -62,7 +69,8 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
   }
 
   @FXML
-  private void initialize() {
+  protected void initialize() throws ParseException {
+    super.initialize();
     sceneID = SceneSwitcher.SCENES.EQUIPMENT_DELIVERY_SR;
 
     // double typeChoiceTextSize = typeChoice.getFont().getSize();
@@ -131,6 +139,8 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
     statusChoice.getItems().setAll(status);
     new AutoCompleteBox(locationChoice);
     new AutoCompleteBox(employeeChoice);
+    new AutoCompleteBox(fromChoice);
+    new AutoCompleteBox(statusChoice);
   }
 
   @FXML
@@ -147,8 +157,27 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
       int locationIndex = this.locationChoice.getSelectionModel().getSelectedIndex();
       Location toLocationSelected = this.locationList.get(locationIndex);
 
+//      //get a uniqueID
+      String uniqueID = "";
+      List<String> currentIDs = new ArrayList<>();
+      for(SR sr: serviceRequestDatabase.getServiceRequestList()){
+        currentIDs.add(sr.getFields_string().get("request_id"));
+      }
+      boolean foundUnique = false;
+      while(!foundUnique){
+
+        String possibleUnique = "EQPDEL" + getUniqueNumbers();
+
+        if(currentIDs.contains(possibleUnique)) continue;
+        else if(!(currentIDs.contains(possibleUnique))){
+          foundUnique = true;
+          uniqueID = possibleUnique;
+        }
+      }
+
+
       // pass medical service request object
-      SR sr = new SR("EquipmentSRID",
+      SR sr = new SR("EQPDEL",
               (new LocationDerbyImpl()).getLocationNode("N/A"),
               toLocationSelected,
               (new EmployeeDerbyImpl()).getEmployee("001"),

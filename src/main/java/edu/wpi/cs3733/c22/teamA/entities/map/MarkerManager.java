@@ -15,6 +15,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
+import javax.swing.*;
+
 public class MarkerManager {
   private List<Location> allLocations;
   private List<Equipment> allEquipments;
@@ -39,6 +41,8 @@ public class MarkerManager {
   private LocationDAO locationDAO;
   private EquipmentDAO equipmentDAO;
   //ServiceRequestDAO SRDAO;
+
+  private boolean dragPopupBool;
 
   public MarkerManager(LocationDAO locationDAO, EquipmentDAO equipmentDAO, AnchorPane anchorPane) {
     floorLocations = new ArrayList<>();
@@ -121,13 +125,23 @@ public class MarkerManager {
     return floorSRs;
   }
 
-  public List<Equipment> returnEquipmentLocations() {
-    return floorEquipment;
+  public List<Equipment> returnDirtyEquipmentLocations() {
+      List<Equipment> equips = new ArrayList<>();
+      for (Equipment equip : floorEquipment) {
+          if (!equip.getIsClean())
+              equips.add(equip);
+      }
+      return equips;
   }
 
-  public List<Location> returnFloorLocations() {
-        return floorLocations;
-    }
+  public List<Equipment> returnCleanEquipmentLocations() {
+      List<Equipment> equips = new ArrayList<>();
+      for (Equipment equip : floorEquipment) {
+          if (equip.getIsClean())
+              equips.add(equip);
+      }
+      return equips;
+  }
 
   private void createFloorEntities(
       SelectionManager selectionManager,
@@ -178,7 +192,7 @@ public class MarkerManager {
 
   private void initialDraw() {
     for (LocationMarker l : locationMarkers) {
-        if(!l.getLocation().getNodeID().equals("")) {
+        if(!l.getLocation().getNodeID().equals("N/A")) {
             l.draw(anchorPane);
         }
       if (l.getEquipmentMarker() != null) {
@@ -198,7 +212,7 @@ public class MarkerManager {
           newLocation.setNodeID("New");
           newLocation.setShortName("New");
           newLocation.setLongName("New");
-          newLocation.setFloor("1");
+          newLocation.setFloor(gesturePaneManager.getCurrentFloor());
           newLocation.setNodeType("New");
           newLocation.setBuilding("Tower");
           newLocation.setYCoord(10);
@@ -298,18 +312,27 @@ public class MarkerManager {
           dragDelta.mouseY = mouseEvent.getSceneY();
           button.setCursor(Cursor.MOVE);
           selectionManager.existingEquipmentSelected(equipmentMarker.getEquipment());
-
-          selectionManager.getEditButton().setDisable(false);
-          selectionManager.getDeleteButton().setDisable(false);
-          selectionManager.getSaveButton().setDisable(true);
-          selectionManager.getClearButton().setDisable(true);
+            selectionManager.getEditButton().setDisable(false);
+            selectionManager.getDeleteButton().setDisable(false);
+            selectionManager.getSaveButton().setDisable(true);
+            selectionManager.getClearButton().setDisable(true);
         });
     button.setOnMouseDragged(
         mouseEvent -> {
+            if (dragPopupBool == true){
+                dragPopupBool = false;
+                return;
+            }
             if (equipmentMarker.getEquipment().getIsClean() == false){
+                JOptionPane pane = new JOptionPane("Dirty equipment cannot be dragged", JOptionPane.ERROR_MESSAGE);
+                JDialog dialog = pane.createDialog("Drag error");
+                dialog.setVisible(true);
+                dragPopupBool = true;
                 return;
             }
           if (checkBoxManager.getDragCheckBox().isSelected()) {
+              selectionManager.getEditButton().setDisable(true);
+              selectionManager.getDeleteButton().setDisable(true);
             button.setLayoutX(
                 (mouseEvent.getSceneX() - dragDelta.mouseX)
                         / (gesturePaneManager.getTransformed().getHeight()
@@ -396,6 +419,9 @@ public class MarkerManager {
             button.setLayoutY(nearestLocation.getYCoord() - 24);
           }
             if (!(nearestLocation.getNodeType().equals("STOR")) && !(nearestLocation.getNodeType().equals("PATI"))){
+                JOptionPane pane = new JOptionPane("Equipment cannot be stored here", JOptionPane.ERROR_MESSAGE);
+                JDialog dialog = pane.createDialog("Drag error");
+                dialog.setVisible(true);
                 button.setLayoutX(dragDelta.buttonX);
                 button.setLayoutY(dragDelta.buttonY);
                 return;
@@ -413,6 +439,8 @@ public class MarkerManager {
                  e.printStackTrace();
              }
 
+            selectionManager.getEditButton().setDisable(false);
+            selectionManager.getDeleteButton().setDisable(false);
         });
   }
 
@@ -436,15 +464,16 @@ public class MarkerManager {
           dragDelta.mouseY = mouseEvent.getSceneY();
           button.setCursor(Cursor.MOVE);
           selectionManager.existingServiceRequestSelected(srMarker.getServiceRequest());
-
-          selectionManager.getEditButton().setDisable(false);
-          selectionManager.getDeleteButton().setDisable(false);
-          selectionManager.getSaveButton().setDisable(true);
-          selectionManager.getClearButton().setDisable(true);
+            selectionManager.getEditButton().setDisable(false);
+            selectionManager.getDeleteButton().setDisable(false);
+            selectionManager.getSaveButton().setDisable(true);
+            selectionManager.getClearButton().setDisable(true);
         });
     button.setOnMouseDragged(
         mouseEvent -> {
           if (checkBoxManager.getDragCheckBox().isSelected()) {
+              selectionManager.getEditButton().setDisable(true);
+              selectionManager.getDeleteButton().setDisable(true);
             button.setLayoutX(
                 (mouseEvent.getSceneX() - dragDelta.mouseX)
                         / (gesturePaneManager.getTransformed().getHeight()
@@ -543,6 +572,8 @@ public class MarkerManager {
                  e.printStackTrace();
              }
           */
+            selectionManager.getEditButton().setDisable(false);
+            selectionManager.getDeleteButton().setDisable(false);
         });
   }
 
@@ -577,14 +608,16 @@ public class MarkerManager {
               System.out.println("Dragged too fast 2");
           }
 
-          selectionManager.getEditButton().setDisable(false);
-          selectionManager.getDeleteButton().setDisable(false);
-          selectionManager.getSaveButton().setDisable(true);
-          selectionManager.getClearButton().setDisable(true);
+            selectionManager.getEditButton().setDisable(false);
+            selectionManager.getDeleteButton().setDisable(false);
+            selectionManager.getSaveButton().setDisable(true);
+            selectionManager.getClearButton().setDisable(true);
         });
     button.setOnMouseDragged(
         mouseEvent -> {
           if (checkBoxManager.getDragCheckBox().isSelected()) {
+              selectionManager.getEditButton().setDisable(true);
+              selectionManager.getDeleteButton().setDisable(true);
             button.setLayoutX(
                 (mouseEvent.getSceneX() - dragDelta.mouseX)
                         / (gesturePaneManager.getTransformed().getHeight()
@@ -633,6 +666,8 @@ public class MarkerManager {
     button.setOnMouseReleased(
         mouseEvent -> {
           button.setCursor(Cursor.HAND);
+            selectionManager.getEditButton().setDisable(false);
+            selectionManager.getDeleteButton().setDisable(false);
         });
   }
 

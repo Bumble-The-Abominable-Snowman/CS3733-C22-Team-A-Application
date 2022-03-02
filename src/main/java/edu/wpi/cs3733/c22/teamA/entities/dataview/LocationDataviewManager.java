@@ -45,11 +45,16 @@ public class LocationDataviewManager {
 	}
 
 	public void delete() throws SQLException {
-		LocationDAO locationDAO = new LocationDerbyImpl();
-		locationDAO.deleteLocationNode(
-				table.getSelectionModel().getSelectedItem().getValue().loc.getNodeID());
-		dataViewCtrl.titleLabel.setText("Locations");
-		initializeLocationTable();
+		try {
+			LocationDAO locationDAO = new LocationDerbyImpl();
+			locationDAO.deleteLocationNode(
+					table.getSelectionModel().getSelectedItem().getValue().loc.getNodeID());
+			dataViewCtrl.titleLabel.setText("Locations");
+			initializeLocationTable();
+		}
+		catch (NullPointerException aE){
+
+		}
 	}
 
 	public void initializeLocationTable() {
@@ -108,6 +113,7 @@ public class LocationDataviewManager {
 		for (Location currLoc : locList) {
 			RecursiveObj recursiveLoc = new RecursiveObj();
 			recursiveLoc.loc = currLoc;
+			if (!recursiveLoc.loc.getShortName().equals("N/A"))
 			locations.add(recursiveLoc);
 		}
 		// Sets up the table and puts the location data under the columns
@@ -120,7 +126,7 @@ public class LocationDataviewManager {
 		dataViewCtrl.setupViewDetailsAndModify();
 	}
 
-	public void modifyPopup(JFXComboBox<String> field, TextArea value, JFXButton updateButton, SRDataviewManager srDataviewManager){
+	public void modifyPopup(JFXComboBox<String> field, TextArea value, JFXButton updateButton){
 		Location loc = locList.get(table.getSelectionModel().getSelectedIndex());
 		Method[] methods = loc.getClass().getMethods();
 		for (Method method : methods) {
@@ -178,11 +184,7 @@ public class LocationDataviewManager {
 									locationDerby.updateLocation(
 											loc.getNodeID(), field.getValue(), value.getText());
 									updateButton.setTextFill(Color.GREEN);
-									try {
-										srDataviewManager.initializeRequestsTable();
-									} catch (SQLException | InvocationTargetException | IllegalAccessException ex) {
-										ex.printStackTrace();
-									}
+									this.initializeLocationTable();
 								} catch (Exception ex) {
 									ex.printStackTrace();
 									updateButton.setTextFill(Color.RED);

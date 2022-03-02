@@ -20,6 +20,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.paint.Color;
 
+import javax.swing.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
@@ -42,15 +43,21 @@ public class EquipmentDataviewManager {
 	}
 
 	public void delete() throws SQLException {
-		table = dataViewCtrl.getTable();
-		EquipmentDAO equipmentDAO = new EquipmentDerbyImpl();
-		equipmentDAO.deleteMedicalEquipment(
-				table.getSelectionModel().getSelectedItem().getValue().equip.getEquipmentID());
-		dataViewCtrl.titleLabel.setText("Equipment");
-		initializeEquipmentTable();
+		try {
+			EquipmentDAO equipmentDAO = new EquipmentDerbyImpl();
+			equipmentDAO.deleteMedicalEquipment(
+					table.getSelectionModel().getSelectedItem().getValue().equip.getEquipmentID());
+			dataViewCtrl.titleLabel.setText("Equipment");
+			initializeEquipmentTable();
+		}
+		catch (NullPointerException aE){
+
+		}
 	}
 
 	public void initializeEquipmentTable() {
+
+		table = dataViewCtrl.getTable();
 		dataViewCtrl.getSelectEmployeeBox().setVisible(false);
 
 		List<JFXTreeTableColumn<RecursiveObj, String>> equipmentColumns = new ArrayList<>();
@@ -166,7 +173,6 @@ public class EquipmentDataviewManager {
 								EquipmentDerbyImpl equipmentDerby = new EquipmentDerbyImpl();
 								try {
 									String aField = "";
-									System.out.println(field.getValue());
 									if(field.getValue().equals("EquipmentType")){
 										aField = "equipment_type";
 									} else if (field.getValue().equals("EquipmentID")){
@@ -185,12 +191,16 @@ public class EquipmentDataviewManager {
 											}
 										}
 										if (theL.getNodeID() == null) {
-											System.out.println("Location does not exist");
+											JOptionPane pane = new JOptionPane("Location does not exist", JOptionPane.ERROR_MESSAGE);
+											JDialog dialog = pane.createDialog("Update failed");
+											dialog.setVisible(true);
 											updateButton.setTextFill(Color.RED);
 											return;
 										}
 										if (!(theL.getNodeType().equals("STOR")) && !(theL.getNodeType().equals("PATI"))) {
-											System.out.println("THIS EQUIPMENT CANNOT BE STORED HERE");
+											JOptionPane pane = new JOptionPane("Equipment cannot be stored here", JOptionPane.ERROR_MESSAGE);
+											JDialog dialog = pane.createDialog("Update failed");
+											dialog.setVisible(true);
 											updateButton.setTextFill(Color.RED);
 											return;
 										}
@@ -198,7 +208,6 @@ public class EquipmentDataviewManager {
 									equipmentDerby.updateMedicalEquipment(
 											eq.getEquipmentID(), aField, value.getText());
 									updateButton.setTextFill(Color.GREEN);
-									System.out.println("B4 initialize");
 									this.initializeEquipmentTable();
 								} catch (Exception ex) {
 									ex.printStackTrace();

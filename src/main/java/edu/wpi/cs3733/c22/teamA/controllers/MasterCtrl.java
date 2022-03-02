@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -45,6 +46,11 @@ public abstract class MasterCtrl {
   @FXML public JFXButton aboutButton;
   @FXML public JFXButton homeButton;
 
+  @FXML public JFXButton bumbleXButton;
+  @FXML public Label bubbleText;
+  @FXML public ImageView bumbleHead;
+
+  public final static SceneSwitcher sceneSwitcher = App.sceneSwitcher;
   @FXML public ImageView newSRIcon;
   @FXML public ImageView mapIcon;
   @FXML public ImageView viewSRIcon;
@@ -75,7 +81,7 @@ public abstract class MasterCtrl {
     STAFF,
   }
 
-  public static ACCOUNT account = ACCOUNT.STAFF;
+  public static ACCOUNT account = ACCOUNT.ADMIN;
 
   double stageWidth;
   double stageHeight;
@@ -91,6 +97,7 @@ public abstract class MasterCtrl {
     }
 
     if (account == ACCOUNT.STAFF) {  //Remove some permissions
+    if (account == ACCOUNT.STAFF) {
 
       menuBox.getChildren().remove(0);
 
@@ -101,6 +108,9 @@ public abstract class MasterCtrl {
     homeSize = homeButton.getFont().getSize();
     titleSize = titleLabel.getFont().getSize();
     nextSize = homeButton.getFont().getSize();
+
+    double bumbleXTextSize = bumbleXButton.getFont().getSize();
+    double bubbleTextSize = bubbleText.getFont().getSize();
 
     drawer.setSidePane(menuBox);
     drawer.setOnDrawerClosed(e -> animating = false);
