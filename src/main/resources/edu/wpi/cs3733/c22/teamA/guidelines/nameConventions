@@ -146,7 +146,19 @@ SceneSwitcher ---> (enum names):
         SaveBackup
         Settings
     
-    
+THREE LETTER ABREVIATIONS FOR EACH TYPE OF SERVICE REQUEST (used in their IDs)
+EquipmentDelivery       EQPDEL
+FoodDelivery            FODDEL
+MedicineDelivery        MEDDEL
+FloralDelivery          FLRDEL
+Sanitation              SNT
+Maintenance             MNT
+Laundry                 LND
+GiftDelivery            GFTDEL
+Language                LAN
+Consolutation           CNS
+Religious               REL
+Security                SEC
 
 
 

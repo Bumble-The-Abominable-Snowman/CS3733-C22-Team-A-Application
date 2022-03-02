@@ -32,7 +32,6 @@ public class AutoCompleteBox<T> {
     public AutoCompleteBox(ComboBox<T> cmb) {
         this.cmb = cmb;
         originalItems = FXCollections.observableArrayList(cmb.getItems());
-        cmb.setTooltip(new Tooltip());
         cmb.setOnKeyPressed(this::handleOnKeyPressed);
         cmb.setOnHidden(this::handleOnHiding);
     }
@@ -43,27 +42,23 @@ public class AutoCompleteBox<T> {
 
         if (code.isLetterKey()) {
             filter += e.getText();
+            cmb.setPromptText(filter);
         }
         if (code == KeyCode.BACK_SPACE && filter.length() > 0) {
             filter = filter.substring(0, filter.length() - 1);
             cmb.getItems().setAll(originalItems);
+            cmb.setPromptText(filter);
         }
         if (code == KeyCode.ESCAPE) {
             filter = "";
         }
         if (filter.length() == 0) {
-            filteredList = originalItems;
-            cmb.getTooltip().hide();
+            cmb.getItems().setAll(originalItems);
         } else {
             Stream<T> itens = cmb.getItems().stream();
             String txtUsr = filter.toString().toLowerCase();
             itens.filter(el -> el.toString().toLowerCase().contains(txtUsr)).forEach(filteredList::add);
-            cmb.getTooltip().setText(txtUsr);
-            Window stage = cmb.getScene().getWindow();
-            double posX = stage.getX() + cmb.getBoundsInParent().getMinX();
-            double posY = stage.getY() + cmb.getBoundsInParent().getMinY()+20;
-            cmb.getTooltip().show(stage, posX, posY);
-            cmb.getTooltip().setMinSize(150, 50);
+            cmb.setPromptText(filter);
             cmb.show();
         }
         cmb.getItems().setAll(filteredList);
@@ -71,7 +66,6 @@ public class AutoCompleteBox<T> {
 
     public void handleOnHiding(Event e) {
         filter = "";
-        cmb.getTooltip().hide();
         T s = cmb.getSelectionModel().getSelectedItem();
         cmb.getItems().setAll(originalItems);
         cmb.getSelectionModel().select(s);

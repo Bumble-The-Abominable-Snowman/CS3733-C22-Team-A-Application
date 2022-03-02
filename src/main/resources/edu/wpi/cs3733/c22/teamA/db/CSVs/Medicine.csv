@@ -1,0 +1,6 @@
+medicineID,genericName,brandName,medicineClass,uses,warning,sideEffects,form
+med123,atorvastatin,Lipitor,Statins,High Control,Do not use while Pregnant or with Chronic Kidney Disease,Muscle aches,Tablet
+med222,ibuprofen,Advil,NSAIDs,Pain and Fever,Do not take with a blood thinner or with history of bleeding problems or over 60 years old,Nausea and Dizziness,Tablet
+med343,ibuprofen,Advil,NSAIDs,Pain and Fever,Do not take with a blood thinner or with history of bleeding problems or over 60 years old,Nausea and Dizziness,Liquid
+med411,alprazolam,Xanax,Benzodiazepines,Anxiety,Do not take with chronic Kidney disease or with respiratory disease,Drowziness and Fatigue,Tablet
+med619,dextroamphetamine,Aderall,CNS Stimulants,ADHD,Do not take while breastfeeding or have high blood pressure,Heart Palpitations and Dizziness,Tablet
