@@ -1,10 +1,14 @@
 package edu.wpi.cs3733.c22.teamA.Adb.medicalequipment;
 
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
@@ -65,6 +69,10 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
     }
 
     update.execute(str);
+  }
+
+  public void enterMedicalEquipment(Equipment e){
+    enterMedicalEquipment(e.getEquipmentID(), e.getEquipmentType(), e.getIsClean(), e.getCurrentLocation(), e.getIsAvailable());
   }
 
   public void enterMedicalEquipment(
@@ -134,8 +142,16 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
       throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
-    File file = new File(csvFilePath);
-    Scanner lineScanner = new Scanner(file);
+    Scanner lineScanner = null;
+    if(!Adb.isInitialized) {
+      ClassLoader classLoader = EquipmentDerbyImpl.class.getClassLoader();
+      InputStream is = classLoader.getResourceAsStream(csvFilePath);
+      lineScanner = new Scanner(is);
+    }else{
+      File file = new File(csvFilePath);
+      lineScanner = new Scanner(file);
+    }
+
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;

@@ -1,10 +1,12 @@
 package edu.wpi.cs3733.c22.teamA.Adb.employee;
 
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
@@ -78,6 +80,10 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
       e.printStackTrace();
       return;
     }
+  }
+
+  public void enterEmployee(Employee e) throws ParseException {
+    enterEmployee(e.getEmployeeID(), e.getEmployeeType(), e.getFirstName(), e.getLastName(), e.getEmail(), e.getPhoneNum(), e.getAddress(),new SimpleDateFormat("yyyy-MM-dd").parse(e.getStartDate()));
   }
 
   public void enterEmployee(
@@ -164,9 +170,16 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
   public static List<Employee> readEmployeeCSV(String csvFilePath)
       throws IOException, ParseException {
     // System.out.println("beginning to read csv");
+    Scanner lineScanner = null;
+    if(!Adb.isInitialized) {
+      ClassLoader classLoader = EmployeeDerbyImpl.class.getClassLoader();
+      InputStream is = classLoader.getResourceAsStream(csvFilePath);
+      lineScanner = new Scanner(is);
+    }else{
+      File file = new File(csvFilePath);
+      lineScanner = new Scanner(file);
+    }
 
-    File file = new File(csvFilePath);
-    Scanner lineScanner = new Scanner(file);
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
@@ -290,7 +303,6 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
         addStatement.executeUpdate(str);
       }
     } catch (SQLException | IOException | ParseException e) {
-      System.out.println("Insertion on Employee failed!");
       e.printStackTrace();
     }
   }

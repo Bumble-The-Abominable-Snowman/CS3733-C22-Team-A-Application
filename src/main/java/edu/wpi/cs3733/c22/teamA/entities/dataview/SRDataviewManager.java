@@ -65,6 +65,7 @@ public class SRDataviewManager {
 		table = dataViewCtrl.getTable();
 		EmployeeDAO employeeDAO = new EmployeeDerbyImpl();
 		dataViewCtrl.getSelectEmployeeBox().getItems().addAll(employeeDAO.getEmployeeList().stream().map(Employee::getFullName).collect(Collectors.toList()));
+		dataViewCtrl.getSelectEmployeeBox().getItems().add("All");
 		dataViewCtrl.getSelectEmployeeBox().setVisible(true);
 		List<JFXTreeTableColumn<RecursiveObj, String>> srColumns = new ArrayList<>();
 
@@ -90,22 +91,22 @@ public class SRDataviewManager {
 				.get(2)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().locStart.getShortName()));
+								new SimpleStringProperty(((Location)param.getValue().getValue().sr.getFields().get("start_location")).getShortName()));
 		srColumns
 				.get(3)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().locEnd.getShortName()));
+								new SimpleStringProperty(((Location)param.getValue().getValue().sr.getFields().get("end_location")).getShortName()));
 		srColumns
 				.get(4)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().employeeReq.getFullName()));
+								new SimpleStringProperty(((Employee)param.getValue().getValue().sr.getFields().get("employee_requested")).getFullName()));
 		srColumns
 				.get(5)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().employeeAss.getFullName()));
+								new SimpleStringProperty(((Employee)param.getValue().getValue().sr.getFields().get("employee_assigned")).getFullName()));
 		srColumns
 				.get(6)
 				.setCellValueFactory(
@@ -132,10 +133,6 @@ public class SRDataviewManager {
 		for (SR sr : srList) {
 			RecursiveObj recursiveSR = new RecursiveObj();
 			recursiveSR.sr = sr;
-			recursiveSR.locStart = (Location) sr.getFields().get("start_location");
-			recursiveSR.locEnd = (Location) sr.getFields().get("end_location");
-			recursiveSR.employeeReq = (Employee) sr.getFields().get("employee_requested");
-			recursiveSR.employeeAss = (Employee) sr.getFields().get("employee_assigned");
 			requests.add(recursiveSR);
 		}
 
@@ -175,23 +172,22 @@ public class SRDataviewManager {
 				.get(2)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().locStart.getShortName()));
+								new SimpleStringProperty(((Location)param.getValue().getValue().sr.getFields().get("start_location")).getShortName()));
 		srColumns
 				.get(3)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().locEnd.getShortName()));
+								new SimpleStringProperty(((Location)param.getValue().getValue().sr.getFields().get("end_location")).getShortName()));
 		srColumns
 				.get(4)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().employeeReq.getFullName()));
+								new SimpleStringProperty(((Employee)param.getValue().getValue().sr.getFields().get("employee_requested")).getFullName()));
 		srColumns
 				.get(5)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().employeeAss.getFullName()));
-		srColumns
+								new SimpleStringProperty(((Employee)param.getValue().getValue().sr.getFields().get("employee_assigned")).getFullName()));srColumns
 				.get(6)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
@@ -217,11 +213,7 @@ public class SRDataviewManager {
 		for (SR sr : this.srList) {
 			RecursiveObj recursiveSR = new RecursiveObj();
 			recursiveSR.sr = sr;
-			recursiveSR.locStart = (Location) sr.getFields().get("start_location");
-			recursiveSR.locEnd = (Location) sr.getFields().get("end_location");
-			recursiveSR.employeeReq = (Employee) sr.getFields().get("employee_requested");
-			recursiveSR.employeeAss = (Employee) sr.getFields().get("employee_assigned");
-			if(newValue.equals(recursiveSR.employeeReq.getFullName()) || newValue.equals(recursiveSR.employeeAss.getFullName()) || newValue.equals("All")) {
+			if(newValue.equals(((Employee)sr.getFields().get("employee_requested")).getFullName()) || newValue.equals(((Employee)sr.getFields().get("employee_assigned")).getFullName()) || newValue.equals("All")) {
 				requests.add(recursiveSR);
 			}
 		}

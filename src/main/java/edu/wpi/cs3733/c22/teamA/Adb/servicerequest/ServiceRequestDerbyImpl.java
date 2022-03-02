@@ -1,10 +1,13 @@
 package edu.wpi.cs3733.c22.teamA.Adb.servicerequest;
 
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
@@ -261,8 +264,16 @@ public class ServiceRequestDerbyImpl implements ServiceRequestDAO {
       this.deleteServiceRequest(sr);
     }
 
-    File file = new File(csvFilePath);
-    Scanner lineScanner = new Scanner(file);
+    Scanner lineScanner = null;
+    if(!Adb.isInitialized) {
+      ClassLoader classLoader = ServiceRequestDerbyImpl.class.getClassLoader();
+      InputStream is = classLoader.getResourceAsStream(csvFilePath);
+      lineScanner = new Scanner(is);
+    }else{
+      File file = new File(csvFilePath);
+      lineScanner = new Scanner(file);
+    }
+
     Scanner dataScanner;
     int dataIndex = 0;
     List<String> field_list = new ArrayList<>();

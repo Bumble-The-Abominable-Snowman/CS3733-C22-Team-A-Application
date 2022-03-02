@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXDrawer?>
-<?import com.jfoenix.controls.JFXHamburger?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<GridPane alignment="CENTER" prefHeight="600.0" prefWidth="960.0" styleClass="background" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.HomeCtrl">
+<GridPane alignment="CENTER" prefHeight="600.0" prefWidth="960.0" styleClass="background" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.HomeCtrl">
     <columnConstraints>
         <ColumnConstraints hgrow="ALWAYS" />
       <ColumnConstraints hgrow="ALWAYS" prefWidth="650.0" />
@@ -164,7 +158,7 @@
                </font>
             </JFXButton>
             <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <JFXButton fx:id="helpButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#bumbleHelp" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" text="." textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <JFXButton fx:id="helpButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#activateBumble" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" text="." textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font size="12.0" />
                </font>
@@ -177,13 +171,20 @@
                </graphic>
             </JFXButton>
             <JFXHamburger fx:id="hamburger" alignment="CENTER" prefHeight="50.0" prefWidth="75.0" stylesheets="@../css/styleSheet.css" />
+              <JFXButton fx:id="bumbleXButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#goToHome" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" text="." textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" visible="false">
+                  <font>
+                      <Font size="12.0" />
+                  </font>
+                  <graphic>
+                      <ImageView fitHeight="25.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="@../images/Question Mark Icon.png" />
+                          </image>
+                      </ImageView>
+                  </graphic>
+              </JFXButton>
          </children>
       </GridPane>
-        <ImageView fx:id="speechBubble" fitHeight="357.0" fitWidth="433.0" pickOnBounds="true" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
-            <image>
-                <Image url="@../images/SpeechBubble.png" />
-            </image>
-        </ImageView>
        <ImageView fx:id="frame5" fitHeight="347.0" fitWidth="481.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
           <image>
              <Image url="@../images/BumbleFrame5.png" />
@@ -209,16 +210,6 @@
              <Image url="@../images/BumbleFrame1.png" />
           </image>
        </ImageView>
-        <JFXButton fx:id="bumbleButton" mnemonicParsing="false" onAction="#activateBumble" prefHeight="100.0" prefWidth="70.0" styleClass="snowmanButton" text="Button" visible="false" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
-            <GridPane.margin>
-                <Insets right="50.0" />
-            </GridPane.margin>
-        </JFXButton>
-        <JFXButton fx:id="bumbleXButton" mnemonicParsing="false" onAction="#goToHome" prefHeight="100.0" prefWidth="70.0" styleClass="noSnowmanButton" text="Button" visible="false" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
-            <GridPane.margin>
-                <Insets right="50.0" />
-            </GridPane.margin>
-        </JFXButton>
         <Label fx:id="bubbleText" prefHeight="211.0" prefWidth="320.0" text="I'm Bumble the Helpful Abominable Snowman. Click one of the buttons on the right to hear more about our features." textAlignment="CENTER" visible="false" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
             <font>
                 <Font size="24.0" />

@@ -154,7 +154,8 @@ public class PathFinder {
       }
     }
    path.add(current);
-    destinationFloor = path.get(0).getFloor();
+    if (!path.get(0).getFloor().equals(path.get(path.size() - 1).getFloor()))
+      destinationFloor = path.get(0).getFloor();
   for(Location l:path){
     if(l.getFloor().equals(floor)) resultPath.add(l);
   }
@@ -166,8 +167,8 @@ public class PathFinder {
       return;
     }
     Location prev = path.get(0);
-    int offsetX = 4;
-    int offsetY = 6;
+    double offsetX = 0.5;
+    double offsetY = 3;
     for (int i = 1; i < path.size(); i++) {
       Line line =
           new Line(

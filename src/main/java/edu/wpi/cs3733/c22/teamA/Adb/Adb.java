@@ -3,7 +3,9 @@ package edu.wpi.cs3733.c22.teamA.Adb;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.entities.Medicine;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +27,7 @@ public class Adb {
 
   public static boolean isInitialized;
 
-  public static void initialConnection(String arg) throws SQLException {
+  public static void initialConnection(String arg) throws SQLException{
 
     isInitialized = true;
     // Connection to database driver
@@ -115,7 +117,7 @@ public class Adb {
               + "PRIMARY KEY (node_id))");
 
       try{
-        LocationDerbyImpl.inputFromCSV("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
+        LocationDerbyImpl.inputFromCSV("edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
       }catch (Exception e){
         System.out.println("TowerLocations Insertion failed");
       }
@@ -139,9 +141,9 @@ public class Adb {
               + "PRIMARY KEY (employee_id))");
 
       try{
-        EmployeeDerbyImpl.inputFromCSV("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.csv");
+        EmployeeDerbyImpl.inputFromCSV("edu/wpi/cs3733/c22/teamA/db/CSVs/Employee.CSV");
       }catch (Exception e){
-        System.out.println("Employee Insertion failed");
+        System.out.println("Employee Insertion failed" + e);
       }
 
     } catch (SQLException e) {
@@ -163,7 +165,7 @@ public class Adb {
       try{
         EquipmentDerbyImpl.inputFromCSV(
                 "MedicalEquipment",
-                "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipment.csv");
+                "edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipment.csv");
       }catch (Exception e){
         System.out.println("MedicalEquipment Insertion failed");
       }
@@ -187,6 +189,14 @@ public class Adb {
               + "form varchar(50), "
               + "PRIMARY KEY (medicine_id))");
 
+      try{
+        MedicineDerbyImpl.importMedicineFromCSV(
+                "edu/wpi/cs3733/c22/teamA/db/CSVs/Medicine.csv");
+      }catch (Exception e){
+        System.out.println("Medicine Insertion failed");
+      }
+
+
     } catch (SQLException e) {
       System.out.println("Error caught trying to create Medicine");
       System.out.println("Error Code: " + e.getErrorCode());
@@ -203,6 +213,14 @@ public class Adb {
               + "dosage_amount float,"
               + "PRIMARY KEY (medicine_id,dosage_amount),"
               + "FOREIGN KEY (medicine_id) REFERENCES Medicine (medicine_id))");
+
+      try{
+        MedicineDerbyImpl.importDosagesFromCSV(
+                "edu/wpi/cs3733/c22/teamA/db/CSVs/MedicineDosage.csv");
+      }catch (Exception e){
+        System.out.println("MedicineDosage Insertion failed");
+      }
+
 
     } catch (SQLException e) {
       System.out.println("Error caught trying to create MedicineDosage");
@@ -244,7 +262,7 @@ public class Adb {
       try{
         // EquipmentSR
         ServiceRequestDerbyImpl EquipmentRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.EQUIPMENT);
-        EquipmentRequestDerby.populateFromCSV("src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipmentServiceRequest.csv");
+        EquipmentRequestDerby.populateFromCSV("edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipmentServiceRequest.csv");
 
       }catch (Exception e){
         System.out.println("MedicalEquipmentServiceRequest Insertion failed");
@@ -268,7 +286,7 @@ public class Adb {
       try{
         ServiceRequestDerbyImpl FoodDeliveryServiceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.FOOD_DELIVERY);
         FoodDeliveryServiceRequestDerby.populateFromCSV(
-                "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/FoodDeliveryServiceRequest.csv");
+                "edu/wpi/cs3733/c22/teamA/db/CSVs/FoodDeliveryServiceRequest.csv");
       }catch (Exception e){
         System.out.println("FoodDeliveryServiceRequest Insertion failed");
       }
@@ -288,7 +306,7 @@ public class Adb {
       try{
         ServiceRequestDerbyImpl LanguageServiceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.LANGUAGE);
         LanguageServiceRequestDerby.populateFromCSV(
-                "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/LanguageServiceRequest.csv");
+                "edu/wpi/cs3733/c22/teamA/db/CSVs/LanguageServiceRequest.csv");
       }catch (Exception e){
         System.out.println("LanguageServiceRequest Insertion failed");
       }
@@ -308,7 +326,7 @@ public class Adb {
       try{
         ServiceRequestDerbyImpl LaundryServiceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.LAUNDRY);
         LaundryServiceRequestDerby.populateFromCSV(
-                "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/LaundryServiceRequest.csv");
+                "edu/wpi/cs3733/c22/teamA/db/CSVs/LaundryServiceRequest.csv");
       }catch (Exception e){
         System.out.println("LaundryServiceRequest Insertion failed");
       }
@@ -327,7 +345,7 @@ public class Adb {
       try{
         ServiceRequestDerbyImpl religiousSRServiceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.RELIGIOUS);
         religiousSRServiceRequestDerby.populateFromCSV(
-                "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/ReligiousServiceRequest.csv");
+                "edu/wpi/cs3733/c22/teamA/db/CSVs/ReligiousServiceRequest.csv");
       }catch (Exception e){
         System.out.println("ReligiousServiceRequest Insertion failed");
       }
@@ -346,7 +364,7 @@ public class Adb {
       try{
         ServiceRequestDerbyImpl sanitationServiceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
         sanitationServiceRequestDerby.populateFromCSV(
-                "src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/SanitationServiceRequest.csv");
+                "edu/wpi/cs3733/c22/teamA/db/CSVs/SanitationServiceRequest.csv");
       }catch (Exception e){
         System.out.println("SanitationServiceRequest Insertion failed");
       }
@@ -363,8 +381,20 @@ public class Adb {
               + "PRIMARY KEY (request_id), "
               + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
 
+      ServiceRequestDerbyImpl FLORAL_DELIVERY = new ServiceRequestDerbyImpl(SR.SRType.FLORAL_DELIVERY);
+      FLORAL_DELIVERY.populateFromCSV(
+              "edu/wpi/cs3733/c22/teamA/db/CSVs/FloralDeliverySR.csv");
+
     } catch (SQLException e) {
       System.out.println("Table Floral Delivery Service already exist");
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ParseException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
     }
 
     // check GiftDeliveryServiceRequest
@@ -375,8 +405,20 @@ public class Adb {
               + "PRIMARY KEY (request_id), "
               + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
 
+      ServiceRequestDerbyImpl GIFT_DELIVERY = new ServiceRequestDerbyImpl(SR.SRType.GIFT_DELIVERY);
+      GIFT_DELIVERY.populateFromCSV(
+              "edu/wpi/cs3733/c22/teamA/db/CSVs/GiftDeliverySR.csv");
+
     } catch (SQLException e) {
       System.out.println("Table GiftDeliveryServiceRequest already exist");
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ParseException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
     }
 
     // check MaintenanceServiceRequest
@@ -401,6 +443,10 @@ public class Adb {
               + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE,"
               + "FOREIGN KEY (medicine_id) REFERENCES Medicine(medicine_id) ON DELETE CASCADE)");
 
+      ServiceRequestDerbyImpl MEDICINE_DELIVERY = new ServiceRequestDerbyImpl(SR.SRType.MEDICINE_DELIVERY);
+      MEDICINE_DELIVERY.populateFromCSV(
+              "edu/wpi/cs3733/c22/teamA/db/CSVs/MDSR.csv");
+
 
     } catch (SQLException e) {
       System.out.println("Error caught trying to create MedicineDeliveryServiceRequest");
@@ -408,6 +454,14 @@ public class Adb {
       System.out.println("SQL State: " + e.getSQLState());
       System.out.println(e.getMessage());
       //System.out.println("Table MedicineDeliveryServiceRequest already exist");
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ParseException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
     }
 
     // check SecurityServiceRequest
@@ -417,8 +471,22 @@ public class Adb {
               + "PRIMARY KEY (request_id), "
               + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
 
+
+      ServiceRequestDerbyImpl SECURITY = new ServiceRequestDerbyImpl(SR.SRType.SECURITY);
+      SECURITY.populateFromCSV(
+              "edu/wpi/cs3733/c22/teamA/db/CSVs/SSR.csv");
+
     } catch (SQLException e) {
       System.out.println("Table SecurityServiceRequest already exist");
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ParseException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
     }
 
     // check ConsultationServiceRequest

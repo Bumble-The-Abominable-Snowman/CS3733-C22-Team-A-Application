@@ -22,6 +22,7 @@ import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 
 public class SanitationSRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> typeChoice;

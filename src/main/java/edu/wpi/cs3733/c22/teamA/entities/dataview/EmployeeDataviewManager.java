@@ -59,7 +59,7 @@ public class EmployeeDataviewManager {
 
 		EmployeeDAO employeeDAO = new EmployeeDerbyImpl();
 		dataViewCtrl.getSelectEmployeeBox().getItems().addAll(employeeDAO.getEmployeeList().stream().map(Employee::getFullName).collect(Collectors.toList()));
-		dataViewCtrl.getSelectEmployeeBox().getItems().addAll("All");
+		dataViewCtrl.getSelectEmployeeBox().getItems().add("All");
 		dataViewCtrl.getSelectEmployeeBox().setVisible(true);
 
 		List<JFXTreeTableColumn<RecursiveObj, String>> employeeColumns = new ArrayList<>();
@@ -208,7 +208,7 @@ public class EmployeeDataviewManager {
 		dataViewCtrl.setupViewDetailsAndModify();
 	}
 
-	public void modifyPopup(JFXComboBox<String> field, TextArea value, JFXButton updateButton, SRDataviewManager srDataviewManager){
+	public void modifyPopup(JFXComboBox<String> field, TextArea value, JFXButton updateButton){
 		Employee emp = empList.get(table.getSelectionModel().getSelectedIndex());
 		Method[] methods = emp.getClass().getMethods();
 		for (Method method : methods) {
@@ -265,11 +265,7 @@ public class EmployeeDataviewManager {
 									employeeDerby.updateEmployee(
 											emp.getEmployeeID(), field.getValue(), value.getText());
 									updateButton.setTextFill(Color.GREEN);
-									try {
-										srDataviewManager.initializeRequestsTable();
-									} catch (SQLException | InvocationTargetException | IllegalAccessException ex) {
-										ex.printStackTrace();
-									}
+									this.initializeEmployeeTable();
 								} catch (Exception ex) {
 									ex.printStackTrace();
 									updateButton.setTextFill(Color.RED);
