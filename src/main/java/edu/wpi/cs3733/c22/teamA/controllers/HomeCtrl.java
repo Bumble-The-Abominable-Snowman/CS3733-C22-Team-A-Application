@@ -17,7 +17,11 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class HomeCtrl extends MasterCtrl {
-/*
+
+  @FXML JFXButton simulatorAPIButton = new JFXButton();
+  @FXML JFXButton transportationAPIButton = new JFXButton();
+
+  /*
   @FXML private Label homeTitle;
   @FXML private ImageView frame1;
   @FXML private ImageView frame2;
@@ -227,6 +231,16 @@ public class HomeCtrl extends MasterCtrl {
     dataViewText.setVisible(false);
     settingsText.setVisible(true); */
   }
+
+  @FXML
+  public void launchTransportationSR() throws IOException {
+
+  }
+
+  @FXML
+  public void launchProbabilisticSimulator() throws IOException {
+
+    }
 
   @FXML
   private void help() throws IOException {
