@@ -37,7 +37,7 @@ public abstract class MasterCtrl {
   @FXML public JFXButton aboutButton;
   @FXML public JFXButton homeButton;
 
-  public final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
+  public final static SceneSwitcher sceneSwitcher = App.sceneSwitcher;
   public static int sceneFlag = 0;
   public static List<Integer> sceneFlags = new ArrayList<Integer>();
 
