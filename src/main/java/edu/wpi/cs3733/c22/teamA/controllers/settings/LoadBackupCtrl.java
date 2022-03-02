@@ -39,9 +39,9 @@ public class LoadBackupCtrl extends MasterCtrl {
   @FXML private JFXButton loadFromSystemButton;
   @FXML private JFXComboBox<String> TypeCSV;
   @FXML private Text selectedFileText;
-  //@FXML private Text statusText;
-  //@FXML private Text selectedLabel;
-  //@FXML private Text insertLabel;
+  @FXML private Text statusText;
+  @FXML private Text selectedLabel;
+  @FXML private Text insertLabel;
   @FXML private String lastSelectedFile;
   private double loadBackupTextSize;
   private double loadFromSystemTextSize;
@@ -72,9 +72,9 @@ public class LoadBackupCtrl extends MasterCtrl {
     loadBackupTextSize = loadBackupButton.getFont().getSize();
     loadFromSystemTextSize = loadFromSystemButton.getFont().getSize();
     selectedFileTextSize = selectedFileText.getFont().getSize();
-    //statusTextSize = statusText.getFont().getSize();
-    //selectedLabelTextSize = selectedLabel.getFont().getSize();
-    //insertLabelTextSize = insertLabel.getFont().getSize();
+    statusTextSize = statusText.getFont().getSize();
+    selectedLabelTextSize = selectedLabel.getFont().getSize();
+    insertLabelTextSize = insertLabel.getFont().getSize();
 
 /*
     double previousTextSize = previousButton.getFont().getSize();
@@ -217,15 +217,15 @@ public class LoadBackupCtrl extends MasterCtrl {
             serviceRequestDerbySecurity.populateFromCSVfile(lastSelectedFile);
             break;
         }
-        //statusText.setText("Success!");
-        //statusText.setFill(Color.LAWNGREEN);
+        statusText.setText("Success!");
+        statusText.setFill(Color.LAWNGREEN);
       } else {
         throw new Exception("No csv file is selected!");
       }
     } catch (Exception e) {
       e.printStackTrace();
-     // statusText.setText("Failed!");
-      //statusText.setFill(Color.RED);
+      statusText.setText("Failed!");
+      statusText.setFill(Color.RED);
     }
   }
 
@@ -256,12 +256,12 @@ public class LoadBackupCtrl extends MasterCtrl {
             "-fx-font-size: " + ((stageWidth / 1000) * loadFromSystemTextSize) + "pt;");
     selectedFileText.setStyle(
             "-fx-font-size: " + ((stageWidth / 1000) * selectedFileTextSize) + "pt;");
-    //statusText.setStyle(
-           // "-fx-font-size: " + ((stageWidth / 1000) * statusTextSize) + "pt;");
-    //selectedLabel.setStyle(
-           // "-fx-font-size: " + ((stageWidth / 1000) * selectedLabelTextSize) + "pt;");
-   // insertLabel.setStyle(
-           // "-fx-font-size: " + ((stageWidth / 1000) * insertLabelTextSize) + "pt;");
+    statusText.setStyle(
+            "-fx-font-size: " + ((stageWidth / 1000) * statusTextSize) + "pt;");
+    selectedLabel.setStyle(
+            "-fx-font-size: " + ((stageWidth / 1000) * selectedLabelTextSize) + "pt;");
+    insertLabel.setStyle(
+            "-fx-font-size: " + ((stageWidth / 1000) * insertLabelTextSize) + "pt;");
   }
 /*
   public void activateBumble(){
