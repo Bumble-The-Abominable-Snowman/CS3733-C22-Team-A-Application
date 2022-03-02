@@ -2,8 +2,17 @@ package edu.wpi.cs3733.c22.teamA.entities.dataview;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
+import edu.wpi.cs3733.c22.teamA.controllers.DataViewCtrl;
+import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
@@ -17,7 +26,11 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import lombok.SneakyThrows;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,28 +51,41 @@ public class DVSelectionManager {
   private JFXButton clearButton;
   private JFXButton deleteButton;
 
-  private LocationDAO locationDatabase;
+  private LocationDAO locationDAO;
+  private EmployeeDAO employeeDAO;
+  private EquipmentDAO equipmentDAO;
 
-  public DVSelectionManager(VBox inputVBox) {
+  private DataViewCtrl dataViewCtrl;
+
+  private Object selected;
+
+  public DVSelectionManager(VBox inputVBox, DataViewCtrl dataViewCtrl) {
     this.inputVBox = inputVBox;
     this.inputVBox.setDisable(true);
     this.inputVBox.setVisible(false);
     instantiateButtons();
     fillBoxes();
 
-    locationDatabase = new LocationDerbyImpl();
+    locationDAO = new LocationDerbyImpl();
+    employeeDAO = new EmployeeDerbyImpl();
+    equipmentDAO = new EquipmentDerbyImpl();
     currentList = new ArrayList<>();
+    this.dataViewCtrl = dataViewCtrl;
   }
 
   public void select(RecursiveObj obj, int sceneFlag){
     this.inputVBox.setVisible(true);
     if(sceneFlag == 1){
+      selected = obj.sr;
       serviceRequestSelected(obj.sr);
     } else if(sceneFlag == 2){
+      selected = obj.loc;
       locationSelected(obj.loc);
     } else if(sceneFlag == 3){
+      selected = obj.equip;
       equipmentSelected(obj.equip);
     } else if(sceneFlag == 4) {
+      selected = obj.employee;
       employeeSelected(obj.employee);
     }  else if(sceneFlag == 5) {
       //medicineSelected(obj.med);
@@ -94,9 +120,10 @@ public class DVSelectionManager {
     deleteButton = new JFXButton("Delete");
     deleteButton.setOnAction(
         new EventHandler<ActionEvent>() {
+          @SneakyThrows
           @Override
           public void handle(ActionEvent e) {
-            //delete(selectedLocation);
+            delete();
           }
         });
   }
@@ -294,25 +321,32 @@ public class DVSelectionManager {
   }
 
   // Delete Location
-  public void delete(LocationMarker location) {
-    locationDatabase.deleteLocationNode(location.getLocation().getNodeID());
-    location.setButtonVisibility(false);
-    location.setLabelVisibility(false);
-    clear();
+  public void delete() throws SQLException, InvocationTargetException, IllegalAccessException, IOException {
+    if(selected instanceof SR){
+      new ServiceRequestDerbyImpl((SR.SRType) ((SR) selected).getFields().get("sr_type")).deleteServiceRequest((SR) selected);
+    } else if(selected instanceof Equipment){
+      equipmentDAO.deleteMedicalEquipment(((Equipment) selected).getEquipmentID());
+    } else if(selected instanceof Employee){
+      employeeDAO.deleteEmployee(((Employee) selected).getEmployeeID());
+    } else if(selected instanceof Location){
+      locationDAO.deleteLocationNode(((Location) selected).getNodeID());
+    }
+    MasterCtrl.sceneFlags.add(MasterCtrl.sceneFlags.get(MasterCtrl.sceneFlags.size()-1));
+    MasterCtrl.sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
   // Save Changes
   public void save(LocationMarker location) {
     String nodeID = locationFields.get(0).textArea.getText();
-    locationDatabase.updateLocation(
+    locationDAO.updateLocation(
         nodeID, "xCoord", (int) Double.parseDouble(locationFields.get(1).textArea.getText()));
-    locationDatabase.updateLocation(
+    locationDAO.updateLocation(
         nodeID, "yCoord", (int) Double.parseDouble(locationFields.get(2).textArea.getText()));
-    locationDatabase.updateLocation(nodeID, "floor", locationFields.get(3).textArea.getText());
-    locationDatabase.updateLocation(nodeID, "building", locationFields.get(4).textArea.getText());
-    locationDatabase.updateLocation(nodeID, "node_type", locationFields.get(5).textArea.getText());
-    locationDatabase.updateLocation(nodeID, "long_Name", locationFields.get(6).textArea.getText());
-    locationDatabase.updateLocation(nodeID, "Short_Name", locationFields.get(7).textArea.getText());
+    locationDAO.updateLocation(nodeID, "floor", locationFields.get(3).textArea.getText());
+    locationDAO.updateLocation(nodeID, "building", locationFields.get(4).textArea.getText());
+    locationDAO.updateLocation(nodeID, "node_type", locationFields.get(5).textArea.getText());
+    locationDAO.updateLocation(nodeID, "long_Name", locationFields.get(6).textArea.getText());
+    locationDAO.updateLocation(nodeID, "Short_Name", locationFields.get(7).textArea.getText());
   }
 
   class InfoField {

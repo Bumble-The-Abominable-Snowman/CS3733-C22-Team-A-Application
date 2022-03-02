@@ -297,7 +297,7 @@ public class DataViewCtrl extends MasterCtrl {
     else {
       // wait what how did you get here
     }
-    dvSelectionManager = new DVSelectionManager(inputVBox);
+    dvSelectionManager = new DVSelectionManager(inputVBox, this);
   }
 
   @FXML
