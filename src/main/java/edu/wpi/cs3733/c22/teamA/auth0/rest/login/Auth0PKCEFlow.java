@@ -1,5 +1,12 @@
 package edu.wpi.cs3733.c22.teamA.auth0.rest.login;
 
+import com.auth0.AuthorizeUrl;
+import com.auth0.client.mgmt.ManagementAPI;
+import com.auth0.client.mgmt.filter.UserFilter;
+import com.auth0.exception.APIException;
+import com.auth0.exception.Auth0Exception;
+import com.auth0.json.mgmt.users.User;
+import com.auth0.net.Request;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.auth0.UserInfo;
@@ -57,9 +64,10 @@ public class Auth0PKCEFlow {
 
     }
 
-    private static final String DOMAIN = "dev-x7bjt62i.us.auth0.com";
-    private static final String CLIENT_ID = "1vU3krUnEN7icaE4EHT8lEtQLFfzyR0Y";
-    private static final String REDIRECT_URI = "https://vigorous-payne-ebb69d.netlify.app/";
+    public static final String DOMAIN = "dev-x7bjt62i.us.auth0.com";
+    public static final String CLIENT_ID = "1vU3krUnEN7icaE4EHT8lEtQLFfzyR0Y";
+    public static final String CLIENT_SECRET = "uOp5D53UbuLu-qJEPUWMPrx4HzNrsd5lSBHMjkq_OP1vn6hhLa_UR6LGyLcHpAz_";
+    public static final String REDIRECT_URI = "https://vigorous-payne-ebb69d.netlify.app/";
 
     public static String createCodeVerifier() {
         final SecureRandom sr = new SecureRandom();
@@ -113,14 +121,20 @@ public class Auth0PKCEFlow {
                 try (RESTAuth0Client client = buildAuth0Client(null)) {
                     tokenInfo = client.getOauthToken(CLIENT_ID, code, flowInfo.getVerifier(), REDIRECT_URI);
 
-                    return JWTUtils.verifyToken(tokenInfo.getIdToken()).map(jwt -> {
+
+                    Optional<UserInfo> userInfo = JWTUtils.verifyToken(tokenInfo.getIdToken()).map(jwt -> {
                         return UserInfo.builder()
                                 .jwtToken(tokenInfo.getIdToken())
                                 .email(jwt.getClaim("email").asString())
                                 .name(jwt.getClaim("name").asString())
                                 .avatarURL(jwt.getClaim("picture").asString())
                                 .build();
+//                                .mongodbUsername(jwt.getClaim("mangodbUsername").asString())
+//                                .mongodbPassword(jwt.getClaim("mangodbPassword").asString())
                     });
+
+                    userInfo.ifPresent(u -> u.setAuth0OauthResponse(tokenInfo));
+                    return userInfo;
                 }
             }
         }

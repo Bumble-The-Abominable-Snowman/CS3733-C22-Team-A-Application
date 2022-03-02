@@ -1,6 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.auth0;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import edu.wpi.cs3733.c22.teamA.auth0.rest.login.Auth0OauthResponse;
 
 import java.beans.ConstructorProperties;
 import java.util.Objects;
@@ -11,6 +12,9 @@ public class UserInfo {
     private final String email;
     private final String avatarURL;
     private final String jwtToken;
+    private Auth0OauthResponse auth0OauthResponse;
+//    private final String mongodbUsername;
+//    private final String mongodbPassword;
 
     @JsonCreator
     @ConstructorProperties({"name", "email", "avatarURL", "jwtToken"})
@@ -19,6 +23,8 @@ public class UserInfo {
         this.email = email;
         this.avatarURL = avatarURL;
         this.jwtToken = jwtToken;
+//        this.mongodbUsername = mongodbUsername;
+//        this.mongodbPassword = mongodbPassword;
     }
 
     public String getName() {
@@ -32,6 +38,22 @@ public class UserInfo {
     public String getAvatarURL() {
         return avatarURL;
     }
+
+    public Auth0OauthResponse getAuth0OauthResponse() {
+        return auth0OauthResponse;
+    }
+    public void setAuth0OauthResponse(Auth0OauthResponse a) {
+        this.auth0OauthResponse = a;
+    }
+
+//
+//    public String getMongodbUsername() {
+//        return this.mongodbUsername;
+//    }
+//
+//    public String getMongodbPassword() {
+//        return this.mongodbPassword;
+//    }
 
     public String getJwtToken() {
         return jwtToken;

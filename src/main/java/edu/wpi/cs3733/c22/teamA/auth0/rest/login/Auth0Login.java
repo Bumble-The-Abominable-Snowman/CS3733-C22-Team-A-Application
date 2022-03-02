@@ -1,5 +1,14 @@
 package edu.wpi.cs3733.c22.teamA.auth0.rest.login;
 
+import com.auth0.client.auth.AuthAPI;
+import com.auth0.client.mgmt.ManagementAPI;
+import com.auth0.client.mgmt.filter.UserFilter;
+import com.auth0.exception.APIException;
+import com.auth0.exception.Auth0Exception;
+import com.auth0.json.auth.TokenHolder;
+import com.auth0.json.mgmt.users.User;
+import com.auth0.net.AuthRequest;
+import com.auth0.net.Request;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.auth0.UserInfo;
 import javafx.application.Platform;
@@ -54,6 +63,8 @@ public class Auth0Login {
                         Unchecked.throwChecked(ex);
                     }
                 }
+
+
             });
 
             engine.load(flow.getAuthorizeUrl());
