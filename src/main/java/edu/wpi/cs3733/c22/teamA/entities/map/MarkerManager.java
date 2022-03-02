@@ -98,16 +98,16 @@ public class MarkerManager {
 
   private void getFloorLocations(String floor) {
     for (Location l : allLocations) {
-      if (floor.equals(l.getFloor())) {
+      if (floor.equals(l.getStringFields().get("floor"))) {
         floorLocations.add(l);
-        currentFloorIDs.add(l.getNodeID());
+        currentFloorIDs.add(l.getStringFields().get("node_id"));
       }
     }
   }
 
   private void getEquipmentLocations() {
     for (Equipment e : allEquipments) {
-      if (currentFloorIDs.contains(e.getCurrentLocation())) {
+      if (currentFloorIDs.contains(e.getStringFields().get("current_location"))) {
         floorEquipment.add(e);
       }
     }
@@ -115,7 +115,7 @@ public class MarkerManager {
 
   private void getSRLocations() {
     for (SR sr : allSRs) {
-      if (currentFloorIDs.contains( ((Location) sr.getFields().get("end_location")).getNodeID())) {
+      if (currentFloorIDs.contains( sr.getStringFields().get("end_location"))) {
         floorSRs.add(sr);
       }
     }
@@ -128,8 +128,7 @@ public class MarkerManager {
   public List<Equipment> returnDirtyEquipmentLocations() {
       List<Equipment> equips = new ArrayList<>();
       for (Equipment equip : floorEquipment) {
-          if (!equip.getIsClean())
-              equips.add(equip);
+          if (!Boolean.parseBoolean(equip.getStringFields().get("is_clean"))) equips.add(equip);
       }
       return equips;
   }
@@ -137,7 +136,7 @@ public class MarkerManager {
   public List<Equipment> returnCleanEquipmentLocations() {
       List<Equipment> equips = new ArrayList<>();
       for (Equipment equip : floorEquipment) {
-          if (equip.getIsClean())
+          if (Boolean.parseBoolean(equip.getStringFields().get("is_clean")))
               equips.add(equip);
       }
       return equips;
@@ -159,7 +158,7 @@ public class MarkerManager {
     for (Location l : floorLocations) {
       LocationMarker newLocationMarker = MarkerMaker.makeLocationMarker(l, mapLayoutX, mapLayoutY);
       locationMarkers.add(newLocationMarker);
-      idToLocationMarker.put(l.getNodeID(), newLocationMarker);
+      idToLocationMarker.put(l.getStringFields().get("node_id"), newLocationMarker);
       setDragLocation(newLocationMarker, selectionManager, checkBoxManager, gesturePaneManager);
     }
   }
@@ -171,7 +170,7 @@ public class MarkerManager {
     for (Equipment e : floorEquipment) {
       EquipmentMarker newEquipmentMarker =
           MarkerMaker.makeEquipmentMarker(
-              e, idToLocationMarker.get(e.getCurrentLocation()), mapLayoutX, mapLayoutY);
+              e, idToLocationMarker.get(e.getStringFields().get("current_location")), mapLayoutX, mapLayoutY);
       equipmentMarkers.add(newEquipmentMarker);
       setDragEquipment(newEquipmentMarker, selectionManager, checkBoxManager, gesturePaneManager);
     }
@@ -184,7 +183,7 @@ public class MarkerManager {
     for (SR sr : floorSRs) {
       SRMarker newSRMarker =
           MarkerMaker.makeSRMarker(
-              sr, idToLocationMarker.get(((Location) sr.getFields().get("end_location")).getNodeID()), mapLayoutX, mapLayoutY);
+              sr, idToLocationMarker.get(sr.getStringFields().get("end_location")), mapLayoutX, mapLayoutY);
       serviceRequestMarkers.add(newSRMarker);
       setDragSR(newSRMarker, selectionManager, checkBoxManager, gesturePaneManager);
     }
@@ -192,7 +191,7 @@ public class MarkerManager {
 
   private void initialDraw() {
     for (LocationMarker l : locationMarkers) {
-        if(!l.getLocation().getNodeID().equals("N/A")) {
+        if(!l.getLocation().getStringFields().get("node_id").equals("N/A")) {
             l.draw(anchorPane);
         }
       if (l.getEquipmentMarker() != null) {
@@ -208,15 +207,8 @@ public class MarkerManager {
       // only one new location at a time
       if(!idToLocationMarker.containsKey("New")) {
           // create fields so shit isnt null and the vbox component wont break
-          Location newLocation = new Location();
-          newLocation.setNodeID("New");
-          newLocation.setShortName("New");
-          newLocation.setLongName("New");
-          newLocation.setFloor(gesturePaneManager.getCurrentFloor());
-          newLocation.setNodeType("New");
-          newLocation.setBuilding("Tower");
-          newLocation.setYCoord(10);
-          newLocation.setXCoord(10);
+          Location newLocation = new Location("New", 10, 10, "1", "Tower", "New", "New", "New");
+
           // make marker for location where its actually usable
           LocationMarker newLocationMarker = MarkerMaker.makeLocationMarker(newLocation, 10, 10);
           locationMarkers.add(newLocationMarker);
@@ -323,7 +315,7 @@ public class MarkerManager {
                 dragPopupBool = false;
                 return;
             }
-            if (equipmentMarker.getEquipment().getIsClean() == false){
+            if (!Boolean.parseBoolean(equipmentMarker.getEquipment().getStringFields().get("is_clean"))){
                 JOptionPane pane = new JOptionPane("Dirty equipment cannot be dragged", JOptionPane.ERROR_MESSAGE);
                 JDialog dialog = pane.createDialog("Drag error");
                 dialog.setVisible(true);
@@ -368,11 +360,11 @@ public class MarkerManager {
               // check hypotenuse between this equipment and every location on floor
               double radiusCheck =
                   Math.sqrt(
-                      Math.pow(l.getXCoord() - button.getLayoutX(), 2)
-                          + (Math.pow(l.getYCoord() - button.getLayoutY(), 2)));
+                      Math.pow(Integer.parseInt(l.getStringFields().get("xcoord")) - button.getLayoutX(), 2)
+                          + (Math.pow(Integer.parseInt(l.getStringFields().get("ycoord")) - button.getLayoutY(), 2)));
               if (radius > radiusCheck) {
-                button.setLayoutX(l.getXCoord());
-                button.setLayoutY(l.getYCoord() - 20);
+                button.setLayoutX(Integer.parseInt(l.getStringFields().get("xcoord")));
+                button.setLayoutY(Integer.parseInt(l.getStringFields().get("ycoord")) - 20);
               }
             }
             Label correspondingLabel = equipmentMarker.getLabel();
@@ -395,13 +387,12 @@ public class MarkerManager {
           button.setCursor(Cursor.HAND);
           boolean isSnapped = false;
           Location nearestLocation = floorLocations.get(0);
-          System.out.println(nearestLocation.getLongName() + " <- default location");
           double radiusOfNearest = Integer.MAX_VALUE;
           for (Location l : floorLocations) {
             double radiusCheck =
                 Math.sqrt(
-                    Math.pow(l.getXCoord() - button.getLayoutX(), 2)
-                        + (Math.pow(l.getYCoord() - button.getLayoutY(), 2)));
+                    Math.pow(Integer.parseInt(l.getStringFields().get("xcoord")) - button.getLayoutX(), 2)
+                        + Math.pow(Integer.parseInt(l.getStringFields().get("ycoord")) - button.getLayoutY(), 2));
             // update nearest location
             if (radiusCheck < radiusOfNearest) {
               radiusOfNearest = radiusCheck;
@@ -415,10 +406,10 @@ public class MarkerManager {
             }
           }
           if (!isSnapped) {
-            button.setLayoutX(nearestLocation.getXCoord());
-            button.setLayoutY(nearestLocation.getYCoord() - 24);
+            button.setLayoutX(Integer.parseInt(nearestLocation.getStringFields().get("xcoord")));
+            button.setLayoutY(Integer.parseInt(nearestLocation.getStringFields().get("ycoord")) - 24);
           }
-            if (!(nearestLocation.getNodeType().equals("STOR")) && !(nearestLocation.getNodeType().equals("PATI"))){
+            if (!(nearestLocation.getStringFields().get("node_type").equals("STOR")) && !(nearestLocation.getStringFields().get("node_type").equals("PATI"))){
                 JOptionPane pane = new JOptionPane("Equipment cannot be stored here", JOptionPane.ERROR_MESSAGE);
                 JDialog dialog = pane.createDialog("Drag error");
                 dialog.setVisible(true);
@@ -433,8 +424,9 @@ public class MarkerManager {
           // TODO this function should update database but getting errors
 
              try {
-                 String equipmentID = equipmentMarker.getEquipment().getEquipmentID();
-                 equipmentDAO.updateMedicalEquipment(equipmentID,"current_location", nearestLocation.getNodeID());
+                 String equipmentID = equipmentMarker.getEquipment().getStringFields().get("equipment_id");
+                 equipmentMarker.getEquipment().getStringFields().put("current_location", nearestLocation.getStringFields().get("node_id"));
+                 equipmentDAO.updateMedicalEquipment(equipmentMarker.getEquipment());
              } catch (SQLException e) {
                  e.printStackTrace();
              }
@@ -510,11 +502,11 @@ public class MarkerManager {
               // check hypotenuse between this equipment and every location on floor
               double radiusCheck =
                   Math.sqrt(
-                      Math.pow(l.getXCoord() - button.getLayoutX(), 2)
-                          + (Math.pow(l.getYCoord() - button.getLayoutY(), 2)));
+                      Math.pow(Integer.parseInt(l.getStringFields().get("xcoord")) - button.getLayoutX(), 2)
+                          + (Math.pow(Integer.parseInt(l.getStringFields().get("ycoord")) - button.getLayoutY(), 2)));
               if (radius > radiusCheck) {
-                button.setLayoutX(l.getXCoord());
-                button.setLayoutY(l.getYCoord() - 20);
+                button.setLayoutX(Integer.parseInt(l.getStringFields().get("xcoord")));
+                button.setLayoutY(Integer.parseInt(l.getStringFields().get("ycoord")) - 20);
               }
             }
 
@@ -542,23 +534,23 @@ public class MarkerManager {
           for (Location l : floorLocations) {
             double radiusCheck =
                 Math.sqrt(
-                    Math.pow(l.getXCoord() - button.getLayoutX(), 2)
-                        + (Math.pow(l.getYCoord() - button.getLayoutY(), 2)));
+                    Math.pow(Integer.parseInt(l.getStringFields().get("xcoord")) - button.getLayoutX(), 2)
+                        + Math.pow(Integer.parseInt(l.getStringFields().get("ycoord")) - button.getLayoutY(), 2));
             // update nearest location
             if (radiusCheck < radiusOfNearest) {
               radiusOfNearest = radiusCheck;
               nearestLocation = l;
             }
             // when it finds the location already snapped to, do this
-            if (button.getLayoutX() == l.getXCoord() && button.getLayoutY() == l.getYCoord()) {
+            if (button.getLayoutX() == Integer.parseInt(l.getStringFields().get("xcoord")) && button.getLayoutY() == Integer.parseInt(l.getStringFields().get("ycoord"))) {
               nearestLocation = l;
               isSnapped = true;
               break;
             }
           }
           if (!isSnapped) {
-            button.setLayoutX(nearestLocation.getXCoord());
-            button.setLayoutY(nearestLocation.getYCoord() - 24);
+            button.setLayoutX(Integer.parseInt(nearestLocation.getStringFields().get("xcoord")));
+            button.setLayoutY(Integer.parseInt(nearestLocation.getStringFields().get("ycoord")) - 24);
           }
           // update label to new location
           Label correspondingLabel = srMarker.getLabel();

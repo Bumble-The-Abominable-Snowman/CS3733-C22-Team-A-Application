@@ -10,6 +10,10 @@ import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
@@ -161,7 +165,7 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
   }
 
   @FXML
-  private void saveAPI() throws IllegalAccessException, SQLException, InvocationTargetException {
+  private void saveAPI() throws IllegalAccessException, SQLException, InvocationTargetException, ParseException {
     List<teamA_API.entities.SR> list = Main.getRequestList();
     ServiceRequestDerbyImpl data = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
     for (teamA_API.entities.SR req : list) {
@@ -179,12 +183,12 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
               employeeAssignedAPI.getEmail(),
               employeeAssignedAPI.getPhoneNum(),
               employeeAssignedAPI.getAddress(),
-              employeeAssignedAPI.startDate);
+              new SimpleDateFormat("yyyy-MM-dd").parse(employeeAssignedAPI.getStartDate()));
 
       EmployeeDerbyImpl employeeDerby = new EmployeeDerbyImpl();
       boolean doesEmployeeAssignedNotExist = false;
       for (Employee e: employeeDerby.getEmployeeList()) {
-        if (e.getEmployeeID().equals(employeeRequested.getEmployeeID()))
+        if (e.getStringFields().get("employee_id").equals(employeeRequested.getStringFields().get("employee_id")))
         {
           doesEmployeeAssignedNotExist = true;
         }
@@ -198,7 +202,7 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
                 employeeAssignedAPI.getEmail(),
                 employeeAssignedAPI.getPhoneNum(),
                 employeeAssignedAPI.getAddress(),
-                employeeAssignedAPI.startDate);
+                new SimpleDateFormat("yyyy-MM-dd").parse(employeeAssignedAPI.getStartDate()));
 
       }
 

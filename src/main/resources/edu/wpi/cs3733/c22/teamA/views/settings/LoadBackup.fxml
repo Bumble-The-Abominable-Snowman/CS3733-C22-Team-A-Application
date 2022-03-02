@@ -19,7 +19,7 @@
 
 <GridPane minHeight="600.0" minWidth="960.0" prefHeight="600.0" prefWidth="960.0" styleClass="background" stylesheets="@../../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.settings.LoadBackupCtrl">
    <columnConstraints>
-      <ColumnConstraints hgrow="ALWAYS" maxWidth="400.0" />
+      <ColumnConstraints hgrow="ALWAYS" prefWidth="400.0" />
       <ColumnConstraints hgrow="ALWAYS" prefWidth="325.0" />
       <ColumnConstraints hgrow="ALWAYS" prefWidth="325.0" />
       <ColumnConstraints hgrow="NEVER" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
@@ -33,13 +33,22 @@
       <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="NEVER" />
    </rowConstraints>
    <children>
-      <JFXButton fx:id="loadBackupButton" buttonType="RAISED" mnemonicParsing="false" onAction="#loadBackup" styleClass="bodyFormat" text="Load Backup" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bodyFormat" text="Selected CSV file:" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+      <JFXButton fx:id="loadBackupButton" buttonType="RAISED" mnemonicParsing="false" onAction="#loadBackup" styleClass="bodyFormat" text="Load Backup" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets bottom="50.0" />
+         </GridPane.margin></JFXButton>
+      <Text fx:id="selectedLabel" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bodyFormat" text="Selected CSV file:" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
       <Text fx:id="selectedFileText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bodyFormat" text="None" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="110.49755859375" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets />
          </GridPane.margin></Text>
-      <JFXComboBox fx:id="TypeCSV" prefHeight="26.0" prefWidth="116.0" styleClass="bodyFormat" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
+      <Text fx:id="insertLabel" fill="WHITE" layoutX="352.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bodyFormat" text="Import into table:" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
+      <Text fx:id="statusText" fill="WHITE" layoutX="352.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bodyFormat" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets top="65.0" />
+         </GridPane.margin>
+      </Text>
+      <JFXComboBox fx:id="TypeCSV" prefHeight="26.0" prefWidth="135.0" styleClass="bodyFormat" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
       <JFXButton fx:id="loadFromSystemButton" buttonType="RAISED" onAction="#loadFromSystem" styleClass="bodyFormat" text="Load from system" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
       <JFXDrawer fx:id="drawer" defaultDrawerSize="2000.0" prefWidth="300.0" stylesheets="@../css/styleSheet.css" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.rowSpan="2" GridPane.vgrow="ALWAYS">
          <children>

@@ -117,7 +117,7 @@
                <children>
                   <JFXButton fx:id="homeButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToHome" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Home" textAlignment="CENTER" textFill="WHITE">
                      <graphic>
-                        <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="homeIcon" fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/Home Icon.png" />
                            </image>
@@ -126,7 +126,7 @@
                   </JFXButton>
                   <JFXButton fx:id="selectSRButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToSelectServiceRequest" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="New Service Request" textAlignment="CENTER" textFill="WHITE">
                      <graphic>
-                        <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="newSRIcon" fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/New Service Request Icon.png" />
                            </image>
@@ -135,7 +135,7 @@
                   </JFXButton>
                   <JFXButton fx:id="mapButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToMap" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Map" textAlignment="CENTER" textFill="WHITE">
                      <graphic>
-                        <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="mapIcon" fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/Map Icon.png" />
                            </image>
@@ -144,7 +144,7 @@
                   </JFXButton>
                   <JFXButton fx:id="viewSRButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToServiceRequestData" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Service Requests" textAlignment="CENTER" textFill="WHITE">
                      <graphic>
-                        <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="viewSRIcon" fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/View Service Request Icon.png" />
                            </image>
@@ -153,16 +153,16 @@
                   </JFXButton>
                   <JFXButton fx:id="viewEmployeesButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToEmployeeData" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Employees" textAlignment="CENTER" textFill="WHITE">
                      <graphic>
-                        <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="viewEmployeesIcon" fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/Equipment Icon.png" />
+                              <Image url="@../images/View%20Employees%20Icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </JFXButton>
                   <JFXButton fx:id="viewLocationsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToLocationData" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Locations" textAlignment="CENTER" textFill="WHITE">
                      <graphic>
-                        <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="viewLocationsIcon" fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/View Locations Icon.png" />
                            </image>
@@ -171,7 +171,7 @@
                   </JFXButton>
                   <JFXButton fx:id="viewEquipmentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToEquipmentData" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Equipment" textAlignment="CENTER" textFill="WHITE">
                      <graphic>
-                        <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="viewEquipmentIcon" fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/Equipment Icon.png" />
                            </image>
@@ -180,7 +180,7 @@
                   </JFXButton>
                   <JFXButton fx:id="viewMedicineButton" alignment="BASELINE_LEFT" onAction="#goToMedicineData" prefHeight="100.0" prefWidth="2000.0" text="View Medicine">
                      <graphic>
-                        <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="viewMedicineIcon" fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/Medicine Icon.png" />
                            </image>
@@ -189,7 +189,7 @@
                   </JFXButton>
                   <JFXButton fx:id="settingsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToSettings" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Settings" textAlignment="CENTER" textFill="WHITE">
                      <graphic>
-                        <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="settingsIcon" fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/Settings Icon.png" />
                            </image>
@@ -198,7 +198,7 @@
                   </JFXButton>
                   <JFXButton fx:id="aboutButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToAbout" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="About" textAlignment="CENTER" textFill="WHITE">
                      <graphic>
-                        <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="aboutIcon" fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/About Icon.png" />
                            </image>
@@ -207,7 +207,7 @@
                   </JFXButton>
                   <JFXButton fx:id="loginButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToLogin" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Log Out" textAlignment="CENTER" textFill="WHITE">
                      <graphic>
-                        <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="loginIcon" fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/Door Icon.png" />
                            </image>
@@ -216,7 +216,7 @@
                   </JFXButton>
                   <JFXButton fx:id="exitButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#exitApp" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Exit" textAlignment="CENTER" textFill="WHITE">
                      <graphic>
-                        <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="exitIcon" fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/Exit Icon.png" />
                            </image>

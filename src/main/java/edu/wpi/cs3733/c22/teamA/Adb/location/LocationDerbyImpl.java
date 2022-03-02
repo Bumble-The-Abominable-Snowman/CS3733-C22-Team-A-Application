@@ -10,9 +10,8 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.text.ParseException;
+import java.util.*;
 
 public class LocationDerbyImpl implements LocationDAO {
   List<Location> Location;
@@ -70,14 +69,14 @@ public class LocationDerbyImpl implements LocationDAO {
 
   public void enterLocationNode(Location location) {
     enterLocationNode(
-        location.getNodeID(),
-        location.getXCoord(),
-        location.getYCoord(),
-        location.getFloor(),
-        location.getBuilding(),
-        location.getNodeType(),
-        location.getLongName(),
-        location.getShortName());
+        location.getStringFields().get("node_id"),
+        Integer.parseInt(location.getStringFields().get("xcoord")),
+            Integer.parseInt(location.getStringFields().get("ycoord")),
+        location.getStringFields().get("floor"),
+        location.getStringFields().get("building"),
+        location.getStringFields().get("node_type"),
+        location.getStringFields().get("long_name"),
+        location.getStringFields().get("short_name"));
   }
 
   // Method to add node to location table.
@@ -120,33 +119,45 @@ public class LocationDerbyImpl implements LocationDAO {
   }
 
   // Method to update nodes from location table.
-  public void updateLocation(String ID, String field, Object change) {
+  public void updateLocation(Location e) throws SQLException {
 
-    String tableName = "TowerLocations";
-    try {
-      Statement updateCoords = Adb.connection.createStatement();
+    Statement get = Adb.connection.createStatement();
 
-      String str = "";
-      if (change instanceof String) {
-        str =
+    HashMap<String, String> e_string_fields = e.getStringFields();
+
+    String str =
             String.format(
-                "update " + tableName + " set " + field + " = '%s' where node_id = '%s'",
-                change,
-                ID);
-      } else {
-        str =
-            String.format(
-                "update " + tableName + " set " + field + " = " + change + " where node_id = '%s'",
-                ID);
+                    "SELECT * FROM TowerLocations WHERE node_id = '%s'",
+                    e_string_fields.get("node_id"));
+
+    ResultSet resultSet = get.executeQuery(str);
+    ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+
+    if (resultSet.next()) {
+      for (int i = 1; i < resultSetMetaData.getColumnCount() + 1; i++) {
+        String returnValOld = resultSet.getString(i);
+        String columnName = resultSetMetaData.getColumnName(i).toLowerCase(Locale.ROOT);
+
+        Statement update = Adb.connection.createStatement();
+
+        if (!returnValOld.equals(e_string_fields.get(columnName))) {
+          if(columnName.equals("xcoord") || columnName.equals("ycoord")){
+            str =
+                    String.format(
+                            "UPDATE TowerLocations SET " + columnName + " = %s WHERE node_id = '%s'",
+                            e_string_fields.get(columnName),
+                            e_string_fields.get("node_id"));
+          }else{
+            str =
+                    String.format(
+                            "UPDATE TowerLocations SET " + columnName + " = '%s' WHERE node_id = '%s'",
+                            e_string_fields.get(columnName),
+                            e_string_fields.get("node_id"));
+          }
+
+          update.execute(str);
+        }
       }
-      updateCoords.execute(str);
-
-    } catch (SQLException e) {
-      System.out.println("Error Caught :");
-      System.out.println("Error Code: " + e.getErrorCode());
-      System.out.println("SQL State: " + e.getSQLState());
-      System.out.println(e.getMessage());
-      e.printStackTrace();
     }
   }
 
@@ -191,7 +202,7 @@ public class LocationDerbyImpl implements LocationDAO {
   }
 
   // Read from Location CSV
-  public static List<Location> readLocationCSV(String csvFilePath) throws IOException {
+  public static List<Location> readLocationCSV(String csvFilePath) throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
 
@@ -215,18 +226,18 @@ public class LocationDerbyImpl implements LocationDAO {
       while (dataScanner.hasNext()) {
 
         String data = dataScanner.next();
-        if (dataIndex == 0) thisLocation.setNodeID(data);
+        if (dataIndex == 0) thisLocation.setFieldByString("node_id",data);
         else if (dataIndex == 1) {
           intData = Integer.parseInt(data);
-          thisLocation.setXCoord(intData);
+          thisLocation.setFieldByString("xcoord", data);
         } else if (dataIndex == 2) {
           intData = Integer.parseInt(data);
-          thisLocation.setYCoord(intData);
-        } else if (dataIndex == 3) thisLocation.setFloor(data);
-        else if (dataIndex == 4) thisLocation.setBuilding(data);
-        else if (dataIndex == 5) thisLocation.setNodeType(data);
-        else if (dataIndex == 6) thisLocation.setLongName(data);
-        else if (dataIndex == 7) thisLocation.setShortName(data);
+          thisLocation.setFieldByString("ycoord", data);
+        } else if (dataIndex == 3) thisLocation.setFieldByString("floor", data);
+        else if (dataIndex == 4) thisLocation.setFieldByString("building", data);
+        else if (dataIndex == 5) thisLocation.setFieldByString("node_type", data);
+        else if (dataIndex == 6) thisLocation.setFieldByString("long_name", data);
+        else if (dataIndex == 7) thisLocation.setFieldByString("short_name", data);
         else System.out.println("Invalid data, I broke::" + data);
         dataIndex++;
       }
@@ -240,7 +251,7 @@ public class LocationDerbyImpl implements LocationDAO {
     return list;
   }
 
-  public static List<Location> readLocationCSVfile(String csvFilePath) throws IOException {
+  public static List<Location> readLocationCSVfile(String csvFilePath) throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
     File file = new File(csvFilePath);
@@ -262,18 +273,16 @@ public class LocationDerbyImpl implements LocationDAO {
       while (dataScanner.hasNext()) {
 
         String data = dataScanner.next();
-        if (dataIndex == 0) thisLocation.setNodeID(data);
+        if (dataIndex == 0) thisLocation.setFieldByString("node_id", data);
         else if (dataIndex == 1) {
-          intData = Integer.parseInt(data);
-          thisLocation.setXCoord(intData);
+          thisLocation.setFieldByString("xcoord", data);
         } else if (dataIndex == 2) {
-          intData = Integer.parseInt(data);
-          thisLocation.setYCoord(intData);
-        } else if (dataIndex == 3) thisLocation.setFloor(data);
-        else if (dataIndex == 4) thisLocation.setBuilding(data);
-        else if (dataIndex == 5) thisLocation.setNodeType(data);
-        else if (dataIndex == 6) thisLocation.setLongName(data);
-        else if (dataIndex == 7) thisLocation.setShortName(data);
+          thisLocation.setFieldByString("ycoord", data);
+        } else if (dataIndex == 3) thisLocation.setFieldByString("floor", data);
+        else if (dataIndex == 4) thisLocation.setFieldByString("building", data);
+        else if (dataIndex == 5) thisLocation.setFieldByString("node_type", data);
+        else if (dataIndex == 6) thisLocation.setFieldByString("long_name", data);
+        else if (dataIndex == 7) thisLocation.setFieldByString("short_name", data);
         else System.out.println("Invalid data, I broke::" + data);
         dataIndex++;
       }
@@ -302,19 +311,19 @@ public class LocationDerbyImpl implements LocationDAO {
     // write location data
     for (Location thisLocation : List) {
 
-      String xCord = String.valueOf(thisLocation.getXCoord());
-      String yCord = String.valueOf(thisLocation.getYCoord());
+      String xCord = String.valueOf(thisLocation.getStringFields().get("xcoord"));
+      String yCord = String.valueOf(thisLocation.getStringFields().get("ycoord"));
       writer.write(
           String.join(
               ",",
-              thisLocation.getNodeID(),
+              thisLocation.getStringFields().get("node_id"),
               xCord,
               yCord,
-              thisLocation.getFloor(),
-              thisLocation.getBuilding(),
-              thisLocation.getNodeType(),
-              thisLocation.getLongName(),
-              thisLocation.getShortName()));
+              thisLocation.getStringFields().get("floor"),
+              thisLocation.getStringFields().get("building"),
+              thisLocation.getStringFields().get("node_type"),
+              thisLocation.getStringFields().get("long_name"),
+              thisLocation.getStringFields().get("short_name")));
       writer.newLine();
     }
     writer.close(); // close the writer
@@ -337,27 +346,29 @@ public class LocationDerbyImpl implements LocationDAO {
         Statement addStatement = Adb.connection.createStatement();
         addStatement.executeUpdate(
             "INSERT INTO TowerLocations(node_id,xcoord,ycoord,floor,building,node_type,long_name,short_name) VALUES('"
-                + l.getNodeID()
+                + l.getStringFields().get("node_id")
                 + "', "
-                + l.getXCoord()
+                + l.getStringFields().get("xcoord")
                 + ", "
-                + l.getYCoord()
+                + l.getStringFields().get("ycoord")
                 + ", '"
-                + l.getFloor()
+                + l.getStringFields().get("floor")
                 + "', '"
-                + l.getBuilding()
+                + l.getStringFields().get("building")
                 + "', '"
-                + l.getNodeType()
+                + l.getStringFields().get("node_type")
                 + "', '"
-                + l.getLongName()
+                + l.getStringFields().get("long_name")
                 + "', '"
-                + l.getShortName()
+                + l.getStringFields().get("short_name")
                 + "')");
       }
     } catch (SQLException | IOException e) {
       System.out.println("Insertion on TowerLocations failed!");
       e.printStackTrace();
       return;
+    } catch (ParseException e) {
+      e.printStackTrace();
     }
     return;
   }
@@ -379,24 +390,24 @@ public class LocationDerbyImpl implements LocationDAO {
         Statement addStatement = Adb.connection.createStatement();
         addStatement.executeUpdate(
                 "INSERT INTO TowerLocations(node_id,xcoord,ycoord,floor,building,node_type,long_name,short_name) VALUES('"
-                        + l.getNodeID()
+                        + l.getStringFields().get("node_id")
                         + "', "
-                        + l.getXCoord()
+                        + l.getStringFields().get("xcoord")
                         + ", "
-                        + l.getYCoord()
+                        + l.getStringFields().get("ycoord")
                         + ", '"
-                        + l.getFloor()
+                        + l.getStringFields().get("floor")
                         + "', '"
-                        + l.getBuilding()
+                        + l.getStringFields().get("building")
                         + "', '"
-                        + l.getNodeType()
+                        + l.getStringFields().get("node_type")
                         + "', '"
-                        + l.getLongName()
+                        + l.getStringFields().get("long_name")
                         + "', '"
-                        + l.getShortName()
+                        + l.getStringFields().get("short_name")
                         + "')");
       }
-    } catch (SQLException | IOException e) {
+    } catch (SQLException | IOException | ParseException e) {
       System.out.println("Insertion on TowerLocations failed!");
       e.printStackTrace();
       return;

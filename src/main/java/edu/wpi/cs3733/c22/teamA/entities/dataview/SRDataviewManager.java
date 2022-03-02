@@ -91,12 +91,12 @@ public class SRDataviewManager {
 				.get(2)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(((Location)param.getValue().getValue().sr.getFields().get("start_location")).getShortName()));
+								new SimpleStringProperty(((Location)param.getValue().getValue().sr.getFields().get("start_location")).getStringFields().get("short_name")));
 		srColumns
 				.get(3)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(((Location)param.getValue().getValue().sr.getFields().get("end_location")).getShortName()));
+								new SimpleStringProperty(((Location)param.getValue().getValue().sr.getFields().get("end_location")).getStringFields().get("short_name")));
 		srColumns
 				.get(4)
 				.setCellValueFactory(
@@ -172,12 +172,12 @@ public class SRDataviewManager {
 				.get(2)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(((Location)param.getValue().getValue().sr.getFields().get("start_location")).getShortName()));
+								new SimpleStringProperty(((Location)param.getValue().getValue().sr.getFields().get("start_location")).getStringFields().get("short_name")));
 		srColumns
 				.get(3)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(((Location)param.getValue().getValue().sr.getFields().get("end_location")).getShortName()));
+								new SimpleStringProperty(((Location)param.getValue().getValue().sr.getFields().get("end_location")).getStringFields().get("short_name")));
 		srColumns
 				.get(4)
 				.setCellValueFactory(
@@ -227,22 +227,21 @@ public class SRDataviewManager {
 		dataViewCtrl.setupViewDetailsAndModify();
 	}
 
-	public void details(StringBuilder detailLabel){
+	public StringBuilder details(StringBuilder detailLabel){
 		detailLabel = new StringBuilder();
 
 		SR sr = srList.get(table.getSelectionModel().getSelectedIndex());
-
 		for (String key : sr.getStringFields().keySet()) {
-			if (!(Objects.equals(key, "request_id")
-					|| Objects.equals(key, "start_location")
-					|| Objects.equals(key, "end_location")
-					|| Objects.equals(key, "employee_requested")
-					|| Objects.equals(key, "employee_assigned")
-					|| Objects.equals(key, "request_time")
-					|| Objects.equals(key, "request_status")
-					|| Objects.equals(key, "request_priority")
-					|| Objects.equals(key, "comments")
-					|| Objects.equals(key, "sr_type")))
+			if (!(key.equals("request_id")
+					|| key.equals("start_location")
+					|| key.equals("end_location")
+					|| key.equals("employee_requested")
+					|| key.equals("employee_assigned")
+					|| key.equals("request_time")
+					|| key.equals("request_status")
+					|| key.equals("request_priority")
+					|| key.equals("comments")
+					|| key.equals("sr_type")))
 			{
 				detailLabel.append(
 						String.format("%s: %s, ", key, sr.getStringFields().get(key)));
@@ -256,6 +255,8 @@ public class SRDataviewManager {
 		if (detailLabel.length() == 0) {
 			detailLabel = new StringBuilder("No further details  ");
 		}
+
+		return detailLabel;
 	}
 
 	public void modifyPopup(JFXComboBox<String> field, TextArea value, JFXButton updateButton){

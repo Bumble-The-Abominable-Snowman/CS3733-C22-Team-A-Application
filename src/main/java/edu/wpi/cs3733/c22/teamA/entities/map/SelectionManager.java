@@ -7,6 +7,8 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +17,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import lombok.SneakyThrows;
 
 public class SelectionManager {
   private VBox inputVBox;
@@ -62,9 +65,10 @@ public class SelectionManager {
     saveButton = new JFXButton("Save");
     saveButton.setOnAction(
         new EventHandler<ActionEvent>() {
+          @SneakyThrows
           @Override
           public void handle(ActionEvent e) {
-            save(selectedLocation);
+            save();
           }
         });
     clearButton = new JFXButton("Clear");
@@ -245,7 +249,7 @@ public class SelectionManager {
 
   // Delete Location
   public void delete(LocationMarker location) {
-    locationDatabase.deleteLocationNode(location.getLocation().getNodeID());
+    locationDatabase.deleteLocationNode(location.getLocation().getStringFields().get("node_id"));
     location.setButtonVisibility(false);
     location.setLabelVisibility(false);
     clear();
@@ -254,17 +258,16 @@ public class SelectionManager {
   }
 
   // Save Changes
-  public void save(LocationMarker location) {
-    String nodeID = locationFields.get(0).textArea.getText();
-    locationDatabase.updateLocation(
-        nodeID, "xCoord", (int) Double.parseDouble(locationFields.get(1).textArea.getText()));
-    locationDatabase.updateLocation(
-        nodeID, "yCoord", (int) Double.parseDouble(locationFields.get(2).textArea.getText()));
-    locationDatabase.updateLocation(nodeID, "floor", locationFields.get(3).textArea.getText());
-    locationDatabase.updateLocation(nodeID, "building", locationFields.get(4).textArea.getText());
-    locationDatabase.updateLocation(nodeID, "node_type", locationFields.get(5).textArea.getText());
-    locationDatabase.updateLocation(nodeID, "long_Name", locationFields.get(6).textArea.getText());
-    locationDatabase.updateLocation(nodeID, "Short_Name", locationFields.get(7).textArea.getText());
+  public void save() throws SQLException {
+    Location newLocation = new Location( locationFields.get(0).textArea.getText(),
+            (int)Double.parseDouble(locationFields.get(1).textArea.getText()),
+            (int)Double.parseDouble(locationFields.get(2).textArea.getText()),
+            locationFields.get(3).textArea.getText(),
+            locationFields.get(4).textArea.getText(),
+            locationFields.get(5).textArea.getText(),
+            locationFields.get(6).textArea.getText(),
+            locationFields.get(7).textArea.getText());
+   locationDatabase.updateLocation(newLocation);
     markerManager.redrawEditedLocation();
   }
   /*

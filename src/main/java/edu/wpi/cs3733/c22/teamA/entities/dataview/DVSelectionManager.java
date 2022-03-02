@@ -8,6 +8,8 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.controllers.DataViewCtrl;
@@ -15,19 +17,23 @@ import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
+import edu.wpi.cs3733.c22.teamA.entities.Medicine;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import lombok.SneakyThrows;
 import org.w3c.dom.Text;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +46,7 @@ public class DVSelectionManager {
   private List<InfoField> equipmentFields;
   private List<InfoField> srFields;
   private List<InfoField> employeeFields;
+  private List<InfoField> medicineFields;
   private List<String> srNames;
 
   private List<InfoField> currentList;
@@ -52,6 +59,7 @@ public class DVSelectionManager {
   private LocationDAO locationDAO;
   private EmployeeDAO employeeDAO;
   private EquipmentDAO equipmentDAO;
+  private MedicineDAO medicineDAO;
 
   private DataViewCtrl dataViewCtrl;
 
@@ -67,6 +75,7 @@ public class DVSelectionManager {
     locationDAO = new LocationDerbyImpl();
     employeeDAO = new EmployeeDerbyImpl();
     equipmentDAO = new EquipmentDerbyImpl();
+    medicineDAO = new MedicineDerbyImpl();
     currentList = new ArrayList<>();
     this.dataViewCtrl = dataViewCtrl;
   }
@@ -86,7 +95,9 @@ public class DVSelectionManager {
       selected = obj.employee;
       employeeSelected(obj.employee);
     }  else if(sceneFlag == 5) {
-      //medicineSelected(obj.med);
+      System.out.println("here");
+      selected = obj.med;
+      medicineSelected(obj.med);
     }
   }
 
@@ -132,6 +143,7 @@ public class DVSelectionManager {
     fillEquipment();
     fillSR();
     fillEmployee();
+    fillMedicine();
   }
 
   public void fillEmployee() {
@@ -144,6 +156,19 @@ public class DVSelectionManager {
     InfoField address = new InfoField(new Label("Address:"), new JFXTextArea());
     InfoField startDate = new InfoField(new Label("Start Date:"), new JFXTextArea());
     employeeFields = List.of(empID, type, firstName, lastName, email, number, address, startDate);
+  }
+
+  public void fillMedicine(){
+    InfoField medicineID = new InfoField(new Label("Medicine ID"), new JFXTextArea());
+    InfoField genericName = new InfoField(new Label("Generic Name:"), new JFXTextArea());
+    InfoField brandName = new InfoField(new Label("Brand Name:"), new JFXTextArea());
+    InfoField medicineClass = new InfoField(new Label("Medicine Class:"), new JFXTextArea());
+    InfoField uses = new InfoField(new Label("Uses:"), new JFXTextArea());
+    InfoField warning = new InfoField(new Label("Warnings:"), new JFXTextArea());
+    InfoField sideEffects= new InfoField(new Label("Side Effects:"), new JFXTextArea());
+    InfoField form = new InfoField(new Label("Form:"), new JFXTextArea());
+    InfoField dosage = new InfoField(new Label("Dosage:"), new JFXTextArea());
+    medicineFields = List.of(medicineID, genericName, brandName, medicineClass, uses, warning, sideEffects, form, dosage);
   }
 
   public void fillLocations() {
@@ -194,6 +219,20 @@ public class DVSelectionManager {
 
   public void clearVBox() {
     inputVBox.getChildren().clear();
+  }
+
+  public void medicineVBox(){
+    clearVBox();
+    for(int i = 0; i < medicineFields.size(); i++){
+      inputVBox.getChildren().add(medicineFields.get(i).label);
+      inputVBox.getChildren().add(medicineFields.get(i).textArea);
+      medicineFields.get(i).textArea.setEditable(false);
+    }
+    inputVBox.getChildren().add(editButton);
+    inputVBox.getChildren().add(clearButton);
+    inputVBox.getChildren().add(saveButton);
+    inputVBox.getChildren().add(deleteButton);
+    inputVBox.toFront();
   }
 
   public void locationVBox() {
@@ -279,6 +318,18 @@ public class DVSelectionManager {
     }
   }
 
+  private void medicineSelected(Medicine medicine){
+    inputVBox.setDisable(false);
+    saveButton.setDisable(true);
+    clearButton.setDisable(true);
+    currentList = new ArrayList<>(medicineFields);
+    medicineVBox();
+    List<String> currentFields = medicine.getListForm();
+    for (int i = 0; i < currentFields.size(); i++) {
+      medicineFields.get(i).textArea.setText(currentFields.get(i));
+    }
+  }
+
   // Selected Location
   public void locationSelected(Location selectedLocation) {
     inputVBox.setDisable(false);
@@ -347,11 +398,13 @@ public class DVSelectionManager {
     if(selected instanceof SR){
       new ServiceRequestDerbyImpl((SR.SRType) ((SR) selected).getFields().get("sr_type")).deleteServiceRequest((SR) selected);
     } else if(selected instanceof Equipment){
-      equipmentDAO.deleteMedicalEquipment(((Equipment) selected).getEquipmentID());
+      equipmentDAO.deleteMedicalEquipment(((Equipment) selected).getStringFields().get("equipment_id"));
     } else if(selected instanceof Employee){
-      employeeDAO.deleteEmployee(((Employee) selected).getEmployeeID());
+      employeeDAO.deleteEmployee(((Employee) selected).getStringFields().get("employee_id"));
     } else if(selected instanceof Location){
-      locationDAO.deleteLocationNode(((Location) selected).getNodeID());
+      locationDAO.deleteLocationNode(((Location) selected).getStringFields().get("node_id"));
+    } else if(selected instanceof Medicine){
+      medicineDAO.deleteMedicine(((Medicine) selected).getMedicineID());
     }
     MasterCtrl.sceneFlags.add(MasterCtrl.sceneFlags.get(MasterCtrl.sceneFlags.size()-1));
     MasterCtrl.sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
@@ -376,45 +429,51 @@ public class DVSelectionManager {
     MasterCtrl.sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
-  private void saveEquipment(){
-    Equipment newEquipment = new Equipment();
-    newEquipment.setEquipmentID(currentList.get(0).textArea.getText());
-    newEquipment.setEquipmentType(currentList.get(1).textArea.getText());
-    newEquipment.setIsClean(Boolean.parseBoolean(currentList.get(2).textArea.getText()));
-    newEquipment.setCurrentLocation(currentList.get(3).textArea.getText());
-    newEquipment.setIsAvailable(Boolean.parseBoolean(currentList.get(4).textArea.getText()));
-    equipmentDAO.deleteMedicalEquipment(((Equipment) selected).getEquipmentID());
-    equipmentDAO.enterMedicalEquipment(newEquipment);
+  private void saveEquipment() throws SQLException {
+    Equipment newEquipment = new Equipment(currentList.get(0).textArea.getText(), currentList.get(1).textArea.getText(),
+            Boolean.parseBoolean(currentList.get(2).textArea.getText()), currentList.get(3).textArea.getText(), Boolean.parseBoolean(currentList.get(4).textArea.getText()));
+    Location l = locationDAO.getLocationNode(newEquipment.getStringFields().get("current_location"));
+    if (l.getStringFields().get("node_id") == null) {
+      JOptionPane pane = new JOptionPane("Location does not exist", JOptionPane.ERROR_MESSAGE);
+      JDialog dialog = pane.createDialog("Update failed");
+      dialog.setVisible(true);
+      return;
+    }
+    if (newEquipment.getFields().get("is_clean").equals(false)) {
+      JOptionPane pane = new JOptionPane("Dirty equipment cannot be moved", JOptionPane.ERROR_MESSAGE);
+      JDialog dialog = pane.createDialog("Update failed");
+      dialog.setVisible(true);
+      return;
+    }
+    if (!(l.getStringFields().get("node_type").equals("STOR")) && !(l.getStringFields().get("node_type").equals("PATI"))) {
+      JOptionPane pane = new JOptionPane("Equipment cannot be stored here", JOptionPane.ERROR_MESSAGE);
+      JDialog dialog = pane.createDialog("Update failed");
+      dialog.setVisible(true);
+      return;
+    }
+    equipmentDAO.updateMedicalEquipment(newEquipment);
   }
 
-  private void saveEmployee() throws ParseException {
+  private void saveEmployee() throws ParseException, SQLException {
 
-    Employee newEmployee = new Employee();
-    newEmployee.setEmployeeID(currentList.get(0).textArea.getText());
-    newEmployee.setEmployeeType(currentList.get(1).textArea.getText());
-    newEmployee.setFirstName(currentList.get(2).textArea.getText());
-    newEmployee.setLastName(currentList.get(3).textArea.getText());
-    newEmployee.setEmail(currentList.get(4).textArea.getText());
-    newEmployee.setPhoneNum(currentList.get(5).textArea.getText());
-    newEmployee.setAddress(currentList.get(6).textArea.getText());
-    newEmployee.setStartDate(currentList.get(7).textArea.getText());
+    Employee newEmployee = new Employee(currentList.get(0).textArea.getText(), currentList.get(1).textArea.getText(),
+            currentList.get(2).textArea.getText(), currentList.get(3).textArea.getText(),currentList.get(4).textArea.getText(), currentList.get(5).textArea.getText(), currentList.get(6).textArea.getText(), new SimpleDateFormat("yyyy-MM-dd").parse(currentList.get(7).textArea.getText()));
 
-    employeeDAO.deleteEmployee(((Employee) selected).getEmployeeID());
-    employeeDAO.enterEmployee(newEmployee);
+    employeeDAO.updateEmployee(newEmployee);
   }
 
-  private void saveLocation(){
-    Location newLocation = new Location();
-    newLocation.setNodeID(currentList.get(0).textArea.getText());
-    newLocation.setXCoord(Integer.parseInt(currentList.get(1).textArea.getText()));
-    newLocation.setYCoord(Integer.parseInt(currentList.get(2).textArea.getText()));
-    newLocation.setFloor(currentList.get(3).textArea.getText());
-    newLocation.setBuilding(currentList.get(4).textArea.getText());
-    newLocation.setNodeType(currentList.get(5).textArea.getText());
-    newLocation.setLongName(currentList.get(6).textArea.getText());
-    newLocation.setShortName(currentList.get(7).textArea.getText());
-    locationDAO.deleteLocationNode(((Location) selected).getNodeID());
-    locationDAO.enterLocationNode(newLocation);
+  private void saveLocation() throws SQLException {
+    Location newLocation = new Location(
+            currentList.get(0).textArea.getText(),
+            Integer.parseInt(currentList.get(1).textArea.getText()),
+            Integer.parseInt(currentList.get(2).textArea.getText()),
+            currentList.get(3).textArea.getText(),
+            currentList.get(4).textArea.getText(),
+            currentList.get(5).textArea.getText(),
+            currentList.get(6).textArea.getText(),
+            currentList.get(7).textArea.getText()
+    );
+    locationDAO.updateLocation(newLocation);
   }
 
   class InfoField {

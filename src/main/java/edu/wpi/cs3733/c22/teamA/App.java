@@ -55,6 +55,7 @@ public class App extends Application {
     guiStage.minHeightProperty().bind(guiStage.widthProperty().divide(aspectRatio));
     guiStage.maxHeightProperty().bind(guiStage.widthProperty().divide(aspectRatio));
     } catch (Exception e) {
+      e.printStackTrace();
       System.out.println("LOGIN ERROR!");
     }
   }
