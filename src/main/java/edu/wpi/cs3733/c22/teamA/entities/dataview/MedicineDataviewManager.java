@@ -211,14 +211,12 @@ public class MedicineDataviewManager {
                                         database.updateMedicine(
                                                 med.getMedicineID(), aField, value.getText());
                                         updateButton.setTextFill(Color.GREEN);
-                                        System.out.println("B4 initialize");
                                         this.initializeMedicineTable();
                                     }
                                     else if(field.getValue().equals("DosageAmounts")){
                                         aField = "dosage_amount";
                                         database.enterMedicineDosage(med.getMedicineID(),Float.parseFloat(aField));
                                         updateButton.setTextFill(Color.GREEN);
-                                        System.out.println("B4 initialize");
                                         this.initializeMedicineTable();
                                     }
                                 } catch (Exception ex) {
