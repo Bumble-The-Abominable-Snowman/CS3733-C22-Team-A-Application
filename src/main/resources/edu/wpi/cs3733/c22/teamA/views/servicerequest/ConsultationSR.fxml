@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import net.kurobako.gesturefx.GesturePane?>
 
 <GridPane fx:id="gridPane" prefHeight="600.0" prefWidth="960.0" styleClass="background" stylesheets="@../../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.servicerequest.ConsultationSRCtrl">
     <columnConstraints>
@@ -75,7 +76,7 @@
             <JFXHamburger fx:id="hamburger" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="75.0" stylesheets="@../css/styleSheet.css" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
         </children>
     </GridPane>
-   <JFXTextArea fx:id="commentsBox" styleClass="text-area-sr" stylesheets="@../../css/styleSheet.css" text="Notes or Special Requests..." GridPane.rowIndex="6">
+   <JFXTextArea fx:id="commentsBox" promptText="Notes or Special Requests..." styleClass="text-area-sr" stylesheets="@../../css/styleSheet.css" GridPane.rowIndex="6">
       <GridPane.margin>
          <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
       </GridPane.margin>
@@ -209,4 +210,9 @@
          <JFXButton fx:id="nextButton" layoutX="323.0" layoutY="118.0" onAction="#next" prefHeight="40.0" prefWidth="70.0" stylesheets="@../../css/styleSheet.css" text="Next" />
       </children>
    </AnchorPane>
+   <GesturePane fx:id="mapView" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.rowSpan="4">
+      <GridPane.margin>
+         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+      </GridPane.margin>
+   </GesturePane>
 </GridPane>

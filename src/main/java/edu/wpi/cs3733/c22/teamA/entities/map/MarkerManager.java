@@ -74,6 +74,26 @@ public class MarkerManager {
     this.anchorPane = anchorPane;
   }
 
+    public MarkerManager(LocationDAO locationDAO, AnchorPane anchorPane) {
+        floorLocations = new ArrayList<>();
+        currentFloorIDs = new HashSet<>();
+        idToLocationMarker = new HashMap<>();
+        allSRs = new ArrayList<>();
+        locationMarkers = new ArrayList<>();
+        equipmentMarkers = new ArrayList<>();
+        serviceRequestMarkers = new ArrayList<>();
+        floorEquipment = new ArrayList<>();
+        floorSRs = new ArrayList<>();
+        this.locationDAO=locationDAO;
+        //this.SRDAO=SRDAO;
+
+        allLocations = locationDAO.getNodeList();
+
+        this.mapLayoutX = 0;
+        this.mapLayoutY = 0;
+        this.anchorPane = anchorPane;
+    }
+
   public void initFloor(
       String floor,
       int mapLayoutX,
@@ -89,11 +109,25 @@ public class MarkerManager {
     this.mapLayoutY = mapLayoutY;
   }
 
+    public void initFloor(
+            String floor,
+            int mapLayoutX,
+            int mapLayoutY) {
+        this.floor = floor;
+        getFloorInfo(floor);
+        createFloorLocations();
+        initialDraw();
+        this.mapLayoutX = mapLayoutX;
+        this.mapLayoutY = mapLayoutY;
+    }
+
   public void getFloorInfo(String floor) {
     clear();
     getFloorLocations(floor);
-    getEquipmentLocations();
-    getSRLocations();
+    if (allEquipments != null){
+        getEquipmentLocations();
+        getSRLocations();
+    }
   }
 
   private void getFloorLocations(String floor) {
@@ -162,6 +196,14 @@ public class MarkerManager {
       setDragLocation(newLocationMarker, selectionManager, checkBoxManager, gesturePaneManager);
     }
   }
+
+    private void createFloorLocations() {
+        for (Location l : floorLocations) {
+            LocationMarker newLocationMarker = MarkerMaker.makeLocationMarker(l, mapLayoutX, mapLayoutY);
+            locationMarkers.add(newLocationMarker);
+            idToLocationMarker.put(l.getStringFields().get("node_id"), newLocationMarker);
+        }
+    }
 
   private void createFloorEquipments(
       SelectionManager selectionManager,
