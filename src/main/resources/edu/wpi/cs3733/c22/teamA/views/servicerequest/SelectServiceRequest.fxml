@@ -185,11 +185,11 @@
          <Font size="18.0" />
       </font>
    </Label>
-   <JFXButton fx:id="loadAPIButton" buttonType="RAISED" mnemonicParsing="false" styleClass="bodyFormat" text="Load SR API" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" onAction="#loadAPI">
+   <JFXButton fx:id="loadAPIButton" buttonType="RAISED" mnemonicParsing="false" styleClass="bodyFormat" text="Load SR API" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" >
       <GridPane.margin>
          <Insets right="25.0" />
       </GridPane.margin></JFXButton>
-   <JFXButton fx:id="saveAPIButton" buttonType="RAISED" mnemonicParsing="false" styleClass="bodyFormat" text="Save SR API" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1" onAction="#saveAPI">
+   <JFXButton fx:id="saveAPIButton" buttonType="RAISED" mnemonicParsing="false" styleClass="bodyFormat" text="Save SR API" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
       <GridPane.margin>
          <Insets left="25.0" />
       </GridPane.margin>
