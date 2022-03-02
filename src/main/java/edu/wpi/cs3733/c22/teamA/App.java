@@ -18,7 +18,8 @@ public class App extends Application {
 
   private static Stage guiStage;
   public static SceneSwitcher sceneSwitcher;
-  public static UserInfo user = null;
+
+  public static AuthUser authUser = new AuthUser();
 
   private boolean db_setup = false;
   private final Semaphore semaphoreHomeScene = new Semaphore(1);
@@ -48,56 +49,22 @@ public class App extends Application {
 
   private void handleLogin()
   {
-    Auth0Login.login().thenApply(userInfo -> {
-      userInfo.ifPresent(info -> user = info);
+    Auth0Login.login().thenApply(u -> {
       try {
+        authUser = u;
+
         semaphoreHomeScene.acquire();
-        this.setupEmbeddedDB(user);
+        this.setupEmbeddedDB(authUser);
         this.handleLoginSwitch();
-
-        System.out.println((new ObjectMapper()).writeValueAsString(user));
-        JWTUtils.verifyToken(user.getJwtToken()).map(jwt -> {
-          for (String key: jwt.getClaims().keySet()) {
-            System.out.printf("openid Key: %s\tValue: %s\n", key,jwt.getClaim(key).asString());
-          }
-          return 1;
-        });
-
-
-
-
-        AuthAPI authAPI = new AuthAPI(Auth0PKCEFlow.DOMAIN, Auth0PKCEFlow.CLIENT_ID, Auth0PKCEFlow.CLIENT_SECRET);
-        AuthRequest authRequest = authAPI.requestToken("https://" + Auth0PKCEFlow.DOMAIN + "/api/v2/");
-        TokenHolder holder = authRequest.execute();
-        ManagementAPI mgmt = new ManagementAPI(Auth0PKCEFlow.DOMAIN, holder.getAccessToken());
-
-        JWTUtils.verifyToken(user.getJwtToken()).map(jwt -> {
-
-          UserFilter filter = new UserFilter();
-          System.out.println(jwt.getClaim("sub").asString());
-          Request<User> request = mgmt.users().get(jwt.getClaim("sub").asString(), filter);
-          try {
-            User response = request.execute();
-            for (String key: response.getAppMetadata().keySet()) {
-              System.out.printf("metadata Key: %s\tValue: %s\n", key, response.getAppMetadata().get(key));
-            }
-          } catch (APIException exception) {
-            // api error
-          } catch (Auth0Exception exception) {
-            // request error
-          }
-          return 1;
-        });
-
       } catch (Exception e) {
         e.printStackTrace();
       }
-      return userInfo;
+      return u;
     });
 
   }
 
-  private void setupEmbeddedDB(UserInfo user)
+  private void setupEmbeddedDB(AuthUser user)
   {
     Task<Integer> task = new Task<>() {
       @Override protected Integer call() throws Exception {
