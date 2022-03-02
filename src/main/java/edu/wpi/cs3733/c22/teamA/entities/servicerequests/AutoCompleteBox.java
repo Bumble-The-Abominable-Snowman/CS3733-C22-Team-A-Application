@@ -9,6 +9,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Window;
 
 /**
@@ -32,9 +33,14 @@ public class AutoCompleteBox<T> {
     public AutoCompleteBox(ComboBox<T> cmb) {
         this.cmb = cmb;
         originalItems = FXCollections.observableArrayList(cmb.getItems());
+        cmb.setOnMousePressed(this::handleOnMousePressed);
         cmb.setOnKeyPressed(this::handleOnKeyPressed);
         cmb.setOnHidden(this::handleOnHiding);
     }
+    public void handleOnMousePressed(MouseEvent e) {
+        cmb.getSelectionModel().clearSelection();
+    }
+
 
     public void handleOnKeyPressed(KeyEvent e) {
         ObservableList<T> filteredList = FXCollections.observableArrayList();
@@ -42,33 +48,30 @@ public class AutoCompleteBox<T> {
 
         if (code.isLetterKey()) {
             filter += e.getText();
-            cmb.setPromptText(filter);
+            cmb.getItems().setAll(originalItems);
         } else if (code == KeyCode.BACK_SPACE && filter.length() > 0) {
             filter = filter.substring(0, filter.length() - 1);
             cmb.getItems().setAll(originalItems);
-            cmb.setPromptText(filter);
         } else if (code == KeyCode.ESCAPE) {
             filter = "";
-            cmb.setPromptText(filter);
         } else {
-
+            cmb.getItems().setAll(originalItems);
         }
+
         if (filter.length() == 0) {
             cmb.getItems().setAll(originalItems);
         } else {
             Stream<T> itens = cmb.getItems().stream();
-            String txtUsr = filter.toString().toLowerCase();
+            String txtUsr = filter.toLowerCase();
             itens.filter(el -> el.toString().toLowerCase().contains(txtUsr)).forEach(filteredList::add);
-            cmb.setPromptText(filter);
-            cmb.show();
+            cmb.getItems().setAll(filteredList);
         }
-        cmb.getItems().setAll(filteredList);
+
+        cmb.setPromptText(filter);
     }
 
     public void handleOnHiding(Event e) {
-        filter = "";
         T s = cmb.getSelectionModel().getSelectedItem();
-        cmb.getItems().setAll(originalItems);
         cmb.getSelectionModel().select(s);
     }
 
