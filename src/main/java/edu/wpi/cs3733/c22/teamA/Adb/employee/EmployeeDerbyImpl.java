@@ -167,7 +167,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
       throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
-    ClassLoader classLoader = LocationDerbyImpl.class.getClassLoader();
+    ClassLoader classLoader = EmployeeDerbyImpl.class.getClassLoader();
     InputStream is = classLoader.getResourceAsStream(csvFilePath);
     Scanner lineScanner = new Scanner(is);
     Scanner dataScanner;
@@ -293,7 +293,6 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
         addStatement.executeUpdate(str);
       }
     } catch (SQLException | IOException | ParseException e) {
-      System.out.println("Insertion on Employee failed!");
       e.printStackTrace();
     }
   }

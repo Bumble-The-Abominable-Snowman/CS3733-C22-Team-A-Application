@@ -313,7 +313,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
     List<Medicine> medicineList = new ArrayList<>();
 
     // Go through medicine CSV file
-    ClassLoader classLoader = LocationDerbyImpl.class.getClassLoader();
+    ClassLoader classLoader = MedicineDerbyImpl.class.getClassLoader();
     InputStream is = classLoader.getResourceAsStream(medicineCSVFilePath);
     Scanner lineScanner = new Scanner(is);
     Scanner dataScanner;
@@ -376,7 +376,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
   public static List<MedicineDosage> readDosagesFromCSV(String dosageCSVFilePath)
           throws FileNotFoundException {
     List<MedicineDosage> dosList = new ArrayList<>();
-    ClassLoader classLoader = LocationDerbyImpl.class.getClassLoader();
+    ClassLoader classLoader = MedicineDerbyImpl.class.getClassLoader();
     InputStream is = classLoader.getResourceAsStream(dosageCSVFilePath);
     Scanner lineScanner = new Scanner(is);
     int dataIndex = 0;
