@@ -1,10 +1,12 @@
 package edu.wpi.cs3733.c22.teamA.Adb.employee;
 
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
@@ -165,8 +167,9 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
       throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
-    File file = new File(csvFilePath);
-    Scanner lineScanner = new Scanner(file);
+    ClassLoader classLoader = LocationDerbyImpl.class.getClassLoader();
+    InputStream is = classLoader.getResourceAsStream(csvFilePath);
+    Scanner lineScanner = new Scanner(is);
     Scanner dataScanner;
     int dataIndex = 0;
     int lineIndex = 0;
