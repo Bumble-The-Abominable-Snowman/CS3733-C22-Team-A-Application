@@ -23,6 +23,7 @@ import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 
 public class SecuritySRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> typeChoice;
