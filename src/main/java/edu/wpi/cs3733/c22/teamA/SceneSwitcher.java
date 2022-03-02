@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import edu.wpi.cs3733.c22.teamA.auth0.rest.login.Auth0Login;
+import edu.wpi.cs3733.c22.teamA.auth0.Auth0Login;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

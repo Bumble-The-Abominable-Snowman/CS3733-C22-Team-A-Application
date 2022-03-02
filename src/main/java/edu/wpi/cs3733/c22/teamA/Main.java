@@ -11,9 +11,6 @@ import com.auth0.net.AuthRequest;
 import com.auth0.net.Request;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
-import edu.wpi.cs3733.c22.teamA.auth0.rest.login.Auth0OauthResponse;
-import edu.wpi.cs3733.c22.teamA.auth0.rest.login.Auth0PKCEFlow;
-
 import java.sql.SQLException;
 import java.util.Objects;
 

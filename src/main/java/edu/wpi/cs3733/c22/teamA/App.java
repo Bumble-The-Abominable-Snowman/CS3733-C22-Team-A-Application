@@ -1,35 +1,16 @@
 package edu.wpi.cs3733.c22.teamA;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.time.Clock;
-import java.util.Optional;
-import java.util.Timer;
-import java.util.concurrent.ExecutionException;
 
-import com.auth0.client.auth.AuthAPI;
-import com.auth0.client.mgmt.ManagementAPI;
-import com.auth0.client.mgmt.filter.UserFilter;
-import com.auth0.exception.APIException;
-import com.auth0.exception.Auth0Exception;
-import com.auth0.json.auth.TokenHolder;
-import com.auth0.json.mgmt.users.User;
-import com.auth0.jwt.JWT;
-import com.auth0.net.AuthRequest;
-import com.auth0.net.Request;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
-import edu.wpi.cs3733.c22.teamA.auth0.UserInfo;
-import edu.wpi.cs3733.c22.teamA.auth0.rest.login.Auth0Login;
-import edu.wpi.cs3733.c22.teamA.auth0.rest.login.Auth0PKCEFlow;
-import edu.wpi.cs3733.c22.teamA.auth0.rest.login.JWTUtils;
+import edu.wpi.cs3733.c22.teamA.auth0.AuthUser;
+import edu.wpi.cs3733.c22.teamA.auth0.Auth0Login;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
-import java.util.concurrent.CompletableFuture;
+
 import java.util.concurrent.Semaphore;
 
 @Slf4j
@@ -40,7 +21,7 @@ public class App extends Application {
   public static UserInfo user = null;
 
   private boolean db_setup = false;
-  private Semaphore semaphoreHomeScene = new Semaphore(1);
+  private final Semaphore semaphoreHomeScene = new Semaphore(1);
 
   public static Stage getStage() {
 
@@ -63,17 +44,6 @@ public class App extends Application {
     } catch (Exception e) {
       System.out.println("LOGIN ERROR!");
     }
-//    sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOGIN);
-//    guiStage.setMaximized(true);
-//    guiStage.setMinHeight(600);
-//    guiStage.setMinWidth(960);
-//    double screenWidth = Screen.getPrimary().getBounds().getWidth();
-//    double screenHeight = Screen.getPrimary().getBounds().getHeight();
-//    double aspectRatio = (screenWidth / screenHeight);
-//    guiStage.setMaxWidth(screenWidth);
-//    guiStage.setMaxHeight(screenHeight);
-//    guiStage.minHeightProperty().bind(guiStage.widthProperty().divide(aspectRatio));
-//    guiStage.maxHeightProperty().bind(guiStage.widthProperty().divide(aspectRatio));
   }
 
   private void handleLogin()
