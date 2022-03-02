@@ -27,7 +27,7 @@ public class Adb {
 
   public static boolean isInitialized;
 
-  public static void initialConnection(String arg) throws SQLException, IOException, ParseException, InvocationTargetException, IllegalAccessException {
+  public static void initialConnection(String arg) throws SQLException{
 
     isInitialized = true;
     // Connection to database driver
@@ -471,12 +471,22 @@ public class Adb {
               + "PRIMARY KEY (request_id), "
               + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
 
-    } catch (SQLException e) {
-      System.out.println("Table SecurityServiceRequest already exist");
 
       ServiceRequestDerbyImpl SECURITY = new ServiceRequestDerbyImpl(SR.SRType.SECURITY);
       SECURITY.populateFromCSV(
               "edu/wpi/cs3733/c22/teamA/db/CSVs/SSR.csv");
+
+    } catch (SQLException e) {
+      System.out.println("Table SecurityServiceRequest already exist");
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ParseException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
     }
 
     // check ConsultationServiceRequest
