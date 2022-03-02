@@ -1,6 +1,7 @@
 package edu.wpi.cs3733.c22.teamA.Adb.medicine;
 
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.Medicine;
 import edu.wpi.cs3733.c22.teamA.entities.MedicineDosage;
 
@@ -312,8 +313,9 @@ public class MedicineDerbyImpl implements MedicineDAO {
     List<Medicine> medicineList = new ArrayList<>();
 
     // Go through medicine CSV file
-    File medFile = new File(medicineCSVFilePath);
-    Scanner lineScanner = new Scanner(medFile);
+    ClassLoader classLoader = LocationDerbyImpl.class.getClassLoader();
+    InputStream is = classLoader.getResourceAsStream(medicineCSVFilePath);
+    Scanner lineScanner = new Scanner(is);
     Scanner dataScanner;
     int dataIndex = 0;
 
@@ -374,8 +376,9 @@ public class MedicineDerbyImpl implements MedicineDAO {
   public static List<MedicineDosage> readDosagesFromCSV(String dosageCSVFilePath)
           throws FileNotFoundException {
     List<MedicineDosage> dosList = new ArrayList<>();
-    File dosFile = new File(dosageCSVFilePath);
-    Scanner lineScanner = new Scanner(dosFile);
+    ClassLoader classLoader = LocationDerbyImpl.class.getClassLoader();
+    InputStream is = classLoader.getResourceAsStream(dosageCSVFilePath);
+    Scanner lineScanner = new Scanner(is);
     int dataIndex = 0;
 
     lineScanner.nextLine();

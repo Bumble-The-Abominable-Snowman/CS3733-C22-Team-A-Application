@@ -43,11 +43,16 @@ public class EquipmentDataviewManager {
 	}
 
 	public void delete() throws SQLException {
-		EquipmentDAO equipmentDAO = new EquipmentDerbyImpl();
-		equipmentDAO.deleteMedicalEquipment(
-				table.getSelectionModel().getSelectedItem().getValue().equip.getEquipmentID());
-		dataViewCtrl.titleLabel.setText("Equipment");
-		initializeEquipmentTable();
+		try {
+			EquipmentDAO equipmentDAO = new EquipmentDerbyImpl();
+			equipmentDAO.deleteMedicalEquipment(
+					table.getSelectionModel().getSelectedItem().getValue().equip.getEquipmentID());
+			dataViewCtrl.titleLabel.setText("Equipment");
+			initializeEquipmentTable();
+		}
+		catch (NullPointerException aE){
+
+		}
 	}
 
 	public void initializeEquipmentTable() {

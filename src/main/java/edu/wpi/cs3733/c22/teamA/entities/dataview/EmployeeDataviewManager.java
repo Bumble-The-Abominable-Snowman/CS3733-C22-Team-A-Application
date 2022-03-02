@@ -42,11 +42,16 @@ public class EmployeeDataviewManager {
 	}
 
 	public void delete() throws SQLException {
-		EmployeeDAO employeeDAO = new EmployeeDerbyImpl();
-		employeeDAO.deleteEmployee(
-				table.getSelectionModel().getSelectedItem().getValue().employee.getEmployeeID());
-		dataViewCtrl.titleLabel.setText("Employees");
-		initializeEmployeeTable();
+		try{
+			EmployeeDAO employeeDAO = new EmployeeDerbyImpl();
+			employeeDAO.deleteEmployee(
+					table.getSelectionModel().getSelectedItem().getValue().employee.getEmployeeID());
+			dataViewCtrl.titleLabel.setText("Employees");
+			initializeEmployeeTable();
+		}
+		catch (NullPointerException aE){
+
+		}
 	}
 
 	public void initializeEmployeeTable() {
