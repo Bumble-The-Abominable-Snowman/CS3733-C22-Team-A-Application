@@ -1,6 +1,8 @@
 package edu.wpi.cs3733.c22.teamA.Adb.location;
 
 import edu.wpi.cs3733.c22.teamA.entities.Location;
+
+import java.sql.SQLException;
 import java.util.List;
 
 public interface LocationDAO {
@@ -21,7 +23,7 @@ public interface LocationDAO {
       String longName,
       String shortName);
 
-  public void updateLocation(String ID, String field, Object change);
+  public void updateLocation(Location location) throws SQLException;
 
   public Location getLocationNode(String ID);
 }

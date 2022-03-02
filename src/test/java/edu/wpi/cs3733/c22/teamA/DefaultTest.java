@@ -7,7 +7,9 @@ package edu.wpi.cs3733.c22.teamA;
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
@@ -20,12 +22,15 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
+import static teamA_API.Main.updateEmployee;
 
 public class DefaultTest {
 
@@ -711,4 +716,23 @@ public class DefaultTest {
   //    System.out.println("testing delete");
   //    derby.deleteMedicalEquipment("meq123");
   //  }
+  @Test
+  public void testOnRefactor() throws SQLException, ParseException {
+    Adb.initialConnection("EmbeddedDriver");
+    System.out.println("\n-----------------------------------Testing Employee-----------------------------------");
+    SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Employee e = new Employee("001","Admin","Nyx","Dai","ydai2@wpi.edu","109301","000 institute Rd", originalFormat.parse("2022-02-01"));
+    EmployeeDAO e1 = new EmployeeDerbyImpl();
+    e1.updateEmployee(e);
+
+    System.out.println("\n-----------------------------------Testing Locations-----------------------------------");
+    Location l = new Location("FDEPT00101",451,1,"2","Tower","AAAA","Center for International Medicine","CIM");
+    LocationDAO l1 = new LocationDerbyImpl();
+    l1.updateLocation(l);
+
+    System.out.println("\n-----------------------------------Testing Equipments-----------------------------------");
+    Equipment eq = new Equipment("EQ5678","ABC",true, "0001",true);
+    EquipmentDAO eq1 = new EquipmentDerbyImpl();
+    eq1.updateMedicalEquipment(eq);
+  }
 }
