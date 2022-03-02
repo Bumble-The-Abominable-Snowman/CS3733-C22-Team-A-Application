@@ -267,7 +267,7 @@
          </ImageView>
       </graphic>
       <GridPane.margin>
-         <Insets right="52.0" bottom="10" />
+         <Insets right="52.0" bottom="7" />
       </GridPane.margin>
    </JFXButton>
    <JFXButton fx:id="nextButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#next" prefHeight="15.0" prefWidth="50.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" visible="false">
@@ -279,7 +279,7 @@
          </ImageView>
       </graphic>
       <GridPane.margin>
-         <Insets left="52.0" bottom="10" />
+         <Insets left="52.0" bottom="7" />
       </GridPane.margin>
    </JFXButton>
    <JFXButton fx:id="previous1Button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#previous1" prefHeight="15.0" prefWidth="50.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" visible="false">
@@ -291,7 +291,7 @@
          </ImageView>
       </graphic>
       <GridPane.margin>
-         <Insets right="52.0" bottom="10" />
+         <Insets right="52.0" bottom="7" />
       </GridPane.margin>
    </JFXButton>
    <JFXButton fx:id="next1Button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#next1" prefHeight="15.0" prefWidth="50.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" visible="false">
@@ -303,7 +303,7 @@
          </ImageView>
       </graphic>
       <GridPane.margin>
-         <Insets left="52.0" bottom="10" />
+         <Insets left="52.0" bottom="7" />
       </GridPane.margin>
    </JFXButton>
    <JFXButton fx:id="previous2Button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#previous2" prefHeight="15.0" prefWidth="50.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" visible="false">
@@ -315,7 +315,7 @@
          </ImageView>
       </graphic>
       <GridPane.margin>
-         <Insets right="52.0" bottom="10" />
+         <Insets right="52.0" bottom="7" />
       </GridPane.margin>
    </JFXButton>
    <JFXButton fx:id="next2Button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#next2" prefHeight="15.0" prefWidth="50.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" visible="false">
@@ -327,7 +327,7 @@
          </ImageView>
       </graphic>
       <GridPane.margin>
-         <Insets left="52.0" bottom="10" />
+         <Insets left="52.0" bottom="7" />
       </GridPane.margin>
    </JFXButton>
    <JFXButton fx:id="previous3Button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#previous3" prefHeight="15.0" prefWidth="50.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" visible="false">
@@ -339,7 +339,7 @@
          </ImageView>
       </graphic>
       <GridPane.margin>
-         <Insets right="52.0" bottom="10" />
+         <Insets right="52.0" bottom="7" />
       </GridPane.margin>
    </JFXButton>
    <JFXButton fx:id="next3Button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#next3" prefHeight="15.0" prefWidth="50.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" visible="false">
@@ -351,7 +351,7 @@
          </ImageView>
       </graphic>
       <GridPane.margin>
-         <Insets left="52.0" bottom="10" />
+         <Insets left="52.0" bottom="7" />
       </GridPane.margin>
    </JFXButton>
    <JFXButton fx:id="previous4Button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#previous4" prefHeight="15.0" prefWidth="50.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" visible="false">
@@ -363,7 +363,7 @@
          </ImageView>
       </graphic>
       <GridPane.margin>
-         <Insets right="52.0" bottom="10" />
+         <Insets right="52.0" bottom="7" />
       </GridPane.margin>
    </JFXButton>
    <JFXButton fx:id="next4Button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#next4" prefHeight="15.0" prefWidth="50.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" visible="false">
@@ -375,7 +375,7 @@
          </ImageView>
       </graphic>
       <GridPane.margin>
-         <Insets left="52.0" bottom="10" />
+         <Insets left="52.0" bottom="7" />
       </GridPane.margin>
    </JFXButton>
    <JFXButton fx:id="previous5Button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#previous5" prefHeight="15.0" prefWidth="50.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" visible="false">
@@ -387,7 +387,7 @@
          </ImageView>
       </graphic>
       <GridPane.margin>
-         <Insets right="52.0" bottom="10" />
+         <Insets right="52.0" bottom="7" />
       </GridPane.margin>
    </JFXButton>
    <JFXButton fx:id="next5Button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#next5" prefHeight="15.0" prefWidth="50.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" visible="false">
@@ -399,7 +399,7 @@
          </ImageView>
       </graphic>
       <GridPane.margin>
-         <Insets left="52.0" bottom="10" />
+         <Insets left="52.0" bottom="7" />
       </GridPane.margin>
    </JFXButton>
 </GridPane>
