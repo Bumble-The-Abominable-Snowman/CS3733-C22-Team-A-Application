@@ -24,9 +24,11 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import lombok.SneakyThrows;
 import org.w3c.dom.Text;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
@@ -430,6 +432,25 @@ public class DVSelectionManager {
   private void saveEquipment() throws SQLException {
     Equipment newEquipment = new Equipment(currentList.get(0).textArea.getText(), currentList.get(1).textArea.getText(),
             Boolean.parseBoolean(currentList.get(2).textArea.getText()), currentList.get(3).textArea.getText(), Boolean.parseBoolean(currentList.get(4).textArea.getText()));
+    Location l = locationDAO.getLocationNode(newEquipment.getStringFields().get("current_location"));
+    if (l.getStringFields().get("node_id") == null) {
+      JOptionPane pane = new JOptionPane("Location does not exist", JOptionPane.ERROR_MESSAGE);
+      JDialog dialog = pane.createDialog("Update failed");
+      dialog.setVisible(true);
+      return;
+    }
+    if (newEquipment.getFields().get("is_clean").equals(false)) {
+      JOptionPane pane = new JOptionPane("Dirty equipment cannot be moved", JOptionPane.ERROR_MESSAGE);
+      JDialog dialog = pane.createDialog("Update failed");
+      dialog.setVisible(true);
+      return;
+    }
+    if (!(l.getStringFields().get("node_type").equals("STOR")) && !(l.getStringFields().get("node_type").equals("PATI"))) {
+      JOptionPane pane = new JOptionPane("Equipment cannot be stored here", JOptionPane.ERROR_MESSAGE);
+      JDialog dialog = pane.createDialog("Update failed");
+      dialog.setVisible(true);
+      return;
+    }
     equipmentDAO.updateMedicalEquipment(newEquipment);
   }
 
