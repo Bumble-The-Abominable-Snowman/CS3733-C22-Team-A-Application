@@ -202,7 +202,7 @@ public class DVSelectionManager {
     for (int i = 0; i < locationFields.size(); i++) {
       inputVBox.getChildren().add(locationFields.get(i).label);
       inputVBox.getChildren().add(locationFields.get(i).textArea);
-      locationFields.get(i).textArea.setEditable(false);
+      if(i != 0) locationFields.get(i).textArea.setEditable(false);
     }
     inputVBox.getChildren().add(editButton);
     inputVBox.getChildren().add(clearButton);
@@ -216,7 +216,7 @@ public class DVSelectionManager {
     for (int i = 0; i < equipmentFields.size(); i++) {
       inputVBox.getChildren().add(equipmentFields.get(i).label);
       inputVBox.getChildren().add(equipmentFields.get(i).textArea);
-      equipmentFields.get(i).textArea.setEditable(false);
+      if(i != 0) equipmentFields.get(i).textArea.setEditable(false);
     }
     inputVBox.getChildren().add(editButton);
     inputVBox.getChildren().add(clearButton);
@@ -230,7 +230,7 @@ public class DVSelectionManager {
     for (int i = 0; i <employeeFields.size(); i++) {
       inputVBox.getChildren().add(employeeFields.get(i).label);
       inputVBox.getChildren().add(employeeFields.get(i).textArea);
-      employeeFields.get(i).textArea.setEditable(false);
+      if(i != 0) employeeFields.get(i).textArea.setEditable(false);
     }
     inputVBox.getChildren().add(editButton);
     inputVBox.getChildren().add(clearButton);
@@ -244,7 +244,7 @@ public class DVSelectionManager {
     for (int i = 0; i < srFields.size(); i++) {
       inputVBox.getChildren().add(srFields.get(i).label);
       inputVBox.getChildren().add(srFields.get(i).textArea);
-      srFields.get(i).textArea.setEditable(false);
+      if(i != 0) srFields.get(i).textArea.setEditable(false);
     }
     inputVBox.getChildren().add(editButton);
     inputVBox.getChildren().add(clearButton);
