@@ -50,11 +50,7 @@ public class DataViewCtrl extends MasterCtrl {
   @FXML private JFXTreeTableView<RecursiveObj> table;
   @FXML private VBox inputVBox;
   @FXML private JFXComboBox selectEmployeeBox;
-  @FXML private JFXButton saveButton;
   @FXML private JFXButton addButton;
-  @FXML private JFXButton editButton;
-  @FXML private JFXButton clearButton;
-  @FXML private JFXButton deleteButton;
 
   /*
   @FXML private ImageView bumbleBlinkHead;
@@ -528,7 +524,7 @@ public class DataViewCtrl extends MasterCtrl {
   void clear() {}
 
   @FXML
-  void add() {}
+  void addData() {}
 
   protected void onSceneSwitch() {
     DataViewCtrl.detailsPopup.get().hide();

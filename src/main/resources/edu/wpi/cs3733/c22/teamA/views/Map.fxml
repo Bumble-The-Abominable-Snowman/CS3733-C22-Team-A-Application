@@ -25,8 +25,7 @@
       <ColumnConstraints hgrow="ALWAYS" />
       <ColumnConstraints hgrow="ALWAYS" />
       <ColumnConstraints hgrow="ALWAYS" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
-      <ColumnConstraints hgrow="ALWAYS" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
-      <ColumnConstraints hgrow="ALWAYS" />
+      <ColumnConstraints hgrow="ALWAYS" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
       <ColumnConstraints hgrow="NEVER" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
    </columnConstraints>
    <rowConstraints>
@@ -34,37 +33,48 @@
       <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="NEVER" />
       <RowConstraints vgrow="NEVER" />
       <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="NEVER" />
-      <RowConstraints maxHeight="1035.0" minHeight="0.0" prefHeight="148.60576057434082" vgrow="ALWAYS" />
-      <RowConstraints maxHeight="1035.0" minHeight="25.740341186523438" prefHeight="25.740341186523438" vgrow="ALWAYS" />
-      <RowConstraints maxHeight="1035.0" minHeight="67.63458251953125" prefHeight="140.01495361328125" vgrow="ALWAYS" />
-      <RowConstraints maxHeight="1035.0" minHeight="20.993896484375" prefHeight="48.451263427734375" vgrow="ALWAYS" />
-      <RowConstraints maxHeight="200.006103515625" minHeight="0.0" prefHeight="85.21871948242188" vgrow="ALWAYS" />
-      <RowConstraints maxHeight="181.13287353515625" minHeight="10.0" prefHeight="38.908660888671875" vgrow="ALWAYS" />
-      <RowConstraints maxHeight="181.13287353515625" minHeight="10.0" prefHeight="70.70428466796875" vgrow="ALWAYS" />
-      <RowConstraints maxHeight="181.13287353515625" minHeight="10.0" prefHeight="48.29571533203125" vgrow="ALWAYS" />
+      <RowConstraints vgrow="ALWAYS" />
+      <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="NEVER" />
+      <RowConstraints vgrow="ALWAYS" />
+      <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="NEVER" />
+      <RowConstraints vgrow="ALWAYS" />
       <RowConstraints />
       <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="NEVER" />
    </rowConstraints>
    <children>
       <VBox fx:id="inputVBox" prefHeight="655.0" prefWidth="160.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="6" GridPane.valignment="TOP" />
-      <JFXButton fx:id="newLocButton" alignment="CENTER" contentDisplay="CENTER" onAction="#newLocationPressed" prefHeight="33.0" prefWidth="124.0" text="New Location" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
-      <JFXComboBox fx:id="floorSelectionComboBox" prefHeight="26.0" prefWidth="106.0" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+      <JFXButton fx:id="newLocButton" alignment="CENTER" contentDisplay="CENTER" onAction="#newLocationPressed" text="New Location" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets left="25.0" />
+         </GridPane.margin></JFXButton>
       <JFXComboBox fx:id="searchComboBox" prefHeight="26.0" prefWidth="167.0" styleClass="comboBox" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-      <JFXComboBox fx:id="pfToComboBox" prefHeight="26.0" prefWidth="97.0" promptText="To:" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="BOTTOM" />
-      <JFXComboBox fx:id="pfFromComboBox" prefHeight="26.0" prefWidth="95.0" promptText="From:" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="TOP" />
-      <JFXButton fx:id="findPathButton" onAction="#findPath" prefHeight="33.0" prefWidth="104.0" text=" Find Path" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="TOP" />
-      <JFXButton fx:id="clearPathButton" onAction="#clearPath" text="Clear Path" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="BOTTOM" />
-      <VBox prefHeight="76.0" prefWidth="219.0" spacing="10.0" GridPane.rowIndex="4">
+      <JFXComboBox fx:id="pfToComboBox" promptText=" To:   " styleClass="comboBox" stylesheets="@../css/styleSheet.css" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="BOTTOM" />
+      <JFXComboBox fx:id="pfFromComboBox" promptText=" From:" styleClass="comboBox" stylesheets="@../css/styleSheet.css" GridPane.halignment="LEFT" GridPane.rowIndex="8" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets left="25.0" />
+         </GridPane.margin></JFXComboBox>
+      <JFXButton fx:id="findPathButton" onAction="#findPath" text=" Find Path " GridPane.halignment="LEFT" GridPane.rowIndex="8" GridPane.valignment="CENTER">
+         <GridPane.margin>
+            <Insets left="25.0" />
+         </GridPane.margin></JFXButton>
+      <JFXButton fx:id="clearPathButton" onAction="#clearPath" text="Clear Path" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+      <VBox alignment="CENTER_LEFT" spacing="10.0" stylesheets="@../css/styleSheet.css" GridPane.rowIndex="4">
          <children>
-            <JFXCheckBox fx:id="dragCheckBox" alignment="CENTER" prefHeight="22.0" prefWidth="176.0" text="Toggle Drag/Drop Locations" wrapText="true" />
-            <JFXCheckBox fx:id="serviceRequestCheckBox" alignment="CENTER" prefHeight="22.0" prefWidth="75.0" text="Toggle Service Request View" wrapText="true" />
-            <JFXCheckBox fx:id="locationCheckBox" text="Toggle Location View" />
-            <JFXCheckBox fx:id="showTextCheckBox" alignment="CENTER" prefHeight="22.0" prefWidth="82.0" text="Toggle Text" wrapText="true" />
-            <JFXCheckBox fx:id="equipmentCheckBox" alignment="CENTER" prefHeight="22.0" prefWidth="75.0" text="Toggle Equipment View" wrapText="true" />
+            <JFXCheckBox fx:id="dragCheckBox" alignment="CENTER" prefHeight="22.0" prefWidth="176.0" styleClass="altLabel" stylesheets="@../css/styleSheet.css" text="Toggle Drag/Drop Locations" wrapText="true" />
+            <JFXCheckBox fx:id="serviceRequestCheckBox" alignment="CENTER" prefHeight="22.0" prefWidth="75.0" styleClass="altLabel" stylesheets="@../css/styleSheet.css" text="Toggle Service Request View" wrapText="true" />
+            <JFXCheckBox fx:id="locationCheckBox" styleClass="altLabel" stylesheets="@../css/styleSheet.css" text="Toggle Location View" />
+            <JFXCheckBox fx:id="showTextCheckBox" alignment="CENTER" prefHeight="22.0" prefWidth="82.0" styleClass="altLabel" stylesheets="@../css/styleSheet.css" text="Toggle Text" wrapText="true" />
+            <JFXCheckBox fx:id="equipmentCheckBox" alignment="CENTER" prefHeight="22.0" prefWidth="75.0" styleClass="altLabel" stylesheets="@../css/styleSheet.css" text="Toggle Equipment View" wrapText="true" />
          </children>
+         <GridPane.margin>
+            <Insets left="25.0" />
+         </GridPane.margin>
       </VBox>
-      <GesturePane fx:id="gesturePane" fitMode="UNBOUNDED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="423.0" prefWidth="406.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.rowSpan="9" GridPane.valignment="TOP" />
-      <JFXButton fx:id="viewTableButton" onAction="#goToLocationTable" prefHeight="33.0" prefWidth="127.0" text="View Table" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
+      <GesturePane fx:id="gesturePane" fitMode="UNBOUNDED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="423.0" prefWidth="406.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.rowSpan="7" GridPane.valignment="TOP" />
+      <JFXButton fx:id="viewTableButton" onAction="#goToLocationTable" text="  View Table  " GridPane.halignment="LEFT" GridPane.rowIndex="8" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets left="25.0" />
+         </GridPane.margin></JFXButton>
       <Label fx:id="titleLabel" alignment="CENTER" styleClass="titleFormat" stylesheets="@../css/styleSheet.css" text="Hospital Map" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
          <font>
             <Font size="18.0" />
@@ -101,7 +111,7 @@
             <JFXHamburger fx:id="hamburger" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="75.0" stylesheets="@../css/styleSheet.css" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
-      <JFXDrawer fx:id="drawer" defaultDrawerSize="2000.0" prefWidth="300.0" stylesheets="@../css/styleSheet.css" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.rowSpan="8" GridPane.vgrow="ALWAYS">
+      <JFXDrawer fx:id="drawer" defaultDrawerSize="2000.0" prefWidth="300.0" stylesheets="@../css/styleSheet.css" visible="false" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.rowSpan="6" GridPane.vgrow="ALWAYS">
          <children>
             <VBox fx:id="menuBox" prefHeight="200.0" prefWidth="100.0">
                <children>
@@ -217,7 +227,7 @@
             </VBox>
          </children>
       </JFXDrawer>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="4" GridPane.rowSpan="8">
+      <AnchorPane visible="false" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="4" GridPane.rowSpan="6">
          <children>
             <JFXTextArea fx:id="helpText" editable="false" layoutX="81.0" layoutY="68.0" prefHeight="283.0" prefWidth="320.0" styleClass="text-area" stylesheets="@../css/styleSheet.css">
                <opaqueInsets>
@@ -230,5 +240,21 @@
             <JFXButton fx:id="nextButton" layoutX="213.0" layoutY="428.0" onAction="#next" stylesheets="@../css/styleSheet.css" text="Next" />
          </children>
       </AnchorPane>
+      <JFXButton fx:id="lowerLevelOne" onAction="#goToLowerLevelOne" text="Lower Level 1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+      <JFXButton fx:id="thirdFloor" onAction="#goToThirdFloor" text="3rd Floor" GridPane.halignment="LEFT" GridPane.rowIndex="6" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets left="25.0" />
+         </GridPane.margin></JFXButton>
+      <JFXButton fx:id="secondFloor" onAction="#goToSecondFloor" text="2nd Floor" GridPane.halignment="LEFT" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+         <GridPane.margin>
+            <Insets left="25.0" />
+         </GridPane.margin></JFXButton>
+      <JFXButton fx:id="lowerLevelTwo" onAction="#goToLowerLevelTwo" text="Lower Level 2" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+      <JFXButton fx:id="firstFloor" onAction="#goToFirstFloor" text="1st Floor " GridPane.halignment="LEFT" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets left="25.0" />
+         </GridPane.margin>
+      </JFXButton>
+      <JFXButton fx:id="sideHospitalView" onAction="#goToSideView" text="Side View" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
    </children>
 </GridPane>
