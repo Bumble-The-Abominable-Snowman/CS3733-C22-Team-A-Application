@@ -115,7 +115,7 @@ public class MarkerManager {
 
   private void getSRLocations() {
     for (SR sr : allSRs) {
-      if (currentFloorIDs.contains( ((Location) sr.getFields().get("end_location")).getStringFields().get("node_id"))) {
+      if (currentFloorIDs.contains( sr.getStringFields().get("end_location"))) {
         floorSRs.add(sr);
       }
     }
