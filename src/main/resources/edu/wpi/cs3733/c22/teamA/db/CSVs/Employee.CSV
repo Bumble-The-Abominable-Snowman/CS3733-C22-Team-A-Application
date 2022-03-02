@@ -1,17 +1,17 @@
 employee_id, employee_type, first_name, last_name, email, phone_num, address, start_date
-001,Admin,Yanbo,Dai,ydai2@wpi.edu,0000000001,100 institute Rd,2022-02-02
-002,Admin,Yasar,Idikut,yidikut@wpi.edu,0000000002,Area 51,2022-02-03
-003, Admin, Alex, Sun, asun@wpi.edu, 0000000003, Smart World,2022-02-04
-004,Admin,The,Rock,rock@wpi.edu,0000000002,Ethans Discord,2022-02-03
-005, Admin, Brendan, King, bking2@wpi.edu, 0000000003, Smart World 420,2022-02-04
-006,Admin,Ethan,Schrim,jeschrim@wpi.edu,0000000002,Faraday Hall,2022-02-03
-007,Admin,Robbie,Eskridge,rceskridge@wpi.edu,2105529015,Covid land,2022-02-20
-008,Admin,Robert,Eskridge,rceskridge@wpi.edu,2105529015,Covid land,2022-02-20
-009,Admin,John,Schrim,jeschrim@wpi.edu,0000000010,Yabba Da Bado,2022-02-19
-010,Admin,Japanese,Beetle,superDuper@wpi.edu,0000000020,Yabba Da Bado,2022-02-18
-011,Admin,Robin,Banks,notACrook@wpi.edu,0000000030,Prison,2022-02-19
+001,Nurse,Yanbo,Dai,ydai2@wpi.edu,0000000001,100 institute Rd,2022-02-02
+002,Doctor,Yasar,Idikut,yidikut@wpi.edu,0000000002,Area 51,2022-02-03
+003, Aide, Alex, Sun, asun@wpi.edu, 0000000003, Smart World,2022-02-04
+004,Custodian,The,Rock,rock@wpi.edu,0000000002,Ethans Discord,2022-02-03
+005, Security, Brendan, King, bking2@wpi.edu, 0000000003, Smart World 420,2022-02-04
+006,Religious,Ethan,Schrim,jeschrim@wpi.edu,0000000002,Faraday Hall,2022-02-03
+007,Maintenance,Robbie,Eskridge,rceskridge@wpi.edu,2105529015,Covid land,2022-02-20
+008,Laundry,Robert,Eskridge,rceskridge@wpi.edu,2105529015,Covid land,2022-02-20
+009,Language,John,Schrim,jeschrim@wpi.edu,0000000010,Yabba Da Bado,2022-02-19
+010,Food,Japanese,Beetle,superDuper@wpi.edu,0000000020,Yabba Da Bado,2022-02-18
+011,Courier,Robin,Banks,notACrook@wpi.edu,0000000030,Prison,2022-02-19
 012,Admin,Chad,chadingson,chadchadinson@wpi.edu,0000000040,SheeshVille,2022-02-21
-013,Admin,Curve,Ball,curveBall@wpi.edu,0000000050,SheeshVille,2022-02-21
+013,Staff,Curve,Ball,curveBall@wpi.edu,0000000050,SheeshVille,2022-02-21
 014,Admin,Loosh,Leech,urug@wpi.edu,0000000060,SheeshVille,2022-02-21
 015,Admin,Shaggy,Of The Machine,420Man@wpi.edu,0000000070,Coolsville,2022-02-21
 016,Admin,Scooby,DoobyDoo,scoobSnack@wpi.edu,0000000080,CoolsVille,2022-02-10
