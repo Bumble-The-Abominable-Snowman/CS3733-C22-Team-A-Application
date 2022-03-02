@@ -93,10 +93,7 @@ public class ReligiousSRCtrl extends SRCtrl {
         .selectedItemProperty()
         .addListener(
             (obs, oldValue, newValue) -> {
-              if (newValue.equals("Type")) {
-                denominationChoice.getItems().clear();
-                denominationChoice.setDisable(true);
-              } else if (newValue.equals("Christian")) {
+              if (newValue.equals("Christian")) {
                 denominationChoice.getItems().clear();
                 denominationChoice.getItems().setAll(christianDenom);
                 denominationChoice.getSelectionModel().select(christianDenom.get(0));

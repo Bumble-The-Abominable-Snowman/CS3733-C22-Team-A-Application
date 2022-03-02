@@ -44,14 +44,15 @@ public class AutoCompleteBox<T> {
         if (code.isLetterKey()) {
             filter += e.getText();
             cmb.setPromptText(filter);
-        }
-        if (code == KeyCode.BACK_SPACE && filter.length() > 0) {
+        } else if (code == KeyCode.BACK_SPACE && filter.length() > 0) {
             filter = filter.substring(0, filter.length() - 1);
             cmb.getItems().setAll(originalItems);
             cmb.setPromptText(filter);
-        }
-        if (code == KeyCode.ESCAPE) {
+        } else if (code == KeyCode.ESCAPE) {
             filter = "";
+            cmb.setPromptText(filter);
+        } else {
+
         }
         if (filter.length() == 0) {
             cmb.getItems().setAll(originalItems);
