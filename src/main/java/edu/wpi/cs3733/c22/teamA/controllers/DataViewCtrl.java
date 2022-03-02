@@ -360,13 +360,13 @@ public class DataViewCtrl extends MasterCtrl {
         srDataviewManager.modifyPopup(field, value, updateButton);
         break;
       case 2:
-        locationDataviewManager.modifyPopup(field, value, updateButton, srDataviewManager);
+        locationDataviewManager.modifyPopup(field, value, updateButton);
         break;
       case 3:
         equipmentDataviewManager.modifyPopup(field, value, updateButton);
         break;
       case 4:
-        employeeDataviewManager.modifyPopup(field, value, updateButton, srDataviewManager);
+        employeeDataviewManager.modifyPopup(field, value, updateButton);
         break;
       case 5:
         medicineDataviewManager.modifyPopup(field, value, updateButton);
