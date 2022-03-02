@@ -3,19 +3,20 @@ package edu.wpi.cs3733.c22.teamA.Adb.employee;
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
 
 public class EmployeeDerbyImpl implements EmployeeDAO {
 
@@ -51,39 +52,44 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     }
   }
 
-  public void updateEmployee(String ID, String field, Object change) {
-    try {
-      Statement update = Adb.connection.createStatement();
+  public void updateEmployee(Employee e)
+          throws SQLException {
 
-      String str = "";
-      if (change instanceof String) {
-        str =
-            String.format(
-                "UPDATE Employee SET " + field + " = '%s' WHERE employee_id = '%s'", change, ID);
-      } else {
-        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String startDateStr = originalFormat.format(change);
+    Statement get = Adb.connection.createStatement();
 
-        str =
+    HashMap<String, String> e_string_fields = e.getStringFields();
+
+    String str =
             String.format(
-                "UPDATE Employee SET "
-                    + field
-                    + " = '"
-                    + startDateStr
-                    + "' WHERE employee_id = '%s'",
-                ID);
+                    "SELECT * FROM Employee WHERE employee_id = '%s'",
+                     e_string_fields.get("employee_id"));
+
+    ResultSet resultSet = get.executeQuery(str);
+    ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+
+    if (resultSet.next()) {
+      for (int i = 1; i < resultSetMetaData.getColumnCount() + 1; i++) {
+        String returnValOld = resultSet.getString(i);
+        String columnName = resultSetMetaData.getColumnName(i).toLowerCase(Locale.ROOT);
+
+        Statement update = Adb.connection.createStatement();
+
+        if (!returnValOld.equals(e_string_fields.get(columnName)))
+        {
+            str =
+                    String.format(
+                            "UPDATE Employee SET " + columnName + " = '%s' WHERE employee_id = '%s'",
+                            e_string_fields.get(columnName),
+                            e_string_fields.get("employee_id"));
+
+          update.execute(str);
+        }
       }
-
-      update.execute(str);
-    } catch (SQLException e) {
-      System.out.println("Failed");
-      e.printStackTrace();
-      return;
     }
   }
 
   public void enterEmployee(Employee e) throws ParseException {
-    enterEmployee(e.getEmployeeID(), e.getEmployeeType(), e.getFirstName(), e.getLastName(), e.getEmail(), e.getPhoneNum(), e.getAddress(),new SimpleDateFormat("yyyy-MM-dd").parse(e.getStartDate()));
+    enterEmployee(e.getStringFields().get("employee_id"), e.getStringFields().get("employee_type"), e.getStringFields().get("first_name"), e.getStringFields().get("last_name"), e.getStringFields().get("email"), e.getStringFields().get("phone_num"), e.getStringFields().get("address"),new SimpleDateFormat("yyyy-MM-dd").parse(e.getStringFields().get("start_date")));
   }
 
   public void enterEmployee(
@@ -168,17 +174,59 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
 
   // Read From Employees CSV
   public static List<Employee> readEmployeeCSV(String csvFilePath)
-      throws IOException, ParseException {
+          throws IOException, ParseException, IllegalAccessException {
     // System.out.println("beginning to read csv");
-    Scanner lineScanner = null;
-    if(!Adb.isInitialized) {
       ClassLoader classLoader = EmployeeDerbyImpl.class.getClassLoader();
       InputStream is = classLoader.getResourceAsStream(csvFilePath);
-      lineScanner = new Scanner(is);
-    }else{
-      File file = new File(csvFilePath);
-      lineScanner = new Scanner(file);
+     Scanner lineScanner = new Scanner(is);
+
+    Scanner dataScanner;
+    int dataIndex = 0;
+    int lineIndex = 0;
+    int intData = 0;
+    List<Employee> list = new ArrayList<>();
+    lineScanner.nextLine();
+    SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    while (lineScanner.hasNextLine()) { // Scan CSV line by line
+
+      dataScanner = new Scanner(lineScanner.nextLine());
+      dataScanner.useDelimiter(",");
+      Employee thisEmployee = new Employee();
+
+      while (dataScanner.hasNext()) {
+
+        String data = dataScanner.next();
+        data = data.trim();
+        if (dataIndex == 0) thisEmployee.setFieldByString("employee_id", data);
+        else if (dataIndex == 1) thisEmployee.setFieldByString("employee_type", data);
+        else if (dataIndex == 2) thisEmployee.setFieldByString("first_name", data);
+        else if (dataIndex == 3) thisEmployee.setFieldByString("last_name", data);
+        else if (dataIndex == 4) thisEmployee.setFieldByString("email", data);
+        else if (dataIndex == 5) thisEmployee.setFieldByString("phone_num", data);
+        else if (dataIndex == 6) thisEmployee.setFieldByString("address", data);
+        else if (dataIndex == 7) {
+          thisEmployee.setFieldByString("start_date", data);
+        } else System.out.println("Invalid data, I broke::" + data);
+        dataIndex++;
+      }
+
+      dataIndex = 0;
+      list.add(thisEmployee);
+       System.out.println(thisEmployee);
+
     }
+
+    lineIndex++;
+    lineScanner.close();
+    return list;
+  }
+
+  public static List<Employee> readEmployeeCSVfile(String csvFilePath)
+          throws IOException, ParseException {
+    // System.out.println("beginning to read csv");
+    File file = new File(csvFilePath);
+    Scanner lineScanner = new Scanner(file);
 
     Scanner dataScanner;
     int dataIndex = 0;
@@ -197,22 +245,22 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
 
         String data = dataScanner.next();
         data = data.trim();
-        if (dataIndex == 0) thisEmployee.setEmployeeID(data);
-        else if (dataIndex == 1) thisEmployee.setEmployeeType(data);
-        else if (dataIndex == 2) thisEmployee.setFirstName(data);
-        else if (dataIndex == 3) thisEmployee.setLastName(data);
-        else if (dataIndex == 4) thisEmployee.setEmail(data);
-        else if (dataIndex == 5) thisEmployee.setPhoneNum(data);
-        else if (dataIndex == 6) thisEmployee.setAddress(data);
+        if (dataIndex == 0) thisEmployee.setFieldByString("employee_id", data);
+        else if (dataIndex == 1) thisEmployee.setFieldByString("employee_type", data);
+        else if (dataIndex == 2) thisEmployee.setFieldByString("first_name", data);
+        else if (dataIndex == 3) thisEmployee.setFieldByString("last_name", data);
+        else if (dataIndex == 4) thisEmployee.setFieldByString("email", data);
+        else if (dataIndex == 5) thisEmployee.setFieldByString("phone_num", data);
+        else if (dataIndex == 6) thisEmployee.setFieldByString("address", data);
         else if (dataIndex == 7) {
-          thisEmployee.setStartDate(data);
+          thisEmployee.setFieldByString("start_date", data);
         } else System.out.println("Invalid data, I broke::" + data);
         dataIndex++;
       }
 
       dataIndex = 0;
       list.add(thisEmployee);
-       System.out.println(thisEmployee);
+      System.out.println(thisEmployee);
 
     }
 
@@ -235,17 +283,17 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     // write location data
     for (Employee thisEmployee : List) {
 
-      String startDate = String.valueOf(thisEmployee.getStartDate());
+      String startDate = String.valueOf(thisEmployee.getStringFields().get("start_date"));
       writer.write(
           String.join(
               ",",
-              thisEmployee.getEmployeeID(),
-              thisEmployee.getEmployeeType(),
-              thisEmployee.getFirstName(),
-              thisEmployee.getLastName(),
-              thisEmployee.getEmail(),
-              thisEmployee.getPhoneNum(),
-              thisEmployee.getAddress(),
+              thisEmployee.getStringFields().get("employee_id"),
+              thisEmployee.getStringFields().get("employee_type"),
+              thisEmployee.getStringFields().get("first_name"),
+              thisEmployee.getStringFields().get("last_name"),
+              thisEmployee.getStringFields().get("email"),
+              thisEmployee.getStringFields().get("phone_num"),
+              thisEmployee.getStringFields().get("address"),
               startDate));
 
       writer.newLine();
@@ -266,7 +314,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     EmployeeDerbyImpl empDerby = new EmployeeDerbyImpl();
     List<Employee> employeeList = empDerby.getEmployeeList();
     for (Employee emp : employeeList) {
-      empDerby.deleteEmployee(emp.getEmployeeID());
+      empDerby.deleteEmployee(emp.getStringFields().get("employee_id"));
     }
 
     try {
@@ -282,21 +330,76 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         String str = "INSERT INTO Employee(employee_id, employee_type, first_name, last_name, email, phone_num, address, start_date) VALUES('"
-                + employee.getEmployeeID()
+                + employee.getStringFields().get("employee_id")
                 + "', '"
-                + employee.getEmployeeType()
+                + employee.getStringFields().get("employee_type")
                 + "', '"
-                + employee.getFirstName()
+                + employee.getStringFields().get("first_name")
                 + "', '"
-                + employee.getLastName()
+                + employee.getStringFields().get("last_name")
                 + "', '"
-                + employee.getEmail()
+                + employee.getStringFields().get("email")
                 + "', '"
-                + employee.getPhoneNum()
+                + employee.getStringFields().get("phone_num")
                 + "', '"
-                + employee.getAddress()
+                + employee.getStringFields().get("address")
                 + "', '"
-                + employee.getStartDate()
+                + employee.getStringFields().get("start_date")
+                + "')";
+
+        System.out.println(str);
+        addStatement.executeUpdate(str);
+      }
+    } catch (SQLException | IOException | ParseException e) {
+      e.printStackTrace();
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static void inputFromCSVfile(String csvFilePath) { // Check employee table
+    try {
+      Statement dropTable = Adb.connection.createStatement();
+
+      dropTable.execute("DELETE FROM Employee");
+    } catch (SQLException e) {
+      System.out.println("Delete on Employee failed");
+    }
+
+    EmployeeDerbyImpl empDerby = new EmployeeDerbyImpl();
+    List<Employee> employeeList = empDerby.getEmployeeList();
+    for (Employee emp : employeeList) {
+      empDerby.deleteEmployee(emp.getStringFields().get("employee_id"));
+    }
+
+    try {
+
+      List<Employee> employeeList1 = EmployeeDerbyImpl.readEmployeeCSVfile(csvFilePath);
+
+      for (Employee employee : employeeList1) {
+        Statement addStatement = Adb.connection.createStatement();
+
+        //        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //        System.out.println(l.getStartDate() == null);
+        //        String date = originalFormat.format(l.getStartDate();
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        String str = "INSERT INTO Employee(employee_id, employee_type, first_name, last_name, email, phone_num, address, start_date) VALUES('"
+                + employee.getStringFields().get("employee_id")
+                + "', '"
+                + employee.getStringFields().get("employee_type")
+                + "', '"
+                + employee.getStringFields().get("first_name")
+                + "', '"
+                + employee.getStringFields().get("last_name")
+                + "', '"
+                + employee.getStringFields().get("email")
+                + "', '"
+                + employee.getStringFields().get("phone_num")
+                + "', '"
+                + employee.getStringFields().get("address")
+                + "', '"
+                + employee.getStringFields().get("start_date")
                 + "')";
 
         System.out.println(str);

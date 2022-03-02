@@ -25,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import net.kurobako.gesturefx.GesturePane;
 
@@ -54,9 +55,11 @@ public class MapCtrl extends MasterCtrl {
   @FXML JFXButton findPathButton = new JFXButton();
   @FXML JFXButton clearPathButton = new JFXButton();
 
+
+  /*
   @FXML private ImageView bumbleBlinkHead;
-  @FXML private JFXButton previousButton;
   @FXML private JFXButton nextButton;
+  @FXML private JFXButton previousButton;
   @FXML private JFXButton previous1Button;
   @FXML private JFXButton next1Button;
   @FXML private JFXButton previous2Button;
@@ -72,7 +75,7 @@ public class MapCtrl extends MasterCtrl {
   @FXML private Label bubble3Text;
   @FXML private Label bubble4Text;
   @FXML private Label bubble5Text;
-  @FXML private Label bubble6Text;
+  @FXML private Label bubble6Text; */
 
   @FXML private JFXComboBox searchComboBox;
 
@@ -148,6 +151,7 @@ public class MapCtrl extends MasterCtrl {
     new AutoCompleteBox(pfToComboBox);
     new AutoCompleteBox(pfFromComboBox);
 
+    /*
     double previousTextSize = previousButton.getFont().getSize();
     double nextTextSize = nextButton.getFont().getSize();
     double previous1TextSize = previous1Button.getFont().getSize();
@@ -171,13 +175,13 @@ public class MapCtrl extends MasterCtrl {
             .widthProperty()
             .addListener(
                     (obs, oldVal, newVal) -> {
-                      previousButton.setStyle(
-                              "-fx-font-size: "
-                                      + ((App.getStage().getWidth() / 1000) * previousTextSize)
-                                      + "pt;");
                       nextButton.setStyle(
                               "-fx-font-size: "
                                       + ((App.getStage().getWidth() / 1000) * nextTextSize)
+                                      + "pt;");
+                      previousButton.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * previousTextSize)
                                       + "pt;");
                       previous1Button.setStyle(
                               "-fx-font-size: "
@@ -243,7 +247,7 @@ public class MapCtrl extends MasterCtrl {
                               "-fx-font-size: "
                                       + ((App.getStage().getWidth() / 1000) * bubble6TextSize)
                                       + "pt;");
-                    });
+                    }); */
   }
 
   private void initFloorSelection() {
@@ -271,6 +275,7 @@ public class MapCtrl extends MasterCtrl {
   }
 
   public void findPath() {
+    if (pfFromComboBox.getSelectionModel().getSelectedItem() == null || pfToComboBox.getSelectionModel().getSelectedItem() == null) return;
     pathFinder.clearPath(anchorPane, true);
     pathFinder.drawPath(pathFinder.findPath(markerManager.getFloor()), anchorPane);
     if (!pathFinder.getDestinationFloor().equals(""))
@@ -284,11 +289,50 @@ public class MapCtrl extends MasterCtrl {
   }
 
   public void goToLocationTable() throws IOException {
-    this.onSceneSwitch();
     sceneFlag = 2;
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
+
+  @FXML
+  private void help() throws IOException {
+
+    if (helpState != 0) {
+      nextButton.setVisible(false);
+      helpText.setVisible(false);
+      drawer.setEffect(null);
+      helpButton.setEffect(null);
+      helpState = 0;
+    }
+    else {
+      borderGlow.setColor(Color.GOLD);
+      borderGlow.setOffsetX(0f);
+      borderGlow.setOffsetY(0f);
+      borderGlow.setHeight(45);
+      nextButton.setVisible(true);
+      helpText.setVisible(true);
+      helpText.setText("Select a menu option to use the application.  This menu is present on every page and is the primary navigation tool you will use.");
+      drawer.setEffect(borderGlow);
+      helpState = 1;
+    }
+
+  }
+
+  @FXML
+  private void next() throws IOException {
+
+    if (helpState == 1) {
+      drawer.setEffect(null);
+      helpText.setText("You can always click the help button to exit help at any time");
+      helpButton.setEffect(borderGlow);
+      helpState = 2;
+    }
+
+  }
+
+  public void goToMap(ActionEvent actionEvent) {
+  }
+/*
   public void activateBumble(){
     helpButton.setVisible(false);
     bumbleXButton.setVisible(true);
@@ -471,4 +515,6 @@ public class MapCtrl extends MasterCtrl {
     bubble5Text.setVisible(true);
     bubble6Text.setVisible(false);
   }
+
+  */
 }

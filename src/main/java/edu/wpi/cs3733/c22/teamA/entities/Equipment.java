@@ -1,14 +1,20 @@
 package edu.wpi.cs3733.c22.teamA.entities;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class Equipment extends RecursiveTreeObject<Equipment> {
-  private String equipmentID;
-  private String equipmentType;
-  private boolean isClean;
-  private String currentLocation;
-  private boolean isAvailable;
+
+  protected HashMap<String, Object> fields = new HashMap<>();
+  protected HashMap<String, String> fields_string = new HashMap<>();
 
   public Equipment() {}
 
@@ -18,59 +24,41 @@ public class Equipment extends RecursiveTreeObject<Equipment> {
       boolean isClean,
       String currentLocation,
       boolean isAvailable) {
-    this.equipmentID = equipmentID;
-    this.equipmentType = equipmentType;
-    this.isClean = isClean;
-    this.currentLocation = currentLocation;
-    this.isAvailable = isAvailable;
+    this.fields.put("equipment_id", equipmentID);
+    this.fields.put("equipment_type", equipmentType);
+    this.fields.put("is_clean", isClean);
+    this.fields.put("current_location", currentLocation);
+    this.fields.put("is_available", isAvailable);
   }
 
   public List<String> getListForm() {
-    return List.of(
-        equipmentID,
-        equipmentType,
-        Boolean.toString(isClean),
-        currentLocation,
-        Boolean.toString(isAvailable));
+    return List.of(getStringFields().get("equipment_id"),
+            getStringFields().get("equipment_type"),
+            getStringFields().get("is_clean"),
+            getStringFields().get("current_location"),
+            getStringFields().get("is_available"));
   }
 
-  public String getEquipmentID() {
-    return equipmentID;
+  public HashMap<String, String> getStringFields() {
+    for (String key : this.fields.keySet()) {
+       this.fields_string.put(key, String.valueOf(this.fields.get(key)));
+    }
+    return this.fields_string;
   }
 
-  public String getEquipmentType() {
-    return equipmentType;
+  public HashMap<String, Object> getFields() {
+    return fields;
   }
 
-  public boolean getIsClean() {
-    return isClean;
+  public void setField(String key, Object value) {
+    this.fields.put(key, value);
   }
 
-  public String getCurrentLocation() {
-    return currentLocation;
-  }
-
-  public boolean getIsAvailable() {
-    return isAvailable;
-  }
-
-  public void setEquipmentID(String id) {
-    equipmentID = id;
-  }
-
-  public void setEquipmentType(String type) {
-    equipmentType = type;
-  }
-
-  public void setIsClean(boolean b) {
-    isClean = b;
-  }
-
-  public void setCurrentLocation(String c) {
-    currentLocation = c;
-  }
-
-  public void setIsAvailable(boolean b) {
-    isAvailable = b;
+  public void setFieldByString(String key, String value) {
+    if (Objects.equals(key, "is_clean") || Objects.equals(key, "is_available") ) {
+      this.fields.put(key, Boolean.valueOf(value));
+    }else {
+      this.fields.put(key, value);
+    }
   }
 }

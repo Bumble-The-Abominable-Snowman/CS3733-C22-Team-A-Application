@@ -314,15 +314,12 @@ public class MedicineDerbyImpl implements MedicineDAO {
     List<Medicine> medicineList = new ArrayList<>();
 
     // Go through medicine CSV file
-    Scanner lineScanner = null;
-    if(!Adb.isInitialized) {
+
+
       ClassLoader classLoader = MedicineDerbyImpl.class.getClassLoader();
       InputStream is = classLoader.getResourceAsStream(medicineCSVFilePath);
-      lineScanner = new Scanner(is);
-    }else{
-      File file = new File(medicineCSVFilePath);
-      lineScanner = new Scanner(file);
-    }
+      Scanner lineScanner = new Scanner(is);
+
 
     Scanner dataScanner;
     int dataIndex = 0;

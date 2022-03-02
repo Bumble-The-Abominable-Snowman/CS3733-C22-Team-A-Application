@@ -92,7 +92,7 @@ public class SideView {
         else
           equipments = markerManager.returnDirtyEquipmentLocations();
         for (Equipment equip : equipments) {
-          displayText += equip.getEquipmentID() + ", " + equip.getCurrentLocation() + "\n";
+          displayText += equip.getStringFields().get("equipment_id") + ", " + equip.getStringFields().get("equipment_type") + "\n";
         }
       }
       if (displayText.equals("")) displayText += "None\n";

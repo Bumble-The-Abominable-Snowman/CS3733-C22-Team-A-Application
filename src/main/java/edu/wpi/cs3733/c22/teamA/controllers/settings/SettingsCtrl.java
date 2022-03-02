@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+import javafx.scene.paint.Color;
 
 public class SettingsCtrl extends MasterCtrl {
 
@@ -22,9 +23,10 @@ public class SettingsCtrl extends MasterCtrl {
   @FXML private JFXButton loadBackupButton;
   @FXML private JFXButton saveBackupButton;
 
+/*
+  @FXML private JFXButton nextButton;
   @FXML private ImageView bumbleBlinkHead;
   @FXML private JFXButton previousButton;
-  @FXML private JFXButton nextButton;
   @FXML private JFXButton previous1Button;
   @FXML private JFXButton next1Button;
   @FXML private JFXButton previous2Button;
@@ -35,9 +37,7 @@ public class SettingsCtrl extends MasterCtrl {
   @FXML private Label bubble1Text;
   @FXML private Label bubble2Text;
   @FXML private Label bubble3Text;
-  @FXML private Label bubble4Text;
-
-  double stageWidth;
+  @FXML private Label bubble4Text; */
 
   double loadBackupTextSize;
   double saveBackupTextSize;
@@ -59,7 +59,7 @@ public class SettingsCtrl extends MasterCtrl {
     saveBackupTextSize = saveBackupButton.getFont().getSize();
     clientServerTextSize = toggleClientServerButton.getFont().getSize();
     cloudTextSize = toggleClientServerButton.getFont().getSize();
-
+/*
     double previousTextSize = previousButton.getFont().getSize();
     double nextTextSize = nextButton.getFont().getSize();
     double previous1TextSize = previous1Button.getFont().getSize();
@@ -71,7 +71,7 @@ public class SettingsCtrl extends MasterCtrl {
     double bubble1TextSize = bubble1Text.getFont().getSize();
     double bubble2TextSize = bubble2Text.getFont().getSize();
     double bubble3TextSize = bubble3Text.getFont().getSize();
-    double bubble4TextSize = bubble4Text.getFont().getSize();
+    double bubble4TextSize = bubble4Text.getFont().getSize(); */
 
     updateSize();
 
@@ -79,14 +79,14 @@ public class SettingsCtrl extends MasterCtrl {
         .widthProperty()
         .addListener(
             (obs, oldVal, newVal) -> {
-              updateSize();
-              previousButton.setStyle(
-                      "-fx-font-size: "
-                              + ((App.getStage().getWidth() / 1000) * previousTextSize)
-                              + "pt;");
+              updateSize(); /*
               nextButton.setStyle(
                       "-fx-font-size: "
                               + ((App.getStage().getWidth() / 1000) * nextTextSize)
+                              + "pt;");
+              previousButton.setStyle(
+                      "-fx-font-size: "
+                              + ((App.getStage().getWidth() / 1000) * previousTextSize)
                               + "pt;");
               previous1Button.setStyle(
                       "-fx-font-size: "
@@ -127,7 +127,7 @@ public class SettingsCtrl extends MasterCtrl {
               bubble4Text.setStyle(
                       "-fx-font-size: "
                               + ((App.getStage().getWidth() / 1000) * bubble4TextSize)
-                              + "pt;");
+                              + "pt;"); */
             });
   }
 
@@ -174,7 +174,7 @@ public class SettingsCtrl extends MasterCtrl {
     toggleCloudButton.setStyle(
         "-fx-font-size: " + ((stageWidth / 1000) * saveBackupTextSize) + "pt;");
   }
-
+/*
   public void activateBumble(){
     helpButton.setVisible(false);
     bumbleXButton.setVisible(true);
@@ -299,6 +299,41 @@ public class SettingsCtrl extends MasterCtrl {
     bubble3Text.setVisible(true);
     bubble4Text.setVisible(false);
   }
+*/
+  @FXML
+  private void help() throws IOException {
 
+    if (helpState != 0) {
+      nextButton.setVisible(false);
+      helpText.setVisible(false);
+      drawer.setEffect(null);
+      helpButton.setEffect(null);
+      helpState = 0;
+    }
+    else {
+      borderGlow.setColor(Color.GOLD);
+      borderGlow.setOffsetX(0f);
+      borderGlow.setOffsetY(0f);
+      borderGlow.setHeight(45);
+      nextButton.setVisible(true);
+      helpText.setVisible(true);
+      helpText.setText("Select a menu option to use the application.  This menu is present on every page and is the primary navigation tool you will use.");
+      drawer.setEffect(borderGlow);
+      helpState = 1;
+    }
+
+  }
+
+  @FXML
+  private void next() throws IOException {
+
+    if (helpState == 1) {
+      drawer.setEffect(null);
+      helpText.setText("You can always click the help button to exit help at any time");
+      helpButton.setEffect(borderGlow);
+      helpState = 2;
+    }
+
+  }
 
 }

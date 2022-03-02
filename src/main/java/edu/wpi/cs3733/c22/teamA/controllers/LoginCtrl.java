@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
+import edu.wpi.cs3733.c22.teamA.auth0.Auth0Login;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -69,6 +70,7 @@ public class LoginCtrl {
 
   @FXML
   private void logIn() {
+      //Auth0Login.login();
       Adb.username = usernameBox.getText();
       Adb.password = passwordBox.getText();
 

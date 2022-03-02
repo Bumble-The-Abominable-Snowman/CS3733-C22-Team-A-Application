@@ -43,7 +43,6 @@ public class LoadBackupCtrl extends MasterCtrl {
   @FXML private Text selectedLabel;
   @FXML private Text insertLabel;
   @FXML private String lastSelectedFile;
-  private double stageWidth;
   private double loadBackupTextSize;
   private double loadFromSystemTextSize;
   private double selectedFileTextSize;
@@ -51,9 +50,11 @@ public class LoadBackupCtrl extends MasterCtrl {
   private double selectedLabelTextSize;
   private double insertLabelTextSize;
 
+  @FXML private JFXButton nextButton;
+
+  /*
   @FXML private ImageView bumbleBlinkHead;
   @FXML private JFXButton previousButton;
-  @FXML private JFXButton nextButton;
   @FXML private JFXButton previous1Button;
   @FXML private JFXButton next1Button;
   @FXML private JFXButton previous2Button;
@@ -61,7 +62,7 @@ public class LoadBackupCtrl extends MasterCtrl {
   @FXML private Label bubbleText;
   @FXML private Label bubble1Text;
   @FXML private Label bubble2Text;
-  @FXML private Label bubble3Text;
+  @FXML private Label bubble3Text; */
 
   @FXML
   public void initialize() {
@@ -75,28 +76,29 @@ public class LoadBackupCtrl extends MasterCtrl {
     selectedLabelTextSize = selectedLabel.getFont().getSize();
     insertLabelTextSize = insertLabel.getFont().getSize();
 
+/*
     double previousTextSize = previousButton.getFont().getSize();
-    double nextTextSize = nextButton.getFont().getSize();
+       double nextTextSize = nextButton.getFont().getSize();
     double previous1TextSize = previous1Button.getFont().getSize();
     double next1TextSize = next1Button.getFont().getSize();
     double previous2TextSize = previous2Button.getFont().getSize();
     double next2TextSize = next2Button.getFont().getSize();
     double bubble1TextSize = bubble1Text.getFont().getSize();
     double bubble2TextSize = bubble2Text.getFont().getSize();
-    double bubble3TextSize = bubble3Text.getFont().getSize();
+    double bubble3TextSize = bubble3Text.getFont().getSize(); */
 
     App.getStage()
             .widthProperty()
             .addListener(
                     (obs, oldVal, newVal) -> {
-                      updateSize();
-                      previousButton.setStyle(
-                              "-fx-font-size: "
-                                      + ((App.getStage().getWidth() / 1000) * previousTextSize)
-                                      + "pt;");
+                      updateSize(); /*
                       nextButton.setStyle(
                               "-fx-font-size: "
                                       + ((App.getStage().getWidth() / 1000) * nextTextSize)
+                                      + "pt;");
+                      previousButton.setStyle(
+                              "-fx-font-size: "
+                                      + ((App.getStage().getWidth() / 1000) * previousTextSize)
                                       + "pt;");
                       previous1Button.setStyle(
                               "-fx-font-size: "
@@ -126,7 +128,7 @@ public class LoadBackupCtrl extends MasterCtrl {
                               "-fx-font-size: "
                                       + ((App.getStage().getWidth() / 1000) * bubble3TextSize)
                                       + "pt;");
-                    });
+         */       });
 
     TypeCSV.getItems().removeAll(TypeCSV.getItems());
     TypeCSV.getItems()
@@ -156,13 +158,13 @@ public class LoadBackupCtrl extends MasterCtrl {
 
         switch (TypeCSV.getSelectionModel().getSelectedItem().toString()) {
           case "TowerLocations":
-            LocationDerbyImpl.inputFromCSV(lastSelectedFile);
+            LocationDerbyImpl.inputFromCSVfile(lastSelectedFile);
             break;
           case "Employee":
-            EmployeeDerbyImpl.inputFromCSV( lastSelectedFile);
+            EmployeeDerbyImpl.inputFromCSVfile( lastSelectedFile);
             break;
           case "MedicalEquipment":
-            EquipmentDerbyImpl.inputFromCSV("MedicalEquipment", lastSelectedFile);
+            EquipmentDerbyImpl.inputFromCSVfile("MedicalEquipment", lastSelectedFile);
             break;
           case "Medicine":
             MedicineDerbyImpl.importMedicineFromCSV(lastSelectedFile);
@@ -172,47 +174,47 @@ public class LoadBackupCtrl extends MasterCtrl {
             break;
           case "MedicalEquipmentServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyEq = new ServiceRequestDerbyImpl(SR.SRType.EQUIPMENT);
-            serviceRequestDerbyEq.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbyEq.populateFromCSVfile(lastSelectedFile);
             break;
           case "FloralDeliveryServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyFloral = new ServiceRequestDerbyImpl(SR.SRType.FLORAL_DELIVERY);
-            serviceRequestDerbyFloral.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbyFloral.populateFromCSVfile(lastSelectedFile);
             break;
           case "FoodDeliveryServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyFood = new ServiceRequestDerbyImpl(SR.SRType.FOOD_DELIVERY);
-            serviceRequestDerbyFood.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbyFood.populateFromCSVfile(lastSelectedFile);
             break;
           case "GiftDeliveryServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyGift = new ServiceRequestDerbyImpl(SR.SRType.GIFT_DELIVERY);
-            serviceRequestDerbyGift.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbyGift.populateFromCSVfile(lastSelectedFile);
             break;
           case "LanguageServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyLanguage = new ServiceRequestDerbyImpl(SR.SRType.LANGUAGE);
-            serviceRequestDerbyLanguage.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbyLanguage.populateFromCSVfile(lastSelectedFile);
             break;
           case "LaundryServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyLaundry = new ServiceRequestDerbyImpl(SR.SRType.LAUNDRY);
-            serviceRequestDerbyLaundry.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbyLaundry.populateFromCSVfile(lastSelectedFile);
             break;
           case "MaintenanceServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyMaintenance = new ServiceRequestDerbyImpl(SR.SRType.MAINTENANCE);
-            serviceRequestDerbyMaintenance.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbyMaintenance.populateFromCSVfile(lastSelectedFile);
             break;
           case "MedicineDeliveryServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyMedicine = new ServiceRequestDerbyImpl(SR.SRType.MEDICINE_DELIVERY);
-            serviceRequestDerbyMedicine.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbyMedicine.populateFromCSVfile(lastSelectedFile);
             break;
           case "ReligiousServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbyReligious = new ServiceRequestDerbyImpl(SR.SRType.RELIGIOUS);
-            serviceRequestDerbyReligious.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbyReligious.populateFromCSVfile(lastSelectedFile);
             break;
           case "SanitationServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbySanitation = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
-            serviceRequestDerbySanitation.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbySanitation.populateFromCSVfile(lastSelectedFile);
             break;
           case "SecurityServiceRequest":
             ServiceRequestDerbyImpl serviceRequestDerbySecurity = new ServiceRequestDerbyImpl(SR.SRType.SECURITY);
-            serviceRequestDerbySecurity.populateFromCSV(lastSelectedFile);
+            serviceRequestDerbySecurity.populateFromCSVfile(lastSelectedFile);
             break;
         }
         statusText.setText("Success!");
@@ -261,7 +263,7 @@ public class LoadBackupCtrl extends MasterCtrl {
     insertLabel.setStyle(
             "-fx-font-size: " + ((stageWidth / 1000) * insertLabelTextSize) + "pt;");
   }
-
+/*
   public void activateBumble(){
     helpButton.setVisible(false);
     bumbleXButton.setVisible(true);
@@ -357,6 +359,41 @@ public class LoadBackupCtrl extends MasterCtrl {
     bubble2Text.setVisible(true);
     bubble3Text.setVisible(false);
   }
+*/
+  @FXML
+  private void help() throws IOException {
 
+    if (helpState != 0) {
+      nextButton.setVisible(false);
+      helpText.setVisible(false);
+      drawer.setEffect(null);
+      helpButton.setEffect(null);
+      helpState = 0;
+    }
+    else {
+      borderGlow.setColor(Color.GOLD);
+      borderGlow.setOffsetX(0f);
+      borderGlow.setOffsetY(0f);
+      borderGlow.setHeight(45);
+      nextButton.setVisible(true);
+      helpText.setVisible(true);
+      helpText.setText("Select a menu option to use the application.  This menu is present on every page and is the primary navigation tool you will use.");
+      drawer.setEffect(borderGlow);
+      helpState = 1;
+    }
+
+  }
+
+  @FXML
+  private void next() throws IOException {
+
+    if (helpState == 1) {
+      drawer.setEffect(null);
+      helpText.setText("You can always click the help button to exit help at any time");
+      helpButton.setEffect(borderGlow);
+      helpState = 2;
+    }
+
+  }
 
 }

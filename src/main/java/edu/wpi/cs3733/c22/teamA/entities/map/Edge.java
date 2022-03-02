@@ -17,11 +17,11 @@ public class Edge {
     this.floorCross = floorCross;
     weight =
         taxiCabDistance
-            ? Math.abs(start.getXCoord() - end.getXCoord())
-                + Math.abs(start.getYCoord() - end.getYCoord())
+            ? Math.abs(Integer.parseInt(start.getStringFields().get("xcoord"))- Integer.parseInt(end.getStringFields().get("xcoord")))
+                + Math.abs(Integer.parseInt(start.getStringFields().get("ycoord")) - Integer.parseInt(end.getStringFields().get("ycoord")))
             : Math.sqrt(
-                Math.pow((end.getXCoord() - start.getXCoord()), 2)
-                    + Math.pow((end.getYCoord() - start.getYCoord()), 2));
+                Math.pow((Integer.parseInt(end.getStringFields().get("xcoord")) - Integer.parseInt(start.getStringFields().get("xcoord"))), 2)
+                    + Math.pow((Integer.parseInt(end.getStringFields().get("ycoord")) - Integer.parseInt(start.getStringFields().get("ycoord"))), 2));
   }
 
   public Edge() {
