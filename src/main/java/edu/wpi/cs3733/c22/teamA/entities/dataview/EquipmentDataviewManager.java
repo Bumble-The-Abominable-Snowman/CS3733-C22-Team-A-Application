@@ -203,7 +203,6 @@ public class EquipmentDataviewManager {
 									equipmentDerby.updateMedicalEquipment(
 											eq.getEquipmentID(), aField, value.getText());
 									updateButton.setTextFill(Color.GREEN);
-									System.out.println("B4 initialize");
 									this.initializeEquipmentTable();
 								} catch (Exception ex) {
 									ex.printStackTrace();
