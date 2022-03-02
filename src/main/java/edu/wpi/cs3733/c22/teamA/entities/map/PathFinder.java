@@ -176,7 +176,7 @@ public class PathFinder {
               prev.getYCoord() + offsetY,
               path.get(i).getXCoord() + offsetX,
               path.get(i).getYCoord() + offsetY);
-      line.setStroke(Color.RED);
+      line.setStroke(Color.BLACK);
       line.setVisible(true);
       line.setStrokeWidth(4);
       miniAnchorPane.getChildren().add(line);
