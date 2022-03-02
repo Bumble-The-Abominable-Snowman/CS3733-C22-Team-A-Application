@@ -19,8 +19,8 @@ import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import teamA_API.Main;
-import teamA_API.exceptions.ServiceException;
+//import teamA_API.Main;
+//import teamA_API.exceptions.ServiceException;
 
 public class SelectServiceRequestCtrl extends MasterCtrl {
 
@@ -159,63 +159,63 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.MEDICINE_DELIVERY_SR);
   }
 
-  @FXML
-  private void loadAPI() throws ServiceException, IOException {
-    Main.run(500, 200, 960, 600, "", "");
-  }
+  //@FXML
+  //private void loadAPI() throws ServiceException, IOException {
+    //Main.run(500, 200, 960, 600, "", "");
+  //}
 
-  @FXML
-  private void saveAPI() throws IllegalAccessException, SQLException, InvocationTargetException, ParseException {
-    List<teamA_API.entities.SR> list = Main.getRequestList();
-    ServiceRequestDerbyImpl data = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
-    for (teamA_API.entities.SR req : list) {
-      SR sr = new SR(SR.SRType.SANITATION);
-      sr.setFieldByString("request_id", req.getFields_string().get("request_id"));
-      sr.setFieldByString("start_location", "N/A");
-      sr.setFieldByString("end_location", req.getFields_string().get("end_location"));
+  //@FXML
+  //private void saveAPI() throws IllegalAccessException, SQLException, InvocationTargetException, ParseException {
+    //List<teamA_API.entities.SR> list = Main.getRequestList();
+    //ServiceRequestDerbyImpl data = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
+    //for (teamA_API.entities.SR req : list) {
+      //SR sr = new SR(SR.SRType.SANITATION);
+      //sr.setFieldByString("request_id", req.getFields_string().get("request_id"));
+      //sr.setFieldByString("start_location", "N/A");
+      //sr.setFieldByString("end_location", req.getFields_string().get("end_location"));
 
-      teamA_API.entities.Employee employeeAssignedAPI = (teamA_API.entities.Employee) Main.getEmployee(req.getFields_string().get("employee_assigned"));
-      Employee employeeRequested = new Employee(
-              employeeAssignedAPI.getEmployeeID(),
-              employeeAssignedAPI.getEmployeeType(),
-              employeeAssignedAPI.getFirstName(),
-              employeeAssignedAPI.getLastName(),
-              employeeAssignedAPI.getEmail(),
-              employeeAssignedAPI.getPhoneNum(),
-              employeeAssignedAPI.getAddress(),
-              new SimpleDateFormat("yyyy-MM-dd").parse(employeeAssignedAPI.getStartDate()));
+      //teamA_API.entities.Employee employeeAssignedAPI = (teamA_API.entities.Employee) Main.getEmployee(req.getFields_string().get("employee_assigned"));
+      //Employee employeeRequested = new Employee(
+              //employeeAssignedAPI.getEmployeeID(),
+              //employeeAssignedAPI.getEmployeeType(),
+              //employeeAssignedAPI.getFirstName(),
+              //employeeAssignedAPI.getLastName(),
+              //employeeAssignedAPI.getEmail(),
+              //employeeAssignedAPI.getPhoneNum(),
+              //employeeAssignedAPI.getAddress(),
+              //new SimpleDateFormat("yyyy-MM-dd").parse(employeeAssignedAPI.getStartDate()));
 
-      EmployeeDerbyImpl employeeDerby = new EmployeeDerbyImpl();
-      boolean doesEmployeeAssignedNotExist = false;
-      for (Employee e: employeeDerby.getEmployeeList()) {
-        if (e.getStringFields().get("employee_id").equals(employeeRequested.getStringFields().get("employee_id")))
-        {
-          doesEmployeeAssignedNotExist = true;
-        }
-      }
-      if (!doesEmployeeAssignedNotExist)
-      {
-        employeeDerby.enterEmployee(employeeAssignedAPI.getEmployeeID(),
-                employeeAssignedAPI.getEmployeeType(),
-                employeeAssignedAPI.getFirstName(),
-                employeeAssignedAPI.getLastName(),
-                employeeAssignedAPI.getEmail(),
-                employeeAssignedAPI.getPhoneNum(),
-                employeeAssignedAPI.getAddress(),
-                new SimpleDateFormat("yyyy-MM-dd").parse(employeeAssignedAPI.getStartDate()));
+      //EmployeeDerbyImpl employeeDerby = new EmployeeDerbyImpl();
+      //boolean doesEmployeeAssignedNotExist = false;
+      //for (Employee e: employeeDerby.getEmployeeList()) {
+        //if (e.getStringFields().get("employee_id").equals(employeeRequested.getStringFields().get("employee_id")))
+        //{
+          //doesEmployeeAssignedNotExist = true;
+        //}
+      //}
+      //if (!doesEmployeeAssignedNotExist)
+      //{
+        //employeeDerby.enterEmployee(employeeAssignedAPI.getEmployeeID(),
+                //employeeAssignedAPI.getEmployeeType(),
+                //employeeAssignedAPI.getFirstName(),
+                //employeeAssignedAPI.getLastName(),
+                //employeeAssignedAPI.getEmail(),
+                //employeeAssignedAPI.getPhoneNum(),
+                //employeeAssignedAPI.getAddress(),
+                //new SimpleDateFormat("yyyy-MM-dd").parse(employeeAssignedAPI.getStartDate()));
 
-      }
+      //}
 
-      sr.setField("employee_assigned", employeeRequested);
-      sr.setField("employee_requested", employeeDerby.getEmployee("001"));
+      //sr.setField("employee_assigned", employeeRequested);
+      //sr.setField("employee_requested", employeeDerby.getEmployee("001"));
 
-      sr.setFieldByString("comments", req.getFields_string().get("comments"));
-      sr.setFieldByString("sanitation_type", req.getFields_string().get("sanitation_type"));
+      //sr.setFieldByString("comments", req.getFields_string().get("comments"));
+      //sr.setFieldByString("sanitation_type", req.getFields_string().get("sanitation_type"));
 
-      System.out.println(sr);
-      data.enterServiceRequest(sr);
-    }
-  }
+      //System.out.println(sr);
+      //data.enterServiceRequest(sr);
+    //}
+  //}
 
   @FXML
   private void updateSize() {
