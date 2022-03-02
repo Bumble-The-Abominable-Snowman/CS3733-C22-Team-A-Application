@@ -17,6 +17,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Collections;
 import java.util.Objects;
+
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -29,6 +31,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 
 public class LoadBackupCtrl extends MasterCtrl {
 
@@ -48,6 +51,7 @@ public class LoadBackupCtrl extends MasterCtrl {
   private double selectedLabelTextSize;
   private double insertLabelTextSize;
 
+  @FXML private ImageView bumbleBlinkHead;
   @FXML private JFXButton previousButton;
   @FXML private JFXButton nextButton;
   @FXML private JFXButton previous1Button;
@@ -283,6 +287,10 @@ public class LoadBackupCtrl extends MasterCtrl {
   }
 
   public void next(){
+    PauseTransition pt = new PauseTransition(Duration.millis(100));
+    bumbleBlinkHead.setVisible(true);
+    pt.setOnFinished(e -> bumbleBlinkHead.setVisible(false));
+    pt.play();
     previousButton.setVisible(true);
     nextButton.setVisible(false);
     next1Button.setVisible(true);
@@ -291,6 +299,10 @@ public class LoadBackupCtrl extends MasterCtrl {
   }
 
   public void previous(){
+    PauseTransition pt = new PauseTransition(Duration.millis(100));
+    bumbleBlinkHead.setVisible(true);
+    pt.setOnFinished(e -> bumbleBlinkHead.setVisible(false));
+    pt.play();
     previousButton.setVisible(false);
     nextButton.setVisible(true);
     next1Button.setVisible(false);
@@ -299,6 +311,10 @@ public class LoadBackupCtrl extends MasterCtrl {
   }
 
   public void next1(){
+    PauseTransition pt = new PauseTransition(Duration.millis(100));
+    bumbleBlinkHead.setVisible(true);
+    pt.setOnFinished(e -> bumbleBlinkHead.setVisible(false));
+    pt.play();
     previous1Button.setVisible(true);
     next1Button.setVisible(false);
     next2Button.setVisible(true);
@@ -307,6 +323,10 @@ public class LoadBackupCtrl extends MasterCtrl {
   }
 
   public void previous1() {
+    PauseTransition pt = new PauseTransition(Duration.millis(100));
+    bumbleBlinkHead.setVisible(true);
+    pt.setOnFinished(e -> bumbleBlinkHead.setVisible(false));
+    pt.play();
     previous1Button.setVisible(false);
     next1Button.setVisible(true);
     next2Button.setVisible(false);
@@ -315,6 +335,10 @@ public class LoadBackupCtrl extends MasterCtrl {
   }
 
   public void next2(){
+    PauseTransition pt = new PauseTransition(Duration.millis(100));
+    bumbleBlinkHead.setVisible(true);
+    pt.setOnFinished(e -> bumbleBlinkHead.setVisible(false));
+    pt.play();
     previous1Button.setVisible(false);
     previous2Button.setVisible(true);
     next2Button.setVisible(false);
@@ -323,6 +347,10 @@ public class LoadBackupCtrl extends MasterCtrl {
   }
 
   public void previous2() {
+    PauseTransition pt = new PauseTransition(Duration.millis(100));
+    bumbleBlinkHead.setVisible(true);
+    pt.setOnFinished(e -> bumbleBlinkHead.setVisible(false));
+    pt.play();
     previous1Button.setVisible(true);
     previous2Button.setVisible(false);
     next2Button.setVisible(true);

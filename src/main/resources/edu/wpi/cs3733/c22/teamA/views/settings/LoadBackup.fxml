@@ -214,6 +214,11 @@
          <Image url="@../../images/BumbleIcon.png" />
       </image>
    </ImageView>
+   <ImageView fx:id="bumbleBlinkHead" fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="6" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" visible="false">
+      <image>
+         <Image url="@../../images/BumbleClosedIcon.png" />
+      </image>
+   </ImageView>
    <Label fx:id="bubbleText" prefHeight="211.0" prefWidth="320.0" text="Welcome to the Save Backup page." textAlignment="CENTER" visible="false" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
       <font>
          <Font size="15.0" />

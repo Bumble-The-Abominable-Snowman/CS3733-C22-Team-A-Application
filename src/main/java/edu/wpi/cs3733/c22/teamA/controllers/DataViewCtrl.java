@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
+import javafx.animation.PauseTransition;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,6 +43,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Popup;
+import javafx.util.Duration;
 
 public class DataViewCtrl extends MasterCtrl {
 
@@ -53,6 +55,7 @@ public class DataViewCtrl extends MasterCtrl {
   @FXML private JFXButton clearButton;
   @FXML private JFXButton deleteButton;
 
+  @FXML private ImageView bumbleBlinkHead;
   @FXML private JFXButton previousButton;
   @FXML private JFXButton nextButton;
   @FXML private JFXButton previous1Button;
@@ -61,7 +64,6 @@ public class DataViewCtrl extends MasterCtrl {
   @FXML private JFXButton next2Button;
   @FXML private JFXButton previous3Button;
   @FXML private JFXButton next3Button;
-  @FXML private Label bubbleText;
   @FXML private Label bubble1Text;
   @FXML private Label bubble2Text;
   @FXML private Label bubble3Text;
@@ -562,6 +564,10 @@ public class DataViewCtrl extends MasterCtrl {
   }
 
   public void next(){
+    PauseTransition pt = new PauseTransition(Duration.millis(100));
+    bumbleBlinkHead.setVisible(true);
+    pt.setOnFinished(e -> bumbleBlinkHead.setVisible(false));
+    pt.play();
     previousButton.setVisible(true);
     nextButton.setVisible(false);
     next1Button.setVisible(true);
@@ -570,6 +576,10 @@ public class DataViewCtrl extends MasterCtrl {
   }
 
   public void previous(){
+    PauseTransition pt = new PauseTransition(Duration.millis(100));
+    bumbleBlinkHead.setVisible(true);
+    pt.setOnFinished(e -> bumbleBlinkHead.setVisible(false));
+    pt.play();
     previousButton.setVisible(false);
     nextButton.setVisible(true);
     next1Button.setVisible(false);
@@ -578,6 +588,10 @@ public class DataViewCtrl extends MasterCtrl {
   }
 
   public void next1(){
+    PauseTransition pt = new PauseTransition(Duration.millis(100));
+    bumbleBlinkHead.setVisible(true);
+    pt.setOnFinished(e -> bumbleBlinkHead.setVisible(false));
+    pt.play();
     previous1Button.setVisible(true);
     next1Button.setVisible(false);
     next2Button.setVisible(true);
@@ -586,6 +600,10 @@ public class DataViewCtrl extends MasterCtrl {
   }
 
   public void previous1() {
+    PauseTransition pt = new PauseTransition(Duration.millis(100));
+    bumbleBlinkHead.setVisible(true);
+    pt.setOnFinished(e -> bumbleBlinkHead.setVisible(false));
+    pt.play();
     previous1Button.setVisible(false);
     next1Button.setVisible(true);
     next2Button.setVisible(false);
@@ -594,6 +612,10 @@ public class DataViewCtrl extends MasterCtrl {
   }
 
   public void next2(){
+    PauseTransition pt = new PauseTransition(Duration.millis(100));
+    bumbleBlinkHead.setVisible(true);
+    pt.setOnFinished(e -> bumbleBlinkHead.setVisible(false));
+    pt.play();
     previous1Button.setVisible(false);
     previous2Button.setVisible(true);
     next2Button.setVisible(false);
@@ -603,6 +625,10 @@ public class DataViewCtrl extends MasterCtrl {
   }
 
   public void previous2() {
+    PauseTransition pt = new PauseTransition(Duration.millis(100));
+    bumbleBlinkHead.setVisible(true);
+    pt.setOnFinished(e -> bumbleBlinkHead.setVisible(false));
+    pt.play();
     previous1Button.setVisible(true);
     previous2Button.setVisible(false);
     next2Button.setVisible(true);
@@ -612,6 +638,10 @@ public class DataViewCtrl extends MasterCtrl {
   }
 
   public void next3(){
+    PauseTransition pt = new PauseTransition(Duration.millis(100));
+    bumbleBlinkHead.setVisible(true);
+    pt.setOnFinished(e -> bumbleBlinkHead.setVisible(false));
+    pt.play();
     previous2Button.setVisible(false);
     previous3Button.setVisible(true);
     next3Button.setVisible(false);
@@ -620,6 +650,10 @@ public class DataViewCtrl extends MasterCtrl {
   }
 
   public void previous3() {
+    PauseTransition pt = new PauseTransition(Duration.millis(100));
+    bumbleBlinkHead.setVisible(true);
+    pt.setOnFinished(e -> bumbleBlinkHead.setVisible(false));
+    pt.play();
     previous2Button.setVisible(true);
     previous3Button.setVisible(false);
     next3Button.setVisible(true);

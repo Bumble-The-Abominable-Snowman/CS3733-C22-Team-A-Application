@@ -14,12 +14,14 @@ import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
 import java.io.IOException;
 import java.rmi.server.ExportException;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 public class SaveBackupCtrl extends MasterCtrl {
   @FXML private JFXButton saveBackupButton;
@@ -28,6 +30,7 @@ public class SaveBackupCtrl extends MasterCtrl {
   @FXML private JFXComboBox<String> TypeCSV;
   @FXML private Text exportLabel;
 
+  @FXML private ImageView bumbleBlinkHead;
   @FXML private JFXButton previousButton;
   @FXML private JFXButton nextButton;
   @FXML private JFXButton previous1Button;
@@ -247,6 +250,10 @@ public class SaveBackupCtrl extends MasterCtrl {
   }
 
   public void next(){
+    PauseTransition pt = new PauseTransition(Duration.millis(100));
+    bumbleBlinkHead.setVisible(true);
+    pt.setOnFinished(e -> bumbleBlinkHead.setVisible(false));
+    pt.play();
     previousButton.setVisible(true);
     nextButton.setVisible(false);
     next1Button.setVisible(true);
@@ -255,6 +262,10 @@ public class SaveBackupCtrl extends MasterCtrl {
   }
 
   public void previous(){
+    PauseTransition pt = new PauseTransition(Duration.millis(100));
+    bumbleBlinkHead.setVisible(true);
+    pt.setOnFinished(e -> bumbleBlinkHead.setVisible(false));
+    pt.play();
     previousButton.setVisible(false);
     nextButton.setVisible(true);
     next1Button.setVisible(false);
@@ -263,6 +274,10 @@ public class SaveBackupCtrl extends MasterCtrl {
   }
 
   public void next1(){
+    PauseTransition pt = new PauseTransition(Duration.millis(100));
+    bumbleBlinkHead.setVisible(true);
+    pt.setOnFinished(e -> bumbleBlinkHead.setVisible(false));
+    pt.play();
     previous1Button.setVisible(true);
     next1Button.setVisible(false);
     next2Button.setVisible(true);
@@ -271,6 +286,10 @@ public class SaveBackupCtrl extends MasterCtrl {
   }
 
   public void previous1() {
+    PauseTransition pt = new PauseTransition(Duration.millis(100));
+    bumbleBlinkHead.setVisible(true);
+    pt.setOnFinished(e -> bumbleBlinkHead.setVisible(false));
+    pt.play();
     previous1Button.setVisible(false);
     next1Button.setVisible(true);
     next2Button.setVisible(false);
@@ -279,6 +298,10 @@ public class SaveBackupCtrl extends MasterCtrl {
   }
 
   public void next2(){
+    PauseTransition pt = new PauseTransition(Duration.millis(100));
+    bumbleBlinkHead.setVisible(true);
+    pt.setOnFinished(e -> bumbleBlinkHead.setVisible(false));
+    pt.play();
     previous1Button.setVisible(false);
     previous2Button.setVisible(true);
     next2Button.setVisible(false);
@@ -287,6 +310,10 @@ public class SaveBackupCtrl extends MasterCtrl {
   }
 
   public void previous2() {
+    PauseTransition pt = new PauseTransition(Duration.millis(100));
+    bumbleBlinkHead.setVisible(true);
+    pt.setOnFinished(e -> bumbleBlinkHead.setVisible(false));
+    pt.play();
     previous1Button.setVisible(true);
     previous2Button.setVisible(false);
     next2Button.setVisible(true);

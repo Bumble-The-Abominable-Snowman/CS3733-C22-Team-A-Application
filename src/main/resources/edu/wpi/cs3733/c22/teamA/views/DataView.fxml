@@ -229,6 +229,14 @@
             <Insets  bottom="20" />
          </GridPane.margin>
       </ImageView>
+      <ImageView fx:id="bumbleBlinkHead" fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" visible="false" >
+         <image>
+            <Image url="@../images/BumbleClosedIcon.png" />
+         </image>
+         <GridPane.margin>
+            <Insets  bottom="20" />
+         </GridPane.margin>
+      </ImageView>
       <Label fx:id="bubbleText" prefHeight="211.0" prefWidth="320.0" text="Welcome to a data view page." textAlignment="CENTER" visible="false" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
          <font>
             <Font size="15.0" />
