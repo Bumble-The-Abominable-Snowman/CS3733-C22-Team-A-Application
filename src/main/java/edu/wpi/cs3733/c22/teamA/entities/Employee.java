@@ -43,6 +43,19 @@ public class Employee {
     this.startDate = startDate;
   }
 
+  public List<String> getListForm() {
+    return List.of(
+        employeeID,
+            employeeID,
+            firstName,
+            lastName,
+            email,
+            phoneNum,
+            address,
+            startDate.toString());
+
+  }
+
   public String getFullName() {
     return this.firstName + " " + this.lastName;
   }

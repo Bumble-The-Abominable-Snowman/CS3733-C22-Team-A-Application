@@ -69,6 +69,10 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
     update.execute(str);
   }
 
+  public void enterMedicalEquipment(Equipment e){
+    enterMedicalEquipment(e.getEquipmentID(), e.getEquipmentType(), e.getIsClean(), e.getCurrentLocation(), e.getIsAvailable());
+  }
+
   public void enterMedicalEquipment(
       String equipmentID,
       String equipmentType,
