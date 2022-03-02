@@ -2,6 +2,7 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
@@ -16,18 +17,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
+
+import edu.wpi.cs3733.c22.teamA.entities.map.GesturePaneManager;
+import edu.wpi.cs3733.c22.teamA.entities.map.LocationMarker;
+import edu.wpi.cs3733.c22.teamA.entities.map.MarkerManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import net.kurobako.gesturefx.GesturePane;
 
 public abstract class SRCtrl extends MasterCtrl {
   @FXML Button submitButton;
   @FXML Button clearButton;
+  @FXML GesturePane mapView;
 
   private double stageWidth;
 
   List<Employee> employeeList = new ArrayList<>();
   List<Location> locationList = new ArrayList<>();
+
+  private GesturePaneManager gesturePaneManager;
+  private MarkerManager markerManager;
+  private LocationDAO locationDAO;
+  private ImageView mapImageView;
 
   SceneSwitcher.SCENES sceneID;
 
@@ -46,6 +60,16 @@ public abstract class SRCtrl extends MasterCtrl {
               submitButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * submitTextSize) + "pt;");
               clearButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * clearTextSize) + "pt;");
             });
+
+    mapImageView = new ImageView();
+    AnchorPane anchorPane = new AnchorPane();
+    gesturePaneManager = new GesturePaneManager(mapView, anchorPane, mapImageView);
+    gesturePaneManager.setMapFloor("Floor 1");
+    gesturePaneManager.initGesture();
+
+    locationDAO = new LocationDerbyImpl();
+    markerManager = new MarkerManager(locationDAO, anchorPane);
+    markerManager.initFloor("1", (int)mapImageView.getLayoutX(), (int)mapImageView.getLayoutY());
   }
 
   @FXML
@@ -98,6 +122,10 @@ public abstract class SRCtrl extends MasterCtrl {
     System.out.println("rand = " + rand +" round = " + round + " str = " + str);
 
     return str;
+  }
+
+  public MarkerManager getMarkerManager() {
+    return markerManager;
   }
 
 

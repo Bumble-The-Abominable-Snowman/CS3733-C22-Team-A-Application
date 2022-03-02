@@ -177,10 +177,10 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
 
 
       // pass medical service request object
-      SR sr = new SR("EQPDEL",
+      SR sr = new SR(uniqueID,
               (new LocationDerbyImpl()).getLocationNode("N/A"),
               toLocationSelected,
-              (new EmployeeDerbyImpl()).getEmployee("001"),
+              (new EmployeeDerbyImpl()).getEmployee("002"),
               employeeSelected,
               new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,

@@ -115,7 +115,7 @@ public class DataViewCtrl extends MasterCtrl {
     }
   }
 
-  @FXML
+ /* @FXML
   public void save() {
 
     if (HomeCtrl.sceneFlag == 3) {
@@ -264,7 +264,7 @@ public class DataViewCtrl extends MasterCtrl {
       DataViewCtrl.addPopup.set(p);
       DataViewCtrl.addPopup.get().show(App.getStage());
     }
-  }
+  }*/
 
   @FXML
   public void initialize() throws SQLException, InvocationTargetException, IllegalAccessException {
