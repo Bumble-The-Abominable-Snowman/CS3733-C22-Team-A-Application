@@ -46,6 +46,14 @@ public class DefaultTest {
 //      System.out.println("rand = " + rand +" round = " + round + " str = " + str);
 //    }
 //  }
+  @Test
+  public void autoLoadTest() throws IOException, ParseException, SQLException, InvocationTargetException, IllegalAccessException {
+    Adb.initialConnection("EmbeddedDriver");
+    ServiceRequestDerbyImpl EquipmentRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.EQUIPMENT);
+    EquipmentRequestDerby.populateFromCSV("edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipmentServiceRequest.csv");
+
+  }
+
 
 
   @Test

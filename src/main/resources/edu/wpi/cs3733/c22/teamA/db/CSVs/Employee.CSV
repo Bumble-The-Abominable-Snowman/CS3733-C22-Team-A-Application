@@ -23,5 +23,5 @@ employee_id, employee_type, first_name, last_name, email, phone_num, address, st
 022,Admin,Owen,Money,debt@wpi.edu,0000000500,The FDA,2022-02-21
 023,Admin,Helen,Highwater,hellAnd@wpi.edu,0000000600,6th grade,2022-02-21
 024,Admin,Jeans,Mcgee,jmacccc@wpi.edu,0000000700,Hell,2022-02-21
-025,Admin,Tom,Brady,goat@wpi.edu,0000000800,Super Bowl,2022-28-03
+025,Admin,Tom,Brady,goat@wpi.edu,0000000800,Super Bowl,2022-03-28
 026,Admin,Ryan,Dieselman,rddieselman@wpi.edu,7814394519,Alden,2022-02-22
