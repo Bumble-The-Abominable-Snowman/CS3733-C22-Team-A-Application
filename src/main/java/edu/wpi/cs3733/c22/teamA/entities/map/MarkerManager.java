@@ -192,7 +192,7 @@ public class MarkerManager {
 
   private void initialDraw() {
     for (LocationMarker l : locationMarkers) {
-        if(!l.getLocation().getNodeID().equals("")) {
+        if(!l.getLocation().getNodeID().equals("N/A")) {
             l.draw(anchorPane);
         }
       if (l.getEquipmentMarker() != null) {
