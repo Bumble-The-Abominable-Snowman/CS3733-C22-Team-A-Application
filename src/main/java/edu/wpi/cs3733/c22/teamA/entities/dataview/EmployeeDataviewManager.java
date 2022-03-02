@@ -59,7 +59,7 @@ public class EmployeeDataviewManager {
 
 		EmployeeDAO employeeDAO = new EmployeeDerbyImpl();
 		dataViewCtrl.getSelectEmployeeBox().getItems().addAll(employeeDAO.getEmployeeList().stream().map(Employee::getFullName).collect(Collectors.toList()));
-		dataViewCtrl.getSelectEmployeeBox().getItems().addAll("All");
+		dataViewCtrl.getSelectEmployeeBox().getItems().add("All");
 		dataViewCtrl.getSelectEmployeeBox().setVisible(true);
 
 		List<JFXTreeTableColumn<RecursiveObj, String>> employeeColumns = new ArrayList<>();
