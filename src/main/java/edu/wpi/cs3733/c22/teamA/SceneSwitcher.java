@@ -75,8 +75,8 @@ public class SceneSwitcher {
 
     if (name == SCENES.LOGIN)
     {
-      Auth0Login.login();
-      return;
+      //Auth0Login.login();
+      //return;
     }
 
     FXMLLoader loader = new FXMLLoader();

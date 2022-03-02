@@ -42,7 +42,18 @@ public class App extends Application {
     guiStage = primaryStage;
     sceneSwitcher = new SceneSwitcher();
     try {
-      this.handleLogin();
+      //this.handleLogin();
+          sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOGIN);
+    guiStage.setMaximized(true);
+    guiStage.setMinHeight(600);
+    guiStage.setMinWidth(960);
+    double screenWidth = Screen.getPrimary().getBounds().getWidth();
+    double screenHeight = Screen.getPrimary().getBounds().getHeight();
+    double aspectRatio = (screenWidth / screenHeight);
+    guiStage.setMaxWidth(screenWidth);
+    guiStage.setMaxHeight(screenHeight);
+    guiStage.minHeightProperty().bind(guiStage.widthProperty().divide(aspectRatio));
+    guiStage.maxHeightProperty().bind(guiStage.widthProperty().divide(aspectRatio));
     } catch (Exception e) {
       e.printStackTrace();
       System.out.println("LOGIN ERROR!");
