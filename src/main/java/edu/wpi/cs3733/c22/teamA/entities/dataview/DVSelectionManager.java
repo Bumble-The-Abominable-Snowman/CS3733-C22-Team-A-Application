@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import lombok.SneakyThrows;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -30,6 +31,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class DVSelectionManager {
   private VBox inputVBox;
@@ -236,12 +238,13 @@ public class DVSelectionManager {
     inputVBox.toFront();
   }
 
-  public void srVBox() {
+  public void srVBox(SR sr) {
     clearVBox();
-    for (int i = 0; i < srFields.size(); i++) {
-      inputVBox.getChildren().add(srFields.get(i).label);
-      inputVBox.getChildren().add(srFields.get(i).textArea);
-      srFields.get(i).textArea.setEditable(false);
+    srExtraField(sr);
+    for (int i = 0; i < currentList.size(); i++) {
+      inputVBox.getChildren().add(currentList.get(i).label);
+      inputVBox.getChildren().add(currentList.get(i).textArea);
+      currentList.get(i).textArea.setEditable(false);
     }
     inputVBox.getChildren().add(editButton);
     inputVBox.getChildren().add(clearButton);
@@ -250,12 +253,38 @@ public class DVSelectionManager {
     inputVBox.toFront();
   }
 
+  private List<InfoField> additionalFields;
+
+  private void srExtraField(SR sr){
+    HashMap<String, String> currentFields = sr.getStringFields();
+    for (int i = 0; i < srNames.size(); i++) {
+      currentList.get(i).textArea.setText(currentFields.get(srNames.get(i)));
+      System.out.println(currentList.get(i).textArea.getStyle());
+    }
+
+    for (String key : sr.getStringFields().keySet()) {
+      if (!(Objects.equals(key, "request_id")
+              || Objects.equals(key, "start_location")
+              || Objects.equals(key, "end_location")
+              || Objects.equals(key, "employee_requested")
+              || Objects.equals(key, "employee_assigned")
+              || Objects.equals(key, "request_time")
+              || Objects.equals(key, "request_status")
+              || Objects.equals(key, "request_priority")
+              || Objects.equals(key, "comments")
+              || Objects.equals(key, "sr_type"))) {
+
+        currentList.add(new InfoField(new Label(key),  new JFXTextArea(sr.getFields_string().get(key))));
+      }
+    }
+  }
+
   // Selected Location
   public void locationSelected(Location selectedLocation) {
     inputVBox.setDisable(false);
     saveButton.setDisable(true);
     clearButton.setDisable(true);
-    currentList = locationFields;
+    currentList = new ArrayList<>(locationFields);
     locationVBox();
     List<String> currentFields = selectedLocation.getListForm();
     for (int i = 0; i < currentFields.size(); i++) {
@@ -267,7 +296,7 @@ public class DVSelectionManager {
     inputVBox.setDisable(false);
     saveButton.setDisable(true);
     clearButton.setDisable(true);
-    currentList = equipmentFields;
+    currentList = new ArrayList<>(equipmentFields);
     equipmentVBox();
     List<String> currentFields = equipment.getListForm();
     for (int i = 0; i < currentFields.size(); i++) {
@@ -276,24 +305,20 @@ public class DVSelectionManager {
   }
 
   // Existing Service Request Selected
-  public void serviceRequestSelected(SR serviceRequest) {
+  private void serviceRequestSelected(SR serviceRequest) {
     saveButton.setDisable(true);
     clearButton.setDisable(true);
     inputVBox.setDisable(false);
-    currentList = srFields;
-    srVBox();
-    HashMap<String, String> currentFields = serviceRequest.getStringFields();
+    currentList = new ArrayList<>(srFields);
+    srVBox(serviceRequest);
 
-    for (int i = 0; i < srFields.size(); i++) {
-      srFields.get(i).textArea.setText(currentFields.get(srNames.get(i)));
-    }
   }
 
   public void employeeSelected(Employee employee) {
     saveButton.setDisable(true);
     clearButton.setDisable(true);
     inputVBox.setDisable(false);
-    currentList = employeeFields;
+    currentList = new ArrayList<>(employeeFields);
     employeeVBox();
     List<String> currentFields = employee.getListForm();
 
@@ -318,7 +343,7 @@ public class DVSelectionManager {
   }
 
   // Delete Location
-  public void delete() throws SQLException, InvocationTargetException, IllegalAccessException, IOException {
+  public void delete() throws SQLException, IOException {
     if(selected instanceof SR){
       new ServiceRequestDerbyImpl((SR.SRType) ((SR) selected).getFields().get("sr_type")).deleteServiceRequest((SR) selected);
     } else if(selected instanceof Equipment){
@@ -333,45 +358,63 @@ public class DVSelectionManager {
   }
 
   // Save Changes
-  public void save() throws SQLException, IOException, ParseException {
+  private void save() throws SQLException, IOException, ParseException {
     if(selected instanceof SR){
-      new ServiceRequestDerbyImpl((SR.SRType) ((SR) selected).getFields().get("sr_type")).deleteServiceRequest((SR) selected);
+//      SR newSR = (SR)selected;
+//      new ServiceRequestDerbyImpl((SR.SRType) ((SR) selected).getFields().get("sr_type")).deleteServiceRequest((SR) selected);
+//      for(String key: newSR.getFields().keySet()){
+//
+//      }
     } else if(selected instanceof Equipment){
-      Equipment newEquipment = new Equipment();
-      newEquipment.setEquipmentID(currentList.get(0).textArea.getText());
-      newEquipment.setEquipmentType(currentList.get(1).textArea.getText());
-      newEquipment.setIsClean(Boolean.parseBoolean(currentList.get(2).textArea.getText()));
-      newEquipment.setCurrentLocation(currentList.get(3).textArea.getText());
-      newEquipment.setIsAvailable(Boolean.parseBoolean(currentList.get(4).textArea.getText()));
-      equipmentDAO.deleteMedicalEquipment(((Equipment) selected).getEquipmentID());
-      equipmentDAO.enterMedicalEquipment(newEquipment);
+      saveEquipment();
     } else if(selected instanceof Employee){
-      Employee newEmployee = new Employee();
-      newEmployee.setEmployeeID(currentList.get(0).textArea.getText());
-      newEmployee.setEmployeeType(currentList.get(1).textArea.getText());
-      newEmployee.setFirstName(currentList.get(2).textArea.getText());
-      newEmployee.setLastName(currentList.get(3).textArea.getText());
-      newEmployee.setEmail(currentList.get(4).textArea.getText());
-      newEmployee.setPhoneNum(currentList.get(5).textArea.getText());
-      newEmployee.setAddress(currentList.get(6).textArea.getText());
-      newEmployee.setStartDate(currentList.get(7).textArea.getText());
-      employeeDAO.deleteEmployee(((Employee) selected).getEmployeeID());
-      employeeDAO.enterEmployee(newEmployee);
+      saveEmployee();
     } else if(selected instanceof Location){
-      Location newLocation = new Location();
-      newLocation.setNodeID(currentList.get(0).textArea.getText());
-      newLocation.setXCoord(Integer.parseInt(currentList.get(1).textArea.getText()));
-      newLocation.setYCoord(Integer.parseInt(currentList.get(2).textArea.getText()));
-      newLocation.setFloor(currentList.get(3).textArea.getText());
-      newLocation.setBuilding(currentList.get(4).textArea.getText());
-      newLocation.setNodeType(currentList.get(5).textArea.getText());
-      newLocation.setLongName(currentList.get(6).textArea.getText());
-      newLocation.setShortName(currentList.get(7).textArea.getText());
-      locationDAO.deleteLocationNode(((Location) selected).getNodeID());
-      locationDAO.enterLocationNode(newLocation);
+      saveLocation();
     }
     MasterCtrl.sceneFlags.add(MasterCtrl.sceneFlags.get(MasterCtrl.sceneFlags.size()-1));
     MasterCtrl.sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
+  }
+
+  private void saveEquipment(){
+    Equipment newEquipment = new Equipment();
+    newEquipment.setEquipmentID(currentList.get(0).textArea.getText());
+    newEquipment.setEquipmentType(currentList.get(1).textArea.getText());
+    newEquipment.setIsClean(Boolean.parseBoolean(currentList.get(2).textArea.getText()));
+    newEquipment.setCurrentLocation(currentList.get(3).textArea.getText());
+    newEquipment.setIsAvailable(Boolean.parseBoolean(currentList.get(4).textArea.getText()));
+    equipmentDAO.deleteMedicalEquipment(((Equipment) selected).getEquipmentID());
+    equipmentDAO.enterMedicalEquipment(newEquipment);
+  }
+
+  private void saveEmployee() throws ParseException {
+
+    Employee newEmployee = new Employee();
+    newEmployee.setEmployeeID(currentList.get(0).textArea.getText());
+    newEmployee.setEmployeeType(currentList.get(1).textArea.getText());
+    newEmployee.setFirstName(currentList.get(2).textArea.getText());
+    newEmployee.setLastName(currentList.get(3).textArea.getText());
+    newEmployee.setEmail(currentList.get(4).textArea.getText());
+    newEmployee.setPhoneNum(currentList.get(5).textArea.getText());
+    newEmployee.setAddress(currentList.get(6).textArea.getText());
+    newEmployee.setStartDate(currentList.get(7).textArea.getText());
+
+    employeeDAO.deleteEmployee(((Employee) selected).getEmployeeID());
+    employeeDAO.enterEmployee(newEmployee);
+  }
+
+  private void saveLocation(){
+    Location newLocation = new Location();
+    newLocation.setNodeID(currentList.get(0).textArea.getText());
+    newLocation.setXCoord(Integer.parseInt(currentList.get(1).textArea.getText()));
+    newLocation.setYCoord(Integer.parseInt(currentList.get(2).textArea.getText()));
+    newLocation.setFloor(currentList.get(3).textArea.getText());
+    newLocation.setBuilding(currentList.get(4).textArea.getText());
+    newLocation.setNodeType(currentList.get(5).textArea.getText());
+    newLocation.setLongName(currentList.get(6).textArea.getText());
+    newLocation.setShortName(currentList.get(7).textArea.getText());
+    locationDAO.deleteLocationNode(((Location) selected).getNodeID());
+    locationDAO.enterLocationNode(newLocation);
   }
 
   class InfoField {
