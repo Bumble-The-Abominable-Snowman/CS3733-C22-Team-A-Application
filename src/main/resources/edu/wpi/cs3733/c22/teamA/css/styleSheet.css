@@ -1,5 +1,4 @@
 .background{
-
     -fx-background-image: url('../images/Logo.png');
     -fx-background-color: #496591;
     -fx-background-size: 50%,50%;
@@ -7,32 +6,20 @@
     -fx-background-position: 120%;
 }
 
-.backgroundAlt{
-
-    -fx-background-image: url('../images/Hospital.jpeg');
-    -fx-background-color:#496591;
-    -fx-background-size: 55%,55%;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: bottom right;
-
-}
-
 .button{
-
     -fx-font-size: 12pt;
     -fx-font-family: "Helvetica Neue";
     -fx-background-color: #161E69;
     -fx-text-fill: WHITE;
     -fx-background-size: 100% 100%;
     -fx-border-color: BLACK;
-    /*-fx-border-radius: 40;
-    -fx-background-radius: 40;*/
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
     -fx-cursor: HAND;
     -fx-font-weight: BOLD;
 }
 
 .noTextButton{
-
     -fx-font-size: 12pt;
     -fx-font-family: "Helvetica Neue";
     -fx-background-color: #161E69;
@@ -46,7 +33,6 @@
 }
 
 .snowmanButton{
-
     -fx-font-size: 12pt;
     -fx-font-family: "Helvetica Neue";
     -fx-background-color: TRANSPARENT;
@@ -69,10 +55,9 @@
 }
 
 .menuButton{
-
     -fx-font-size: 12pt;
     -fx-font-family: "Helvetica Neue";
-    -fx-background-color: #161E69;
+    -fx-background-color: #191970;
     -fx-text-fill: WHITE;
     -fx-background-size: 100% 100%;
     -fx-border-color: BLACK;
@@ -81,32 +66,76 @@
     -fx-background-radius: 0;
     -fx-cursor: HAND;
     -fx-font-weight: BOLD;
-
 }
 
 .menuBox{
-
     -fx-background-color:  #161E69;
     -fx-border-color: #161E69;
     -fx-effect: null;
+}
 
+.jfx-hamburger {
+    -fx-background-color: #161E69;
+    -fx-border-color: BLACK;
+}
+
+.jfx-hamburger:hover {
+    -fx-background-color: #0048BA;
+}
+
+.jfx-hamburger StackPane {
+    -fx-background-color: WHITE;
 }
 
 .button:hover{
-
     -fx-background-color: #0048BA;
-
 }
 
 .label{
-
-    -fx-text-fill: BLACK;
+    -fx-text-fill: WHITE;
     -fx-font-weight: BOLD;
 }
 
-.comboBox{
+.text-area-general {
+    -fx-font-family: "Helvetica Neue";
+    -fx-font-size: 14pt;
+    -fx-background-color: #161E69;
+    -fx-text-fill: WHITE;
+    -fx-font-weight: BOLD;
+    -fx-border-color: BLACK;
+    -fx-focus-color: transparent;
+    -fx-border-radius: 40;
+    -fx-background-radius: 40;
+}
 
-    -fx-background-color: #B55243;
+.text-area-sr {
+    -fx-font-family: "Helvetica Neue";
+    -fx-font-size: 12pt;
+    -fx-background-color: #161E69;
+    -fx-text-fill: WHITE;
+    -fx-font-weight: BOLD;
+    -fx-border-color: BLACK;
+    -fx-focus-color: transparent;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+}
+
+.text-area-map {
+    -fx-font-family: "Helvetica Neue";
+    -fx-font-size: 14pt;
+    -fx-background-color: transparent;
+    -fx-text-fill: WHITE;
+    -fx-font-weight: BOLD;
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+}
+
+.text-area *.text{-fx-text-alignment: center;}
+
+.comboBox{
+    -fx-background-color: #161E69;
     -fx-font-size: 12pt;
     -fx-font-family: "Helvetica Neue";
     -fx-text-fill: WHITE;
@@ -115,26 +144,30 @@
     -fx-border-color: BLACK;
     -fx-cursor: HAND;
     -fx-font-weight: BOLD;
-
 }
 
 .comboBox:focused{
-
     -fx-background-color: #0048BA;
     -fx-text-fill: #FFFFFF;
+}
 
+.comboBox.list-view{
+    -fx-background-color: #161E69;
+    -fx-text-fill: #FFFFFF;
+}
+
+.comboBox.list-cell{
+    -fx-background-color: #161E69;
+    -fx-text-fill: #FFFFFF;
 }
 
 .titleFormat {
-
     -fx-font-size: 18pt;
     -fx-font-family: "Helvetica Neue";
-
+    -fx-text-fill: WHITE;
 }
 
 .bodyFormat {
-
     -fx-font-size: 14pt;
     -fx-font-family: "Helvetica Neue";
-
 }

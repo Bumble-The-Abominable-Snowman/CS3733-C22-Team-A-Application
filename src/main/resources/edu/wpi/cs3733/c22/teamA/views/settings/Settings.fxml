@@ -3,10 +3,13 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -15,9 +18,9 @@
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="960.0" styleClass="background" stylesheets="@../../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.settings.SettingsCtrl">
    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="ALWAYS" maxWidth="400.0" />
+      <ColumnConstraints hgrow="ALWAYS" prefWidth="325.0" />
+      <ColumnConstraints hgrow="ALWAYS" prefWidth="325.0" />
    </columnConstraints>
    <rowConstraints>
       <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="NEVER" />
@@ -31,106 +34,115 @@
    <Label fx:id="titleLabel" layoutX="180.0" layoutY="10.0" styleClass="titleFormat" text="Settings" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
    <JFXButton fx:id="loadBackupButton" buttonType="RAISED" layoutX="236.0" layoutY="43.0" mnemonicParsing="false" onAction="#loadBackup" styleClass="bodyFormat" text="Load Backup" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
    <JFXButton fx:id="saveBackupButton" buttonType="RAISED" layoutX="240.0" layoutY="81.0" mnemonicParsing="false" onAction="#saveBackup" styleClass="bodyFormat" text="Save Backup" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-   <JFXToggleButton fx:id="toggleClientServerButton" onAction="#toggleClientServer" prefHeight="43.0" prefWidth="259.0" styleClass="button" stylesheets="@../../css/styleSheet.css" text="Toggle Client-Server DB" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP" />
-   <JFXDrawer fx:id="drawer" defaultDrawerSize="2000.0" prefWidth="300.0" stylesheets="@../../css/styleSheet.css" GridPane.rowIndex="3" GridPane.rowSpan="3">
+   <JFXToggleButton fx:id="toggleClientServerButton" onAction="#toggleClientServer" styleClass="button" stylesheets="@../../css/styleSheet.css" text="Toggle Client-Server DB" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+   <JFXDrawer fx:id="drawer" defaultDrawerSize="2000.0" prefWidth="300.0" stylesheets="@../css/styleSheet.css" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.rowSpan="3" GridPane.vgrow="ALWAYS">
       <children>
-         <VBox fx:id="menuBox" alignment="CENTER_LEFT" styleClass="menuBox" stylesheets="@../../css/styleSheet.css">
+         <VBox fx:id="menuBox" alignment="CENTER_LEFT" styleClass="menuBox" stylesheets="@../css/styleSheet.css">
             <children>
-               <JFXButton fx:id="homeButton" alignment="BASELINE_LEFT" layoutX="11.0" layoutY="229.0" mnemonicParsing="false" onAction="#goToHome" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../../css/styleSheet.css" text="Home" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+               <JFXButton fx:id="homeButton" alignment="BASELINE_LEFT" layoutX="11.0" layoutY="229.0" mnemonicParsing="false" onAction="#goToHome" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Home" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
                   <graphic>
-                     <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fx:id="homeIcon" fitHeight="26.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" styleClass="image">
                         <image>
-                           <Image url="@../../images/home_2.png" />
+                           <Image url="@../../images/Home%20Icon.png" />
                         </image>
                      </ImageView>
                   </graphic>
                </JFXButton>
-               <JFXButton fx:id="selectSRButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToSelectServiceRequest" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../../css/styleSheet.css" text="New Service Request" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+               <JFXButton fx:id="selectSRButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToSelectServiceRequest" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="New Service Request" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
                   <graphic>
-                     <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fx:id="newSRIcon" fitHeight="26.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" styleClass="image">
                         <image>
-                           <Image url="@../../images/form_2.png" />
+                           <Image url="@../../images/New%20Service%20Request%20Icon.png" />
                         </image>
                      </ImageView>
                   </graphic>
                </JFXButton>
-               <JFXButton fx:id="mapButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToMap" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../../css/styleSheet.css" text="Map" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+               <JFXButton fx:id="mapButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToMap" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Map" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
                   <graphic>
-                     <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fx:id="mapIcon" fitHeight="26.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" styleClass="image">
                         <image>
                            <Image url="@../../images/Map%20Icon.png" />
                         </image>
                      </ImageView>
                   </graphic>
                </JFXButton>
-               <JFXButton fx:id="viewSRButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToServiceRequestData" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../../css/styleSheet.css" text="View Service Requests" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+               <JFXButton fx:id="viewSRButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToServiceRequestData" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Service Requests" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
                   <graphic>
-                     <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fx:id="viewSRIcon" fitHeight="26.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" styleClass="image">
                         <image>
-                           <Image url="@../../images/listOrTable.png" />
+                           <Image url="@../../images/View%20Service%20Request%20Icon.png" />
                         </image>
                      </ImageView>
                   </graphic>
                </JFXButton>
-               <JFXButton fx:id="viewEmployeesButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToEmployeeData" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../../css/styleSheet.css" text="View Employees" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+               <JFXButton fx:id="viewEmployeesButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToEmployeeData" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Employees" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
                   <graphic>
-                     <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fx:id="viewEmployeesIcon" fitHeight="26.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" styleClass="image">
                         <image>
-                           <Image url="@../../images/person.png" />
+                           <Image url="@../../images/Equipment%20Icon.png" />
                         </image>
                      </ImageView>
                   </graphic>
                </JFXButton>
-               <JFXButton fx:id="viewLocationsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToLocationData" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../../css/styleSheet.css" text="View Locations" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+               <JFXButton fx:id="viewLocationsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToLocationData" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Locations" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
                   <graphic>
-                     <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fx:id="viewLocationsIcon" fitHeight="26.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" styleClass="image">
                         <image>
-                           <Image url="@../../images/Location%20Marker%20Icon.png" />
+                           <Image url="@../../images/View%20Locations%20Icon.png" />
                         </image>
                      </ImageView>
                   </graphic>
                </JFXButton>
-               <JFXButton fx:id="viewEquipmentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToEquipmentData" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../../css/styleSheet.css" text="View Equipment" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+               <JFXButton fx:id="viewEquipmentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToEquipmentData" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Equipment" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
                   <graphic>
-                     <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fx:id="viewEquipmentIcon" fitHeight="26.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@../../images/Bed_with_pump.png" />
+                           <Image url="@../../images/Equipment%20Icon.png" />
                         </image>
                      </ImageView>
                   </graphic>
                </JFXButton>
-               <JFXButton fx:id="settingsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToSettings" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../../css/styleSheet.css" text="Settings" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+               <JFXButton fx:id="viewMedicineButton" alignment="BASELINE_LEFT" onAction="#goToMedicineData" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="View Medicine" VBox.vgrow="ALWAYS">
                   <graphic>
-                     <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fx:id="viewMedicineIcon" fitHeight="26.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@../../images/settings-gear.png" />
+                           <Image url="@../../images/Medicine%20Icon.png" />
                         </image>
                      </ImageView>
                   </graphic>
                </JFXButton>
-               <JFXButton fx:id="aboutButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToAbout" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../../css/styleSheet.css" text="About" textAlignment="CENTER" textFill="WHITE">
+               <JFXButton fx:id="settingsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToSettings" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Settings" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
                   <graphic>
-                     <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fx:id="settingsIcon" fitHeight="26.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@../../images/Speech%20Bubble%20Icon.png" />
+                           <Image url="@../../images/Settings%20Icon.png" />
                         </image>
                      </ImageView>
                   </graphic>
                </JFXButton>
-               <JFXButton fx:id="loginButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToLogin" prefHeight="100.0" prefWidth="2000.0" snapToPixel="false" styleClass="menuButton" stylesheets="@../../css/styleSheet.css" text="Log Out" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+               <JFXButton fx:id="aboutButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToAbout" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="About" textAlignment="CENTER" textFill="WHITE">
                   <graphic>
-                     <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fx:id="aboutIcon" fitHeight="26.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../images/About%20Icon.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+               </JFXButton>
+               <JFXButton fx:id="loginButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#goToLogin" prefHeight="100.0" prefWidth="2000.0" snapToPixel="false" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Log Out" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+                  <graphic>
+                     <ImageView fx:id="loginIcon" fitHeight="26.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                            <Image url="@../../images/Door%20Icon.png" />
                         </image>
                      </ImageView>
                   </graphic>
                </JFXButton>
-               <JFXButton fx:id="exitButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#exitApp" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../../css/styleSheet.css" text="Exit" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+               <JFXButton fx:id="exitButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#exitApp" prefHeight="100.0" prefWidth="2000.0" styleClass="menuButton" stylesheets="@../css/styleSheet.css" text="Exit" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
                   <graphic>
-                     <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fx:id="exitIcon" fitHeight="26.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@../../images/exit.png" />
+                           <Image url="@../../images/Exit%20Icon.png" />
                         </image>
                      </ImageView>
                   </graphic>
@@ -139,7 +151,7 @@
          </VBox>
       </children>
    </JFXDrawer>
-   <JFXToggleButton fx:id="toggleCloudButton" onAction="#toggleCloud" prefHeight="43.0" prefWidth="259.0" styleClass="button" stylesheets="@../../css/styleSheet.css" text="Toggle Firebase DB" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
+   <JFXToggleButton fx:id="toggleCloudButton" onAction="#toggleCloud" styleClass="button" stylesheets="@../../css/styleSheet.css" text="      Toggle Cloud DB      " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
    <GridPane GridPane.rowIndex="1">
       <columnConstraints>
          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
@@ -162,7 +174,6 @@
                <Font size="12.0" />
             </font>
          </JFXButton>
-         <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../../css/styleSheet.css" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          <JFXButton fx:id="helpButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#help" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../../css/styleSheet.css" text="." textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
             <font>
                <Font size="12.0" />
@@ -175,7 +186,20 @@
                </ImageView>
             </graphic>
          </JFXButton>
-         <JFXHamburger fx:id="hamburger" alignment="CENTER" prefHeight="50.0" prefWidth="75.0" stylesheets="@../../css/styleSheet.css" />
+         <JFXHamburger fx:id="hamburger" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="75.0" stylesheets="@../../css/styleSheet.css" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
       </children>
    </GridPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.rowSpan="3">
+      <children>
+         <JFXTextArea fx:id="helpText" editable="false" layoutX="4.0" layoutY="70.0" prefHeight="283.0" prefWidth="320.0" styleClass="text-area" stylesheets="@../../css/styleSheet.css">
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets>
+            <padding>
+               <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+            </padding>
+         </JFXTextArea>
+         <JFXButton fx:id="nextButton" layoutX="136.0" layoutY="427.0" onAction="#next" stylesheets="@../../css/styleSheet.css" text="Next" />
+      </children>
+   </AnchorPane>
 </GridPane>

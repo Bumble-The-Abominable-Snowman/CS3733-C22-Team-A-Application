@@ -29,16 +29,9 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> typeChoice;
   @FXML private JFXComboBox<String> fromChoice;
   @FXML private JFXComboBox<String> statusChoice;
-  @FXML private JFXComboBox<String> toLocationChoice;
+  @FXML private JFXComboBox<String> locationChoice;
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
-  @FXML private Label equipmentLabel;
-  @FXML private Label fromLabel;
-  @FXML private Label employeeLabel;
-  @FXML private Label statusLabel;
-  @FXML private Label titleLabel;
-  @FXML private Label mapLabel;
-  @FXML private Label locationLabel;
 
   private List<String> bedLocations = new ArrayList<>();
   private List<String> xrayLocations = new ArrayList<>();
@@ -78,13 +71,7 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
     // double toLocationChoiceTextSize = toLocationChoice.getFont().getSize();
     // double employeeChoiceTextSize = employeeChoice.getFont().getSize();
     double commentsTextSize = commentsBox.getFont().getSize();
-    double equipmentTextSize = equipmentLabel.getFont().getSize();
-    double fromTextSize = fromLabel.getFont().getSize();
-    double employeeTextSize = employeeLabel.getFont().getSize();
-    double statusTextSize = statusLabel.getFont().getSize();
     double titleTextSize = titleLabel.getFont().getSize();
-    double mapTextSize = mapLabel.getFont().getSize();
-    double locationTextSize = locationLabel.getFont().getSize();
 
     App.getStage()
         .widthProperty()
@@ -94,28 +81,8 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
                   "-fx-font-size: "
                       + ((App.getStage().getWidth() / 1000) * commentsTextSize)
                       + "pt;");
-              equipmentLabel.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * equipmentTextSize)
-                      + "pt;");
-              fromLabel.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * fromTextSize) + "pt;");
-              employeeLabel.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * employeeTextSize)
-                      + "pt;");
-              statusLabel.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * statusTextSize)
-                      + "pt;");
               titleLabel.setStyle(
                   "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * titleTextSize) + "pt;");
-              mapLabel.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * mapTextSize) + "pt;");
-              locationLabel.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * locationTextSize)
-                      + "pt;");
             });
 
     commentsBox.setWrapText(true);
@@ -158,11 +125,11 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
     fromChoice.getItems().removeAll(fromChoice.getItems());
     this.populateEmployeeAndLocationList();
     this.populateEmployeeComboBox(this.employeeChoice);
-    this.populateLocationComboBox(this.toLocationChoice);
+    this.populateLocationComboBox(this.locationChoice);
 
     statusChoice.getItems().removeAll(statusChoice.getItems());
     statusChoice.getItems().setAll(status);
-    new AutoCompleteBox(toLocationChoice);
+    new AutoCompleteBox(locationChoice);
     new AutoCompleteBox(employeeChoice);
   }
 
@@ -171,13 +138,13 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
       throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
 
     if (!typeChoice.getSelectionModel().getSelectedItem().equals("Type")
-        && toLocationChoice.getSelectionModel().getSelectedItem() != null
+        && locationChoice.getSelectionModel().getSelectedItem() != null
         && employeeChoice.getSelectionModel().getSelectedItem() != null) {
 
       int employeeIndex = this.employeeChoice.getSelectionModel().getSelectedIndex();
       Employee employeeSelected = this.employeeList.get(employeeIndex);
 
-      int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
+      int locationIndex = this.locationChoice.getSelectionModel().getSelectedIndex();
       Location toLocationSelected = this.locationList.get(locationIndex);
 
       // pass medical service request object

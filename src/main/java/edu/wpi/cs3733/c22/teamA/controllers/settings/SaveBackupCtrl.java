@@ -5,11 +5,15 @@ import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
+import edu.wpi.cs3733.c22.teamA.entities.Medicine;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
 import java.io.IOException;
+import java.rmi.server.ExportException;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
@@ -20,6 +24,7 @@ public class SaveBackupCtrl extends MasterCtrl {
   @FXML public TextField fileName;
   @FXML public Text exportFileText;
   @FXML private JFXComboBox<String> TypeCSV;
+  @FXML private Text exportLabel;
 
   @FXML
   public void initialize() {
@@ -146,4 +151,41 @@ public class SaveBackupCtrl extends MasterCtrl {
       }
     }
   }
+
+  @FXML
+  private void help() throws IOException {
+
+    if (helpState != 0) {
+      nextButton.setVisible(false);
+      helpText.setVisible(false);
+      drawer.setEffect(null);
+      helpButton.setEffect(null);
+      helpState = 0;
+    }
+    else {
+      borderGlow.setColor(Color.GOLD);
+      borderGlow.setOffsetX(0f);
+      borderGlow.setOffsetY(0f);
+      borderGlow.setHeight(45);
+      nextButton.setVisible(true);
+      helpText.setVisible(true);
+      helpText.setText("Select a menu option to use the application.  This menu is present on every page and is the primary navigation tool you will use.");
+      drawer.setEffect(borderGlow);
+      helpState = 1;
+    }
+
+  }
+
+  @FXML
+  private void next() throws IOException {
+
+    if (helpState == 1) {
+      drawer.setEffect(null);
+      helpText.setText("You can always click the help button to exit help at any time");
+      helpButton.setEffect(borderGlow);
+      helpState = 2;
+    }
+
+  }
+
 }
