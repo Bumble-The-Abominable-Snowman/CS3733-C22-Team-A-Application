@@ -178,17 +178,17 @@ public class DataViewCtrl extends MasterCtrl {
               List<Location> aList = locationDAO.getNodeList();
               Location theL = new Location();
               for (Location aL: aList){
-                if(currentLocationText.getText().equals(aL.getNodeID())){
+                if(currentLocationText.getText().equals(aL.getStringFields().get("node_id"))){
                   theL = aL;
-                  System.out.println(theL.getNodeID());
+                  System.out.println(theL.getStringFields().get("node_id"));
                   break;
                 }
               }
-              if(theL.getNodeID() == null){
+              if(theL.getStringFields().get("node_id") == null){
                 System.out.println("Location does not exist");
                 return;
               }
-              if(!(theL.getNodeType().equals("STOR")) && !(theL.getNodeType().equals("PATI"))){
+              if(!(theL.getStringFields().get("node_type").equals("STOR")) && !(theL.getStringFields().get("node_type").equals("PATI"))){
                 System.out.println("THIS EQUIPMENT CANNOT BE STORED HERE");
                 return;
               }
