@@ -6,7 +6,6 @@ import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 
-import java.io.IOException;
 import java.util.List;
 
 import javafx.animation.PauseTransition;
@@ -17,16 +16,12 @@ import javafx.util.Duration;
 
 public class HomeCtrl extends MasterCtrl {
 
-  @FXML public Label homeTitle;
+  @FXML private Label homeTitle;
   @FXML private ImageView frame1;
   @FXML private ImageView frame2;
   @FXML private ImageView frame3;
   @FXML private ImageView frame4;
   @FXML private ImageView frame5;
-  @FXML private JFXButton bumbleButton;
-  @FXML private JFXButton bumbleXButton;
-  @FXML private ImageView speechBubble;
-  @FXML private Label bubbleText;
   @FXML private JFXButton newSRHelpButton;
   @FXML private JFXButton mapHelpButton;
   @FXML private JFXButton viewDataHelpButton;
@@ -44,9 +39,6 @@ public class HomeCtrl extends MasterCtrl {
     EmployeeDAO employeeBase = new EmployeeDerbyImpl();
     List<Employee> empList = employeeBase.getEmployeeList();
 
-    double bumbleTextSize = bumbleButton.getFont().getSize();
-    double bumbleXTextSize = bumbleXButton.getFont().getSize();
-    double bubbleTextSize = bubbleText.getFont().getSize();
     double newSRHelpTextSize = newSRHelpButton.getFont().getSize();
     double mapHelpTextSize = mapHelpButton.getFont().getSize();
     double viewDataHelpTextSize = viewDataHelpButton.getFont().getSize();
@@ -60,18 +52,6 @@ public class HomeCtrl extends MasterCtrl {
             .widthProperty()
             .addListener(
                     (obs, oldVal, newVal) -> {
-                      bumbleButton.setStyle(
-                              "-fx-font-size: "
-                                      + ((App.getStage().getWidth() / 1000) * bumbleTextSize)
-                                      + "pt;");
-                      bumbleXButton.setStyle(
-                              "-fx-font-size: "
-                                      + ((App.getStage().getWidth() / 1000) * bumbleXTextSize)
-                                      + "pt;");
-                      bubbleText.setStyle(
-                              "-fx-font-size: "
-                                      + ((App.getStage().getWidth() / 1000) * bubbleTextSize)
-                                      + "pt;");
                       newSRHelpButton.setStyle(
                               "-fx-font-size: "
                                       + ((App.getStage().getWidth() / 1000) * newSRHelpTextSize)
@@ -114,19 +94,16 @@ public class HomeCtrl extends MasterCtrl {
   }
 
   @FXML
-  private void bumbleHelp() throws IOException {
-    bumbleButton.setVisible(true);
-  }
-
-  @FXML
   private void activateBumble() {
+    boolean bumbleStop = false;
+    int counter = 0;
     double dur = 0;
     giveHelp();
-    bumbleButton.setVisible(false);
+    helpButton.setVisible(false);
     bumbleXButton.setVisible(true);
 
-    for(int i = 0; i<5000; i++) {
-
+    while(!bumbleStop) {
+      counter++;
       dur = dur + 100;
       PauseTransition pt = new PauseTransition(Duration.millis(dur));
       frame1.setVisible(true);
@@ -199,11 +176,13 @@ public class HomeCtrl extends MasterCtrl {
       PauseTransition pt15 = new PauseTransition(Duration.millis(dur));
       pt15.setOnFinished(e -> frame1.setVisible(true));
       pt15.play();
+      if (counter == 5000){
+        bumbleStop = true;
+      }
     }
   }
 
   @FXML private void giveHelp(){
-    speechBubble.setVisible(true);
     bubbleText.setVisible(true);
     newSRHelpButton.setVisible(true);
     mapHelpButton.setVisible(true);
