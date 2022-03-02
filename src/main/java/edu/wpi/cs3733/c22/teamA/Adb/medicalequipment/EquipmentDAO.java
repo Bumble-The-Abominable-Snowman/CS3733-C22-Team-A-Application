@@ -9,6 +9,8 @@ public interface EquipmentDAO {
 
   public void updateMedicalEquipment(Equipment e) throws SQLException;
 
+  public void enterMedicalEquipment(Equipment e);
+
   public void enterMedicalEquipment(
       String equipmentID,
       String equipmentType,

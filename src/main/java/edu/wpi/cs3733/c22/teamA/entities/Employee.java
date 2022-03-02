@@ -47,9 +47,22 @@ public class Employee {
     return this.fields_string;
   }
 
+
   public void setField(String key, Object value) {
     this.fields.put(key, value);
   }
+
+  public List<String> getListForm() {
+    return List.of(getStringFields().get("employee_id"),
+            getStringFields().get("employee_id"),
+            getStringFields().get("first_name"),
+            getStringFields().get("last_name"),
+            getStringFields().get("email"),
+            getStringFields().get("phone_num"),
+            getStringFields().get("address"),
+            getStringFields().get("start_date"));
+  }
+
 
   public void setFieldByString(String key, String value) throws ParseException {
     if (Objects.equals(key, "start_date")) {
