@@ -178,6 +178,7 @@ public class PathFinder {
                   Integer.parseInt(path.get(i).getStringFields().get("xcoord")) + offsetX,
                   Integer.parseInt(path.get(i).getStringFields().get("ycoord")) + offsetY);
       line.setStroke(Color.RED);
+
       line.setVisible(true);
       line.setStrokeWidth(4);
       miniAnchorPane.getChildren().add(line);
