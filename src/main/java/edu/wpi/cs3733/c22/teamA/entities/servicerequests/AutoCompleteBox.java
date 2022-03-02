@@ -32,7 +32,6 @@ public class AutoCompleteBox<T> {
     public AutoCompleteBox(ComboBox<T> cmb) {
         this.cmb = cmb;
         originalItems = FXCollections.observableArrayList(cmb.getItems());
-        cmb.setTooltip(new Tooltip());
         cmb.setOnKeyPressed(this::handleOnKeyPressed);
         cmb.setOnHidden(this::handleOnHiding);
     }
@@ -68,7 +67,6 @@ public class AutoCompleteBox<T> {
 
     public void handleOnHiding(Event e) {
         filter = "";
-        cmb.getTooltip().hide();
         T s = cmb.getSelectionModel().getSelectedItem();
         cmb.getItems().setAll(originalItems);
         cmb.getSelectionModel().select(s);

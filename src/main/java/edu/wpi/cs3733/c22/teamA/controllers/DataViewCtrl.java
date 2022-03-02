@@ -65,10 +65,13 @@ public class DataViewCtrl extends MasterCtrl {
   MenuItem viewDetails = new MenuItem("View Details");
   MenuItem modify = new MenuItem("Modify");
 
+  Popup p = new Popup();
+
   SRDataviewManager srDataviewManager;
   EmployeeDataviewManager employeeDataviewManager;
   EquipmentDataviewManager equipmentDataviewManager;
   LocationDataviewManager locationDataviewManager;
+  MedicineDataviewManager medicineDataviewManager;
 
   public DataViewCtrl(){
     table = new JFXTreeTableView<>();
@@ -76,11 +79,12 @@ public class DataViewCtrl extends MasterCtrl {
     employeeDataviewManager = new EmployeeDataviewManager(this);
     equipmentDataviewManager = new EquipmentDataviewManager(this);
     locationDataviewManager = new LocationDataviewManager(this);
+    medicineDataviewManager = new MedicineDataviewManager(this);
   }
 
   @FXML
   public void delete() throws SQLException, InvocationTargetException, IllegalAccessException {
-    System.out.println(table.getSelectionModel().getSelectedItem().getValue().sr);
+    //System.out.println(table.getSelectionModel().getSelectedItem().getValue().sr);
 
     if (HomeCtrl.sceneFlag == 1) {
       srDataviewManager.delete();
@@ -90,6 +94,8 @@ public class DataViewCtrl extends MasterCtrl {
       equipmentDataviewManager.delete();
     } else if (HomeCtrl.sceneFlag == 4) {
       employeeDataviewManager.delete();
+    } else if (HomeCtrl.sceneFlag == 5) {
+      medicineDataviewManager.delete();
     } else {
       // wait what how did you get here
     }
@@ -238,7 +244,7 @@ public class DataViewCtrl extends MasterCtrl {
           new Background(new BackgroundFill(Color.WHITE, new CornerRadii(10), null)));
       content.setEffect(new DropShadow());
 
-      var p = new Popup();
+      p = new Popup();
       p.getContent().add(content);
 
       DataViewCtrl.addPopup.set(p);
@@ -283,7 +289,11 @@ public class DataViewCtrl extends MasterCtrl {
     } else if (HomeCtrl.sceneFlag == 4) {
       titleLabel.setText("Employees");
       employeeDataviewManager.initializeEmployeeTable();
-    } else {
+    } else if(HomeCtrl.sceneFlag == 5) {
+      titleLabel.setText("MEDICINE");
+      medicineDataviewManager.initializeMedicineTable();
+    }
+    else {
       // wait what how did you get here
     }
   }
@@ -357,6 +367,9 @@ public class DataViewCtrl extends MasterCtrl {
         break;
       case 4:
         employeeDataviewManager.modifyPopup(field, value, updateButton, srDataviewManager);
+        break;
+      case 5:
+        medicineDataviewManager.modifyPopup(field, value, updateButton);
         break;
     }
 
@@ -434,6 +447,7 @@ public class DataViewCtrl extends MasterCtrl {
   protected void onSceneSwitch() {
     DataViewCtrl.detailsPopup.get().hide();
     DataViewCtrl.modifyPopup.get().hide();
+    p.hide();
   }
 
   public JFXComboBox getSelectEmployeeBox() {

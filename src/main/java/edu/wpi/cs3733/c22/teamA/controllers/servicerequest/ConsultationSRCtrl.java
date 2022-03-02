@@ -30,7 +30,8 @@ public class ConsultationSRCtrl extends SRCtrl {
   @FXML private TextArea commentsBox;
 
   @FXML
-  public void initialize() throws ParseException {
+  protected void initialize() throws ParseException {
+    super.initialize();
     sceneID = SceneSwitcher.SCENES.CONSULTATION_SR;
 
     // double reasonTextSize = reasonChoice.getFont().getSize();
