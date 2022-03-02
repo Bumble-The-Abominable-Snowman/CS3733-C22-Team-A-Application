@@ -39,9 +39,12 @@ dependencies {
             'org.apache.commons:commons-lang3:3.0',
             'net.kurobako:gesturefx:0.7.1',
 
-            files('C:\\Users\\techn\\Github-Projects\\CS3733\\CS3733-C22-Team-A-API\\build\\libs\\CS3733-C22-Team-A-API.jar')
+            'org.json:json:20211205',
+
+//            files('C:\\Users\\techn\\Github-Projects\\CS3733\\CS3733-C22-Team-A-API\\build\\libs\\CS3733-C22-Team-A-API.jar')
             //files('C:\\Users\\Brybl\\Desktop\\CS3733\\CS3733-C22-Team-A-Application\\build\\libs\\CS3733-C22-Team-A-API.jar')
 
+            files("/Users/yasaridikut/IdeaProjects/CS3733-C22-Team-A-API/build/libs/CS3733-C22-Team-A-API.jar")
             //files('C:\\Users\\24795\\Documents\\GitHub\\CS3733-C22-Team-A-Application\\build\\libs\\CS3733-C22-Team-A-API.jar')
 //            //files('C:\\Users\\techn\\Github-Projects\\CS3733\\CS3733-C22-Team-A-API\\build\\libs\\CS3733-C22-Team-A-API.jar')
 //            files('C:\\Users\\Brybl\\Desktop\\CS3733\\CS3733-C22-Team-A-Application\\build\\libs\\CS3733-C22-Team-A-API.jar')
