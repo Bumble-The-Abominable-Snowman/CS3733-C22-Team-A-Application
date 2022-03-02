@@ -271,6 +271,7 @@ public class MapCtrl extends MasterCtrl {
   }
 
   public void findPath() {
+    if (pfFromComboBox.getSelectionModel().getSelectedItem() == null || pfToComboBox.getSelectionModel().getSelectedItem() == null) return;
     pathFinder.clearPath(anchorPane, true);
     pathFinder.drawPath(pathFinder.findPath(markerManager.getFloor()), anchorPane);
     if (!pathFinder.getDestinationFloor().equals(""))
