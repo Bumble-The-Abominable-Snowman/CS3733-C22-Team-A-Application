@@ -50,6 +50,7 @@ public class DataViewCtrl extends MasterCtrl {
   @FXML private JFXTreeTableView<RecursiveObj> table;
   @FXML private VBox inputVBox;
   @FXML private JFXComboBox selectEmployeeBox;
+  @FXML private JFXButton addButton;
 
   /*
   @FXML private ImageView bumbleBlinkHead;
@@ -114,7 +115,7 @@ public class DataViewCtrl extends MasterCtrl {
     }
   }
 
-  @FXML
+ /* @FXML
   public void save() {
 
     if (HomeCtrl.sceneFlag == 3) {
@@ -263,7 +264,7 @@ public class DataViewCtrl extends MasterCtrl {
       DataViewCtrl.addPopup.set(p);
       DataViewCtrl.addPopup.get().show(App.getStage());
     }
-  }
+  }*/
 
   @FXML
   public void initialize() throws SQLException, InvocationTargetException, IllegalAccessException {
@@ -523,7 +524,7 @@ public class DataViewCtrl extends MasterCtrl {
   void clear() {}
 
   @FXML
-  void add() {}
+  void addData() {}
 
   protected void onSceneSwitch() {
     DataViewCtrl.detailsPopup.get().hide();

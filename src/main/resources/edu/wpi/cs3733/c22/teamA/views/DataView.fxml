@@ -33,12 +33,12 @@
       <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="NEVER" />
    </rowConstraints>
    <children>
-       <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" styleClass="titleFormat" stylesheets="@../css/styleSheet.css" text="Data View" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+       <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" styleClass="titleFormat" stylesheets="@../css/styleSheet.css" text="Data View" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
            <font>
                <Font size="18.0" />
            </font>
        </Label>
-       <JFXTreeTableView fx:id="table" prefHeight="146.0" prefWidth="709.0" showRoot="false" GridPane.columnSpan="3" GridPane.rowIndex="3">
+       <JFXTreeTableView fx:id="table" prefHeight="146.0" prefWidth="709.0" showRoot="false" styleClass="label" stylesheets="@../css/styleSheet.css" GridPane.columnSpan="3" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets left="25.0" />
          </GridPane.margin></JFXTreeTableView>
@@ -195,7 +195,7 @@
             <JFXHamburger fx:id="hamburger" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="75.0" stylesheets="@../css/styleSheet.css" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
-      <VBox fx:id="inputVBox" prefHeight="655.0" prefWidth="160.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+      <VBox fx:id="inputVBox" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="3" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets left="25.0" right="25.0" />
          </GridPane.margin>
@@ -214,5 +214,10 @@
             <JFXButton fx:id="nextButton" layoutX="152.0" layoutY="395.0" onAction="#next" stylesheets="@../css/styleSheet.css" text="Next" />
          </children>
       </AnchorPane>
+      <JFXButton fx:id="addButton" onAction="#addData" text="Add Data" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets right="25.0" />
+         </GridPane.margin>
+      </JFXButton>
    </children>
 </GridPane>

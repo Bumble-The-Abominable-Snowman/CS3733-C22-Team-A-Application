@@ -194,15 +194,17 @@ public class SelectionManager {
     locationVBox();
     List<String> currentFields = selectedLocation.getLocation().getListForm();
     for (int i = 0; i < currentFields.size(); i++) {
-      locationFields.get(i).textArea.setText(currentFields.get(i));
+      if(i != 1 && i != 2){
+        locationFields.get(i).textArea.setText(currentFields.get(i));
+      }
+      if((i == 1 || i == 2) && (locationFields.get(i).textArea.getText().equals("") || locationFields.get(i).textArea.getText().equals(null))){
+        locationFields.get(i).textArea.setText(currentFields.get(i));
+      }
+
     }
     this.selectedLocation = selectedLocation;
-    /*
-    if (xPosText.getText() == null || xPosText.getText().equals("")) {
-      xPosText.setText(String.valueOf(selectedLocation.getXCoord()));
-      yPosText.setText(String.valueOf(selectedLocation.getYCoord()));
-    }
-    */
+
+
   }
 
   // Existing Equipment Selected
@@ -268,7 +270,7 @@ public class SelectionManager {
             locationFields.get(6).textArea.getText(),
             locationFields.get(7).textArea.getText());
    locationDatabase.updateLocation(newLocation);
-    markerManager.redrawEditedLocation();
+    //markerManager.redrawEditedLocation();
   }
   /*
   // Update Medical Equipment / Service Request on Drag Release

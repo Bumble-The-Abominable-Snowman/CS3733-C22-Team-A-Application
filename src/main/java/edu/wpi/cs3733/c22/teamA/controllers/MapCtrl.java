@@ -45,7 +45,6 @@ public class MapCtrl extends MasterCtrl {
   @FXML private JFXCheckBox equipmentCheckBox;
 
   // Gesture Pane Manager
-  @FXML private JFXComboBox<String> floorSelectionComboBox;
   @FXML private JFXComboBox<String> pfFromComboBox;
   @FXML private JFXComboBox<String> pfToComboBox;
   @FXML private GesturePane gesturePane;
@@ -55,6 +54,12 @@ public class MapCtrl extends MasterCtrl {
   @FXML JFXButton findPathButton = new JFXButton();
   @FXML JFXButton clearPathButton = new JFXButton();
 
+  @FXML JFXButton lowerLevelOne = new JFXButton();
+  @FXML JFXButton lowerLevelTwo = new JFXButton();
+  @FXML JFXButton firstFloor = new JFXButton();
+  @FXML JFXButton secondFloor = new JFXButton();
+  @FXML JFXButton thirdFloor = new JFXButton();
+  @FXML JFXButton sideHospitalView = new JFXButton();
 
   /*
   @FXML private ImageView bumbleBlinkHead;
@@ -111,20 +116,18 @@ public class MapCtrl extends MasterCtrl {
     //SRDAO = new ServiceRequestDerbyImpl();
   }
 
-  /* Floor Combo Box */
   @FXML
   public void initialize() {
     configure();
 
-    floorSelectionComboBox.toFront();
     markerManager = new MarkerManager(locationDAO, equipmentDAO, anchorPane);
     checkBoxManager =
-        new CheckBoxManager(
-            locationCheckBox,
-            equipmentCheckBox,
-            serviceRequestCheckBox,
-            showTextCheckBox,
-            dragCheckBox);
+            new CheckBoxManager(
+                    locationCheckBox,
+                    equipmentCheckBox,
+                    serviceRequestCheckBox,
+                    showTextCheckBox,
+                    dragCheckBox);
     gesturePaneManager = new GesturePaneManager(gesturePane, anchorPane, mapImageView);
     selectionManager = new SelectionManager(inputVBox, markerManager);
     searcher = new Searcher(searchComboBox);
@@ -134,20 +137,18 @@ public class MapCtrl extends MasterCtrl {
     buttons.add(findPathButton);
     buttons.add(clearPathButton);
     mapManager =
-        new MapManager(
-            markerManager,
-            checkBoxManager,
-            gesturePaneManager,
-            selectionManager,
-            searcher,
-            sideView,
-            buttons);
+            new MapManager(
+                    markerManager,
+                    checkBoxManager,
+                    gesturePaneManager,
+                    selectionManager,
+                    searcher,
+                    sideView,
+                    buttons);
     pathFinder = new PathFinder("db/CSVs/AllEdgesHand.csv", pfFromComboBox, pfToComboBox, markerManager);
 
     mapManager.init();
     sideView.init();
-    initFloorSelection();
-    new AutoCompleteBox(floorSelectionComboBox);
     new AutoCompleteBox(pfToComboBox);
     new AutoCompleteBox(pfFromComboBox);
 
@@ -250,24 +251,58 @@ public class MapCtrl extends MasterCtrl {
                     }); */
   }
 
-  private void initFloorSelection() {
-    pathFinder.updateComboBoxes();
-    floorSelectionComboBox.getItems().removeAll(floorNames);
-    floorSelectionComboBox.getItems().addAll(floorNames);
-    floorSelectionComboBox.getSelectionModel().select("Choose Floor:");
-    floorSelectionComboBox
-        .getSelectionModel()
-        .selectedItemProperty()
-        .addListener(
-            (obs, oldValue, newValue) -> {
-              mapManager.reset();
-              mapManager.initFloor(
-                  newValue, ((int) mapImageView.getLayoutX()), (int) mapImageView.getLayoutY());
-              //pathFinder.updateComboBoxes();
-              pathFinder.clearPath(anchorPane, false);
-              if (drawPathOnSwitch)
-                pathFinder.drawPath(pathFinder.findPath(markerManager.getFloor()), anchorPane);
-            });
+  @FXML
+  private void goToSideView () {
+    mapManager.reset();
+    mapManager.initFloor("Choose Floor:", ((int) mapImageView.getLayoutX()), (int) mapImageView.getLayoutY());
+    pathFinder.clearPath(anchorPane, false);
+    if (drawPathOnSwitch)
+      pathFinder.drawPath(pathFinder.findPath(markerManager.getFloor()), anchorPane);
+  }
+
+  @FXML
+  private void goToThirdFloor () {
+    mapManager.reset();
+    mapManager.initFloor("Floor 3", ((int) mapImageView.getLayoutX()), (int) mapImageView.getLayoutY());
+    pathFinder.clearPath(anchorPane, false);
+    if (drawPathOnSwitch)
+      pathFinder.drawPath(pathFinder.findPath(markerManager.getFloor()), anchorPane);
+  }
+
+  @FXML
+  private void goToSecondFloor () {
+    mapManager.reset();
+    mapManager.initFloor("Floor 2", ((int) mapImageView.getLayoutX()), (int) mapImageView.getLayoutY());
+    pathFinder.clearPath(anchorPane, false);
+    if (drawPathOnSwitch)
+      pathFinder.drawPath(pathFinder.findPath(markerManager.getFloor()), anchorPane);
+  }
+
+  @FXML
+  private void goToFirstFloor () {
+    mapManager.reset();
+    mapManager.initFloor("Floor 1", ((int) mapImageView.getLayoutX()), (int) mapImageView.getLayoutY());
+    pathFinder.clearPath(anchorPane, false);
+    if (drawPathOnSwitch)
+      pathFinder.drawPath(pathFinder.findPath(markerManager.getFloor()), anchorPane);
+  }
+
+  @FXML
+  private void goToLowerLevelTwo () {
+    mapManager.reset();
+    mapManager.initFloor("L2", ((int) mapImageView.getLayoutX()), (int) mapImageView.getLayoutY());
+    pathFinder.clearPath(anchorPane, false);
+    if (drawPathOnSwitch)
+      pathFinder.drawPath(pathFinder.findPath(markerManager.getFloor()), anchorPane);
+  }
+
+  @FXML
+  private void goToLowerLevelOne () {
+    mapManager.reset();
+    mapManager.initFloor("L1", ((int) mapImageView.getLayoutX()), (int) mapImageView.getLayoutY());
+    pathFinder.clearPath(anchorPane, false);
+    if (drawPathOnSwitch)
+      pathFinder.drawPath(pathFinder.findPath(markerManager.getFloor()), anchorPane);
   }
 
   public void newLocationPressed() {

@@ -12,6 +12,7 @@ import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 //import edu.wpi.cs3733.c22.teamA.entities.servicerequests.EquipmentSR;
 import edu.wpi.cs3733.c22.teamA.entities.Medicine;
+import edu.wpi.cs3733.c22.teamA.entities.map.LocationMarker;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
@@ -141,6 +142,10 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
     new AutoCompleteBox(employeeChoice);
     new AutoCompleteBox(fromChoice);
     new AutoCompleteBox(statusChoice);
+
+    for (LocationMarker lm : getMarkerManager().getLocationMarkers()){
+      lm.getButton().setOnAction(e -> locationChoice.getSelectionModel().select(lm.getLocation().getShortName()));
+    }
   }
 
   @FXML
@@ -177,10 +182,10 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
 
 
       // pass medical service request object
-      SR sr = new SR("EQPDEL",
+      SR sr = new SR(uniqueID,
               (new LocationDerbyImpl()).getLocationNode("N/A"),
               toLocationSelected,
-              (new EmployeeDerbyImpl()).getEmployee("001"),
+              (new EmployeeDerbyImpl()).getEmployee("002"),
               employeeSelected,
               new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,

@@ -197,7 +197,7 @@ public class EquipmentDataviewManager {
 											updateButton.setTextFill(Color.RED);
 											return;
 										}
-										if (eq.getFields().get("is_clean").equals(false)) {
+										if (eq.getFields().get("is_clean").equals("No")) {
 											JOptionPane pane = new JOptionPane("Dirty equipment cannot be moved", JOptionPane.ERROR_MESSAGE);
 											JDialog dialog = pane.createDialog("Update failed");
 											dialog.setVisible(true);

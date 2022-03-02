@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import net.kurobako.gesturefx.GesturePane?>
 
 <GridPane fx:id="gridPane" prefHeight="600.0" prefWidth="960.0" styleClass="background" stylesheets="@../../css/styleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.c22.teamA.controllers.servicerequest.EquipmentDeliverySRCtrl">
     <columnConstraints>
@@ -81,7 +82,7 @@
             <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
         </GridPane.margin>
     </JFXTextArea>
-    <JFXDrawer fx:id="drawer" defaultDrawerSize="2000.0" stylesheets="@../../css/styleSheet.css" visible="false" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.rowSpan="5" GridPane.vgrow="ALWAYS">
+    <JFXDrawer fx:id="drawer" defaultDrawerSize="2000.0" stylesheets="@../../css/styleSheet.css" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.rowSpan="5" GridPane.vgrow="ALWAYS">
         <children>
             <VBox fx:id="menuBox" alignment="CENTER_LEFT" styleClass="menuBox" stylesheets="@../../css/styleSheet.css">
                 <children>
@@ -217,4 +218,9 @@
       </opaqueInsets>
    </JFXComboBox>
    <JFXComboBox fx:id="statusChoice" promptText=" Status                   " styleClass="comboBox" stylesheets="@../../css/styleSheet.css" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+   <GesturePane fx:id="mapView" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.rowSpan="5">
+      <GridPane.margin>
+         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+      </GridPane.margin>
+   </GesturePane>
 </GridPane>

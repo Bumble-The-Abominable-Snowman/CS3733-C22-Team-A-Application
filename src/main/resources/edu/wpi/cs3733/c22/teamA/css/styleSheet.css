@@ -92,6 +92,11 @@
 }
 
 .label{
+    -fx-text-fill: BLACK;
+    -fx-font-weight: BOLD;
+}
+
+.altLabel{
     -fx-text-fill: WHITE;
     -fx-font-weight: BOLD;
 }
@@ -108,9 +113,9 @@
     -fx-background-radius: 40;
 }
 
-.text-area-sr {
+.text-area-square {
     -fx-font-family: "Helvetica Neue";
-    -fx-font-size: 12pt;
+    -fx-font-size: 11pt;
     -fx-background-color: #161E69;
     -fx-text-fill: WHITE;
     -fx-font-weight: BOLD;
@@ -120,7 +125,7 @@
     -fx-background-radius: 0;
 }
 
-.text-area-map {
+.text-area-sidebar {
     -fx-font-family: "Helvetica Neue";
     -fx-font-size: 14pt;
     -fx-background-color: transparent;
@@ -170,4 +175,10 @@
 .bodyFormat {
     -fx-font-size: 14pt;
     -fx-font-family: "Helvetica Neue";
+}
+
+.mapFormat {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Helvetica Neue";
+    -fx-text-fill: BLACK;
 }
