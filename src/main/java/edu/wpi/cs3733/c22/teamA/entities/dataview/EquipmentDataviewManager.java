@@ -46,7 +46,7 @@ public class EquipmentDataviewManager {
 		try {
 			EquipmentDAO equipmentDAO = new EquipmentDerbyImpl();
 			equipmentDAO.deleteMedicalEquipment(
-					table.getSelectionModel().getSelectedItem().getValue().equip.getEquipmentID());
+					table.getSelectionModel().getSelectedItem().getValue().equip.getStringFields().get("equipment_id"));
 			dataViewCtrl.titleLabel.setText("Equipment");
 			initializeEquipmentTable();
 		}
@@ -74,29 +74,29 @@ public class EquipmentDataviewManager {
 				.get(0)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().equip.getEquipmentID()));
+								new SimpleStringProperty(param.getValue().getValue().equip.getStringFields().get("equipment_id")));
 		equipmentColumns
 				.get(1)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().equip.getEquipmentType()));
+								new SimpleStringProperty(param.getValue().getValue().equip.getStringFields().get("equipment_type")));
 		equipmentColumns
 				.get(2)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
 								new SimpleStringProperty(
-										param.getValue().getValue().equip.getIsClean() ? "Yes" : "No"));
+										(Boolean)param.getValue().getValue().equip.getFields().get("is_clean") ? "Yes" : "No"));
 		equipmentColumns
 				.get(3)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().equip.getCurrentLocation()));
+								new SimpleStringProperty(param.getValue().getValue().equip.getStringFields().get("current_location")));
 		equipmentColumns
 				.get(4)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
 								new SimpleStringProperty(
-										param.getValue().getValue().equip.getIsAvailable() ? "Yes" : "No"));
+										(Boolean)param.getValue().getValue().equip.getFields().get("is_available") ? "Yes" : "No"));
 
 		// Grab equipment from database
 		EquipmentDAO database = new EquipmentDerbyImpl();
@@ -185,19 +185,19 @@ public class EquipmentDataviewManager {
 										List<Location> aList = locationDAO.getNodeList();
 										Location theL = new Location();
 										for (Location aL : aList) {
-											if (value.getText().equals(aL.getNodeID())) {
+											if (value.getText().equals(aL.getStringFields().get("node_id"))) {
 												theL = aL;
 												break;
 											}
 										}
-										if (theL.getNodeID() == null) {
+										if (theL.getStringFields().get("node_id") == null) {
 											JOptionPane pane = new JOptionPane("Location does not exist", JOptionPane.ERROR_MESSAGE);
 											JDialog dialog = pane.createDialog("Update failed");
 											dialog.setVisible(true);
 											updateButton.setTextFill(Color.RED);
 											return;
 										}
-										if (!(theL.getNodeType().equals("STOR")) && !(theL.getNodeType().equals("PATI"))) {
+										if (!(theL.getStringFields().get("node_type").equals("STOR")) && !(theL.getStringFields().get("node_type").equals("PATI"))) {
 											JOptionPane pane = new JOptionPane("Equipment cannot be stored here", JOptionPane.ERROR_MESSAGE);
 											JDialog dialog = pane.createDialog("Update failed");
 											dialog.setVisible(true);
@@ -205,8 +205,7 @@ public class EquipmentDataviewManager {
 											return;
 										}
 									}
-									equipmentDerby.updateMedicalEquipment(
-											eq.getEquipmentID(), aField, value.getText());
+									equipmentDerby.updateMedicalEquipment(eq);
 									updateButton.setTextFill(Color.GREEN);
 									this.initializeEquipmentTable();
 								} catch (Exception ex) {

@@ -31,11 +31,23 @@ public class Equipment extends RecursiveTreeObject<Equipment> {
     this.fields.put("is_available", isAvailable);
   }
 
+  public List<String> getListForm() {
+    return List.of(getStringFields().get("equipment_id"),
+            getStringFields().get("equipment_type"),
+            getStringFields().get("is_clean"),
+            getStringFields().get("current_location"),
+            getStringFields().get("is_available"));
+  }
+
   public HashMap<String, String> getStringFields() {
     for (String key : this.fields.keySet()) {
        this.fields_string.put(key, String.valueOf(this.fields.get(key)));
     }
     return this.fields_string;
+  }
+
+  public HashMap<String, Object> getFields() {
+    return fields;
   }
 
   public void setField(String key, Object value) {

@@ -53,7 +53,7 @@ public class Employee {
 
   public List<String> getListForm() {
     return List.of(getStringFields().get("employee_id"),
-            getStringFields().get("employee_id"),
+            getStringFields().get("employee_type"),
             getStringFields().get("first_name"),
             getStringFields().get("last_name"),
             getStringFields().get("email"),

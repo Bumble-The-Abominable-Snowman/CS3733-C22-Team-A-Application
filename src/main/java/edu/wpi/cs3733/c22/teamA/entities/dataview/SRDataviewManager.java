@@ -91,12 +91,12 @@ public class SRDataviewManager {
 				.get(2)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(((Location)param.getValue().getValue().sr.getFields().get("start_location")).getShortName()));
+								new SimpleStringProperty(((Location)param.getValue().getValue().sr.getFields().get("start_location")).getStringFields().get("short_name")));
 		srColumns
 				.get(3)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(((Location)param.getValue().getValue().sr.getFields().get("end_location")).getShortName()));
+								new SimpleStringProperty(((Location)param.getValue().getValue().sr.getFields().get("end_location")).getStringFields().get("short_name")));
 		srColumns
 				.get(4)
 				.setCellValueFactory(
@@ -172,12 +172,12 @@ public class SRDataviewManager {
 				.get(2)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(((Location)param.getValue().getValue().sr.getFields().get("start_location")).getShortName()));
+								new SimpleStringProperty(((Location)param.getValue().getValue().sr.getFields().get("start_location")).getStringFields().get("short_name")));
 		srColumns
 				.get(3)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(((Location)param.getValue().getValue().sr.getFields().get("end_location")).getShortName()));
+								new SimpleStringProperty(((Location)param.getValue().getValue().sr.getFields().get("end_location")).getStringFields().get("short_name")));
 		srColumns
 				.get(4)
 				.setCellValueFactory(

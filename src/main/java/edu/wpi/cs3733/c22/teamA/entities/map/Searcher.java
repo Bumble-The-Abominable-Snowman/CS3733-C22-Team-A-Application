@@ -87,9 +87,9 @@ public class Searcher {
                     String lowerCaseFilter = newValue.toLowerCase();
                     // if search matches either name or ID, display it
                     // if not, this returns false and doesn't display
-                    return (location.getLongName().toLowerCase().contains(lowerCaseFilter)
-                        || location.getShortName().toLowerCase().contains(lowerCaseFilter)
-                        || location.getNodeID().toLowerCase().contains(lowerCaseFilter));
+                    return (location.getStringFields().get("long_name").toLowerCase().contains(lowerCaseFilter)
+                        || location.getStringFields().get("short_name").toLowerCase().contains(lowerCaseFilter)
+                        || location.getStringFields().get("node_id").toLowerCase().contains(lowerCaseFilter));
                   });
               filteredEquipment.setPredicate(
                   equipment -> {
@@ -102,9 +102,9 @@ public class Searcher {
                     String lowerCaseFilter = newValue.toLowerCase();
                     // if search matches either name or ID, display it
                     // if not, this returns false and doesn't display
-                    return (equipment.getEquipmentID().toLowerCase().contains(lowerCaseFilter)
-                        || equipment.getEquipmentType().toLowerCase().contains(lowerCaseFilter)
-                        || equipment.getCurrentLocation().toLowerCase().contains(lowerCaseFilter));
+                    return (equipment.getStringFields().get("equipment_id").toLowerCase().contains(lowerCaseFilter)
+                        || equipment.getStringFields().get("equipment_type").toLowerCase().contains(lowerCaseFilter)
+                        || equipment.getStringFields().get("current_location").toLowerCase().contains(lowerCaseFilter));
                   });
               filteredSR.setPredicate(
                   request -> {
@@ -125,12 +125,12 @@ public class Searcher {
               // add items to comboBox dropdown
               ArrayList<String> locationNames = new ArrayList<>();
               for (Location l : filteredLocations) {
-                locationNames.add(l.getLongName());
+                locationNames.add(l.getStringFields().get("long_name"));
                 // System.out.println(l.getLongName() + " <- filtered check 1");
               }
               ArrayList<String> equipmentNames = new ArrayList<>();
               for (Equipment e : filteredEquipment) {
-                equipmentNames.add(e.getEquipmentID());
+                equipmentNames.add(e.getStringFields().get("equipment_id"));
               }
 
               searchComboBox.getItems().clear();
@@ -151,7 +151,7 @@ public class Searcher {
               // HashMap<String, LocationMarker> locationIDs = new HashMap<>();
               // Loops through every location filtered & draws them if present on the floor
               for (LocationMarker l : locations) {
-                if (locationNames.contains(l.getLocation().getLongName())) {
+                if (locationNames.contains(l.getLocation().getStringFields().get("long_name"))) {
                   l.setButtonVisibility(true);
                   l.setLabelVisibility(true);
                   //   locationIDs.put(l.getLocation().getNodeID(), l);
@@ -162,7 +162,7 @@ public class Searcher {
               }
               // Loops through every medical equipment & draws them
               for (EquipmentMarker equipment : equipments) {
-                if (equipmentNames.contains(equipment.getEquipment().getEquipmentID())) {
+                if (equipmentNames.contains(equipment.getEquipment().getStringFields().get("equipment_id"))) {
                   equipment.setButtonVisibility(true);
                   equipment.setLabelVisibility(true);
                 } else {

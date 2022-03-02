@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -347,11 +348,11 @@ public class DVSelectionManager {
     if(selected instanceof SR){
       new ServiceRequestDerbyImpl((SR.SRType) ((SR) selected).getFields().get("sr_type")).deleteServiceRequest((SR) selected);
     } else if(selected instanceof Equipment){
-      equipmentDAO.deleteMedicalEquipment(((Equipment) selected).getEquipmentID());
+      equipmentDAO.deleteMedicalEquipment(((Equipment) selected).getStringFields().get("equipment_id"));
     } else if(selected instanceof Employee){
-      employeeDAO.deleteEmployee(((Employee) selected).getEmployeeID());
+      employeeDAO.deleteEmployee(((Employee) selected).getStringFields().get("employee_id"));
     } else if(selected instanceof Location){
-      locationDAO.deleteLocationNode(((Location) selected).getNodeID());
+      locationDAO.deleteLocationNode(((Location) selected).getStringFields().get("node_id"));
     }
     MasterCtrl.sceneFlags.add(MasterCtrl.sceneFlags.get(MasterCtrl.sceneFlags.size()-1));
     MasterCtrl.sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
@@ -376,45 +377,32 @@ public class DVSelectionManager {
     MasterCtrl.sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
-  private void saveEquipment(){
-    Equipment newEquipment = new Equipment();
-    newEquipment.setEquipmentID(currentList.get(0).textArea.getText());
-    newEquipment.setEquipmentType(currentList.get(1).textArea.getText());
-    newEquipment.setIsClean(Boolean.parseBoolean(currentList.get(2).textArea.getText()));
-    newEquipment.setCurrentLocation(currentList.get(3).textArea.getText());
-    newEquipment.setIsAvailable(Boolean.parseBoolean(currentList.get(4).textArea.getText()));
-    equipmentDAO.deleteMedicalEquipment(((Equipment) selected).getEquipmentID());
-    equipmentDAO.enterMedicalEquipment(newEquipment);
+  private void saveEquipment() throws SQLException {
+    Equipment newEquipment = new Equipment(currentList.get(0).textArea.getText(), currentList.get(1).textArea.getText(),
+            Boolean.parseBoolean(currentList.get(2).textArea.getText()), currentList.get(3).textArea.getText(), Boolean.parseBoolean(currentList.get(4).textArea.getText()));
+    equipmentDAO.updateMedicalEquipment(newEquipment);
   }
 
-  private void saveEmployee() throws ParseException {
+  private void saveEmployee() throws ParseException, SQLException {
 
-    Employee newEmployee = new Employee();
-    newEmployee.setEmployeeID(currentList.get(0).textArea.getText());
-    newEmployee.setEmployeeType(currentList.get(1).textArea.getText());
-    newEmployee.setFirstName(currentList.get(2).textArea.getText());
-    newEmployee.setLastName(currentList.get(3).textArea.getText());
-    newEmployee.setEmail(currentList.get(4).textArea.getText());
-    newEmployee.setPhoneNum(currentList.get(5).textArea.getText());
-    newEmployee.setAddress(currentList.get(6).textArea.getText());
-    newEmployee.setStartDate(currentList.get(7).textArea.getText());
+    Employee newEmployee = new Employee(currentList.get(0).textArea.getText(), currentList.get(1).textArea.getText(),
+            currentList.get(2).textArea.getText(), currentList.get(3).textArea.getText(),currentList.get(4).textArea.getText(), currentList.get(5).textArea.getText(), currentList.get(6).textArea.getText(), new SimpleDateFormat("yyyy-MM-dd").parse(currentList.get(7).textArea.getText()));
 
-    employeeDAO.deleteEmployee(((Employee) selected).getEmployeeID());
-    employeeDAO.enterEmployee(newEmployee);
+    employeeDAO.updateEmployee(newEmployee);
   }
 
-  private void saveLocation(){
-    Location newLocation = new Location();
-    newLocation.setNodeID(currentList.get(0).textArea.getText());
-    newLocation.setXCoord(Integer.parseInt(currentList.get(1).textArea.getText()));
-    newLocation.setYCoord(Integer.parseInt(currentList.get(2).textArea.getText()));
-    newLocation.setFloor(currentList.get(3).textArea.getText());
-    newLocation.setBuilding(currentList.get(4).textArea.getText());
-    newLocation.setNodeType(currentList.get(5).textArea.getText());
-    newLocation.setLongName(currentList.get(6).textArea.getText());
-    newLocation.setShortName(currentList.get(7).textArea.getText());
-    locationDAO.deleteLocationNode(((Location) selected).getNodeID());
-    locationDAO.enterLocationNode(newLocation);
+  private void saveLocation() throws SQLException {
+    Location newLocation = new Location(
+            currentList.get(0).textArea.getText(),
+            Integer.parseInt(currentList.get(1).textArea.getText()),
+            Integer.parseInt(currentList.get(2).textArea.getText()),
+            currentList.get(3).textArea.getText(),
+            currentList.get(4).textArea.getText(),
+            currentList.get(5).textArea.getText(),
+            currentList.get(6).textArea.getText(),
+            currentList.get(7).textArea.getText()
+    );
+    locationDAO.updateLocation(newLocation);
   }
 
   class InfoField {

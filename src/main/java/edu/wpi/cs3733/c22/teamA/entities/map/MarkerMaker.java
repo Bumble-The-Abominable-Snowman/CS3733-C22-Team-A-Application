@@ -15,15 +15,15 @@ public class MarkerMaker {
   private static Polygon equipmentMarkerShape = new Polygon(0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0);
 
   public static LocationMarker makeLocationMarker(Location location, int offSetX, int offSetY) {
-    double buttonX = location.getXCoord() + offSetX - 8;
-    double buttonY = location.getYCoord() + offSetY - 24;
+    double buttonX = Integer.parseInt(location.getStringFields().get("xcoord")) + offSetX - 8;
+    double buttonY = Integer.parseInt(location.getStringFields().get("ycoord")) + offSetY - 24;
     Button button = newDraggableButton(buttonX, buttonY, 0);
 
     button.setStyle("-fx-background-color: #78aaf0");
     button.setShape(locationMarkerShape);
 
-    double labelX = location.getXCoord() + offSetX - 8 + 7.5;
-    double labelY = location.getYCoord() + offSetY - 24 - 15;
+    double labelX = Integer.parseInt(location.getStringFields().get("xcoord")) + offSetX - 8 + 7.5;
+    double labelY = Integer.parseInt(location.getStringFields().get("ycoord")) + offSetY - 24 - 15;
     Label label = newDraggableLabel(labelX, labelY, location.getShortName());
 
     LocationMarker locationMarker = new LocationMarker(button, label, location);
@@ -33,15 +33,15 @@ public class MarkerMaker {
 
   public static EquipmentMarker makeEquipmentMarker(
       Equipment equipment, LocationMarker locationMarker, int offSetX, int offSetY) {
-    double buttonX = locationMarker.getLocation().getXCoord() + offSetX - 8 + 10;
-    double buttonY = locationMarker.getLocation().getYCoord() + offSetY - 24 + 10;
+    double buttonX = Integer.parseInt(locationMarker.getLocation().getStringFields().get("xcoord")) + offSetX - 8 + 10;
+    double buttonY = Integer.parseInt(locationMarker.getLocation().getStringFields().get("ycoord")) + offSetY - 24 + 10;
     Button button = newDraggableButton(buttonX, buttonY, 1);
 
-    double labelX = locationMarker.getLocation().getXCoord() + offSetX - 8 + 7.5 + 10;
-    double labelY = locationMarker.getLocation().getYCoord() + offSetY - 24 - 15 + 10;
+    double labelX = Integer.parseInt(locationMarker.getLocation().getStringFields().get("xcoord")) + offSetX - 8 + 7.5 + 10;
+    double labelY = Integer.parseInt(locationMarker.getLocation().getStringFields().get("ycoord")) + offSetY - 24 - 15 + 10;
     Label label =
         newDraggableLabel(
-            labelX, labelY, equipment.getEquipmentID() + equipment.getEquipmentType());
+            labelX, labelY, equipment.getStringFields().get("equipment_id") + equipment.getStringFields().get("equipment_type"));
 
     button.setStyle("-fx-background-color: RED");
     button.setShape(equipmentMarkerShape);
@@ -54,12 +54,12 @@ public class MarkerMaker {
 
   public static SRMarker makeSRMarker(
       SR serviceRequest, LocationMarker locationMarker, int offSetX, int offSetY) {
-    double buttonX = locationMarker.getLocation().getXCoord() + offSetX - 8;
-    double buttonY = locationMarker.getLocation().getYCoord() + offSetY - 24;
+    double buttonX = Integer.parseInt(locationMarker.getLocation().getStringFields().get("xcoord")) + offSetX - 8;
+    double buttonY = Integer.parseInt(locationMarker.getLocation().getStringFields().get("ycoord")) + offSetY - 24;
     Button button = newDraggableButton(buttonX, buttonY, 2);
 
-    double labelX = locationMarker.getLocation().getXCoord() + offSetX - 8 + 7.5;
-    double labelY = locationMarker.getLocation().getYCoord() + offSetY - 24 - 15;
+    double labelX = Integer.parseInt(locationMarker.getLocation().getStringFields().get("xcoord")) + offSetX - 8 + 7.5;
+    double labelY = Integer.parseInt(locationMarker.getLocation().getStringFields().get("ycoord")) + offSetY - 24 - 15;
     Label label = newDraggableLabel(labelX, labelY, "");
 
     button.setStyle(colorSR(serviceRequest));

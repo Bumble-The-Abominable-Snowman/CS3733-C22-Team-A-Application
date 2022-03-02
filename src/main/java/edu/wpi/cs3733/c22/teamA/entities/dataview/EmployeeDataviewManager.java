@@ -257,8 +257,7 @@ public class EmployeeDataviewManager {
 
 								EmployeeDerbyImpl employeeDerby = new EmployeeDerbyImpl();
 								try {
-									employeeDerby.updateEmployee(
-											emp.getFields_string().get("employee_id"), field.getValue(), value.getText());
+									employeeDerby.updateEmployee(emp);
 									updateButton.setTextFill(Color.GREEN);
 									try {
 										srDataviewManager.initializeRequestsTable();

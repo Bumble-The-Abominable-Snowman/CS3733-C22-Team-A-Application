@@ -48,7 +48,7 @@ public class LocationDataviewManager {
 		try {
 			LocationDAO locationDAO = new LocationDerbyImpl();
 			locationDAO.deleteLocationNode(
-					table.getSelectionModel().getSelectedItem().getValue().loc.getNodeID());
+					table.getSelectionModel().getSelectedItem().getValue().loc.getStringFields().get("node_id"));
 			dataViewCtrl.titleLabel.setText("Locations");
 			initializeLocationTable();
 		}
@@ -74,17 +74,17 @@ public class LocationDataviewManager {
 				.get(0)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().loc.getNodeID()));
+								new SimpleStringProperty(param.getValue().getValue().loc.getStringFields().get("node_id")));
 		locationColumns
 				.get(1)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().loc.getLongName()));
+								new SimpleStringProperty(param.getValue().getValue().loc.getStringFields().get("long_name")));
 		locationColumns
 				.get(2)
 				.setCellValueFactory(
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-								new SimpleStringProperty(param.getValue().getValue().loc.getFloor()));
+								new SimpleStringProperty(param.getValue().getValue().loc.getStringFields().get("floor")));
 		locationColumns
 				.get(3)
 				.setCellValueFactory(
@@ -113,7 +113,7 @@ public class LocationDataviewManager {
 		for (Location currLoc : locList) {
 			RecursiveObj recursiveLoc = new RecursiveObj();
 			recursiveLoc.loc = currLoc;
-			if (!recursiveLoc.loc.getShortName().equals("N/A"))
+			if (!recursiveLoc.loc.getStringFields().get("short_name").equals("N/A"))
 			locations.add(recursiveLoc);
 		}
 		// Sets up the table and puts the location data under the columns
@@ -181,8 +181,7 @@ public class LocationDataviewManager {
 								LocationDerbyImpl locationDerby = new LocationDerbyImpl();
 								try {
 
-									locationDerby.updateLocation(
-											loc.getNodeID(), field.getValue(), value.getText());
+									locationDerby.updateLocation(loc);
 									updateButton.setTextFill(Color.GREEN);
 									try {
 										srDataviewManager.initializeRequestsTable();

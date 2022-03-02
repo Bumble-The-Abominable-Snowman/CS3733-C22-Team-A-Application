@@ -12,6 +12,8 @@ import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -154,7 +156,7 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
   }
 
   @FXML
-  private void saveAPI() throws IllegalAccessException, SQLException, InvocationTargetException {
+  private void saveAPI() throws IllegalAccessException, SQLException, InvocationTargetException, ParseException {
     List<teamA_API.entities.SR> list = Main.getRequestList();
     ServiceRequestDerbyImpl data = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
     for (teamA_API.entities.SR req : list) {
@@ -165,14 +167,14 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
 
       teamA_API.entities.Employee employeeAssignedAPI = (teamA_API.entities.Employee) Main.getEmployee(req.getFields_string().get("employee_assigned"));
       Employee employeeRequested = new Employee(
-              employeeAssignedAPI.getStringFields().get("employee_id"),
-              employeeAssignedAPI.getStringFields().get("employee_type"),
-              employeeAssignedAPI.getStringFields().get("first_name"),
-              employeeAssignedAPI.getStringFields().get("last_name"),
-              employeeAssignedAPI.getStringFields().get("email"),
-              employeeAssignedAPI.getStringFields().get("phone_num"),
-              employeeAssignedAPI.getStringFields().get("address"),
-              employeeAssignedAPI.thisEmployee.getStringFields().get("start_date"));
+              employeeAssignedAPI.getEmployeeID(),
+              employeeAssignedAPI.getEmployeeType(),
+              employeeAssignedAPI.getFirstName(),
+              employeeAssignedAPI.getLastName(),
+              employeeAssignedAPI.getEmail(),
+              employeeAssignedAPI.getPhoneNum(),
+              employeeAssignedAPI.getAddress(),
+              new SimpleDateFormat("yyyy-MM-dd").parse(employeeAssignedAPI.getStartDate()));
 
       EmployeeDerbyImpl employeeDerby = new EmployeeDerbyImpl();
       boolean doesEmployeeAssignedNotExist = false;
@@ -184,14 +186,14 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
       }
       if (!doesEmployeeAssignedNotExist)
       {
-        employeeDerby.enterEmployee(employeeAssignedAPI.getStringFields().get("employee_id"),
-                employeeAssignedAPI.getStringFields().get("employee_type"),
-                employeeAssignedAPI.getStringFields().get("first_name"),
-                employeeAssignedAPI.getStringFields().get("last_name"),
-                employeeAssignedAPI.getStringFields().get("email"),
-                employeeAssignedAPI.getStringFields().get("phone_num"),
-                employeeAssignedAPI.getStringFields().get("address"),
-                employeeAssignedAPI.thisEmployee.getStringFields().get("start_date"));
+        employeeDerby.enterEmployee(employeeAssignedAPI.getEmployeeID(),
+                employeeAssignedAPI.getEmployeeType(),
+                employeeAssignedAPI.getFirstName(),
+                employeeAssignedAPI.getLastName(),
+                employeeAssignedAPI.getEmail(),
+                employeeAssignedAPI.getPhoneNum(),
+                employeeAssignedAPI.getAddress(),
+                new SimpleDateFormat("yyyy-MM-dd").parse(employeeAssignedAPI.getStartDate()));
 
       }
 

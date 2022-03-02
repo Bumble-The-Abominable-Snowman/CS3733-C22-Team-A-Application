@@ -89,7 +89,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
   }
 
   public void enterEmployee(Employee e) throws ParseException {
-    enterEmployee(e.getEmployeeID(), e.getEmployeeType(), e.getFirstName(), e.getLastName(), e.getEmail(), e.getPhoneNum(), e.getAddress(),new SimpleDateFormat("yyyy-MM-dd").parse(e.getStartDate()));
+    enterEmployee(e.getStringFields().get("employee_id"), e.getStringFields().get("employee_type"), e.getStringFields().get("first_name"), e.getStringFields().get("last_name"), e.getStringFields().get("email"), e.getStringFields().get("phone_num"), e.getStringFields().get("address"),new SimpleDateFormat("yyyy-MM-dd").parse(e.getStringFields().get("start_date")));
   }
 
   public void enterEmployee(

@@ -37,6 +37,21 @@ public class Location extends RecursiveTreeObject<Location> {
     this.fields.put("short_name", shortName);
   }
 
+  public String getShortName(){
+    return getStringFields().get("short_name");
+  }
+
+  public List<String> getListForm() {
+    return List.of(getStringFields().get("node_id"),
+            getStringFields().get("xcoord"),
+            getStringFields().get("ycoord"),
+            getStringFields().get("floor"),
+            getStringFields().get("building"),
+            getStringFields().get("node_type"),
+            getStringFields().get("long_name"),
+            getStringFields().get("short_name"));
+  }
+
   public HashMap<String, String> getStringFields() {
     for (String key : this.fields.keySet()) {
       this.fields_string.put(key, String.valueOf(this.fields.get(key)));

@@ -34,7 +34,7 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
         Object currentLocation = rset.getObject("current_location");
         boolean isAvailable = rset.getBoolean("is_available");
 
-        me = new Equipment(equipmentID, equipmentType, isClean, (Location) currentLocation, isAvailable);
+        me = new Equipment(equipmentID, equipmentType, isClean, ((Location)currentLocation).getStringFields().get("equipment_id"), isAvailable);
       }
       return me;
 
@@ -82,7 +82,7 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
   }
 
   public void enterMedicalEquipment(Equipment e){
-    enterMedicalEquipment(e.getEquipmentID(), e.getEquipmentType(), e.getIsClean(), e.getCurrentLocation(), e.getIsAvailable());
+    enterMedicalEquipment(e.getStringFields().get("equipment_id"), e.getStringFields().get("equipment_type"), (Boolean)e.getFields().get("is_clean"), e.getStringFields().get("current_location"), (Boolean) e.getFields().get("is_available"));
   }
 
   public void enterMedicalEquipment(
@@ -136,7 +136,7 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
         boolean isAvailable = rset.getBoolean("is_available");
 
         Equipment e =
-            new Equipment(equipmentID, equipmentType, isClean, (Location) currentLocation, isAvailable);
+            new Equipment(equipmentID, equipmentType, isClean, ((Location)currentLocation).getStringFields().get("equipment_id"), isAvailable);
         equipList.add(e);
       }
     } catch (SQLException e) {

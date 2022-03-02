@@ -60,7 +60,7 @@ public class PathFinder {
     HashMap<Location, HashSet<Edge>> resultMap = new HashMap<>();
 
     for (Location l : locations) {
-      map.put(l.getNodeID(), l);
+      map.put(l.getStringFields().get("node_id"), l);
       resultMap.put(l, new HashSet<>());
     }
 
@@ -154,9 +154,9 @@ public class PathFinder {
       }
     }
    path.add(current);
-    destinationFloor = path.get(0).getFloor();
+    destinationFloor = path.get(0).getStringFields().get("floor");
   for(Location l:path){
-    if(l.getFloor().equals(floor)) resultPath.add(l);
+    if(l.getStringFields().get("floor").equals(floor)) resultPath.add(l);
   }
     return resultPath;
   }
@@ -171,10 +171,10 @@ public class PathFinder {
     for (int i = 1; i < path.size(); i++) {
       Line line =
           new Line(
-              prev.getXCoord() + offsetX,
-              prev.getYCoord() + offsetY,
-              path.get(i).getXCoord() + offsetX,
-              path.get(i).getYCoord() + offsetY);
+              Integer.parseInt(prev.getStringFields().get("xcoord")) + offsetX,
+                  Integer.parseInt(prev.getStringFields().get("ycoord")) + offsetY,
+                  Integer.parseInt(path.get(i).getStringFields().get("xcoord")) + offsetX,
+                  Integer.parseInt(path.get(i).getStringFields().get("ycoord")) + offsetY);
       line.setStroke(Color.RED);
       line.setVisible(true);
       line.setStrokeWidth(4);
