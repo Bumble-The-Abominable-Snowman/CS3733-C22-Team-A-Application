@@ -31,10 +31,10 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
         String equipmentID = rset.getString("equipment_id");
         String equipmentType = rset.getString("equipment_type");
         boolean isClean = rset.getBoolean("is_clean");
-        Object currentLocation = rset.getObject("current_location");
+        String currentLocation = rset.getString("current_location");
         boolean isAvailable = rset.getBoolean("is_available");
 
-        me = new Equipment(equipmentID, equipmentType, isClean, (Location) currentLocation, isAvailable);
+        me = new Equipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable);
       }
       return me;
 
@@ -81,9 +81,9 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
     }
   }
 
-  public void enterMedicalEquipment(Equipment e){
+  /*public void enterMedicalEquipment(Equipment e){
     enterMedicalEquipment(e.getEquipmentID(), e.getEquipmentType(), e.getIsClean(), e.getCurrentLocation(), e.getIsAvailable());
-  }
+  }*/
 
   public void enterMedicalEquipment(
       String equipmentID,
@@ -132,11 +132,11 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
         String equipmentID = rset.getString("equipment_id");
         String equipmentType = rset.getString("equipment_type");
         boolean isClean = rset.getBoolean("is_clean");
-        Object currentLocation = rset.getObject("current_location");
+        String currentLocation = rset.getString("current_location");
         boolean isAvailable = rset.getBoolean("is_available");
 
         Equipment e =
-            new Equipment(equipmentID, equipmentType, isClean, (Location) currentLocation, isAvailable);
+            new Equipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable);
         equipList.add(e);
       }
     } catch (SQLException e) {

@@ -30,8 +30,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import static teamA_API.Main.updateEmployee;
-
 public class DefaultTest {
 
 //  @Test
