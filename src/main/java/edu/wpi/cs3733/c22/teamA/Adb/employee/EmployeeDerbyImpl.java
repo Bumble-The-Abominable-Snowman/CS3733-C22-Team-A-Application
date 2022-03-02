@@ -343,7 +343,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
                 + "', '"
                 + employee.getStringFields().get("address")
                 + "', '"
-                + employee.getStringFields().get("start_date")
+                + originalFormat.parse(employee.getStringFields().get("start_date"))
                 + "')";
 
         System.out.println(str);

@@ -8,6 +8,7 @@ import edu.wpi.cs3733.c22.teamA.auth0.Auth0Login;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,6 +44,7 @@ public class App extends Application {
     try {
       this.handleLogin();
     } catch (Exception e) {
+      e.printStackTrace();
       System.out.println("LOGIN ERROR!");
     }
   }
