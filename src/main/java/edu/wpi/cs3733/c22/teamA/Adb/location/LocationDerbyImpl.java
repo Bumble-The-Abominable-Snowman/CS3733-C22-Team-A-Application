@@ -141,11 +141,19 @@ public class LocationDerbyImpl implements LocationDAO {
         Statement update = Adb.connection.createStatement();
 
         if (!returnValOld.equals(e_string_fields.get(columnName))) {
-          str =
-                  String.format(
-                          "UPDATE TowerLocations SET " + columnName + " = '%s' WHERE node_id = '%s'",
-                          e_string_fields.get(columnName),
-                          e_string_fields.get("node_id"));
+          if(columnName.equals("xcoord") || columnName.equals("ycoord")){
+            str =
+                    String.format(
+                            "UPDATE TowerLocations SET " + columnName + " = %s WHERE node_id = '%s'",
+                            e_string_fields.get(columnName),
+                            e_string_fields.get("node_id"));
+          }else{
+            str =
+                    String.format(
+                            "UPDATE TowerLocations SET " + columnName + " = '%s' WHERE node_id = '%s'",
+                            e_string_fields.get(columnName),
+                            e_string_fields.get("node_id"));
+          }
 
           update.execute(str);
         }
