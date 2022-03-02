@@ -10,9 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class LocationDerbyImpl implements LocationDAO {
   List<Location> Location;
@@ -120,33 +118,37 @@ public class LocationDerbyImpl implements LocationDAO {
   }
 
   // Method to update nodes from location table.
-  public void updateLocation(String ID, String field, Object change) {
+  public void updateLocation(Location e) throws SQLException {
 
-    String tableName = "TowerLocations";
-    try {
-      Statement updateCoords = Adb.connection.createStatement();
+    Statement get = Adb.connection.createStatement();
 
-      String str = "";
-      if (change instanceof String) {
-        str =
+    HashMap<String, String> e_string_fields = e.getStringFields();
+
+    String str =
             String.format(
-                "update " + tableName + " set " + field + " = '%s' where node_id = '%s'",
-                change,
-                ID);
-      } else {
-        str =
-            String.format(
-                "update " + tableName + " set " + field + " = " + change + " where node_id = '%s'",
-                ID);
+                    "SELECT * FROM TowerLocations WHERE location_id = '%s'",
+                    e_string_fields.get("location_id"));
+
+    ResultSet resultSet = get.executeQuery(str);
+    ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+
+    if (resultSet.next()) {
+      for (int i = 1; i < resultSetMetaData.getColumnCount() + 1; i++) {
+        String returnValOld = resultSet.getString(i);
+        String columnName = resultSetMetaData.getColumnName(i).toLowerCase(Locale.ROOT);
+
+        Statement update = Adb.connection.createStatement();
+
+        if (!returnValOld.equals(e_string_fields.get(columnName))) {
+          str =
+                  String.format(
+                          "UPDATE TowerLocations SET " + columnName + " = '%s' WHERE location_id = '%s'",
+                          e_string_fields.get(columnName),
+                          e_string_fields.get("location_id"));
+
+          update.execute(str);
+        }
       }
-      updateCoords.execute(str);
-
-    } catch (SQLException e) {
-      System.out.println("Error Caught :");
-      System.out.println("Error Code: " + e.getErrorCode());
-      System.out.println("SQL State: " + e.getSQLState());
-      System.out.println(e.getMessage());
-      e.printStackTrace();
     }
   }
 

@@ -47,7 +47,6 @@ public class Employee {
     return this.fields_string;
   }
 
-
   public void setField(String key, Object value) {
     this.fields.put(key, value);
   }
@@ -62,7 +61,6 @@ public class Employee {
             getStringFields().get("address"),
             getStringFields().get("start_date"));
   }
-
 
   public void setFieldByString(String key, String value) throws ParseException {
     if (Objects.equals(key, "start_date")) {
