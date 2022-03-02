@@ -244,15 +244,15 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
 
         String data = dataScanner.next();
         data = data.trim();
-        if (dataIndex == 0) thisEmployee.setEmployeeID(data);
-        else if (dataIndex == 1) thisEmployee.setEmployeeType(data);
-        else if (dataIndex == 2) thisEmployee.setFirstName(data);
-        else if (dataIndex == 3) thisEmployee.setLastName(data);
-        else if (dataIndex == 4) thisEmployee.setEmail(data);
-        else if (dataIndex == 5) thisEmployee.setPhoneNum(data);
-        else if (dataIndex == 6) thisEmployee.setAddress(data);
+        if (dataIndex == 0) thisEmployee.setFieldByString("employee_id", data);
+        else if (dataIndex == 1) thisEmployee.setFieldByString("employee_type", data);
+        else if (dataIndex == 2) thisEmployee.setFieldByString("first_name", data);
+        else if (dataIndex == 3) thisEmployee.setFieldByString("last_name", data);
+        else if (dataIndex == 4) thisEmployee.setFieldByString("email", data);
+        else if (dataIndex == 5) thisEmployee.setFieldByString("phone_num", data);
+        else if (dataIndex == 6) thisEmployee.setFieldByString("address", data);
         else if (dataIndex == 7) {
-          thisEmployee.setStartDate(data);
+          thisEmployee.setFieldByString("start_date", data);
         } else System.out.println("Invalid data, I broke::" + data);
         dataIndex++;
       }
@@ -368,7 +368,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     EmployeeDerbyImpl empDerby = new EmployeeDerbyImpl();
     List<Employee> employeeList = empDerby.getEmployeeList();
     for (Employee emp : employeeList) {
-      empDerby.deleteEmployee(emp.getEmployeeID());
+      empDerby.deleteEmployee(emp.getStringFields().get("employee_id"));
     }
 
     try {
@@ -384,21 +384,21 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         String str = "INSERT INTO Employee(employee_id, employee_type, first_name, last_name, email, phone_num, address, start_date) VALUES('"
-                + employee.getEmployeeID()
+                + employee.getStringFields().get("employee_id")
                 + "', '"
-                + employee.getEmployeeType()
+                + employee.getStringFields().get("employee_type")
                 + "', '"
-                + employee.getFirstName()
+                + employee.getStringFields().get("first_name")
                 + "', '"
-                + employee.getLastName()
+                + employee.getStringFields().get("last_name")
                 + "', '"
-                + employee.getEmail()
+                + employee.getStringFields().get("email")
                 + "', '"
-                + employee.getPhoneNum()
+                + employee.getStringFields().get("phone_num")
                 + "', '"
-                + employee.getAddress()
+                + employee.getStringFields().get("address")
                 + "', '"
-                + employee.getStartDate()
+                + employee.getStringFields().get("start_date")
                 + "')";
 
         System.out.println(str);

@@ -218,18 +218,18 @@ public class LocationDerbyImpl implements LocationDAO {
       while (dataScanner.hasNext()) {
 
         String data = dataScanner.next();
-        if (dataIndex == 0) thisLocation.setNodeID(data);
+        if (dataIndex == 0) thisLocation.setFieldByString("node_id",data);
         else if (dataIndex == 1) {
           intData = Integer.parseInt(data);
-          thisLocation.setXCoord(intData);
+          thisLocation.setFieldByString("xcoord", data);
         } else if (dataIndex == 2) {
           intData = Integer.parseInt(data);
-          thisLocation.setYCoord(intData);
-        } else if (dataIndex == 3) thisLocation.setFloor(data);
-        else if (dataIndex == 4) thisLocation.setBuilding(data);
-        else if (dataIndex == 5) thisLocation.setNodeType(data);
-        else if (dataIndex == 6) thisLocation.setLongName(data);
-        else if (dataIndex == 7) thisLocation.setShortName(data);
+          thisLocation.setFieldByString("ycoord", data);
+        } else if (dataIndex == 3) thisLocation.setFieldByString("floor", data);
+        else if (dataIndex == 4) thisLocation.setFieldByString("building", data);
+        else if (dataIndex == 5) thisLocation.setFieldByString("node_type", data);
+        else if (dataIndex == 6) thisLocation.setFieldByString("long_name", data);
+        else if (dataIndex == 7) thisLocation.setFieldByString("short_name", data);
         else System.out.println("Invalid data, I broke::" + data);
         dataIndex++;
       }
@@ -243,7 +243,7 @@ public class LocationDerbyImpl implements LocationDAO {
     return list;
   }
 
-  public static List<Location> readLocationCSVfile(String csvFilePath) throws IOException {
+  public static List<Location> readLocationCSVfile(String csvFilePath) throws IOException, ParseException {
     // System.out.println("beginning to read csv");
 
     File file = new File(csvFilePath);
@@ -382,24 +382,24 @@ public class LocationDerbyImpl implements LocationDAO {
         Statement addStatement = Adb.connection.createStatement();
         addStatement.executeUpdate(
                 "INSERT INTO TowerLocations(node_id,xcoord,ycoord,floor,building,node_type,long_name,short_name) VALUES('"
-                        + l.getNodeID()
+                        + l.getStringFields().get("node_id")
                         + "', "
-                        + l.getXCoord()
+                        + l.getStringFields().get("xcoord")
                         + ", "
-                        + l.getYCoord()
+                        + l.getStringFields().get("ycoord")
                         + ", '"
-                        + l.getFloor()
+                        + l.getStringFields().get("floor")
                         + "', '"
-                        + l.getBuilding()
+                        + l.getStringFields().get("building")
                         + "', '"
-                        + l.getNodeType()
+                        + l.getStringFields().get("node_type")
                         + "', '"
-                        + l.getLongName()
+                        + l.getStringFields().get("long_name")
                         + "', '"
-                        + l.getShortName()
+                        + l.getStringFields().get("short_name")
                         + "')");
       }
-    } catch (SQLException | IOException e) {
+    } catch (SQLException | IOException | ParseException e) {
       System.out.println("Insertion on TowerLocations failed!");
       e.printStackTrace();
       return;

@@ -177,16 +177,16 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
       while (dataScanner.hasNext()) {
 
         String data = dataScanner.next();
-        if (dataIndex == 0) thisME.setEquipmentID(data);
-        else if (dataIndex == 1) thisME.setEquipmentType(data);
+        if (dataIndex == 0) thisME.setFieldByString("equipment_id", data);
+        else if (dataIndex == 1) thisME.setFieldByString("equipment_type", data);
         else if (dataIndex == 2) {
           Boolean boolData = Boolean.parseBoolean(data);
           System.out.println("boolData: " + boolData);
-          thisME.setIsClean(boolData);
-        } else if (dataIndex == 3) thisME.setCurrentLocation(data);
+          thisME.setFieldByString("is_clean", data);
+        } else if (dataIndex == 3) thisME.setFieldByString("current_location", data);
         else if (dataIndex == 4) {
           Boolean boolData = Boolean.parseBoolean(data);
-          thisME.setIsAvailable(boolData);
+          thisME.setFieldByString("is_available", data);
         } else System.out.println("Invalid data, I broke::" + data);
         dataIndex++;
       }
@@ -330,22 +330,22 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
 
       List<Equipment> List = EquipmentDerbyImpl.readMedicalEquipmentCSVfile(csvFilePath);
       for(Equipment equip : List){
-        System.out.println("equip IsClean: " + equip.getIsClean());
+        System.out.println("equip IsClean: " + equip.getStringFields().get("is_clean"));
       }
 
       for (Equipment l : List) {
         Statement addStatement = Adb.connection.createStatement();
         addStatement.executeUpdate(
                 "INSERT INTO MedicalEquipment( equipment_id, equipment_type, is_clean, current_location, is_available) VALUES('"
-                        + l.getEquipmentID()
+                        + l.getStringFields().get("equipment_id")
                         + "', '"
-                        + l.getEquipmentType()
+                        + l.getStringFields().get("equipment_type")
                         + "', '"
-                        + l.getIsClean()
+                        + l.getStringFields().get("is_clean")
                         + "', '"
-                        + l.getCurrentLocation()
+                        + l.getStringFields().get("current_location")
                         + "', '"
-                        + l.getIsAvailable()
+                        + l.getStringFields().get("is_available")
                         + "')");
       }
     } catch (SQLException | IOException | ParseException e) {

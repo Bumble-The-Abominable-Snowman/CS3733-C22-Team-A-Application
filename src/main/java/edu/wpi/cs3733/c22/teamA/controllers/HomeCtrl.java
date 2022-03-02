@@ -86,17 +86,6 @@ public class HomeCtrl extends MasterCtrl {
                                       + ((App.getStage().getWidth() / 1000) * settingsTextSize)
                                       + "pt;");
                     });
-
-    for (Employee emp : empList) {
-      if (emp.getStringFields().get("email").equals(App.factory.getUsername())) {
-        homeTitle.setText("Welcome, " + emp.getStringFields().get("last_name")+ " " + emp.getStringFields().get("first_name"));
-      }
-    }
-  }
-
-  @FXML
-  private void bumbleHelp() throws IOException {
-    bumbleButton.setVisible(true);
   }
 
   @FXML
