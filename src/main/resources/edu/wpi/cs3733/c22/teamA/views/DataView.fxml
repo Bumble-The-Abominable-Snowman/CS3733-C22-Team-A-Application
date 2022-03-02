@@ -196,29 +196,6 @@
          </children>
       </GridPane>
       <VBox fx:id="inputVBox" prefHeight="655.0" prefWidth="160.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
-         <children>
-            <JFXButton fx:id="editButton" onAction="#edit" prefHeight="25.0" prefWidth="416.0" text="Edit">
-               <VBox.margin>
-                  <Insets bottom="25.0" top="25.0" />
-               </VBox.margin>
-            </JFXButton>
-            <JFXButton fx:id="addButton" onAction="#add" prefHeight="25.0" prefWidth="416.0" text="Add">
-               <VBox.margin>
-                  <Insets bottom="25.0" />
-               </VBox.margin>
-            </JFXButton>
-            <JFXButton fx:id="clearButton" onAction="#clear" prefHeight="25.0" prefWidth="416.0" text="Clear">
-               <VBox.margin>
-                  <Insets bottom="25.0" />
-               </VBox.margin>
-            </JFXButton>
-            <JFXButton fx:id="saveButton" onAction="#save" prefHeight="25.0" prefWidth="416.0" text="Save">
-               <VBox.margin>
-                  <Insets bottom="25.0" />
-               </VBox.margin>
-            </JFXButton>
-            <JFXButton fx:id="deleteButton" onAction="#delete" prefHeight="25.0" prefWidth="399.0" text="Delete" />
-         </children>
          <GridPane.margin>
             <Insets left="25.0" right="25.0" />
          </GridPane.margin>
