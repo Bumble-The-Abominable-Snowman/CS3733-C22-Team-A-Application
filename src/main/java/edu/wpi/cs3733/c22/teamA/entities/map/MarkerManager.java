@@ -183,7 +183,7 @@ public class MarkerManager {
     for (SR sr : floorSRs) {
       SRMarker newSRMarker =
           MarkerMaker.makeSRMarker(
-              sr, idToLocationMarker.get(((Location) sr.getFields().get("end_location")).getStringFields().get("node_id")), mapLayoutX, mapLayoutY);
+              sr, idToLocationMarker.get(sr.getStringFields().get("end_location")), mapLayoutX, mapLayoutY);
       serviceRequestMarkers.add(newSRMarker);
       setDragSR(newSRMarker, selectionManager, checkBoxManager, gesturePaneManager);
     }
