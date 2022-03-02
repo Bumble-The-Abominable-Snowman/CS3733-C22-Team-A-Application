@@ -263,7 +263,7 @@ public class ServiceRequestDerbyImpl implements ServiceRequestDAO {
       this.deleteServiceRequest(sr);
     }
 
-    ClassLoader classLoader = LocationDerbyImpl.class.getClassLoader();
+    ClassLoader classLoader = ServiceRequestDerbyImpl.class.getClassLoader();
     InputStream is = classLoader.getResourceAsStream(csvFilePath);
     Scanner lineScanner = new Scanner(is);
     Scanner dataScanner;
