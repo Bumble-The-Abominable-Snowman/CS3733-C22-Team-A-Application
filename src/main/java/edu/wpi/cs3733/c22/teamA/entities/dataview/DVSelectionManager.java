@@ -8,7 +8,6 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
-import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.controllers.DataViewCtrl;
@@ -16,10 +15,6 @@ import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-import edu.wpi.cs3733.c22.teamA.entities.map.CheckBoxManager;
-import edu.wpi.cs3733.c22.teamA.entities.map.GesturePaneManager;
-import edu.wpi.cs3733.c22.teamA.entities.map.LocationMarker;
-import edu.wpi.cs3733.c22.teamA.entities.map.MarkerManager;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -31,6 +26,7 @@ import lombok.SneakyThrows;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -104,9 +100,10 @@ public class DVSelectionManager {
     saveButton = new JFXButton("Save");
     saveButton.setOnAction(
         new EventHandler<ActionEvent>() {
+          @SneakyThrows
           @Override
           public void handle(ActionEvent e) {
-            //save(selectedLocation);
+            save();
           }
         });
     clearButton = new JFXButton("Clear");
@@ -202,7 +199,7 @@ public class DVSelectionManager {
     for (int i = 0; i < locationFields.size(); i++) {
       inputVBox.getChildren().add(locationFields.get(i).label);
       inputVBox.getChildren().add(locationFields.get(i).textArea);
-      if(i != 0) locationFields.get(i).textArea.setEditable(false);
+      locationFields.get(i).textArea.setEditable(false);
     }
     inputVBox.getChildren().add(editButton);
     inputVBox.getChildren().add(clearButton);
@@ -216,7 +213,7 @@ public class DVSelectionManager {
     for (int i = 0; i < equipmentFields.size(); i++) {
       inputVBox.getChildren().add(equipmentFields.get(i).label);
       inputVBox.getChildren().add(equipmentFields.get(i).textArea);
-      if(i != 0) equipmentFields.get(i).textArea.setEditable(false);
+      equipmentFields.get(i).textArea.setEditable(false);
     }
     inputVBox.getChildren().add(editButton);
     inputVBox.getChildren().add(clearButton);
@@ -230,7 +227,7 @@ public class DVSelectionManager {
     for (int i = 0; i <employeeFields.size(); i++) {
       inputVBox.getChildren().add(employeeFields.get(i).label);
       inputVBox.getChildren().add(employeeFields.get(i).textArea);
-      if(i != 0) employeeFields.get(i).textArea.setEditable(false);
+      employeeFields.get(i).textArea.setEditable(false);
     }
     inputVBox.getChildren().add(editButton);
     inputVBox.getChildren().add(clearButton);
@@ -244,7 +241,7 @@ public class DVSelectionManager {
     for (int i = 0; i < srFields.size(); i++) {
       inputVBox.getChildren().add(srFields.get(i).label);
       inputVBox.getChildren().add(srFields.get(i).textArea);
-      if(i != 0) srFields.get(i).textArea.setEditable(false);
+      srFields.get(i).textArea.setEditable(false);
     }
     inputVBox.getChildren().add(editButton);
     inputVBox.getChildren().add(clearButton);
@@ -306,8 +303,8 @@ public class DVSelectionManager {
   }
 
   public void edit() {
-    for (InfoField i : currentList) {
-      i.textArea.setEditable(true);
+    for (int i = 1; i < currentList.size(); i++) {
+      currentList.get(i).textArea.setEditable(true);
     }
     saveButton.setDisable(false);
     clearButton.setDisable(false);
@@ -336,17 +333,45 @@ public class DVSelectionManager {
   }
 
   // Save Changes
-  public void save(LocationMarker location) {
-    String nodeID = locationFields.get(0).textArea.getText();
-    locationDAO.updateLocation(
-        nodeID, "xCoord", (int) Double.parseDouble(locationFields.get(1).textArea.getText()));
-    locationDAO.updateLocation(
-        nodeID, "yCoord", (int) Double.parseDouble(locationFields.get(2).textArea.getText()));
-    locationDAO.updateLocation(nodeID, "floor", locationFields.get(3).textArea.getText());
-    locationDAO.updateLocation(nodeID, "building", locationFields.get(4).textArea.getText());
-    locationDAO.updateLocation(nodeID, "node_type", locationFields.get(5).textArea.getText());
-    locationDAO.updateLocation(nodeID, "long_Name", locationFields.get(6).textArea.getText());
-    locationDAO.updateLocation(nodeID, "Short_Name", locationFields.get(7).textArea.getText());
+  public void save() throws SQLException, IOException, ParseException {
+    if(selected instanceof SR){
+      new ServiceRequestDerbyImpl((SR.SRType) ((SR) selected).getFields().get("sr_type")).deleteServiceRequest((SR) selected);
+    } else if(selected instanceof Equipment){
+      Equipment newEquipment = new Equipment();
+      newEquipment.setEquipmentID(currentList.get(0).textArea.getText());
+      newEquipment.setEquipmentType(currentList.get(1).textArea.getText());
+      newEquipment.setIsClean(Boolean.parseBoolean(currentList.get(2).textArea.getText()));
+      newEquipment.setCurrentLocation(currentList.get(3).textArea.getText());
+      newEquipment.setIsAvailable(Boolean.parseBoolean(currentList.get(4).textArea.getText()));
+      equipmentDAO.deleteMedicalEquipment(((Equipment) selected).getEquipmentID());
+      equipmentDAO.enterMedicalEquipment(newEquipment);
+    } else if(selected instanceof Employee){
+      Employee newEmployee = new Employee();
+      newEmployee.setEmployeeID(currentList.get(0).textArea.getText());
+      newEmployee.setEmployeeType(currentList.get(1).textArea.getText());
+      newEmployee.setFirstName(currentList.get(2).textArea.getText());
+      newEmployee.setLastName(currentList.get(3).textArea.getText());
+      newEmployee.setEmail(currentList.get(4).textArea.getText());
+      newEmployee.setPhoneNum(currentList.get(5).textArea.getText());
+      newEmployee.setAddress(currentList.get(6).textArea.getText());
+      newEmployee.setStartDate(currentList.get(7).textArea.getText());
+      employeeDAO.deleteEmployee(((Employee) selected).getEmployeeID());
+      employeeDAO.enterEmployee(newEmployee);
+    } else if(selected instanceof Location){
+      Location newLocation = new Location();
+      newLocation.setNodeID(currentList.get(0).textArea.getText());
+      newLocation.setXCoord(Integer.parseInt(currentList.get(1).textArea.getText()));
+      newLocation.setYCoord(Integer.parseInt(currentList.get(2).textArea.getText()));
+      newLocation.setFloor(currentList.get(3).textArea.getText());
+      newLocation.setBuilding(currentList.get(4).textArea.getText());
+      newLocation.setNodeType(currentList.get(5).textArea.getText());
+      newLocation.setLongName(currentList.get(6).textArea.getText());
+      newLocation.setShortName(currentList.get(7).textArea.getText());
+      locationDAO.deleteLocationNode(((Location) selected).getNodeID());
+      locationDAO.enterLocationNode(newLocation);
+    }
+    MasterCtrl.sceneFlags.add(MasterCtrl.sceneFlags.get(MasterCtrl.sceneFlags.size()-1));
+    MasterCtrl.sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
   class InfoField {
