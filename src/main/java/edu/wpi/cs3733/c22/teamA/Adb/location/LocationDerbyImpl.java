@@ -127,8 +127,8 @@ public class LocationDerbyImpl implements LocationDAO {
 
     String str =
             String.format(
-                    "SELECT * FROM TowerLocations WHERE location_id = '%s'",
-                    e_string_fields.get("location_id"));
+                    "SELECT * FROM TowerLocations WHERE node_id = '%s'",
+                    e_string_fields.get("node_id"));
 
     ResultSet resultSet = get.executeQuery(str);
     ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
@@ -143,9 +143,9 @@ public class LocationDerbyImpl implements LocationDAO {
         if (!returnValOld.equals(e_string_fields.get(columnName))) {
           str =
                   String.format(
-                          "UPDATE TowerLocations SET " + columnName + " = '%s' WHERE location_id = '%s'",
+                          "UPDATE TowerLocations SET " + columnName + " = '%s' WHERE node_id = '%s'",
                           e_string_fields.get(columnName),
-                          e_string_fields.get("location_id"));
+                          e_string_fields.get("node_id"));
 
           update.execute(str);
         }

@@ -68,7 +68,7 @@ public class SelectionManager {
           @SneakyThrows
           @Override
           public void handle(ActionEvent e) {
-            save(selectedLocation);
+            save();
           }
         });
     clearButton = new JFXButton("Clear");
@@ -258,10 +258,10 @@ public class SelectionManager {
   }
 
   // Save Changes
-  public void save(LocationMarker location) throws SQLException {
+  public void save() throws SQLException {
     Location newLocation = new Location( locationFields.get(0).textArea.getText(),
-            Integer.parseInt(locationFields.get(1).textArea.getText()),
-            Integer.parseInt(locationFields.get(2).textArea.getText()),
+            (int)Double.parseDouble(locationFields.get(1).textArea.getText()),
+            (int)Double.parseDouble(locationFields.get(2).textArea.getText()),
             locationFields.get(3).textArea.getText(),
             locationFields.get(4).textArea.getText(),
             locationFields.get(5).textArea.getText(),
