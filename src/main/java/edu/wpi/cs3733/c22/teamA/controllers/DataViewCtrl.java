@@ -56,6 +56,7 @@ public class DataViewCtrl extends MasterCtrl {
   @FXML private JFXButton clearButton;
   @FXML private JFXButton deleteButton;
 
+  /*
   @FXML private ImageView bumbleBlinkHead;
   @FXML private JFXButton previousButton;
   @FXML private JFXButton nextButton;
@@ -68,9 +69,7 @@ public class DataViewCtrl extends MasterCtrl {
   @FXML private Label bubble1Text;
   @FXML private Label bubble2Text;
   @FXML private Label bubble3Text;
-  @FXML private Label bubble4Text;
-
-
+  @FXML private Label bubble4Text; */
 
   private StringBuilder detailLabel = new StringBuilder("No further details  ");
   public static AtomicReference<Popup> detailsPopup = new AtomicReference<>(new Popup());
@@ -275,7 +274,7 @@ public class DataViewCtrl extends MasterCtrl {
   public void initialize() throws SQLException, InvocationTargetException, IllegalAccessException {
 
     configure();
-
+/*
     double previousTextSize = previousButton.getFont().getSize();
     double nextTextSize = nextButton.getFont().getSize();
     double previous1TextSize = previous1Button.getFont().getSize();
@@ -287,7 +286,7 @@ public class DataViewCtrl extends MasterCtrl {
     double bubble1TextSize = bubble1Text.getFont().getSize();
     double bubble2TextSize = bubble2Text.getFont().getSize();
     double bubble3TextSize = bubble3Text.getFont().getSize();
-    double bubble4TextSize = bubble4Text.getFont().getSize();
+    double bubble4TextSize = bubble4Text.getFont().getSize(); */
 
     selectEmployeeBox
             .getSelectionModel()
@@ -306,7 +305,7 @@ public class DataViewCtrl extends MasterCtrl {
                         } catch (IllegalAccessException e) {
                           e.printStackTrace();
                         }
-                      }
+                      } /*
                       previousButton.setStyle(
                               "-fx-font-size: "
                                       + ((App.getStage().getWidth() / 1000) * previousTextSize)
@@ -356,7 +355,7 @@ public class DataViewCtrl extends MasterCtrl {
                                       + ((App.getStage().getWidth() / 1000) * bubble4TextSize)
                                       + "pt;");
 
-                    });
+               */     });
     if (HomeCtrl.sceneFlag == 1) {
       titleLabel.setText("Service Requests");
       srDataviewManager.initializeRequestsTable();
@@ -560,7 +559,7 @@ public class DataViewCtrl extends MasterCtrl {
     }
 
   }
-/*
+
   @FXML
   private void next() throws IOException {
 
@@ -571,7 +570,7 @@ public class DataViewCtrl extends MasterCtrl {
       helpState = 2;
     }
 
-  } */
+  }
 
   public JFXComboBox getSelectEmployeeBox() {
     return selectEmployeeBox;
@@ -580,7 +579,7 @@ public class DataViewCtrl extends MasterCtrl {
   public JFXTreeTableView<RecursiveObj> getTable() {
     return table;
   }
-
+/*
   public void activateBumble(){
     helpButton.setVisible(false);
     bumbleXButton.setVisible(true);
@@ -704,5 +703,5 @@ public class DataViewCtrl extends MasterCtrl {
     next3Button.setVisible(true);
     bubble3Text.setVisible(true);
     bubble4Text.setVisible(false);
-  }
+  } */
 }

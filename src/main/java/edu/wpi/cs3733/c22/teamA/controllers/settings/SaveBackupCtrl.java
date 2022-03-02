@@ -27,10 +27,12 @@ public class SaveBackupCtrl extends MasterCtrl {
   @FXML public TextField fileName;
   @FXML public Text exportFileText;
   @FXML private JFXComboBox<String> TypeCSV;
-  @FXML private Text exportLabel;
+  //@FXML private Text exportLabel;
+
+  /*
+  @FXML private JFXButton nextButton;
   @FXML private ImageView bumbleBlinkHead;
   @FXML private JFXButton previousButton;
-  @FXML private JFXButton nextButton;
   @FXML private JFXButton previous1Button;
   @FXML private JFXButton next1Button;
   @FXML private JFXButton previous2Button;
@@ -38,7 +40,7 @@ public class SaveBackupCtrl extends MasterCtrl {
   @FXML private Label bubbleText;
   @FXML private Label bubble1Text;
   @FXML private Label bubble2Text;
-  @FXML private Label bubble3Text;
+  @FXML private Label bubble3Text; */
 
   @FXML
   public void initialize() {
@@ -48,17 +50,18 @@ public class SaveBackupCtrl extends MasterCtrl {
     double saveBackupTextSize = saveBackupButton.getFont().getSize();
     double fileNameTextSize = fileName.getFont().getSize();
     double exportFileTextSize = exportFileText.getFont().getSize();
-    double exportLabelTextSize = exportLabel.getFont().getSize();
+    //double exportLabelTextSize = exportLabel.getFont().getSize();
 
+    /*
     double previousTextSize = previousButton.getFont().getSize();
-    double nextTextSize = nextButton.getFont().getSize();
+      double nextTextSize = nextButton.getFont().getSize();
     double previous1TextSize = previous1Button.getFont().getSize();
     double next1TextSize = next1Button.getFont().getSize();
     double previous2TextSize = previous2Button.getFont().getSize();
     double next2TextSize = next2Button.getFont().getSize();
     double bubble1TextSize = bubble1Text.getFont().getSize();
     double bubble2TextSize = bubble2Text.getFont().getSize();
-    double bubble3TextSize = bubble3Text.getFont().getSize();
+    double bubble3TextSize = bubble3Text.getFont().getSize(); */
 
     App.getStage()
         .widthProperty()
@@ -76,17 +79,17 @@ public class SaveBackupCtrl extends MasterCtrl {
                   "-fx-font-size: "
                       + ((App.getStage().getWidth() / 1000) * exportFileTextSize)
                       + "pt;");
-              exportLabel.setStyle(
+            /*  exportLabel.setStyle(
                       "-fx-font-size: "
                               + ((App.getStage().getWidth() / 1000) * exportLabelTextSize)
-                              + "pt;");
-              previousButton.setStyle(
-                      "-fx-font-size: "
-                              + ((App.getStage().getWidth() / 1000) * previousTextSize)
                               + "pt;");
               nextButton.setStyle(
                       "-fx-font-size: "
                               + ((App.getStage().getWidth() / 1000) * nextTextSize)
+                              + "pt;");
+             previousButton.setStyle(
+                      "-fx-font-size: "
+                              + ((App.getStage().getWidth() / 1000) * previousTextSize)
                               + "pt;");
               previous1Button.setStyle(
                       "-fx-font-size: "
@@ -116,7 +119,7 @@ public class SaveBackupCtrl extends MasterCtrl {
                       "-fx-font-size: "
                               + ((App.getStage().getWidth() / 1000) * bubble3TextSize)
                               + "pt;");
-            });
+         */   });
 
     TypeCSV.getItems().removeAll(TypeCSV.getItems());
     TypeCSV.getItems()
@@ -246,7 +249,7 @@ public class SaveBackupCtrl extends MasterCtrl {
     }
 
   }
-/*
+
   @FXML
   private void next() throws IOException {
 
@@ -257,9 +260,9 @@ public class SaveBackupCtrl extends MasterCtrl {
       helpState = 2;
     }
 
-  } */
+  }
 
-
+/*
   public void activateBumble(){
     helpButton.setVisible(false);
     bumbleXButton.setVisible(true);
@@ -354,5 +357,5 @@ public class SaveBackupCtrl extends MasterCtrl {
     next2Button.setVisible(true);
     bubble2Text.setVisible(true);
     bubble3Text.setVisible(false);
-  }
+  } */
 }

@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class HomeCtrl extends MasterCtrl {
-
+/*
   @FXML private Label homeTitle;
   @FXML private ImageView frame1;
   @FXML private ImageView frame2;
@@ -31,16 +31,17 @@ public class HomeCtrl extends MasterCtrl {
   @FXML private Label newSRText;
   @FXML private Label mapText;
   @FXML private Label dataViewText;
-  @FXML private Label settingsText;
+  @FXML private Label settingsText; */
 
   @FXML
   private void initialize() {
 
-    configure();
+      configure();
       drawer.open();
       drawer.toFront();
       menuBox.toFront();
 
+/*
     EmployeeDAO employeeBase = new EmployeeDerbyImpl();
     List<Employee> empList = employeeBase.getEmployeeList();
 
@@ -93,10 +94,10 @@ public class HomeCtrl extends MasterCtrl {
 
   }
 
-  /* @FXML
+   @FXML
   private void bumbleHelp() throws IOException {
     bumbleButton.setVisible(true);
-  } */
+  }
 
   @FXML
   private void activateBumble() {
@@ -224,7 +225,7 @@ public class HomeCtrl extends MasterCtrl {
     newSRText.setVisible(false);
     mapText.setVisible(false);
     dataViewText.setVisible(false);
-    settingsText.setVisible(true);
+    settingsText.setVisible(true); */
   }
 
   @FXML

@@ -15,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -46,11 +45,12 @@ public abstract class MasterCtrl {
   @FXML public JFXButton aboutButton;
   @FXML public JFXButton homeButton;
 
-  @FXML public JFXButton bumbleXButton;
-  @FXML public Label bubbleText;
-  @FXML public ImageView bumbleHead;
+  //@FXML public JFXButton bumbleXButton;
+  //@FXML public Label bubbleText;
+  //@FXML public ImageView bumbleHead;
 
   public final static SceneSwitcher sceneSwitcher = App.sceneSwitcher;
+
   @FXML public ImageView newSRIcon;
   @FXML public ImageView mapIcon;
   @FXML public ImageView viewSRIcon;
@@ -82,7 +82,7 @@ public abstract class MasterCtrl {
 
   public static ACCOUNT account = ACCOUNT.ADMIN;
 
-  double stageWidth;
+  public double stageWidth;
   double stageHeight;
 
   boolean animating = false;
@@ -97,10 +97,9 @@ public abstract class MasterCtrl {
 
     if (account == ACCOUNT.STAFF) {  //Remove some permissions
       if (account == ACCOUNT.STAFF) {
-
         menuBox.getChildren().remove(0);
-
       }
+    }
 
       nextButton.setVisible(false);
       helpText.setVisible(false);
@@ -108,8 +107,8 @@ public abstract class MasterCtrl {
       titleSize = titleLabel.getFont().getSize();
       nextSize = homeButton.getFont().getSize();
 
-      double bumbleXTextSize = bumbleXButton.getFont().getSize();
-      double bubbleTextSize = bubbleText.getFont().getSize();
+      //double bumbleXTextSize = bumbleXButton.getFont().getSize();
+      //double bubbleTextSize = bubbleText.getFont().getSize();
 
       drawer.setSidePane(menuBox);
       drawer.setOnDrawerClosed(e -> animating = false);
@@ -139,14 +138,10 @@ public abstract class MasterCtrl {
               });
 
       updateSize();
-      App.getStage().widthProperty().addListener((obs, oldVal, newVal) -> {
-        updateSize();
-      });
       handleIconPulses();
+      App.getStage().widthProperty().addListener((obs, oldVal, newVal) -> {updateSize();});
 
     }
-
-  }
 
   private void updateSize() {
 
@@ -173,8 +168,6 @@ public abstract class MasterCtrl {
   private void setStyle(JFXButton thisButton) {
     thisButton.setStyle("-fx-font-size: " + ((stageWidth / 1000) * homeSize) + "pt;");
   }
-
-  protected void onSceneSwitch() {}
 
   @FXML
   private void goToHome() throws IOException {
