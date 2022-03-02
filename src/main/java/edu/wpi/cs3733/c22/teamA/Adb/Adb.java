@@ -60,7 +60,7 @@ public class Adb {
         connection =
             DriverManager.getConnection(
                 String.format(
-                    "jdbc:derby:%s;user=%s;password=%s",
+                    "jdbc:derby:%s;create=true;user=%s;password=%s",
                     pathToDBA, username, password)); // Modify the database name from TowerLocation to Adb
         // for better
         // recognition.
@@ -92,6 +92,7 @@ public class Adb {
     */
 
     // Check if tables exist
+
       System.out.println(
               "-------------------------------------Checking tables-------------------------------------");
 
@@ -146,6 +147,7 @@ public class Adb {
         } catch (Exception e) {
           System.out.println("Employee Insertion failed" + e);
         }
+
 
       } catch (SQLException e) {
         System.out.println("Table Employee already exist");
@@ -504,6 +506,7 @@ public class Adb {
 
       System.out.println(
               "-------------------------------------Tables checked-------------------------------------");
+
     System.out.println("Check isInitialized: " + isInitialized);
   }
 
