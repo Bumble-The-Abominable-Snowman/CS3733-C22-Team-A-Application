@@ -27,7 +27,7 @@ public class Adb {
 
   public static boolean isInitialized;
 
-  public static void initialConnection(String arg) throws SQLException {
+  public static void initialConnection(String arg) throws SQLException, IOException, ParseException, InvocationTargetException, IllegalAccessException {
 
     isInitialized = true;
     // Connection to database driver
@@ -381,8 +381,20 @@ public class Adb {
               + "PRIMARY KEY (request_id), "
               + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
 
+      ServiceRequestDerbyImpl FLORAL_DELIVERY = new ServiceRequestDerbyImpl(SR.SRType.FLORAL_DELIVERY);
+      FLORAL_DELIVERY.populateFromCSV(
+              "edu/wpi/cs3733/c22/teamA/db/CSVs/FloralDeliverySR.csv");
+
     } catch (SQLException e) {
       System.out.println("Table Floral Delivery Service already exist");
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ParseException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
     }
 
     // check GiftDeliveryServiceRequest
@@ -393,8 +405,20 @@ public class Adb {
               + "PRIMARY KEY (request_id), "
               + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE)");
 
+      ServiceRequestDerbyImpl GIFT_DELIVERY = new ServiceRequestDerbyImpl(SR.SRType.GIFT_DELIVERY);
+      GIFT_DELIVERY.populateFromCSV(
+              "edu/wpi/cs3733/c22/teamA/db/CSVs/GiftDeliverySR.csv");
+
     } catch (SQLException e) {
       System.out.println("Table GiftDeliveryServiceRequest already exist");
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ParseException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
     }
 
     // check MaintenanceServiceRequest
@@ -419,6 +443,10 @@ public class Adb {
               + "FOREIGN KEY (request_id) REFERENCES ServiceRequest(request_id) ON DELETE CASCADE,"
               + "FOREIGN KEY (medicine_id) REFERENCES Medicine(medicine_id) ON DELETE CASCADE)");
 
+      ServiceRequestDerbyImpl MEDICINE_DELIVERY = new ServiceRequestDerbyImpl(SR.SRType.MEDICINE_DELIVERY);
+      MEDICINE_DELIVERY.populateFromCSV(
+              "edu/wpi/cs3733/c22/teamA/db/CSVs/MDSR.csv");
+
 
     } catch (SQLException e) {
       System.out.println("Error caught trying to create MedicineDeliveryServiceRequest");
@@ -426,6 +454,14 @@ public class Adb {
       System.out.println("SQL State: " + e.getSQLState());
       System.out.println(e.getMessage());
       //System.out.println("Table MedicineDeliveryServiceRequest already exist");
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ParseException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
     }
 
     // check SecurityServiceRequest
@@ -437,6 +473,10 @@ public class Adb {
 
     } catch (SQLException e) {
       System.out.println("Table SecurityServiceRequest already exist");
+
+      ServiceRequestDerbyImpl SECURITY = new ServiceRequestDerbyImpl(SR.SRType.SECURITY);
+      SECURITY.populateFromCSV(
+              "edu/wpi/cs3733/c22/teamA/db/CSVs/SSR.csv");
     }
 
     // check ConsultationServiceRequest
