@@ -1,6 +1,8 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
@@ -13,6 +15,7 @@ import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
@@ -40,6 +43,7 @@ public class HomeCtrl extends MasterCtrl {
       drawer.open();
       drawer.toFront();
       menuBox.toFront();
+      PauseTransition pt = new PauseTransition(Duration.millis(100));
 
 /*
     EmployeeDAO employeeBase = new EmployeeDerbyImpl();

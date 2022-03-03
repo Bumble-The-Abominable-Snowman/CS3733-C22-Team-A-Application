@@ -110,32 +110,33 @@ public abstract class MasterCtrl {
       //double bumbleXTextSize = bumbleXButton.getFont().getSize();
       //double bubbleTextSize = bubbleText.getFont().getSize();
 
+      HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(hamburger);
+
       drawer.setSidePane(menuBox);
       drawer.setOnDrawerClosed(e -> animating = false);
       drawer.setOnDrawerOpened(e -> animating = false);
-      HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(hamburger);
       burgerTask.setRate(-1);
 
       drawer.toBack();
       menuBox.toBack();
       hamburger.addEventHandler(
-              MouseEvent.MOUSE_PRESSED,
-              (e) -> {
-                if (!animating) {
-                  animating = true;
-                  burgerTask.setRate(burgerTask.getRate() * -1);
-                  burgerTask.play();
-                  if (drawer.isOpened()) {
-                    drawer.close();
-                    drawer.toBack();
-                    menuBox.toBack();
-                  } else {
-                    drawer.open();
-                    drawer.toFront();
-                    menuBox.toFront();
-                  }
+            MouseEvent.MOUSE_PRESSED,
+            (e) -> {
+              if (!animating) {
+                animating = true;
+                burgerTask.setRate(burgerTask.getRate() * -1);
+                burgerTask.play();
+                if (drawer.isOpened()) {
+                  drawer.close();
+                  drawer.toBack();
+                  menuBox.toBack();
+                } else {
+                  drawer.open();
+                  drawer.toFront();
+                  menuBox.toFront();
                 }
-              });
+              }
+            });
 
       updateSize();
       handleIconPulses();
