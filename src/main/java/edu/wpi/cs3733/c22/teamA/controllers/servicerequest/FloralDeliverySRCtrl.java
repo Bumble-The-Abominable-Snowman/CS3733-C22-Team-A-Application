@@ -66,13 +66,11 @@ public class FloralDeliverySRCtrl extends SRCtrl {
 
     flowerChoice.getItems().removeAll(flowerChoice.getItems());
     flowerChoice.getItems().addAll("Carnation", "Daisy", "Forget-Me-Not", "Lily", "Orchid", "Rose", "Tulip");
-    flowerChoice.getSelectionModel().select("Flower Type");
     new AutoCompleteBox(flowerChoice);
     flowerChoice.setVisibleRowCount(5);
 
     bouquetTypeChoice.getItems().removeAll(bouquetTypeChoice.getItems());
     bouquetTypeChoice.getItems().addAll("Full Bouquet", "Single Flower");
-    bouquetTypeChoice.getSelectionModel().select("Bouquet Type");
     new AutoCompleteBox(bouquetTypeChoice);
     bouquetTypeChoice.setVisibleRowCount(5);
 
@@ -100,7 +98,8 @@ public class FloralDeliverySRCtrl extends SRCtrl {
   void submitRequest()
           throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
 
-    if (!flowerChoice.getSelectionModel().getSelectedItem().equals("Flower Type") && !bouquetTypeChoice.getSelectionModel().getSelectedItem().equals("Bouquet Type")
+    if (flowerChoice.getSelectionModel().getSelectedItem() != null
+            && bouquetTypeChoice.getSelectionModel().getSelectedItem() != null
             && locationChoice.getSelectionModel().getSelectedItem() != null
             && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
 

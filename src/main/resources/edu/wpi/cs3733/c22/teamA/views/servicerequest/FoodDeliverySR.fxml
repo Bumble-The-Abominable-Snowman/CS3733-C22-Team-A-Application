@@ -38,12 +38,12 @@
    <JFXButton fx:id="submitButton" buttonType="RAISED" layoutX="191.0" layoutY="340.0" mnemonicParsing="false" onAction="#submitRequest" styleClass="bodyFormat" text="Submit" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
    <JFXComboBox fx:id="mainChoice" layoutX="34.0" layoutY="180.0" promptText="  Choose Main Dish   " styleClass="comboBox" stylesheets="@../../css/styleSheet.css" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" >
       <GridPane.margin>
-         <Insets top="400.0" />
+         <Insets top="300.0" />
       </GridPane.margin>
    </JFXComboBox>
    <JFXComboBox fx:id="sideChoice" layoutX="34.0" layoutY="180.0" promptText="  Choose Side Dish    " styleClass="comboBox" stylesheets="@../../css/styleSheet.css" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" >
       <GridPane.margin>
-         <Insets top="300.0" />
+         <Insets top="400.0" />
       </GridPane.margin>
    </JFXComboBox>
    <JFXComboBox fx:id="beverageChoice" layoutX="34.0" layoutY="180.0" promptText="  Choose Beverage   " styleClass="comboBox" stylesheets="@../../css/styleSheet.css" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" >

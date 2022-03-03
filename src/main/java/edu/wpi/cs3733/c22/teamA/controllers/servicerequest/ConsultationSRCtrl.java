@@ -64,7 +64,6 @@ public class ConsultationSRCtrl extends SRCtrl {
 
     reasonChoice.getItems().removeAll(reasonChoice.getItems());
     reasonChoice.getItems().addAll("Change In Care", "General Check-up", "Professional Advice");
-    reasonChoice.getSelectionModel().select("Reason");
     new AutoCompleteBox(reasonChoice);
     reasonChoice.setVisibleRowCount(5);
 
@@ -92,7 +91,7 @@ public class ConsultationSRCtrl extends SRCtrl {
   void submitRequest()
       throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
 
-    if (!reasonChoice.getSelectionModel().getSelectedItem().equals("Reason")
+    if (reasonChoice.getSelectionModel().getSelectedItem() != null
         && locationChoice.getSelectionModel().getSelectedItem() != null
         && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
 

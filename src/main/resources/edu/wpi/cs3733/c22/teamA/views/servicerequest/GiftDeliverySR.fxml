@@ -33,7 +33,7 @@
         <RowConstraints vgrow="ALWAYS" />
         <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="NEVER" />
     </rowConstraints>
-    <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" styleClass="titleFormat" text="Consultation Services" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+    <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" styleClass="titleFormat" text="Gift Delivery Services" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
     <JFXButton fx:id="clearButton" buttonType="RAISED" layoutX="481.0" layoutY="360.0" mnemonicParsing="false" onAction="#clearSubmission" styleClass="bodyFormat" text="Clear All Fields" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
     <JFXButton fx:id="submitButton" buttonType="RAISED" layoutX="191.0" layoutY="340.0" mnemonicParsing="false" onAction="#submitRequest" styleClass="bodyFormat" text="Submit" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
     <JFXComboBox fx:id="typeChoice" layoutX="34.0" layoutY="180.0" promptText="  Choose Type    " styleClass="comboBox" stylesheets="@../../css/styleSheet.css" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />

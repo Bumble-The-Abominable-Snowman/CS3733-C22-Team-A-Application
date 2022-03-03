@@ -99,11 +99,8 @@ public class ReligiousSRCtrl extends SRCtrl {
             .getSelectionModel()
             .selectedItemProperty()
             .addListener(
-                    (obs, oldValue, newValue) -> {        //TODO this is throwing NullPointers
-                      if (newValue.equals("Type")) {
-                        denominationChoice.getItems().clear();
-                        denominationChoice.setDisable(true);
-                      } else if (newValue.equals("Christian")) {
+                    (obs, oldValue, newValue) -> {
+                      if (newValue.equals("Christian")) {
                         denominationChoice.getItems().clear();
                         denominationChoice.getItems().setAll(christianDenom);
                         denominationChoice.getSelectionModel().select(christianDenom.get(0));
@@ -118,6 +115,9 @@ public class ReligiousSRCtrl extends SRCtrl {
                         denominationChoice.getItems().setAll(otherDenom);
                         denominationChoice.getSelectionModel().select(otherDenom.get(0));
                         denominationChoice.setDisable(false);
+                      } else {
+                        denominationChoice.getItems().clear();
+                        denominationChoice.setDisable(true);
                       }
                     });
     denominationChoice.getItems().removeAll(denominationChoice.getItems());
@@ -146,7 +146,7 @@ public class ReligiousSRCtrl extends SRCtrl {
   void submitRequest()
           throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
 
-    if (!religionChoice.getSelectionModel().getSelectedItem().equals("Religion")
+    if (religionChoice.getSelectionModel().getSelectedItem() != null
             && locationChoice.getSelectionModel().getSelectedItem() != null
             && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
 

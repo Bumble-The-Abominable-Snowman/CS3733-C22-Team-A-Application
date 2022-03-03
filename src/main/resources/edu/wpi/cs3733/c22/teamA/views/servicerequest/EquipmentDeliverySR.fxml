@@ -48,13 +48,13 @@
             <JFXButton fx:id="nextButton" layoutX="330.0" layoutY="104.0" onAction="#next" prefHeight="40.0" prefWidth="70.0" stylesheets="@../../css/styleSheet.css" text="Next" />
         </children>
     </AnchorPane>
-    <JFXComboBox fx:id="typeChoice" promptText=" Equipment Type   " styleClass="comboBox" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+    <JFXComboBox fx:id="statusChoice" promptText=" Status                   " styleClass="comboBox" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
     <JFXComboBox fx:id="fromChoice" promptText=" Start Location       " styleClass="comboBox" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
         <opaqueInsets>
             <Insets />
         </opaqueInsets>
     </JFXComboBox>
-    <JFXComboBox fx:id="statusChoice" promptText=" Status                   " styleClass="comboBox" stylesheets="@../../css/styleSheet.css" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+    <JFXComboBox fx:id="typeChoice" promptText=" Equipment Type   " styleClass="comboBox" stylesheets="@../../css/styleSheet.css" unFocusColor="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
     <GesturePane fx:id="mapView" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.rowSpan="5">
         <GridPane.margin>
             <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />

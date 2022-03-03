@@ -64,7 +64,6 @@ public class LaundrySRCtrl extends SRCtrl {
 
     washModeChoice.getItems().removeAll(washModeChoice.getItems());
     washModeChoice.getItems().addAll("Colors", "Whites", "Perm. press", "Save the trees!");
-    washModeChoice.getSelectionModel().select("Wash Mode");
     new AutoCompleteBox(washModeChoice);
     washModeChoice.setVisibleRowCount(5);
 
@@ -92,7 +91,7 @@ public class LaundrySRCtrl extends SRCtrl {
   void submitRequest()
           throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
 
-    if (!washModeChoice.getSelectionModel().getSelectedItem().equals("Wash Mode")
+    if (washModeChoice.getSelectionModel().getSelectedItem() != null
             && locationChoice.getSelectionModel().getSelectedItem() != null
             && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
 

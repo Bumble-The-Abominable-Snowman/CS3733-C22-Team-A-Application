@@ -64,7 +64,6 @@ public class GiftDeliverySRCtrl extends SRCtrl {
 
     typeChoice.getItems().removeAll(typeChoice.getItems());
     typeChoice.getItems().addAll("Balloons", "Card", "Stuffed Animal");
-    typeChoice.getSelectionModel().select("Type");
     new AutoCompleteBox(typeChoice);
     typeChoice.setVisibleRowCount(5);
 
@@ -92,7 +91,7 @@ public class GiftDeliverySRCtrl extends SRCtrl {
   void submitRequest()
           throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
 
-    if (!typeChoice.getSelectionModel().getSelectedItem().equals("Type")
+    if (typeChoice.getSelectionModel().getSelectedItem() != null
             && locationChoice.getSelectionModel().getSelectedItem() != null
             && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
 

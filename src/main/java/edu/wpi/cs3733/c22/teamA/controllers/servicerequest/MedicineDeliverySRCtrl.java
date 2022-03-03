@@ -104,7 +104,7 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
   @FXML
   void submitRequest()
       throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
-    if (!medicineChoice.getSelectionModel().getSelectedItem().equals("Medicine")
+    if (medicineChoice.getSelectionModel().getSelectedItem() != null
         && locationChoice.getSelectionModel().getSelectedItem() != null
         && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
 

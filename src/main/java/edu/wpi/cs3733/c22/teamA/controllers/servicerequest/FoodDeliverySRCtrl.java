@@ -70,25 +70,21 @@ public class FoodDeliverySRCtrl extends SRCtrl {
 
     mainChoice.getItems().removeAll(mainChoice.getItems());
     mainChoice.getItems().addAll("Turkey Sandwich", "Grilled Cheese Sandwich", "Fried Chicken");
-    mainChoice.getSelectionModel().select("Main Choice");
     new AutoCompleteBox(mainChoice);
     mainChoice.setVisibleRowCount(5);
 
     sideChoice.getItems().removeAll(sideChoice.getItems());
     sideChoice.getItems().addAll("French Fries", "Apple", "Biscuit");
-    sideChoice.getSelectionModel().select("Side Choice");
     new AutoCompleteBox(sideChoice);
     sideChoice.setVisibleRowCount(5);
 
     beverageChoice.getItems().removeAll(beverageChoice.getItems());
     beverageChoice.getItems().addAll("Water", "Juice", "Milk");
-    beverageChoice.getSelectionModel().select("Beverage Choice");
     new AutoCompleteBox(beverageChoice);
     beverageChoice.setVisibleRowCount(5);
 
     dessertChoice.getItems().removeAll(dessertChoice.getItems());
     dessertChoice.getItems().addAll("Cookie", "Brownie", "Cinnamon Roll");
-    dessertChoice.getSelectionModel().select("Dessert Choice");
     new AutoCompleteBox(dessertChoice);
     dessertChoice.setVisibleRowCount(5);
 
@@ -116,7 +112,10 @@ public class FoodDeliverySRCtrl extends SRCtrl {
   void submitRequest()
           throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
 
-    if (!mainChoice.getSelectionModel().getSelectedItem().equals("Main Choice") && !sideChoice.getSelectionModel().getSelectedItem().equals("Side Choice") && !beverageChoice.getSelectionModel().getSelectedItem().equals("Beverage Choice") && !dessertChoice.getSelectionModel().getSelectedItem().equals("Dessert Choice")
+    if (mainChoice.getSelectionModel().getSelectedItem() != null
+            && sideChoice.getSelectionModel().getSelectedItem() != null
+            && beverageChoice.getSelectionModel().getSelectedItem() != null
+            && dessertChoice.getSelectionModel().getSelectedItem() != null
             && locationChoice.getSelectionModel().getSelectedItem() != null
             && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
 

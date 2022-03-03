@@ -64,7 +64,6 @@ public class LanguageSRCtrl extends SRCtrl {
 
     languageChoice.getItems().removeAll(languageChoice.getItems());
     languageChoice.getItems().addAll("American Sign Language", "Arabic", "French", "German", "Italian", "Japanese", "Korean", "Mandarin", "Russian", "Spanish");
-    languageChoice.getSelectionModel().select("Language");
     new AutoCompleteBox(languageChoice);
     languageChoice.setVisibleRowCount(5);
 
@@ -92,7 +91,7 @@ public class LanguageSRCtrl extends SRCtrl {
   void submitRequest()
           throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
 
-    if (!languageChoice.getSelectionModel().getSelectedItem().equals("Language")
+    if (languageChoice.getSelectionModel().getSelectedItem() != null
             && locationChoice.getSelectionModel().getSelectedItem() != null
             && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
 
