@@ -8,8 +8,10 @@ import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-//import edu.wpi.cs3733.c22.teamA.entities.servicerequests.LanguageSR;
-//import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
+//import edu.wpi.cs3733.c22.teamA.entities.servicerequests.ConsultationSR;
+import edu.wpi.cs3733.c22.teamA.entities.map.LocationMarker;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
@@ -19,102 +21,85 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 public class LanguageSRCtrl extends SRCtrl {
+  @FXML private Label titleLabel;
   @FXML private JFXComboBox<String> languageChoice;
-  @FXML private JFXComboBox<String> toLocationChoice;
+  @FXML private JFXComboBox<String> locationChoice;
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
-  @FXML private Label titleLabel;
-  @FXML private Label mapLabel;
-  @FXML private Label locationLabel;
-  @FXML private Label languageLabel;
-  @FXML private Label employeeLabel;
+
+  private double stageWidth;
+  double commentsTextSize;
+  double titleTextSize;
+  double locationChoiceSize;
+  double languageChoiceSize;
+  double employeeChoiceSize;
 
   private ServiceRequestDerbyImpl serviceRequestDatabase = new ServiceRequestDerbyImpl(SR.SRType.LANGUAGE);
 
   @FXML
   protected void initialize() throws ParseException {
     super.initialize();
+
     sceneID = SceneSwitcher.SCENES.LANGUAGE_SR;
 
-    // double languageTextSize = languageChoice.getFont().getSize();
-    // double toLocationTextSize = toLocationChoice.getFont().getSize();
-    // double employeeChoiceTextSize = employeeChoice.getFont().getSize();
-    double commentsTextSize = commentsBox.getFont().getSize();
-    double titleTextSize = titleLabel.getFont().getSize();
-    double mapTextSize = mapLabel.getFont().getSize();
-    double locationTextSize = locationLabel.getFont().getSize();
-    double languageTextSize = languageLabel.getFont().getSize();
-    double employeeTextSize = employeeLabel.getFont().getSize();
+    configure();
+
+    stageWidth = App.getStage().getWidth();
+
+    commentsTextSize = commentsBox.getFont().getSize();
+    titleTextSize = titleLabel.getFont().getSize();
+    //locationChoiceSize = locationChoice.getWidth();
+    //languageChoiceSize = reasonChoice.getWidth();
+    //employeeChoiceSize = employeeChoice.getWidth();
 
     App.getStage()
-        .widthProperty()
-        .addListener(
-            (obs, oldVal, newVal) -> {
-              commentsBox.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * commentsTextSize)
-                      + "pt;");
-              titleLabel.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * titleTextSize) + "pt;");
-              mapLabel.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * mapTextSize) + "pt;");
-              locationLabel.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * locationTextSize)
-                      + "pt;");
-              languageLabel.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * languageTextSize)
-                      + "pt;");
-              employeeLabel.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * employeeTextSize)
-                      + "pt;");
-            });
+            .widthProperty()
+            .addListener((obs, oldVal, newVal) -> {updateSize();});
 
     commentsBox.setWrapText(true);
 
     languageChoice.getItems().removeAll(languageChoice.getItems());
-    languageChoice
-        .getItems()
-        .addAll(
-            "American Sign Language",
-            "Arabic",
-            "French",
-            "German",
-            "Italian",
-            "Japanese",
-            "Korean",
-            "Mandarin",
-            "Russian",
-            "Spanish");
+    languageChoice.getItems().addAll("American Sign Language", "Arabic", "French", "German", "Italian", "Japanese", "Korean", "Mandarin", "Russian", "Spanish");
+    languageChoice.getSelectionModel().select("Language");
     new AutoCompleteBox(languageChoice);
     languageChoice.setVisibleRowCount(5);
+
     this.populateEmployeeAndLocationList();
     this.populateEmployeeComboBox(this.employeeChoice);
-    this.populateLocationComboBox(this.toLocationChoice);
-    new AutoCompleteBox(toLocationChoice);
+    this.populateLocationComboBox(this.locationChoice);
+    new AutoCompleteBox(locationChoice);
     new AutoCompleteBox(employeeChoice);
+
+    for (LocationMarker lm : getMarkerManager().getLocationMarkers()){
+      lm.getButton().setOnAction(e -> locationChoice.getSelectionModel().select(lm.getLocation().getShortName()));
+    }
+  }
+
+  @FXML
+  private void updateSize() {
+
+    stageWidth = App.getStage().getWidth();
+    commentsBox.setStyle("-fx-font-size: " + ((stageWidth / 1000) * commentsTextSize) + "pt;");
+    titleLabel.setStyle("-fx-font-size: " + ((stageWidth / 1000) * titleTextSize) + "pt;");
+
   }
 
   @FXML
   void submitRequest()
-      throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
+          throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
 
     if (!languageChoice.getSelectionModel().getSelectedItem().equals("Language")
-        && toLocationChoice.getSelectionModel().getSelectedItem() != null
-        && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
+            && locationChoice.getSelectionModel().getSelectedItem() != null
+            && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
 
       int employeeIndex = this.employeeChoice.getSelectionModel().getSelectedIndex();
       Employee employeeSelected = this.employeeList.get(employeeIndex);
 
-      int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
+      int locationIndex = this.locationChoice.getSelectionModel().getSelectedIndex();
       Location toLocationSelected = this.locationList.get(locationIndex);
 
       //      //get a uniqueID
@@ -126,7 +111,7 @@ public class LanguageSRCtrl extends SRCtrl {
       boolean foundUnique = false;
       while(!foundUnique){
 
-        String possibleUnique = "LAN" + getUniqueNumbers();
+        String possibleUnique = "CNS" + getUniqueNumbers();
 
         if(currentIDs.contains(possibleUnique)) continue;
         else if(!(currentIDs.contains(possibleUnique))){
@@ -135,11 +120,11 @@ public class LanguageSRCtrl extends SRCtrl {
         }
       }
 
-
+      // pass language service request object
       SR sr = new SR(uniqueID,
               (new LocationDerbyImpl()).getLocationNode("N/A"),
               toLocationSelected,
-              (new EmployeeDerbyImpl()).getEmployee("001"),
+              (new EmployeeDerbyImpl()).getEmployee("002"),
               employeeSelected,
               new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,
@@ -147,9 +132,8 @@ public class LanguageSRCtrl extends SRCtrl {
               commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               SR.SRType.LANGUAGE);
 
-      sr.setField("sanitation_type", languageChoice.getValue());
-
-      serviceRequestDatabase.enterServiceRequest(sr);
+      ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.LANGUAGE);
+      serviceRequestDerby.enterServiceRequest(sr);
     }
   }
 }

@@ -74,6 +74,8 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
     super.initialize();
     sceneID = SceneSwitcher.SCENES.EQUIPMENT_DELIVERY_SR;
 
+    configure();
+
     // double typeChoiceTextSize = typeChoice.getFont().getSize();
     // double fromTypeChoiceTextSize = fromTypeChoice.getFont().getSize();
     // double statusChoiceTextSize = statusChoice.getFont().getSize();
