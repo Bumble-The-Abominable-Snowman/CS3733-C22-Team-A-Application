@@ -21,7 +21,7 @@ public class HomeCtrl extends MasterCtrl {
   @FXML JFXButton simulatorAPIButton = new JFXButton();
   @FXML JFXButton transportationAPIButton = new JFXButton();
 
-  /*
+
   @FXML private Label homeTitle;
   @FXML private ImageView frame1;
   @FXML private ImageView frame2;
@@ -35,7 +35,7 @@ public class HomeCtrl extends MasterCtrl {
   @FXML private Label newSRText;
   @FXML private Label mapText;
   @FXML private Label dataViewText;
-  @FXML private Label settingsText; */
+  @FXML private Label settingsText;
 
   @FXML
   private void initialize() {
@@ -45,7 +45,7 @@ public class HomeCtrl extends MasterCtrl {
       drawer.toFront();
       menuBox.toFront();
 
-/*
+
     EmployeeDAO employeeBase = new EmployeeDerbyImpl();
     List<Employee> empList = employeeBase.getEmployeeList();
 
@@ -98,10 +98,6 @@ public class HomeCtrl extends MasterCtrl {
 
   }
 
-   @FXML
-  private void bumbleHelp() throws IOException {
-    bumbleButton.setVisible(true);
-  }
 
   @FXML
   private void activateBumble() {
@@ -111,6 +107,8 @@ public class HomeCtrl extends MasterCtrl {
     giveHelp();
     helpButton.setVisible(false);
     bumbleXButton.setVisible(true);
+    simulatorAPIButton.setVisible(false);
+    transportationAPIButton.setVisible(false);
 
     while(!bumbleStop) {
       counter++;
@@ -206,6 +204,21 @@ public class HomeCtrl extends MasterCtrl {
     mapText.setVisible(false);
     dataViewText.setVisible(false);
     settingsText.setVisible(false);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    selectSRButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    mapButton.setEffect(transparentGlow);
+    viewEmployeesButton.setEffect(transparentGlow);
+    viewLocationsButton.setEffect(transparentGlow);
+    viewSRButton.setEffect(transparentGlow);
+    viewMedicineButton.setEffect(transparentGlow);
+    viewEquipmentButton.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
   }
 
   @FXML private void mapHelp(){
@@ -214,6 +227,21 @@ public class HomeCtrl extends MasterCtrl {
     mapText.setVisible(true);
     dataViewText.setVisible(false);
     settingsText.setVisible(false);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    mapButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    selectSRButton.setEffect(transparentGlow);
+    viewEmployeesButton.setEffect(transparentGlow);
+    viewLocationsButton.setEffect(transparentGlow);
+    viewSRButton.setEffect(transparentGlow);
+    viewMedicineButton.setEffect(transparentGlow);
+    viewEquipmentButton.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
   }
 
   @FXML private void dataViewHelp(){
@@ -222,6 +250,21 @@ public class HomeCtrl extends MasterCtrl {
     mapText.setVisible(false);
     dataViewText.setVisible(true);
     settingsText.setVisible(false);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    viewEmployeesButton.setEffect(borderGlow);
+    viewLocationsButton.setEffect(borderGlow);
+    viewSRButton.setEffect(borderGlow);
+    viewMedicineButton.setEffect(borderGlow);
+    viewEquipmentButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    selectSRButton.setEffect(transparentGlow);
+    mapButton.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
   }
 
   @FXML private void settingsHelp(){
@@ -229,7 +272,22 @@ public class HomeCtrl extends MasterCtrl {
     newSRText.setVisible(false);
     mapText.setVisible(false);
     dataViewText.setVisible(false);
-    settingsText.setVisible(true); */
+    settingsText.setVisible(true);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    settingsButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    mapButton.setEffect(transparentGlow);
+    selectSRButton.setEffect(transparentGlow);
+    viewEmployeesButton.setEffect(transparentGlow);
+    viewLocationsButton.setEffect(transparentGlow);
+    viewSRButton.setEffect(transparentGlow);
+    viewMedicineButton.setEffect(transparentGlow);
+    viewEquipmentButton.setEffect(transparentGlow);
   }
 
   @FXML

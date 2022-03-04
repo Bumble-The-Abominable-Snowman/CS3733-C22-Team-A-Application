@@ -285,6 +285,10 @@ public class LoadBackupCtrl extends MasterCtrl {
     next1Button.setVisible(false);
     previous2Button.setVisible(false);
     next2Button.setVisible(false);
+    transparentGlow.setColor(Color.TRANSPARENT);
+    loadFromSystemButton.setEffect(transparentGlow);
+    TypeCSV.setEffect(transparentGlow);
+    loadBackupButton.setEffect(transparentGlow);
   }
 
   public void next(){
@@ -297,6 +301,16 @@ public class LoadBackupCtrl extends MasterCtrl {
     next1Button.setVisible(true);
     bubbleText.setVisible(false);
     bubble1Text.setVisible(true);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    loadFromSystemButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    TypeCSV.setEffect(transparentGlow);
+    loadBackupButton.setEffect(transparentGlow);
   }
 
   public void previous(){
@@ -309,6 +323,11 @@ public class LoadBackupCtrl extends MasterCtrl {
     next1Button.setVisible(false);
     bubbleText.setVisible(true);
     bubble1Text.setVisible(false);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    loadFromSystemButton.setEffect(transparentGlow);
+    TypeCSV.setEffect(transparentGlow);
+    loadBackupButton.setEffect(transparentGlow);
   }
 
   public void next1(){
@@ -321,6 +340,16 @@ public class LoadBackupCtrl extends MasterCtrl {
     next2Button.setVisible(true);
     bubble1Text.setVisible(false);
     bubble2Text.setVisible(true);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    TypeCSV.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    loadFromSystemButton.setEffect(transparentGlow);
+    loadBackupButton.setEffect(transparentGlow);
   }
 
   public void previous1() {
@@ -333,6 +362,16 @@ public class LoadBackupCtrl extends MasterCtrl {
     next2Button.setVisible(false);
     bubble1Text.setVisible(true);
     bubble2Text.setVisible(false);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    loadFromSystemButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    TypeCSV.setEffect(transparentGlow);
+    loadBackupButton.setEffect(transparentGlow);
   }
 
   public void next2(){
@@ -345,6 +384,16 @@ public class LoadBackupCtrl extends MasterCtrl {
     next2Button.setVisible(false);
     bubble2Text.setVisible(false);
     bubble3Text.setVisible(true);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    loadBackupButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    loadFromSystemButton.setEffect(transparentGlow);
+    TypeCSV.setEffect(transparentGlow);
   }
 
   public void previous2() {
@@ -357,6 +406,16 @@ public class LoadBackupCtrl extends MasterCtrl {
     next2Button.setVisible(true);
     bubble2Text.setVisible(true);
     bubble3Text.setVisible(false);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    TypeCSV.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    loadFromSystemButton.setEffect(transparentGlow);
+    loadBackupButton.setEffect(transparentGlow);
   }
 
 
