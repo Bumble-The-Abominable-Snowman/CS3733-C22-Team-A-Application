@@ -130,10 +130,10 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     }
   }
 
-  public void deleteEmployee(String ID) {
+  public void deleteEmployee(Employee emp) {
     try {
       Statement delete = Adb.connection.createStatement();
-      String str = String.format("DELETE FROM Employee WHERE employee_id = '%s'", ID);
+      String str = String.format("DELETE FROM Employee WHERE employee_id = '%s'", emp.getStringFields().get("employee_id"));
       delete.execute(str);
 
     } catch (SQLException e) {
@@ -314,7 +314,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     EmployeeDerbyImpl empDerby = new EmployeeDerbyImpl();
     List<Employee> employeeList = empDerby.getEmployeeList();
     for (Employee emp : employeeList) {
-      empDerby.deleteEmployee(emp.getStringFields().get("employee_id"));
+      empDerby.deleteEmployee(emp);
     }
 
     try {
@@ -369,7 +369,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
     EmployeeDerbyImpl empDerby = new EmployeeDerbyImpl();
     List<Employee> employeeList = empDerby.getEmployeeList();
     for (Employee emp : employeeList) {
-      empDerby.deleteEmployee(emp.getStringFields().get("employee_id"));
+      empDerby.deleteEmployee(emp);
     }
 
     try {
@@ -411,7 +411,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
   }
 
   // Export to CSV
-  public static void exportToCSV(String tableName, String csvFilePath) throws IOException {
+  public static void exportToCSV(String tableName, String csvFilePath) throws IOException, ParseException {
     EmployeeDAO Employee = new EmployeeDerbyImpl();
     EmployeeDerbyImpl.writeEmployeeCSV(Employee.getEmployeeList(), csvFilePath);
   }

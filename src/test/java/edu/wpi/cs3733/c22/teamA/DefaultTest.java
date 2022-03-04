@@ -715,7 +715,7 @@ public class DefaultTest {
   //    derby.deleteMedicalEquipment("meq123");
   //  }
   @Test
-  public void testOnRefactor() throws SQLException, ParseException {
+  public void testOnRefactor() throws SQLException, ParseException, IOException {
     Adb.initialConnection("EmbeddedDriver");
     System.out.println("\n-----------------------------------Testing Employee-----------------------------------");
     SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");

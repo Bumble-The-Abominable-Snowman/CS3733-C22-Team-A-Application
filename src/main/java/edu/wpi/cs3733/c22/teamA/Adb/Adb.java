@@ -1,17 +1,26 @@
 package edu.wpi.cs3733.c22.teamA.Adb;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.entities.Medicine;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.*;
+import okhttp3.*;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Type;
 import java.sql.*;
+import java.sql.Connection;
 import java.text.ParseException;
+import java.util.*;
 
 public class Adb {
 
@@ -661,4 +670,92 @@ public class Adb {
 //        new ServiceRequestDerbyImpl<>(new SecuritySR());
 //    securitySRServiceRequestDerby.exportToCSV(dirPath + "/SecurityServiceRequest.csv");
   }
+
+  public static void postREST(String url, Map<String, String> map) throws IOException {
+    String json_load = String.valueOf(new JSONObject(map));
+    System.out.println(json_load);
+    RequestBody body = RequestBody.create(MediaType.parse("application/json"), json_load);
+
+    Request request = new Request.Builder()
+            .url(url)
+            .addHeader("Content-Type", "application/json")
+            .addHeader("authorization", "Bearer " + App.authUser.getToken())
+            .post(body)
+            .build();
+
+    OkHttpClient client = new OkHttpClient();
+    Call call = client.newCall(request);
+    Response response = call.execute();
+
+    if (response.code() >= 300)
+    {
+      throw new IOException(String.format("Operation unsuccessful (ERR MSG:%s)!", response.message()));
+    }
+  }
+
+  public static HashMap<String, String> getREST(String url, Map<String, String> map) throws IOException {
+    String json_load = String.valueOf(new JSONObject(map));
+    System.out.println(json_load);
+    RequestBody body = RequestBody.create(MediaType.parse("application/json"), json_load);
+
+    Request request = new Request.Builder()
+            .url(url)
+            .addHeader("Content-Type", "application/json")
+            .addHeader("authorization", "Bearer " + App.authUser.getToken())
+            .post(body)
+            .build();
+
+    OkHttpClient client = new OkHttpClient();
+    Call call = client.newCall(request);
+    Response response = call.execute();
+
+    if (response.code() >= 300)
+    {
+      throw new IOException(String.format("Operation unsuccessful (ERR MSG:%s)!", response.message()));
+    }
+
+    Type type = new TypeToken<HashMap<String, String>>(){}.getType();
+
+    return (new Gson()).fromJson(Objects.requireNonNull(response.body()).string(), type);
+  }
+
+  public static ArrayList<HashMap<String, String>> getAllREST(String url) throws IOException {
+    HashMap<String, String> map = new HashMap<>();
+    map.put("operation", "getall");
+    String json_load = String.valueOf(new JSONObject(map));
+    System.out.println(json_load);
+    RequestBody body = RequestBody.create(MediaType.parse("application/json"), json_load);
+
+    Request request = new Request.Builder()
+            .url(url)
+            .addHeader("Content-Type", "application/json")
+            .addHeader("authorization", "Bearer " + App.authUser.getToken())
+            .post(body)
+            .build();
+
+    OkHttpClient client = new OkHttpClient();
+    Call call = client.newCall(request);
+    Response response = call.execute();
+
+    if (response.code() >= 300)
+    {
+      String json_string = Objects.requireNonNull(response.body()).string();
+      System.out.println(json_string);
+      throw new IOException(String.format("Operation unsuccessful (ERR MSG:%s)!", response.message()));
+    }
+
+    String json_string = Objects.requireNonNull(response.body()).string();
+    Type type = new TypeToken<ArrayList<HashMap<String, String>>>(){}.getType();
+    try
+    {
+      Gson gson = new Gson();
+      return gson.fromJson(json_string, type);
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+      return new ArrayList<>();
+    }
+  }
+
 }

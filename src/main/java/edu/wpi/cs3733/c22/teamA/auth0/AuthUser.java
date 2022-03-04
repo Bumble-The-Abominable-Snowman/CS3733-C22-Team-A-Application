@@ -56,4 +56,11 @@ public class AuthUser {
 //            return 1;
 //        });
     }
+
+
+    public String getToken()
+    {
+        return this.token;
+    }
+
 }

@@ -2,16 +2,18 @@ package edu.wpi.cs3733.c22.teamA.Adb.location;
 
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 public interface LocationDAO {
 
-  public List<Location> getNodeList();
+  public List<Location> getNodeList() throws IOException, ParseException;
 
-  public void deleteLocationNode(String ID);
+  public void deleteLocationNode(String ID) throws IOException;
 
-  public void enterLocationNode(Location location);
+  public void enterLocationNode(Location location) throws IOException;
 
   public void enterLocationNode(
       String ID,
@@ -21,9 +23,9 @@ public interface LocationDAO {
       String building,
       String nodeType,
       String longName,
-      String shortName);
+      String shortName) throws IOException;
 
-  public void updateLocation(Location location) throws SQLException;
+  public void updateLocation(Location location) throws SQLException, IOException;
 
-  public Location getLocationNode(String ID);
+  public Location getLocationNode(String ID) throws IOException, ParseException;
 }
