@@ -1,8 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXHamburger;
-import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
@@ -15,12 +13,15 @@ import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class HomeCtrl extends MasterCtrl {
 
+  @FXML JFXButton simulatorAPIButton = new JFXButton();
+  @FXML JFXButton transportationAPIButton = new JFXButton();
+
+  /*
   @FXML private Label homeTitle;
   @FXML private ImageView frame1;
   @FXML private ImageView frame2;
@@ -34,14 +35,17 @@ public class HomeCtrl extends MasterCtrl {
   @FXML private Label newSRText;
   @FXML private Label mapText;
   @FXML private Label dataViewText;
-  @FXML private Label settingsText;
+  @FXML private Label settingsText; */
 
   @FXML
   private void initialize() {
 
       configure();
+      drawer.open();
+      drawer.toFront();
+      menuBox.toFront();
 
-
+/*
     EmployeeDAO employeeBase = new EmployeeDerbyImpl();
     List<Employee> empList = employeeBase.getEmployeeList();
 
@@ -96,7 +100,7 @@ public class HomeCtrl extends MasterCtrl {
 
    @FXML
   private void bumbleHelp() throws IOException {
-    helpButton.setVisible(true);
+    bumbleButton.setVisible(true);
   }
 
   @FXML
@@ -197,22 +201,6 @@ public class HomeCtrl extends MasterCtrl {
   }
 
   @FXML private void newSRHelp(){
-    borderGlow.setColor(Color.GOLD);
-    borderGlow.setOffsetX(0f);
-    borderGlow.setOffsetY(0f);
-    borderGlow.setHeight(45);
-    if (drawer.isClosed()){
-      drawer.open();
-    }
-    selectSRButton.setEffect(borderGlow);
-    transparentGlow.setColor(Color.TRANSPARENT);
-    mapButton.setEffect(transparentGlow);
-    viewSRButton.setEffect(transparentGlow);
-    viewEmployeesButton.setEffect(transparentGlow);
-    viewEquipmentButton.setEffect(transparentGlow);
-    viewMedicineButton.setEffect(transparentGlow);
-    viewLocationsButton.setEffect(transparentGlow);
-    settingsButton.setEffect(transparentGlow);
     bubbleText.setVisible(false);
     newSRText.setVisible(true);
     mapText.setVisible(false);
@@ -221,22 +209,6 @@ public class HomeCtrl extends MasterCtrl {
   }
 
   @FXML private void mapHelp(){
-    borderGlow.setColor(Color.GOLD);
-    borderGlow.setOffsetX(0f);
-    borderGlow.setOffsetY(0f);
-    borderGlow.setHeight(45);
-    if (drawer.isClosed()){
-      drawer.open();
-    }
-    mapButton.setEffect(borderGlow);
-    transparentGlow.setColor(Color.TRANSPARENT);
-    selectSRButton.setEffect(transparentGlow);
-    viewSRButton.setEffect(transparentGlow);
-    viewEmployeesButton.setEffect(transparentGlow);
-    viewEquipmentButton.setEffect(transparentGlow);
-    viewMedicineButton.setEffect(transparentGlow);
-    viewLocationsButton.setEffect(transparentGlow);
-    settingsButton.setEffect(transparentGlow);
     bubbleText.setVisible(false);
     newSRText.setVisible(false);
     mapText.setVisible(true);
@@ -245,22 +217,6 @@ public class HomeCtrl extends MasterCtrl {
   }
 
   @FXML private void dataViewHelp(){
-    borderGlow.setColor(Color.GOLD);
-    borderGlow.setOffsetX(0f);
-    borderGlow.setOffsetY(0f);
-    borderGlow.setHeight(45);
-    if (drawer.isClosed()){
-      drawer.open();
-    }
-    viewSRButton.setEffect(borderGlow);
-    viewEmployeesButton.setEffect(borderGlow);
-    viewEquipmentButton.setEffect(borderGlow);
-    viewMedicineButton.setEffect(borderGlow);
-    viewLocationsButton.setEffect(borderGlow);
-    transparentGlow.setColor(Color.TRANSPARENT);
-    mapButton.setEffect(transparentGlow);
-    selectSRButton.setEffect(transparentGlow);
-    settingsButton.setEffect(transparentGlow);
     bubbleText.setVisible(false);
     newSRText.setVisible(false);
     mapText.setVisible(false);
@@ -269,27 +225,57 @@ public class HomeCtrl extends MasterCtrl {
   }
 
   @FXML private void settingsHelp(){
-    borderGlow.setColor(Color.GOLD);
-    borderGlow.setOffsetX(0f);
-    borderGlow.setOffsetY(0f);
-    borderGlow.setHeight(45);
-    if (drawer.isClosed()){
-      drawer.open();
-    }
-    settingsButton.setEffect(borderGlow);
-    transparentGlow.setColor(Color.TRANSPARENT);
-    mapButton.setEffect(transparentGlow);
-    viewSRButton.setEffect(transparentGlow);
-    viewEmployeesButton.setEffect(transparentGlow);
-    viewEquipmentButton.setEffect(transparentGlow);
-    viewMedicineButton.setEffect(transparentGlow);
-    viewLocationsButton.setEffect(transparentGlow);
-    selectSRButton.setEffect(transparentGlow);
     bubbleText.setVisible(false);
     newSRText.setVisible(false);
     mapText.setVisible(false);
     dataViewText.setVisible(false);
-    settingsText.setVisible(true);
+    settingsText.setVisible(true); */
+  }
+
+  @FXML
+  public void launchTransportationSR() throws IOException {
+
+  }
+
+  @FXML
+  public void launchProbabilisticSimulator() throws IOException {
+
+    }
+
+  @FXML
+  private void help() throws IOException {
+
+    if (helpState != 0) {
+      nextButton.setVisible(false);
+      helpText.setVisible(false);
+      drawer.setEffect(null);
+      helpButton.setEffect(null);
+      helpState = 0;
+    }
+    else {
+      borderGlow.setColor(Color.GOLD);
+      borderGlow.setOffsetX(0f);
+      borderGlow.setOffsetY(0f);
+      borderGlow.setHeight(45);
+      nextButton.setVisible(true);
+      helpText.setVisible(true);
+      helpText.setText("Select a menu option to use the application.  This menu is present on every page and is the primary navigation tool you will use.");
+      drawer.setEffect(borderGlow);
+      helpState = 1;
+    }
+
+  }
+
+  @FXML
+  private void next() throws IOException {
+
+  if (helpState == 1) {
+    drawer.setEffect(null);
+    helpText.setText("You can always click the help button to exit help at any time");
+    helpButton.setEffect(borderGlow);
+    helpState = 2;
+    }
+
   }
 
 }
