@@ -248,20 +248,25 @@ public class MarkerManager {
   }
   // TODO probably move this to selectionManager
     public void newLocationPressed(SelectionManager selectionManager, CheckBoxManager checkBoxManager, GesturePaneManager gesturePaneManager) {
-      // only one new location at a time
-      if(!idToLocationMarker.containsKey("New")) {
-          // create fields so shit isnt null and the vbox component wont break
-          Location newLocation = new Location("New", 10, 10, "1", "Tower", "New", "New", "New");
+        // only one new location at a time
+        String newID = "New";
+        int ct = 2;
+        while (idToLocationMarker.containsKey(newID)){
+            newID = "New" + ct;
+            ct++;
+        }
 
-          // make marker for location where its actually usable
-          LocationMarker newLocationMarker = MarkerMaker.makeLocationMarker(newLocation, 10, 10);
-          locationMarkers.add(newLocationMarker);
-          idToLocationMarker.put("New", newLocationMarker);
-          locationDAO.enterLocationNode(newLocation);
-          setDragLocation(newLocationMarker, selectionManager, checkBoxManager, gesturePaneManager);
-          midRunDraw();
-          selectionManager.existingLocationSelected(newLocationMarker);
-      }
+        // create fields so shit isnt null and the vbox component wont break
+        Location newLocation = new Location(newID, 10, 10, floor, "Tower", "New", "New", "New");
+
+        // make marker for location where its actually usable
+        LocationMarker newLocationMarker = MarkerMaker.makeLocationMarker(newLocation, 10, 10);
+        locationMarkers.add(newLocationMarker);
+        idToLocationMarker.put(newID, newLocationMarker);
+        locationDAO.enterLocationNode(newLocation);
+        setDragLocation(newLocationMarker, selectionManager, checkBoxManager, gesturePaneManager);
+        midRunDraw();
+        selectionManager.existingLocationSelected(newLocationMarker);
     }
 
   public void midRunDraw() {
