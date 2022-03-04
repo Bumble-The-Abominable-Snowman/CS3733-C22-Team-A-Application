@@ -29,7 +29,7 @@ public class SaveBackupCtrl extends MasterCtrl {
   @FXML private JFXComboBox<String> TypeCSV;
   //@FXML private Text exportLabel;
 
-  /*
+
   @FXML private JFXButton nextButton;
   @FXML private ImageView bumbleBlinkHead;
   @FXML private JFXButton previousButton;
@@ -40,7 +40,7 @@ public class SaveBackupCtrl extends MasterCtrl {
   @FXML private Label bubbleText;
   @FXML private Label bubble1Text;
   @FXML private Label bubble2Text;
-  @FXML private Label bubble3Text; */
+  @FXML private Label bubble3Text;
 
   @FXML
   public void initialize() {
@@ -226,7 +226,6 @@ public class SaveBackupCtrl extends MasterCtrl {
     }
   }
 
-/*
   public void activateBumble(){
     helpButton.setVisible(false);
     bumbleXButton.setVisible(true);
@@ -321,5 +320,5 @@ public class SaveBackupCtrl extends MasterCtrl {
     next2Button.setVisible(true);
     bubble2Text.setVisible(true);
     bubble3Text.setVisible(false);
-  } */
+  }
 }

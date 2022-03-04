@@ -23,7 +23,7 @@ public class SettingsCtrl extends MasterCtrl {
   @FXML private JFXButton loadBackupButton;
   @FXML private JFXButton saveBackupButton;
 
-/*
+
   @FXML private JFXButton nextButton;
   @FXML private ImageView bumbleBlinkHead;
   @FXML private JFXButton previousButton;
@@ -37,7 +37,7 @@ public class SettingsCtrl extends MasterCtrl {
   @FXML private Label bubble1Text;
   @FXML private Label bubble2Text;
   @FXML private Label bubble3Text;
-  @FXML private Label bubble4Text; */
+  @FXML private Label bubble4Text;
 
   double loadBackupTextSize;
   double saveBackupTextSize;
@@ -174,7 +174,7 @@ public class SettingsCtrl extends MasterCtrl {
     toggleCloudButton.setStyle(
         "-fx-font-size: " + ((stageWidth / 1000) * saveBackupTextSize) + "pt;");
   }
-/*
+
   public void activateBumble(){
     helpButton.setVisible(false);
     bumbleXButton.setVisible(true);
@@ -299,7 +299,4 @@ public class SettingsCtrl extends MasterCtrl {
     bubble3Text.setVisible(true);
     bubble4Text.setVisible(false);
   }
-*/
-
-
 }

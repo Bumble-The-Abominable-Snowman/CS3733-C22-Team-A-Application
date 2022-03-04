@@ -52,7 +52,6 @@ public class LoadBackupCtrl extends MasterCtrl {
 
   @FXML private JFXButton nextButton;
 
-  /*
   @FXML private ImageView bumbleBlinkHead;
   @FXML private JFXButton previousButton;
   @FXML private JFXButton previous1Button;
@@ -62,7 +61,7 @@ public class LoadBackupCtrl extends MasterCtrl {
   @FXML private Label bubbleText;
   @FXML private Label bubble1Text;
   @FXML private Label bubble2Text;
-  @FXML private Label bubble3Text; */
+  @FXML private Label bubble3Text;
 
   @FXML
   public void initialize() {
@@ -76,7 +75,7 @@ public class LoadBackupCtrl extends MasterCtrl {
     selectedLabelTextSize = selectedLabel.getFont().getSize();
     insertLabelTextSize = insertLabel.getFont().getSize();
 
-/*
+
     double previousTextSize = previousButton.getFont().getSize();
        double nextTextSize = nextButton.getFont().getSize();
     double previous1TextSize = previous1Button.getFont().getSize();
@@ -85,7 +84,7 @@ public class LoadBackupCtrl extends MasterCtrl {
     double next2TextSize = next2Button.getFont().getSize();
     double bubble1TextSize = bubble1Text.getFont().getSize();
     double bubble2TextSize = bubble2Text.getFont().getSize();
-    double bubble3TextSize = bubble3Text.getFont().getSize(); */
+    double bubble3TextSize = bubble3Text.getFont().getSize();
 
     App.getStage()
             .widthProperty()
@@ -263,7 +262,7 @@ public class LoadBackupCtrl extends MasterCtrl {
     insertLabel.setStyle(
             "-fx-font-size: " + ((stageWidth / 1000) * insertLabelTextSize) + "pt;");
   }
-/*
+
   public void activateBumble(){
     helpButton.setVisible(false);
     bumbleXButton.setVisible(true);
@@ -359,6 +358,6 @@ public class LoadBackupCtrl extends MasterCtrl {
     bubble2Text.setVisible(true);
     bubble3Text.setVisible(false);
   }
-*/
+
 
 }
