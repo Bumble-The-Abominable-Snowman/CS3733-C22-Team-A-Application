@@ -1,12 +1,15 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 //import edu.wpi.cs3733.c22.teamA.entities.servicerequests.ConsultationSR;
+import edu.wpi.cs3733.c22.teamA.entities.map.LocationMarker;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
@@ -14,7 +17,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -31,6 +37,8 @@ public class ConsultationSRCtrl extends SRCtrl {
   double locationChoiceSize;
   double reasonChoiceSize;
   double employeeChoiceSize;
+
+  private ServiceRequestDerbyImpl serviceRequestDatabase = new ServiceRequestDerbyImpl(SR.SRType.CONSULTATION);
 
   @FXML
   protected void initialize() throws ParseException {
@@ -56,7 +64,6 @@ public class ConsultationSRCtrl extends SRCtrl {
 
     reasonChoice.getItems().removeAll(reasonChoice.getItems());
     reasonChoice.getItems().addAll("Change In Care", "General Check-up", "Professional Advice");
-    reasonChoice.getSelectionModel().select("Reason");
     new AutoCompleteBox(reasonChoice);
     reasonChoice.setVisibleRowCount(5);
 
@@ -66,6 +73,9 @@ public class ConsultationSRCtrl extends SRCtrl {
     new AutoCompleteBox(locationChoice);
     new AutoCompleteBox(employeeChoice);
 
+    for (LocationMarker lm : getMarkerManager().getLocationMarkers()){
+      lm.getButton().setOnAction(e -> locationChoice.getSelectionModel().select(lm.getLocation().getShortName()));
+    }
   }
 
   @FXML
@@ -81,7 +91,7 @@ public class ConsultationSRCtrl extends SRCtrl {
   void submitRequest()
       throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
 
-    if (!reasonChoice.getSelectionModel().getSelectedItem().equals("Reason")
+    if (reasonChoice.getSelectionModel().getSelectedItem() != null
         && locationChoice.getSelectionModel().getSelectedItem() != null
         && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
 
@@ -91,21 +101,38 @@ public class ConsultationSRCtrl extends SRCtrl {
       int locationIndex = this.locationChoice.getSelectionModel().getSelectedIndex();
       Location toLocationSelected = this.locationList.get(locationIndex);
 
-      //ConsultationSR consultationSR =
-        //  new ConsultationSR(
-          //    "ConsultationSRID",
-            //  "N/A",
-              //toLocationSelected.getNodeID(),
-              //"001",
-              //employeeSelected.getEmployeeID(),
-              //new Timestamp((new Date()).getTime()),
-              //SR.Status.BLANK,
-              //SR.Priority.REGULAR,
-              //commentsBox.getText().equals("") ? "N/A" : commentsBox.getText());
+      //      //get a uniqueID
+      String uniqueID = "";
+      List<String> currentIDs = new ArrayList<>();
+      for(SR sr: serviceRequestDatabase.getServiceRequestList()){
+        currentIDs.add(sr.getFields_string().get("request_id"));
+      }
+      boolean foundUnique = false;
+      while(!foundUnique){
 
-     // ServiceRequestDerbyImpl<ConsultationSR> serviceRequestDAO =
-      //    new ServiceRequestDerbyImpl<>(new ConsultationSR());
-     // serviceRequestDAO.enterServiceRequest(consultationSR);
+        String possibleUnique = "CNS" + getUniqueNumbers();
+
+        if(currentIDs.contains(possibleUnique)) continue;
+        else if(!(currentIDs.contains(possibleUnique))){
+          foundUnique = true;
+          uniqueID = possibleUnique;
+        }
+      }
+
+      // pass consultation service request object
+      SR sr = new SR(uniqueID,
+              (new LocationDerbyImpl()).getLocationNode("N/A"),
+              toLocationSelected,
+              (new EmployeeDerbyImpl()).getEmployee("002"),
+              employeeSelected,
+              new Timestamp((new Date()).getTime()),
+              SR.Status.BLANK,
+              SR.Priority.REGULAR,
+              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
+              SR.SRType.CONSULTATION);
+
+      ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.CONSULTATION);
+      serviceRequestDerby.enterServiceRequest(sr);
     }
   }
 }

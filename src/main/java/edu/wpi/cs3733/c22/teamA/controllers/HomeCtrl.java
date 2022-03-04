@@ -17,7 +17,8 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class HomeCtrl extends MasterCtrl {
-/*
+
+
   @FXML private Label homeTitle;
   @FXML private ImageView frame1;
   @FXML private ImageView frame2;
@@ -31,7 +32,7 @@ public class HomeCtrl extends MasterCtrl {
   @FXML private Label newSRText;
   @FXML private Label mapText;
   @FXML private Label dataViewText;
-  @FXML private Label settingsText; */
+  @FXML private Label settingsText;
 
   @FXML
   private void initialize() {
@@ -41,7 +42,7 @@ public class HomeCtrl extends MasterCtrl {
       drawer.toFront();
       menuBox.toFront();
 
-/*
+
     EmployeeDAO employeeBase = new EmployeeDerbyImpl();
     List<Employee> empList = employeeBase.getEmployeeList();
 
@@ -94,10 +95,6 @@ public class HomeCtrl extends MasterCtrl {
 
   }
 
-   @FXML
-  private void bumbleHelp() throws IOException {
-    bumbleButton.setVisible(true);
-  }
 
   @FXML
   private void activateBumble() {
@@ -202,6 +199,21 @@ public class HomeCtrl extends MasterCtrl {
     mapText.setVisible(false);
     dataViewText.setVisible(false);
     settingsText.setVisible(false);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    selectSRButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    mapButton.setEffect(transparentGlow);
+    viewEmployeesButton.setEffect(transparentGlow);
+    viewLocationsButton.setEffect(transparentGlow);
+    viewSRButton.setEffect(transparentGlow);
+    viewMedicineButton.setEffect(transparentGlow);
+    viewEquipmentButton.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
   }
 
   @FXML private void mapHelp(){
@@ -210,6 +222,21 @@ public class HomeCtrl extends MasterCtrl {
     mapText.setVisible(true);
     dataViewText.setVisible(false);
     settingsText.setVisible(false);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    mapButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    selectSRButton.setEffect(transparentGlow);
+    viewEmployeesButton.setEffect(transparentGlow);
+    viewLocationsButton.setEffect(transparentGlow);
+    viewSRButton.setEffect(transparentGlow);
+    viewMedicineButton.setEffect(transparentGlow);
+    viewEquipmentButton.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
   }
 
   @FXML private void dataViewHelp(){
@@ -218,6 +245,21 @@ public class HomeCtrl extends MasterCtrl {
     mapText.setVisible(false);
     dataViewText.setVisible(true);
     settingsText.setVisible(false);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    viewEmployeesButton.setEffect(borderGlow);
+    viewLocationsButton.setEffect(borderGlow);
+    viewSRButton.setEffect(borderGlow);
+    viewMedicineButton.setEffect(borderGlow);
+    viewEquipmentButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    selectSRButton.setEffect(transparentGlow);
+    mapButton.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
   }
 
   @FXML private void settingsHelp(){
@@ -225,43 +267,22 @@ public class HomeCtrl extends MasterCtrl {
     newSRText.setVisible(false);
     mapText.setVisible(false);
     dataViewText.setVisible(false);
-    settingsText.setVisible(true); */
-  }
+    settingsText.setVisible(true);
 
-  @FXML
-  private void help() throws IOException {
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    settingsButton.setEffect(borderGlow);
 
-    if (helpState != 0) {
-      nextButton.setVisible(false);
-      helpText.setVisible(false);
-      drawer.setEffect(null);
-      helpButton.setEffect(null);
-      helpState = 0;
-    }
-    else {
-      borderGlow.setColor(Color.GOLD);
-      borderGlow.setOffsetX(0f);
-      borderGlow.setOffsetY(0f);
-      borderGlow.setHeight(45);
-      nextButton.setVisible(true);
-      helpText.setVisible(true);
-      helpText.setText("Select a menu option to use the application.  This menu is present on every page and is the primary navigation tool you will use.");
-      drawer.setEffect(borderGlow);
-      helpState = 1;
-    }
-
-  }
-
-  @FXML
-  private void next() throws IOException {
-
-  if (helpState == 1) {
-    drawer.setEffect(null);
-    helpText.setText("You can always click the help button to exit help at any time");
-    helpButton.setEffect(borderGlow);
-    helpState = 2;
-    }
-
+    transparentGlow.setColor(Color.TRANSPARENT);
+    mapButton.setEffect(transparentGlow);
+    selectSRButton.setEffect(transparentGlow);
+    viewEmployeesButton.setEffect(transparentGlow);
+    viewLocationsButton.setEffect(transparentGlow);
+    viewSRButton.setEffect(transparentGlow);
+    viewMedicineButton.setEffect(transparentGlow);
+    viewEquipmentButton.setEffect(transparentGlow);
   }
 
 }

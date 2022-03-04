@@ -197,6 +197,13 @@ public class EquipmentDataviewManager {
 											updateButton.setTextFill(Color.RED);
 											return;
 										}
+										if (eq.getFields().get("is_clean").equals("No")) {
+											JOptionPane pane = new JOptionPane("Dirty equipment cannot be moved", JOptionPane.ERROR_MESSAGE);
+											JDialog dialog = pane.createDialog("Update failed");
+											dialog.setVisible(true);
+											updateButton.setTextFill(Color.RED);
+											return;
+										}
 										if (!(theL.getStringFields().get("node_type").equals("STOR")) && !(theL.getStringFields().get("node_type").equals("PATI"))) {
 											JOptionPane pane = new JOptionPane("Equipment cannot be stored here", JOptionPane.ERROR_MESSAGE);
 											JDialog dialog = pane.createDialog("Update failed");

@@ -3,12 +3,10 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
-<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -178,7 +176,7 @@
                   <Font size="12.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="helpButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#help" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" text="." textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <JFXButton fx:id="helpButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#activateBumble" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" text="." textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font size="12.0" />
                </font>
@@ -190,6 +188,18 @@
                   </ImageView>
                </graphic>
             </JFXButton>
+             <JFXButton fx:id="bumbleXButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#goToHome" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" text="." textAlignment="CENTER" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                 <font>
+                     <Font size="12.0" />
+                 </font>
+                 <graphic>
+                     <ImageView fitHeight="30.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" translateX="3.0">
+                         <image>
+                             <Image url="@../images/Help Icon.png" />
+                         </image>
+                     </ImageView>
+                 </graphic>
+             </JFXButton>
             <JFXHamburger fx:id="hamburger" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="75.0" stylesheets="@../css/styleSheet.css" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
@@ -258,17 +268,25 @@
             <GridPane.margin>
                 <Insets top="25.0" />
             </GridPane.margin></Label>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-         <children>
-            <JFXTextArea fx:id="helpText" editable="false" layoutX="81.0" layoutY="68.0" prefHeight="283.0" prefWidth="320.0" styleClass="text-area-general" stylesheets="@../css/styleSheet.css">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <padding>
-                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-               </padding></JFXTextArea>
-            <JFXButton fx:id="nextButton" layoutX="213.0" layoutY="428.0" onAction="#next" stylesheets="@../css/styleSheet.css" text="Next" />
-         </children>
-      </AnchorPane>
+        <JFXButton fx:id="newSRHelpButton" mnemonicParsing="false" onAction="#newSRHelp" prefHeight="41.0" prefWidth="436.0" styleClass="bodyFormat" text="New Service Request Help" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+            <GridPane.margin>
+                <Insets top="50.0" />
+            </GridPane.margin>
+        </JFXButton>
+        <JFXButton fx:id="settingsHelpButton" layoutX="772.0" layoutY="92.0" mnemonicParsing="false" onAction="#settingsHelp" prefHeight="41.0" prefWidth="436.0" styleClass="bodyFormat" text="Settings Help" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+            <GridPane.margin>
+                <Insets top="200.0" />
+            </GridPane.margin>
+        </JFXButton>
+        <JFXButton fx:id="mapHelpButton" layoutX="772.0" layoutY="292.0" mnemonicParsing="false" onAction="#mapHelp" prefHeight="41.0" prefWidth="436.0" styleClass="bodyFormat" text="Map Help" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+            <GridPane.margin>
+                <Insets top="100.0" />
+            </GridPane.margin>
+        </JFXButton>
+        <JFXButton fx:id="viewDataHelpButton" layoutX="772.0" layoutY="173.0" mnemonicParsing="false" onAction="#dataViewHelp" prefHeight="41.0" prefWidth="436.0" styleClass="bodyFormat" text="View Data Help" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+            <GridPane.margin>
+                <Insets top="150.0" />
+            </GridPane.margin>
+        </JFXButton>
     </children>
 </GridPane>

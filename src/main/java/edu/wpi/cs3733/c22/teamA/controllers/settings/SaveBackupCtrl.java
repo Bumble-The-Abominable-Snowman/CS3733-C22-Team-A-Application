@@ -29,7 +29,6 @@ public class SaveBackupCtrl extends MasterCtrl {
   @FXML private JFXComboBox<String> TypeCSV;
   //@FXML private Text exportLabel;
 
-  /*
   @FXML private JFXButton nextButton;
   @FXML private ImageView bumbleBlinkHead;
   @FXML private JFXButton previousButton;
@@ -40,7 +39,7 @@ public class SaveBackupCtrl extends MasterCtrl {
   @FXML private Label bubbleText;
   @FXML private Label bubble1Text;
   @FXML private Label bubble2Text;
-  @FXML private Label bubble3Text; */
+  @FXML private Label bubble3Text;
 
   @FXML
   public void initialize() {
@@ -226,43 +225,6 @@ public class SaveBackupCtrl extends MasterCtrl {
     }
   }
 
-  @FXML
-  private void help() throws IOException {
-
-    if (helpState != 0) {
-      nextButton.setVisible(false);
-      helpText.setVisible(false);
-      drawer.setEffect(null);
-      helpButton.setEffect(null);
-      helpState = 0;
-    }
-    else {
-      borderGlow.setColor(Color.GOLD);
-      borderGlow.setOffsetX(0f);
-      borderGlow.setOffsetY(0f);
-      borderGlow.setHeight(45);
-      nextButton.setVisible(true);
-      helpText.setVisible(true);
-      helpText.setText("Select a menu option to use the application.  This menu is present on every page and is the primary navigation tool you will use.");
-      drawer.setEffect(borderGlow);
-      helpState = 1;
-    }
-
-  }
-
-  @FXML
-  private void next() throws IOException {
-
-    if (helpState == 1) {
-      drawer.setEffect(null);
-      helpText.setText("You can always click the help button to exit help at any time");
-      helpButton.setEffect(borderGlow);
-      helpState = 2;
-    }
-
-  }
-
-/*
   public void activateBumble(){
     helpButton.setVisible(false);
     bumbleXButton.setVisible(true);
@@ -285,6 +247,10 @@ public class SaveBackupCtrl extends MasterCtrl {
     next1Button.setVisible(false);
     previous2Button.setVisible(false);
     next2Button.setVisible(false);
+    transparentGlow.setColor(Color.TRANSPARENT);
+    TypeCSV.setEffect(transparentGlow);
+    fileName.setEffect(transparentGlow);
+    saveBackupButton.setEffect(transparentGlow);
   }
 
   public void next(){
@@ -297,6 +263,16 @@ public class SaveBackupCtrl extends MasterCtrl {
     next1Button.setVisible(true);
     bubbleText.setVisible(false);
     bubble1Text.setVisible(true);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    TypeCSV.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    fileName.setEffect(transparentGlow);
+    saveBackupButton.setEffect(transparentGlow);
   }
 
   public void previous(){
@@ -309,6 +285,11 @@ public class SaveBackupCtrl extends MasterCtrl {
     next1Button.setVisible(false);
     bubbleText.setVisible(true);
     bubble1Text.setVisible(false);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    TypeCSV.setEffect(transparentGlow);
+    fileName.setEffect(transparentGlow);
+    saveBackupButton.setEffect(transparentGlow);
   }
 
   public void next1(){
@@ -321,6 +302,16 @@ public class SaveBackupCtrl extends MasterCtrl {
     next2Button.setVisible(true);
     bubble1Text.setVisible(false);
     bubble2Text.setVisible(true);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    fileName.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    TypeCSV.setEffect(transparentGlow);
+    saveBackupButton.setEffect(transparentGlow);
   }
 
   public void previous1() {
@@ -333,6 +324,16 @@ public class SaveBackupCtrl extends MasterCtrl {
     next2Button.setVisible(false);
     bubble1Text.setVisible(true);
     bubble2Text.setVisible(false);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    TypeCSV.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    fileName.setEffect(transparentGlow);
+    saveBackupButton.setEffect(transparentGlow);
   }
 
   public void next2(){
@@ -345,6 +346,17 @@ public class SaveBackupCtrl extends MasterCtrl {
     next2Button.setVisible(false);
     bubble2Text.setVisible(false);
     bubble3Text.setVisible(true);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    saveBackupButton.setEffect(borderGlow);
+
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    TypeCSV.setEffect(transparentGlow);
+    fileName.setEffect(transparentGlow);
   }
 
   public void previous2() {
@@ -357,5 +369,15 @@ public class SaveBackupCtrl extends MasterCtrl {
     next2Button.setVisible(true);
     bubble2Text.setVisible(true);
     bubble3Text.setVisible(false);
-  } */
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    fileName.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    TypeCSV.setEffect(transparentGlow);
+    saveBackupButton.setEffect(transparentGlow);
+  }
 }

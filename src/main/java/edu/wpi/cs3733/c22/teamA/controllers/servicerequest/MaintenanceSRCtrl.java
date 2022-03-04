@@ -8,8 +8,11 @@ import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-//import edu.wpi.cs3733.c22.teamA.entities.servicerequests.MaintenanceSR;
-//import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
+//import edu.wpi.cs3733.c22.teamA.entities.servicerequests.ConsultationSR;
+import edu.wpi.cs3733.c22.teamA.entities.map.LocationMarker;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -18,138 +21,118 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 
 public class MaintenanceSRCtrl extends SRCtrl {
-  @FXML private JFXComboBox<String> typeChoice;
-  @FXML private JFXComboBox<String> toLocationChoice;
-  @FXML private JFXComboBox<String> employeeChoice;
-  @FXML private TextArea commentsBox;
-  @FXML private TextArea typeOtherBox;
-  @FXML private Label titleLabel;
-  @FXML private Label mapLabel;
-  @FXML private Label locationLabel;
-  @FXML private Label typeLabel;
-  @FXML private Label employeeLabel;
+    @FXML private Label titleLabel;
+    @FXML private JFXComboBox<String> typeChoice;
+    @FXML private JFXComboBox<String> locationChoice;
+    @FXML private JFXComboBox<String> employeeChoice;
+    @FXML private TextArea commentsBox;
+
+    private double stageWidth;
+    double commentsTextSize;
+    double titleTextSize;
+    double locationChoiceSize;
+    double typeChoiceSize;
+    double employeeChoiceSize;
 
     private ServiceRequestDerbyImpl serviceRequestDatabase = new ServiceRequestDerbyImpl(SR.SRType.MAINTENANCE);
 
-    List<Employee> employeeList = new ArrayList<>();
-  List<Location> locationList = new ArrayList<>();
+    @FXML
+    protected void initialize() throws ParseException {
+        super.initialize();
 
-  @FXML
-  protected void initialize() throws ParseException {
-    super.initialize();
-    sceneID = SceneSwitcher.SCENES.MAINTENANCE_SR;
+        sceneID = SceneSwitcher.SCENES.MAINTENANCE_SR;
 
-    // double typeChoiceTextSize = typeChoice.getFont().getSize();
-    // double toLocationTextSize = toLocationChoice.getFont().getSize();
-    // double employeeChoiceTextSize = employeeChoice.getFont().getSize();
-    double commentsTextSize = commentsBox.getFont().getSize();
-    double typeOtherTextSize = typeOtherBox.getFont().getSize();
-    double titleTextSize = titleLabel.getFont().getSize();
-    double mapTextSize = mapLabel.getFont().getSize();
-    double locationTextSize = locationLabel.getFont().getSize();
-    double typeTextSize = typeLabel.getFont().getSize();
-    double employeeTextSize = employeeLabel.getFont().getSize();
+        configure();
 
-    App.getStage()
-        .widthProperty()
-        .addListener(
-            (obs, oldVal, newVal) -> {
-              commentsBox.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * commentsTextSize)
-                      + "pt;");
-              typeOtherBox.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * typeOtherTextSize)
-                      + "pt;");
-              titleLabel.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * titleTextSize) + "pt;");
-              mapLabel.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * mapTextSize) + "pt;");
-              locationLabel.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * locationTextSize)
-                      + "pt;");
-              typeLabel.setStyle(
-                  "-fx-font-size: " + ((App.getStage().getWidth() / 1000) * typeTextSize) + "pt;");
-              employeeLabel.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * employeeTextSize)
-                      + "pt;");
-            });
+        stageWidth = App.getStage().getWidth();
 
-    commentsBox.setWrapText(true);
-    typeOtherBox.setWrapText(true);
+        commentsTextSize = commentsBox.getFont().getSize();
+        titleTextSize = titleLabel.getFont().getSize();
+        //locationChoiceSize = locationChoice.getWidth();
+        //typeChoiceSize = typeChoice.getWidth();
+        //employeeChoiceSize = employeeChoice.getWidth();
 
-    // Put sanitation types in temporary type menu
-    typeChoice.getItems().addAll("Change Light Bulb", "Repair AC", "Other");
-      new AutoCompleteBox(typeChoice);
-    typeChoice
-        .getSelectionModel()
-        .selectedItemProperty()
-        .addListener(
-            (obs, oldValue, newValue) -> {
-              if (newValue.equals("Other")) {
-                typeOtherBox.setVisible(true);
-              } else {
-                typeOtherBox.setVisible(false);
-              }
-            });
+        App.getStage()
+                .widthProperty()
+                .addListener((obs, oldVal, newVal) -> {updateSize();});
 
-    // Put locations in temporary location menu
-    this.populateEmployeeAndLocationList();
-    this.populateEmployeeComboBox(this.employeeChoice);
-    this.populateLocationComboBox(this.toLocationChoice);
-      new AutoCompleteBox(toLocationChoice);
-      new AutoCompleteBox(employeeChoice);
-  }
+        commentsBox.setWrapText(true);
 
-  @FXML
-  void submitRequest() throws SQLException, InvocationTargetException, IllegalAccessException {
+        typeChoice.getItems().removeAll(typeChoice.getItems());
+        typeChoice.getItems().addAll("Change Light Bulb", "Repair AC");
+        new AutoCompleteBox(typeChoice);
+        typeChoice.setVisibleRowCount(5);
 
-    int employeeIndex = this.employeeChoice.getSelectionModel().getSelectedIndex();
-    Employee employeeSelected = this.employeeList.get(employeeIndex);
+        this.populateEmployeeAndLocationList();
+        this.populateEmployeeComboBox(this.employeeChoice);
+        this.populateLocationComboBox(this.locationChoice);
+        new AutoCompleteBox(locationChoice);
+        new AutoCompleteBox(employeeChoice);
 
-    int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
-    Location toLocationSelected = this.locationList.get(locationIndex);
+        for (LocationMarker lm : getMarkerManager().getLocationMarkers()){
+            lm.getButton().setOnAction(e -> locationChoice.getSelectionModel().select(lm.getLocation().getShortName()));
+        }
+    }
 
-      //      //get a uniqueID
-      String uniqueID = "";
-      List<String> currentIDs = new ArrayList<>();
-      for(SR sr: serviceRequestDatabase.getServiceRequestList()){
-          currentIDs.add(sr.getFields_string().get("request_id"));
-      }
-      boolean foundUnique = false;
-      while(!foundUnique){
+    @FXML
+    private void updateSize() {
 
-          String possibleUnique = "MNT" + getUniqueNumbers();
+        stageWidth = App.getStage().getWidth();
+        commentsBox.setStyle("-fx-font-size: " + ((stageWidth / 1000) * commentsTextSize) + "pt;");
+        titleLabel.setStyle("-fx-font-size: " + ((stageWidth / 1000) * titleTextSize) + "pt;");
 
-          if(currentIDs.contains(possibleUnique)) continue;
-          else if(!(currentIDs.contains(possibleUnique))){
-              foundUnique = true;
-              uniqueID = possibleUnique;
-          }
-      }
+    }
 
+    @FXML
+    void submitRequest()
+            throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
 
-      SR sr = new SR(uniqueID,
-            (new LocationDerbyImpl()).getLocationNode("N/A"),
-            toLocationSelected,
-            (new EmployeeDerbyImpl()).getEmployee("001"),
-            employeeSelected,
-            new Timestamp((new Date()).getTime()),
-            SR.Status.BLANK,
-            SR.Priority.REGULAR,
-            commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
-            SR.SRType.MAINTENANCE);
+        if (typeChoice.getSelectionModel().getSelectedItem() != null
+                && locationChoice.getSelectionModel().getSelectedItem() != null
+                && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
 
-    serviceRequestDatabase.enterServiceRequest(sr);
-  }
+            int employeeIndex = this.employeeChoice.getSelectionModel().getSelectedIndex();
+            Employee employeeSelected = this.employeeList.get(employeeIndex);
+
+            int locationIndex = this.locationChoice.getSelectionModel().getSelectedIndex();
+            Location toLocationSelected = this.locationList.get(locationIndex);
+
+            //      //get a uniqueID
+            String uniqueID = "";
+            List<String> currentIDs = new ArrayList<>();
+            for(SR sr: serviceRequestDatabase.getServiceRequestList()){
+                currentIDs.add(sr.getFields_string().get("request_id"));
+            }
+            boolean foundUnique = false;
+            while(!foundUnique){
+
+                String possibleUnique = "CNS" + getUniqueNumbers();
+
+                if(currentIDs.contains(possibleUnique)) continue;
+                else if(!(currentIDs.contains(possibleUnique))){
+                    foundUnique = true;
+                    uniqueID = possibleUnique;
+                }
+            }
+
+            // pass maintenance service request object
+            SR sr = new SR(uniqueID,
+                    (new LocationDerbyImpl()).getLocationNode("N/A"),
+                    toLocationSelected,
+                    (new EmployeeDerbyImpl()).getEmployee("002"),
+                    employeeSelected,
+                    new Timestamp((new Date()).getTime()),
+                    SR.Status.BLANK,
+                    SR.Priority.REGULAR,
+                    commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
+                    SR.SRType.MAINTENANCE);
+
+            ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.MAINTENANCE);
+            serviceRequestDerby.enterServiceRequest(sr);
+        }
+    }
 }

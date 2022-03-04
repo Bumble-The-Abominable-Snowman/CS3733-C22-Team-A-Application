@@ -144,8 +144,8 @@ public class LocationDerbyImpl implements LocationDAO {
           if(columnName.equals("xcoord") || columnName.equals("ycoord")){
             str =
                     String.format(
-                            "UPDATE TowerLocations SET " + columnName + " = %s WHERE node_id = '%s'",
-                            e_string_fields.get(columnName),
+                            "UPDATE TowerLocations SET " + columnName + " = %d WHERE node_id = '%s'",
+                            Integer.parseInt(e_string_fields.get(columnName)),
                             e_string_fields.get("node_id"));
           }else{
             str =

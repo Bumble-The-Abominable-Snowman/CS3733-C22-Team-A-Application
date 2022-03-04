@@ -4,11 +4,22 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDAO;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
+import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
+import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +29,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import lombok.SneakyThrows;
+
+import javax.swing.*;
 
 public class SelectionManager {
   private VBox inputVBox;
@@ -35,22 +48,29 @@ public class SelectionManager {
   private JFXButton deleteButton;
 
   private MarkerManager markerManager;
-  private CheckBoxManager checkBoxManager;
+  private MapManager mapManager;
   private GesturePaneManager gesturePaneManager;
 
   private LocationDAO locationDatabase;
-
+  private EquipmentDAO equipmentDatabase;
   private LocationMarker selectedLocation;
+  private Object selectedObject;
 
-  public SelectionManager(VBox inputVBox, MarkerManager markerManager) {
+  public SelectionManager(VBox inputVBox, MarkerManager markerManager, GesturePaneManager gesturePaneManager) {
     this.inputVBox = inputVBox;
     this.markerManager = markerManager;
+    this.gesturePaneManager = gesturePaneManager;
     inputVBox.setDisable(true);
     instantiateButtons();
     fillBoxes();
 
     locationDatabase = new LocationDerbyImpl();
+    equipmentDatabase = new EquipmentDerbyImpl();
     currentList = new ArrayList<>();
+  }
+
+  public void setMapManager(MapManager mapManager){
+    this.mapManager = mapManager;
   }
 
   public void instantiateButtons() {
@@ -194,15 +214,17 @@ public class SelectionManager {
     locationVBox();
     List<String> currentFields = selectedLocation.getLocation().getListForm();
     for (int i = 0; i < currentFields.size(); i++) {
-      locationFields.get(i).textArea.setText(currentFields.get(i));
+      if(i != 1 && i != 2){
+        locationFields.get(i).textArea.setText(currentFields.get(i));
+      }
+      if((i == 1 || i == 2) && (locationFields.get(i).textArea.getText().equals("") || locationFields.get(i).textArea.getText().equals(null))){
+        locationFields.get(i).textArea.setText(currentFields.get(i));
+      }
+
     }
     this.selectedLocation = selectedLocation;
-    /*
-    if (xPosText.getText() == null || xPosText.getText().equals("")) {
-      xPosText.setText(String.valueOf(selectedLocation.getXCoord()));
-      yPosText.setText(String.valueOf(selectedLocation.getYCoord()));
-    }
-    */
+    selectedObject = selectedLocation.getLocation();
+
   }
 
   // Existing Equipment Selected
@@ -217,6 +239,7 @@ public class SelectionManager {
         System.out.println(currentFields.get(i));
       }
     }
+    selectedObject = equipment;
   }
 
   // Existing Service Request Selected
@@ -229,6 +252,7 @@ public class SelectionManager {
     for (int i = 0; i < srFields.size(); i++) {
       srFields.get(i).textArea.setText(currentFields.get(srNames.get(i)));
     }
+    selectedObject = serviceRequest;
   }
 
   // Edit
@@ -258,17 +282,64 @@ public class SelectionManager {
   }
 
   // Save Changes
-  public void save() throws SQLException {
-    Location newLocation = new Location( locationFields.get(0).textArea.getText(),
-            (int)Double.parseDouble(locationFields.get(1).textArea.getText()),
-            (int)Double.parseDouble(locationFields.get(2).textArea.getText()),
-            locationFields.get(3).textArea.getText(),
-            locationFields.get(4).textArea.getText(),
-            locationFields.get(5).textArea.getText(),
-            locationFields.get(6).textArea.getText(),
-            locationFields.get(7).textArea.getText());
-   locationDatabase.updateLocation(newLocation);
-    markerManager.redrawEditedLocation();
+  private void save() throws SQLException, IllegalAccessException, InvocationTargetException {
+    if(selectedObject instanceof SR){
+      SR newSR = (SR)selectedObject;
+      ServiceRequestDAO dao = new ServiceRequestDerbyImpl((SR.SRType) ((SR) selectedObject).getFields().get("sr_type"));
+      int ct = 0;
+      for(String key: srNames){
+        newSR.setFieldByString(key, srFields.get(ct).textArea.getText());
+        ct++;
+      }
+      dao.updateServiceRequest(newSR);
+    } else if(selectedObject instanceof Equipment){
+      saveEquipment();
+    } else if(selectedObject instanceof Location){
+      saveLocation();
+    }
+
+    mapManager.initFloor("Floor " + gesturePaneManager.getCurrentFloor(), (int)gesturePaneManager.getMapImageView().getLayoutX(), (int)gesturePaneManager.getMapImageView().getLayoutY());
+  }
+
+  private void saveEquipment() throws SQLException {
+    Equipment oldEquipment = (Equipment)selectedObject;
+    Location lOld = locationDatabase.getLocationNode(oldEquipment.getStringFields().get("current_location"));
+    Equipment newEquipment = new Equipment(currentList.get(0).textArea.getText(), currentList.get(1).textArea.getText(),
+            Boolean.parseBoolean(currentList.get(2).textArea.getText()), currentList.get(3).textArea.getText(), Boolean.parseBoolean(currentList.get(4).textArea.getText()));
+    Location l = locationDatabase.getLocationNode(newEquipment.getStringFields().get("current_location"));
+    if (l.getStringFields().get("node_id") == null) {
+      JOptionPane pane = new JOptionPane("Location does not exist", JOptionPane.ERROR_MESSAGE);
+      JDialog dialog = pane.createDialog("Update failed");
+      dialog.setVisible(true);
+      return;
+    }
+    if (!(l.getStringFields().get("node_type").equals("STOR")) && !(l.getStringFields().get("node_type").equals("PATI"))) {
+      JOptionPane pane = new JOptionPane("Equipment cannot be stored here", JOptionPane.ERROR_MESSAGE);
+      JDialog dialog = pane.createDialog("Update failed");
+      dialog.setVisible(true);
+      return;
+    }
+    if (!oldEquipment.getFields().get("is_clean").equals(true) && newEquipment.getFields().get("is_clean").equals(false) && !l.getStringFields().get("node_id").equals(lOld.getStringFields().get("node_id"))) {
+      JOptionPane pane = new JOptionPane("Dirty equipment cannot be moved", JOptionPane.ERROR_MESSAGE);
+      JDialog dialog = pane.createDialog("Update failed");
+      dialog.setVisible(true);
+      return;
+    }
+    equipmentDatabase.updateMedicalEquipment(newEquipment);
+  }
+
+  private void saveLocation() throws SQLException {
+    Location newLocation = new Location(
+            currentList.get(0).textArea.getText(),
+            (int)Double.parseDouble(currentList.get(1).textArea.getText()),
+            (int)Double.parseDouble(currentList.get(2).textArea.getText()),
+            currentList.get(3).textArea.getText(),
+            currentList.get(4).textArea.getText(),
+            currentList.get(5).textArea.getText(),
+            currentList.get(6).textArea.getText(),
+            currentList.get(7).textArea.getText()
+    );
+    locationDatabase.updateLocation(newLocation);
   }
   /*
   // Update Medical Equipment / Service Request on Drag Release

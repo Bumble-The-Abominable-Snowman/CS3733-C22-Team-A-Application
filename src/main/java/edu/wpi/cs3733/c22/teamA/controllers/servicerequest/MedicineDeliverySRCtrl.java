@@ -25,6 +25,7 @@ import edu.wpi.cs3733.c22.teamA.entities.Medicine;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
 public class MedicineDeliverySRCtrl extends SRCtrl {
@@ -33,25 +34,39 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
   private MedicineDAO medicineDatabase = new MedicineDerbyImpl();
   private List<Medicine> medicineList = medicineDatabase.getMedicineList();
 
+  @FXML private Label titleLabel;
   @FXML private JFXComboBox<String> medicineChoice;
-  @FXML private JFXComboBox<String> toLocationChoice;
+  @FXML private JFXComboBox<String> locationChoice;
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
+
+  private double stageWidth;
+  double commentsTextSize;
+  double titleTextSize;
+  double locationChoiceSize;
+  double medicineChoiceSize;
+  double employeeChoiceSize;
 
   @FXML
   protected void initialize() throws ParseException {
     super.initialize();
     sceneID = SceneSwitcher.SCENES.MEDICINE_DELIVERY_SR;
 
-    // double medicineChoiceTextSize = medicineChoice.getFont().getSize();
-    // double toLocationTextSize = toLocationChoice.getFont().getSize();
-    // double employeeChoiceTextSize = employeeChoice.getFont().getSize();
-    double commentsTextSize = commentsBox.getFont().getSize();
+    configure();
+
+    stageWidth = App.getStage().getWidth();
+
+    commentsTextSize = commentsBox.getFont().getSize();
+    titleTextSize = titleLabel.getFont().getSize();
+    //locationChoiceSize = locationChoice.getWidth();
+    //medicineChoiceSize = medicineChoice.getWidth();
+    //employeeChoiceSize = employeeChoice.getWidth();
 
     App.getStage()
         .widthProperty()
         .addListener(
             (obs, oldVal, newVal) -> {
+              updateSize();
               commentsBox.setStyle(
                   "-fx-font-size: "
                       + ((App.getStage().getWidth() / 1000) * commentsTextSize)
@@ -72,22 +87,31 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
 
     this.populateEmployeeAndLocationList();
     this.populateEmployeeComboBox(this.employeeChoice);
-    this.populateLocationComboBox(this.toLocationChoice);
-    new AutoCompleteBox(toLocationChoice);
+    this.populateLocationComboBox(this.locationChoice);
+    new AutoCompleteBox(locationChoice);
     new AutoCompleteBox(employeeChoice);
+  }
+
+  @FXML
+  private void updateSize() {
+
+    stageWidth = App.getStage().getWidth();
+    commentsBox.setStyle("-fx-font-size: " + ((stageWidth / 1000) * commentsTextSize) + "pt;");
+    titleLabel.setStyle("-fx-font-size: " + ((stageWidth / 1000) * titleTextSize) + "pt;");
+
   }
 
   @FXML
   void submitRequest()
       throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
-    if (!medicineChoice.getSelectionModel().getSelectedItem().equals("Medicine")
-        && toLocationChoice.getSelectionModel().getSelectedItem() != null
+    if (medicineChoice.getSelectionModel().getSelectedItem() != null
+        && locationChoice.getSelectionModel().getSelectedItem() != null
         && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
 
       int employeeIndex = this.employeeChoice.getSelectionModel().getSelectedIndex();
       Employee employeeSelected = this.employeeList.get(employeeIndex);
 
-      int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
+      int locationIndex = this.locationChoice.getSelectionModel().getSelectedIndex();
       Location toLocationSelected = this.locationList.get(locationIndex);
 
 //      //get a uniqueID

@@ -19,11 +19,12 @@ import javafx.scene.paint.Color;
 public class SettingsCtrl extends MasterCtrl {
 
   @FXML private JFXToggleButton toggleClientServerButton;
-  @FXML private JFXToggleButton toggleCloudButton;
   @FXML private JFXButton loadBackupButton;
   @FXML private JFXButton saveBackupButton;
+  @FXML private JFXButton simulatorAPIButton;
+  @FXML private JFXButton transportationAPIButton;
 
-/*
+
   @FXML private JFXButton nextButton;
   @FXML private ImageView bumbleBlinkHead;
   @FXML private JFXButton previousButton;
@@ -37,7 +38,7 @@ public class SettingsCtrl extends MasterCtrl {
   @FXML private Label bubble1Text;
   @FXML private Label bubble2Text;
   @FXML private Label bubble3Text;
-  @FXML private Label bubble4Text; */
+  @FXML private Label bubble4Text;
 
   double loadBackupTextSize;
   double saveBackupTextSize;
@@ -158,8 +159,6 @@ public class SettingsCtrl extends MasterCtrl {
     // add client server toggle code here
   }
 
-  public void toggleCloud() {}
-
   @FXML
   private void updateSize() {
 
@@ -171,10 +170,8 @@ public class SettingsCtrl extends MasterCtrl {
         "-fx-font-size: " + ((stageWidth / 1000) * saveBackupTextSize) + "pt;");
     toggleClientServerButton.setStyle(
         "-fx-font-size: " + ((stageWidth / 1000) * loadBackupTextSize) + "pt;");
-    toggleCloudButton.setStyle(
-        "-fx-font-size: " + ((stageWidth / 1000) * saveBackupTextSize) + "pt;");
   }
-/*
+
   public void activateBumble(){
     helpButton.setVisible(false);
     bumbleXButton.setVisible(true);
@@ -200,6 +197,11 @@ public class SettingsCtrl extends MasterCtrl {
     next2Button.setVisible(false);
     previous3Button.setVisible(false);
     next3Button.setVisible(false);
+    transparentGlow.setColor(Color.TRANSPARENT);
+    loadBackupButton.setEffect(transparentGlow);
+    saveBackupButton.setEffect(transparentGlow);
+    toggleClientServerButton.setEffect(transparentGlow);
+
   }
 
   public void next(){
@@ -212,6 +214,16 @@ public class SettingsCtrl extends MasterCtrl {
     next1Button.setVisible(true);
     bubbleText.setVisible(false);
     bubble1Text.setVisible(true);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    loadBackupButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    saveBackupButton.setEffect(transparentGlow);
+    toggleClientServerButton.setEffect(transparentGlow);
   }
 
   public void previous(){
@@ -224,6 +236,11 @@ public class SettingsCtrl extends MasterCtrl {
     next1Button.setVisible(false);
     bubbleText.setVisible(true);
     bubble1Text.setVisible(false);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    loadBackupButton.setEffect(transparentGlow);
+    saveBackupButton.setEffect(transparentGlow);
+    toggleClientServerButton.setEffect(transparentGlow);
   }
 
   public void next1(){
@@ -236,6 +253,16 @@ public class SettingsCtrl extends MasterCtrl {
     next2Button.setVisible(true);
     bubble1Text.setVisible(false);
     bubble2Text.setVisible(true);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    saveBackupButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    loadBackupButton.setEffect(transparentGlow);
+    toggleClientServerButton.setEffect(transparentGlow);
   }
 
   public void previous1() {
@@ -248,6 +275,16 @@ public class SettingsCtrl extends MasterCtrl {
     next2Button.setVisible(false);
     bubble1Text.setVisible(true);
     bubble2Text.setVisible(false);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    loadBackupButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    saveBackupButton.setEffect(transparentGlow);
+    toggleClientServerButton.setEffect(transparentGlow);
   }
 
   public void next2(){
@@ -261,6 +298,16 @@ public class SettingsCtrl extends MasterCtrl {
     next3Button.setVisible(true);
     bubble2Text.setVisible(false);
     bubble3Text.setVisible(true);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    toggleClientServerButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    loadBackupButton.setEffect(transparentGlow);
+    saveBackupButton.setEffect(transparentGlow);
   }
 
   public void previous2() {
@@ -274,6 +321,16 @@ public class SettingsCtrl extends MasterCtrl {
     next3Button.setVisible(false);
     bubble2Text.setVisible(true);
     bubble3Text.setVisible(false);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    saveBackupButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    loadBackupButton.setEffect(transparentGlow);
+    toggleClientServerButton.setEffect(transparentGlow);
   }
 
   public void next3(){
@@ -286,6 +343,16 @@ public class SettingsCtrl extends MasterCtrl {
     next3Button.setVisible(false);
     bubble3Text.setVisible(false);
     bubble4Text.setVisible(true);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    loadBackupButton.setEffect(transparentGlow);
+    saveBackupButton.setEffect(transparentGlow);
+    toggleClientServerButton.setEffect(transparentGlow);
   }
 
   public void previous3() {
@@ -298,42 +365,26 @@ public class SettingsCtrl extends MasterCtrl {
     next3Button.setVisible(true);
     bubble3Text.setVisible(true);
     bubble4Text.setVisible(false);
-  }
-*/
-  @FXML
-  private void help() throws IOException {
 
-    if (helpState != 0) {
-      nextButton.setVisible(false);
-      helpText.setVisible(false);
-      drawer.setEffect(null);
-      helpButton.setEffect(null);
-      helpState = 0;
-    }
-    else {
-      borderGlow.setColor(Color.GOLD);
-      borderGlow.setOffsetX(0f);
-      borderGlow.setOffsetY(0f);
-      borderGlow.setHeight(45);
-      nextButton.setVisible(true);
-      helpText.setVisible(true);
-      helpText.setText("Select a menu option to use the application.  This menu is present on every page and is the primary navigation tool you will use.");
-      drawer.setEffect(borderGlow);
-      helpState = 1;
-    }
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    toggleClientServerButton.setEffect(borderGlow);
 
+    transparentGlow.setColor(Color.TRANSPARENT);
+    loadBackupButton.setEffect(transparentGlow);
+    saveBackupButton.setEffect(transparentGlow);
   }
 
   @FXML
-  private void next() throws IOException {
+  public void launchTransportationSR() throws IOException {
+    edu.wpi.cs3733.c22.teamD.Main.run(500, 200, 960, 600, "", "", "");
+  }
 
-    if (helpState == 1) {
-      drawer.setEffect(null);
-      helpText.setText("You can always click the help button to exit help at any time");
-      helpButton.setEffect(borderGlow);
-      helpState = 2;
-    }
-
+  @FXML
+  public void launchProbabilisticSimulator() throws IOException {
+    edu.wpi.GoldenGandaberundas.Main.run(500, 200, 960, 600, "", 2);
   }
 
 }

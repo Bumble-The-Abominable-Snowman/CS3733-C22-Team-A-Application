@@ -155,7 +155,8 @@ public class PathFinder {
     }
    path.add(current);
 
-    destinationFloor = path.get(0).getStringFields().get("floor");
+    if (!path.get(0).getStringFields().get("floor").equals(path.get(path.size() - 1).getStringFields().get("floor")))
+      destinationFloor = path.get(0).getStringFields().get("floor");
 
   for(Location l:path){
     if(l.getStringFields().get("floor").equals(floor)) resultPath.add(l);
