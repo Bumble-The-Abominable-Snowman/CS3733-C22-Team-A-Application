@@ -41,7 +41,7 @@ public class HomeCtrl extends MasterCtrl {
 
       configure();
 
-/*
+
     EmployeeDAO employeeBase = new EmployeeDerbyImpl();
     List<Employee> empList = employeeBase.getEmployeeList();
 
@@ -96,7 +96,7 @@ public class HomeCtrl extends MasterCtrl {
 
    @FXML
   private void bumbleHelp() throws IOException {
-    bumbleButton.setVisible(true);
+    helpButton.setVisible(true);
   }
 
   @FXML
@@ -197,6 +197,22 @@ public class HomeCtrl extends MasterCtrl {
   }
 
   @FXML private void newSRHelp(){
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    if (drawer.isClosed()){
+      drawer.open();
+    }
+    selectSRButton.setEffect(borderGlow);
+    transparentGlow.setColor(Color.TRANSPARENT);
+    mapButton.setEffect(transparentGlow);
+    viewSRButton.setEffect(transparentGlow);
+    viewEmployeesButton.setEffect(transparentGlow);
+    viewEquipmentButton.setEffect(transparentGlow);
+    viewMedicineButton.setEffect(transparentGlow);
+    viewLocationsButton.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
     bubbleText.setVisible(false);
     newSRText.setVisible(true);
     mapText.setVisible(false);
@@ -205,6 +221,22 @@ public class HomeCtrl extends MasterCtrl {
   }
 
   @FXML private void mapHelp(){
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    if (drawer.isClosed()){
+      drawer.open();
+    }
+    mapButton.setEffect(borderGlow);
+    transparentGlow.setColor(Color.TRANSPARENT);
+    selectSRButton.setEffect(transparentGlow);
+    viewSRButton.setEffect(transparentGlow);
+    viewEmployeesButton.setEffect(transparentGlow);
+    viewEquipmentButton.setEffect(transparentGlow);
+    viewMedicineButton.setEffect(transparentGlow);
+    viewLocationsButton.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
     bubbleText.setVisible(false);
     newSRText.setVisible(false);
     mapText.setVisible(true);
@@ -213,6 +245,22 @@ public class HomeCtrl extends MasterCtrl {
   }
 
   @FXML private void dataViewHelp(){
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    if (drawer.isClosed()){
+      drawer.open();
+    }
+    viewSRButton.setEffect(borderGlow);
+    viewEmployeesButton.setEffect(borderGlow);
+    viewEquipmentButton.setEffect(borderGlow);
+    viewMedicineButton.setEffect(borderGlow);
+    viewLocationsButton.setEffect(borderGlow);
+    transparentGlow.setColor(Color.TRANSPARENT);
+    mapButton.setEffect(transparentGlow);
+    selectSRButton.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
     bubbleText.setVisible(false);
     newSRText.setVisible(false);
     mapText.setVisible(false);
@@ -221,16 +269,27 @@ public class HomeCtrl extends MasterCtrl {
   }
 
   @FXML private void settingsHelp(){
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    if (drawer.isClosed()){
+      drawer.open();
+    }
+    settingsButton.setEffect(borderGlow);
+    transparentGlow.setColor(Color.TRANSPARENT);
+    mapButton.setEffect(transparentGlow);
+    viewSRButton.setEffect(transparentGlow);
+    viewEmployeesButton.setEffect(transparentGlow);
+    viewEquipmentButton.setEffect(transparentGlow);
+    viewMedicineButton.setEffect(transparentGlow);
+    viewLocationsButton.setEffect(transparentGlow);
+    selectSRButton.setEffect(transparentGlow);
     bubbleText.setVisible(false);
     newSRText.setVisible(false);
     mapText.setVisible(false);
     dataViewText.setVisible(false);
-    settingsText.setVisible(true); */
+    settingsText.setVisible(true);
   }
-  //borderGlow.setColor(Color.GOLD);
-    //  borderGlow.setOffsetX(0f);
-      //borderGlow.setOffsetY(0f);
-      //borderGlow.setHeight(45);
-//drawer.setEffect(borderGlow);
 
 }

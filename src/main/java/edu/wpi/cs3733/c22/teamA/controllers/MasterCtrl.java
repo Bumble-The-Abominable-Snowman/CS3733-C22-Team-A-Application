@@ -43,9 +43,9 @@ public abstract class MasterCtrl {
   @FXML public JFXButton aboutButton;
   @FXML public JFXButton homeButton;
 
-  //@FXML public JFXButton bumbleXButton;
+  @FXML public JFXButton bumbleXButton;
   @FXML public Label bubbleText;
-  //@FXML public ImageView bumbleHead;
+  @FXML public ImageView bumbleHead;
 
   public final static SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
@@ -66,6 +66,7 @@ public abstract class MasterCtrl {
   double titleSize;
   double nextSize;
   public DropShadow borderGlow = new DropShadow();
+  public DropShadow transparentGlow = new DropShadow();
 
   public static int sceneFlag = 0;
   public static List<Integer> sceneFlags = new ArrayList<Integer>();
