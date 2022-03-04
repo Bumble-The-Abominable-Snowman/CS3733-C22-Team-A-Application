@@ -17,16 +17,16 @@ public class MarkerMaker {
   private static Polygon equipmentMarkerShape = new Polygon(0.0, 0.0, 0.0, 1.0, 4.0, 1.0, 4.0, 0.0);
 
   public static LocationMarker makeLocationMarker(Location location, int offSetX, int offSetY) {
-    double buttonX = Integer.parseInt(location.getStringFields().get("xcoord")) + offSetX - 8;
-    double buttonY = Integer.parseInt(location.getStringFields().get("ycoord")) + offSetY - 24;
+    double buttonX = Integer.parseInt(location.getStringFields().get("xcoord")) + offSetX - 24;
+    double buttonY = Integer.parseInt(location.getStringFields().get("ycoord")) + offSetY - 45;
     Button button = newDraggableButton(buttonX, buttonY, 0);
 
     ImageView pin = new ImageView(App.class.getResource("images/pin.png").toExternalForm());
     button.setGraphic(pin);
     button.setStyle("-fx-background-color:rgba(0, 0, 0, 0);-fx-border-color: transparent;");
 
-    double labelX = Integer.parseInt(location.getStringFields().get("xcoord")) + offSetX - 8 + 7.5;
-    double labelY = Integer.parseInt(location.getStringFields().get("ycoord")) + offSetY - 24 - 15;
+    double labelX = Integer.parseInt(location.getStringFields().get("xcoord")) + offSetX - 24 + 7.5;
+    double labelY = Integer.parseInt(location.getStringFields().get("ycoord")) + offSetY - 45 - 15;
 
     Label label = newDraggableLabel(labelX, labelY, location.getShortName());
 

@@ -83,7 +83,6 @@ public class MapCtrl extends MasterCtrl {
 
   @FXML private JFXComboBox searchComboBox;
 
-  private ArrayList<String> floorNames;
   private boolean drawPathOnSwitch;
 
   private LocationDAO locationDAO;
@@ -105,10 +104,6 @@ public class MapCtrl extends MasterCtrl {
     // Setup Floors
     mapImageView = new ImageView();
     anchorPane = new AnchorPane();
-
-    floorNames =
-        new ArrayList<>(
-            Arrays.asList("Choose Floor:", "Floor 1", "Floor 2", "Floor 3", "L1", "L2"));
 
     locationDAO = new LocationDerbyImpl();
     equipmentDAO = new EquipmentDerbyImpl();
@@ -148,6 +143,7 @@ public class MapCtrl extends MasterCtrl {
 
     mapManager.init();
     sideView.init();
+    pathFinder.updateComboBoxes();
     new AutoCompleteBox(pfToComboBox);
     new AutoCompleteBox(pfFromComboBox);
 
