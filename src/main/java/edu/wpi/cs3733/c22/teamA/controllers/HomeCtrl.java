@@ -20,7 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class HomeCtrl extends MasterCtrl {
-/*
+
   @FXML private Label homeTitle;
   @FXML private ImageView frame1;
   @FXML private ImageView frame2;
@@ -34,16 +34,12 @@ public class HomeCtrl extends MasterCtrl {
   @FXML private Label newSRText;
   @FXML private Label mapText;
   @FXML private Label dataViewText;
-  @FXML private Label settingsText; */
+  @FXML private Label settingsText;
 
   @FXML
   private void initialize() {
 
       configure();
-      drawer.open();
-      drawer.toFront();
-      menuBox.toFront();
-      PauseTransition pt = new PauseTransition(Duration.millis(100));
 
 /*
     EmployeeDAO employeeBase = new EmployeeDerbyImpl();
@@ -231,41 +227,10 @@ public class HomeCtrl extends MasterCtrl {
     dataViewText.setVisible(false);
     settingsText.setVisible(true); */
   }
-
-  @FXML
-  private void help() throws IOException {
-
-    if (helpState != 0) {
-      nextButton.setVisible(false);
-      helpText.setVisible(false);
-      drawer.setEffect(null);
-      helpButton.setEffect(null);
-      helpState = 0;
-    }
-    else {
-      borderGlow.setColor(Color.GOLD);
-      borderGlow.setOffsetX(0f);
-      borderGlow.setOffsetY(0f);
-      borderGlow.setHeight(45);
-      nextButton.setVisible(true);
-      helpText.setVisible(true);
-      helpText.setText("Select a menu option to use the application.  This menu is present on every page and is the primary navigation tool you will use.");
-      drawer.setEffect(borderGlow);
-      helpState = 1;
-    }
-
-  }
-
-  @FXML
-  private void next() throws IOException {
-
-  if (helpState == 1) {
-    drawer.setEffect(null);
-    helpText.setText("You can always click the help button to exit help at any time");
-    helpButton.setEffect(borderGlow);
-    helpState = 2;
-    }
-
-  }
+  //borderGlow.setColor(Color.GOLD);
+    //  borderGlow.setOffsetX(0f);
+      //borderGlow.setOffsetY(0f);
+      //borderGlow.setHeight(45);
+//drawer.setEffect(borderGlow);
 
 }

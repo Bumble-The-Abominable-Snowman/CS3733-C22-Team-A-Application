@@ -5,12 +5,10 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
-<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -90,7 +88,7 @@
           <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
-            <JFXButton fx:id="helpButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#help" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+            <JFXButton fx:id="helpButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="2" GridPane.halignment="CENTER">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -155,7 +153,7 @@
                      <graphic>
                         <ImageView fx:id="viewEmployeesIcon" fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/View%20Employees%20Icon.png" />
+                              <Image url="@../images/View Employees Icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -227,19 +225,6 @@
             </VBox>
          </children>
       </JFXDrawer>
-      <AnchorPane visible="false" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="4" GridPane.rowSpan="6">
-         <children>
-            <JFXTextArea fx:id="helpText" editable="false" layoutX="81.0" layoutY="68.0" prefHeight="283.0" prefWidth="320.0" styleClass="text-area" stylesheets="@../css/styleSheet.css">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <padding>
-                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-               </padding>
-            </JFXTextArea>
-            <JFXButton fx:id="nextButton" layoutX="213.0" layoutY="428.0" onAction="#next" stylesheets="@../css/styleSheet.css" text="Next" />
-         </children>
-      </AnchorPane>
       <JFXButton fx:id="lowerLevelOne" onAction="#goToLowerLevelOne" text="Lower Level 1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
       <JFXButton fx:id="thirdFloor" onAction="#goToThirdFloor" text="3rd Floor" GridPane.halignment="LEFT" GridPane.rowIndex="6" GridPane.valignment="TOP">
          <GridPane.margin>

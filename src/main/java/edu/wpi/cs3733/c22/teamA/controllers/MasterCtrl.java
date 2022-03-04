@@ -27,10 +27,8 @@ public abstract class MasterCtrl {
   @FXML public JFXHamburger hamburger;
   @FXML public JFXButton backButton;
   @FXML public JFXButton helpButton;
-  @FXML public JFXButton nextButton;
   @FXML public JFXDrawer drawer;
   @FXML public VBox menuBox;
-  @FXML public TextArea helpText;
 
   @FXML public JFXButton selectSRButton;
   @FXML public JFXButton mapButton;
@@ -46,7 +44,7 @@ public abstract class MasterCtrl {
   @FXML public JFXButton homeButton;
 
   //@FXML public JFXButton bumbleXButton;
-  //@FXML public Label bubbleText;
+  @FXML public Label bubbleText;
   //@FXML public ImageView bumbleHead;
 
   public final static SceneSwitcher sceneSwitcher = App.sceneSwitcher;
@@ -67,13 +65,12 @@ public abstract class MasterCtrl {
   double homeSize;
   double titleSize;
   double nextSize;
-  double helpTextSize;
   public DropShadow borderGlow = new DropShadow();
 
   public static int sceneFlag = 0;
   public static List<Integer> sceneFlags = new ArrayList<Integer>();
 
-  public int helpState;
+  //public int helpState;
 
   public enum ACCOUNT {
     ADMIN,
@@ -101,8 +98,7 @@ public abstract class MasterCtrl {
       }
     }
 
-      nextButton.setVisible(false);
-      helpText.setVisible(false);
+
       homeSize = homeButton.getFont().getSize();
       titleSize = titleLabel.getFont().getSize();
       nextSize = homeButton.getFont().getSize();
@@ -162,7 +158,6 @@ public abstract class MasterCtrl {
     setStyle(loginButton);
     setStyle(aboutButton);
     setStyle(homeButton);
-    setStyle(nextButton);
 
   }
 
