@@ -123,7 +123,7 @@ public class MapCtrl extends MasterCtrl {
                     showTextCheckBox,
                     dragCheckBox);
     gesturePaneManager = new GesturePaneManager(gesturePane, anchorPane, mapImageView);
-    selectionManager = new SelectionManager(inputVBox, markerManager);
+    selectionManager = new SelectionManager(inputVBox, markerManager, gesturePaneManager);
     searcher = new Searcher(searchComboBox);
     sideView = new SideView(anchorPane, mapImageView, markerManager);
     List<JFXButton> buttons = new ArrayList<>();
@@ -139,6 +139,7 @@ public class MapCtrl extends MasterCtrl {
                     searcher,
                     sideView,
                     buttons);
+    selectionManager.setMapManager(mapManager);
     pathFinder = new PathFinder("db/CSVs/AllEdgesHand.csv", pfFromComboBox, pfToComboBox, markerManager);
 
     mapManager.init();
