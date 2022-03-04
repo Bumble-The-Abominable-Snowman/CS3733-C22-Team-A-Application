@@ -379,12 +379,12 @@ public class SettingsCtrl extends MasterCtrl {
 
   @FXML
   public void launchTransportationSR() throws IOException {
-
+    edu.wpi.cs3733.c22.teamD.Main.run(500, 200, 960, 600, "", "", "");
   }
 
   @FXML
   public void launchProbabilisticSimulator() throws IOException {
-
+    edu.wpi.GoldenGandaberundas.Main.run(500, 200, 960, 600, "", 2);
   }
 
 }
