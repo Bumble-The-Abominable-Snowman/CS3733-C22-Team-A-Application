@@ -377,25 +377,8 @@ public class MarkerManager {
                         / (gesturePaneManager.getTransformed().getHeight()
                             / gesturePaneManager.getAnchorPane().getHeight())
                     + dragDelta.buttonY);
+            selectionManager.getCurrentList().get(3).textArea.setText("--");
 
-            selectionManager
-                .getCurrentList()
-                .get(1)
-                .textArea
-                .setText(
-                    String.valueOf(
-                        button.getLayoutX()
-                            - gesturePaneManager.getMapImageView().getLayoutX()
-                            + 8));
-            selectionManager
-                .getCurrentList()
-                .get(2)
-                .textArea
-                .setText(
-                    String.valueOf(
-                        button.getLayoutY()
-                            - gesturePaneManager.getMapImageView().getLayoutY()
-                            + 24));
             // standard circle radius around medical equipment markers, 20 is placeholder
             double radius = Math.sqrt(2 * Math.pow(20, 2));
             for (Location l : floorLocations) {
@@ -407,6 +390,7 @@ public class MarkerManager {
               if (radius > radiusCheck) {
                 button.setLayoutX(Integer.parseInt(l.getStringFields().get("xcoord")));
                 button.setLayoutY(Integer.parseInt(l.getStringFields().get("ycoord")) - 20);
+                  selectionManager.getCurrentList().get(3).textArea.setText(l.getStringFields().get("node_id"));
               }
             }
             Label correspondingLabel = equipmentMarker.getLabel();
@@ -448,8 +432,9 @@ public class MarkerManager {
             }
           }
           if (!isSnapped) {
-            button.setLayoutX(Integer.parseInt(nearestLocation.getStringFields().get("xcoord")));
-            button.setLayoutY(Integer.parseInt(nearestLocation.getStringFields().get("ycoord")) - 24);
+            button.setLayoutX(Integer.parseInt(equipmentMarker.getLocationMarker().getLocation().getStringFields().get("xcoord")));
+            button.setLayoutY(Integer.parseInt(equipmentMarker.getLocationMarker().getLocation().getStringFields().get("ycoord")) - 24);
+              selectionManager.getCurrentList().get(3).textArea.setText(equipmentMarker.getEquipment().getStringFields().get("current_location"));
           }
             if (!(nearestLocation.getStringFields().get("node_type").equals("STOR")) && !(nearestLocation.getStringFields().get("node_type").equals("PATI"))){
                 JOptionPane pane = new JOptionPane("Equipment cannot be stored here", JOptionPane.ERROR_MESSAGE);
@@ -457,6 +442,9 @@ public class MarkerManager {
                 dialog.setVisible(true);
                 button.setLayoutX(dragDelta.buttonX);
                 button.setLayoutY(dragDelta.buttonY);
+                Label correspondingLabel = equipmentMarker.getLabel();
+                correspondingLabel.setLayoutX(dragDelta.buttonX);
+                correspondingLabel.setLayoutY(dragDelta.buttonY - 24);
                 return;
             }
           // update label to new location
@@ -466,9 +454,10 @@ public class MarkerManager {
           // TODO this function should update database but getting errors
 
              try {
-                 String equipmentID = equipmentMarker.getEquipment().getStringFields().get("equipment_id");
-                 equipmentMarker.getEquipment().getStringFields().put("current_location", nearestLocation.getStringFields().get("node_id"));
-                 equipmentDAO.updateMedicalEquipment(equipmentMarker.getEquipment());
+                 if (isSnapped) {
+                     equipmentMarker.getEquipment().getStringFields().put("current_location", nearestLocation.getStringFields().get("node_id"));
+                     equipmentDAO.updateMedicalEquipment(equipmentMarker.getEquipment());
+                 }
              } catch (SQLException e) {
                  e.printStackTrace();
              }
@@ -518,25 +507,7 @@ public class MarkerManager {
                         / (gesturePaneManager.getTransformed().getHeight()
                             / gesturePaneManager.getAnchorPane().getHeight())
                     + dragDelta.buttonY);
-
-            selectionManager
-                .getCurrentList()
-                .get(1)
-                .textArea
-                .setText(
-                    String.valueOf(
-                        button.getLayoutX()
-                            - gesturePaneManager.getMapImageView().getLayoutX()
-                            + 8));
-            selectionManager
-                .getCurrentList()
-                .get(2)
-                .textArea
-                .setText(
-                    String.valueOf(
-                        button.getLayoutY()
-                            - gesturePaneManager.getMapImageView().getLayoutY()
-                            + 24));
+              selectionManager.getCurrentList().get(2).textArea.setText("--");
 
             // standard circle radius around medical equipment markers, 20 is placeholder
             double radius = Math.sqrt(2 * Math.pow(20, 2));
@@ -549,6 +520,7 @@ public class MarkerManager {
               if (radius > radiusCheck) {
                 button.setLayoutX(Integer.parseInt(l.getStringFields().get("xcoord")));
                 button.setLayoutY(Integer.parseInt(l.getStringFields().get("ycoord")) - 20);
+                  selectionManager.getCurrentList().get(2).textArea.setText(l.getStringFields().get("node_id"));
               }
             }
 
@@ -571,7 +543,6 @@ public class MarkerManager {
         mouseEvent -> {
           button.setCursor(Cursor.HAND);
           boolean isSnapped = false;
-          Location nearestLocation = floorLocations.get(0);
           double radiusOfNearest = Integer.MAX_VALUE;
           for (Location l : floorLocations) {
             double radiusCheck =
@@ -581,18 +552,17 @@ public class MarkerManager {
             // update nearest location
             if (radiusCheck < radiusOfNearest) {
               radiusOfNearest = radiusCheck;
-              nearestLocation = l;
             }
             // when it finds the location already snapped to, do this
-            if (button.getLayoutX() == Integer.parseInt(l.getStringFields().get("xcoord")) && button.getLayoutY() == Integer.parseInt(l.getStringFields().get("ycoord"))) {
-              nearestLocation = l;
+            if ((int)button.getLayoutX() == Integer.parseInt(l.getStringFields().get("xcoord")) && (int)button.getLayoutY() == Integer.parseInt(l.getStringFields().get("ycoord"))) {
               isSnapped = true;
               break;
             }
           }
           if (!isSnapped) {
-            button.setLayoutX(Integer.parseInt(nearestLocation.getStringFields().get("xcoord")));
-            button.setLayoutY(Integer.parseInt(nearestLocation.getStringFields().get("ycoord")) - 24);
+              button.setLayoutX(Integer.parseInt(srMarker.getLocationMarker().getLocation().getStringFields().get("xcoord")));
+              button.setLayoutY(Integer.parseInt(srMarker.getLocationMarker().getLocation().getStringFields().get("ycoord")) - 24);
+              selectionManager.getCurrentList().get(2).textArea.setText(srMarker.getServiceRequest().getStringFields().get("end_location"));
           }
           // update label to new location
           Label correspondingLabel = srMarker.getLabel();
