@@ -10,6 +10,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.controllers.DataViewCtrl;
@@ -76,6 +77,7 @@ public class DVSelectionManager {
     employeeDAO = new EmployeeDerbyImpl();
     equipmentDAO = new EquipmentDerbyImpl();
     medicineDAO = new MedicineDerbyImpl();
+
     currentList = new ArrayList<>();
     this.dataViewCtrl = dataViewCtrl;
   }
@@ -298,7 +300,6 @@ public class DVSelectionManager {
     HashMap<String, String> currentFields = sr.getStringFields();
     for (int i = 0; i < srNames.size(); i++) {
       currentList.get(i).textArea.setText(currentFields.get(srNames.get(i)));
-      System.out.println(currentList.get(i).textArea.getStyle());
     }
 
     for (String key : sr.getStringFields().keySet()) {
@@ -393,7 +394,7 @@ public class DVSelectionManager {
     }
   }
 
-  // Delete Location
+  // Delete Service Request
   public void delete() throws SQLException, IOException {
     if(selected instanceof SR){
       new ServiceRequestDerbyImpl((SR.SRType) ((SR) selected).getFields().get("sr_type")).deleteServiceRequest((SR) selected);
@@ -411,13 +412,16 @@ public class DVSelectionManager {
   }
 
   // Save Changes
-  private void save() throws SQLException, IOException, ParseException {
+  private void save() throws SQLException, IOException, ParseException, IllegalAccessException, InvocationTargetException {
     if(selected instanceof SR){
-//      SR newSR = (SR)selected;
-//      new ServiceRequestDerbyImpl((SR.SRType) ((SR) selected).getFields().get("sr_type")).deleteServiceRequest((SR) selected);
-//      for(String key: newSR.getFields().keySet()){
-//
-//      }
+      SR newSR = (SR)selected;
+      ServiceRequestDAO dao = new ServiceRequestDerbyImpl((SR.SRType) ((SR) selected).getFields().get("sr_type"));
+      int ct = 0;
+      for(String key: srNames){
+        newSR.setFieldByString(key, srFields.get(ct).textArea.getText());
+        ct++;
+      }
+      dao.updateServiceRequest(newSR);
     } else if(selected instanceof Equipment){
       saveEquipment();
     } else if(selected instanceof Employee){
