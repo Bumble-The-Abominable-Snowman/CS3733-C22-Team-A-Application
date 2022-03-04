@@ -57,7 +57,7 @@
          </GridPane.margin></JFXComboBox>
       <JFXButton fx:id="findPathButton" onAction="#findPath" text=" Find Path " GridPane.halignment="LEFT" GridPane.rowIndex="9" GridPane.valignment="CENTER">
          <GridPane.margin>
-            <Insets left="25.0" />
+            <Insets left="25.0" bottom="5" />
          </GridPane.margin></JFXButton>
       <JFXButton fx:id="clearPathButton" onAction="#clearPath" text="Clear Path" GridPane.halignment="RIGHT" GridPane.rowIndex="9" GridPane.valignment="CENTER" >
       </JFXButton>
