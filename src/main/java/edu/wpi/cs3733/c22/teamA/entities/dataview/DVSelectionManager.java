@@ -434,6 +434,8 @@ public class DVSelectionManager {
   }
 
   private void saveEquipment() throws SQLException {
+    Equipment oldEquipment = (Equipment)selected;
+    Location lOld = locationDAO.getLocationNode(oldEquipment.getStringFields().get("current_location"));
     Equipment newEquipment = new Equipment(currentList.get(0).textArea.getText(), currentList.get(1).textArea.getText(),
             Boolean.parseBoolean(currentList.get(2).textArea.getText()), currentList.get(3).textArea.getText(), Boolean.parseBoolean(currentList.get(4).textArea.getText()));
     Location l = locationDAO.getLocationNode(newEquipment.getStringFields().get("current_location"));
@@ -443,14 +445,14 @@ public class DVSelectionManager {
       dialog.setVisible(true);
       return;
     }
-    if (newEquipment.getFields().get("is_clean").equals(false)) {
-      JOptionPane pane = new JOptionPane("Dirty equipment cannot be moved", JOptionPane.ERROR_MESSAGE);
+    if (!(l.getStringFields().get("node_type").equals("STOR")) && !(l.getStringFields().get("node_type").equals("PATI"))) {
+      JOptionPane pane = new JOptionPane("Equipment cannot be stored here", JOptionPane.ERROR_MESSAGE);
       JDialog dialog = pane.createDialog("Update failed");
       dialog.setVisible(true);
       return;
     }
-    if (!(l.getStringFields().get("node_type").equals("STOR")) && !(l.getStringFields().get("node_type").equals("PATI"))) {
-      JOptionPane pane = new JOptionPane("Equipment cannot be stored here", JOptionPane.ERROR_MESSAGE);
+    if (!oldEquipment.getFields().get("is_clean").equals(true) && newEquipment.getFields().get("is_clean").equals(false) && !l.getStringFields().get("node_id").equals(lOld.getStringFields().get("node_id"))) {
+      JOptionPane pane = new JOptionPane("Dirty equipment cannot be moved", JOptionPane.ERROR_MESSAGE);
       JDialog dialog = pane.createDialog("Update failed");
       dialog.setVisible(true);
       return;
