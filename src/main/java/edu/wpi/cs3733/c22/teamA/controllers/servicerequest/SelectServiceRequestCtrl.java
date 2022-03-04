@@ -19,8 +19,8 @@ import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-//import teamA_API.Main;
-//import teamA_API.exceptions.ServiceException;
+import teamA_API.Main;
+import teamA_API.exceptions.ServiceException;
 
 public class SelectServiceRequestCtrl extends MasterCtrl {
 

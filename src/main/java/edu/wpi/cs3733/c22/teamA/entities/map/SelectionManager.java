@@ -297,6 +297,7 @@ public class SelectionManager {
     } else if(selectedObject instanceof Location){
       saveLocation();
     }
+
     mapManager.initFloor("Floor " + gesturePaneManager.getCurrentFloor(), (int)gesturePaneManager.getMapImageView().getLayoutX(), (int)gesturePaneManager.getMapImageView().getLayoutY());
   }
 

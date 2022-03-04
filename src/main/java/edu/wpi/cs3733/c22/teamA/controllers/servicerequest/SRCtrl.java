@@ -1,5 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
@@ -42,6 +43,7 @@ public abstract class SRCtrl extends MasterCtrl {
   private MarkerManager markerManager;
   private LocationDAO locationDAO;
   private ImageView mapImageView;
+  private String[] floorNames = {"3", "2", "1", "L1", "L2"};
 
   SceneSwitcher.SCENES sceneID;
 
@@ -69,6 +71,20 @@ public abstract class SRCtrl extends MasterCtrl {
 
     locationDAO = new LocationDerbyImpl();
     markerManager = new MarkerManager(locationDAO, anchorPane);
+    List<JFXButton> buttons = new ArrayList<>();
+    for (int i = 0; i < 5; i++) {
+      double buttonY = i * 41 + mapImageView.getLayoutY();
+      JFXButton button = new JFXButton();
+      button.setLayoutX(mapImageView.getLayoutX());
+      button.setLayoutY(buttonY);
+      button.setPrefHeight(40);
+      button.setPrefWidth(90);
+      int finalI = i;
+      button.setOnMousePressed(e -> {markerManager.initFloor(floorNames[finalI], (int)mapImageView.getLayoutX(), (int)mapImageView.getLayoutY()); if(floorNames[finalI].equals("L1") || floorNames[finalI].equals("L2")) gesturePaneManager.setMapFloor(floorNames[finalI]); else gesturePaneManager.setMapFloor("Floor " + floorNames[finalI]);});
+      button.setText("Floor " + floorNames[finalI]);
+      buttons.add(button);
+    }
+    anchorPane.getChildren().addAll(buttons);
     markerManager.initFloor("1", (int)mapImageView.getLayoutX(), (int)mapImageView.getLayoutY());
   }
 
@@ -127,6 +143,4 @@ public abstract class SRCtrl extends MasterCtrl {
   public MarkerManager getMarkerManager() {
     return markerManager;
   }
-
-
 }

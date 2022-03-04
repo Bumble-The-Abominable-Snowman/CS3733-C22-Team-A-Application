@@ -286,7 +286,7 @@ public class MarkerManager {
     for (EquipmentMarker e : equipmentMarkers) {
       e.clear(anchorPane);
     }
-      System.out.println("here");
+
     initialDraw();
   }
 
