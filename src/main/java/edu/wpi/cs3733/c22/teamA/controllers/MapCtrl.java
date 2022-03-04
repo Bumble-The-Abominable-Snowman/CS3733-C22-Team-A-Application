@@ -61,7 +61,6 @@ public class MapCtrl extends MasterCtrl {
   @FXML JFXButton thirdFloor = new JFXButton();
   @FXML JFXButton sideHospitalView = new JFXButton();
 
-  /*
   @FXML private ImageView bumbleBlinkHead;
   @FXML private JFXButton nextButton;
   @FXML private JFXButton previousButton;
@@ -80,7 +79,7 @@ public class MapCtrl extends MasterCtrl {
   @FXML private Label bubble3Text;
   @FXML private Label bubble4Text;
   @FXML private Label bubble5Text;
-  @FXML private Label bubble6Text; */
+  @FXML private Label bubble6Text;
 
   @FXML private JFXComboBox searchComboBox;
 
@@ -330,7 +329,7 @@ public class MapCtrl extends MasterCtrl {
 
   public void goToMap(ActionEvent actionEvent) {
   }
-/*
+
   public void activateBumble(){
     helpButton.setVisible(false);
     bumbleXButton.setVisible(true);
@@ -374,6 +373,28 @@ public class MapCtrl extends MasterCtrl {
     next1Button.setVisible(true);
     bubbleText.setVisible(false);
     bubble1Text.setVisible(true);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    dragCheckBox.setEffect(transparentGlow);
+    serviceRequestCheckBox.setEffect(transparentGlow);
+    locationCheckBox.setEffect(transparentGlow);
+    showTextCheckBox.setEffect(transparentGlow);
+    equipmentCheckBox.setEffect(transparentGlow);
+    viewLocationsButton.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
+    lowerLevelOne.setEffect(transparentGlow);
+    lowerLevelTwo.setEffect(transparentGlow);
+    firstFloor.setEffect(transparentGlow);
+    secondFloor.setEffect(transparentGlow);
+    thirdFloor.setEffect(transparentGlow);
+    sideHospitalView.setEffect(transparentGlow);
+    newLocButton.setEffect(transparentGlow);
+    searchComboBox.setEffect(transparentGlow);
   }
 
   public void previous(){
@@ -386,6 +407,23 @@ public class MapCtrl extends MasterCtrl {
     next1Button.setVisible(false);
     bubbleText.setVisible(true);
     bubble1Text.setVisible(false);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    dragCheckBox.setEffect(transparentGlow);
+    serviceRequestCheckBox.setEffect(transparentGlow);
+    locationCheckBox.setEffect(transparentGlow);
+    showTextCheckBox.setEffect(transparentGlow);
+    equipmentCheckBox.setEffect(transparentGlow);
+    viewLocationsButton.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
+    lowerLevelOne.setEffect(transparentGlow);
+    lowerLevelTwo.setEffect(transparentGlow);
+    firstFloor.setEffect(transparentGlow);
+    secondFloor.setEffect(transparentGlow);
+    thirdFloor.setEffect(transparentGlow);
+    sideHospitalView.setEffect(transparentGlow);
+    newLocButton.setEffect(transparentGlow);
+    searchComboBox.setEffect(transparentGlow);
   }
 
   public void next1(){
@@ -514,5 +552,5 @@ public class MapCtrl extends MasterCtrl {
     bubble6Text.setVisible(false);
   }
 
-  */
+
 }

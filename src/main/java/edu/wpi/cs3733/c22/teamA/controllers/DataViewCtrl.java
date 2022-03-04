@@ -52,7 +52,6 @@ public class DataViewCtrl extends MasterCtrl {
   @FXML private JFXComboBox selectEmployeeBox;
   @FXML private JFXButton addButton;
 
-  /*
   @FXML private ImageView bumbleBlinkHead;
   @FXML private JFXButton previousButton;
   @FXML private JFXButton nextButton;
@@ -65,7 +64,7 @@ public class DataViewCtrl extends MasterCtrl {
   @FXML private Label bubble1Text;
   @FXML private Label bubble2Text;
   @FXML private Label bubble3Text;
-  @FXML private Label bubble4Text; */
+  @FXML private Label bubble4Text;
 
   private StringBuilder detailLabel = new StringBuilder("No further details  ");
   public static AtomicReference<Popup> detailsPopup = new AtomicReference<>(new Popup());
@@ -539,7 +538,7 @@ public class DataViewCtrl extends MasterCtrl {
   public JFXTreeTableView<RecursiveObj> getTable() {
     return table;
   }
-/*
+
   public void activateBumble(){
     helpButton.setVisible(false);
     bumbleXButton.setVisible(true);
@@ -663,5 +662,5 @@ public class DataViewCtrl extends MasterCtrl {
     next3Button.setVisible(true);
     bubble3Text.setVisible(true);
     bubble4Text.setVisible(false);
-  } */
+  }
 }

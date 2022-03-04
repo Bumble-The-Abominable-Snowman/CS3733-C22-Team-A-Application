@@ -13,20 +13,20 @@ import javafx.util.Duration;
 
 public class AboutCtrl extends MasterCtrl {
 
-    /*
+
     @FXML private JFXButton nextButton;
     @FXML private ImageView bumbleBlinkHead;
     @FXML private Label bubble1Text;
     @FXML private Label bubble2Text;
     @FXML private JFXButton previousButton;
     @FXML private JFXButton previous1Button;
-    @FXML private JFXButton next1Button; */
+    @FXML private JFXButton next1Button;
 
     @FXML
     private void initialize() {
 
         configure();
-/*
+
         double previousTextSize = previousButton.getFont().getSize();
         double nextTextSize = nextButton.getFont().getSize();
         double previous1TextSize = previous1Button.getFont().getSize();
@@ -130,7 +130,7 @@ public class AboutCtrl extends MasterCtrl {
         previous1Button.setVisible(false);
         next1Button.setVisible(true);
         bubble1Text.setVisible(true);
-        bubble2Text.setVisible(false); */
+        bubble2Text.setVisible(false);
     }
 
 }
