@@ -357,6 +357,26 @@ public class MapCtrl extends MasterCtrl {
     next4Button.setVisible(false);
     previous5Button.setVisible(false);
     next5Button.setVisible(false);
+    transparentGlow.setColor(Color.TRANSPARENT);
+    dragCheckBox.setEffect(transparentGlow);
+    serviceRequestCheckBox.setEffect(transparentGlow);
+    locationCheckBox.setEffect(transparentGlow);
+    showTextCheckBox.setEffect(transparentGlow);
+    equipmentCheckBox.setEffect(transparentGlow);
+    viewLocationsButton.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
+    lowerLevelOne.setEffect(transparentGlow);
+    lowerLevelTwo.setEffect(transparentGlow);
+    firstFloor.setEffect(transparentGlow);
+    secondFloor.setEffect(transparentGlow);
+    thirdFloor.setEffect(transparentGlow);
+    sideHospitalView.setEffect(transparentGlow);
+    newLocButton.setEffect(transparentGlow);
+    searchComboBox.setEffect(transparentGlow);
+    pfToComboBox.setEffect(transparentGlow);
+    pfFromComboBox.setEffect(transparentGlow);
+    findPathButton.setEffect(transparentGlow);
+    clearPathButton.setEffect(transparentGlow);
   }
 
   public void next(){
@@ -374,13 +394,13 @@ public class MapCtrl extends MasterCtrl {
     borderGlow.setOffsetX(0f);
     borderGlow.setOffsetY(0f);
     borderGlow.setHeight(45);
+    dragCheckBox.setEffect(borderGlow);
+    serviceRequestCheckBox.setEffect(borderGlow);
+    locationCheckBox.setEffect(borderGlow);
+    showTextCheckBox.setEffect(borderGlow);
+    equipmentCheckBox.setEffect(borderGlow);
 
     transparentGlow.setColor(Color.TRANSPARENT);
-    dragCheckBox.setEffect(transparentGlow);
-    serviceRequestCheckBox.setEffect(transparentGlow);
-    locationCheckBox.setEffect(transparentGlow);
-    showTextCheckBox.setEffect(transparentGlow);
-    equipmentCheckBox.setEffect(transparentGlow);
     viewLocationsButton.setEffect(transparentGlow);
     settingsButton.setEffect(transparentGlow);
     lowerLevelOne.setEffect(transparentGlow);
@@ -391,6 +411,10 @@ public class MapCtrl extends MasterCtrl {
     sideHospitalView.setEffect(transparentGlow);
     newLocButton.setEffect(transparentGlow);
     searchComboBox.setEffect(transparentGlow);
+    pfToComboBox.setEffect(transparentGlow);
+    pfFromComboBox.setEffect(transparentGlow);
+    findPathButton.setEffect(transparentGlow);
+    clearPathButton.setEffect(transparentGlow);
   }
 
   public void previous(){
@@ -420,6 +444,10 @@ public class MapCtrl extends MasterCtrl {
     sideHospitalView.setEffect(transparentGlow);
     newLocButton.setEffect(transparentGlow);
     searchComboBox.setEffect(transparentGlow);
+    pfToComboBox.setEffect(transparentGlow);
+    pfFromComboBox.setEffect(transparentGlow);
+    findPathButton.setEffect(transparentGlow);
+    clearPathButton.setEffect(transparentGlow);
   }
 
   public void next1(){
@@ -432,6 +460,32 @@ public class MapCtrl extends MasterCtrl {
     next2Button.setVisible(true);
     bubble1Text.setVisible(false);
     bubble2Text.setVisible(true);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    lowerLevelOne.setEffect(borderGlow);
+    lowerLevelTwo.setEffect(borderGlow);
+    firstFloor.setEffect(borderGlow);
+    secondFloor.setEffect(borderGlow);
+    thirdFloor.setEffect(borderGlow);
+    sideHospitalView.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    dragCheckBox.setEffect(transparentGlow);
+    serviceRequestCheckBox.setEffect(transparentGlow);
+    locationCheckBox.setEffect(transparentGlow);
+    showTextCheckBox.setEffect(transparentGlow);
+    equipmentCheckBox.setEffect(transparentGlow);
+    viewLocationsButton.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
+    newLocButton.setEffect(transparentGlow);
+    searchComboBox.setEffect(transparentGlow);
+    pfToComboBox.setEffect(transparentGlow);
+    pfFromComboBox.setEffect(transparentGlow);
+    findPathButton.setEffect(transparentGlow);
+    clearPathButton.setEffect(transparentGlow);
   }
 
   public void previous1() {
@@ -444,6 +498,32 @@ public class MapCtrl extends MasterCtrl {
     next2Button.setVisible(false);
     bubble1Text.setVisible(true);
     bubble2Text.setVisible(false);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    dragCheckBox.setEffect(borderGlow);
+    serviceRequestCheckBox.setEffect(borderGlow);
+    locationCheckBox.setEffect(borderGlow);
+    showTextCheckBox.setEffect(borderGlow);
+    equipmentCheckBox.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    viewLocationsButton.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
+    lowerLevelOne.setEffect(transparentGlow);
+    lowerLevelTwo.setEffect(transparentGlow);
+    firstFloor.setEffect(transparentGlow);
+    secondFloor.setEffect(transparentGlow);
+    thirdFloor.setEffect(transparentGlow);
+    sideHospitalView.setEffect(transparentGlow);
+    newLocButton.setEffect(transparentGlow);
+    searchComboBox.setEffect(transparentGlow);
+    pfToComboBox.setEffect(transparentGlow);
+    pfFromComboBox.setEffect(transparentGlow);
+    findPathButton.setEffect(transparentGlow);
+    clearPathButton.setEffect(transparentGlow);
   }
 
   public void next2(){
@@ -457,6 +537,32 @@ public class MapCtrl extends MasterCtrl {
     next3Button.setVisible(true);
     bubble2Text.setVisible(false);
     bubble3Text.setVisible(true);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    viewLocationsButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    lowerLevelOne.setEffect(transparentGlow);
+    lowerLevelTwo.setEffect(transparentGlow);
+    firstFloor.setEffect(transparentGlow);
+    secondFloor.setEffect(transparentGlow);
+    thirdFloor.setEffect(transparentGlow);
+    sideHospitalView.setEffect(transparentGlow);
+    dragCheckBox.setEffect(transparentGlow);
+    serviceRequestCheckBox.setEffect(transparentGlow);
+    showTextCheckBox.setEffect(transparentGlow);
+    equipmentCheckBox.setEffect(transparentGlow);
+    locationCheckBox.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
+    searchComboBox.setEffect(transparentGlow);
+    pfToComboBox.setEffect(transparentGlow);
+    pfFromComboBox.setEffect(transparentGlow);
+    findPathButton.setEffect(transparentGlow);
+    clearPathButton.setEffect(transparentGlow);
+    newLocButton.setEffect(transparentGlow);
   }
 
   public void previous2() {
@@ -470,6 +576,32 @@ public class MapCtrl extends MasterCtrl {
     next3Button.setVisible(false);
     bubble2Text.setVisible(true);
     bubble3Text.setVisible(false);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    lowerLevelOne.setEffect(borderGlow);
+    lowerLevelTwo.setEffect(borderGlow);
+    firstFloor.setEffect(borderGlow);
+    secondFloor.setEffect(borderGlow);
+    thirdFloor.setEffect(borderGlow);
+    sideHospitalView.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    dragCheckBox.setEffect(transparentGlow);
+    serviceRequestCheckBox.setEffect(transparentGlow);
+    locationCheckBox.setEffect(transparentGlow);
+    showTextCheckBox.setEffect(transparentGlow);
+    equipmentCheckBox.setEffect(transparentGlow);
+    viewLocationsButton.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
+    newLocButton.setEffect(transparentGlow);
+    searchComboBox.setEffect(transparentGlow);
+    pfToComboBox.setEffect(transparentGlow);
+    pfFromComboBox.setEffect(transparentGlow);
+    findPathButton.setEffect(transparentGlow);
+    clearPathButton.setEffect(transparentGlow);
   }
 
   public void next3(){
@@ -483,6 +615,32 @@ public class MapCtrl extends MasterCtrl {
     next4Button.setVisible(true);
     bubble3Text.setVisible(false);
     bubble4Text.setVisible(true);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    newLocButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    locationCheckBox.setEffect(transparentGlow);
+    lowerLevelOne.setEffect(transparentGlow);
+    lowerLevelTwo.setEffect(transparentGlow);
+    firstFloor.setEffect(transparentGlow);
+    secondFloor.setEffect(transparentGlow);
+    thirdFloor.setEffect(transparentGlow);
+    sideHospitalView.setEffect(transparentGlow);
+    dragCheckBox.setEffect(transparentGlow);
+    serviceRequestCheckBox.setEffect(transparentGlow);
+    showTextCheckBox.setEffect(transparentGlow);
+    equipmentCheckBox.setEffect(transparentGlow);
+    viewLocationsButton.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
+    searchComboBox.setEffect(transparentGlow);
+    pfToComboBox.setEffect(transparentGlow);
+    pfFromComboBox.setEffect(transparentGlow);
+    findPathButton.setEffect(transparentGlow);
+    clearPathButton.setEffect(transparentGlow);
   }
 
   public void previous3() {
@@ -496,6 +654,32 @@ public class MapCtrl extends MasterCtrl {
     next4Button.setVisible(false);
     bubble3Text.setVisible(true);
     bubble4Text.setVisible(false);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    viewLocationsButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    lowerLevelOne.setEffect(transparentGlow);
+    lowerLevelTwo.setEffect(transparentGlow);
+    firstFloor.setEffect(transparentGlow);
+    secondFloor.setEffect(transparentGlow);
+    thirdFloor.setEffect(transparentGlow);
+    sideHospitalView.setEffect(transparentGlow);
+    dragCheckBox.setEffect(transparentGlow);
+    serviceRequestCheckBox.setEffect(transparentGlow);
+    showTextCheckBox.setEffect(transparentGlow);
+    equipmentCheckBox.setEffect(transparentGlow);
+    locationCheckBox.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
+    newLocButton.setEffect(transparentGlow);
+    searchComboBox.setEffect(transparentGlow);
+    pfToComboBox.setEffect(transparentGlow);
+    pfFromComboBox.setEffect(transparentGlow);
+    findPathButton.setEffect(transparentGlow);
+    clearPathButton.setEffect(transparentGlow);
   }
 
   public void next4(){
@@ -509,6 +693,32 @@ public class MapCtrl extends MasterCtrl {
     next5Button.setVisible(true);
     bubble4Text.setVisible(false);
     bubble5Text.setVisible(true);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    pfToComboBox.setEffect(borderGlow);
+    pfFromComboBox.setEffect(borderGlow);
+    findPathButton.setEffect(borderGlow);
+    clearPathButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    viewLocationsButton.setEffect(transparentGlow);
+    locationCheckBox.setEffect(transparentGlow);
+    lowerLevelOne.setEffect(transparentGlow);
+    lowerLevelTwo.setEffect(transparentGlow);
+    firstFloor.setEffect(transparentGlow);
+    secondFloor.setEffect(transparentGlow);
+    thirdFloor.setEffect(transparentGlow);
+    sideHospitalView.setEffect(transparentGlow);
+    dragCheckBox.setEffect(transparentGlow);
+    serviceRequestCheckBox.setEffect(transparentGlow);
+    showTextCheckBox.setEffect(transparentGlow);
+    equipmentCheckBox.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
+    newLocButton.setEffect(transparentGlow);
+    searchComboBox.setEffect(transparentGlow);
   }
 
   public void previous4() {
@@ -522,6 +732,30 @@ public class MapCtrl extends MasterCtrl {
     next5Button.setVisible(false);
     bubble4Text.setVisible(true);
     bubble5Text.setVisible(false);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    newLocButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    locationCheckBox.setEffect(transparentGlow);
+    lowerLevelOne.setEffect(transparentGlow);
+    lowerLevelTwo.setEffect(transparentGlow);
+    firstFloor.setEffect(transparentGlow);
+    secondFloor.setEffect(transparentGlow);
+    thirdFloor.setEffect(transparentGlow);
+    sideHospitalView.setEffect(transparentGlow);
+    dragCheckBox.setEffect(transparentGlow);
+    serviceRequestCheckBox.setEffect(transparentGlow);
+    showTextCheckBox.setEffect(transparentGlow);
+    equipmentCheckBox.setEffect(transparentGlow);
+    viewLocationsButton.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
+    searchComboBox.setEffect(transparentGlow);
+    pfToComboBox.setEffect(transparentGlow);
+    pfFromComboBox.setEffect(transparentGlow);
   }
 
   public void next5(){
@@ -534,6 +768,32 @@ public class MapCtrl extends MasterCtrl {
     next5Button.setVisible(false);
     bubble5Text.setVisible(false);
     bubble6Text.setVisible(true);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    searchComboBox.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    pfToComboBox.setEffect(transparentGlow);
+    pfFromComboBox.setEffect(transparentGlow);
+    findPathButton.setEffect(transparentGlow);
+    clearPathButton.setEffect(transparentGlow);
+    viewLocationsButton.setEffect(transparentGlow);
+    locationCheckBox.setEffect(transparentGlow);
+    lowerLevelOne.setEffect(transparentGlow);
+    lowerLevelTwo.setEffect(transparentGlow);
+    firstFloor.setEffect(transparentGlow);
+    secondFloor.setEffect(transparentGlow);
+    thirdFloor.setEffect(transparentGlow);
+    sideHospitalView.setEffect(transparentGlow);
+    dragCheckBox.setEffect(transparentGlow);
+    serviceRequestCheckBox.setEffect(transparentGlow);
+    showTextCheckBox.setEffect(transparentGlow);
+    equipmentCheckBox.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
+    newLocButton.setEffect(transparentGlow);
   }
 
   public void previous5() {
@@ -546,6 +806,32 @@ public class MapCtrl extends MasterCtrl {
     next5Button.setVisible(true);
     bubble5Text.setVisible(true);
     bubble6Text.setVisible(false);
+
+    borderGlow.setColor(Color.GOLD);
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setHeight(45);
+    pfToComboBox.setEffect(borderGlow);
+    pfFromComboBox.setEffect(borderGlow);
+    findPathButton.setEffect(borderGlow);
+    clearPathButton.setEffect(borderGlow);
+
+    transparentGlow.setColor(Color.TRANSPARENT);
+    viewLocationsButton.setEffect(transparentGlow);
+    locationCheckBox.setEffect(transparentGlow);
+    lowerLevelOne.setEffect(transparentGlow);
+    lowerLevelTwo.setEffect(transparentGlow);
+    firstFloor.setEffect(transparentGlow);
+    secondFloor.setEffect(transparentGlow);
+    thirdFloor.setEffect(transparentGlow);
+    sideHospitalView.setEffect(transparentGlow);
+    dragCheckBox.setEffect(transparentGlow);
+    serviceRequestCheckBox.setEffect(transparentGlow);
+    showTextCheckBox.setEffect(transparentGlow);
+    equipmentCheckBox.setEffect(transparentGlow);
+    settingsButton.setEffect(transparentGlow);
+    newLocButton.setEffect(transparentGlow);
+    searchComboBox.setEffect(transparentGlow);
   }
 
 
