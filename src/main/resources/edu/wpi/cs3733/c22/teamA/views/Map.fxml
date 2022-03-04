@@ -116,7 +116,7 @@
             </JFXButton>
             <JFXButton fx:id="backButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#back" prefHeight="50.0" prefWidth="75.0" styleClass="noTextButton" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="5.0">
+                  <ImageView fitHeight="30.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/Back Arrow.png" />
                      </image>
@@ -126,7 +126,7 @@
             <JFXHamburger fx:id="hamburger" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="75.0" stylesheets="@../css/styleSheet.css" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
-      <JFXDrawer fx:id="drawer" defaultDrawerSize="2000.0" prefWidth="300.0" stylesheets="@../css/styleSheet.css" visible="false" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.rowSpan="6" GridPane.vgrow="ALWAYS">
+      <JFXDrawer fx:id="drawer" defaultDrawerSize="2000.0" prefWidth="300.0" stylesheets="@../css/styleSheet.css" visible="true" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.rowSpan="6" GridPane.vgrow="ALWAYS">
          <children>
             <VBox fx:id="menuBox" prefHeight="200.0" prefWidth="100.0">
                <children>
