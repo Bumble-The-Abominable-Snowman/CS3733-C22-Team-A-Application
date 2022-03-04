@@ -8,8 +8,10 @@ import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
-//import edu.wpi.cs3733.c22.teamA.entities.servicerequests.ReligiousSR;
-//import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
+//import edu.wpi.cs3733.c22.teamA.entities.servicerequests.ConsultationSR;
+import edu.wpi.cs3733.c22.teamA.entities.map.LocationMarker;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
@@ -19,27 +21,35 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.AutoCompleteBox;
-import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 public class ReligiousSRCtrl extends SRCtrl {
+  @FXML private Label titleLabel;
   @FXML private JFXComboBox<String> religionChoice;
   @FXML private JFXComboBox<String> denominationChoice;
-  @FXML private JFXComboBox<String> toLocationChoice;
+  @FXML private JFXComboBox<String> locationChoice;
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
 
-  private ServiceRequestDerbyImpl serviceRequestDatabase = new ServiceRequestDerbyImpl(SR.SRType.RELIGIOUS);
+  private double stageWidth;
+  double commentsTextSize;
+  double titleTextSize;
+  double locationChoiceSize;
+  double religionChoiceSize;
+  double denominationChoiceSize;
+  double employeeChoiceSize;
 
   private List<String> christianDenom = new ArrayList<>();
   private List<String> nonDenom = new ArrayList<>();
   private List<String> otherDenom = new ArrayList<>();
   private List<String> initChoices = new ArrayList<>();
 
-  public ReligiousSRCtrl() {
-    super();
+  private ServiceRequestDerbyImpl serviceRequestDatabase = new ServiceRequestDerbyImpl(SR.SRType.RELIGIOUS);
+
+  @FXML
+  protected void initialize() throws ParseException {
+    super.initialize();
 
     initChoices.add("Christian");
     initChoices.add("Non-Religious");
@@ -62,28 +72,22 @@ public class ReligiousSRCtrl extends SRCtrl {
     otherDenom.add("Muslim");
     otherDenom.add("Hindu");
     otherDenom.add("Other");
-  }
 
-  @FXML
-  protected void initialize() throws ParseException {
-    super.initialize();
     sceneID = SceneSwitcher.SCENES.RELIGIOUS_SR;
 
-    // double religionChoiceTextSize = religionChoice.getFont().getSize();
-    // double denominationChoiceTextSize = denominationChoice.getFont().getSize();
-    // double toLocationChoiceTextSize = toLocationChoice.getFont().getSize();
-    // double employeeChoiceTextSize = employeeChoice.getFont().getSize();
-    double commentsTextSize = commentsBox.getFont().getSize();
+    configure();
+
+    stageWidth = App.getStage().getWidth();
+
+    commentsTextSize = commentsBox.getFont().getSize();
+    titleTextSize = titleLabel.getFont().getSize();
+    //locationChoiceSize = locationChoice.getWidth();
+    //religionChoiceSize = religionChoice.getWidth();
+    //employeeChoiceSize = employeeChoice.getWidth();
 
     App.getStage()
-        .widthProperty()
-        .addListener(
-            (obs, oldVal, newVal) -> {
-              commentsBox.setStyle(
-                  "-fx-font-size: "
-                      + ((App.getStage().getWidth() / 1000) * commentsTextSize)
-                      + "pt;");
-            });
+            .widthProperty()
+            .addListener((obs, oldVal, newVal) -> {updateSize();});
 
     commentsBox.setWrapText(true);
 
@@ -92,50 +96,64 @@ public class ReligiousSRCtrl extends SRCtrl {
     new AutoCompleteBox(religionChoice);
 
     religionChoice
-        .getSelectionModel()
-        .selectedItemProperty()
-        .addListener(
-            (obs, oldValue, newValue) -> {        //TODO this is throwing NullPointers
-              if (newValue.equals("Type")) {
-                denominationChoice.getItems().clear();
-                denominationChoice.setDisable(true);
-              } else if (newValue.equals("Christian")) {
-                denominationChoice.getItems().clear();
-                denominationChoice.getItems().setAll(christianDenom);
-                denominationChoice.getSelectionModel().select(christianDenom.get(0));
-                denominationChoice.setDisable(false);
-              } else if (newValue.equals("Non-Religious")) {
-                denominationChoice.getItems().clear();
-                denominationChoice.getItems().setAll(nonDenom);
-                denominationChoice.getSelectionModel().select(nonDenom.get(0));
-                denominationChoice.setDisable(false);
-              } else if (newValue.equals("Other")) {
-                denominationChoice.getItems().clear();
-                denominationChoice.getItems().setAll(otherDenom);
-                denominationChoice.getSelectionModel().select(otherDenom.get(0));
-                denominationChoice.setDisable(false);
-              }
-            });
+            .getSelectionModel()
+            .selectedItemProperty()
+            .addListener(
+                    (obs, oldValue, newValue) -> {
+                      if (newValue.equals("Christian")) {
+                        denominationChoice.getItems().clear();
+                        denominationChoice.getItems().setAll(christianDenom);
+                        denominationChoice.getSelectionModel().select(christianDenom.get(0));
+                        denominationChoice.setDisable(false);
+                      } else if (newValue.equals("Non-Religious")) {
+                        denominationChoice.getItems().clear();
+                        denominationChoice.getItems().setAll(nonDenom);
+                        denominationChoice.getSelectionModel().select(nonDenom.get(0));
+                        denominationChoice.setDisable(false);
+                      } else if (newValue.equals("Other")) {
+                        denominationChoice.getItems().clear();
+                        denominationChoice.getItems().setAll(otherDenom);
+                        denominationChoice.getSelectionModel().select(otherDenom.get(0));
+                        denominationChoice.setDisable(false);
+                      } else {
+                        denominationChoice.getItems().clear();
+                        denominationChoice.setDisable(true);
+                      }
+                    });
     denominationChoice.getItems().removeAll(denominationChoice.getItems());
     this.populateEmployeeAndLocationList();
     this.populateEmployeeComboBox(this.employeeChoice);
-    this.populateLocationComboBox(this.toLocationChoice);
-    new AutoCompleteBox(toLocationChoice);
+    this.populateLocationComboBox(this.locationChoice);
+    new AutoCompleteBox(locationChoice);
     new AutoCompleteBox(employeeChoice);
     new AutoCompleteBox(denominationChoice);
+
+    for (LocationMarker lm : getMarkerManager().getLocationMarkers()){
+      lm.getButton().setOnAction(e -> locationChoice.getSelectionModel().select(lm.getLocation().getShortName()));
+    }
+  }
+
+  @FXML
+  private void updateSize() {
+
+    stageWidth = App.getStage().getWidth();
+    commentsBox.setStyle("-fx-font-size: " + ((stageWidth / 1000) * commentsTextSize) + "pt;");
+    titleLabel.setStyle("-fx-font-size: " + ((stageWidth / 1000) * titleTextSize) + "pt;");
+
   }
 
   @FXML
   void submitRequest()
-      throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
-    if (!religionChoice.getSelectionModel().getSelectedItem().equals("Type")
-        && toLocationChoice.getSelectionModel().getSelectedItem() != null
-        && employeeChoice.getSelectionModel().getSelectedItem() != null) {
+          throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
+
+    if (religionChoice.getSelectionModel().getSelectedItem() != null
+            && locationChoice.getSelectionModel().getSelectedItem() != null
+            && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
 
       int employeeIndex = this.employeeChoice.getSelectionModel().getSelectedIndex();
       Employee employeeSelected = this.employeeList.get(employeeIndex);
 
-      int locationIndex = this.toLocationChoice.getSelectionModel().getSelectedIndex();
+      int locationIndex = this.locationChoice.getSelectionModel().getSelectedIndex();
       Location toLocationSelected = this.locationList.get(locationIndex);
 
       //      //get a uniqueID
@@ -147,7 +165,7 @@ public class ReligiousSRCtrl extends SRCtrl {
       boolean foundUnique = false;
       while(!foundUnique){
 
-        String possibleUnique = "REL" + getUniqueNumbers();
+        String possibleUnique = "CNS" + getUniqueNumbers();
 
         if(currentIDs.contains(possibleUnique)) continue;
         else if(!(currentIDs.contains(possibleUnique))){
@@ -156,11 +174,11 @@ public class ReligiousSRCtrl extends SRCtrl {
         }
       }
 
-
+      // pass religious service request object
       SR sr = new SR(uniqueID,
               (new LocationDerbyImpl()).getLocationNode("N/A"),
               toLocationSelected,
-              (new EmployeeDerbyImpl()).getEmployee("001"),
+              (new EmployeeDerbyImpl()).getEmployee("002"),
               employeeSelected,
               new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,
@@ -168,9 +186,8 @@ public class ReligiousSRCtrl extends SRCtrl {
               commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               SR.SRType.RELIGIOUS);
 
-      sr.setField("religion", religionChoice.getValue());
-
-      serviceRequestDatabase.enterServiceRequest(sr);
+      ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.RELIGIOUS);
+      serviceRequestDerby.enterServiceRequest(sr);
     }
   }
 }
