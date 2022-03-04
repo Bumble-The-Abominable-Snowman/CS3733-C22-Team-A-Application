@@ -19,9 +19,10 @@ import javafx.scene.paint.Color;
 public class SettingsCtrl extends MasterCtrl {
 
   @FXML private JFXToggleButton toggleClientServerButton;
-  @FXML private JFXToggleButton toggleCloudButton;
   @FXML private JFXButton loadBackupButton;
   @FXML private JFXButton saveBackupButton;
+  @FXML private JFXButton simulatorAPIButton;
+  @FXML private JFXButton transportationAPIButton;
 
 
   @FXML private JFXButton nextButton;
@@ -158,8 +159,6 @@ public class SettingsCtrl extends MasterCtrl {
     // add client server toggle code here
   }
 
-  public void toggleCloud() {}
-
   @FXML
   private void updateSize() {
 
@@ -171,8 +170,6 @@ public class SettingsCtrl extends MasterCtrl {
         "-fx-font-size: " + ((stageWidth / 1000) * saveBackupTextSize) + "pt;");
     toggleClientServerButton.setStyle(
         "-fx-font-size: " + ((stageWidth / 1000) * loadBackupTextSize) + "pt;");
-    toggleCloudButton.setStyle(
-        "-fx-font-size: " + ((stageWidth / 1000) * saveBackupTextSize) + "pt;");
   }
 
   public void activateBumble(){
@@ -204,7 +201,6 @@ public class SettingsCtrl extends MasterCtrl {
     loadBackupButton.setEffect(transparentGlow);
     saveBackupButton.setEffect(transparentGlow);
     toggleClientServerButton.setEffect(transparentGlow);
-    toggleCloudButton.setEffect(transparentGlow);
 
   }
 
@@ -228,7 +224,6 @@ public class SettingsCtrl extends MasterCtrl {
     transparentGlow.setColor(Color.TRANSPARENT);
     saveBackupButton.setEffect(transparentGlow);
     toggleClientServerButton.setEffect(transparentGlow);
-    toggleCloudButton.setEffect(transparentGlow);
   }
 
   public void previous(){
@@ -246,7 +241,6 @@ public class SettingsCtrl extends MasterCtrl {
     loadBackupButton.setEffect(transparentGlow);
     saveBackupButton.setEffect(transparentGlow);
     toggleClientServerButton.setEffect(transparentGlow);
-    toggleCloudButton.setEffect(transparentGlow);
   }
 
   public void next1(){
@@ -269,7 +263,6 @@ public class SettingsCtrl extends MasterCtrl {
     transparentGlow.setColor(Color.TRANSPARENT);
     loadBackupButton.setEffect(transparentGlow);
     toggleClientServerButton.setEffect(transparentGlow);
-    toggleCloudButton.setEffect(transparentGlow);
   }
 
   public void previous1() {
@@ -292,7 +285,6 @@ public class SettingsCtrl extends MasterCtrl {
     transparentGlow.setColor(Color.TRANSPARENT);
     saveBackupButton.setEffect(transparentGlow);
     toggleClientServerButton.setEffect(transparentGlow);
-    toggleCloudButton.setEffect(transparentGlow);
   }
 
   public void next2(){
@@ -316,7 +308,6 @@ public class SettingsCtrl extends MasterCtrl {
     transparentGlow.setColor(Color.TRANSPARENT);
     loadBackupButton.setEffect(transparentGlow);
     saveBackupButton.setEffect(transparentGlow);
-    toggleCloudButton.setEffect(transparentGlow);
   }
 
   public void previous2() {
@@ -340,7 +331,6 @@ public class SettingsCtrl extends MasterCtrl {
     transparentGlow.setColor(Color.TRANSPARENT);
     loadBackupButton.setEffect(transparentGlow);
     toggleClientServerButton.setEffect(transparentGlow);
-    toggleCloudButton.setEffect(transparentGlow);
   }
 
   public void next3(){
@@ -358,7 +348,6 @@ public class SettingsCtrl extends MasterCtrl {
     borderGlow.setOffsetX(0f);
     borderGlow.setOffsetY(0f);
     borderGlow.setHeight(45);
-    toggleCloudButton.setEffect(borderGlow);
 
     transparentGlow.setColor(Color.TRANSPARENT);
     loadBackupButton.setEffect(transparentGlow);
@@ -386,6 +375,16 @@ public class SettingsCtrl extends MasterCtrl {
     transparentGlow.setColor(Color.TRANSPARENT);
     loadBackupButton.setEffect(transparentGlow);
     saveBackupButton.setEffect(transparentGlow);
-    toggleCloudButton.setEffect(transparentGlow);
   }
+
+  @FXML
+  public void launchTransportationSR() throws IOException {
+
+  }
+
+  @FXML
+  public void launchProbabilisticSimulator() throws IOException {
+
+  }
+
 }

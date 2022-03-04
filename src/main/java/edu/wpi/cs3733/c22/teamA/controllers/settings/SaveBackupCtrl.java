@@ -29,7 +29,6 @@ public class SaveBackupCtrl extends MasterCtrl {
   @FXML private JFXComboBox<String> TypeCSV;
   //@FXML private Text exportLabel;
 
-
   @FXML private JFXButton nextButton;
   @FXML private ImageView bumbleBlinkHead;
   @FXML private JFXButton previousButton;

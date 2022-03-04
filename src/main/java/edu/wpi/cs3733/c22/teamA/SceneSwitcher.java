@@ -16,6 +16,7 @@ public class SceneSwitcher {
   public static List<SCENES> fxmlval = new ArrayList<SCENES>();
 
   public enum SCENES {
+    LAUNCH,
     LOGIN,
     HOME,
     SELECT_SERVICE_REQUEST,
@@ -43,7 +44,7 @@ public class SceneSwitcher {
   public static Scene currentScene;
 
   public SceneSwitcher() {
-
+    addScene(SCENES.LAUNCH, "views/Launch.fxml");
     addScene(SceneSwitcher.SCENES.LOGIN, "views/Login.fxml");
     addScene(SceneSwitcher.SCENES.HOME, "views/Home.fxml");
     addScene(SCENES.SETTINGS, "views/settings/Settings.fxml");
@@ -72,12 +73,6 @@ public class SceneSwitcher {
   }
 
   public void switchScene(SCENES name) throws IOException {
-
-    if (name == SCENES.LOGIN)
-    {
-      //Auth0Login.login();
-      //return;
-    }
 
     FXMLLoader loader = new FXMLLoader();
     URL xmlUrl = App.class.getResource(screenMap.get(name));

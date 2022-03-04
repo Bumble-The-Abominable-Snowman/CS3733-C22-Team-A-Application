@@ -18,9 +18,6 @@ import javafx.util.Duration;
 
 public class HomeCtrl extends MasterCtrl {
 
-  @FXML JFXButton simulatorAPIButton = new JFXButton();
-  @FXML JFXButton transportationAPIButton = new JFXButton();
-
 
   @FXML private Label homeTitle;
   @FXML private ImageView frame1;
@@ -107,8 +104,6 @@ public class HomeCtrl extends MasterCtrl {
     giveHelp();
     helpButton.setVisible(false);
     bumbleXButton.setVisible(true);
-    simulatorAPIButton.setVisible(false);
-    transportationAPIButton.setVisible(false);
 
     while(!bumbleStop) {
       counter++;
@@ -289,15 +284,5 @@ public class HomeCtrl extends MasterCtrl {
     viewMedicineButton.setEffect(transparentGlow);
     viewEquipmentButton.setEffect(transparentGlow);
   }
-
-  @FXML
-  public void launchTransportationSR() throws IOException {
-
-  }
-
-  @FXML
-  public void launchProbabilisticSimulator() throws IOException {
-
-    }
 
 }

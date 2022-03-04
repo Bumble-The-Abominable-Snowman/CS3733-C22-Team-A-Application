@@ -42,8 +42,7 @@ public class App extends Application {
     guiStage = primaryStage;
     sceneSwitcher = new SceneSwitcher();
     try {
-      //this.handleLogin();
-          sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOGIN);
+          sceneSwitcher.switchScene(SceneSwitcher.SCENES.LAUNCH);
     guiStage.setMaximized(true);
     guiStage.setMinHeight(600);
     guiStage.setMinWidth(960);
@@ -60,7 +59,7 @@ public class App extends Application {
     }
   }
 
-  private void handleLogin()
+  public void handleLogin()
   {
     Auth0Login.login().thenApply(u -> {
       try {

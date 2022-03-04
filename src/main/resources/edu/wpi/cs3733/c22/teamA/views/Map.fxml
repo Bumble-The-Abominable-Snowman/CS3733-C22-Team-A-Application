@@ -46,7 +46,7 @@
             <Insets left="25.0" bottom="20" />
          </GridPane.margin></JFXButton>
       <JFXComboBox fx:id="searchComboBox" prefHeight="26.0" prefWidth="167.0" styleClass="comboBox" stylesheets="@../css/styleSheet.css" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-      <JFXComboBox fx:id="pfToComboBox" promptText=" To:   " styleClass="comboBox" stylesheets="@../css/styleSheet.css" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="BOTTOM" >
+      <JFXComboBox fx:id="pfToComboBox" promptText=" To:" styleClass="comboBox" stylesheets="@../css/styleSheet.css" GridPane.halignment="LEFT" GridPane.rowIndex="8" GridPane.valignment="CENTER" >
          <GridPane.margin>
             <Insets bottom="5" />
          </GridPane.margin>
