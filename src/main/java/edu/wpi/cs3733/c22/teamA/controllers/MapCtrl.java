@@ -543,7 +543,7 @@ public class MapCtrl extends MasterCtrl {
     borderGlow.setOffsetX(0f);
     borderGlow.setOffsetY(0f);
     borderGlow.setHeight(45);
-    viewLocationsButton.setEffect(borderGlow);
+    newLocButton.setEffect(borderGlow);
 
     transparentGlow.setColor(Color.TRANSPARENT);
     lowerLevelOne.setEffect(transparentGlow);
@@ -563,7 +563,7 @@ public class MapCtrl extends MasterCtrl {
     pfFromComboBox.setEffect(transparentGlow);
     findPathButton.setEffect(transparentGlow);
     clearPathButton.setEffect(transparentGlow);
-    newLocButton.setEffect(transparentGlow);
+    viewLocationsButton.setEffect(transparentGlow);
   }
 
   public void previous2() {
@@ -621,7 +621,7 @@ public class MapCtrl extends MasterCtrl {
     borderGlow.setOffsetX(0f);
     borderGlow.setOffsetY(0f);
     borderGlow.setHeight(45);
-    newLocButton.setEffect(borderGlow);
+    viewLocationsButton.setEffect(borderGlow);
 
     transparentGlow.setColor(Color.TRANSPARENT);
     locationCheckBox.setEffect(transparentGlow);
@@ -635,13 +635,13 @@ public class MapCtrl extends MasterCtrl {
     serviceRequestCheckBox.setEffect(transparentGlow);
     showTextCheckBox.setEffect(transparentGlow);
     equipmentCheckBox.setEffect(transparentGlow);
-    viewLocationsButton.setEffect(transparentGlow);
     settingsButton.setEffect(transparentGlow);
     searchComboBox.setEffect(transparentGlow);
     pfToComboBox.setEffect(transparentGlow);
     pfFromComboBox.setEffect(transparentGlow);
     findPathButton.setEffect(transparentGlow);
     clearPathButton.setEffect(transparentGlow);
+    newLocButton.setEffect(transparentGlow);
   }
 
   public void previous3() {
@@ -660,7 +660,7 @@ public class MapCtrl extends MasterCtrl {
     borderGlow.setOffsetX(0f);
     borderGlow.setOffsetY(0f);
     borderGlow.setHeight(45);
-    viewLocationsButton.setEffect(borderGlow);
+    newLocButton.setEffect(borderGlow);
 
     transparentGlow.setColor(Color.TRANSPARENT);
     lowerLevelOne.setEffect(transparentGlow);
@@ -675,12 +675,12 @@ public class MapCtrl extends MasterCtrl {
     equipmentCheckBox.setEffect(transparentGlow);
     locationCheckBox.setEffect(transparentGlow);
     settingsButton.setEffect(transparentGlow);
-    newLocButton.setEffect(transparentGlow);
     searchComboBox.setEffect(transparentGlow);
     pfToComboBox.setEffect(transparentGlow);
     pfFromComboBox.setEffect(transparentGlow);
     findPathButton.setEffect(transparentGlow);
     clearPathButton.setEffect(transparentGlow);
+    viewLocationsButton.setEffect(transparentGlow);
   }
 
   public void next4(){
@@ -738,7 +738,7 @@ public class MapCtrl extends MasterCtrl {
     borderGlow.setOffsetX(0f);
     borderGlow.setOffsetY(0f);
     borderGlow.setHeight(45);
-    newLocButton.setEffect(borderGlow);
+    viewLocationsButton.setEffect(borderGlow);
 
     transparentGlow.setColor(Color.TRANSPARENT);
     locationCheckBox.setEffect(transparentGlow);
@@ -752,11 +752,13 @@ public class MapCtrl extends MasterCtrl {
     serviceRequestCheckBox.setEffect(transparentGlow);
     showTextCheckBox.setEffect(transparentGlow);
     equipmentCheckBox.setEffect(transparentGlow);
-    viewLocationsButton.setEffect(transparentGlow);
     settingsButton.setEffect(transparentGlow);
     searchComboBox.setEffect(transparentGlow);
     pfToComboBox.setEffect(transparentGlow);
     pfFromComboBox.setEffect(transparentGlow);
+    findPathButton.setEffect(transparentGlow);
+    clearPathButton.setEffect(transparentGlow);
+    newLocButton.setEffect(transparentGlow);
   }
 
   public void next5(){
