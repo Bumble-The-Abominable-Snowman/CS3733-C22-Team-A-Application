@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
-public interface ServiceRequestDAO<T> {
-  T getRequest(String ID) throws SQLException, InvocationTargetException, IllegalAccessException, IOException;
+public interface ServiceRequestDAO {
+  SR getRequest(String ID) throws SQLException, InvocationTargetException, IllegalAccessException, IOException;
 
   void updateServiceRequest(SR sr)
           throws SQLException, InvocationTargetException, IllegalAccessException, IOException;

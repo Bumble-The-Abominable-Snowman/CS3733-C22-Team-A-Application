@@ -21,6 +21,7 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.paint.Color;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
@@ -50,12 +51,12 @@ public class EquipmentDataviewManager {
 			dataViewCtrl.titleLabel.setText("Equipment");
 			initializeEquipmentTable();
 		}
-		catch (NullPointerException aE){
+		catch (NullPointerException | IOException aE){
 
 		}
 	}
 
-	public void initializeEquipmentTable() {
+	public void initializeEquipmentTable() throws IOException {
 
 		table = dataViewCtrl.getTable();
 		dataViewCtrl.getSelectEmployeeBox().setVisible(false);

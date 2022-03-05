@@ -3,8 +3,16 @@ package edu.wpi.cs3733.c22.teamA;
 import java.io.IOException;
 
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.auth0.AuthUser;
 import edu.wpi.cs3733.c22.teamA.auth0.Auth0Login;
+import edu.wpi.cs3733.c22.teamA.controllers.servicerequest.MedicineDeliverySRCtrl;
+import edu.wpi.cs3733.c22.teamA.entities.Employee;
+import edu.wpi.cs3733.c22.teamA.entities.Medicine;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -16,6 +24,8 @@ import java.util.concurrent.Semaphore;
 
 @Slf4j
 public class App extends Application {
+
+  public static String DB_CHOICE = "embedded";
 
   private static Stage guiStage;
   public static SceneSwitcher sceneSwitcher;

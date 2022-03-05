@@ -4,6 +4,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 
 import com.jfoenix.controls.JFXButton;
 
+import java.io.IOException;
 import java.util.List;
 
 // Facade
@@ -72,7 +73,7 @@ public class MapManager {
     selectionManager.clearVBox();
   }
 
-  public void newLocationPressed() {
+  public void newLocationPressed() throws IOException {
     markerManager.newLocationPressed(selectionManager, checkBoxManager, gesturePaneManager);
   }
 

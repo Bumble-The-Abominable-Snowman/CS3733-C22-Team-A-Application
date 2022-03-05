@@ -17,8 +17,10 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.paint.Color;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -57,11 +59,13 @@ public class SRDataviewManager {
 			initializeRequestsTable();
 		} catch (NullPointerException aE){
 
+		} catch (IOException | ParseException e) {
+			e.printStackTrace();
 		}
 	}
 
 	public void initializeRequestsTable()
-			throws SQLException, InvocationTargetException, IllegalAccessException {
+			throws SQLException, InvocationTargetException, IllegalAccessException, IOException, ParseException {
 		table = dataViewCtrl.getTable();
 		EmployeeDAO employeeDAO = new EmployeeDerbyImpl();
 		dataViewCtrl.getSelectEmployeeBox().getItems().addAll(employeeDAO.getEmployeeList().stream().map(Employee::getFullName).collect(Collectors.toList()));

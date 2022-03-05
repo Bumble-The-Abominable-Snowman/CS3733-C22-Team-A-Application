@@ -2,10 +2,14 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
@@ -30,8 +34,8 @@ import javafx.scene.control.TextArea;
 
 public class MedicineDeliverySRCtrl extends SRCtrl {
 
-  private ServiceRequestDerbyImpl serviceRequestDatabase = new ServiceRequestDerbyImpl(SR.SRType.MEDICINE_DELIVERY);
-  private MedicineDAO medicineDatabase = new MedicineDerbyImpl();
+  private ServiceRequestWrapperImpl serviceRequestDatabase = new ServiceRequestWrapperImpl(SR.SRType.MEDICINE_DELIVERY);
+  private MedicineWrapperImpl medicineDatabase = new MedicineWrapperImpl();
   private List<Medicine> medicineList = medicineDatabase.getMedicineList();
 
   @FXML private Label titleLabel;
@@ -46,6 +50,9 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
   double locationChoiceSize;
   double medicineChoiceSize;
   double employeeChoiceSize;
+
+  public MedicineDeliverySRCtrl() throws IOException {
+  }
 
   @FXML
   protected void initialize() throws ParseException {
@@ -103,7 +110,7 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
 
   @FXML
   void submitRequest()
-      throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
+          throws IOException, SQLException, InvocationTargetException, IllegalAccessException, ParseException {
     if (medicineChoice.getSelectionModel().getSelectedItem() != null
         && locationChoice.getSelectionModel().getSelectedItem() != null
         && !employeeChoice.getSelectionModel().getSelectedItem().equals("Employee")) {
@@ -133,9 +140,9 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
       }
 
       SR sr = new SR(uniqueID,
-              (new LocationDerbyImpl()).getLocationNode("N/A"),
+              (new LocationWrapperImpl()).getLocationNode("N/A"),
               toLocationSelected,
-              (new EmployeeDerbyImpl()).getEmployee("001"),
+              (new EmployeeWrapperImpl()).getEmployee("001"),
               employeeSelected,
               new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,

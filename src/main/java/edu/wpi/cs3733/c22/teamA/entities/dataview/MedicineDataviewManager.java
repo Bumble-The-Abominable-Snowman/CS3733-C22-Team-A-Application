@@ -19,6 +19,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.paint.Color;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class MedicineDataviewManager {
         this.dataViewCtrl = dataViewCtrl;
     }
 
-    public void delete() {
+    public void delete() throws IOException {
         MedicineDAO database = new MedicineDerbyImpl();
         database.deleteMedicine(
                 table.getSelectionModel().getSelectedItem().getValue().med.getMedicineID()
@@ -52,7 +53,7 @@ public class MedicineDataviewManager {
         initializeMedicineTable();
     }
 
-    public void initializeMedicineTable() {
+    public void initializeMedicineTable() throws IOException {
         table = dataViewCtrl.getTable();
         dataViewCtrl.getSelectEmployeeBox().setVisible(false);
 

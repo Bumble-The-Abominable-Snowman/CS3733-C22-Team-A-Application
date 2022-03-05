@@ -2,8 +2,11 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
@@ -38,7 +41,7 @@ public class LanguageSRCtrl extends SRCtrl {
   double languageChoiceSize;
   double employeeChoiceSize;
 
-  private ServiceRequestDerbyImpl serviceRequestDatabase = new ServiceRequestDerbyImpl(SR.SRType.LANGUAGE);
+  private ServiceRequestWrapperImpl serviceRequestDatabase = new ServiceRequestWrapperImpl(SR.SRType.LANGUAGE);
 
   @FXML
   protected void initialize() throws ParseException {
@@ -89,7 +92,7 @@ public class LanguageSRCtrl extends SRCtrl {
 
   @FXML
   void submitRequest()
-          throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
+          throws IOException, SQLException, InvocationTargetException, IllegalAccessException, ParseException {
 
     if (languageChoice.getSelectionModel().getSelectedItem() != null
             && locationChoice.getSelectionModel().getSelectedItem() != null
@@ -121,9 +124,9 @@ public class LanguageSRCtrl extends SRCtrl {
 
       // pass language service request object
       SR sr = new SR(uniqueID,
-              (new LocationDerbyImpl()).getLocationNode("N/A"),
+              (new LocationWrapperImpl()).getLocationNode("N/A"),
               toLocationSelected,
-              (new EmployeeDerbyImpl()).getEmployee("002"),
+              (new EmployeeWrapperImpl()).getEmployee("002"),
               employeeSelected,
               new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,
@@ -131,8 +134,8 @@ public class LanguageSRCtrl extends SRCtrl {
               commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               SR.SRType.LANGUAGE);
 
-      ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.LANGUAGE);
-      serviceRequestDerby.enterServiceRequest(sr);
+      ServiceRequestWrapperImpl serviceRequestWrapper = new ServiceRequestWrapperImpl(SR.SRType.LANGUAGE);
+      serviceRequestWrapper.enterServiceRequest(sr);
     }
   }
 }

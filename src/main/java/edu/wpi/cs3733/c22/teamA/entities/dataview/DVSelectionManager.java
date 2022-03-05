@@ -401,7 +401,7 @@ public class DVSelectionManager {
     } else if(selected instanceof Equipment){
       equipmentDAO.deleteMedicalEquipment(((Equipment) selected).getStringFields().get("equipment_id"));
     } else if(selected instanceof Employee){
-      employeeDAO.deleteEmployee(((Employee) selected).getStringFields().get("employee_id"));
+      employeeDAO.deleteEmployee(((Employee) selected));
     } else if(selected instanceof Location){
       locationDAO.deleteLocationNode(((Location) selected).getStringFields().get("node_id"));
     } else if(selected instanceof Medicine){
@@ -433,7 +433,7 @@ public class DVSelectionManager {
     MasterCtrl.sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
   }
 
-  private void saveEquipment() throws SQLException {
+  private void saveEquipment() throws SQLException, IOException, ParseException {
     Equipment oldEquipment = (Equipment)selected;
     Location lOld = locationDAO.getLocationNode(oldEquipment.getStringFields().get("current_location"));
     Equipment newEquipment = new Equipment(currentList.get(0).textArea.getText(), currentList.get(1).textArea.getText(),
@@ -460,7 +460,7 @@ public class DVSelectionManager {
     equipmentDAO.updateMedicalEquipment(newEquipment);
   }
 
-  private void saveEmployee() throws ParseException, SQLException {
+  private void saveEmployee() throws ParseException, SQLException, IOException {
 
     Employee newEmployee = new Employee(currentList.get(0).textArea.getText(), currentList.get(1).textArea.getText(),
             currentList.get(2).textArea.getText(), currentList.get(3).textArea.getText(),currentList.get(4).textArea.getText(), currentList.get(5).textArea.getText(), currentList.get(6).textArea.getText(), new SimpleDateFormat("yyyy-MM-dd").parse(currentList.get(7).textArea.getText()));
@@ -468,7 +468,7 @@ public class DVSelectionManager {
     employeeDAO.updateEmployee(newEmployee);
   }
 
-  private void saveLocation() throws SQLException {
+  private void saveLocation() throws SQLException, IOException {
     Location newLocation = new Location(
             currentList.get(0).textArea.getText(),
             Integer.parseInt(currentList.get(1).textArea.getText()),

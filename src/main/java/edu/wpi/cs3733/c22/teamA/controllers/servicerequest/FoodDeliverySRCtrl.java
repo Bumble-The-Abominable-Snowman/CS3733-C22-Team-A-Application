@@ -2,8 +2,11 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
@@ -44,7 +47,7 @@ public class FoodDeliverySRCtrl extends SRCtrl {
   double dessertChoiceSize;
   double employeeChoiceSize;
 
-  private ServiceRequestDerbyImpl serviceRequestDatabase = new ServiceRequestDerbyImpl(SR.SRType.FOOD_DELIVERY);
+  private ServiceRequestWrapperImpl serviceRequestDatabase = new ServiceRequestWrapperImpl(SR.SRType.FOOD_DELIVERY);
 
   @FXML
   protected void initialize() throws ParseException {
@@ -110,7 +113,7 @@ public class FoodDeliverySRCtrl extends SRCtrl {
 
   @FXML
   void submitRequest()
-          throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
+          throws IOException, SQLException, InvocationTargetException, IllegalAccessException, ParseException {
 
     if (mainChoice.getSelectionModel().getSelectedItem() != null
             && sideChoice.getSelectionModel().getSelectedItem() != null
@@ -145,9 +148,9 @@ public class FoodDeliverySRCtrl extends SRCtrl {
 
       // pass food delivery service request object
       SR sr = new SR(uniqueID,
-              (new LocationDerbyImpl()).getLocationNode("N/A"),
+              (new LocationWrapperImpl()).getLocationNode("N/A"),
               toLocationSelected,
-              (new EmployeeDerbyImpl()).getEmployee("002"),
+              (new EmployeeWrapperImpl()).getEmployee("002"),
               employeeSelected,
               new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,
@@ -155,8 +158,8 @@ public class FoodDeliverySRCtrl extends SRCtrl {
               commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               SR.SRType.FOOD_DELIVERY);
 
-      ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.FOOD_DELIVERY);
-      serviceRequestDerby.enterServiceRequest(sr);
+      ServiceRequestWrapperImpl serviceRequestWrapper = new ServiceRequestWrapperImpl(SR.SRType.FOOD_DELIVERY);
+      serviceRequestWrapper.enterServiceRequest(sr);
     }
   }
 }

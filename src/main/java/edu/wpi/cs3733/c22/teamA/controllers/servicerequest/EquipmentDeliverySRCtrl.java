@@ -2,9 +2,13 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
@@ -38,8 +42,8 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
   @FXML private JFXComboBox<String> employeeChoice;
   @FXML private TextArea commentsBox;
 
-  private ServiceRequestDerbyImpl serviceRequestDatabase = new ServiceRequestDerbyImpl(SR.SRType.EQUIPMENT);
-  private EquipmentDerbyImpl equipmentDatabase = new EquipmentDerbyImpl();
+  private ServiceRequestWrapperImpl serviceRequestDatabase = new ServiceRequestWrapperImpl(SR.SRType.EQUIPMENT);
+  private EquipmentWrapperImpl equipmentDatabase = new EquipmentWrapperImpl();
   private List<Equipment> equipmentList = equipmentDatabase.getMedicalEquipmentList();
   private List<String> bedLocations = new ArrayList<>();
   private List<String> xrayLocations = new ArrayList<>();
@@ -47,7 +51,7 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
   private List<String> reclinerLocations = new ArrayList<>();
   private List<String> status = new ArrayList<>();
 
-  public EquipmentDeliverySRCtrl() {
+  public EquipmentDeliverySRCtrl() throws IOException {
     super();
 
     bedLocations.add("Nearest Location");
@@ -151,7 +155,7 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
 
   @FXML
   void submitRequest()
-      throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
+          throws IOException, SQLException, InvocationTargetException, IllegalAccessException, ParseException {
 
     if (typeChoice.getSelectionModel().getSelectedItem() != null
         && locationChoice.getSelectionModel().getSelectedItem() != null
@@ -184,9 +188,9 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
 
       // pass medical service request object
       SR sr = new SR(uniqueID,
-              (new LocationDerbyImpl()).getLocationNode("N/A"),
+              (new LocationWrapperImpl()).getLocationNode("N/A"),
               toLocationSelected,
-              (new EmployeeDerbyImpl()).getEmployee("002"),
+              (new EmployeeWrapperImpl()).getEmployee("002"),
               employeeSelected,
               new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,
@@ -196,8 +200,8 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
 
       sr.setField("equipment_id", typeChoice.getValue());
 
-      ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.EQUIPMENT);
-      serviceRequestDerby.enterServiceRequest(sr);
+      ServiceRequestWrapperImpl serviceRequestWrapper = new ServiceRequestWrapperImpl(SR.SRType.EQUIPMENT);
+      serviceRequestWrapper.enterServiceRequest(sr);
     }
   }
 }

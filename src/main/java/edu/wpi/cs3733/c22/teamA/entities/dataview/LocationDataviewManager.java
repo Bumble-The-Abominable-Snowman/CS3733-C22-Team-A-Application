@@ -15,9 +15,11 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.paint.Color;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -54,10 +56,12 @@ public class LocationDataviewManager {
 		}
 		catch (NullPointerException aE){
 
+		} catch (IOException | ParseException e) {
+			e.printStackTrace();
 		}
 	}
 
-	public void initializeLocationTable() {
+	public void initializeLocationTable() throws IOException, ParseException {
 		table = dataViewCtrl.getTable();
 		dataViewCtrl.getSelectEmployeeBox().setVisible(false);
 		List<JFXTreeTableColumn<RecursiveObj, String>> locationColumns = new ArrayList<>();

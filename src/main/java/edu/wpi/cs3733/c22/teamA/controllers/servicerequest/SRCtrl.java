@@ -95,8 +95,8 @@ public abstract class SRCtrl extends MasterCtrl {
 
   @FXML
   abstract void submitRequest()
-      throws IOException, TimeoutException, SQLException, InvocationTargetException,
-          IllegalAccessException;
+          throws IOException, TimeoutException, SQLException, InvocationTargetException,
+          IllegalAccessException, ParseException;
 
   @FXML
   protected void populateEmployeeAndLocationList() {

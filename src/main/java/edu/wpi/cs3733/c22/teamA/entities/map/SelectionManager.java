@@ -102,6 +102,7 @@ public class SelectionManager {
     deleteButton = new JFXButton("Delete");
     deleteButton.setOnAction(
         new EventHandler<ActionEvent>() {
+          @SneakyThrows
           @Override
           public void handle(ActionEvent e) {
             delete(selectedLocation);
@@ -272,7 +273,7 @@ public class SelectionManager {
   }
 
   // Delete Location
-  public void delete(LocationMarker location) {
+  public void delete(LocationMarker location) throws IOException {
     locationDatabase.deleteLocationNode(location.getLocation().getStringFields().get("node_id"));
     location.setButtonVisibility(false);
     location.setLabelVisibility(false);
@@ -282,7 +283,7 @@ public class SelectionManager {
   }
 
   // Save Changes
-  private void save() throws SQLException, IllegalAccessException, InvocationTargetException {
+  private void save() throws SQLException, IllegalAccessException, InvocationTargetException, IOException, ParseException {
     if(selectedObject instanceof SR){
       SR newSR = (SR)selectedObject;
       ServiceRequestDAO dao = new ServiceRequestDerbyImpl((SR.SRType) ((SR) selectedObject).getFields().get("sr_type"));
@@ -301,7 +302,7 @@ public class SelectionManager {
     mapManager.initFloor("Floor " + gesturePaneManager.getCurrentFloor(), (int)gesturePaneManager.getMapImageView().getLayoutX(), (int)gesturePaneManager.getMapImageView().getLayoutY());
   }
 
-  private void saveEquipment() throws SQLException {
+  private void saveEquipment() throws SQLException, IOException, ParseException {
     Equipment oldEquipment = (Equipment)selectedObject;
     Location lOld = locationDatabase.getLocationNode(oldEquipment.getStringFields().get("current_location"));
     Equipment newEquipment = new Equipment(currentList.get(0).textArea.getText(), currentList.get(1).textArea.getText(),
@@ -328,7 +329,7 @@ public class SelectionManager {
     equipmentDatabase.updateMedicalEquipment(newEquipment);
   }
 
-  private void saveLocation() throws SQLException {
+  private void saveLocation() throws SQLException, IOException {
     Location newLocation = new Location(
             currentList.get(0).textArea.getText(),
             (int)Double.parseDouble(currentList.get(1).textArea.getText()),

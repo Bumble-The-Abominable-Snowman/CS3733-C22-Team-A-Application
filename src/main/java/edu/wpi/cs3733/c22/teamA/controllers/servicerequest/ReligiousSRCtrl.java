@@ -2,8 +2,11 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
@@ -45,7 +48,7 @@ public class ReligiousSRCtrl extends SRCtrl {
   private List<String> otherDenom = new ArrayList<>();
   private List<String> initChoices = new ArrayList<>();
 
-  private ServiceRequestDerbyImpl serviceRequestDatabase = new ServiceRequestDerbyImpl(SR.SRType.RELIGIOUS);
+  private ServiceRequestWrapperImpl serviceRequestDatabase = new ServiceRequestWrapperImpl(SR.SRType.RELIGIOUS);
 
   @FXML
   protected void initialize() throws ParseException {
@@ -144,7 +147,7 @@ public class ReligiousSRCtrl extends SRCtrl {
 
   @FXML
   void submitRequest()
-          throws IOException, SQLException, InvocationTargetException, IllegalAccessException {
+          throws IOException, SQLException, InvocationTargetException, IllegalAccessException, ParseException {
 
     if (religionChoice.getSelectionModel().getSelectedItem() != null
             && locationChoice.getSelectionModel().getSelectedItem() != null
@@ -176,9 +179,9 @@ public class ReligiousSRCtrl extends SRCtrl {
 
       // pass religious service request object
       SR sr = new SR(uniqueID,
-              (new LocationDerbyImpl()).getLocationNode("N/A"),
+              (new LocationWrapperImpl()).getLocationNode("N/A"),
               toLocationSelected,
-              (new EmployeeDerbyImpl()).getEmployee("002"),
+              (new EmployeeWrapperImpl()).getEmployee("002"),
               employeeSelected,
               new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,
@@ -186,8 +189,8 @@ public class ReligiousSRCtrl extends SRCtrl {
               commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
               SR.SRType.RELIGIOUS);
 
-      ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl(SR.SRType.RELIGIOUS);
-      serviceRequestDerby.enterServiceRequest(sr);
+      ServiceRequestWrapperImpl serviceRequestWrapper = new ServiceRequestWrapperImpl(SR.SRType.RELIGIOUS);
+      serviceRequestWrapper.enterServiceRequest(sr);
     }
   }
 }

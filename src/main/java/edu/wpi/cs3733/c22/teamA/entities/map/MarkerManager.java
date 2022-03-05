@@ -8,7 +8,9 @@ import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.*;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -46,7 +48,7 @@ public class MarkerManager {
 
   private boolean dragPopupBool;
 
-  public MarkerManager(LocationDAO locationDAO, EquipmentDAO equipmentDAO, AnchorPane anchorPane) {
+  public MarkerManager(LocationDAO locationDAO, EquipmentDAO equipmentDAO, AnchorPane anchorPane) throws IOException, ParseException {
     floorLocations = new ArrayList<>();
     currentFloorIDs = new HashSet<>();
     idToLocationMarker = new HashMap<>();
@@ -247,7 +249,7 @@ public class MarkerManager {
     }
   }
   // TODO probably move this to selectionManager
-    public void newLocationPressed(SelectionManager selectionManager, CheckBoxManager checkBoxManager, GesturePaneManager gesturePaneManager) {
+    public void newLocationPressed(SelectionManager selectionManager, CheckBoxManager checkBoxManager, GesturePaneManager gesturePaneManager) throws IOException {
         // only one new location at a time
         String newID = "New";
         int ct = 2;
@@ -290,7 +292,7 @@ public class MarkerManager {
     initialDraw();
   }
 
-  public void redrawEditedLocation(){
+  public void redrawEditedLocation() throws IOException, ParseException {
       allLocations.clear();
       allLocations = locationDAO.getNodeList();
       System.out.println("redraw pre checking");
@@ -450,7 +452,7 @@ public class MarkerManager {
                      equipmentMarker.getEquipment().getStringFields().put("current_location", draggedLocation.getStringFields().get("node_id"));
                      equipmentDAO.updateMedicalEquipment(equipmentMarker.getEquipment());
                  }
-             } catch (SQLException e) {
+             } catch (SQLException | IOException e) {
                  e.printStackTrace();
              }
 

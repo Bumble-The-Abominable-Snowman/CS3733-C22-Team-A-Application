@@ -19,9 +19,11 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.paint.Color;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,15 +43,14 @@ public class EmployeeDataviewManager {
 		this.dataViewCtrl = dataViewCtrl;
 	}
 
-	public void delete() throws SQLException {
+	public void delete() throws SQLException, IOException, ParseException {
 		EmployeeDAO employeeDAO = new EmployeeDerbyImpl();
-		employeeDAO.deleteEmployee(
-				table.getSelectionModel().getSelectedItem().getValue().employee.getStringFields().get("employee_id"));
+		employeeDAO.deleteEmployee(table.getSelectionModel().getSelectedItem().getValue().employee);
 		dataViewCtrl.titleLabel.setText("Employees");
 		initializeEmployeeTable();
 	}
 
-	public void initializeEmployeeTable() {
+	public void initializeEmployeeTable() throws IOException, ParseException {
 		table = dataViewCtrl.getTable();
 
 		EmployeeDAO employeeDAO = new EmployeeDerbyImpl();
@@ -128,7 +129,7 @@ public class EmployeeDataviewManager {
 		dataViewCtrl.setupViewDetailsAndModify();
 	}
 
-	public void filterEmployees(String newValue){
+	public void filterEmployees(String newValue) throws IOException, ParseException {
 
 		List<JFXTreeTableColumn<RecursiveObj, String>> employeeColumns = new ArrayList<>();
 
