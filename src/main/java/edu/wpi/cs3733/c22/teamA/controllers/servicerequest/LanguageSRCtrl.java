@@ -44,7 +44,7 @@ public class LanguageSRCtrl extends SRCtrl {
   private ServiceRequestWrapperImpl serviceRequestDatabase = new ServiceRequestWrapperImpl(SR.SRType.LANGUAGE);
 
   @FXML
-  protected void initialize() throws ParseException {
+  protected void initialize() throws ParseException, IOException {
     super.initialize();
 
     sceneID = SceneSwitcher.SCENES.LANGUAGE_SR;

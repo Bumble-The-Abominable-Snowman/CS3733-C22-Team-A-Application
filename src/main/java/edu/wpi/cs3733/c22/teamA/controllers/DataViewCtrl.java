@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +97,7 @@ public class DataViewCtrl extends MasterCtrl {
   }
 
   @FXML
-  public void delete() throws SQLException, InvocationTargetException, IllegalAccessException {
+  public void delete() throws SQLException, InvocationTargetException, IllegalAccessException, IOException, ParseException {
     //System.out.println(table.getSelectionModel().getSelectedItem().getValue().sr);
 
     if (HomeCtrl.sceneFlag == 1) {
@@ -266,7 +267,7 @@ public class DataViewCtrl extends MasterCtrl {
   }*/
 
   @FXML
-  public void initialize() throws SQLException, InvocationTargetException, IllegalAccessException {
+  public void initialize() throws SQLException, InvocationTargetException, IllegalAccessException, IOException, ParseException {
 
     configure();
 /*
@@ -289,7 +290,11 @@ public class DataViewCtrl extends MasterCtrl {
             .addListener(
                     (obs, oldValue, newValue) -> {
                       if (HomeCtrl.sceneFlag == 4) {
-                        employeeDataviewManager.filterEmployees(newValue.toString());
+                        try {
+                          employeeDataviewManager.filterEmployees(newValue.toString());
+                        } catch (IOException | ParseException e) {
+                          e.printStackTrace();
+                        }
                       } else if(HomeCtrl.sceneFlag == 1){
                         try {
                           srDataviewManager.filterSRs(newValue.toString());

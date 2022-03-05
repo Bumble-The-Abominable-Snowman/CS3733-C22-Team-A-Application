@@ -10,6 +10,7 @@ import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 public class ServiceRequestWrapperImpl implements ServiceRequestDAO {
@@ -64,4 +65,12 @@ public class ServiceRequestWrapperImpl implements ServiceRequestDAO {
         else
         {return (new ServiceRequestDerbyImpl(this.srType)).getServiceRequestList();}
     }
+
+    public void inputFromCSVfile(String csvFilePath) throws IOException, ParseException, SQLException, InvocationTargetException, IllegalAccessException {
+        if (App.DB_CHOICE.equals("nosql"))
+        {(new ServiceRequestRESTImpl(this.srType)).populateFromCSVfile(csvFilePath);}
+        else {(new ServiceRequestDerbyImpl(this.srType)).populateFromCSVfile(csvFilePath);}
+
+    }
+
 }

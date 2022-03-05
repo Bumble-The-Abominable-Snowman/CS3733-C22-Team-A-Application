@@ -50,7 +50,7 @@ public class FoodDeliverySRCtrl extends SRCtrl {
   private ServiceRequestWrapperImpl serviceRequestDatabase = new ServiceRequestWrapperImpl(SR.SRType.FOOD_DELIVERY);
 
   @FXML
-  protected void initialize() throws ParseException {
+  protected void initialize() throws ParseException, IOException {
     super.initialize();
 
     sceneID = SceneSwitcher.SCENES.FOOD_DELIVERY_SR;

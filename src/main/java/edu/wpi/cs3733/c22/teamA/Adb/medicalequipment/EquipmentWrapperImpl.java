@@ -68,4 +68,19 @@ public class EquipmentWrapperImpl implements EquipmentDAO {
         {return (new EquipmentDerbyImpl()).getMedicalEquipmentList();}
 
     }
+
+    public void inputFromCSVfile(String csvFilePath) throws IOException, ParseException {
+        if (App.DB_CHOICE.equals("nosql"))
+        {(new EquipmentRESTImpl()).inputFromCSVfile(csvFilePath);}
+        else {EquipmentDerbyImpl.inputFromCSVfile(csvFilePath);}
+
+    }
+
+    public void exportToCSV(String csvFilePath) throws IOException, ParseException {
+        if (App.DB_CHOICE.equals("nosql"))
+        {EquipmentRESTImpl.exportToCSV(csvFilePath);}
+        else {EquipmentDerbyImpl.exportToCSV(csvFilePath);}
+
+    }
+
 }

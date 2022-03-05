@@ -415,7 +415,7 @@ public class LocationDerbyImpl implements LocationDAO {
     return;}
 
   // Export to CSV
-  public static void exportToCSV(String tableName, String csvFilePath) throws IOException, ParseException {
+  public static void exportToCSV(String csvFilePath) throws IOException, ParseException {
     LocationDAO Location = new LocationDerbyImpl();
     LocationDerbyImpl.writeLocationCSV(Location.getNodeList(), csvFilePath);
   }

@@ -64,4 +64,19 @@ public class EmployeeWrapperImpl implements EmployeeDAO{
         {return (new EmployeeDerbyImpl()).getEmployeeList();}
 
     }
+
+    public void inputFromCSVfile(String csvFilePath) throws IOException, ParseException {
+        if (App.DB_CHOICE.equals("nosql"))
+        {(new EmployeeRESTImpl()).inputFromCSVfile(csvFilePath);}
+        else {EmployeeDerbyImpl.inputFromCSVfile(csvFilePath);}
+
+    }
+
+    public void exportToCSV(String csvFilePath) throws IOException, ParseException {
+        if (App.DB_CHOICE.equals("nosql"))
+        {EmployeeRESTImpl.exportToCSV(csvFilePath);}
+        else {EmployeeDerbyImpl.exportToCSV(csvFilePath);}
+
+    }
+
 }

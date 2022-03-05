@@ -241,7 +241,7 @@ public class LocationRESTImpl implements LocationDAO {
   }
 
   // Input from CSV
-  public void inputFromCSV(String csvFilePath) throws IOException, ParseException {
+  public void inputFromCSVfile(String csvFilePath) throws IOException, ParseException {
     List<Location> locationArrayListPrev = getNodeList();
     for (Location location: locationArrayListPrev) {
       deleteLocationNode(location.getStringFields().get("node_id"));
@@ -254,7 +254,7 @@ public class LocationRESTImpl implements LocationDAO {
   }
 
   // Export to CSV
-  public static void exportToCSV(String tableName, String csvFilePath) throws IOException, ParseException {
+  public static void exportToCSV(String csvFilePath) throws IOException, ParseException {
     LocationDAO Location = new LocationRESTImpl();
     LocationRESTImpl.writeLocationCSV(Location.getNodeList(), csvFilePath);
   }

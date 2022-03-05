@@ -411,7 +411,7 @@ public class EmployeeDerbyImpl implements EmployeeDAO {
   }
 
   // Export to CSV
-  public static void exportToCSV(String tableName, String csvFilePath) throws IOException, ParseException {
+  public static void exportToCSV(String csvFilePath) throws IOException, ParseException {
     EmployeeDAO Employee = new EmployeeDerbyImpl();
     EmployeeDerbyImpl.writeEmployeeCSV(Employee.getEmployeeList(), csvFilePath);
   }

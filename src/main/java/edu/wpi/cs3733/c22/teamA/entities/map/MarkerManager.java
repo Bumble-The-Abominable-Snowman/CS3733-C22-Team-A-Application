@@ -78,7 +78,7 @@ public class MarkerManager {
     this.anchorPane = anchorPane;
   }
 
-    public MarkerManager(LocationDAO locationDAO, AnchorPane anchorPane) {
+    public MarkerManager(LocationDAO locationDAO, AnchorPane anchorPane) throws IOException, ParseException {
         floorLocations = new ArrayList<>();
         currentFloorIDs = new HashSet<>();
         idToLocationMarker = new HashMap<>();

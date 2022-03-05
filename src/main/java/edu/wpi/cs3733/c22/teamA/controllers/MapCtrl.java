@@ -5,14 +5,18 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.map.*;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -105,13 +109,13 @@ public class MapCtrl extends MasterCtrl {
     mapImageView = new ImageView();
     anchorPane = new AnchorPane();
 
-    locationDAO = new LocationDerbyImpl();
-    equipmentDAO = new EquipmentDerbyImpl();
-    //SRDAO = new ServiceRequestDerbyImpl();
+    locationDAO = new LocationWrapperImpl();
+    equipmentDAO = new EquipmentWrapperImpl();
+//    SRDAO = new ServiceRequestWrapperImpl();
   }
 
   @FXML
-  public void initialize() {
+  public void initialize() throws IOException, ParseException {
     configure();
 
     markerManager = new MarkerManager(locationDAO, equipmentDAO, anchorPane);
@@ -301,7 +305,7 @@ public class MapCtrl extends MasterCtrl {
       pathFinder.drawPath(pathFinder.findPath(markerManager.getFloor()), anchorPane);
   }
 
-  public void newLocationPressed() {
+  public void newLocationPressed() throws IOException {
     mapManager.newLocationPressed();
   }
 

@@ -232,4 +232,9 @@ public class EquipmentRESTImpl implements EquipmentDAO {
       enterMedicalEquipment(l);
     }
   }
+
+  public static void exportToCSV(String csvFilePath) throws IOException {
+    EquipmentDAO equipment = new EquipmentRESTImpl();
+    EquipmentDerbyImpl.writeMedicalEquipmentCSV(equipment.getMedicalEquipmentList(), csvFilePath);
+  }
 }

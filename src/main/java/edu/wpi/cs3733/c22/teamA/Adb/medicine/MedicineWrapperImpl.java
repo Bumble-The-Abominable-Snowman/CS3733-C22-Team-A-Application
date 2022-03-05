@@ -10,6 +10,7 @@ import edu.wpi.cs3733.c22.teamA.entities.MedicineDosage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 public class MedicineWrapperImpl implements MedicineDAO {
@@ -102,4 +103,18 @@ public class MedicineWrapperImpl implements MedicineDAO {
         else
         {return (new MedicineDerbyImpl()).getAllDosages();}
     }
+
+    public void importMedicineFromCSV(String csvFilePath) throws IOException, ParseException {
+        if (App.DB_CHOICE.equals("nosql"))
+        {}
+        else {MedicineDerbyImpl.importMedicineFromCSV(csvFilePath);}
+
+    }
+    public void importDosagesFromCSV(String csvFilePath) throws IOException, ParseException {
+        if (App.DB_CHOICE.equals("nosql"))
+        {}
+        else {MedicineDerbyImpl.importDosagesFromCSV(csvFilePath);}
+
+    }
+
 }

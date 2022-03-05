@@ -51,7 +51,7 @@ public class ReligiousSRCtrl extends SRCtrl {
   private ServiceRequestWrapperImpl serviceRequestDatabase = new ServiceRequestWrapperImpl(SR.SRType.RELIGIOUS);
 
   @FXML
-  protected void initialize() throws ParseException {
+  protected void initialize() throws ParseException, IOException {
     super.initialize();
 
     initChoices.add("Christian");

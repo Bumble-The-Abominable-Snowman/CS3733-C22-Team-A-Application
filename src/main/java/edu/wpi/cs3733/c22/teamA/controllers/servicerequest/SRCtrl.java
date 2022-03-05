@@ -50,7 +50,7 @@ public abstract class SRCtrl extends MasterCtrl {
   private final SceneSwitcher sceneSwitcher = App.sceneSwitcher;
 
   @FXML
-  void initialize() throws ParseException {
+  void initialize() throws ParseException, IOException {
     double submitTextSize = submitButton.getFont().getSize();
     double clearTextSize = clearButton.getFont().getSize();
 

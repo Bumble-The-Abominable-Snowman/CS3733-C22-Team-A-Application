@@ -3,10 +3,12 @@ package edu.wpi.cs3733.c22.teamA.controllers;
 import com.jfoenix.controls.JFXButton;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 import javafx.animation.PauseTransition;
@@ -35,7 +37,7 @@ public class HomeCtrl extends MasterCtrl {
   @FXML private Label settingsText;
 
   @FXML
-  private void initialize() {
+  private void initialize() throws IOException, ParseException {
 
       configure();
       drawer.open();
@@ -43,7 +45,7 @@ public class HomeCtrl extends MasterCtrl {
       menuBox.toFront();
 
 
-    EmployeeDAO employeeBase = new EmployeeDerbyImpl();
+    EmployeeDAO employeeBase = new EmployeeWrapperImpl();
     List<Employee> empList = employeeBase.getEmployeeList();
 
     double newSRHelpTextSize = newSRHelpButton.getFont().getSize();

@@ -44,7 +44,7 @@ public class LaundrySRCtrl extends SRCtrl {
   private ServiceRequestWrapperImpl serviceRequestDatabase = new ServiceRequestWrapperImpl(SR.SRType.LAUNDRY);
 
   @FXML
-  protected void initialize() throws ParseException {
+  protected void initialize() throws ParseException, IOException {
     super.initialize();
 
     sceneID = SceneSwitcher.SCENES.LAUNDRY_SR;

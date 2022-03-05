@@ -55,7 +55,7 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
   }
 
   @FXML
-  protected void initialize() throws ParseException {
+  protected void initialize() throws ParseException, IOException {
     super.initialize();
     sceneID = SceneSwitcher.SCENES.MEDICINE_DELIVERY_SR;
 

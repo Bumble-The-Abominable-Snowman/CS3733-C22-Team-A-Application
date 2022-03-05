@@ -74,7 +74,7 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
   }
 
   @FXML
-  protected void initialize() throws ParseException {
+  protected void initialize() throws ParseException, IOException {
     super.initialize();
     sceneID = SceneSwitcher.SCENES.EQUIPMENT_DELIVERY_SR;
 

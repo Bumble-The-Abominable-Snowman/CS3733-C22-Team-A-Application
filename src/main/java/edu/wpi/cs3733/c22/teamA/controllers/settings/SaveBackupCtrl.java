@@ -156,13 +156,13 @@ public class SaveBackupCtrl extends MasterCtrl {
       try {
         switch (TypeCSV.getSelectionModel().getSelectedItem().toString()) {
           case "TowerLocations":
-            LocationDerbyImpl.exportToCSV("Location", filepath);
+            LocationDerbyImpl.exportToCSV( filepath);
             break;
           case "Employee":
-            EmployeeDerbyImpl.exportToCSV("Employee", filepath);
+            EmployeeDerbyImpl.exportToCSV( filepath);
             break;
           case "MedicalEquipment":
-            EquipmentDerbyImpl.exportToCSV("MedicalEquipment", filepath);
+            EquipmentDerbyImpl.exportToCSV(filepath);
             break;
           case "Medicine":
             MedicineDerbyImpl.exportMedicineToCSV(filepath);

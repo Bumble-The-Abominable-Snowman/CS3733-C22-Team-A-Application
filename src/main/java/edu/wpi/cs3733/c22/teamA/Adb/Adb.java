@@ -175,9 +175,7 @@ public class Adb {
                         + "FOREIGN KEY (current_location) REFERENCES TowerLocations(node_id) ON DELETE CASCADE)");
 
         try {
-          EquipmentDerbyImpl.inputFromCSV(
-                  "MedicalEquipment",
-                  "edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipment.csv");
+          EquipmentDerbyImpl.inputFromCSV("edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipment.csv");
         } catch (Exception e) {
           System.out.println("MedicalEquipment Insertion failed");
         }
@@ -618,11 +616,11 @@ public class Adb {
       System.out.println("Sorry couldnt create specified directory");
     }
 
-    EmployeeDerbyImpl.exportToCSV("", dirPath + "/Employee.csv");
+    EmployeeDerbyImpl.exportToCSV( dirPath + "/Employee.csv");
 
-    LocationDerbyImpl.exportToCSV("", dirPath + "/TowerLocations.csv");
+    LocationDerbyImpl.exportToCSV(dirPath + "/TowerLocations.csv");
 
-    EquipmentDerbyImpl.exportToCSV("", dirPath + "/MedicalEquipment.csv");
+    EquipmentDerbyImpl.exportToCSV( dirPath + "/MedicalEquipment.csv");
 
     // Service Requests
 //    ServiceRequestDerbyImpl<EquipmentSR> equipmentSRServiceRequestDerby =

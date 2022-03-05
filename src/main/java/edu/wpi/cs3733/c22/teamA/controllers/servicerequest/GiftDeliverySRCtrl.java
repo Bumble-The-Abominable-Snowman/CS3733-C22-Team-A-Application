@@ -44,7 +44,7 @@ public class GiftDeliverySRCtrl extends SRCtrl {
   private ServiceRequestWrapperImpl serviceRequestDatabase = new ServiceRequestWrapperImpl(SR.SRType.GIFT_DELIVERY);
 
   @FXML
-  protected void initialize() throws ParseException {
+  protected void initialize() throws ParseException, IOException {
     super.initialize();
 
     sceneID = SceneSwitcher.SCENES.GIFT_DELIVERY_SR;

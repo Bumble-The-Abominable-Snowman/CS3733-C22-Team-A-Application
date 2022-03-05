@@ -29,7 +29,7 @@ public class LocationWrapperImpl implements LocationDAO {
         if (App.DB_CHOICE.equals("nosql"))
         {(new LocationRESTImpl()).deleteLocationNode(ID);}
         else
-        {(new LocationRESTImpl()).deleteLocationNode(ID);}
+        {(new LocationDerbyImpl()).deleteLocationNode(ID);}
 
     }
 
@@ -38,7 +38,7 @@ public class LocationWrapperImpl implements LocationDAO {
         if (App.DB_CHOICE.equals("nosql"))
         {(new LocationRESTImpl()).enterLocationNode(location);}
         else
-        {(new LocationRESTImpl()).enterLocationNode(location);}
+        {(new LocationDerbyImpl()).enterLocationNode(location);}
 
     }
 
@@ -47,7 +47,7 @@ public class LocationWrapperImpl implements LocationDAO {
         if (App.DB_CHOICE.equals("nosql"))
         {(new LocationRESTImpl()).enterLocationNode(ID, xcoord, ycoord, floor, building, nodeType, longName, shortName);}
         else
-        {(new LocationRESTImpl()).enterLocationNode(ID, xcoord, ycoord, floor, building, nodeType, longName, shortName);}
+        {(new LocationDerbyImpl()).enterLocationNode(ID, xcoord, ycoord, floor, building, nodeType, longName, shortName);}
 
     }
 
@@ -56,7 +56,7 @@ public class LocationWrapperImpl implements LocationDAO {
         if (App.DB_CHOICE.equals("nosql"))
         {(new LocationRESTImpl()).updateLocation(location);}
         else
-        {(new LocationRESTImpl()).updateLocation(location);}
+        {(new LocationDerbyImpl()).updateLocation(location);}
 
     }
 
@@ -65,7 +65,22 @@ public class LocationWrapperImpl implements LocationDAO {
         if (App.DB_CHOICE.equals("nosql"))
         {return (new LocationRESTImpl()).getLocationNode(ID);}
         else
-        {return (new LocationRESTImpl()).getLocationNode(ID);}
+        {return (new LocationDerbyImpl()).getLocationNode(ID);}
 
     }
+
+    public void inputFromCSVfile(String csvFilePath) throws IOException, ParseException {
+        if (App.DB_CHOICE.equals("nosql"))
+        {(new LocationRESTImpl()).inputFromCSVfile(csvFilePath);}
+        else {LocationDerbyImpl.inputFromCSVfile(csvFilePath);}
+
+    }
+
+    public void exportToCSV(String csvFilePath) throws IOException, ParseException {
+        if (App.DB_CHOICE.equals("nosql"))
+        {LocationRESTImpl.exportToCSV(csvFilePath);}
+        else {LocationDerbyImpl.exportToCSV(csvFilePath);}
+
+    }
+
 }

@@ -274,7 +274,7 @@ public class EmployeeRESTImpl implements EmployeeDAO {
   }
 
   // Export to CSV
-  public static void exportToCSV(String tableName, String csvFilePath) throws IOException, ParseException {
+  public static void exportToCSV(String csvFilePath) throws IOException, ParseException {
     EmployeeDAO Employee = new EmployeeRESTImpl();
     EmployeeRESTImpl.writeEmployeeCSV(Employee.getEmployeeList(), csvFilePath);
   }

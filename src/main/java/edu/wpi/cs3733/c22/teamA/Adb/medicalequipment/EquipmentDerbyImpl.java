@@ -279,7 +279,7 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
   }
 
   // input from CSV
-  public static void inputFromCSV(String tableName, String csvFilePath) {
+  public static void inputFromCSV(String csvFilePath) {
     // Check MedicalEquipment table
     try {
       Statement dropTable = Adb.connection.createStatement();
@@ -316,7 +316,7 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
     }
   }
 
-  public static void inputFromCSVfile(String tableName, String csvFilePath) {
+  public static void inputFromCSVfile(String csvFilePath) {
     // Check MedicalEquipment table
     try {
       Statement dropTable = Adb.connection.createStatement();
@@ -354,7 +354,7 @@ public class EquipmentDerbyImpl implements EquipmentDAO {
   }
 
   // Export to CSV
-  public static void exportToCSV(String tableName, String csvFilePath) throws IOException {
+  public static void exportToCSV(String csvFilePath) throws IOException {
     EquipmentDAO equipment = new EquipmentDerbyImpl();
     EquipmentDerbyImpl.writeMedicalEquipmentCSV(equipment.getMedicalEquipmentList(), csvFilePath);
   }
