@@ -4,6 +4,8 @@ import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationWrapperImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.DataViewCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import javafx.beans.property.SimpleStringProperty;
@@ -48,7 +50,7 @@ public class LocationDataviewManager {
 
 	public void delete() throws SQLException {
 		try {
-			LocationDAO locationDAO = new LocationDerbyImpl();
+			LocationDAO locationDAO = new LocationWrapperImpl();
 			locationDAO.deleteLocationNode(
 					table.getSelectionModel().getSelectedItem().getValue().loc.getStringFields().get("node_id"));
 			dataViewCtrl.titleLabel.setText("Locations");
@@ -111,7 +113,7 @@ public class LocationDataviewManager {
 								new SimpleStringProperty(fillerYes ? "Yes" : "No"));
 
 		// Grab location / equipment from database, these are dummies
-		LocationDAO locationBase = new LocationDerbyImpl();
+		LocationDAO locationBase = new LocationWrapperImpl();
 		locList = locationBase.getNodeList();
 		ObservableList<RecursiveObj> locations = FXCollections.observableArrayList();
 		for (Location currLoc : locList) {
@@ -132,68 +134,27 @@ public class LocationDataviewManager {
 
 	public void modifyPopup(JFXComboBox<String> field, TextArea value, JFXButton updateButton){
 		Location loc = locList.get(table.getSelectionModel().getSelectedIndex());
-		Method[] methods = loc.getClass().getMethods();
-		for (Method method : methods) {
-			boolean is_the_method_of_loc = method.getDeclaringClass().equals(loc.getClass());
-			boolean starts_with_set = method.getName().split("^set")[0].equals("");
-			boolean return_string =
-					Arrays.toString(method.getParameterTypes())
-							.toLowerCase(Locale.ROOT)
-							.contains("string");
 
-			if (is_the_method_of_loc && starts_with_set && return_string) {
-				field.getItems().addAll(method.getName().substring(3));
-			}
-		}
+		field.getItems().addAll(loc.getStringFields().keySet());
 
-		field.setOnAction(
-				e -> {
-					if (field.getSelectionModel().getSelectedIndex() > -1) {
-						for (Method method : methods) {
-							boolean starts_with_get = method.getName().split("^get")[0].equals("");
-							boolean contains_name =
-									method
-											.getName()
-											.toLowerCase(Locale.ROOT)
-											.contains(
-													field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
-							if (starts_with_get && contains_name) {
-								try {
-									value.setText((String) method.invoke(loc));
-								} catch (IllegalAccessException | InvocationTargetException ex) {
-									ex.printStackTrace();
-								}
-							}
-						}
-					}
-				});
+		field.setOnAction( e -> value.setText(loc.getStringFields().get(field.getSelectionModel().getSelectedItem())));
 
 		updateButton.setOnAction(
 				e -> {
 					if (field.getSelectionModel().getSelectedIndex() > -1
 							&& value.getText().length() > 0) {
-						for (Method method : methods) {
-							boolean starts_with_set = method.getName().split("^set")[0].equals("");
-							boolean contains_name =
-									method
-											.getName()
-											.toLowerCase(Locale.ROOT)
-											.contains(
-													field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
-							if (starts_with_set && contains_name) {
 
-								LocationDerbyImpl locationDerby = new LocationDerbyImpl();
-								try {
+						LocationWrapperImpl locationWrapper = new LocationWrapperImpl();
+						try {
 
-									locationDerby.updateLocation(loc);
-									updateButton.setTextFill(Color.GREEN);
-									this.initializeLocationTable();
-								} catch (Exception ex) {
-									ex.printStackTrace();
-									updateButton.setTextFill(Color.RED);
-								}
-							}
+							locationWrapper.updateLocation(loc);
+							this.initializeLocationTable();
+							updateButton.setTextFill(Color.GREEN);
+						} catch (Exception ex) {
+							ex.printStackTrace();
+							updateButton.setTextFill(Color.RED);
 						}
+
 					}
 				});
 	}

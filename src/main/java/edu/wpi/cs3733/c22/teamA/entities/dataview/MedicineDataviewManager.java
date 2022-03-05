@@ -7,6 +7,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.DataViewCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
@@ -45,7 +46,7 @@ public class MedicineDataviewManager {
     }
 
     public void delete() throws IOException {
-        MedicineDAO database = new MedicineDerbyImpl();
+        MedicineDAO database = new MedicineWrapperImpl();
         database.deleteMedicine(
                 table.getSelectionModel().getSelectedItem().getValue().med.getMedicineID()
         );
@@ -114,7 +115,7 @@ public class MedicineDataviewManager {
                                 new SimpleStringProperty(param.getValue().getValue().med.getDosageAmounts().toString()));
 
         // Grab medicine from database
-        MedicineDAO database = new MedicineDerbyImpl();
+        MedicineDAO database = new MedicineWrapperImpl();
         this.medList = database.getMedicineList();
         ObservableList<RecursiveObj> medicine = FXCollections.observableArrayList();
         for (Medicine item : this.medList) {
@@ -189,7 +190,7 @@ public class MedicineDataviewManager {
                                             .contains(
                                                     field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
                             if (starts_with_set && contains_name) {
-                                MedicineDAO database = new MedicineDerbyImpl();
+                                MedicineDAO database = new MedicineWrapperImpl();
                                 try {
                                     String aField = "";
                                     System.out.println(field.getValue());

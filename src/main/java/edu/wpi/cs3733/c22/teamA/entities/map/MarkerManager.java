@@ -4,6 +4,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
@@ -65,7 +66,7 @@ public class MarkerManager {
     allLocations = locationDAO.getNodeList();
     allEquipments = equipmentDAO.getMedicalEquipmentList();
     try {
-      List<?> requestList = ServiceRequestDerbyImpl.getAllServiceRequestList();
+      List<?> requestList = (new ServiceRequestWrapperImpl()).getServiceRequestList();
       for (Object sr : requestList) {
         allSRs.add((SR) sr);
       }

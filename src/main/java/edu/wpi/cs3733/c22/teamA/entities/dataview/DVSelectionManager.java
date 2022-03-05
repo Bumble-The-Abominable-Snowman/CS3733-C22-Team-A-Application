@@ -4,14 +4,19 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.controllers.DataViewCtrl;
 import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
@@ -73,10 +78,10 @@ public class DVSelectionManager {
     instantiateButtons();
     fillBoxes();
 
-    locationDAO = new LocationDerbyImpl();
-    employeeDAO = new EmployeeDerbyImpl();
-    equipmentDAO = new EquipmentDerbyImpl();
-    medicineDAO = new MedicineDerbyImpl();
+    locationDAO = new LocationWrapperImpl();
+    employeeDAO = new EmployeeWrapperImpl();
+    equipmentDAO = new EquipmentWrapperImpl();
+    medicineDAO = new MedicineWrapperImpl();
 
     currentList = new ArrayList<>();
     this.dataViewCtrl = dataViewCtrl;
@@ -397,7 +402,7 @@ public class DVSelectionManager {
   // Delete Service Request
   public void delete() throws SQLException, IOException {
     if(selected instanceof SR){
-      new ServiceRequestDerbyImpl((SR.SRType) ((SR) selected).getFields().get("sr_type")).deleteServiceRequest((SR) selected);
+      new ServiceRequestWrapperImpl((SR.SRType) ((SR) selected).getFields().get("sr_type")).deleteServiceRequest((SR) selected);
     } else if(selected instanceof Equipment){
       equipmentDAO.deleteMedicalEquipment(((Equipment) selected).getStringFields().get("equipment_id"));
     } else if(selected instanceof Employee){
@@ -415,7 +420,7 @@ public class DVSelectionManager {
   private void save() throws SQLException, IOException, ParseException, IllegalAccessException, InvocationTargetException {
     if(selected instanceof SR){
       SR newSR = (SR)selected;
-      ServiceRequestDAO dao = new ServiceRequestDerbyImpl((SR.SRType) ((SR) selected).getFields().get("sr_type"));
+      ServiceRequestDAO dao = new ServiceRequestWrapperImpl((SR.SRType) ((SR) selected).getFields().get("sr_type"));
       int ct = 0;
       for(String key: srNames){
         newSR.setFieldByString(key, srFields.get(ct).textArea.getText());

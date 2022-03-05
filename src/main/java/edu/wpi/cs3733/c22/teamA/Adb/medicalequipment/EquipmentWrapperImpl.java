@@ -19,9 +19,9 @@ public class EquipmentWrapperImpl implements EquipmentDAO {
     @Override
     public Equipment getMedicalEquipment(String ID) throws IOException {
         if (App.DB_CHOICE.equals("nosql"))
-        {return (new EquipmentDerbyImpl()).getMedicalEquipment(ID);}
-        else
         {return (new EquipmentRESTImpl()).getMedicalEquipment(ID);}
+        else
+        {return (new EquipmentDerbyImpl()).getMedicalEquipment(ID);}
     }
 
     @Override
@@ -29,7 +29,7 @@ public class EquipmentWrapperImpl implements EquipmentDAO {
         if (App.DB_CHOICE.equals("nosql"))
         {(new EquipmentRESTImpl()).updateMedicalEquipment(e);}
         else
-        {(new EquipmentRESTImpl()).updateMedicalEquipment(e);}
+        {(new EquipmentDerbyImpl()).updateMedicalEquipment(e);}
 
     }
 
@@ -38,7 +38,7 @@ public class EquipmentWrapperImpl implements EquipmentDAO {
         if (App.DB_CHOICE.equals("nosql"))
         {(new EquipmentRESTImpl()).enterMedicalEquipment(e);}
         else
-        {(new EquipmentRESTImpl()).enterMedicalEquipment(e);}
+        {(new EquipmentDerbyImpl()).enterMedicalEquipment(e);}
 
     }
 
@@ -47,7 +47,7 @@ public class EquipmentWrapperImpl implements EquipmentDAO {
         if (App.DB_CHOICE.equals("nosql"))
         {(new EquipmentRESTImpl()).enterMedicalEquipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable);}
         else
-        {(new EquipmentRESTImpl()).enterMedicalEquipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable);}
+        {(new EquipmentDerbyImpl()).enterMedicalEquipment(equipmentID, equipmentType, isClean, currentLocation, isAvailable);}
 
     }
 
@@ -56,7 +56,7 @@ public class EquipmentWrapperImpl implements EquipmentDAO {
         if (App.DB_CHOICE.equals("nosql"))
         {(new EquipmentRESTImpl()).deleteMedicalEquipment(ID);}
         else
-        {(new EquipmentRESTImpl()).deleteMedicalEquipment(ID);}
+        {(new EquipmentDerbyImpl()).deleteMedicalEquipment(ID);}
 
     }
 

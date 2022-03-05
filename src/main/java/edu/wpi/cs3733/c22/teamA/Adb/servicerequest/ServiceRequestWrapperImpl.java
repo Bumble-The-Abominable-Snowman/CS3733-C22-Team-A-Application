@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceRequestWrapperImpl implements ServiceRequestDAO {
@@ -72,5 +73,14 @@ public class ServiceRequestWrapperImpl implements ServiceRequestDAO {
         else {(new ServiceRequestDerbyImpl(this.srType)).populateFromCSVfile(csvFilePath);}
 
     }
+
+    public static List<SR> getAllServiceRequestList()
+            throws SQLException, IllegalAccessException, InvocationTargetException, IOException {
+        if (App.DB_CHOICE.equals("nosql"))
+        {return ServiceRequestRESTImpl.getAllServiceRequestList();}
+        else
+        {return ServiceRequestDerbyImpl.getAllServiceRequestList();}
+    }
+
 
 }

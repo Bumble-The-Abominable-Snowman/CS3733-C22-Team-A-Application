@@ -2,6 +2,7 @@ package edu.wpi.cs3733.c22.teamA.entities.map;
 
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import java.io.IOException;
@@ -24,8 +25,8 @@ public class PathFinder {
 
   private String destinationFloor = "";
 
-  public PathFinder(String path, JFXComboBox fromBox, JFXComboBox toBox, MarkerManager markerManager) {
-    locations = new LocationDerbyImpl().getNodeList();
+  public PathFinder(String path, JFXComboBox fromBox, JFXComboBox toBox, MarkerManager markerManager) throws IOException, ParseException {
+    locations = new LocationWrapperImpl().getNodeList();
     pfLine = new ArrayList<>();
     this.path = path;
     this.neighborMap = getEdges();

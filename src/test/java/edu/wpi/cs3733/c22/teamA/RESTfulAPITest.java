@@ -6,6 +6,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeRESTImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationRESTImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentRESTImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestRESTImpl;
 import edu.wpi.cs3733.c22.teamA.auth0.AuthUser;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
@@ -45,5 +46,7 @@ public class RESTfulAPITest {
 //        Ser locationREST = new LocationRESTImpl();
 //        locationREST.inputFromCSV("/Users/yasaridikut/IdeaProjects/CS3733-C22-Team-A-Application/src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/TowerLocations.csv");
 
+        ServiceRequestRESTImpl serviceRequestREST = new ServiceRequestRESTImpl(SR.SRType.EQUIPMENT);
+        serviceRequestREST.populateFromCSVfile("/home/yasaridikut/IdeaProjects/CS3733-C22-Team-A-Application/src/main/resources/edu/wpi/cs3733/c22/teamA/db/CSVs/MedicalEquipmentServiceRequest.CSV");
     }
 }

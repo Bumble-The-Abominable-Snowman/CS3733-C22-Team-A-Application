@@ -4,7 +4,9 @@ import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.DataViewCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
@@ -54,8 +56,8 @@ public class SRDataviewManager {
 		try{
 			dataViewCtrl.titleLabel.setText("Service Requests");
 			SR sr = table.getSelectionModel().getSelectedItem().getValue().sr;
-			ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl((SR.SRType) sr.getFields().get("sr_type"));
-			serviceRequestDerby.deleteServiceRequest(table.getSelectionModel().getSelectedItem().getValue().sr);
+			ServiceRequestWrapperImpl serviceRequestWrapper = new ServiceRequestWrapperImpl((SR.SRType) sr.getFields().get("sr_type"));
+			serviceRequestWrapper.deleteServiceRequest(table.getSelectionModel().getSelectedItem().getValue().sr);
 			initializeRequestsTable();
 		} catch (NullPointerException aE){
 
@@ -67,7 +69,7 @@ public class SRDataviewManager {
 	public void initializeRequestsTable()
 			throws SQLException, InvocationTargetException, IllegalAccessException, IOException, ParseException {
 		table = dataViewCtrl.getTable();
-		EmployeeDAO employeeDAO = new EmployeeDerbyImpl();
+		EmployeeDAO employeeDAO = new EmployeeWrapperImpl();
 		dataViewCtrl.getSelectEmployeeBox().getItems().addAll(employeeDAO.getEmployeeList().stream().map(Employee::getFullName).collect(Collectors.toList()));
 		dataViewCtrl.getSelectEmployeeBox().getItems().add("All");
 		dataViewCtrl.getSelectEmployeeBox().setVisible(true);
@@ -132,7 +134,7 @@ public class SRDataviewManager {
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
 								new SimpleStringProperty(param.getValue().getValue().sr.getFields().get("comments").toString()));
 
-		srList = ServiceRequestDerbyImpl.getAllServiceRequestList();
+		srList = ServiceRequestWrapperImpl.getAllServiceRequestList();
 		ObservableList<RecursiveObj> requests = FXCollections.observableArrayList();
 		for (SR sr : srList) {
 			RecursiveObj recursiveSR = new RecursiveObj();
@@ -212,7 +214,7 @@ public class SRDataviewManager {
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
 								new SimpleStringProperty(param.getValue().getValue().sr.getFields().get("comments").toString()));
 
-		this.srList = ServiceRequestDerbyImpl.getAllServiceRequestList();
+		this.srList = (new ServiceRequestWrapperImpl()).getServiceRequestList();
 		ObservableList<RecursiveObj> requests = FXCollections.observableArrayList();
 		for (SR sr : this.srList) {
 			RecursiveObj recursiveSR = new RecursiveObj();
@@ -280,12 +282,13 @@ public class SRDataviewManager {
 					if (field.getSelectionModel().getSelectedIndex() > -1
 							&& value.getText().length() > 0) {
 
-						ServiceRequestDerbyImpl serviceRequestDerby = new ServiceRequestDerbyImpl((SR.SRType) sr.getFields().get("sr_type"));
+						ServiceRequestWrapperImpl serviceRequestWrapper = new ServiceRequestWrapperImpl((SR.SRType) sr.getFields().get("sr_type"));
 						try {
 							sr.setFieldByString(field.getSelectionModel().getSelectedItem(), value.getText());
-							serviceRequestDerby.updateServiceRequest(sr);
+							serviceRequestWrapper.updateServiceRequest(sr);
+							this.initializeRequestsTable();
 							updateButton.setTextFill(Color.GREEN);
-						} catch (SQLException | IllegalAccessException | InvocationTargetException ex) {
+						} catch (SQLException | IllegalAccessException | InvocationTargetException | IOException | ParseException ex) {
 							ex.printStackTrace();
 							updateButton.setTextFill(Color.RED);
 						}

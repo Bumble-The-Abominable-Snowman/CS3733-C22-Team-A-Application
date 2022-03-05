@@ -6,8 +6,10 @@ import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.controllers.DataViewCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
@@ -45,7 +47,7 @@ public class EquipmentDataviewManager {
 
 	public void delete() throws SQLException {
 		try {
-			EquipmentDAO equipmentDAO = new EquipmentDerbyImpl();
+			EquipmentDAO equipmentDAO = new EquipmentWrapperImpl();
 			equipmentDAO.deleteMedicalEquipment(
 					table.getSelectionModel().getSelectedItem().getValue().equip.getStringFields().get("equipment_id"));
 			dataViewCtrl.titleLabel.setText("Equipment");
@@ -100,7 +102,7 @@ public class EquipmentDataviewManager {
 										(Boolean)param.getValue().getValue().equip.getFields().get("is_available") ? "Yes" : "No"));
 
 		// Grab equipment from database
-		EquipmentDAO database = new EquipmentDerbyImpl();
+		EquipmentDAO database = new EquipmentWrapperImpl();
 		this.eqList = database.getMedicalEquipmentList();
 		ObservableList<RecursiveObj> equipment = FXCollections.observableArrayList();
 		for (Equipment item : this.eqList) {
@@ -121,107 +123,68 @@ public class EquipmentDataviewManager {
 	public void modifyPopup(JFXComboBox<String> field, TextArea value, JFXButton updateButton){
 		// BIGGER MARKER
 		Equipment eq = this.eqList.get(table.getSelectionModel().getSelectedIndex());
-		Method[] methods = eq.getClass().getMethods();
-		for (Method method : methods) {
-			boolean is_the_method_of_eq = method.getDeclaringClass().equals(eq.getClass());
-			boolean starts_with_set = method.getName().split("^set")[0].equals("");
-			boolean return_string =
-					Arrays.toString(method.getParameterTypes())
-							.toLowerCase(Locale.ROOT)
-							.contains("string");
 
-			if (is_the_method_of_eq && starts_with_set && return_string) {
-				field.getItems().addAll(method.getName().substring(3));
-			}
-		}
+		field.getItems().addAll(eq.getStringFields().keySet());
 
 		field.setOnAction(
-				e -> {
-					if (field.getSelectionModel().getSelectedIndex() > -1) {
-						for (Method method : methods) {
-							boolean starts_with_get = method.getName().split("^get")[0].equals("");
-							boolean contains_name =
-									method
-											.getName()
-											.toLowerCase(Locale.ROOT)
-											.contains(
-													field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
-							if (starts_with_get && contains_name) {
-								try {
-									value.setText((String) method.invoke(eq));
-								} catch (IllegalAccessException | InvocationTargetException ex) {
-									ex.printStackTrace();
-								}
-							}
-						}
-					}
-				});
+				e -> value.setText(eq.getStringFields().get(field.getSelectionModel().getSelectedItem())));
 
 		updateButton.setOnAction(
 				e -> {
 					if (field.getSelectionModel().getSelectedIndex() > -1
 							&& value.getText().length() > 0) {
-						for (Method method : methods) {
-							boolean starts_with_set = method.getName().split("^set")[0].equals("");
-							boolean contains_name =
-									method
-											.getName()
-											.toLowerCase(Locale.ROOT)
-											.contains(
-													field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
-							if (starts_with_set && contains_name) {
 
-								EquipmentDerbyImpl equipmentDerby = new EquipmentDerbyImpl();
-								try {
-									String aField = "";
-									if(field.getValue().equals("EquipmentType")){
-										aField = "equipment_type";
-									} else if (field.getValue().equals("EquipmentID")){
-										aField = "equipment_id";
-									} else if (field.getValue().equals("CurrentLocation")){
-										aField = "current_location";
+						EquipmentWrapperImpl equipmentWrapper = new EquipmentWrapperImpl();
+						try {
+							String aField = "";
+							if(field.getValue().equals("EquipmentType")){
+								aField = "equipment_type";
+							} else if (field.getValue().equals("EquipmentID")){
+								aField = "equipment_id";
+							} else if (field.getValue().equals("CurrentLocation")){
+								aField = "current_location";
+							}
+							if (aField == "current_location") {
+								LocationDAO locationDAO = new LocationWrapperImpl();
+								List<Location> aList = locationDAO.getNodeList();
+								Location theL = new Location();
+								for (Location aL : aList) {
+									if (value.getText().equals(aL.getStringFields().get("node_id"))) {
+										theL = aL;
+										break;
 									}
-									if (aField == "current_location") {
-										LocationDAO locationDAO = new LocationDerbyImpl();
-										List<Location> aList = locationDAO.getNodeList();
-										Location theL = new Location();
-										for (Location aL : aList) {
-											if (value.getText().equals(aL.getStringFields().get("node_id"))) {
-												theL = aL;
-												break;
-											}
-										}
-										if (theL.getStringFields().get("node_id") == null) {
-											JOptionPane pane = new JOptionPane("Location does not exist", JOptionPane.ERROR_MESSAGE);
-											JDialog dialog = pane.createDialog("Update failed");
-											dialog.setVisible(true);
-											updateButton.setTextFill(Color.RED);
-											return;
-										}
-										if (eq.getFields().get("is_clean").equals("No")) {
-											JOptionPane pane = new JOptionPane("Dirty equipment cannot be moved", JOptionPane.ERROR_MESSAGE);
-											JDialog dialog = pane.createDialog("Update failed");
-											dialog.setVisible(true);
-											updateButton.setTextFill(Color.RED);
-											return;
-										}
-										if (!(theL.getStringFields().get("node_type").equals("STOR")) && !(theL.getStringFields().get("node_type").equals("PATI"))) {
-											JOptionPane pane = new JOptionPane("Equipment cannot be stored here", JOptionPane.ERROR_MESSAGE);
-											JDialog dialog = pane.createDialog("Update failed");
-											dialog.setVisible(true);
-											updateButton.setTextFill(Color.RED);
-											return;
-										}
-									}
-									equipmentDerby.updateMedicalEquipment(eq);
-									updateButton.setTextFill(Color.GREEN);
-									this.initializeEquipmentTable();
-								} catch (Exception ex) {
-									ex.printStackTrace();
+								}
+								if (theL.getStringFields().get("node_id") == null) {
+									JOptionPane pane = new JOptionPane("Location does not exist", JOptionPane.ERROR_MESSAGE);
+									JDialog dialog = pane.createDialog("Update failed");
+									dialog.setVisible(true);
 									updateButton.setTextFill(Color.RED);
+									return;
+								}
+								if (eq.getFields().get("is_clean").equals("No")) {
+									JOptionPane pane = new JOptionPane("Dirty equipment cannot be moved", JOptionPane.ERROR_MESSAGE);
+									JDialog dialog = pane.createDialog("Update failed");
+									dialog.setVisible(true);
+									updateButton.setTextFill(Color.RED);
+									return;
+								}
+								if (!(theL.getStringFields().get("node_type").equals("STOR")) && !(theL.getStringFields().get("node_type").equals("PATI"))) {
+									JOptionPane pane = new JOptionPane("Equipment cannot be stored here", JOptionPane.ERROR_MESSAGE);
+									JDialog dialog = pane.createDialog("Update failed");
+									dialog.setVisible(true);
+									updateButton.setTextFill(Color.RED);
+									return;
 								}
 							}
+							eq.setFieldByString(field.getSelectionModel().getSelectedItem(), value.getText());
+							equipmentWrapper.updateMedicalEquipment(eq);
+							updateButton.setTextFill(Color.GREEN);
+							this.initializeEquipmentTable();
+						} catch (Exception ex) {
+							ex.printStackTrace();
+							updateButton.setTextFill(Color.RED);
 						}
+
 					}
 				});
 	}

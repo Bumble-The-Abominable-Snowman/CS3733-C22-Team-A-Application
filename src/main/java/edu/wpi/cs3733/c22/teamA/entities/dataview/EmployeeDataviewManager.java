@@ -4,6 +4,7 @@ import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
@@ -44,7 +45,7 @@ public class EmployeeDataviewManager {
 	}
 
 	public void delete() throws SQLException, IOException, ParseException {
-		EmployeeDAO employeeDAO = new EmployeeDerbyImpl();
+		EmployeeDAO employeeDAO = new EmployeeWrapperImpl();
 		employeeDAO.deleteEmployee(table.getSelectionModel().getSelectedItem().getValue().employee);
 		dataViewCtrl.titleLabel.setText("Employees");
 		initializeEmployeeTable();
@@ -53,7 +54,7 @@ public class EmployeeDataviewManager {
 	public void initializeEmployeeTable() throws IOException, ParseException {
 		table = dataViewCtrl.getTable();
 
-		EmployeeDAO employeeDAO = new EmployeeDerbyImpl();
+		EmployeeDAO employeeDAO = new EmployeeWrapperImpl();
 		dataViewCtrl.getSelectEmployeeBox().getItems().addAll(employeeDAO.getEmployeeList().stream().map(Employee::getFullName).collect(Collectors.toList()));
 		dataViewCtrl.getSelectEmployeeBox().getItems().add("All");
 		dataViewCtrl.getSelectEmployeeBox().setVisible(true);
@@ -111,7 +112,7 @@ public class EmployeeDataviewManager {
 										param.getValue().getValue().employee.getStringFields().get("start_date")));
 
 		// Grab location / equipment from database, these are dummies
-		EmployeeDAO employeeBase = new EmployeeDerbyImpl();
+		EmployeeDAO employeeBase = new EmployeeWrapperImpl();
 		this.empList = employeeBase.getEmployeeList();
 		ObservableList<RecursiveObj> employees = FXCollections.observableArrayList();
 		for (Employee anEmployee : this.empList) {
@@ -185,7 +186,7 @@ public class EmployeeDataviewManager {
 
 
 		// Grab location / equipment from database, these are dummies
-		EmployeeDAO employeeBase = new EmployeeDerbyImpl();
+		EmployeeDAO employeeBase = new EmployeeWrapperImpl();
 		this.empList = employeeBase.getEmployeeList();
 		ObservableList<RecursiveObj> employees = FXCollections.observableArrayList();
 		for (Employee anEmployee : this.empList) {
@@ -206,66 +207,26 @@ public class EmployeeDataviewManager {
 
 	public void modifyPopup(JFXComboBox<String> field, TextArea value, JFXButton updateButton){
 		Employee emp = empList.get(table.getSelectionModel().getSelectedIndex());
-		Method[] methods = emp.getClass().getMethods();
-		for (Method method : methods) {
-			boolean is_the_method_of_emp = method.getDeclaringClass().equals(emp.getClass());
-			boolean starts_with_set = method.getName().split("^set")[0].equals("");
-			boolean return_string =
-					Arrays.toString(method.getParameterTypes())
-							.toLowerCase(Locale.ROOT)
-							.contains("string");
 
-			if (is_the_method_of_emp && starts_with_set && return_string) {
-				field.getItems().addAll(method.getName().substring(3));
-			}
-		}
+		field.getItems().addAll(emp.getStringFields().keySet());
 
 		field.setOnAction(
-				e -> {
-					if (field.getSelectionModel().getSelectedIndex() > -1) {
-						for (Method method : methods) {
-							boolean starts_with_get = method.getName().split("^get")[0].equals("");
-							boolean contains_name =
-									method
-											.getName()
-											.toLowerCase(Locale.ROOT)
-											.contains(
-													field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
-							if (starts_with_get && contains_name) {
-								try {
-									value.setText((String) method.invoke(emp));
-								} catch (IllegalAccessException | InvocationTargetException ex) {
-									ex.printStackTrace();
-								}
-							}
-						}
-					}
-				});
+				e -> value.setText(emp.getStringFields().get(field.getSelectionModel().getSelectedItem())));
 
 		updateButton.setOnAction(
 				e -> {
 					if (field.getSelectionModel().getSelectedIndex() > -1
 							&& value.getText().length() > 0) {
-						for (Method method : methods) {
-							boolean starts_with_set = method.getName().split("^set")[0].equals("");
-							boolean contains_name =
-									method
-											.getName()
-											.toLowerCase(Locale.ROOT)
-											.contains(
-													field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
-							if (starts_with_set && contains_name) {
 
-								EmployeeDerbyImpl employeeDerby = new EmployeeDerbyImpl();
-								try {
-									employeeDerby.updateEmployee(emp);
-									updateButton.setTextFill(Color.GREEN);
-									this.initializeEmployeeTable();
-								} catch (Exception ex) {
-									ex.printStackTrace();
-									updateButton.setTextFill(Color.RED);
-								}
-							}
+						try {
+							emp.setFieldByString(field.getSelectionModel().getSelectedItem(), value.getText());
+							EmployeeDAO employeeDAO = new EmployeeWrapperImpl();
+							employeeDAO.updateEmployee(emp);
+							updateButton.setTextFill(Color.GREEN);
+							this.initializeEmployeeTable();
+						} catch (ParseException | IOException | SQLException ex) {
+							ex.printStackTrace();
+							updateButton.setTextFill(Color.RED);
 						}
 					}
 				});

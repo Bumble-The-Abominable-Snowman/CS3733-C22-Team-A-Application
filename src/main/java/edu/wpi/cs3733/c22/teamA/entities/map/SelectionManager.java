@@ -4,10 +4,13 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
@@ -64,8 +67,8 @@ public class SelectionManager {
     instantiateButtons();
     fillBoxes();
 
-    locationDatabase = new LocationDerbyImpl();
-    equipmentDatabase = new EquipmentDerbyImpl();
+    locationDatabase = new LocationWrapperImpl();
+    equipmentDatabase = new EquipmentWrapperImpl();
     currentList = new ArrayList<>();
   }
 
@@ -286,7 +289,7 @@ public class SelectionManager {
   private void save() throws SQLException, IllegalAccessException, InvocationTargetException, IOException, ParseException {
     if(selectedObject instanceof SR){
       SR newSR = (SR)selectedObject;
-      ServiceRequestDAO dao = new ServiceRequestDerbyImpl((SR.SRType) ((SR) selectedObject).getFields().get("sr_type"));
+      ServiceRequestDAO dao = new ServiceRequestWrapperImpl((SR.SRType) ((SR) selectedObject).getFields().get("sr_type"));
       int ct = 0;
       for(String key: srNames){
         newSR.setFieldByString(key, srFields.get(ct).textArea.getText());
