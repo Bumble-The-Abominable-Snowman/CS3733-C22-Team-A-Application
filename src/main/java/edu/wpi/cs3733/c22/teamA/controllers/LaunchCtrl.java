@@ -46,16 +46,25 @@ public class LaunchCtrl {
 
   @FXML
   private void launchEmbedded() throws IOException {
+      App.DB_CHOICE = "embedded";
         sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOGIN);
     }
 @FXML
     private void launchClientServer() throws IOException {
+    App.DB_CHOICE = "remote-derby";
         sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOGIN);
     }
 @FXML
     private void launchFirebase() throws IOException {
       //handleLogin()??? needs to be static but it can't.
-    Auth0Login.login();
+    App.DB_CHOICE = "nosql";
+    Auth0Login.login().thenRun(() -> {
+        try {
+            sceneSwitcher.switchScene(SceneSwitcher.SCENES.HOME);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    });
     }
 
   @FXML

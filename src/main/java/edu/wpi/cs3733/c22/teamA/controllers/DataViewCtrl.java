@@ -298,11 +298,7 @@ public class DataViewCtrl extends MasterCtrl {
                       } else if(HomeCtrl.sceneFlag == 1){
                         try {
                           srDataviewManager.filterSRs(newValue.toString());
-                        } catch (SQLException e) {
-                          e.printStackTrace();
-                        } catch (InvocationTargetException e) {
-                          e.printStackTrace();
-                        } catch (IllegalAccessException e) {
+                        } catch (SQLException | IllegalAccessException | InvocationTargetException | IOException e) {
                           e.printStackTrace();
                         }
                       } /*

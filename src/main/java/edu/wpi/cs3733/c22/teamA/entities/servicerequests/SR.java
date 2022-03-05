@@ -1,11 +1,16 @@
 package edu.wpi.cs3733.c22.teamA.entities.servicerequests;
 
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
+
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -111,13 +116,13 @@ public class SR {
     this.fields.put(key, value);
   }
 
-  public void setFieldByString(String key, String value) throws IllegalAccessException {
+  public void setFieldByString(String key, String value) throws IllegalAccessException, IOException, ParseException {
     if (Objects.equals(key, "start_location") || Objects.equals(key, "end_location")) {
-      LocationDerbyImpl locationDerby = new LocationDerbyImpl();
+      LocationWrapperImpl locationDerby = new LocationWrapperImpl();
       this.fields.put(key, locationDerby.getLocationNode(value));
     } else if (Objects.equals(key, "employee_requested")
             || Objects.equals(key, "employee_assigned")) {
-      EmployeeDerbyImpl employeeDerby = new EmployeeDerbyImpl();
+      EmployeeWrapperImpl employeeDerby = new EmployeeWrapperImpl();
       this.fields.put(key, employeeDerby.getEmployee(value));
     } else if (Objects.equals(key, "request_time")) {
       this.fields.put(key, Timestamp.valueOf(value));

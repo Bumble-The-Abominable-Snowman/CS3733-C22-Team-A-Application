@@ -151,7 +151,7 @@ public class SRDataviewManager {
 		dataViewCtrl.setupViewDetailsAndModify();
 	}
 
-	public void filterSRs(String newValue) throws SQLException, InvocationTargetException, IllegalAccessException {
+	public void filterSRs(String newValue) throws SQLException, InvocationTargetException, IllegalAccessException, IOException {
 		List<JFXTreeTableColumn<RecursiveObj, String>> srColumns = new ArrayList<>();
 
 		for (String columnName : this.srColumnNames) {

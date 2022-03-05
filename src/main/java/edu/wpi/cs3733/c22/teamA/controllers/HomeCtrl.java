@@ -45,8 +45,8 @@ public class HomeCtrl extends MasterCtrl {
       menuBox.toFront();
 
 
-    EmployeeDAO employeeBase = new EmployeeWrapperImpl();
-    List<Employee> empList = employeeBase.getEmployeeList();
+//    EmployeeDAO employeeBase = new EmployeeWrapperImpl();
+//    List<Employee> empList = employeeBase.getEmployeeList();
 
     double newSRHelpTextSize = newSRHelpButton.getFont().getSize();
     double mapHelpTextSize = mapHelpButton.getFont().getSize();

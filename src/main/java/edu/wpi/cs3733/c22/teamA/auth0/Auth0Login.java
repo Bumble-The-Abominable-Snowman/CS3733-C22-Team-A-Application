@@ -46,8 +46,8 @@ public class Auth0Login {
                     String url = engine.getLocation();
                     if (url.startsWith(REDIRECT_URI)) {
                         String token = url.substring(REDIRECT_URI.length());
-                        AuthUser authUser = new AuthUser(token);
-                        future.complete(authUser);
+                        App.authUser = new AuthUser(token);
+                        future.complete(App.authUser);
                     }
                 }
             });
