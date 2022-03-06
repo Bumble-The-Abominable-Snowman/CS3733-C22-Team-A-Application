@@ -1,3 +1,3 @@
 request_status, start_location, request_priority, request_time, comments, employee_requested, end_location, employee_assigned, bouquet_type, request_id, flower
-BLANK,N/A,REGULAR,2022-03-01 23:45:01.81,N/A,001,FDEPT00201,003,null,FLODEL957,null
-BLANK,N/A,REGULAR,2022-03-01 23:45:31.291,N/A,001,FDEPT00201,004,null,FLODEL186,null
+BLANK,NA,REGULAR,2022-03-01 23:45:01.81,NA,001,FDEPT00201,003,null,FLODEL957,null
+BLANK,NA,REGULAR,2022-03-01 23:45:31.291,NA,001,FDEPT00201,004,null,FLODEL186,null

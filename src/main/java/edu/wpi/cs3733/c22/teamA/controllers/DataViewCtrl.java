@@ -300,6 +300,8 @@ public class DataViewCtrl extends MasterCtrl {
                           srDataviewManager.filterSRs(newValue.toString());
                         } catch (SQLException | IllegalAccessException | InvocationTargetException | IOException e) {
                           e.printStackTrace();
+                        } catch (ParseException e) {
+                          e.printStackTrace();
                         }
                       } /*
                       previousButton.setStyle(

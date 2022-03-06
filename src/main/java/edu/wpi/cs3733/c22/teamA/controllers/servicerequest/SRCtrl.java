@@ -3,8 +3,10 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
@@ -69,7 +71,7 @@ public abstract class SRCtrl extends MasterCtrl {
     gesturePaneManager.setMapFloor("Floor 1");
     gesturePaneManager.initGesture();
 
-    locationDAO = new LocationDerbyImpl();
+    locationDAO = new LocationWrapperImpl();
     markerManager = new MarkerManager(locationDAO, anchorPane);
     List<JFXButton> buttons = new ArrayList<>();
     for (int i = 0; i < 5; i++) {
@@ -99,9 +101,9 @@ public abstract class SRCtrl extends MasterCtrl {
           IllegalAccessException, ParseException;
 
   @FXML
-  protected void populateEmployeeAndLocationList() {
-    this.employeeList = new EmployeeDerbyImpl().getEmployeeList();
-    this.locationList = new LocationDerbyImpl().getNodeList();
+  protected void populateEmployeeAndLocationList() throws IOException, ParseException {
+    this.employeeList = new EmployeeWrapperImpl().getEmployeeList();
+    this.locationList = new LocationWrapperImpl().getNodeList();
   }
 
   @FXML

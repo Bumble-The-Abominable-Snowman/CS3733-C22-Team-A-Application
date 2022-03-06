@@ -60,7 +60,7 @@ public class SR {
 
   public SR(SRType srType) {
     this(
-        "N/A",
+        "NA",
         new Location(),
         new Location(),
         new Employee(),
@@ -68,7 +68,7 @@ public class SR {
         new Timestamp((new Date()).getTime()),
         Status.BLANK,
         Priority.REGULAR,
-        "N/A",
+        "NA",
         srType);
   }
 

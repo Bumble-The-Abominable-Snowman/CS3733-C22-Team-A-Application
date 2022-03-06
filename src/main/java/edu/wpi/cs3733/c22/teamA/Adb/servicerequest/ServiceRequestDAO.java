@@ -17,7 +17,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public interface ServiceRequestDAO {
-  SR getRequest(String ID) throws SQLException, InvocationTargetException, IllegalAccessException, IOException;
+  SR getRequest(String ID) throws SQLException, InvocationTargetException, IllegalAccessException, IOException, ParseException;
 
   void updateServiceRequest(SR sr)
           throws SQLException, InvocationTargetException, IllegalAccessException, IOException;
@@ -28,7 +28,7 @@ public interface ServiceRequestDAO {
   void deleteServiceRequest(SR sr) throws SQLException, IOException;
 
   List<SR> getServiceRequestList()
-          throws SQLException, InvocationTargetException, IllegalAccessException, IOException;
+          throws SQLException, InvocationTargetException, IllegalAccessException, IOException, ParseException;
 
 
   // Read from CSV

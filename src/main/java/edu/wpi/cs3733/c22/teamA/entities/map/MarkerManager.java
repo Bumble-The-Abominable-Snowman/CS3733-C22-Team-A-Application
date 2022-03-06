@@ -66,7 +66,7 @@ public class MarkerManager {
     allLocations = locationDAO.getNodeList();
     allEquipments = equipmentDAO.getMedicalEquipmentList();
     try {
-      List<?> requestList = (new ServiceRequestWrapperImpl()).getServiceRequestList();
+      List<?> requestList = ServiceRequestWrapperImpl.getAllServiceRequestList();
       for (Object sr : requestList) {
         allSRs.add((SR) sr);
       }
@@ -238,7 +238,7 @@ public class MarkerManager {
 
   private void initialDraw() {
     for (LocationMarker l : locationMarkers) {
-        if(!l.getLocation().getStringFields().get("node_id").equals("N/A")) {
+        if(!l.getLocation().getStringFields().get("node_id").equals("NA")) {
             l.draw(anchorPane);
         }
       if (l.getEquipmentMarker() != null) {

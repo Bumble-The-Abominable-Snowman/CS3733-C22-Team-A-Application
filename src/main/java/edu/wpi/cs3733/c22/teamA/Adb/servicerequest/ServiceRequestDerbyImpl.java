@@ -212,7 +212,7 @@ public class ServiceRequestDerbyImpl implements ServiceRequestDAO {
 
   @Override
   public List<SR> getServiceRequestList()
-      throws SQLException, InvocationTargetException, IllegalAccessException {
+          throws SQLException, InvocationTargetException, IllegalAccessException, IOException, ParseException {
 
     Statement getNodeList = Adb.connection.createStatement();
 
@@ -239,7 +239,7 @@ public class ServiceRequestDerbyImpl implements ServiceRequestDAO {
   }
 
   public static List<SR> getAllServiceRequestList()
-          throws SQLException, IllegalAccessException, InvocationTargetException {
+          throws SQLException, IllegalAccessException, InvocationTargetException, IOException, ParseException {
     ArrayList<SR> allReqList = new ArrayList<>();
 
     for (SR.SRType srType: SR.SRType.values()) {

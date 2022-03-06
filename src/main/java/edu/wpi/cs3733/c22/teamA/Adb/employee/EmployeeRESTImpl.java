@@ -255,22 +255,27 @@ public class EmployeeRESTImpl implements EmployeeDAO {
   }
 
   public void inputFromCSVfile(String csvFilePath) throws IOException, ParseException { // Check employee table
-    EmployeeRESTImpl employeeREST = new EmployeeRESTImpl();
-    List<Employee> employeeList = employeeREST.getEmployeeList();
-    for (Employee emp : employeeList) {
-      employeeREST.deleteEmployee(emp);
-    }
+
+
+    ArrayList<HashMap<String, String>> map_list = new ArrayList<>();
 
     try {
 
       List<Employee> employeeList1 = EmployeeRESTImpl.readEmployeeCSVfile(csvFilePath);
 
       for (Employee employee : employeeList1) {
-        this.enterEmployee(employee);
+        map_list.add(employee.getStringFields());
       }
+
+      HashMap<String, String> metadata_map = new HashMap<>();
+      metadata_map.put("operation", "populate");
+      metadata_map.put("employee_type", "");
+
+      Adb.populate_db(url, metadata_map, map_list);
     } catch (IOException | ParseException e) {
       e.printStackTrace();
     }
+
   }
 
   // Export to CSV

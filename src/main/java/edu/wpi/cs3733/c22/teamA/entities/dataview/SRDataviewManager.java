@@ -153,7 +153,7 @@ public class SRDataviewManager {
 		dataViewCtrl.setupViewDetailsAndModify();
 	}
 
-	public void filterSRs(String newValue) throws SQLException, InvocationTargetException, IllegalAccessException, IOException {
+	public void filterSRs(String newValue) throws SQLException, InvocationTargetException, IllegalAccessException, IOException, ParseException {
 		List<JFXTreeTableColumn<RecursiveObj, String>> srColumns = new ArrayList<>();
 
 		for (String columnName : this.srColumnNames) {
@@ -214,7 +214,7 @@ public class SRDataviewManager {
 						(TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
 								new SimpleStringProperty(param.getValue().getValue().sr.getFields().get("comments").toString()));
 
-		this.srList = (new ServiceRequestWrapperImpl()).getServiceRequestList();
+		this.srList = ServiceRequestWrapperImpl.getAllServiceRequestList();
 		ObservableList<RecursiveObj> requests = FXCollections.observableArrayList();
 		for (SR sr : this.srList) {
 			RecursiveObj recursiveSR = new RecursiveObj();

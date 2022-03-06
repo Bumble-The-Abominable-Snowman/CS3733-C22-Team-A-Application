@@ -25,7 +25,7 @@ public class ServiceRequestWrapperImpl implements ServiceRequestDAO {
     }
 
     @Override
-    public SR getRequest(String ID) throws SQLException, InvocationTargetException, IllegalAccessException, IOException {
+    public SR getRequest(String ID) throws SQLException, InvocationTargetException, IllegalAccessException, IOException, ParseException {
         if (App.DB_CHOICE.equals("nosql"))
         {return (new ServiceRequestRESTImpl(this.srType)).getRequest(ID);}
         else
@@ -60,14 +60,14 @@ public class ServiceRequestWrapperImpl implements ServiceRequestDAO {
     }
 
     @Override
-    public List<SR> getServiceRequestList() throws SQLException, InvocationTargetException, IllegalAccessException, IOException {
+    public List<SR> getServiceRequestList() throws SQLException, InvocationTargetException, IllegalAccessException, IOException, ParseException {
         if (App.DB_CHOICE.equals("nosql"))
         {return (new ServiceRequestRESTImpl(this.srType)).getServiceRequestList();}
         else
         {return (new ServiceRequestDerbyImpl(this.srType)).getServiceRequestList();}
     }
 
-    public void inputFromCSVfile(String csvFilePath) throws IOException, ParseException, SQLException, InvocationTargetException, IllegalAccessException {
+    public void populateFromCSVfile(String csvFilePath) throws IOException, ParseException, SQLException, InvocationTargetException, IllegalAccessException {
         if (App.DB_CHOICE.equals("nosql"))
         {(new ServiceRequestRESTImpl(this.srType)).populateFromCSVfile(csvFilePath);}
         else {(new ServiceRequestDerbyImpl(this.srType)).populateFromCSVfile(csvFilePath);}
@@ -75,7 +75,7 @@ public class ServiceRequestWrapperImpl implements ServiceRequestDAO {
     }
 
     public static List<SR> getAllServiceRequestList()
-            throws SQLException, IllegalAccessException, InvocationTargetException, IOException {
+            throws SQLException, IllegalAccessException, InvocationTargetException, IOException, ParseException {
         if (App.DB_CHOICE.equals("nosql"))
         {return ServiceRequestRESTImpl.getAllServiceRequestList();}
         else

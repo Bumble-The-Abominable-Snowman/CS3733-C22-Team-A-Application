@@ -107,6 +107,7 @@ public class LocationRESTImpl implements LocationDAO {
     HashMap<String, String> resp = Adb.getREST(url, map);
     Location location = new Location();
     for (String key: resp.keySet()) {
+      System.out.printf("Key: %s\tValue: %s\n", key, resp.get(key));
       location.setFieldByString(key, resp.get(key));
     }
     return location;

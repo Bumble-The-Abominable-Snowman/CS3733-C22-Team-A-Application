@@ -2,7 +2,9 @@ package edu.wpi.cs3733.c22.teamA.controllers.servicerequest;
 
 import com.jfoenix.controls.JFXButton;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
@@ -165,13 +167,13 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
   }
 
   @FXML
-  private void saveAPI() throws IllegalAccessException, SQLException, InvocationTargetException, ParseException {
+  private void saveAPI() throws IllegalAccessException, SQLException, InvocationTargetException, ParseException, IOException {
     List<teamA_API.entities.SR> list = Main.getRequestList();
-    ServiceRequestDerbyImpl data = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
+    ServiceRequestWrapperImpl data = new ServiceRequestWrapperImpl(SR.SRType.SANITATION);
     for (teamA_API.entities.SR req : list) {
       SR sr = new SR(SR.SRType.SANITATION);
       sr.setFieldByString("request_id", req.getFields_string().get("request_id"));
-      sr.setFieldByString("start_location", "N/A");
+      sr.setFieldByString("start_location", "NA");
       sr.setFieldByString("end_location", req.getFields_string().get("end_location"));
 
       teamA_API.entities.Employee employeeAssignedAPI = (teamA_API.entities.Employee) Main.getEmployee(req.getFields_string().get("employee_assigned"));
@@ -185,9 +187,9 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
               employeeAssignedAPI.getAddress(),
               new SimpleDateFormat("yyyy-MM-dd").parse(employeeAssignedAPI.getStartDate()));
 
-      EmployeeDerbyImpl employeeDerby = new EmployeeDerbyImpl();
+      EmployeeWrapperImpl employeeWrapper = new EmployeeWrapperImpl();
       boolean doesEmployeeAssignedNotExist = false;
-      for (Employee e: employeeDerby.getEmployeeList()) {
+      for (Employee e: employeeWrapper.getEmployeeList()) {
         if (e.getStringFields().get("employee_id").equals(employeeRequested.getStringFields().get("employee_id")))
         {
           doesEmployeeAssignedNotExist = true;
@@ -195,7 +197,7 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
       }
       if (!doesEmployeeAssignedNotExist)
       {
-        employeeDerby.enterEmployee(employeeAssignedAPI.getEmployeeID(),
+        employeeWrapper.enterEmployee(employeeAssignedAPI.getEmployeeID(),
                 employeeAssignedAPI.getEmployeeType(),
                 employeeAssignedAPI.getFirstName(),
                 employeeAssignedAPI.getLastName(),
@@ -207,7 +209,7 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
       }
 
       sr.setField("employee_assigned", employeeRequested);
-      sr.setField("employee_requested", employeeDerby.getEmployee("001"));
+      sr.setField("employee_requested", employeeWrapper.getEmployee("001"));
 
       sr.setFieldByString("comments", req.getFields_string().get("comments"));
       sr.setFieldByString("sanitation_type", req.getFields_string().get("sanitation_type"));

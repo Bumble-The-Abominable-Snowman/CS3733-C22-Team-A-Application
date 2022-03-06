@@ -124,14 +124,14 @@ public class LanguageSRCtrl extends SRCtrl {
 
       // pass language service request object
       SR sr = new SR(uniqueID,
-              (new LocationWrapperImpl()).getLocationNode("N/A"),
+              (new LocationWrapperImpl()).getLocationNode("NA"),
               toLocationSelected,
               (new EmployeeWrapperImpl()).getEmployee("002"),
               employeeSelected,
               new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,
               SR.Priority.REGULAR,
-              commentsBox.getText().equals("") ? "N/A" : commentsBox.getText(),
+              commentsBox.getText().equals("") ? "NA" : commentsBox.getText(),
               SR.SRType.LANGUAGE);
 
       ServiceRequestWrapperImpl serviceRequestWrapper = new ServiceRequestWrapperImpl(SR.SRType.LANGUAGE);

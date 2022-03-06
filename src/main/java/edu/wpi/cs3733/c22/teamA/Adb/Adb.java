@@ -24,6 +24,8 @@ import java.util.*;
 
 public class Adb {
 
+  private static final OkHttpClient client = new OkHttpClient();
+
   public static String pathToDBA = "";
 
   public static Connection connection = null;
@@ -669,8 +671,19 @@ public class Adb {
 //    securitySRServiceRequestDerby.exportToCSV(dirPath + "/SecurityServiceRequest.csv");
   }
 
-  public static void postREST(String url, Map<String, String> map) throws IOException {
+  public static void postREST(String url, HashMap<String, String> metadata_map, HashMap<String, String> payload_map) throws IOException {
+
+    HashMap<String, ArrayList<HashMap<String, String>>> map = new HashMap<>();
+    ArrayList<HashMap<String, String>> metadata_list = new ArrayList<>();
+    ArrayList<HashMap<String, String>> payload_list = new ArrayList<>();
+
+    metadata_list.add(metadata_map);
+    payload_list.add(payload_map);
+    map.put("metadata", metadata_list);
+    map.put("payload", payload_list);
+
     String json_load = String.valueOf(new JSONObject(map));
+    System.out.println("json load:");
     System.out.println(json_load);
     RequestBody body = RequestBody.create(MediaType.parse("application/json"), json_load);
 
@@ -681,18 +694,30 @@ public class Adb {
             .post(body)
             .build();
 
-    OkHttpClient client = new OkHttpClient();
+
     Call call = client.newCall(request);
     Response response = call.execute();
+    String msg = response.message();
+    Objects.requireNonNull(response.body()).close();
 
     if (response.code() >= 300)
     {
-      throw new IOException(String.format("Operation unsuccessful (ERR MSG:%s)!", response.message()));
+      throw new IOException(String.format("Operation unsuccessful (ERR MSG:%s)!", msg));
     }
   }
 
-  public static HashMap<String, String> getREST(String url, Map<String, String> map) throws IOException {
+  public static HashMap<String, String> getREST(String url, HashMap<String, String> metadata_map) throws IOException {
+
+    HashMap<String, ArrayList<HashMap<String, String>>> map = new HashMap<>();
+    ArrayList<HashMap<String, String>> metadata_list = new ArrayList<>();
+    ArrayList<HashMap<String, String>> payload_list = new ArrayList<>();
+
+    metadata_list.add(metadata_map);
+    map.put("metadata", metadata_list);
+    map.put("payload", payload_list);
+
     String json_load = String.valueOf(new JSONObject(map));
+    System.out.println("json load:");
     System.out.println(json_load);
     RequestBody body = RequestBody.create(MediaType.parse("application/json"), json_load);
 
@@ -703,23 +728,33 @@ public class Adb {
             .post(body)
             .build();
 
-    OkHttpClient client = new OkHttpClient();
-    Call call = client.newCall(request);
+    Call call = Adb.client.newCall(request);
     Response response = call.execute();
 
-    if (response.code() >= 300)
-    {
-      throw new IOException(String.format("Operation unsuccessful (ERR MSG:%s)!", response.message()));
-    }
+//    if (response.code() >= 300)
+//    {
+//      throw new IOException(String.format("Operation unsuccessful (ERR MSG:%s)!", response.message()));
+//    }
 
+    String json_string = Objects.requireNonNull(response.body()).string();
+    Objects.requireNonNull(response.body()).close();
+    System.out.println(json_string);
     Type type = new TypeToken<HashMap<String, String>>(){}.getType();
-
-    return (new Gson()).fromJson(Objects.requireNonNull(response.body()).string(), type);
+    return (new Gson()).fromJson(json_string, type);
   }
 
   public static ArrayList<HashMap<String, String>> getAllREST(String url) throws IOException {
-    HashMap<String, String> map = new HashMap<>();
-    map.put("operation", "getall");
+
+    HashMap<String, ArrayList<HashMap<String, String>>> map = new HashMap<>();
+    ArrayList<HashMap<String, String>> metadata_list = new ArrayList<>();
+    HashMap<String, String> metadata_map = new HashMap<>();
+
+    metadata_map.put("operation", "getall");
+
+    metadata_list.add(metadata_map);
+    map.put("metadata", metadata_list);
+    map.put("payload", new ArrayList<>());
+
     String json_load = String.valueOf(new JSONObject(map));
     System.out.println(json_load);
     RequestBody body = RequestBody.create(MediaType.parse("application/json"), json_load);
@@ -731,18 +766,19 @@ public class Adb {
             .post(body)
             .build();
 
-    OkHttpClient client = new OkHttpClient();
-    Call call = client.newCall(request);
+    Call call = Adb.client.newCall(request);
     Response response = call.execute();
 
     if (response.code() >= 300)
     {
       String json_string = Objects.requireNonNull(response.body()).string();
+      Objects.requireNonNull(response.body()).close();
       System.out.println(json_string);
       throw new IOException(String.format("Operation unsuccessful (ERR MSG:%s)!", response.message()));
     }
 
     String json_string = Objects.requireNonNull(response.body()).string();
+    Objects.requireNonNull(response.body()).close();
     Type type = new TypeToken<ArrayList<HashMap<String, String>>>(){}.getType();
     try
     {
@@ -754,6 +790,91 @@ public class Adb {
       e.printStackTrace();
       return new ArrayList<>();
     }
+
   }
+
+  public static ArrayList<HashMap<String, HashMap<String, String>>> getAllRESTSR(String url) throws IOException {
+
+    HashMap<String, ArrayList<HashMap<String, String>>> map = new HashMap<>();
+    ArrayList<HashMap<String, String>> metadata_list = new ArrayList<>();
+    HashMap<String, String> metadata_map = new HashMap<>();
+
+    metadata_map.put("operation", "getall");
+
+    metadata_list.add(metadata_map);
+    map.put("metadata", metadata_list);
+    map.put("payload", new ArrayList<>());
+
+    String json_load = String.valueOf(new JSONObject(map));
+    System.out.println(json_load);
+    RequestBody body = RequestBody.create(MediaType.parse("application/json"), json_load);
+
+    Request request = new Request.Builder()
+            .url(url)
+            .addHeader("Content-Type", "application/json")
+            .addHeader("authorization", "Bearer " + App.authUser.getToken())
+            .post(body)
+            .build();
+
+    Call call = Adb.client.newCall(request);
+    Response response = call.execute();
+
+    if (response.code() >= 300)
+    {
+      String json_string = Objects.requireNonNull(response.body()).string();
+      System.out.println(json_string);
+      Objects.requireNonNull(response.body()).close();
+      throw new IOException(String.format("Operation unsuccessful (ERR MSG:%s)!", response.message()));
+    }
+
+    String json_string = Objects.requireNonNull(response.body()).string();
+    Objects.requireNonNull(response.body()).close();
+    System.out.println(json_string);
+    Type type = new TypeToken<ArrayList<HashMap<String, HashMap<String, String>>>>(){}.getType();
+    try
+    {
+      Gson gson = new Gson();
+      return gson.fromJson(json_string, type);
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+      return new ArrayList<>();
+    }
+  }
+
+  public static void populate_db(String url, HashMap<String, String> metadata_map, ArrayList<HashMap<String, String>> map_list) throws IOException {
+    HashMap<String, ArrayList<HashMap<String, String>>> map = new HashMap<>();
+    ArrayList<HashMap<String, String>> metadata_list = new ArrayList<>();
+
+    metadata_list.add(metadata_map);
+    map.put("metadata", metadata_list);
+    map.put("payload", map_list);
+
+    String json_load = String.valueOf(new JSONObject(map));
+    System.out.println(json_load);
+    RequestBody body = RequestBody.create(MediaType.parse("application/json"), json_load);
+
+    Request request = new Request.Builder()
+            .url(url)
+            .addHeader("Content-Type", "application/json")
+            .addHeader("authorization", "Bearer " + App.authUser.getToken())
+            .post(body)
+            .build();
+
+    Call call = Adb.client.newCall(request);
+    Response response = call.execute();
+    String json_string = Objects.requireNonNull(response.body()).string();
+
+    if (response.code() >= 300)
+    {
+      System.out.println(json_string);
+      String msg = response.message();
+      Objects.requireNonNull(response.body()).close();
+      throw new IOException(String.format("Operation unsuccessful (ERR MSG:%s)!", msg));
+    }
+    Objects.requireNonNull(response.body()).close();
+  }
+
 
 }
