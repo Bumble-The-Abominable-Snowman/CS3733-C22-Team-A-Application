@@ -1,7 +1,11 @@
 package edu.wpi.cs3733.c22.teamA.entities;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import java.util.List;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
+import java.util.*;
 
 public class Medicine extends RecursiveTreeObject<Medicine> {
 
@@ -15,6 +19,10 @@ public class Medicine extends RecursiveTreeObject<Medicine> {
   private String warnings; // "Do not take while (x,y,z)"
   private String sideEffects; // Listed sideeffects of the medicine (ex. Nausea)
   private String form; // Method of drug delivery (tablet, liquid, IV, etc.)
+
+  protected HashMap<String, Object> fields = new HashMap<>();
+  protected HashMap<String, String> fields_string = new HashMap<>();
+
 
   private List<Float> dosageAmounts; // Different dosage amounts (in milligrams)
 
@@ -30,114 +38,74 @@ public class Medicine extends RecursiveTreeObject<Medicine> {
       String sideEffects,
       String form,
       List<Float> dosageAmounts) {
-    this.medicineID = medicineID;
-    this.genericName = genericName;
-    this.brandName = brandName;
-    this.medicineClass = medicineClass;
-    this.uses = uses;
-    this.warnings = warnings;
-    this.sideEffects = sideEffects;
-    this.form = form;
-    this.dosageAmounts = dosageAmounts;
+    this.setField("medicine_id", medicineID);
+    this.setField("generic_name", genericName);
+    this.setField("brand_name", brandName);
+    this.setField("medicine_class", medicineClass);
+    this.setField("uses", uses);
+    this.setField("warnings", warnings);
+    this.setField("side_effects", sideEffects);
+    this.setField("form", form);
+    this.setField("dosage_amounts", dosageAmounts);
   }
 
   public List<String> getListForm(){
     return List.of(
-            this.medicineID,
-            this.genericName,
-            this.brandName,
-            this.medicineClass,
-            this.uses,
-            this.warnings,
-            this.sideEffects,
-            this.form,
-            this.dosageAmounts.toString()
+            this.fields_string.get("medicine_id"),
+            this.fields_string.get("generic_name"),
+            this.fields_string.get("brand_name"),
+            this.fields_string.get("medicine_class"),
+            this.fields_string.get("uses"),
+            this.fields_string.get("warnings"),
+            this.fields_string.get("side_effects"),
+            this.fields_string.get("form"),
+            this.fields_string.get("dosage_amounts")
     );
   }
 
-  public String getMedicineID() {
-    return this.medicineID;
+  public HashMap<String, String> getStringFields() {return this.fields_string;}
+
+  public HashMap<String, Object> getFields() {
+    return fields;
   }
 
-  public void setMedicineID(String medicineID) {
-    this.medicineID = medicineID;
+  public void setField(String key, Object value) {
+    if (Objects.equals(key, "dosage_amounts"))
+    {
+      this.fields.put(key, null);
+      this.fields_string.put(key, "");
+      for (Float d: ((List<Float>) value)) {
+        this.fields_string.put(key, this.fields_string.get(key) + d + " ");
+      }
+      this.fields.put(key, value);
+    }
+    else
+    {
+      this.fields.put(key, value);
+      this.fields_string.put(key, String.valueOf(value));
+    }
+
   }
 
-  public String getGenericName() {
-    return this.genericName;
-  }
+  public void setFieldByString(String key, String value) throws ParseException {
+    if (Objects.equals(key, "dosage_amounts")) {
+      ArrayList<Float> temp = new ArrayList<Float>();
+      this.fields_string.put(key, "");
+      for (String d: value.split(" ")) {
+        this.fields_string.put(key, this.fields_string.get(key) + d + " ");
 
-  public void setGenericName(String genericName) {
-    this.genericName = genericName;
-  }
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setDecimalSeparator('.');
+        DecimalFormat decimalFormat = new DecimalFormat("#.000");
+        decimalFormat.setDecimalFormatSymbols(symbols);
 
-  public String getBrandName() {
-    return this.brandName;
-  }
+        this.fields.put(key, temp.add(decimalFormat.parse(value).floatValue()));
+      }
 
-  public void setBrandName(String brandName) {
-    this.brandName = brandName;
-  }
-
-  public String getMedicineClass() {
-    return this.medicineClass;
-  }
-
-  public void setMedicineClass(String medicineClass) {
-    this.medicineClass = medicineClass;
-  }
-
-  public String getUses() {
-    return this.uses;
-  }
-
-  public void setUses(String uses) {
-    this.uses = uses;
-  }
-
-  public String getWarnings() {
-    return this.warnings;
-  }
-
-  public void setWarnings(String warnings) {
-    this.warnings = warnings;
-  }
-
-  public String getSideEffects() {
-    return this.sideEffects;
-  }
-
-  public void setSideEffects(String sideEffects) {
-    this.sideEffects = sideEffects;
-  }
-
-  public String getForm() {
-    return this.form;
-  }
-
-  public void setForm(String form) {
-    this.form = form;
-  }
-
-  public List<Float> getDosageAmounts() {
-    return this.dosageAmounts;
-  }
-
-  public void setDosageAmounts(List<Float> dosageAmounts) {
-    this.dosageAmounts = dosageAmounts;
-  }
-
-  public String toString(){
-    return "" +
-            "medID: " + medicineID +
-            " genName: " + genericName +
-            " brandName: " + brandName +
-            " class: " + medicineClass +
-            " uses: " + uses +
-            " warnings: " + warnings +
-            " sideeffects: " + sideEffects +
-            " form: " + form +
-            " doses: " + dosageAmounts;
+    }else {
+      this.fields.put(key, value);
+      this.fields_string.put(key, value);
+    }
   }
 
 }

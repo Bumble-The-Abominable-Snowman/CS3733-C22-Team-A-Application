@@ -12,10 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class MedicineRESTImpl implements MedicineDAO {
 
@@ -45,9 +42,10 @@ public class MedicineRESTImpl implements MedicineDAO {
   }
 
   public void enterMedicine(Medicine med) throws IOException {
-//    HashMap<String, String> map = med.getStringFields();
-//    map.put("operation", "add");
-//    Adb.postREST(url, map);
+    HashMap<String, String> metadata = new HashMap<>();
+    metadata.put("operation", "add");
+    Adb.postREST(url, metadata, med.getStringFields());
+
   }
 
   /**
@@ -63,7 +61,8 @@ public class MedicineRESTImpl implements MedicineDAO {
       String sideEffects,
       String form,
       List<Float> dosageAmount) throws IOException {
-    Medicine medicine = new Medicine(medicineID,
+
+    Medicine med = new Medicine(medicineID,
             genericName,
             brandName,
             medicineClass,
@@ -72,7 +71,7 @@ public class MedicineRESTImpl implements MedicineDAO {
             sideEffects,
             form,
             dosageAmount);
-    enterMedicine(medicine);
+    enterMedicine(med);
   }
 
   public void enterMedicineDosage(String ID, Float dosage) throws IOException {
