@@ -1,7 +1,6 @@
 package edu.wpi.cs3733.c22.teamA.controllers.settings;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXToggleButton;
 import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
@@ -18,7 +17,6 @@ import javafx.scene.paint.Color;
 
 public class SettingsCtrl extends MasterCtrl {
 
-  @FXML private JFXToggleButton toggleClientServerButton;
   @FXML private JFXButton loadBackupButton;
   @FXML private JFXButton saveBackupButton;
   @FXML private JFXButton simulatorAPIButton;
@@ -50,16 +48,8 @@ public class SettingsCtrl extends MasterCtrl {
 
     configure();
 
-    if (Adb.usingEmbedded) {
-      toggleClientServerButton.setSelected(false);
-    } else {
-      toggleClientServerButton.setSelected(true);
-    }
-
     loadBackupTextSize = loadBackupButton.getFont().getSize();
     saveBackupTextSize = saveBackupButton.getFont().getSize();
-    clientServerTextSize = toggleClientServerButton.getFont().getSize();
-    cloudTextSize = toggleClientServerButton.getFont().getSize();
 /*
     double previousTextSize = previousButton.getFont().getSize();
     double nextTextSize = nextButton.getFont().getSize();
@@ -144,21 +134,6 @@ public class SettingsCtrl extends MasterCtrl {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.SAVE_BACKUP);
   }
 
-  public void toggleClientServer() {
-    try{
-      if (toggleClientServerButton.isSelected()) {
-        Adb.initialConnection("ClientDriver");
-        System.out.println("Client Driver");
-      } else {
-        Adb.initialConnection("EmbeddedDriver");
-        System.out.println("Embedded Driver");
-      }
-    }catch (SQLException e){
-      System.out.println(e);
-    }
-    // add client server toggle code here
-  }
-
   @FXML
   private void updateSize() {
 
@@ -168,8 +143,6 @@ public class SettingsCtrl extends MasterCtrl {
         "-fx-font-size: " + ((stageWidth / 1000) * loadBackupTextSize) + "pt;");
     saveBackupButton.setStyle(
         "-fx-font-size: " + ((stageWidth / 1000) * saveBackupTextSize) + "pt;");
-    toggleClientServerButton.setStyle(
-        "-fx-font-size: " + ((stageWidth / 1000) * loadBackupTextSize) + "pt;");
   }
 
   public void activateBumble(){
@@ -200,8 +173,6 @@ public class SettingsCtrl extends MasterCtrl {
     transparentGlow.setColor(Color.TRANSPARENT);
     loadBackupButton.setEffect(transparentGlow);
     saveBackupButton.setEffect(transparentGlow);
-    toggleClientServerButton.setEffect(transparentGlow);
-
   }
 
   public void next(){
@@ -223,7 +194,6 @@ public class SettingsCtrl extends MasterCtrl {
 
     transparentGlow.setColor(Color.TRANSPARENT);
     saveBackupButton.setEffect(transparentGlow);
-    toggleClientServerButton.setEffect(transparentGlow);
   }
 
   public void previous(){
@@ -240,7 +210,6 @@ public class SettingsCtrl extends MasterCtrl {
     transparentGlow.setColor(Color.TRANSPARENT);
     loadBackupButton.setEffect(transparentGlow);
     saveBackupButton.setEffect(transparentGlow);
-    toggleClientServerButton.setEffect(transparentGlow);
   }
 
   public void next1(){
@@ -262,7 +231,6 @@ public class SettingsCtrl extends MasterCtrl {
 
     transparentGlow.setColor(Color.TRANSPARENT);
     loadBackupButton.setEffect(transparentGlow);
-    toggleClientServerButton.setEffect(transparentGlow);
   }
 
   public void previous1() {
@@ -284,7 +252,6 @@ public class SettingsCtrl extends MasterCtrl {
 
     transparentGlow.setColor(Color.TRANSPARENT);
     saveBackupButton.setEffect(transparentGlow);
-    toggleClientServerButton.setEffect(transparentGlow);
   }
 
   public void next2(){
@@ -303,7 +270,6 @@ public class SettingsCtrl extends MasterCtrl {
     borderGlow.setOffsetX(0f);
     borderGlow.setOffsetY(0f);
     borderGlow.setHeight(45);
-    toggleClientServerButton.setEffect(borderGlow);
 
     transparentGlow.setColor(Color.TRANSPARENT);
     loadBackupButton.setEffect(transparentGlow);
@@ -330,7 +296,6 @@ public class SettingsCtrl extends MasterCtrl {
 
     transparentGlow.setColor(Color.TRANSPARENT);
     loadBackupButton.setEffect(transparentGlow);
-    toggleClientServerButton.setEffect(transparentGlow);
   }
 
   public void next3(){
@@ -352,7 +317,6 @@ public class SettingsCtrl extends MasterCtrl {
     transparentGlow.setColor(Color.TRANSPARENT);
     loadBackupButton.setEffect(transparentGlow);
     saveBackupButton.setEffect(transparentGlow);
-    toggleClientServerButton.setEffect(transparentGlow);
   }
 
   public void previous3() {
@@ -370,7 +334,6 @@ public class SettingsCtrl extends MasterCtrl {
     borderGlow.setOffsetX(0f);
     borderGlow.setOffsetY(0f);
     borderGlow.setHeight(45);
-    toggleClientServerButton.setEffect(borderGlow);
 
     transparentGlow.setColor(Color.TRANSPARENT);
     loadBackupButton.setEffect(transparentGlow);

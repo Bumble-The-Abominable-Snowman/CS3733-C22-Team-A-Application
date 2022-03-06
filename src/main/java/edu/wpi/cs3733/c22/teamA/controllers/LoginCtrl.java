@@ -5,6 +5,7 @@ import edu.wpi.cs3733.c22.teamA.Adb.Adb;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.auth0.Auth0Login;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -12,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -110,4 +112,7 @@ public class LoginCtrl {
     warningText.setStyle("-fx-font-size: " + ((stageWidth / 1000) * warningTextSize) + "pt;");
   }
 
+    public void back(ActionEvent actionEvent) throws IOException {
+      App.sceneSwitcher.switchScene(SceneSwitcher.SCENES.LAUNCH);
+    }
 }
