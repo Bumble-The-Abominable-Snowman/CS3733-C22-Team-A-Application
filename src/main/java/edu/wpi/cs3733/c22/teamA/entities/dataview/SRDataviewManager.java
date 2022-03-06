@@ -268,7 +268,15 @@ public class SRDataviewManager {
 	public void modifyPopup(JFXComboBox<String> field, TextArea value, JFXButton updateButton){
 		SR sr = srList.get(table.getSelectionModel().getSelectedIndex());
 
-		field.getItems().addAll(sr.getStringFields().keySet());
+		for (String key: sr.getStringFields().keySet()) {
+			if ((key.equals("sr_type")) || (key.equals("request_time") || (key.equals("request_id"))))
+			{
+			}
+			else
+			{
+				field.getItems().add(key);
+			}
+		}
 
 		field.setOnAction(
 				e -> {
@@ -282,12 +290,13 @@ public class SRDataviewManager {
 					if (field.getSelectionModel().getSelectedIndex() > -1
 							&& value.getText().length() > 0) {
 
-						ServiceRequestWrapperImpl serviceRequestWrapper = new ServiceRequestWrapperImpl((SR.SRType) sr.getFields().get("sr_type"));
+						SR.SRType sr_type = SR.SRType.valueOf(sr.getStringFields().get("sr_type"));
+						ServiceRequestWrapperImpl serviceRequestWrapper = new ServiceRequestWrapperImpl(sr_type);
 						try {
 							sr.setFieldByString(field.getSelectionModel().getSelectedItem(), value.getText());
 							serviceRequestWrapper.updateServiceRequest(sr);
-							this.initializeRequestsTable();
 							updateButton.setTextFill(Color.GREEN);
+							this.initializeRequestsTable();
 						} catch (SQLException | IllegalAccessException | InvocationTargetException | IOException | ParseException ex) {
 							ex.printStackTrace();
 							updateButton.setTextFill(Color.RED);

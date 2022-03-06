@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import java.sql.*;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -52,21 +53,87 @@ public class MedicineDerbyImpl implements MedicineDAO {
     return null;
   }
 
-  public void updateMedicine(String ID, String field, String change) {
+  public void updateMedicine(Medicine m) {
     try {
-      Statement update = Adb.connection.createStatement();
 
-      String str =
-          String.format("UPDATE Medicine SET %s = '%s' WHERE medicine_id = '%s'", field, change, ID);
 
-      //System.out.println(str);
-      update.execute(str);
+        this.enterMedicine(m);
 
-    } catch (SQLException e) {
-      System.out.println("Error Code: " + e.getErrorCode());
-      System.out.println("SQL State: " + e.getSQLState());
-      System.out.println(e.getMessage());
-      System.out.println("Error caught");
+
+
+//      Statement get = Adb.connection.createStatement();
+//
+//      HashMap<String, String> sr_string_fields = m.getStringFields();
+//
+//      String str =
+//              String.format(
+//                      "SELECT * FROM Medicine s, %s r WHERE (s.medicine_id = r.medicine_id) AND r.medicine_id = '%s'",
+//                      this.tableName, sr_string_fields.get("request_id"));
+//
+//      ResultSet resultSet = get.executeQuery(str);
+//      ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+//
+//      if (resultSet.next()) {
+//        for (int i = 1; i < resultSetMetaData.getColumnCount() + 1; i++) {
+//          String returnValOld = resultSet.getString(i);
+//          String columnName = resultSetMetaData.getColumnName(i).toLowerCase(Locale.ROOT);
+//
+//          Statement update = Adb.connection.createStatement();
+//
+//          if (!returnValOld.equals(sr_string_fields.get(columnName)))
+//          {
+//            if (columnName.equals("request_id")
+//                    || columnName.equals("start_location")
+//                    || columnName.equals("end_location")
+//                    || columnName.equals("employee_requested")
+//                    || columnName.equals("employee_assigned")
+//                    || columnName.equals("request_time")
+//                    || columnName.equals("request_status")
+//                    || columnName.equals("request_priority")
+//                    || columnName.equals("comments"))
+//            {
+//              str =
+//                      String.format(
+//                              "UPDATE ServiceRequest SET " + columnName + " = '%s' WHERE request_id = '%s'",
+//                              sr_string_fields.get(columnName),
+//                              sr_string_fields.get("request_id"));
+//            } else {
+//              str =
+//                      String.format(
+//                              "UPDATE %s SET " + columnName + " = '%s' WHERE request_id = '%s'",
+//                              this.tableName,
+//                              sr_string_fields.get(columnName),
+//                              sr_string_fields.get("request_id"));
+//
+//            }
+//            update.execute(str);
+//          }
+//
+//        }
+//      }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//      Statement update = Adb.connection.createStatement();
+//
+//      String str =
+//          String.format("UPDATE Medicine SET %s = '%s' WHERE medicine_id = '%s'", field, change, ID);
+//
+//      //System.out.println(str);
+//      update.execute(str);
+
+    } catch (Exception e) {
+//      System.out.println("Error Code: " + e.getErrorCode());
+//      System.out.println("SQL State: " + e.getSQLState());
+//      System.out.println(e.getMessage());
+//      System.out.println("Error caught");
     }
   }
 

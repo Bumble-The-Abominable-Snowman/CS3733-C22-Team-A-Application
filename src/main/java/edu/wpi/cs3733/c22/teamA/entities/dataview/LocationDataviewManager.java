@@ -135,7 +135,15 @@ public class LocationDataviewManager {
 	public void modifyPopup(JFXComboBox<String> field, TextArea value, JFXButton updateButton){
 		Location loc = locList.get(table.getSelectionModel().getSelectedIndex());
 
-		field.getItems().addAll(loc.getStringFields().keySet());
+		for (String key: loc.getStringFields().keySet()) {
+			if ((key.equals("location_id")))
+			{
+			}
+			else
+			{
+				field.getItems().add(key);
+			}
+		}
 
 		field.setOnAction( e -> value.setText(loc.getStringFields().get(field.getSelectionModel().getSelectedItem())));
 

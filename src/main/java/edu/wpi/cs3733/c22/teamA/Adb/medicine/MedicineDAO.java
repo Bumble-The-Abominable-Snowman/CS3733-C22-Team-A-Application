@@ -11,7 +11,7 @@ public interface MedicineDAO {
 
   Medicine getMedicine(String ID) throws IOException, ParseException;
 
-  void updateMedicine(String ID, String field, String change) throws IOException;
+  void updateMedicine(Medicine m) throws IOException;
 
   void enterMedicine(Medicine med) throws IOException;
 

@@ -383,7 +383,7 @@ public class DataViewCtrl extends MasterCtrl {
     detailLabel = new StringBuilder("Nothing selected  ");
 
     if (HomeCtrl.sceneFlag == 1 && table.getSelectionModel().getSelectedIndex() > -1) {
-      srDataviewManager.details(detailLabel);
+      detailLabel = srDataviewManager.details(detailLabel);
     }
 
     if (HomeCtrl.sceneFlag != 1) {
@@ -429,8 +429,6 @@ public class DataViewCtrl extends MasterCtrl {
 
     JFXButton updateButton = new JFXButton();
     updateButton.setText("Update");
-
-
 
     // fill out the combobox
     switch (HomeCtrl.sceneFlag) {

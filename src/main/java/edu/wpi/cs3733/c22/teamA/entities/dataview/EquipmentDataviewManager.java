@@ -124,7 +124,15 @@ public class EquipmentDataviewManager {
 		// BIGGER MARKER
 		Equipment eq = this.eqList.get(table.getSelectionModel().getSelectedIndex());
 
-		field.getItems().addAll(eq.getStringFields().keySet());
+		for (String key: eq.getStringFields().keySet()) {
+			if ((key.equals("equipment_id")))
+			{
+			}
+			else
+			{
+				field.getItems().add(key);
+			}
+		}
 
 		field.setOnAction(
 				e -> value.setText(eq.getStringFields().get(field.getSelectionModel().getSelectedItem())));

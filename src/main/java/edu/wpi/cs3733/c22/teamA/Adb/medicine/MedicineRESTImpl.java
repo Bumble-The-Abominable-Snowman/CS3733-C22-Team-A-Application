@@ -34,13 +34,19 @@ public class MedicineRESTImpl implements MedicineDAO {
     return medicine;
   }
 
-  public void updateMedicine(String ID, String field, String change) throws IOException {
+  public void updateMedicine(Medicine m) throws IOException {
+//    HashMap<String, String> metadata = new HashMap<>();
+//    metadata.put("operation", "update");
+//
+//    HashMap<String, String> payload = new HashMap<>();
+//    payload.put(field, change);
+//    payload.put("medicine_id", ID);
+//    Adb.postREST(url, metadata, payload);
+
     HashMap<String, String> metadata = new HashMap<>();
     metadata.put("operation", "update");
+    Adb.postREST(url, metadata, m.getStringFields());
 
-    HashMap<String, String> payload = new HashMap<>();
-    metadata.put(field, change);
-    Adb.postREST(url, metadata, payload);
   }
 
   public void enterMedicine(Medicine med) throws IOException {

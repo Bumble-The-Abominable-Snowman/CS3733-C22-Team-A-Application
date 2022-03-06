@@ -138,97 +138,137 @@ public class MedicineDataviewManager {
 
     public void modifyPopup(JFXComboBox<String> field, TextArea value, JFXButton updateButton){
         Medicine med = this.medList.get(table.getSelectionModel().getSelectedIndex());
+
+
+        for (String key: med.getStringFields().keySet()) {
+            if ((key.equals("medicine_id")))
+            {
+            }
+            else
+            {
+                field.getItems().add(key);
+            }
+        }
+
+
         Method[] methods = med.getClass().getMethods();
 
-        for(Method method: methods) {
-            boolean is_the_method_of_med = method.getDeclaringClass().equals(med.getClass());
-            boolean starts_with_set = method.getName().split("^set")[0].equals("");
-
-            boolean return_string =
-                    Arrays.toString(method.getParameterTypes())
-                            .toLowerCase(Locale.ROOT)
-                            .contains("string");
-
-            if (is_the_method_of_med && starts_with_set && return_string) {
-                field.getItems().addAll(method.getName().substring(3));
-            }
-
-
-        }
+//        for(Method method: methods) {
+//            boolean is_the_method_of_med = method.getDeclaringClass().equals(med.getClass());
+//            boolean starts_with_set = method.getName().split("^set")[0].equals("");
+//            boolean is_id = method.getName().matches("id");
+//
+//            boolean return_string =
+//                    Arrays.toString(method.getParameterTypes())
+//                            .toLowerCase(Locale.ROOT)
+//                            .contains("string");
+//
+//            if (is_the_method_of_med && starts_with_set && return_string && !is_id) {
+//
+//                field.getItems().addAll(method.getName().substring(3));
+//            }
+//
+//
+//        }
 
         field.setOnAction(
                 e -> {
                     if (field.getSelectionModel().getSelectedIndex() > -1) {
-                        for (Method method : methods) {
-                            boolean starts_with_get = method.getName().split("^get")[0].equals("");
-                            boolean contains_name =
-                                    method
-                                            .getName()
-                                            .toLowerCase(Locale.ROOT)
-                                            .contains(
-                                                    field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
-                            if (starts_with_get && contains_name) {
-                                try {
-                                    value.setText((String) method.invoke(med));
-                                } catch (IllegalAccessException | InvocationTargetException ex) {
-                                    ex.printStackTrace();
-                                }
-                            }
-                        }
+                        value.setText(med.getStringFields().get(field.getSelectionModel().getSelectedItem()));
                     }
                 });
+
+//        field.setOnAction(
+//                e -> {
+//                    if (field.getSelectionModel().getSelectedIndex() > -1) {
+//                        for (Method method : methods) {
+//                            boolean starts_with_get = method.getName().split("^get")[0].equals("");
+//                            boolean contains_name =
+//                                    method
+//                                            .getName()
+//                                            .toLowerCase(Locale.ROOT)
+//                                            .contains(
+//                                                    field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
+//                            if (starts_with_get && contains_name) {
+//                                try {
+//                                    value.setText((String) method.invoke(med));
+//                                } catch (IllegalAccessException | InvocationTargetException ex) {
+//                                    ex.printStackTrace();
+//                                }
+//                            }
+//                        }
+//                    }
+//                });
 
         updateButton.setOnAction(
                 e -> {
                     if (field.getSelectionModel().getSelectedIndex() > -1
                             && value.getText().length() > 0) {
-                        for (Method method : methods) {
-                            boolean starts_with_set = method.getName().split("^set")[0].equals("");
-                            boolean contains_name =
-                                    method
-                                            .getName()
-                                            .toLowerCase(Locale.ROOT)
-                                            .contains(
-                                                    field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
-                            if (starts_with_set && contains_name) {
-                                MedicineDAO database = new MedicineWrapperImpl();
-                                try {
-                                    String aField = "";
-                                    System.out.println(field.getValue());
-                                    if (field.getValue().equals("GenericName")) {
-                                        aField = "generic_name";
-                                    } else if (field.getValue().equals("BrandName")) {
-                                        aField = "brand_name";
-                                    } else if (field.getValue().equals("MedicineClass")) {
-                                        aField = "medicine_class";
-                                    } else if (field.getValue().equals("Uses")) {
-                                        aField = "uses";
-                                    } else if (field.getValue().equals("Warnings")) {
-                                        aField = "warnings";
-                                    } else if (field.getValue().equals("SideEffects")) {
-                                        aField = "side_effects";
-                                    } else if (field.getValue().equals("Form")) {
-                                        aField = "form";
-                                    }
-                                    if (!(field.getValue().equals("DosageAmounts"))){
-                                        database.updateMedicine(
-                                                med.getStringFields().get("medicine_id"), aField, value.getText());
-                                        updateButton.setTextFill(Color.GREEN);
-                                        this.initializeMedicineTable();
-                                    }
-                                    else if(field.getValue().equals("DosageAmounts")){
-                                        aField = "dosage_amount";
-                                        database.enterMedicineDosage(med.getStringFields().get("medicine_id"),Float.parseFloat(aField));
-                                        updateButton.setTextFill(Color.GREEN);
-                                        this.initializeMedicineTable();
-                                    }
-                                } catch (Exception ex) {
-                                    ex.printStackTrace();
-                                    updateButton.setTextFill(Color.RED);
-                                }
-                            }
+
+                        MedicineWrapperImpl medicineWrapper = new MedicineWrapperImpl();
+                        try {
+                            med.setFieldByString(field.getSelectionModel().getSelectedItem(), value.getText());
+                            medicineWrapper.updateMedicine(med);
+                            updateButton.setTextFill(Color.GREEN);
+                            this.initializeMedicineTable();
+                        } catch (IOException | ParseException ex) {
+                            ex.printStackTrace();
+                            updateButton.setTextFill(Color.RED);
                         }
                     }
                 });
+
+//        updateButton.setOnAction(
+//                e -> {
+//                    if (field.getSelectionModel().getSelectedIndex() > -1
+//                            && value.getText().length() > 0) {
+//                        for (Method method : methods) {
+//                            boolean starts_with_set = method.getName().split("^set")[0].equals("");
+//                            boolean contains_name =
+//                                    method
+//                                            .getName()
+//                                            .toLowerCase(Locale.ROOT)
+//                                            .contains(
+//                                                    field.getSelectionModel().getSelectedItem().toLowerCase(Locale.ROOT));
+//                            if (starts_with_set && contains_name) {
+//                                MedicineDAO database = new MedicineWrapperImpl();
+//                                try {
+//                                    String aField = "";
+//                                    System.out.println(field.getValue());
+//                                    if (field.getValue().equals("GenericName")) {
+//                                        aField = "generic_name";
+//                                    } else if (field.getValue().equals("BrandName")) {
+//                                        aField = "brand_name";
+//                                    } else if (field.getValue().equals("MedicineClass")) {
+//                                        aField = "medicine_class";
+//                                    } else if (field.getValue().equals("Uses")) {
+//                                        aField = "uses";
+//                                    } else if (field.getValue().equals("Warnings")) {
+//                                        aField = "warnings";
+//                                    } else if (field.getValue().equals("SideEffects")) {
+//                                        aField = "side_effects";
+//                                    } else if (field.getValue().equals("Form")) {
+//                                        aField = "form";
+//                                    }
+//                                    if (!(field.getValue().equals("DosageAmounts"))){
+//                                        database.updateMedicine(
+//                                                med.getStringFields().get("medicine_id"), aField, value.getText());
+//                                        updateButton.setTextFill(Color.GREEN);
+//                                        this.initializeMedicineTable();
+//                                    }
+//                                    else if(field.getValue().equals("DosageAmounts")){
+//                                        aField = "dosage_amount";
+//                                        database.enterMedicineDosage(med.getStringFields().get("medicine_id"),Float.parseFloat(aField));
+//                                        updateButton.setTextFill(Color.GREEN);
+//                                        this.initializeMedicineTable();
+//                                    }
+//                                } catch (Exception ex) {
+//                                    ex.printStackTrace();
+//                                    updateButton.setTextFill(Color.RED);
+//                                }
+//                            }
+//                        }
+//                    }
+//                });
     }
 }

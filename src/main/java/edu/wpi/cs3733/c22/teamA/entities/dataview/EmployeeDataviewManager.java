@@ -208,7 +208,15 @@ public class EmployeeDataviewManager {
 	public void modifyPopup(JFXComboBox<String> field, TextArea value, JFXButton updateButton){
 		Employee emp = empList.get(table.getSelectionModel().getSelectedIndex());
 
-		field.getItems().addAll(emp.getStringFields().keySet());
+		for (String key: emp.getStringFields().keySet()) {
+			if ((key.equals("start_date") || (key.equals("employee_id")) || (key.equals("employee_type"))))
+			{
+			}
+			else
+			{
+				field.getItems().add(key);
+			}
+		}
 
 		field.setOnAction(
 				e -> value.setText(emp.getStringFields().get(field.getSelectionModel().getSelectedItem())));

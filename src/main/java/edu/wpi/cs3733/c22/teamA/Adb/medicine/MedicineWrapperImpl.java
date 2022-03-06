@@ -34,11 +34,11 @@ public class MedicineWrapperImpl implements MedicineDAO {
     }
 
     @Override
-    public void updateMedicine(String ID, String field, String change) throws IOException {
+    public void updateMedicine(Medicine m) throws IOException {
         if (App.DB_CHOICE.equals("nosql"))
-        {(new MedicineRESTImpl()).updateMedicine(ID, field, change);}
+        {(new MedicineRESTImpl()).updateMedicine(m);}
         else
-        {(new MedicineDerbyImpl()).updateMedicine(ID, field, change);}
+        {(new MedicineDerbyImpl()).updateMedicine(m);}
 
     }
 
