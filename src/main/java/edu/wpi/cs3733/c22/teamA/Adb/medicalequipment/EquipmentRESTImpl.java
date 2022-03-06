@@ -25,10 +25,10 @@ public class EquipmentRESTImpl implements EquipmentDAO {
   public EquipmentRESTImpl() {}
 
   public Equipment getMedicalEquipment(String ID) throws IOException {
-    HashMap<String, String> map = new HashMap<>();
-    map.put("operation", "get");
-    map.put("equipment_id", ID);
-    HashMap<String, String> resp = Adb.getREST(url, map);
+    HashMap<String, String> metadata = new HashMap<>();
+    metadata.put("operation", "get");
+    metadata.put("equipment_id", ID);
+    HashMap<String, String> resp = Adb.getREST(url, metadata);
     Equipment equipment = new Equipment();
     for (String key: resp.keySet()) {
       equipment.setFieldByString(key, resp.get(key));
@@ -37,16 +37,19 @@ public class EquipmentRESTImpl implements EquipmentDAO {
   }
 
   public void updateMedicalEquipment(Equipment e)
-          throws SQLException, IOException {
-    HashMap<String, String> map = e.getStringFields();
-    map.put("operation", "update");
-    Adb.postREST(url, map);
+          throws IOException {
+
+    HashMap<String, String> metadata = new HashMap<>();
+    metadata.put("operation", "update");
+    Adb.postREST(url, metadata, e.getStringFields());
+
   }
 
   public void enterMedicalEquipment(Equipment e) throws IOException {
-    HashMap<String, String> map = e.getStringFields();
-    map.put("operation", "add");
-    Adb.postREST(url, map);
+    HashMap<String, String> metadata = new HashMap<>();
+    metadata.put("operation", "add");
+    Adb.postREST(url, metadata, e.getStringFields());
+
   }
 
 
@@ -62,10 +65,11 @@ public class EquipmentRESTImpl implements EquipmentDAO {
   }
 
   public void deleteMedicalEquipment(String ID) throws IOException {
-    HashMap<String, String> map = new HashMap<>();
-    map.put("equipment_id", ID);
-    map.put("operation", "delete");
-    Adb.postREST(url, map);
+    HashMap<String, String> metadata = new HashMap<>();
+    metadata.put("operation", "delete");
+    metadata.put("equipment_id", ID);
+    Adb.postREST(url, metadata, new HashMap<>());
+
   }
 
   public List<Equipment> getMedicalEquipmentList() throws IOException {

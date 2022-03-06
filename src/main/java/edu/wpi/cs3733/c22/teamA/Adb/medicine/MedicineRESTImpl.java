@@ -24,10 +24,10 @@ public class MedicineRESTImpl implements MedicineDAO {
   public MedicineRESTImpl() {}
 
   public Medicine getMedicine(String ID) throws IOException {
-    HashMap<String, String> map = new HashMap<>();
-    map.put("operation", "get");
-    map.put("medicine_id", ID);
-    HashMap<String, String> resp = Adb.getREST(url, map);
+    HashMap<String, String> metadata = new HashMap<>();
+    metadata.put("operation", "get");
+    metadata.put("medicine_id", ID);
+    HashMap<String, String> resp = Adb.getREST(url, metadata);
     Medicine medicine = new Medicine();
     for (String key: resp.keySet()) {
 //      medicine.setFieldByString(key, resp.get(key));
@@ -115,10 +115,10 @@ public class MedicineRESTImpl implements MedicineDAO {
    * @param ID The ID of the medicine you want to delete
    */
   public void deleteMedicine(String ID) throws IOException {
-    HashMap<String, String> map = new HashMap<>();
-    map.put("medicine_id", ID);
-    map.put("operation", "delete");
-    Adb.postREST(url, map);
+    HashMap<String, String> metadata = new HashMap<>();
+    metadata.put("operation", "delete");
+    metadata.put("medicine_id", ID);
+    Adb.postREST(url, metadata, new HashMap<>());
   }
 
 

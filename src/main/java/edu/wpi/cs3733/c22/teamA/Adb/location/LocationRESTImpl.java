@@ -47,20 +47,19 @@ public class LocationRESTImpl implements LocationDAO {
 
   // Method to delete nodes from location table.
   public void deleteLocationNode(String ID) throws IOException {
+    HashMap<String, String> metadata = new HashMap<>();
+    metadata.put("node_id", ID);
+    metadata.put("operation", "delete");
+    Adb.postREST(url, metadata, new HashMap<>());
 
-    HashMap<String, String> map = new HashMap<>();
-    map.put("node_id", ID);
-    map.put("operation", "delete");
-    Adb.postREST(url, map);
   }
 
-  public void enterLocationNode(Location location) throws IOException {
-
-    HashMap<String, String> map = location.getStringFields();
-    map.put("operation", "add");
+  public void enterLocationNode(Location l) throws IOException {
     try
     {
-      Adb.postREST(url, map);
+      HashMap<String, String> metadata = new HashMap<>();
+      metadata.put("operation", "add");
+      Adb.postREST(url, metadata, l.getStringFields());
     } catch (SocketTimeoutException e)
     {
       System.out.println("failed! trying again...");
@@ -90,21 +89,22 @@ public class LocationRESTImpl implements LocationDAO {
   }
 
   // Method to update nodes from location table.
-  public void updateLocation(Location location) throws SQLException, IOException {
+  public void updateLocation(Location l) throws SQLException, IOException {
 
-    HashMap<String, String> map = location.getStringFields();
-    map.put("operation", "update");
-    Adb.postREST(url, map);
+    HashMap<String, String> metadata = new HashMap<>();
+    metadata.put("operation", "update");
+    Adb.postREST(url, metadata, l.getStringFields());
+
 
   }
 
   // Method to get node from the location table.
   public Location getLocationNode(String ID) throws IOException, ParseException {
 
-    HashMap<String, String> map = new HashMap<>();
-    map.put("operation", "get");
-    map.put("node_id", ID);
-    HashMap<String, String> resp = Adb.getREST(url, map);
+    HashMap<String, String> metadata = new HashMap<>();
+    metadata.put("operation", "get");
+    metadata.put("node_id", ID);
+    HashMap<String, String> resp = Adb.getREST(url, metadata);
     Location location = new Location();
     for (String key: resp.keySet()) {
       System.out.printf("Key: %s\tValue: %s\n", key, resp.get(key));

@@ -32,10 +32,11 @@ public class EmployeeRESTImpl implements EmployeeDAO {
 
   @Override
   public Employee getEmployee(String ID) throws IOException, ParseException {
-    HashMap<String, String> map = new HashMap<>();
-    map.put("operation", "get");
-    map.put("employee_id", ID);
-    HashMap<String, String> resp = Adb.getREST(url, map);
+    HashMap<String, String> metadata = new HashMap<>();
+    metadata.put("operation", "get");
+    metadata.put("employee_id", ID);
+    HashMap<String, String> resp = Adb.getREST(url, metadata);
+
     Employee employee = new Employee();
     for (String key: resp.keySet()) {
       employee.setFieldByString(key, resp.get(key));
@@ -46,18 +47,15 @@ public class EmployeeRESTImpl implements EmployeeDAO {
 
   // Method to update employee from employee table.
   public void updateEmployee(Employee e) throws SQLException, IOException {
-
-    HashMap<String, String> map = e.getStringFields();
-    map.put("operation", "update");
-    Adb.postREST(url, map);
-
+    HashMap<String, String> metadata = new HashMap<>();
+    metadata.put("operation", "update");
+    Adb.postREST(url, metadata, e.getStringFields());
   }
 
   public void enterEmployee(Employee e) throws IOException {
-
-    HashMap<String, String> map = e.getStringFields();
-    map.put("operation", "add");
-    Adb.postREST(url, map);
+    HashMap<String, String> metadata = new HashMap<>();
+    metadata.put("operation", "add");
+    Adb.postREST(url, metadata, e.getStringFields());
   }
 
   public void enterEmployee(
@@ -83,12 +81,12 @@ public class EmployeeRESTImpl implements EmployeeDAO {
   }
 
   public void deleteEmployee(Employee e) throws IOException {
+    HashMap<String, String> metadata = new HashMap<>();
+    metadata.put("operation", "delete");
+    metadata.put("employee_id", e.getStringFields().get("employee_id"));
+    metadata.put("employee_type", e.getStringFields().get("employee_type"));
+    Adb.postREST(url, metadata, e.getStringFields());
 
-    HashMap<String, String> map = new HashMap<>();
-    map.put("employee_id", e.getStringFields().get("employee_id"));
-    map.put("employee_type", e.getStringFields().get("employee_type"));
-    map.put("operation", "delete");
-    Adb.postREST(url, map);
   }
 
   public List<Employee> getEmployeeList() throws IOException, ParseException {
