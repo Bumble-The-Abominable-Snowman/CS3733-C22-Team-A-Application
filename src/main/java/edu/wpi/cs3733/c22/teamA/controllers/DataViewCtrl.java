@@ -173,8 +173,8 @@ public class DataViewCtrl extends MasterCtrl {
             if (equipmentIDText.getText().length() > 2
                 && equipmentTypeText.getText().length() > 2
                 && currentLocationText.getText().length() > 2) {
-              EquipmentDerbyImpl equipmentDerby = new EquipmentDerbyImpl();
-              LocationDAO locationDAO = new LocationDerbyImpl();
+              EquipmentWrapperImpl equipmentWrapper = new EquipmentWrapperImpl();
+              LocationDAO locationDAO = new LocationWrapperImpl();
               List<Location> aList = locationDAO.getNodeList();
               Location theL = new Location();
               for (Location aL: aList){
@@ -192,7 +192,7 @@ public class DataViewCtrl extends MasterCtrl {
                 System.out.println("THIS EQUIPMENT CANNOT BE STORED HERE");
                 return;
               }
-              equipmentDerby.enterMedicalEquipment(
+              equipmentWrapper.enterMedicalEquipment(
                   equipmentIDText.getText(),
                   equipmentTypeText.getText(),
                   isCleanCheckBox.isSelected(),

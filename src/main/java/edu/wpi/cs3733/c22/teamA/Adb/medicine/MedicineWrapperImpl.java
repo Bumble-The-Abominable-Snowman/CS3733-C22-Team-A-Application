@@ -3,15 +3,23 @@ package edu.wpi.cs3733.c22.teamA.Adb.medicine;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentRESTImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestRESTImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Medicine;
 import edu.wpi.cs3733.c22.teamA.entities.MedicineDosage;
+import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Set;
 
 public class MedicineWrapperImpl implements MedicineDAO {
     public MedicineWrapperImpl()  {}
@@ -97,7 +105,7 @@ public class MedicineWrapperImpl implements MedicineDAO {
     }
 
     @Override
-    public List<MedicineDosage> getAllDosages() throws IOException {
+    public List<MedicineDosage> getAllDosages() throws IOException, ParseException {
         if (App.DB_CHOICE.equals("nosql"))
         {return (new MedicineRESTImpl()).getAllDosages();}
         else
@@ -117,4 +125,88 @@ public class MedicineWrapperImpl implements MedicineDAO {
 
     }
 
+    public void exportMedicineToCSV(String csvFilePath) throws Exception {
+
+        // Get list of this type of service Requests
+        List<Medicine> list;
+        if (App.DB_CHOICE.equals("nosql")) {
+            list = (new MedicineRESTImpl()).getMedicineList();
+        } else {
+            list = (new MedicineDerbyImpl()).getMedicineList();
+        }
+
+        if (list.size() > 0) {
+
+            File file = new File(csvFilePath);
+            file.createNewFile();
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
+
+            StringBuilder tleString = new StringBuilder();
+
+            // column line
+            Set<String> keys = list.get(0).getStringFields().keySet();
+            for (String key : keys) {
+                key = key + ", ";
+                if (!(key.equals("dosage_amount, "))) {
+                    tleString.append(key);
+                }
+            }
+            String firstLine = tleString.toString().substring(0, tleString.toString().length() - 2);
+
+            writer.write(firstLine);
+            writer.newLine();
+
+            // rows
+            for (Medicine thisMed : list) {
+                String str = "";
+
+                boolean first_column = true;
+                for (String key : keys) {
+                    if (!(key.equals("dosage_amount"))) {
+                        if (first_column) {
+                            str = thisMed.getStringFields().get(key);
+                            first_column = false;
+                        } else {
+                            str = String.join(",", str, thisMed.getStringFields().get(key));
+                        }
+                    }
+                }
+
+                writer.write(str);
+                writer.newLine();
+            }
+            writer.close(); // close the writer
+        } else {
+            throw new Exception("Medicine list is empty!");
+        }
+    }
+
+    public void exportDosagesToCSV(String csvFilePath) throws IOException, ParseException {
+        // Get list of this type of service Requests
+        List<MedicineDosage> list;
+        if (App.DB_CHOICE.equals("nosql")) {
+            list = (new MedicineRESTImpl()).getAllDosages();
+        } else {
+            list = (new MedicineDerbyImpl()).getAllDosages();
+        }
+
+        File dosFile = new File(csvFilePath);
+        dosFile.createNewFile();
+        BufferedWriter dosWriter = Files.newBufferedWriter(Paths.get(csvFilePath));
+
+        String dosTitleString = "medicine_id, dosage_amount";
+        dosWriter.write(dosTitleString);
+        dosWriter.newLine();
+
+        for (MedicineDosage thisDos : list) {
+            if (thisDos.getDosage_amount() != null)
+            {
+                String thisLine = String.join(",", thisDos.getMedicine_id(), thisDos.getDosage_amount().toString());
+                dosWriter.write(thisLine);
+                dosWriter.newLine();
+            }
+        }
+        dosWriter.close();
+
+    }
 }

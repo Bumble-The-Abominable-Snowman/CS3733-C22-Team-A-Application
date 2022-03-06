@@ -118,12 +118,12 @@ public class SR {
 
   public void setFieldByString(String key, String value) throws IllegalAccessException, IOException, ParseException {
     if (Objects.equals(key, "start_location") || Objects.equals(key, "end_location")) {
-      LocationWrapperImpl locationDerby = new LocationWrapperImpl();
-      this.fields.put(key, locationDerby.getLocationNode(value));
+      LocationWrapperImpl locationWrapper = new LocationWrapperImpl();
+      this.fields.put(key, locationWrapper.getLocationNode(value));
     } else if (Objects.equals(key, "employee_requested")
             || Objects.equals(key, "employee_assigned")) {
-      EmployeeWrapperImpl employeeDerby = new EmployeeWrapperImpl();
-      this.fields.put(key, employeeDerby.getEmployee(value));
+      EmployeeWrapperImpl employeeWrapper = new EmployeeWrapperImpl();
+      this.fields.put(key, employeeWrapper.getEmployee(value));
     } else if (Objects.equals(key, "request_time")) {
       this.fields.put(key, Timestamp.valueOf(value));
     } else if (Objects.equals(key, "request_status")) {

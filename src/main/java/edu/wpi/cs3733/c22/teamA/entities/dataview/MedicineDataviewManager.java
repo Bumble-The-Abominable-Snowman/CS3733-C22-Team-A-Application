@@ -113,7 +113,7 @@ public class MedicineDataviewManager {
                 .get(8)
                 .setCellValueFactory(
                         (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-                                new SimpleStringProperty(param.getValue().getValue().med.getStringFields().get("dosage_amounts")));
+                                new SimpleStringProperty(param.getValue().getValue().med.getStringFields().get("dosage_amount")));
 
         // Grab medicine from database
         MedicineDAO database = new MedicineWrapperImpl();

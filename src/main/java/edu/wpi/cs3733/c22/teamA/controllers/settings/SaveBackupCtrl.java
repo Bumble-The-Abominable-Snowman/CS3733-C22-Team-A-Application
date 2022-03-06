@@ -3,10 +3,15 @@ package edu.wpi.cs3733.c22.teamA.controllers.settings;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.location.LocationWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.medicine.MedicineWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestDerbyImpl;
+import edu.wpi.cs3733.c22.teamA.Adb.servicerequest.ServiceRequestWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.App;
 import edu.wpi.cs3733.c22.teamA.controllers.MasterCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.Medicine;
@@ -156,63 +161,63 @@ public class SaveBackupCtrl extends MasterCtrl {
       try {
         switch (TypeCSV.getSelectionModel().getSelectedItem().toString()) {
           case "TowerLocations":
-            LocationDerbyImpl.exportToCSV( filepath);
+            (new LocationWrapperImpl()).exportToCSV( filepath);
             break;
           case "Employee":
-            EmployeeDerbyImpl.exportToCSV( filepath);
+            (new EmployeeWrapperImpl()).exportToCSV( filepath);
             break;
           case "MedicalEquipment":
-            EquipmentDerbyImpl.exportToCSV(filepath);
+            (new EquipmentWrapperImpl()).exportToCSV(filepath);
             break;
           case "Medicine":
-            MedicineDerbyImpl.exportMedicineToCSV(filepath);
+            (new MedicineWrapperImpl()).exportMedicineToCSV(filepath);
             break;
           case "MedicineDosage":
-            MedicineDerbyImpl.exportDosagesToCSV(filepath);
+            (new MedicineWrapperImpl()).exportDosagesToCSV(filepath);
             break;
           case "MedicalEquipmentServiceRequest":
-            ServiceRequestDerbyImpl serviceRequestDerbyEq = new ServiceRequestDerbyImpl(SR.SRType.EQUIPMENT);
-            serviceRequestDerbyEq.exportToCSV(filepath);
+            ServiceRequestWrapperImpl serviceRequestWrapperEq = new ServiceRequestWrapperImpl(SR.SRType.EQUIPMENT);
+            serviceRequestWrapperEq.exportToCSV(filepath);
             break;
           case "FloralDeliveryServiceRequest":
-            ServiceRequestDerbyImpl serviceRequestDerbyFloral = new ServiceRequestDerbyImpl(SR.SRType.FLORAL_DELIVERY);
-            serviceRequestDerbyFloral.exportToCSV(filepath);
+            ServiceRequestWrapperImpl serviceRequestWrapperFloral = new ServiceRequestWrapperImpl(SR.SRType.FLORAL_DELIVERY);
+            serviceRequestWrapperFloral.exportToCSV(filepath);
             break;
           case "FoodDeliveryServiceRequest":
-            ServiceRequestDerbyImpl serviceRequestDerbyFood = new ServiceRequestDerbyImpl(SR.SRType.FOOD_DELIVERY);
-            serviceRequestDerbyFood.exportToCSV(filepath);
+            ServiceRequestWrapperImpl serviceRequestWrapperFood = new ServiceRequestWrapperImpl(SR.SRType.FOOD_DELIVERY);
+            serviceRequestWrapperFood.exportToCSV(filepath);
             break;
           case "GiftDeliveryServiceRequest":
-            ServiceRequestDerbyImpl serviceRequestDerbyGift = new ServiceRequestDerbyImpl(SR.SRType.GIFT_DELIVERY);
-            serviceRequestDerbyGift.exportToCSV(filepath);
+            ServiceRequestWrapperImpl serviceRequestWrapperGift = new ServiceRequestWrapperImpl(SR.SRType.GIFT_DELIVERY);
+            serviceRequestWrapperGift.exportToCSV(filepath);
             break;
           case "LanguageServiceRequest":
-            ServiceRequestDerbyImpl serviceRequestDerbyLanguage = new ServiceRequestDerbyImpl(SR.SRType.LANGUAGE);
-            serviceRequestDerbyLanguage.exportToCSV(filepath);
+            ServiceRequestWrapperImpl serviceRequestWrapperLanguage = new ServiceRequestWrapperImpl(SR.SRType.LANGUAGE);
+            serviceRequestWrapperLanguage.exportToCSV(filepath);
             break;
           case "LaundryServiceRequest":
-            ServiceRequestDerbyImpl serviceRequestDerbyLaundry = new ServiceRequestDerbyImpl(SR.SRType.LAUNDRY);
-            serviceRequestDerbyLaundry.exportToCSV(filepath);
+            ServiceRequestWrapperImpl serviceRequestWrapperLaundry = new ServiceRequestWrapperImpl(SR.SRType.LAUNDRY);
+            serviceRequestWrapperLaundry.exportToCSV(filepath);
             break;
           case "MaintenanceServiceRequest":
-            ServiceRequestDerbyImpl serviceRequestDerbyMaintenance = new ServiceRequestDerbyImpl(SR.SRType.MAINTENANCE);
-            serviceRequestDerbyMaintenance.exportToCSV(filepath);
+            ServiceRequestWrapperImpl serviceRequestWrapperMaintenance = new ServiceRequestWrapperImpl(SR.SRType.MAINTENANCE);
+            serviceRequestWrapperMaintenance.exportToCSV(filepath);
             break;
           case "MedicineDeliveryServiceRequest":
-            ServiceRequestDerbyImpl serviceRequestDerbyMedicine = new ServiceRequestDerbyImpl(SR.SRType.MEDICINE_DELIVERY);
-            serviceRequestDerbyMedicine.exportToCSV(filepath);
+            ServiceRequestWrapperImpl serviceRequestWrapperMedicine = new ServiceRequestWrapperImpl(SR.SRType.MEDICINE_DELIVERY);
+            serviceRequestWrapperMedicine.exportToCSV(filepath);
             break;
           case "ReligiousServiceRequest":
-            ServiceRequestDerbyImpl serviceRequestDerbyReligious = new ServiceRequestDerbyImpl(SR.SRType.RELIGIOUS);
-            serviceRequestDerbyReligious.exportToCSV(filepath);
+            ServiceRequestWrapperImpl serviceRequestWrapperReligious = new ServiceRequestWrapperImpl(SR.SRType.RELIGIOUS);
+            serviceRequestWrapperReligious.exportToCSV(filepath);
             break;
           case "SanitationServiceRequest":
-            ServiceRequestDerbyImpl serviceRequestDerbySanitation = new ServiceRequestDerbyImpl(SR.SRType.SANITATION);
-            serviceRequestDerbySanitation.exportToCSV(filepath);
+            ServiceRequestWrapperImpl serviceRequestWrapperSanitation = new ServiceRequestWrapperImpl(SR.SRType.SANITATION);
+            serviceRequestWrapperSanitation.exportToCSV(filepath);
             break;
           case "SecurityServiceRequest":
-            ServiceRequestDerbyImpl serviceRequestDerbySecurity = new ServiceRequestDerbyImpl(SR.SRType.SECURITY);
-            serviceRequestDerbySecurity.exportToCSV(filepath);
+            ServiceRequestWrapperImpl serviceRequestWrapperSecurity = new ServiceRequestWrapperImpl(SR.SRType.SECURITY);
+            serviceRequestWrapperSecurity.exportToCSV(filepath);
             break;
         }
         exportFileText.setText(filepath);

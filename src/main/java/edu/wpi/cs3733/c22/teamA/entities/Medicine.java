@@ -46,7 +46,7 @@ public class Medicine extends RecursiveTreeObject<Medicine> {
     this.setField("warnings", warnings);
     this.setField("side_effects", sideEffects);
     this.setField("form", form);
-    this.setField("dosage_amounts", dosageAmounts);
+    this.setField("dosage_amount", dosageAmounts);
   }
 
   public List<String> getListForm(){
@@ -59,7 +59,7 @@ public class Medicine extends RecursiveTreeObject<Medicine> {
             this.fields_string.get("warnings"),
             this.fields_string.get("side_effects"),
             this.fields_string.get("form"),
-            this.fields_string.get("dosage_amounts")
+            this.fields_string.get("dosage_amount")
     );
   }
 
@@ -70,7 +70,7 @@ public class Medicine extends RecursiveTreeObject<Medicine> {
   }
 
   public void setField(String key, Object value) {
-    if (Objects.equals(key, "dosage_amounts"))
+    if (Objects.equals(key, "dosage_amount"))
     {
       this.fields.put(key, null);
       this.fields_string.put(key, "");
@@ -88,7 +88,7 @@ public class Medicine extends RecursiveTreeObject<Medicine> {
   }
 
   public void setFieldByString(String key, String value) throws ParseException {
-    if (Objects.equals(key, "dosage_amounts")) {
+    if (Objects.equals(key, "dosage_amount")) {
       ArrayList<Float> temp = new ArrayList<Float>();
       this.fields_string.put(key, "");
       for (String d: value.split(" ")) {

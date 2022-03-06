@@ -178,13 +178,18 @@ public class ServiceRequestRESTImpl implements ServiceRequestDAO {
           }
         }
       }
-
-      arrayList.add(sr);
+      if (this.srType.equals(SR.SRType.INVALID))
+      {
+        arrayList.add(sr);
+      }
+      else if (String.valueOf(this.srType).equals(sr.getStringFields().get("sr_type")))
+      {
+        arrayList.add(sr);
+      }
     }
 
     return arrayList;
   }
-
 
   public static List<SR> getAllServiceRequestList()
           throws SQLException, IllegalAccessException, InvocationTargetException, IOException, ParseException {
@@ -194,57 +199,15 @@ public class ServiceRequestRESTImpl implements ServiceRequestDAO {
 
   // Read from CSV
   public void populateFromCSV(String csvFilePath)
-          throws IOException, ParseException, InvocationTargetException, IllegalAccessException,
-          SQLException {
-
-    ClassLoader classLoader = ServiceRequestDerbyImpl.class.getClassLoader();
-    InputStream is = classLoader.getResourceAsStream(csvFilePath);
-    Scanner lineScanner = new Scanner(is);
-
-    Scanner dataScanner;
-    int dataIndex = 0;
-    List<String> field_list = new ArrayList<>();
-
-    dataScanner = new Scanner(lineScanner.nextLine());
-    dataScanner.useDelimiter(",");
-    while (dataScanner.hasNext()) {
-      field_list.add(dataScanner.next().toLowerCase(Locale.ROOT).strip());
-    }
-
-    ArrayList<HashMap<String, String>> sr_list = new ArrayList<>();
-    while (lineScanner.hasNextLine()) { // Scan CSV line by line
-
-      dataScanner = new Scanner(lineScanner.nextLine());
-      dataScanner.useDelimiter(",");
-
-      HashMap<String, String> sr_h = new HashMap<>();
-      while (dataScanner.hasNext()) {
-        String data = dataScanner.next().strip();
-
-        String columnName = field_list.get(dataIndex);
-        sr_h.put(columnName, data);
-        dataIndex++;
-      }
-      sr_list.add(sr_h);
-
-      dataIndex = 0;
-    }
-    lineScanner.close();
-
-    HashMap<String, String> metadata_map = new HashMap<>();
-    metadata_map.put("operation", "populate");
-    metadata_map.put("table-name", this.db_name);
-
-    Adb.populate_db(url, metadata_map, sr_list);
-  }
-
-  public void populateFromCSVfile(String csvFilePath)
-          throws IOException, ParseException, InvocationTargetException, IllegalAccessException,
-          SQLException {
+          throws IOException {
 
     File file = new File(csvFilePath);
     Scanner lineScanner = new Scanner(file);
 
+//    ClassLoader classLoader = ServiceRequestDerbyImpl.class.getClassLoader();
+//    InputStream is = classLoader.getResourceAsStream(csvFilePath);
+//    Scanner lineScanner = new Scanner(is);
+
     Scanner dataScanner;
     int dataIndex = 0;
     List<String> field_list = new ArrayList<>();
@@ -256,6 +219,7 @@ public class ServiceRequestRESTImpl implements ServiceRequestDAO {
     }
 
     ArrayList<HashMap<String, String>> sr_list = new ArrayList<>();
+    SR sr = new SR();
     while (lineScanner.hasNextLine()) { // Scan CSV line by line
 
       dataScanner = new Scanner(lineScanner.nextLine());
@@ -281,64 +245,6 @@ public class ServiceRequestRESTImpl implements ServiceRequestDAO {
     metadata_map.put("table-name", this.db_name);
 
     Adb.populate_db(url, metadata_map, sr_list);
-  }
-
-  public void exportToCSV(String csvFilePath)
-          throws Exception {
-
-    // Get list of this type of service Requests
-    List<SR> list = getServiceRequestList();
-    if (list.size() > 0) {
-
-      File file = new File(csvFilePath);
-      file.createNewFile();
-      BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFilePath));
-
-      StringBuilder tleString = new StringBuilder();
-
-      // column line
-      for (String key : list.get(0).getStringFields().keySet()) {
-        key = key + ", ";
-        if (!(key.equals("sr_type, "))) {
-          tleString.append(key);
-        }
-      }
-      String firstLine = tleString.toString().substring(0, tleString.toString().length() - 2);
-
-      writer.write(firstLine);
-      writer.newLine();
-
-      // rows
-      for (SR thisSR : list) {
-        String str = "";
-
-        boolean first_column = true;
-        for (String key : thisSR.getStringFields().keySet()) {
-          if (!(key.equals("sr_type"))) {
-            if (first_column) {
-              str = thisSR.getStringFields().get(key);
-              first_column = false;
-            } else {
-              str = String.join(",", str, thisSR.getStringFields().get(key));
-            }
-          }
-        }
-
-        writer.write(str);
-        writer.newLine();
-      }
-      writer.close(); // close the writer
-    }
-    else
-    {
-      throw new Exception("SR list is empty!");
-    }
-  }
-
-  // Write CSV for table currently unused
-  public void writeServiceRequestCSV(ArrayList<Object> list, String csvFilePath)
-          throws IOException, InvocationTargetException, IllegalAccessException {
-//    refreshVariables();
   }
 
 }

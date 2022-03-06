@@ -37,7 +37,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
         med.setFieldByString("form", rset.getString("form"));
       }
 
-      med.setField("dosage_amounts", (List<Float>) getSpecificDosages(med.getStringFields().get("medicine_id")));
+      med.setField("dosage_amount", (List<Float>) getSpecificDosages(med.getStringFields().get("medicine_id")));
       return med;
 
     } catch (SQLException e) {
@@ -80,7 +80,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
         med.getStringFields().get("warnings"),
         med.getStringFields().get("side_effects"),
         med.getStringFields().get("form"),
-            (List<Float>) med.getFields().get("dosage_amounts"));
+            (List<Float>) med.getFields().get("dosage_amount"));
   }
 
   /**
@@ -251,7 +251,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
         med.setFieldByString("side_effects", rset.getString("side_effects"));
         med.setFieldByString("form", rset.getString("form"));
 
-        med.setField("dosage_amounts", (List<Float>) getSpecificDosages(med.getStringFields().get("medicine_id")));
+        med.setField("dosage_amount", (List<Float>) getSpecificDosages(med.getStringFields().get("medicine_id")));
         returnList.add(med);
       }
       //System.out.println(returnList);
@@ -351,7 +351,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
         dataIndex++;
       }
 
-      med.setField("dosage_amounts", null);
+      med.setField("dosage_amount", null);
       //System.out.println(thisMed);
       medicineList.add(med);
       dataIndex = 0;
@@ -414,78 +414,4 @@ public class MedicineDerbyImpl implements MedicineDAO {
     }
     return dosList;
   }
-
-  /***************** EXPORT FUNCTIONS *************************************************/
-  //To export to csv
-
-  public static void exportMedicineToCSV(String medicineCSVFilePath)
-      throws IOException {
-    MedicineDAO medicineDerby = new MedicineDerbyImpl();
-    List<Medicine> medicineList = ((MedicineDerbyImpl) medicineDerby).getMedicineList();
-    writeMedicineToCSV(medicineList, medicineCSVFilePath);
-  }
-
-  public static void exportDosagesToCSV(String dosageCSVFilePath) throws IOException {
-    MedicineDerbyImpl derby = new MedicineDerbyImpl();
-    List<MedicineDosage> dosList = derby.getAllDosages();
-    //System.out.println("Printing dosList");
-    //System.out.println(dosList);
-    writeDosagesToCSV(dosList, dosageCSVFilePath);
-  }
-
-  public static void writeMedicineToCSV(
-      List<Medicine> medicineList, String medicineCSVFilePath)
-      throws IOException {
-
-    // Export all Medicine
-
-    File medFile = new File(medicineCSVFilePath);
-    medFile.createNewFile();
-    BufferedWriter medWriter = Files.newBufferedWriter(Paths.get(medicineCSVFilePath));
-
-    String medTitleLine =
-        "medicine_id,generic_name,brand_name,medicine_class,uses,warnings,side_effect,form";
-    medWriter.write(medTitleLine);
-    medWriter.newLine();
-    for (Medicine med : medicineList) {
-      String thisLine =
-          String.join(
-              ",",
-              med.getStringFields().get("medicine_id"),
-              med.getStringFields().get("generic_name"),
-              med.getStringFields().get("brand_name"),
-              med.getStringFields().get("medicine_class"),
-              med.getStringFields().get("uses"),
-              med.getStringFields().get("warnings"),
-              med.getStringFields().get("side_effects"),
-              med.getStringFields().get("form"));
-      medWriter.write(thisLine);
-      medWriter.newLine();
-    }
-    medWriter.close();
-
-  }
-
-
-  public static void writeDosagesToCSV(
-          List<MedicineDosage> dosList, String dosageCSVFilePath) throws IOException {
-    // Export Dosage Information
-    File dosFile = new File(dosageCSVFilePath);
-    dosFile.createNewFile();
-    BufferedWriter dosWriter = Files.newBufferedWriter(Paths.get(dosageCSVFilePath));
-
-    String dosTitleString = "medicine_id, dosage_amount";
-    dosWriter.write(dosTitleString);
-    dosWriter.newLine();
-
-    for (MedicineDosage thisDos : dosList) {
-        String thisLine = String.join(",", thisDos.getMedicine_id(), thisDos.getDosage_amount().toString());
-        dosWriter.write(thisLine);
-        dosWriter.newLine();
-    }
-    dosWriter.close();
-  }
-
-
-
 }

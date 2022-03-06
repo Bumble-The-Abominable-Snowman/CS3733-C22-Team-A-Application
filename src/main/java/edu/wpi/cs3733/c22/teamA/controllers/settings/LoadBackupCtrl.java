@@ -177,37 +177,37 @@ public class LoadBackupCtrl extends MasterCtrl {
             (new MedicineWrapperImpl()).importDosagesFromCSV(lastSelectedFile);
             break;
           case "MedicalEquipmentServiceRequest":
-            (new ServiceRequestWrapperImpl(SR.SRType.EQUIPMENT)).populateFromCSVfile(lastSelectedFile);
+            (new ServiceRequestWrapperImpl(SR.SRType.EQUIPMENT)).populateFromCSV(lastSelectedFile);
             break;
           case "FloralDeliveryServiceRequest":
-            (new ServiceRequestWrapperImpl(SR.SRType.FLORAL_DELIVERY)).populateFromCSVfile(lastSelectedFile);
+            (new ServiceRequestWrapperImpl(SR.SRType.FLORAL_DELIVERY)).populateFromCSV(lastSelectedFile);
             break;
           case "FoodDeliveryServiceRequest":
-            (new ServiceRequestWrapperImpl(SR.SRType.FOOD_DELIVERY)).populateFromCSVfile(lastSelectedFile);
+            (new ServiceRequestWrapperImpl(SR.SRType.FOOD_DELIVERY)).populateFromCSV(lastSelectedFile);
             break;
           case "GiftDeliveryServiceRequest":
-            (new ServiceRequestWrapperImpl(SR.SRType.GIFT_DELIVERY)).populateFromCSVfile(lastSelectedFile);
+            (new ServiceRequestWrapperImpl(SR.SRType.GIFT_DELIVERY)).populateFromCSV(lastSelectedFile);
             break;
           case "LanguageServiceRequest":
-            (new ServiceRequestWrapperImpl(SR.SRType.LANGUAGE)).populateFromCSVfile(lastSelectedFile);
+            (new ServiceRequestWrapperImpl(SR.SRType.LANGUAGE)).populateFromCSV(lastSelectedFile);
             break;
           case "LaundryServiceRequest":
-            (new ServiceRequestWrapperImpl(SR.SRType.LAUNDRY)).populateFromCSVfile(lastSelectedFile);
+            (new ServiceRequestWrapperImpl(SR.SRType.LAUNDRY)).populateFromCSV(lastSelectedFile);
             break;
           case "MaintenanceServiceRequest":
-            (new ServiceRequestWrapperImpl(SR.SRType.MAINTENANCE)).populateFromCSVfile(lastSelectedFile);
+            (new ServiceRequestWrapperImpl(SR.SRType.MAINTENANCE)).populateFromCSV(lastSelectedFile);
             break;
           case "MedicineDeliveryServiceRequest":
-            (new ServiceRequestWrapperImpl(SR.SRType.MEDICINE_DELIVERY)).populateFromCSVfile(lastSelectedFile);
+            (new ServiceRequestWrapperImpl(SR.SRType.MEDICINE_DELIVERY)).populateFromCSV(lastSelectedFile);
             break;
           case "ReligiousServiceRequest":
-            (new ServiceRequestWrapperImpl(SR.SRType.RELIGIOUS)).populateFromCSVfile(lastSelectedFile);
+            (new ServiceRequestWrapperImpl(SR.SRType.RELIGIOUS)).populateFromCSV(lastSelectedFile);
             break;
           case "SanitationServiceRequest":
-            (new ServiceRequestWrapperImpl(SR.SRType.SANITATION)).populateFromCSVfile(lastSelectedFile);
+            (new ServiceRequestWrapperImpl(SR.SRType.SANITATION)).populateFromCSV(lastSelectedFile);
             break;
           case "SecurityServiceRequest":
-            (new ServiceRequestWrapperImpl(SR.SRType.SECURITY)).populateFromCSVfile(lastSelectedFile);
+            (new ServiceRequestWrapperImpl(SR.SRType.SECURITY)).populateFromCSV(lastSelectedFile);
             break;
         }
         statusText.setText("Success!");

@@ -40,7 +40,7 @@ public interface MedicineDAO {
 
   List<Medicine> getMedicineList() throws IOException, ParseException;
 
-  List<MedicineDosage> getAllDosages() throws IOException;
+  List<MedicineDosage> getAllDosages() throws IOException, ParseException;
 
 
 }
