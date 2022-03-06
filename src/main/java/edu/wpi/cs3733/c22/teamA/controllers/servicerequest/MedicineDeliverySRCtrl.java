@@ -51,7 +51,7 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
   double medicineChoiceSize;
   double employeeChoiceSize;
 
-  public MedicineDeliverySRCtrl() throws IOException {
+  public MedicineDeliverySRCtrl() throws IOException, ParseException {
   }
 
   @FXML
@@ -86,7 +86,7 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
     for(Medicine med : medicineList) {
       medicineChoice
               .getItems()
-              .add(med.getGenericName());
+              .add(med.getStringFields().get("generic_name"));
 
     }
     new AutoCompleteBox(medicineChoice);

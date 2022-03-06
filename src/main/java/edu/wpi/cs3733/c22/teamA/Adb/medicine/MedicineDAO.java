@@ -4,13 +4,14 @@ import edu.wpi.cs3733.c22.teamA.entities.Medicine;
 import edu.wpi.cs3733.c22.teamA.entities.MedicineDosage;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 public interface MedicineDAO {
 
-  Medicine getMedicine(String ID) throws IOException;
+  Medicine getMedicine(String ID) throws IOException, ParseException;
 
-  void updateMedicine(String ID, String field, String change);
+  void updateMedicine(String ID, String field, String change) throws IOException;
 
   void enterMedicine(Medicine med) throws IOException;
 
@@ -26,20 +27,20 @@ public interface MedicineDAO {
       List<Float> dosageAmount) throws IOException;
 
 
-  void enterMedicineDosage(String ID, Float dosage);
+  void enterMedicineDosage(String ID, Float dosage) throws IOException;
 
 
   void deleteMedicine(String ID) throws IOException;
 
 
-  void deleteMedicineDosage(String ID, Float dosage);
+  void deleteMedicineDosage(String ID, Float dosage) throws IOException;
 
 
-  List<Float> getSpecificDosages(String ID);
+  List<Float> getSpecificDosages(String ID) throws IOException, ParseException;
 
-  List<Medicine> getMedicineList() throws IOException;
+  List<Medicine> getMedicineList() throws IOException, ParseException;
 
-  List<MedicineDosage> getAllDosages();
+  List<MedicineDosage> getAllDosages() throws IOException;
 
 
 }

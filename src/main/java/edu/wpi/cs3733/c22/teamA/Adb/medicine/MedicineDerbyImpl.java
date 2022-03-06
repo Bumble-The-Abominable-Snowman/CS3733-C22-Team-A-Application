@@ -27,17 +27,17 @@ public class MedicineDerbyImpl implements MedicineDAO {
       ResultSet rset = get.executeQuery(strMed);
       Medicine med = new Medicine();
       if (rset.next()) {
-        med.setMedicineID(rset.getString("medicine_id"));
-        med.setGenericName(rset.getString("generic_name"));
-        med.setBrandName(rset.getString("brand_name"));
-        med.setMedicineClass(rset.getString("medicine_class"));
-        med.setUses(rset.getString("uses"));
-        med.setWarnings(rset.getString("warnings"));
-        med.setSideEffects(rset.getString("side_effects"));
-        med.setForm(rset.getString("form"));
+        med.setFieldByString("medicine_id", rset.getString("medicine_id"));
+        med.setFieldByString("generic_name", rset.getString("generic_name"));
+        med.setFieldByString("brand_name", rset.getString("brand_name"));
+        med.setFieldByString("medicine_class", rset.getString("medicine_class"));
+        med.setFieldByString("uses", rset.getString("uses"));
+        med.setFieldByString("warnings", rset.getString("warnings"));
+        med.setFieldByString("side_effects", rset.getString("side_effects"));
+        med.setFieldByString("form", rset.getString("form"));
       }
 
-      med.setDosageAmounts(getSpecificDosages(ID));
+      med.setField("dosage_amounts", (List<Float>) getSpecificDosages(med.getStringFields().get("medicine_id")));
       return med;
 
     } catch (SQLException e) {
@@ -46,8 +46,10 @@ public class MedicineDerbyImpl implements MedicineDAO {
       System.out.println(e.getMessage());
       System.out.println("Error caught");
 
-      return null;
+    } catch (ParseException e) {
+      e.printStackTrace();
     }
+    return null;
   }
 
   public void updateMedicine(String ID, String field, String change) {
@@ -70,15 +72,15 @@ public class MedicineDerbyImpl implements MedicineDAO {
 
   public void enterMedicine(Medicine med) {
     enterMedicine(
-        med.getMedicineID(),
-        med.getGenericName(),
-        med.getBrandName(),
-        med.getMedicineClass(),
-        med.getUses(),
-        med.getWarnings(),
-        med.getSideEffects(),
-        med.getForm(),
-        med.getDosageAmounts());
+        med.getStringFields().get("medicine_id"),
+        med.getStringFields().get("generic_name"),
+        med.getStringFields().get("brand_name"),
+        med.getStringFields().get("medicine_class"),
+        med.getStringFields().get("uses"),
+        med.getStringFields().get("warnings"),
+        med.getStringFields().get("side_effects"),
+        med.getStringFields().get("form"),
+            (List<Float>) med.getFields().get("dosage_amounts"));
   }
 
   /**
@@ -240,16 +242,16 @@ public class MedicineDerbyImpl implements MedicineDAO {
       List<Medicine> returnList = new ArrayList<>();
       while (rset.next()) {
         Medicine med = new Medicine();
-        med.setMedicineID(rset.getString("medicine_id"));
-        med.setGenericName(rset.getString("generic_name"));
-        med.setBrandName(rset.getString("brand_name"));
-        med.setMedicineClass(rset.getString("medicine_class"));
-        med.setUses(rset.getString("uses"));
-        med.setWarnings(rset.getString("warnings"));
-        med.setSideEffects(rset.getString("side_effects"));
-        med.setForm(rset.getString("form"));
+        med.setFieldByString("medicine_id", rset.getString("medicine_id"));
+        med.setFieldByString("generic_name", rset.getString("generic_name"));
+        med.setFieldByString("brand_name", rset.getString("brand_name"));
+        med.setFieldByString("medicine_class", rset.getString("medicine_class"));
+        med.setFieldByString("uses", rset.getString("uses"));
+        med.setFieldByString("warnings", rset.getString("warnings"));
+        med.setFieldByString("side_effects", rset.getString("side_effects"));
+        med.setFieldByString("form", rset.getString("form"));
 
-        med.setDosageAmounts(getSpecificDosages(med.getMedicineID()));
+        med.setField("dosage_amounts", (List<Float>) getSpecificDosages(med.getStringFields().get("medicine_id")));
         returnList.add(med);
       }
       //System.out.println(returnList);
@@ -260,8 +262,11 @@ public class MedicineDerbyImpl implements MedicineDAO {
       System.out.println("Error Code: " + e.getErrorCode());
       System.out.println("SQL State: " + e.getSQLState());
       System.out.println(e.getMessage());
-      return null;
+
+    } catch (ParseException e) {
+      e.printStackTrace();
     }
+    return null;
   }
 
 
@@ -329,26 +334,26 @@ public class MedicineDerbyImpl implements MedicineDAO {
       //System.out.println("Starting New Line");
       dataScanner = new Scanner(lineScanner.nextLine());
       dataScanner.useDelimiter(",");
-      Medicine thisMed = new Medicine();
+      Medicine med = new Medicine();
 
       while (dataScanner.hasNext()) { // Scan CSV Line data by data
         String data = dataScanner.next();
         data = data.trim();
-        if (dataIndex == 0) thisMed.setMedicineID(data);
-        else if (dataIndex == 1) thisMed.setGenericName(data);
-        else if (dataIndex == 2) thisMed.setBrandName(data);
-        else if (dataIndex == 3) thisMed.setMedicineClass(data);
-        else if (dataIndex == 4) thisMed.setUses(data);
-        else if (dataIndex == 5) thisMed.setWarnings(data);
-        else if (dataIndex == 6) thisMed.setSideEffects(data);
-        else if (dataIndex == 7) thisMed.setForm(data);
+        if (dataIndex == 0) med.setFieldByString("medicine_id", data);
+        else if (dataIndex == 1) med.setFieldByString("generic_name", data);
+        else if (dataIndex == 2) med.setFieldByString("brand_name", data);
+        else if (dataIndex == 3) med.setFieldByString("medicine_class", data);
+        else if (dataIndex == 4) med.setFieldByString("uses", data);
+        else if (dataIndex == 5) med.setFieldByString("warnings", data);
+        else if (dataIndex == 6) med.setFieldByString("side_effects", data);
+        else if (dataIndex == 7) med.setFieldByString("form", data);
         else System.out.println("Invalid data, I broke::" + data);
         dataIndex++;
       }
 
-      thisMed.setDosageAmounts(null);
+      med.setField("dosage_amounts", null);
       //System.out.println(thisMed);
-      medicineList.add(thisMed);
+      medicineList.add(med);
       dataIndex = 0;
     }
     return medicineList;
@@ -446,14 +451,14 @@ public class MedicineDerbyImpl implements MedicineDAO {
       String thisLine =
           String.join(
               ",",
-              med.getMedicineID(),
-              med.getGenericName(),
-              med.getBrandName(),
-              med.getMedicineClass(),
-              med.getUses(),
-              med.getWarnings(),
-              med.getSideEffects(),
-              med.getForm());
+              med.getStringFields().get("medicine_id"),
+              med.getStringFields().get("generic_name"),
+              med.getStringFields().get("brand_name"),
+              med.getStringFields().get("medicine_class"),
+              med.getStringFields().get("uses"),
+              med.getStringFields().get("warnings"),
+              med.getStringFields().get("side_effects"),
+              med.getStringFields().get("form"));
       medWriter.write(thisLine);
       medWriter.newLine();
     }

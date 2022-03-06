@@ -410,7 +410,7 @@ public class DVSelectionManager {
     } else if(selected instanceof Location){
       locationDAO.deleteLocationNode(((Location) selected).getStringFields().get("node_id"));
     } else if(selected instanceof Medicine){
-      medicineDAO.deleteMedicine(((Medicine) selected).getMedicineID());
+      medicineDAO.deleteMedicine(((Medicine) selected).getStringFields().get("medicine_id"));
     }
     MasterCtrl.sceneFlags.add(MasterCtrl.sceneFlags.get(MasterCtrl.sceneFlags.size()-1));
     MasterCtrl.sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);

@@ -23,23 +23,25 @@ public class MedicineRESTImpl implements MedicineDAO {
 
   public MedicineRESTImpl() {}
 
-  public Medicine getMedicine(String ID) throws IOException {
+  public Medicine getMedicine(String ID) throws IOException, ParseException {
     HashMap<String, String> metadata = new HashMap<>();
     metadata.put("operation", "get");
     metadata.put("medicine_id", ID);
     HashMap<String, String> resp = Adb.getREST(url, metadata);
     Medicine medicine = new Medicine();
     for (String key: resp.keySet()) {
-//      medicine.setFieldByString(key, resp.get(key));
+      medicine.setFieldByString(key, resp.get(key));
     }
     return medicine;
   }
 
-  public void updateMedicine(String ID, String field, String change) {
-//    HashMap<String, String> map = e.getStringFields();
-//    map.put("operation", "update");
-//    Adb.postREST(url, map);
+  public void updateMedicine(String ID, String field, String change) throws IOException {
+    HashMap<String, String> metadata = new HashMap<>();
+    metadata.put("operation", "update");
 
+    HashMap<String, String> payload = new HashMap<>();
+    metadata.put(field, change);
+    Adb.postREST(url, metadata, payload);
   }
 
   public void enterMedicine(Medicine med) throws IOException {
@@ -73,20 +75,16 @@ public class MedicineRESTImpl implements MedicineDAO {
     enterMedicine(medicine);
   }
 
-  public void enterMedicineDosage(String ID, Float dosage) {
-//    try {
-//      Statement insert = Adb.connection.createStatement();
-//      String str =
-//          String.format(
-//              "INSERT INTO MedicineDosage(medicine_id, dosage_amount) VALUES('%s', %f)", ID, dosage);
-//      insert.execute(str);
-//
-//    } catch (SQLException e) {
-//      System.out.println("Error caught");
-//      System.out.println("Error Code: " + e.getErrorCode());
-//      System.out.println("SQL State: " + e.getSQLState());
-//      System.out.println(e.getMessage());
-//    }
+  public void enterMedicineDosage(String ID, Float dosage) throws IOException {
+
+    HashMap<String, String> metadata = new HashMap<>();
+    metadata.put("operation", "enter_dosage");
+
+    HashMap<String, String> payload = new HashMap<>();
+    metadata.put("medicine_id", ID);
+    payload.put("dosage", String.valueOf(dosage));
+    Adb.postREST(url, metadata, payload);
+
   }
 
   /**
@@ -94,20 +92,15 @@ public class MedicineRESTImpl implements MedicineDAO {
    * @param ID The specifc ID
    * @param dosage The specifc Dosage
    */
-  public void deleteMedicineDosage(String ID, Float dosage) {
-//    try {
-//      Statement delete = Adb.connection.createStatement();
-//      delete.execute(
-//          String.format(
-//              "DELETE FROM MedicineDosage WHERE (medicine_id = '%s' AND dosage_amount = '%f')",
-//              ID, dosage));
-//
-//    } catch (SQLException e) {
-//      System.out.println("Error caught");
-//      System.out.println("Error Code: " + e.getErrorCode());
-//      System.out.println("SQL State: " + e.getSQLState());
-//      System.out.println(e.getMessage());
-//    }
+  public void deleteMedicineDosage(String ID, Float dosage) throws IOException {
+
+    HashMap<String, String> metadata = new HashMap<>();
+    metadata.put("operation", "delete_dosage");
+
+    HashMap<String, String> payload = new HashMap<>();
+    payload.put("dosage", String.valueOf(dosage));
+    Adb.postREST(url, metadata, payload);
+
   }
 
   /**
@@ -119,6 +112,7 @@ public class MedicineRESTImpl implements MedicineDAO {
     metadata.put("operation", "delete");
     metadata.put("medicine_id", ID);
     Adb.postREST(url, metadata, new HashMap<>());
+
   }
 
 
@@ -128,28 +122,9 @@ public class MedicineRESTImpl implements MedicineDAO {
    * @param ID
    * @return
    */
-  public List<Float> getSpecificDosages(String ID) {
-//    try {
-//      Statement get = Adb.connection.createStatement();
-//
-//      ResultSet rset =
-//          get.executeQuery(
-//              String.format("SELECT * FROM MedicineDosage WHERE medicine_id = '%s'", ID));
-//
-//      List<Float> returnList = new ArrayList<>();
-//      while (rset.next()) {
-//        returnList.add(rset.getFloat("dosage_amount"));
-//      }
-//      return returnList;
-//    } catch (SQLException e) {
-//      System.out.println("Error caught");
-//      System.out.println("Error Code: " + e.getErrorCode());
-//      System.out.println("SQL State: " + e.getSQLState());
-//      System.out.println(e.getMessage());
-//
-//      return null;
-//    }
-    return new ArrayList<>();
+  public List<Float> getSpecificDosages(String ID) throws IOException, ParseException {
+    Medicine medicine = getMedicine(ID);
+    return (List<Float>) medicine.getFields().get("dosage_amounts");
   }
 
 
@@ -157,7 +132,7 @@ public class MedicineRESTImpl implements MedicineDAO {
    * Get a list of MedicineDosage entites to export to csv
    * @return
    */
-  public List<MedicineDosage> getAllDosages(){
+  public List<MedicineDosage> getAllDosages() throws IOException {
 //    try{
 //      Statement get = Adb.connection.createStatement();
 //      String str = String.format("SELECT * FROM MedicineDosage");
@@ -182,23 +157,59 @@ public class MedicineRESTImpl implements MedicineDAO {
 //      System.out.println(e.getMessage());
 //      return null;
 //    }
+
+//    List<MedicineDosage> arrayList = new ArrayList<>();
+//    List<HashMap<String, String>> mapArrayList = Adb.getAllREST(url);
+//    for (HashMap<String, String> map: mapArrayList) {
+//      MedicineDosage l = new MedicineDosage();
+//      for (String key: map.keySet()) {
+//        l.setFieldByString(key, map.get(key));
+//        if (key.equals("dosage_amounts"))
+//        {
+//          arrayList.add(map.get(key));
+//        }
+//      }
+//      arrayList.add(l);
+//    }
+//
+//    return arrayList;
+
+
+//    List<List<Float>> arrayList = new ArrayList<>();
+//    List<HashMap<String, String>> mapArrayList = Adb.getREST(url);
+//    for (HashMap<String, String> map: mapArrayList) {
+//      Medicine m = new Medicine();
+//      for (String key: map.keySet()) {
+//        if (key.equals("dosage_amounts"))
+//        {
+//          List<Float> l = (List<Float>) List.of(map.get(key));
+//          arrayList.add(List.of(map.get(key)));
+//        }
+//        m.setFieldByString(key, map.get(key));
+//      }
+//      arrayList.add(m);
+//    }
+//
+//    return arrayList;
+//
     return new ArrayList<>();
   }
 
 
   // get all medicine
-  public List<Medicine> getMedicineList() throws IOException {
+  public List<Medicine> getMedicineList() throws IOException, ParseException {
     List<Medicine> arrayList = new ArrayList<>();
     List<HashMap<String, String>> mapArrayList = Adb.getAllREST(url);
     for (HashMap<String, String> map: mapArrayList) {
-      Medicine l = new Medicine();
+      Medicine m = new Medicine();
       for (String key: map.keySet()) {
-//        l.setFieldByString(key, map.get(key));
+        m.setFieldByString(key, map.get(key));
       }
-      arrayList.add(l);
+      arrayList.add(m);
     }
 
     return arrayList;
+
   }
 
 
@@ -210,39 +221,49 @@ public class MedicineRESTImpl implements MedicineDAO {
   /**
    * Import medicine from a csv file
    * Note: This function does not do dosages
-   * @param medicineCSVFilePath
+   * @param csvFilePath
    */
-  public static void importMedicineFromCSV(String medicineCSVFilePath) {
+  public void importMedicineFromCSV(String csvFilePath) throws IOException {
     // Delete all contents of both table
-    try {
-      Statement dropTable = Adb.connection.createStatement();
-      dropTable.execute("DELETE FROM MedicineDosage");
-      dropTable.execute("DELETE FROM Medicine");
-    } catch (SQLException e) {
-      System.out.println("delete failed");
+
+    File file = new File(csvFilePath);
+    Scanner lineScanner = new Scanner(file);
+
+    Scanner dataScanner;
+    int dataIndex = 0;
+    List<String> field_list = new ArrayList<>();
+
+    dataScanner = new Scanner(lineScanner.nextLine());
+    dataScanner.useDelimiter(",");
+    while (dataScanner.hasNext()) {
+      field_list.add(dataScanner.next().toLowerCase(Locale.ROOT).strip());
     }
 
-    //Read all values from the medicine CSV
-    List<Medicine> medicineList = new ArrayList<>();
-    try {
-      medicineList = readMedicineCSV(medicineCSVFilePath);
-      //System.out.println("Printing out medicineList: ");
-      //System.out.println(medicineList);
-    } catch (IOException | ParseException e){
-      System.out.println("Error caught while trying to read CSV");
-      System.out.println(e.getMessage());
+    ArrayList<HashMap<String, String>> med_list = new ArrayList<>();
+    while (lineScanner.hasNextLine()) { // Scan CSV line by line
 
-    }
+      dataScanner = new Scanner(lineScanner.nextLine());
+      dataScanner.useDelimiter(",");
 
-    MedicineRESTImpl derby = new MedicineRESTImpl();
-    try{
-      for(Medicine med : medicineList){
-        derby.enterMedicine(med);
+      HashMap<String, String> med_h = new HashMap<>();
+      while (dataScanner.hasNext()) {
+        String data = dataScanner.next().strip();
+
+        String columnName = field_list.get(dataIndex);
+        med_h.put(columnName, data);
+        dataIndex++;
       }
-    } catch (Exception e) {
-      System.out.println("Error caught when trying to enter");
-      System.out.println("Error Code: " + e.getMessage());
+      med_list.add(med_h);
+
+      dataIndex = 0;
     }
+    lineScanner.close();
+
+    HashMap<String, String> metadata_map = new HashMap<>();
+    metadata_map.put("operation", "populate");
+    metadata_map.put("table-name", "medicine");
+
+    Adb.populate_db(url, metadata_map, med_list);
   }
 
   public static List<Medicine> readMedicineCSV(String medicineCSVFilePath)
@@ -271,20 +292,19 @@ public class MedicineRESTImpl implements MedicineDAO {
       while (dataScanner.hasNext()) { // Scan CSV Line data by data
         String data = dataScanner.next();
         data = data.trim();
-        if (dataIndex == 0) thisMed.setMedicineID(data);
-        else if (dataIndex == 1) thisMed.setGenericName(data);
-        else if (dataIndex == 2) thisMed.setBrandName(data);
-        else if (dataIndex == 3) thisMed.setMedicineClass(data);
-        else if (dataIndex == 4) thisMed.setUses(data);
-        else if (dataIndex == 5) thisMed.setWarnings(data);
-        else if (dataIndex == 6) thisMed.setSideEffects(data);
-        else if (dataIndex == 7) thisMed.setForm(data);
+        if (dataIndex == 0) thisMed.setFieldByString("medicine_id", data);
+        else if (dataIndex == 1) thisMed.setFieldByString("generic_name", data);
+        else if (dataIndex == 2) thisMed.setFieldByString("brand_name", data);
+        else if (dataIndex == 3) thisMed.setFieldByString("medicine_class", data);
+        else if (dataIndex == 4) thisMed.setFieldByString("uses", data);
+        else if (dataIndex == 5) thisMed.setFieldByString("warnings", data);
+        else if (dataIndex == 6) thisMed.setFieldByString("side_effects", data);
+        else if (dataIndex == 7) thisMed.setFieldByString("form", data);
         else System.out.println("Invalid data, I broke::" + data);
         dataIndex++;
       }
 
-      thisMed.setDosageAmounts(null);
-      //System.out.println(thisMed);
+      thisMed.setFieldByString("dosage_amounts", null);
       medicineList.add(thisMed);
       dataIndex = 0;
     }
@@ -294,25 +314,48 @@ public class MedicineRESTImpl implements MedicineDAO {
   /**
    * Import dosages from a csv file
    * NOTE: this function does not check or anything if foreign key stuff
-   * @param dosageCSVFilePath
+   * @param csvFilePath
    */
-  public static void importDosagesFromCSV(String dosageCSVFilePath){
-//    try{
-//      Statement dropTable = Adb.connection.createStatement();
-//      dropTable.execute("DELETE FROM MedicineDosage");
-//      List<MedicineDosage> dosList = readDosagesFromCSV(dosageCSVFilePath);
-//      //System.out.println("Printing dosList:");
-//      //System.out.println(dosList);
-//      MedicineRESTImpl derby = new MedicineRESTImpl();
-//
-//      for(MedicineDosage thisDos: dosList){
-//        derby.enterMedicineDosage(thisDos.getMedicine_id(), thisDos.getDosage_amount());
-//      }
-//
-//    } catch(Exception e){
-//      System.out.println("Error Caught! Uh Oh!");
-//      System.out.println("Error Code: " + e.getMessage());
-//    }
+  public void importDosagesFromCSV(String csvFilePath) throws IOException {
+
+    File file = new File(csvFilePath);
+    Scanner lineScanner = new Scanner(file);
+
+    Scanner dataScanner;
+    int dataIndex = 0;
+    List<String> field_list = new ArrayList<>();
+
+    dataScanner = new Scanner(lineScanner.nextLine());
+    dataScanner.useDelimiter(",");
+    while (dataScanner.hasNext()) {
+      field_list.add(dataScanner.next().toLowerCase(Locale.ROOT).strip());
+    }
+
+    ArrayList<HashMap<String, String>> med_list = new ArrayList<>();
+    while (lineScanner.hasNextLine()) { // Scan CSV line by line
+
+      dataScanner = new Scanner(lineScanner.nextLine());
+      dataScanner.useDelimiter(",");
+
+      HashMap<String, String> med_h = new HashMap<>();
+      while (dataScanner.hasNext()) {
+        String data = dataScanner.next().strip();
+
+        String columnName = field_list.get(dataIndex);
+        med_h.put(columnName, data);
+        dataIndex++;
+      }
+      med_list.add(med_h);
+
+      dataIndex = 0;
+    }
+    lineScanner.close();
+
+    HashMap<String, String> metadata_map = new HashMap<>();
+    metadata_map.put("operation", "populate");
+    metadata_map.put("table-name", "dosages");
+
+    Adb.populate_db(url, metadata_map, med_list);
   }
 
   public static List<MedicineDosage> readDosagesFromCSV(String dosageCSVFilePath)
@@ -351,7 +394,7 @@ public class MedicineRESTImpl implements MedicineDAO {
   //To export to csv
 
   public static void exportMedicineToCSV(String medicineCSVFilePath)
-      throws IOException {
+          throws IOException, ParseException {
     MedicineDAO medicineDerby = new MedicineRESTImpl();
     List<Medicine> medicineList = ((MedicineRESTImpl) medicineDerby).getMedicineList();
     writeMedicineToCSV(medicineList, medicineCSVFilePath);
@@ -383,14 +426,14 @@ public class MedicineRESTImpl implements MedicineDAO {
       String thisLine =
           String.join(
               ",",
-              med.getMedicineID(),
-              med.getGenericName(),
-              med.getBrandName(),
-              med.getMedicineClass(),
-              med.getUses(),
-              med.getWarnings(),
-              med.getSideEffects(),
-              med.getForm());
+                  med.getStringFields().get("medicine_id"),
+                  med.getStringFields().get("generic_name"),
+                  med.getStringFields().get("brand_name"),
+                  med.getStringFields().get("medicine_class"),
+                  med.getStringFields().get("uses"),
+                  med.getStringFields().get("warnings"),
+                  med.getStringFields().get("side_effects"),
+                  med.getStringFields().get("form"));
       medWriter.write(thisLine);
       medWriter.newLine();
     }

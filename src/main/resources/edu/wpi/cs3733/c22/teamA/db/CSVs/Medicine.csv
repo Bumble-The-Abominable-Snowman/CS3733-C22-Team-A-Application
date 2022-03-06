@@ -1,4 +1,4 @@
-medicine_id,generic_name,brand_name,medicine_class,uses,warning,side_effects,form
+medicine_id,generic_name,brand_name,medicine_class,uses,warnings,side_effects,form
 med123,atorvastatin,Lipitor,Statins,High Control,Do not use while Pregnant or with Chronic Kidney Disease,Muscle aches,Tablet
 med222,ibuprofen,Advil,NSAIDs,Pain and Fever,Do not take with a blood thinner or with history of bleeding problems or over 60 years old,Nausea and Dizziness,Tablet
 med343,ibuprofen,Advil,NSAIDs,Pain and Fever,Do not take with a blood thinner or with history of bleeding problems or over 60 years old,Nausea and Dizziness,Liquid

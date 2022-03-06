@@ -23,6 +23,7 @@ import javafx.scene.paint.Color;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,16 +46,16 @@ public class MedicineDataviewManager {
         this.dataViewCtrl = dataViewCtrl;
     }
 
-    public void delete() throws IOException {
+    public void delete() throws IOException, ParseException {
         MedicineDAO database = new MedicineWrapperImpl();
         database.deleteMedicine(
-                table.getSelectionModel().getSelectedItem().getValue().med.getMedicineID()
+                table.getSelectionModel().getSelectedItem().getValue().med.getStringFields().get("medicine_id")
         );
         dataViewCtrl.titleLabel.setText("Medicine");
         initializeMedicineTable();
     }
 
-    public void initializeMedicineTable() throws IOException {
+    public void initializeMedicineTable() throws IOException, ParseException {
         table = dataViewCtrl.getTable();
         dataViewCtrl.getSelectEmployeeBox().setVisible(false);
 
@@ -72,47 +73,47 @@ public class MedicineDataviewManager {
                 .get(0)
                 .setCellValueFactory(
                         (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-                                new SimpleStringProperty(param.getValue().getValue().med.getMedicineID()));
+                                new SimpleStringProperty(param.getValue().getValue().med.getStringFields().get("medicine_id")));
         medicineColumns
                 .get(1)
                 .setCellValueFactory(
                         (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-                                new SimpleStringProperty(param.getValue().getValue().med.getGenericName()));
+                                new SimpleStringProperty(param.getValue().getValue().med.getStringFields().get("generic_name")));
         medicineColumns
                 .get(2)
                 .setCellValueFactory(
                         (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-                                new SimpleStringProperty(param.getValue().getValue().med.getBrandName()));
+                                new SimpleStringProperty(param.getValue().getValue().med.getStringFields().get("brand_name")));
         medicineColumns
                 .get(3)
                 .setCellValueFactory(
                         (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-                                new SimpleStringProperty(param.getValue().getValue().med.getMedicineClass()));
+                                new SimpleStringProperty(param.getValue().getValue().med.getStringFields().get("medicine_class")));
         medicineColumns
                 .get(4)
                 .setCellValueFactory(
                         (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-                                new SimpleStringProperty(param.getValue().getValue().med.getUses()));
+                                new SimpleStringProperty(param.getValue().getValue().med.getStringFields().get("uses")));
         medicineColumns
                 .get(5)
                 .setCellValueFactory(
                         (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-                                new SimpleStringProperty(param.getValue().getValue().med.getWarnings()));
+                                new SimpleStringProperty(param.getValue().getValue().med.getStringFields().get("warnings")));
         medicineColumns
                 .get(6)
                 .setCellValueFactory(
                         (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-                                new SimpleStringProperty(param.getValue().getValue().med.getSideEffects()));
+                                new SimpleStringProperty(param.getValue().getValue().med.getStringFields().get("side_effects")));
         medicineColumns
                 .get(7)
                 .setCellValueFactory(
                         (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-                                new SimpleStringProperty(param.getValue().getValue().med.getForm()));
+                                new SimpleStringProperty(param.getValue().getValue().med.getStringFields().get("form")));
         medicineColumns
                 .get(8)
                 .setCellValueFactory(
                         (TreeTableColumn.CellDataFeatures<RecursiveObj, String> param) ->
-                                new SimpleStringProperty(param.getValue().getValue().med.getDosageAmounts().toString()));
+                                new SimpleStringProperty(param.getValue().getValue().med.getStringFields().get("dosage_amounts")));
 
         // Grab medicine from database
         MedicineDAO database = new MedicineWrapperImpl();
@@ -211,13 +212,13 @@ public class MedicineDataviewManager {
                                     }
                                     if (!(field.getValue().equals("DosageAmounts"))){
                                         database.updateMedicine(
-                                                med.getMedicineID(), aField, value.getText());
+                                                med.getStringFields().get("medicine_id"), aField, value.getText());
                                         updateButton.setTextFill(Color.GREEN);
                                         this.initializeMedicineTable();
                                     }
                                     else if(field.getValue().equals("DosageAmounts")){
                                         aField = "dosage_amount";
-                                        database.enterMedicineDosage(med.getMedicineID(),Float.parseFloat(aField));
+                                        database.enterMedicineDosage(med.getStringFields().get("medicine_id"),Float.parseFloat(aField));
                                         updateButton.setTextFill(Color.GREEN);
                                         this.initializeMedicineTable();
                                     }

@@ -17,7 +17,7 @@ public class MedicineWrapperImpl implements MedicineDAO {
     public MedicineWrapperImpl()  {}
 
     @Override
-    public Medicine getMedicine(String ID) throws IOException {
+    public Medicine getMedicine(String ID) throws IOException, ParseException {
         if (App.DB_CHOICE.equals("nosql"))
         {return (new MedicineRESTImpl()).getMedicine(ID);}
         else
@@ -26,7 +26,7 @@ public class MedicineWrapperImpl implements MedicineDAO {
     }
 
     @Override
-    public void updateMedicine(String ID, String field, String change) {
+    public void updateMedicine(String ID, String field, String change) throws IOException {
         if (App.DB_CHOICE.equals("nosql"))
         {(new MedicineRESTImpl()).updateMedicine(ID, field, change);}
         else
@@ -53,7 +53,7 @@ public class MedicineWrapperImpl implements MedicineDAO {
     }
 
     @Override
-    public void enterMedicineDosage(String ID, Float dosage) {
+    public void enterMedicineDosage(String ID, Float dosage) throws IOException {
         if (App.DB_CHOICE.equals("nosql"))
         {(new MedicineRESTImpl()).enterMedicineDosage(ID, dosage);}
         else
@@ -71,7 +71,7 @@ public class MedicineWrapperImpl implements MedicineDAO {
     }
 
     @Override
-    public void deleteMedicineDosage(String ID, Float dosage) {
+    public void deleteMedicineDosage(String ID, Float dosage) throws IOException {
         if (App.DB_CHOICE.equals("nosql"))
         {(new MedicineRESTImpl()).deleteMedicineDosage(ID, dosage);}
         else
@@ -80,7 +80,7 @@ public class MedicineWrapperImpl implements MedicineDAO {
     }
 
     @Override
-    public List<Float> getSpecificDosages(String ID) {
+    public List<Float> getSpecificDosages(String ID) throws IOException, ParseException {
         if (App.DB_CHOICE.equals("nosql"))
         {return (new MedicineRESTImpl()).getSpecificDosages(ID);}
         else
@@ -89,7 +89,7 @@ public class MedicineWrapperImpl implements MedicineDAO {
     }
 
     @Override
-    public List<Medicine> getMedicineList() throws IOException {
+    public List<Medicine> getMedicineList() throws IOException, ParseException {
         if (App.DB_CHOICE.equals("nosql"))
         {return (new MedicineRESTImpl()).getMedicineList();}
         else
@@ -97,7 +97,7 @@ public class MedicineWrapperImpl implements MedicineDAO {
     }
 
     @Override
-    public List<MedicineDosage> getAllDosages() {
+    public List<MedicineDosage> getAllDosages() throws IOException {
         if (App.DB_CHOICE.equals("nosql"))
         {return (new MedicineRESTImpl()).getAllDosages();}
         else
@@ -106,13 +106,13 @@ public class MedicineWrapperImpl implements MedicineDAO {
 
     public void importMedicineFromCSV(String csvFilePath) throws IOException, ParseException {
         if (App.DB_CHOICE.equals("nosql"))
-        {}
+        {(new MedicineRESTImpl()).importMedicineFromCSV(csvFilePath);}
         else {MedicineDerbyImpl.importMedicineFromCSV(csvFilePath);}
 
     }
     public void importDosagesFromCSV(String csvFilePath) throws IOException, ParseException {
         if (App.DB_CHOICE.equals("nosql"))
-        {}
+        {(new MedicineRESTImpl()).importDosagesFromCSV(csvFilePath);}
         else {MedicineDerbyImpl.importDosagesFromCSV(csvFilePath);}
 
     }
