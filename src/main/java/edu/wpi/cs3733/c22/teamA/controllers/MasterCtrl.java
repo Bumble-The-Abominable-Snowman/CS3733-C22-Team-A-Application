@@ -240,7 +240,8 @@ public abstract class MasterCtrl {
 
   @FXML
   private void goToLogin() throws IOException {
-    sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOGIN);
+    java.net.CookieHandler.setDefault(new java.net.CookieManager());
+    sceneSwitcher.switchScene(SceneSwitcher.SCENES.LAUNCH);
   }
 
   @FXML

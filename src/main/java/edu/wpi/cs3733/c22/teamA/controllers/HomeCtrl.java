@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -77,7 +78,13 @@ public class HomeCtrl extends MasterCtrl {
 
           if (String.valueOf(SceneSwitcher.fxmlval.get(SceneSwitcher.fxmlval.size() - 1)).equals("DATA_VIEW"))
           {
-            App.sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
+            Platform.runLater(() -> {
+              try {
+                App.sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
+              } catch (IOException e) {
+                e.printStackTrace();
+              }
+            });
           }
         };
         System.out.println("starting the rabbitmq daemon...");
