@@ -6,16 +6,27 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.location.LocationWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentWrapperImpl;
+import edu.wpi.cs3733.c22.teamA.App;
+import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.controllers.DataViewCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Popup;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -42,6 +53,8 @@ public class LocationDataviewManager {
 			"Store Recliners?"
 	};
 
+	private Popup popup;
+
 	private List<Location> locList = new ArrayList<>();
 
 	public LocationDataviewManager(DataViewCtrl dataViewCtrl){
@@ -64,6 +77,7 @@ public class LocationDataviewManager {
 	}
 
 	public void initializeLocationTable() throws IOException, ParseException {
+		popup = new Popup();
 		table = dataViewCtrl.getTable();
 		dataViewCtrl.getSelectEmployeeBox().setVisible(false);
 		List<JFXTreeTableColumn<RecursiveObj, String>> locationColumns = new ArrayList<>();
@@ -165,5 +179,9 @@ public class LocationDataviewManager {
 
 					}
 				});
+	}
+
+	public void addData() throws IOException {
+		App.sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOAD_BACKUP);
 	}
 }

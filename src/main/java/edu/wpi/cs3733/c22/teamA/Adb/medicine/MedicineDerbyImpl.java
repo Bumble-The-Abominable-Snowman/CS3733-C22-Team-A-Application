@@ -11,10 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class MedicineDerbyImpl implements MedicineDAO {
   public MedicineDerbyImpl() {}
@@ -56,61 +53,57 @@ public class MedicineDerbyImpl implements MedicineDAO {
   public void updateMedicine(Medicine m) {
     try {
 
+      Statement get = Adb.connection.createStatement();
 
-        this.enterMedicine(m);
+      HashMap<String, String> sr_string_fields = m.getStringFields();
 
+      String str =
+              String.format(
+                      "SELECT * FROM Medicine s, %s r WHERE (s.medicine_id = r.medicine_id) AND r.medicine_id = '%s'",
+                      "MedicineDosage", sr_string_fields.get("medicine_id"));
 
+      ResultSet resultSet = get.executeQuery(str);
+      ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
 
-//      Statement get = Adb.connection.createStatement();
-//
-//      HashMap<String, String> sr_string_fields = m.getStringFields();
-//
-//      String str =
-//              String.format(
-//                      "SELECT * FROM Medicine s, %s r WHERE (s.medicine_id = r.medicine_id) AND r.medicine_id = '%s'",
-//                      this.tableName, sr_string_fields.get("request_id"));
-//
-//      ResultSet resultSet = get.executeQuery(str);
-//      ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
-//
-//      if (resultSet.next()) {
-//        for (int i = 1; i < resultSetMetaData.getColumnCount() + 1; i++) {
-//          String returnValOld = resultSet.getString(i);
-//          String columnName = resultSetMetaData.getColumnName(i).toLowerCase(Locale.ROOT);
-//
-//          Statement update = Adb.connection.createStatement();
-//
-//          if (!returnValOld.equals(sr_string_fields.get(columnName)))
-//          {
-//            if (columnName.equals("request_id")
-//                    || columnName.equals("start_location")
-//                    || columnName.equals("end_location")
-//                    || columnName.equals("employee_requested")
-//                    || columnName.equals("employee_assigned")
-//                    || columnName.equals("request_time")
-//                    || columnName.equals("request_status")
-//                    || columnName.equals("request_priority")
-//                    || columnName.equals("comments"))
-//            {
-//              str =
-//                      String.format(
-//                              "UPDATE ServiceRequest SET " + columnName + " = '%s' WHERE request_id = '%s'",
-//                              sr_string_fields.get(columnName),
-//                              sr_string_fields.get("request_id"));
-//            } else {
-//              str =
-//                      String.format(
-//                              "UPDATE %s SET " + columnName + " = '%s' WHERE request_id = '%s'",
-//                              this.tableName,
-//                              sr_string_fields.get(columnName),
-//                              sr_string_fields.get("request_id"));
-//
-//            }
-//            update.execute(str);
-//          }
-//
-//        }
-//      }
+      if (resultSet.next()) {
+        for (int i = 1; i < resultSetMetaData.getColumnCount() + 1; i++) {
+          String returnValOld = resultSet.getString(i);
+          String columnName = resultSetMetaData.getColumnName(i).toLowerCase(Locale.ROOT);
+
+          Statement update = Adb.connection.createStatement();
+
+          if (!returnValOld.equals(sr_string_fields.get(columnName)))
+          {
+            if (columnName.equals("medicine_id")
+                    || columnName.equals("generic_name")
+                    || columnName.equals("brand_name")
+                    || columnName.equals("medicine_class")
+                    || columnName.equals("uses")
+                    || columnName.equals("warnings")
+                    || columnName.equals("side_effects")
+                    || columnName.equals("form"))
+            {
+              str =
+                      String.format(
+                              "UPDATE Medicine SET " + columnName + " = '%s' WHERE medicine_id = '%s'",
+                              sr_string_fields.get(columnName),
+                              sr_string_fields.get("medicine_id"));
+            } else {
+              str =
+                      String.format(
+                              "UPDATE %s SET " + columnName + " = '%s' WHERE medicine_id = '%s'",
+                              "MedicineDosage",
+                              sr_string_fields.get(columnName),
+                              sr_string_fields.get("medicine_id"));
+
+            }
+            System.out.println(str);
+            update.execute(str);
+          }
+
+        }
+      }
+
 //
 //
 //
@@ -171,7 +164,14 @@ public class MedicineDerbyImpl implements MedicineDAO {
                               + " VALUES('%s', '%s','%s','%s','%s','%s','%s','%s')",
                       medicineID, genericName, brandName, medicineClass, uses, warnings, sideEffects, form);
 
-      insert.executeUpdate(strMed);
+      insert.execute(strMed);
+
+      System.out.println(dosageAmount);
+      for (Float d:
+           dosageAmount) {
+        System.out.println(d);
+        this.enterMedicineDosage(medicineID, d);
+      }
 
     } catch (SQLException e) {
       System.out.println("Error caught during enter");
@@ -361,8 +361,8 @@ public class MedicineDerbyImpl implements MedicineDAO {
     List<Medicine> medicineList = new ArrayList<>();
     try {
       medicineList = readMedicineCSV(medicineCSVFilePath);
-      //System.out.println("Printing out medicineList: ");
-      //System.out.println(medicineList);
+
+
     } catch (IOException | ParseException e){
       System.out.println("Error caught while trying to read CSV");
       System.out.println(e.getMessage());
@@ -418,7 +418,7 @@ public class MedicineDerbyImpl implements MedicineDAO {
         dataIndex++;
       }
 
-      med.setField("dosage_amount", null);
+      med.setFieldByString("dosage_amount", "");
       //System.out.println(thisMed);
       medicineList.add(med);
       dataIndex = 0;

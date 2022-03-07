@@ -87,20 +87,46 @@ public abstract class MasterCtrl {
 
   public void configure() {
 
-    if (Adb.username.equals("admin")) {
-      account = ACCOUNT.ADMIN;
-    } else if (Adb.username.equals("staff")) {
-      account = ACCOUNT.STAFF;
-    }
+    viewSRButton.setDisable(true);
+    viewEmployeesButton.setDisable(true);
+    viewEquipmentButton.setDisable(true);
+    viewMedicineButton.setDisable(true);
+    settingsButton.setDisable(true);
+    mapButton.setDisable(true);
 
-    if (account == ACCOUNT.STAFF) {  //Remove some permissions
-      if (account == ACCOUNT.STAFF) {
-        menuBox.getChildren().remove(0);
+    boolean map_sr = false;
+    boolean map_eq = false;
+    for (String scope: App.authUser.getPermissions()) {
+      if (scope.matches("^read:db-sr-.*"))
+      {
+        viewSRButton.setDisable(false);
+        map_sr = true;
+      }
+      if (scope.matches("^read:db-employee-.*"))
+      {
+        viewEmployeesButton.setDisable(false);
+      }
+      if (scope.matches("^read:db-equipment"))
+      {
+        viewEquipmentButton.setDisable(false);
+        map_eq = true;
+      }
+      if (scope.matches("^read:db-medicine"))
+      {
+        viewMedicineButton.setDisable(false);
+      }
+      if (scope.equals("user-admin"))
+      {
+        settingsButton.setDisable(false);
       }
     }
+    if (map_eq && map_sr) {
+      mapButton.setDisable(false);
+    }
 
 
-      homeSize = homeButton.getFont().getSize();
+
+    homeSize = homeButton.getFont().getSize();
       titleSize = titleLabel.getFont().getSize();
       nextSize = homeButton.getFont().getSize();
 

@@ -10,6 +10,8 @@ import edu.wpi.cs3733.c22.teamA.Adb.location.LocationWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.medicalequipment.EquipmentWrapperImpl;
+import edu.wpi.cs3733.c22.teamA.App;
+import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.controllers.DataViewCtrl;
 import edu.wpi.cs3733.c22.teamA.entities.Equipment;
 import edu.wpi.cs3733.c22.teamA.entities.Location;
@@ -196,4 +198,8 @@ public class EquipmentDataviewManager {
 					}
 				});
 	}
+
+    public void addData() throws IOException {
+		App.sceneSwitcher.switchScene(SceneSwitcher.SCENES.LOAD_BACKUP);
+    }
 }

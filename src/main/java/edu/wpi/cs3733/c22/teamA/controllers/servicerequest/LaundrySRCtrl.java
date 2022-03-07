@@ -126,13 +126,15 @@ public class LaundrySRCtrl extends SRCtrl {
       SR sr = new SR(uniqueID,
               (new LocationWrapperImpl()).getLocationNode("NA"),
               toLocationSelected,
-              (new EmployeeWrapperImpl()).getEmployee("002"),
+              App.authUser.getEmployee(),
               employeeSelected,
               new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,
               SR.Priority.REGULAR,
               commentsBox.getText().equals("") ? "NA" : commentsBox.getText(),
               SR.SRType.LAUNDRY);
+
+      sr.setFieldByString("wash_mode", washModeChoice.getValue());
 
       ServiceRequestWrapperImpl serviceRequestWrapper = new ServiceRequestWrapperImpl(SR.SRType.LAUNDRY);
       serviceRequestWrapper.enterServiceRequest(sr);

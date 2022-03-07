@@ -206,6 +206,7 @@ public class Adb {
                   "edu/wpi/cs3733/c22/teamA/db/CSVs/Medicine.csv");
         } catch (Exception e) {
           System.out.println("Medicine Insertion failed");
+          e.printStackTrace();
         }
 
 
@@ -231,6 +232,7 @@ public class Adb {
                   "edu/wpi/cs3733/c22/teamA/db/CSVs/MedicineDosage.csv");
         } catch (Exception e) {
           System.out.println("MedicineDosage Insertion failed");
+          e.printStackTrace();
         }
 
 

@@ -354,8 +354,19 @@ public class DataViewCtrl extends MasterCtrl {
                                       + "pt;");
 
                */     });
+
+    this.addButton.setDisable(true);
+    for (String scope: App.authUser.getPermissions()) {
+      System.out.printf("permission for %s\n", scope);
+      if (scope.equals("user-admin"))
+      {
+        this.addButton.setDisable(false);
+      }
+    }
+
     if (HomeCtrl.sceneFlag == 1) {
       titleLabel.setText("Service Requests");
+      this.addButton.setDisable(false);
       srDataviewManager.initializeRequestsTable();
     } else if (HomeCtrl.sceneFlag == 2) {
       titleLabel.setText("Locations");
@@ -524,7 +535,26 @@ public class DataViewCtrl extends MasterCtrl {
   void clear() {}
 
   @FXML
-  void addData() {}
+  void addData() throws IOException {
+    if (HomeCtrl.sceneFlag == 1) {
+      srDataviewManager.addData();
+    } else if (HomeCtrl.sceneFlag == 2) {
+      titleLabel.setText("Locations");
+      locationDataviewManager.addData();
+    } else if (HomeCtrl.sceneFlag == 3) {
+      titleLabel.setText("Equipment");
+      equipmentDataviewManager.addData();
+    } else if (HomeCtrl.sceneFlag == 4) {
+      titleLabel.setText("Employees");
+      employeeDataviewManager.addData();
+    } else if(HomeCtrl.sceneFlag == 5) {
+      titleLabel.setText("MEDICINE");
+      medicineDataviewManager.addData();
+    }
+    else {
+      // wait what how did you get here
+    }
+  }
 
   protected void onSceneSwitch() {
     DataViewCtrl.detailsPopup.get().hide();

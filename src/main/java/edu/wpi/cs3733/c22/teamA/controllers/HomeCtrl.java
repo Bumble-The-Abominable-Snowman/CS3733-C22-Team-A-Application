@@ -21,7 +21,8 @@ import javafx.util.Duration;
 public class HomeCtrl extends MasterCtrl {
 
 
-  @FXML private Label homeTitle;
+    public Label greetingLabel;
+    @FXML private Label homeTitle;
   @FXML private ImageView frame1;
   @FXML private ImageView frame2;
   @FXML private ImageView frame3;
@@ -44,6 +45,7 @@ public class HomeCtrl extends MasterCtrl {
       drawer.toFront();
       menuBox.toFront();
 
+      greetingLabel.setText("Welcome, " + App.authUser.getEmployeeName());
 
 //    EmployeeDAO employeeBase = new EmployeeWrapperImpl();
 //    List<Employee> empList = employeeBase.getEmployeeList();

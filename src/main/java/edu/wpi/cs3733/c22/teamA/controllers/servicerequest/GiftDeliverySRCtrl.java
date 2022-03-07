@@ -126,13 +126,15 @@ public class GiftDeliverySRCtrl extends SRCtrl {
       SR sr = new SR(uniqueID,
               (new LocationWrapperImpl()).getLocationNode("NA"),
               toLocationSelected,
-              (new EmployeeWrapperImpl()).getEmployee("002"),
+              App.authUser.getEmployee(),
               employeeSelected,
               new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,
               SR.Priority.REGULAR,
               commentsBox.getText().equals("") ? "NA" : commentsBox.getText(),
               SR.SRType.GIFT_DELIVERY);
+
+      sr.setFieldByString("gift_description", typeChoice.getValue());
 
       ServiceRequestWrapperImpl serviceRequestWrapper = new ServiceRequestWrapperImpl(SR.SRType.GIFT_DELIVERY);
       serviceRequestWrapper.enterServiceRequest(sr);

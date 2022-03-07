@@ -25,3 +25,8 @@ employee_id, employee_type, first_name, last_name, email, phone_num, address, st
 024,admin,Jeans,Mcgee,jmacccc@wpi.edu,0000000700,Hell,2022-02-21
 025,admin,Tom,Brady,goat@wpi.edu,0000000800,Super Bowl,2022-03-28
 026,admin,Ryan,Dieselman,rddieselman@wpi.edu,7814394519,Alden,2022-02-22
+027,nurse,Saoirse,Bailey,cs3733.teama.1@gmail.com,7814394519,Alden,2022-02-22
+028,doctor,Ottilie,Wicks,cs3733.teama.2@gmail.com,7814394519,Alden,2022-02-22
+029,aide,Sohail,Dyer,cs3733.teama.3@gmail.com,7814394519,Alden,2022-02-22
+030,staff,Anderson,Dawson,cs3733.teama.4@gmail.com,7814394519,Alden,2022-02-22
+031,custodian,Joyce,Fuller,cs3733.teama.5@gmail.com,7814394519,Alden,2022-02-22

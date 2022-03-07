@@ -150,13 +150,18 @@ public class FoodDeliverySRCtrl extends SRCtrl {
       SR sr = new SR(uniqueID,
               (new LocationWrapperImpl()).getLocationNode("NA"),
               toLocationSelected,
-              (new EmployeeWrapperImpl()).getEmployee("002"),
+              App.authUser.getEmployee(),
               employeeSelected,
               new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,
               SR.Priority.REGULAR,
               commentsBox.getText().equals("") ? "NA" : commentsBox.getText(),
               SR.SRType.FOOD_DELIVERY);
+
+      sr.setFieldByString("main_dish", mainChoice.getValue());
+      sr.setFieldByString("side_dish", sideChoice.getValue());
+      sr.setFieldByString("beverage", beverageChoice.getValue());
+      sr.setFieldByString("dessert", dessertChoice.getValue());
 
       ServiceRequestWrapperImpl serviceRequestWrapper = new ServiceRequestWrapperImpl(SR.SRType.FOOD_DELIVERY);
       serviceRequestWrapper.enterServiceRequest(sr);

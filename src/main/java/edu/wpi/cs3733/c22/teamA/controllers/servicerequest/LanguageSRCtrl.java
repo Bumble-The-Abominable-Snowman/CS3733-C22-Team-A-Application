@@ -126,13 +126,15 @@ public class LanguageSRCtrl extends SRCtrl {
       SR sr = new SR(uniqueID,
               (new LocationWrapperImpl()).getLocationNode("NA"),
               toLocationSelected,
-              (new EmployeeWrapperImpl()).getEmployee("002"),
+              App.authUser.getEmployee(),
               employeeSelected,
               new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,
               SR.Priority.REGULAR,
               commentsBox.getText().equals("") ? "NA" : commentsBox.getText(),
               SR.SRType.LANGUAGE);
+
+      sr.setFieldByString("language", languageChoice.getValue());
 
       ServiceRequestWrapperImpl serviceRequestWrapper = new ServiceRequestWrapperImpl(SR.SRType.LANGUAGE);
       serviceRequestWrapper.enterServiceRequest(sr);

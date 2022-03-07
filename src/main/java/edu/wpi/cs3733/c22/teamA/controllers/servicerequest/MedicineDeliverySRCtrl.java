@@ -142,13 +142,15 @@ public class MedicineDeliverySRCtrl extends SRCtrl {
       SR sr = new SR(uniqueID,
               (new LocationWrapperImpl()).getLocationNode("NA"),
               toLocationSelected,
-              (new EmployeeWrapperImpl()).getEmployee("001"),
+              App.authUser.getEmployee(),
               employeeSelected,
               new Timestamp((new Date()).getTime()),
               SR.Status.BLANK,
               SR.Priority.REGULAR,
               commentsBox.getText().equals("") ? "NA" : commentsBox.getText(),
               SR.SRType.MEDICINE_DELIVERY);
+
+      sr.setFieldByString("medicine_id", medicineChoice.getValue());
 
       serviceRequestDatabase.enterServiceRequest(sr);
     }

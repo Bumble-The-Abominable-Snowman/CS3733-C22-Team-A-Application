@@ -66,9 +66,8 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
     reclinerLocations.add("Nearest from Hallways");
     reclinerLocations.add("West Plaza 1st Floor");
 
-    status.add("NEW/BLANK");
-    status.add("IN-PROGRESS");
-    status.add("WAITING FOR EQUIPMENT");
+    status.add("BLANK");
+    status.add("WAITING");
     status.add("CANCELED");
     status.add("DONE");
   }
@@ -190,10 +189,10 @@ public class EquipmentDeliverySRCtrl extends SRCtrl {
       SR sr = new SR(uniqueID,
               (new LocationWrapperImpl()).getLocationNode("NA"),
               toLocationSelected,
-              (new EmployeeWrapperImpl()).getEmployee("002"),
+              App.authUser.getEmployee(),
               employeeSelected,
               new Timestamp((new Date()).getTime()),
-              SR.Status.BLANK,
+              SR.Status.valueOf(statusChoice.getValue()),
               SR.Priority.REGULAR,
               commentsBox.getText().equals("") ? "NA" : commentsBox.getText(),
               SR.SRType.EQUIPMENT);

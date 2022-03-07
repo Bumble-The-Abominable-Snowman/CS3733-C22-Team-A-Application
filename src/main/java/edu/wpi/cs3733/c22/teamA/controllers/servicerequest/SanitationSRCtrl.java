@@ -126,7 +126,7 @@ public class SanitationSRCtrl extends SRCtrl {
             SR sr = new SR(uniqueID,
                     (new LocationWrapperImpl()).getLocationNode("NA"),
                     toLocationSelected,
-                    (new EmployeeWrapperImpl()).getEmployee("002"),
+                    App.authUser.getEmployee(),
                     employeeSelected,
                     new Timestamp((new Date()).getTime()),
                     SR.Status.BLANK,
@@ -134,6 +134,7 @@ public class SanitationSRCtrl extends SRCtrl {
                     commentsBox.getText().equals("") ? "NA" : commentsBox.getText(),
                     SR.SRType.SANITATION);
 
+            sr.setFieldByString("sanitation_type", typeChoice.getValue());
             ServiceRequestWrapperImpl serviceRequestWrapper = new ServiceRequestWrapperImpl(SR.SRType.SANITATION);
             serviceRequestWrapper.enterServiceRequest(sr);
         }

@@ -21,8 +21,8 @@ import edu.wpi.cs3733.c22.teamA.entities.servicerequests.SR;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-//import teamA_API.Main;
-//import teamA_API.exceptions.ServiceException;
+import teamA_API.Main;
+import teamA_API.exceptions.ServiceException;
 
 public class SelectServiceRequestCtrl extends MasterCtrl {
 
@@ -99,6 +99,61 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
             (obs, oldVal, newVal) -> {
               updateSize();
             });
+
+    equipmentDeliveryButton.setDisable(true);
+    religiousButton.setDisable(true);
+    sanitationButton.setDisable(true);
+    laundryButton.setDisable(true);
+    foodDeliveryButton.setDisable(true);
+    languageButton.setDisable(true);
+    floralDeliveryButton.setDisable(true);
+    medicineDeliveryButton.setDisable(true);
+    securityButton.setDisable(true);
+    consultationButton.setDisable(true);
+    maintenanceButton.setDisable(true);
+    giftDeliveryButton.setDisable(true);
+
+    for (String scope: App.authUser.getPermissions()) {
+      System.out.printf("permission for %s\n", scope);
+      switch (scope) {
+        case "write:db-sr-equipment-delivery":
+          equipmentDeliveryButton.setDisable(false);
+          break;
+        case "write:db-sr-religious":
+          religiousButton.setDisable(false);
+          break;
+        case "write:db-sr-sanitation":
+          sanitationButton.setDisable(false);
+          break;
+        case "write:db-sr-laundry":
+          laundryButton.setDisable(false);
+          break;
+        case "write:db-sr-food-delivery":
+          foodDeliveryButton.setDisable(false);
+          break;
+        case "write:db-sr-language":
+          languageButton.setDisable(false);
+          break;
+        case "write:db-sr-floral-delivery":
+          floralDeliveryButton.setDisable(false);
+          break;
+        case "write:db-sr-medicine-delivery":
+          medicineDeliveryButton.setDisable(false);
+          break;
+        case "write:db-sr-security":
+          securityButton.setDisable(false);
+          break;
+        case "write:db-sr-consultation":
+          consultationButton.setDisable(false);
+          break;
+        case "write:db-sr-maintenance":
+          maintenanceButton.setDisable(false);
+          break;
+        case "write:db-sr-gift-delivery":
+          giftDeliveryButton.setDisable(false);
+          break;
+      }
+    }
   }
 
   @FXML
@@ -161,63 +216,63 @@ public class SelectServiceRequestCtrl extends MasterCtrl {
     sceneSwitcher.switchScene(SceneSwitcher.SCENES.MEDICINE_DELIVERY_SR);
   }
 
-//  @FXML
-//  private void loadAPI() throws ServiceException, IOException {
-//    Main.run(500, 200, 960, 600, App.class.getResource("css/styleSheet.css").toExternalForm(), "");
-//  }
-//
-//  @FXML
-//  private void saveAPI() throws IllegalAccessException, SQLException, InvocationTargetException, ParseException, IOException {
-//    List<teamA_API.entities.SR> list = Main.getRequestList();
-//    ServiceRequestWrapperImpl data = new ServiceRequestWrapperImpl(SR.SRType.SANITATION);
-//    for (teamA_API.entities.SR req : list) {
-//      SR sr = new SR(SR.SRType.SANITATION);
-//      sr.setFieldByString("request_id", req.getFields_string().get("request_id"));
-//      sr.setFieldByString("start_location", "NA");
-//      sr.setFieldByString("end_location", req.getFields_string().get("end_location"));
-//
-//      teamA_API.entities.Employee employeeAssignedAPI = (teamA_API.entities.Employee) Main.getEmployee(req.getFields_string().get("employee_assigned"));
-//      Employee employeeRequested = new Employee(
-//              employeeAssignedAPI.getEmployeeID(),
-//              employeeAssignedAPI.getEmployeeType(),
-//              employeeAssignedAPI.getFirstName(),
-//              employeeAssignedAPI.getLastName(),
-//              employeeAssignedAPI.getEmail(),
-//              employeeAssignedAPI.getPhoneNum(),
-//              employeeAssignedAPI.getAddress(),
-//              new SimpleDateFormat("yyyy-MM-dd").parse(employeeAssignedAPI.getStartDate()));
-//
-//      EmployeeWrapperImpl employeeWrapper = new EmployeeWrapperImpl();
-//      boolean doesEmployeeAssignedNotExist = false;
-//      for (Employee e: employeeWrapper.getEmployeeList()) {
-//        if (e.getStringFields().get("employee_id").equals(employeeRequested.getStringFields().get("employee_id")))
-//        {
-//          doesEmployeeAssignedNotExist = true;
-//        }
-//      }
-//      if (!doesEmployeeAssignedNotExist)
-//      {
-//        employeeWrapper.enterEmployee(employeeAssignedAPI.getEmployeeID(),
-//                employeeAssignedAPI.getEmployeeType(),
-//                employeeAssignedAPI.getFirstName(),
-//                employeeAssignedAPI.getLastName(),
-//                employeeAssignedAPI.getEmail(),
-//                employeeAssignedAPI.getPhoneNum(),
-//                employeeAssignedAPI.getAddress(),
-//                new SimpleDateFormat("yyyy-MM-dd").parse(employeeAssignedAPI.getStartDate()));
-//
-//      }
-//
-//      sr.setField("employee_assigned", employeeRequested);
-//      sr.setField("employee_requested", employeeWrapper.getEmployee("001"));
-//
-//      sr.setFieldByString("comments", req.getFields_string().get("comments"));
-//      sr.setFieldByString("sanitation_type", req.getFields_string().get("sanitation_type"));
-//
-//      System.out.println(sr);
-//      data.enterServiceRequest(sr);
-//    }
-//  }
+  @FXML
+  private void loadAPI() throws ServiceException, IOException {
+    Main.run(500, 200, 960, 600, App.class.getResource("css/styleSheet.css").toExternalForm(), "");
+  }
+
+  @FXML
+  private void saveAPI() throws IllegalAccessException, SQLException, InvocationTargetException, ParseException, IOException {
+    List<teamA_API.entities.SR> list = Main.getRequestList();
+    ServiceRequestWrapperImpl data = new ServiceRequestWrapperImpl(SR.SRType.SANITATION);
+    for (teamA_API.entities.SR req : list) {
+      SR sr = new SR(SR.SRType.SANITATION);
+      sr.setFieldByString("request_id", req.getFields_string().get("request_id"));
+      sr.setFieldByString("start_location", "NA");
+      sr.setFieldByString("end_location", req.getFields_string().get("end_location"));
+
+      teamA_API.entities.Employee employeeAssignedAPI = (teamA_API.entities.Employee) Main.getEmployee(req.getFields_string().get("employee_assigned"));
+      Employee employeeRequested = new Employee(
+              employeeAssignedAPI.getEmployeeID(),
+              employeeAssignedAPI.getEmployeeType(),
+              employeeAssignedAPI.getFirstName(),
+              employeeAssignedAPI.getLastName(),
+              employeeAssignedAPI.getEmail(),
+              employeeAssignedAPI.getPhoneNum(),
+              employeeAssignedAPI.getAddress(),
+              new SimpleDateFormat("yyyy-MM-dd").parse(employeeAssignedAPI.getStartDate()));
+
+      EmployeeWrapperImpl employeeWrapper = new EmployeeWrapperImpl();
+      boolean doesEmployeeAssignedNotExist = false;
+      for (Employee e: employeeWrapper.getEmployeeList()) {
+        if (e.getStringFields().get("employee_id").equals(employeeRequested.getStringFields().get("employee_id")))
+        {
+          doesEmployeeAssignedNotExist = true;
+        }
+      }
+      if (!doesEmployeeAssignedNotExist)
+      {
+        employeeWrapper.enterEmployee(employeeAssignedAPI.getEmployeeID(),
+                employeeAssignedAPI.getEmployeeType(),
+                employeeAssignedAPI.getFirstName(),
+                employeeAssignedAPI.getLastName(),
+                employeeAssignedAPI.getEmail(),
+                employeeAssignedAPI.getPhoneNum(),
+                employeeAssignedAPI.getAddress(),
+                new SimpleDateFormat("yyyy-MM-dd").parse(employeeAssignedAPI.getStartDate()));
+
+      }
+
+      sr.setField("employee_assigned", employeeRequested);
+      sr.setField("employee_requested", employeeWrapper.getEmployee("001"));
+
+      sr.setFieldByString("comments", req.getFields_string().get("comments"));
+      sr.setFieldByString("sanitation_type", req.getFields_string().get("sanitation_type"));
+
+      System.out.println(sr);
+      data.enterServiceRequest(sr);
+    }
+  }
 
   @FXML
   private void updateSize() {

@@ -19,6 +19,8 @@ public class Employee {
   protected HashMap<String, Object> fields = new HashMap<>();
   protected HashMap<String, String> fields_string = new HashMap<>();
 
+  SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+
   public Employee() {}
 
   public Employee(
@@ -42,7 +44,15 @@ public class Employee {
 
   public HashMap<String, String> getStringFields() {
     for (String key : this.fields.keySet()) {
-      this.fields_string.put(key, String.valueOf(this.fields.get(key)));
+      if (key.equals("start_date"))
+      {
+        this.fields_string.put(key, originalFormat.format(this.fields.get(key)));
+      }
+      else
+      {
+        this.fields_string.put(key, String.valueOf(this.fields.get(key)));
+      }
+
     }
     return this.fields_string;
   }
@@ -50,7 +60,7 @@ public class Employee {
   public void setField(String key, Object value) {
     this.fields.put(key, value);
   }
-  SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 
   public List<String> getListForm() {
     return List.of(getStringFields().get("employee_id"),
@@ -65,7 +75,7 @@ public class Employee {
 
   public void setFieldByString(String key, String value) throws ParseException {
     if (Objects.equals(key, "start_date")) {
-      this.fields.put(key, originalFormat.format(Timestamp.valueOf(value + " 00:00:00")));
+      this.fields.put(key, originalFormat.parse(value));
     } else {
       this.fields.put(key, value);
     }
@@ -73,7 +83,13 @@ public class Employee {
 
   public String getFullName(){
     StringBuilder str = new StringBuilder();
-    str.append(this.getStringFields().get("last_name")).append(" ").append(this.getStringFields().get("first_name"));
+    str.
+            append(this.getStringFields().get("first_name")).
+            append(" ").
+            append(this.getStringFields().get("last_name")).
+            append(" (").
+            append(this.getStringFields().get("employee_type")).
+            append(")");
     return str.toString();
   }
 }

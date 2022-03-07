@@ -234,30 +234,22 @@ public class EmployeeRESTImpl implements EmployeeDAO {
   }
 
   // input from CSV
-  public void inputFromCSV(String csvFilePath) throws IOException, ParseException { // Check employee table
+  public void inputFromCSV(String csvFilePath) throws IOException, ParseException, IllegalAccessException { // Check employee table
     EmployeeRESTImpl employeeREST = new EmployeeRESTImpl();
     List<Employee> employeeList = employeeREST.getEmployeeList();
     for (Employee emp : employeeList) {
       employeeREST.deleteEmployee(emp);
     }
 
-    try {
-
-      List<Employee> employeeList1 = EmployeeRESTImpl.readEmployeeCSV(csvFilePath);
-      for (Employee employee : employeeList1) {
-        this.enterEmployee(employee);
-      }
-    } catch (IOException | ParseException | IllegalAccessException e) {
-      e.printStackTrace();
+    List<Employee> employeeList1 = EmployeeRESTImpl.readEmployeeCSV(csvFilePath);
+    for (Employee employee : employeeList1) {
+      this.enterEmployee(employee);
     }
   }
 
   public void inputFromCSVfile(String csvFilePath) throws IOException, ParseException { // Check employee table
 
-
     ArrayList<HashMap<String, String>> map_list = new ArrayList<>();
-
-    try {
 
       List<Employee> employeeList1 = EmployeeRESTImpl.readEmployeeCSVfile(csvFilePath);
 
@@ -270,10 +262,6 @@ public class EmployeeRESTImpl implements EmployeeDAO {
       metadata_map.put("employee_type", "");
 
       Adb.populate_db(url, metadata_map, map_list);
-    } catch (IOException | ParseException e) {
-      e.printStackTrace();
-    }
-
   }
 
   // Export to CSV

@@ -6,21 +6,33 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeWrapperImpl;
+import edu.wpi.cs3733.c22.teamA.App;
+import edu.wpi.cs3733.c22.teamA.entities.Employee;
 
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.net.URLDecoder;
 import java.security.interfaces.RSAPublicKey;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AuthUser {
 
     private String token = "";
+    private String email;
     private ArrayList<String> permissions = new ArrayList<>();
+
+    private Employee employee;
 
     public AuthUser() {
 
     }
 
-    public AuthUser(String token) {
-        this.token = token;
+    public AuthUser(String params) {
+        this.token = params.split("&")[0];
+        this.email = URLDecoder.decode(params.split("&")[1]);
         System.out.printf("Init token is: %s\n", this.token);
 
         JwkProvider provider = new UrlJwkProvider(String.format("https://%s/", Auth0Login.DOMAIN));
@@ -43,18 +55,12 @@ public class AuthUser {
                 this.permissions.addAll(jwt.getClaim("permissions").asList(String.class));
                 System.out.println(this.permissions);
             }
+
+
         } catch (JWTVerificationException | JwkException e){
             //Invalid signature/claims
             e.printStackTrace();
         }
-
-
-//        JWTUtils.verifyToken(token).map(jwt -> {
-//            for (String key: jwt.getClaims().keySet()) {
-//                System.out.printf("openid Key: %s\tValue: %s\n", key,jwt.getClaim(key).asString());
-//            }
-//            return 1;
-//        });
     }
 
 
@@ -62,5 +68,35 @@ public class AuthUser {
     {
         return this.token;
     }
+
+    public Employee getEmployee() {return this.employee;}
+    public void setEmployee(Employee e) {this.employee = e;}
+
+    public String getEmployeeName() throws IOException, ParseException {
+
+        if (!App.DB_CHOICE.equals("nosql"))
+        {
+            return "Admin (admin)";
+        }
+
+        List<Employee> employeeArrayList = (new EmployeeWrapperImpl()).getEmployeeList();
+        for (Employee emp: employeeArrayList) {
+            if (this.email.equals(String.format("email=%s", emp.getStringFields().get("email"))))
+            {
+                this.employee = emp;
+            }
+        }
+        if (this.employee != null)
+        {
+            return this.employee.getFullName();
+        }
+        else {
+            return "EMPLOYEE NOT FOUND!";
+        }
+    }
+
+    public ArrayList<String> getPermissions() {return this.permissions;}
+
+
 
 }

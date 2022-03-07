@@ -76,7 +76,7 @@
             <JFXHamburger fx:id="hamburger" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="75.0" stylesheets="@../../css/styleSheet.css" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
         </children>
     </GridPane>
-    <JFXTextArea fx:id="commentsBox" styleClass="text-area-sr" stylesheets="@../../css/styleSheet.css" text="Notes or Special Requests..." GridPane.rowIndex="8">
+    <JFXTextArea fx:id="commentsBox" promptText="Notes or Special Requests..." styleClass="text-area-sr" stylesheets="@../../css/styleSheet.css" GridPane.rowIndex="8">
         <GridPane.margin>
             <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
         </GridPane.margin>

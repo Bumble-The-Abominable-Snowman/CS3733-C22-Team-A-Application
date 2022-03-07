@@ -89,17 +89,27 @@ public class Medicine extends RecursiveTreeObject<Medicine> {
 
   public void setFieldByString(String key, String value) throws ParseException {
     if (Objects.equals(key, "dosage_amount")) {
-      ArrayList<Float> temp = new ArrayList<Float>();
-      this.fields_string.put(key, "");
-      for (String d: value.split(" ")) {
-        this.fields_string.put(key, this.fields_string.get(key) + d + " ");
+      try
+      {
+        ArrayList<Float> temp = new ArrayList<Float>();
+        this.fields_string.put(key, "");
+        for (String d: value.split(" ")) {
+          this.fields_string.put(key, this.fields_string.get(key) + d + " ");
 
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-        symbols.setDecimalSeparator('.');
-        DecimalFormat decimalFormat = new DecimalFormat("#.000");
-        decimalFormat.setDecimalFormatSymbols(symbols);
+          DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+          symbols.setDecimalSeparator('.');
+          DecimalFormat decimalFormat = new DecimalFormat("#.000");
+          decimalFormat.setDecimalFormatSymbols(symbols);
 
-        this.fields.put(key, temp.add(decimalFormat.parse(value).floatValue()));
+          this.fields.put(key, temp.add(decimalFormat.parse(value).floatValue()));
+          System.out.println(d);
+          System.out.println(decimalFormat.parse(value).floatValue());
+        }
+      } catch (ParseException e)
+      {
+        System.out.println("parse exception");
+        this.fields_string.put(key, "");
+        this.fields.put(key, null);
       }
 
     }else {

@@ -126,12 +126,12 @@ public class SecuritySRCtrl extends SRCtrl {
             SR sr = new SR(uniqueID,
                     (new LocationWrapperImpl()).getLocationNode("NA"),
                     toLocationSelected,
-                    (new EmployeeWrapperImpl()).getEmployee("002"),
+                    App.authUser.getEmployee(),
                     employeeSelected,
                     new Timestamp((new Date()).getTime()),
                     SR.Status.BLANK,
                     SR.Priority.REGULAR,
-                    commentsBox.getText().equals("") ? "NA" : commentsBox.getText(),
+                    (commentsBox.getText().equals("") ? "NA" : commentsBox.getText()) + typeChoice.getValue(),
                         SR.SRType.SECURITY);
 
             ServiceRequestWrapperImpl serviceRequestWrapper = new ServiceRequestWrapperImpl(SR.SRType.SECURITY);
