@@ -1,15 +1,21 @@
 package edu.wpi.cs3733.c22.teamA.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.DeliverCallback;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDAO;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeDerbyImpl;
 import edu.wpi.cs3733.c22.teamA.Adb.employee.EmployeeWrapperImpl;
 import edu.wpi.cs3733.c22.teamA.App;
+import edu.wpi.cs3733.c22.teamA.SceneSwitcher;
 import edu.wpi.cs3733.c22.teamA.entities.Employee;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
@@ -38,14 +44,45 @@ public class HomeCtrl extends MasterCtrl {
   @FXML private Label settingsText;
 
   @FXML
-  private void initialize() throws IOException, ParseException {
+  private void initialize() throws IOException, ParseException, TimeoutException {
 
       configure();
       drawer.open();
       drawer.toFront();
       menuBox.toFront();
 
+
       greetingLabel.setText("Welcome, " + App.authUser.getEmployeeName());
+      if (App.DB_CHOICE.equals("nosql"))
+      {
+        String EXCHANGE_NAME = "push_api";
+
+        ConnectionFactory factory = new ConnectionFactory();
+        factory.setHost("cs3733c22teama.ddns.net");
+        factory.setUsername("a");
+        factory.setPassword("a");
+        factory.setPort(5672);
+        Connection connection = factory.newConnection();
+        Channel channel = connection.createChannel();
+
+        channel.exchangeDeclare(EXCHANGE_NAME, "topic");
+        String queueName = channel.queueDeclare().getQueue();
+
+        channel.queueBind(queueName, EXCHANGE_NAME, "anonymous.info");
+
+        DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+          String message = new String(delivery.getBody(), "UTF-8");
+          System.out.println(" [x] Received '" +
+                  delivery.getEnvelope().getRoutingKey() + "':'" + message + "'");
+
+          if (String.valueOf(SceneSwitcher.fxmlval.get(SceneSwitcher.fxmlval.size() - 1)).equals("DATA_VIEW"))
+          {
+            App.sceneSwitcher.switchScene(SceneSwitcher.SCENES.DATA_VIEW);
+          }
+        };
+        System.out.println("starting the rabbitmq daemon...");
+        channel.basicConsume(queueName, true, deliverCallback, consumerTag -> { });
+      }
 
 //    EmployeeDAO employeeBase = new EmployeeWrapperImpl();
 //    List<Employee> empList = employeeBase.getEmployeeList();

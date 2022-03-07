@@ -73,13 +73,6 @@ public abstract class MasterCtrl {
 
   //public int helpState;
 
-  public enum ACCOUNT {
-    ADMIN,
-    STAFF,
-  }
-
-  public static ACCOUNT account = ACCOUNT.ADMIN;
-
   public double stageWidth;
   double stageHeight;
 

@@ -13,7 +13,7 @@ import javafx.scene.Scene;
 
 public class SceneSwitcher {
 
-  public static List<SCENES> fxmlval = new ArrayList<SCENES>();
+  public static List<SCENES> fxmlval = new ArrayList<>();
 
   public enum SCENES {
     LAUNCH,
